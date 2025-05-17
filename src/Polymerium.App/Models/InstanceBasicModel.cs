@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
+using Polymerium.App.Properties;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions.Utilities;
 
@@ -42,7 +43,7 @@ public partial class InstanceBasicModel : ModelBase
     public partial string Version { get; set; }
 
     [ObservableProperty]
-    public partial string LoaderLabel { get; set; } = "Vanilla";
+    public partial string LoaderLabel { get; set; } = Resources.Enum_Vanilla;
 
     [ObservableProperty]
     public partial string SourceLabel { get; set; } = "local";
@@ -73,7 +74,7 @@ public partial class InstanceBasicModel : ModelBase
                 // TODO: 从语言文件中选取
                 LoaderLabel = LoaderHelper.ToDisplayName(result.Identity);
             else
-                LoaderLabel = "Vanilla";
+                LoaderLabel = Resources.Enum_Vanilla;
         }
     }
 

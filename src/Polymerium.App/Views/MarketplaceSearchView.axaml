@@ -194,7 +194,7 @@
                         <StackPanel Margin="36" Spacing="6">
                             <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
                             <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
-                            <husk:ProgressRing Width="20" Height="20" StrokeWidth="3"
+                            <husk:ProgressRing Width="20" Height="20"
                                                IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
                                                HorizontalAlignment="Center" ShowProgressText="False" />
                             <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}"

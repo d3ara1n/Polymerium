@@ -19,6 +19,7 @@ using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Views;
@@ -201,7 +202,7 @@ public partial class InstanceSetupViewModel(
         if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var result))
             LoaderLabel = LoaderHelper.ToDisplayLabel(result.Identity, result.Version);
         else
-            LoaderLabel = "None";
+            LoaderLabel = Resources.Enum_None;
 
         _updatingSubscription?.Dispose();
         UpdatingPending = true;

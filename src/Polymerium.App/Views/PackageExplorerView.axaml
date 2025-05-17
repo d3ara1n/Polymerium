@@ -258,7 +258,7 @@
                 </ItemsControl.ItemsPanel>
                 <husk:InfiniteScrollView.PendingContent>
                     <StackPanel Margin="36" Spacing="6">
-                        <husk:ProgressRing Width="20" Height="20" StrokeWidth="3"
+                        <husk:ProgressRing Width="20" Height="20"
                                            IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
                                            HorizontalAlignment="Center" ShowProgressText="False" />
                         <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}"

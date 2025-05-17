@@ -13,6 +13,7 @@ using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
@@ -203,7 +204,7 @@ public partial class MainWindowContext : ObservableObject
     private void OnInstanceInstalling(object? sender, InstallTracker e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null);
+        var model = new InstanceEntryModel(e.Key, e.Key, "N/A", null, null);
 
         e
            .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
@@ -236,7 +237,9 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _entries.Remove(model);
-                        _notificationService.PopMessage(e.FailureReason, $"Failed to install {e.Key}");
+                        _notificationService.PopMessage(e.FailureReason,
+                                                        Resources.MainWindow_InstanceInstallingDangerNotificationTitle
+                                                                 .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -244,10 +247,12 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage("The instance has been installed",
+                        _notificationService.PopMessage(Resources
+                                                           .MainWindow_InstanceInstallingSuccessNotificationPrompt,
                                                         e.Key,
                                                         NotificationLevel.Success,
-                                                        actions: new NotificationAction("Open",
+                                                        actions: new NotificationAction(Resources
+                                                               .MainWindow_InstanceInstallingSuccessNotificationOpenText,
                                                             ViewInstanceCommand,
                                                             e.Key));
                     });
@@ -307,7 +312,9 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(e.FailureReason, $"Failed to update {e.Key}");
+                        _notificationService.PopMessage(e.FailureReason,
+                                                        Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
+                                                                 .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -315,12 +322,13 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage("The instance has been updated",
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationPrompt,
                                                         e.Key,
                                                         NotificationLevel.Success,
-                                                        actions: new NotificationAction("Open",
-                                                            ViewInstanceCommand,
-                                                            e.Key));
+                                                        actions: new NotificationAction(Resources
+                                                               .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
+                                                                 ViewInstanceCommand,
+                                                                 e.Key));
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
                                                                 PersistenceService.ActionKind.Update,
@@ -380,7 +388,9 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(e.FailureReason, $"Failed to deploy {e.Key}");
+                        _notificationService.PopMessage(e.FailureReason,
+                                                        Resources.MainWindow_InstanceDeployingNotificationTitle
+                                                                 .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -388,7 +398,7 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage("The instance has been deployed",
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceDeployingSuccessNotificationPrompt,
                                                         e.Key,
                                                         NotificationLevel.Success);
                     });
@@ -428,9 +438,6 @@ public partial class MainWindowContext : ObservableObject
                         // 不从 ProfileManager 里取，反正 UI 上只要行为类似就好
                         model.LastPlayedAtRaw = DateTimeOffset.Now;
                         model.State = InstanceEntryState.Running;
-                        _notificationService.PopMessage("The instance has been launched",
-                                                        e.Key,
-                                                        NotificationLevel.Success);
                     });
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
@@ -438,10 +445,13 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(e.FailureReason,
-                                                        $"{e.Key}",
+                                                        e.Key,
                                                         actions:
                                                         [
-                                                            new NotificationAction("View Output", ViewLogCommand, e)
+                                                            new NotificationAction(Resources
+                                                                   .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
+                                                                ViewLogCommand,
+                                                                e)
                                                         ]);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
@@ -454,7 +464,7 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage("The instance has been exited",
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceLaunchingSuccessNotificationPrompt,
                                                         e.Key,
                                                         NotificationLevel.Success);
                     });

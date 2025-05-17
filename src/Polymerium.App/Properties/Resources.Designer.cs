@@ -483,6 +483,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string Enum_Off {
+            get {
+                return ResourceManager.GetString("Enum_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string Enum_On {
+            get {
+                return ResourceManager.GetString("Enum_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string Enum_Unknown {
+            get {
+                return ResourceManager.GetString("Enum_Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vanilla.
+        /// </summary>
+        public static string Enum_Vanilla {
+            get {
+                return ResourceManager.GetString("Enum_Vanilla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It seems something went wrong....
         /// </summary>
         public static string ExceptionView_Subtitle {
@@ -1320,6 +1356,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I&apos;m in a hurry.
+        /// </summary>
+        public static string InstancePropertiesView_FastLaunchOnText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_FastLaunchOnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted..
         /// </summary>
         public static string InstancePropertiesView_FastLaunchPrompt {
@@ -1514,6 +1559,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePropertiesView_ResolvePackageDependenciesLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I know what I&apos;m doing.
+        /// </summary>
+        public static string InstancePropertiesView_ResolvePackageDependenciesOnText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesOnText", resourceCulture);
             }
         }
         
@@ -1770,11 +1824,101 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to deploy {0}.
+        /// </summary>
+        public static string MainWindow_InstanceDeployingNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceDeployingNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instance has been deployed.
+        /// </summary>
+        public static string MainWindow_InstanceDeployingSuccessNotificationPrompt {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceDeployingSuccessNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter entries by names....
         /// </summary>
         public static string MainWindow_InstanceFilterPlaceholder {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceFilterPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to install {0}.
+        /// </summary>
+        public static string MainWindow_InstanceInstallingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceInstallingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string MainWindow_InstanceInstallingSuccessNotificationOpenText {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationOpenText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instance has been installed.
+        /// </summary>
+        public static string MainWindow_InstanceInstallingSuccessNotificationPrompt {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Output.
+        /// </summary>
+        public static string MainWindow_InstanceLaunchingDangerNotificationViewOutputText {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationViewOutputText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instance has been exited.
+        /// </summary>
+        public static string MainWindow_InstanceLaunchingSuccessNotificationPrompt {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceLaunchingSuccessNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update {0}.
+        /// </summary>
+        public static string MainWindow_InstanceUpdatingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceUpdatingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string MainWindow_InstanceUpdatingSuccessNotificationOpenText {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationOpenText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instance has been updated.
+        /// </summary>
+        public static string MainWindow_InstanceUpdatingSuccessNotificationPrompt {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationPrompt", resourceCulture);
             }
         }
         
