@@ -88,10 +88,6 @@ Windows
 
 `设置` 👉 `系统` 👉 `开发者选项` 👉 `开发人员模式`
 
-#### 其他系统或其他 Windows
-
-不需要。只有 Windows 需要在创建软连接时提供管理员权限，也只有 Windows 10+ 才能使用 WinUi3 打包应用。
-
 ### 2.Enable Windows Developer Mode
 
 Due to Windows constraints in [symlink](https://www.wikiwand.com/en/Symbolic_link), instance deployment requires
