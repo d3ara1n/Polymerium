@@ -293,7 +293,6 @@ public class InstanceManager(
                    .SetAssetRootDirectory(assetDir)
                    .SetNativesRootDirectory(nativeDir)
                    .SetLibraryRootDirectory(libraryDir)
-                   .SetClassPathSeparator(';')
                    .SetLauncherName(options.Brand)
                    .SetLauncherVersion(Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Eternal")
                    .SetOsName(PlatformHelper.GetOsName())
