@@ -33,7 +33,8 @@ public class Igniter : IBuilder<Process>
 
     public Process Build()
     {
-        var classPath = string.Join(ClassPathSeparator!.Value, Libraries);
+        var separator = ClassPathSeparator ?? (OperatingSystem.IsWindows() ? ';' : ':');
+        var classPath = string.Join(separator, Libraries);
         var crates = new Dictionary<string, string>
         {
             { "${auth_player_name}", UserName! },
@@ -55,7 +56,7 @@ public class Igniter : IBuilder<Process>
             { "${os_arch}", OsArch! },
             { "${os_version}", OsVersion! },
             { "${jvm_max_memory}", $"{MaxMemory!.Value}m" },
-            { "${classpath_separator}", ClassPathSeparator!.ToString()! },
+            { "${classpath_separator}", separator.ToString() },
             { "${classpath}", classPath }
         };
         var executable = Path.Combine(JavaHome!,
