@@ -8,9 +8,6 @@
         <File Path=".gitignore"/>
         <File Path=".editorconfig"/>
     </Folder>
-    <Project Path="src\Huskui.Avalonia.Markdown\Huskui.Avalonia.Markdown.csproj" Type="Classic C#"/>
-    <Project Path="src\Huskui.Avalonia\Huskui.Avalonia.csproj" Type="Classic C#"/>
-    <Project Path="src\Huskui.Gallery\Huskui.Gallery.csproj" Type="Classic C#"/>
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" Type="Classic C#"/>
     <Project Path="src\Polymerium.Trident\Polymerium.Trident.csproj" Type="Classic C#"/>
     <Project Path="src\Trident.Abstractions\Trident.Abstractions.csproj" Type="Classic C#"/>
