@@ -90,7 +90,7 @@
     <data name="InstanceHomeView_SeeMoreButtonText" xml:space="preserve">
         <value>See More</value>
     </data>
-    <data name="InstanceHomeView_SetupDetailsButtonText" xml:space="preserve">
+    <data name="InstanceHomeView_SetupEditButtonText" xml:space="preserve">
         <value>Details</value>
     </data>
     <data name="InstanceHomeView_ReadyLabelText" xml:space="preserve">

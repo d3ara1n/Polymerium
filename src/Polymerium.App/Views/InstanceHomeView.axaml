@@ -132,7 +132,7 @@
                             Theme="{StaticResource SectionHeaderButtonTheme}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <TextBlock FontSize="{StaticResource SmallFontSize}"
-                                           Text="{x:Static lang:Resources.InstanceHomeView_SetupDetailsButtonText}" />
+                                           Text="{x:Static lang:Resources.InstanceHomeView_SetupEditButtonText}" />
                                 <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                             </StackPanel>
                         </Button>
