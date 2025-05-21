@@ -119,7 +119,7 @@ public class App : Application
 
             var page = Activator.CreateInstance(view) as Page;
 
-            if (type is not null)
+            if (page is not null && type is not null)
             {
                 if (!type.IsAssignableTo(typeof(ObservableObject)))
                     throw new ArgumentOutOfRangeException(nameof(type),
@@ -133,13 +133,10 @@ public class App : Application
 
                 var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
 
-                if (page is not null)
-                {
-                    page.DataContext = viewModel;
+                page.DataContext = viewModel;
 
-                    if (viewModel is IPageModel pageModel)
-                        page.Model = pageModel;
-                }
+                if (viewModel is IPageModel pageModel)
+                    page.Model = pageModel;
             }
 
             activatorErrorCount = 0;
