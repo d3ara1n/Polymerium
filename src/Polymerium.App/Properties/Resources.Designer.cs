@@ -1187,9 +1187,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
-        public static string InstanceHomeView_SetupDetailsButtonText {
+        public static string InstanceHomeView_SetupEditButtonText {
             get {
-                return ResourceManager.GetString("InstanceHomeView_SetupDetailsButtonText", resourceCulture);
+                return ResourceManager.GetString("InstanceHomeView_SetupEditButtonText", resourceCulture);
             }
         }
         
