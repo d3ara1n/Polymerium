@@ -14,93 +14,68 @@
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="24">
         <TextBlock Grid.Row="0" Text="{x:Static lang:Resources.PackageBulkUpdaterModal_Title}"
                    FontSize="{StaticResource LargeFontSize}" FontWeight="{StaticResource ControlStrongFontWeight}" />
-        <husk:SwitchPresenter Grid.Row="1"
-                              Value="{Binding $parent[modals:PackageBulkUpdaterModal].IsFetching,Mode=OneWay,FallbackValue=True}"
-                              TargetType="x:Boolean">
-            <husk:SwitchCase Value="{x:True}">
-                <StackPanel Spacing="12">
-                    <husk:ProgressRing Height="56" Width="56"
-                                       Value="{Binding $parent[modals:PackageBulkUpdaterModal].Updates.Count}"
-                                       Maximum="{Binding $parent[modals:PackageBulkUpdaterModal].FetchingTotalCount}"
-                                       HorizontalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Center">
-                        <Run Text="{x:Static lang:Resources.PackageBulkUpdaterModal_FetchingLabelText}" />
-                        <Run Text="(" />
-                        <Run
-                            Text="{Binding $parent[modals:PackageBulkUpdaterModal].Updates.Count,Mode=OneWay,FallbackValue=0}" />
-                        <Run Text="/" />
-                        <Run
-                            Text="{Binding $parent[modals:PackageBulkUpdaterModal].FetchingTotalCount,Mode=OneWay,FallbackValue=0}" />
-                        <Run Text=")" />
-                    </TextBlock>
-                </StackPanel>
-            </husk:SwitchCase>
-            <husk:SwitchCase Value="{x:False}">
-                <Panel>
-                    <StackPanel VerticalAlignment="Center"
-                                Spacing="8"
-                                IsVisible="{Binding $parent[modals:PackageBulkUpdaterModal].Updates.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
-                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
-                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                   FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
-                    </StackPanel>
-                    <ScrollViewer>
-                        <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="m:PackageUpdaterModel">
-                                    <Border Padding="12" Margin="2" BoxShadow="0 0 4 0 #3F000000"
-                                            CornerRadius="{StaticResource MediumCornerRadius}"
-                                            Background="{StaticResource OverlaySolidBackgroundBrush}">
-                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                            <Border Grid.Column="0" Width="{Binding $self.Bounds.Height}"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}"
-                                                    ToolTip.Tip="{Binding Package.ProjectName}">
-                                                <Border.Background>
-                                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                                                </Border.Background>
-                                            </Border>
-                                            <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
-                                                <StackPanel Grid.Row="0">
-                                                    <TextBlock Text="{Binding NewVersionName}"
-                                                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                                                    <TextBlock Text="{Binding NewVersionTime}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                               FontSize="{StaticResource SmallFontSize}" />
-                                                </StackPanel>
-                                                <StackPanel Grid.Row="1">
-                                                    <TextBlock Text="{Binding OldVersionName}"
-                                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                                    <TextBlock Text="{Binding OldVersionTime}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                               FontSize="{StaticResource SmallFontSize}" />
-                                                </StackPanel>
-                                            </Grid>
-                                            <Grid Grid.Column="2" RowDefinitions="*,*">
-                                                <CheckBox Grid.Row="0" VerticalAlignment="Center"
-                                                          HorizontalAlignment="Right"
-                                                          IsChecked="{Binding IsChecked,Mode=TwoWay}" />
-                                                <icons:PackIconLucide Grid.Row="1" VerticalAlignment="Center"
-                                                                      Kind="CornerUpLeft"
-                                                                      Height="{StaticResource MediumFontSize}"
-                                                                      Width="{StaticResource MediumFontSize}" />
-                                            </Grid>
-                                        </Grid>
+        <Panel Grid.Row="1">
+            <StackPanel VerticalAlignment="Center"
+                        Spacing="8"
+                        IsVisible="{Binding $parent[modals:PackageBulkUpdaterModal].Updates.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                           FontSize="{StaticResource LargeFontSize}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+            <ScrollViewer Margin="-18,0" Padding="18,0">
+                <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="m:PackageUpdaterModel">
+                            <Border Padding="12" Margin="2" BoxShadow="0 0 4 0 #3F000000"
+                                    CornerRadius="{StaticResource MediumCornerRadius}"
+                                    Background="{StaticResource OverlaySolidBackgroundBrush}">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Border Grid.Column="0" Width="{Binding $self.Bounds.Height}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}"
+                                            ToolTip.Tip="{Binding Package.ProjectName}">
+                                        <Border.Background>
+                                            <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                        </Border.Background>
                                     </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Panel>
-            </husk:SwitchCase>
-        </husk:SwitchPresenter>
+                                    <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
+                                        <StackPanel Grid.Row="0">
+                                            <TextBlock Text="{Binding NewVersionName}"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                       Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                            <TextBlock Text="{Binding NewVersionTime}"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                       FontSize="{StaticResource SmallFontSize}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1">
+                                            <TextBlock Text="{Binding OldVersionName}"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                            <TextBlock Text="{Binding OldVersionTime}"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                       FontSize="{StaticResource SmallFontSize}" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="2" RowDefinitions="*,*">
+                                        <CheckBox Grid.Row="0" VerticalAlignment="Center"
+                                                  HorizontalAlignment="Right"
+                                                  IsChecked="{Binding IsChecked,Mode=TwoWay}" />
+                                        <icons:PackIconLucide Grid.Row="1" VerticalAlignment="Center"
+                                                              Kind="CornerUpLeft"
+                                                              Height="{StaticResource MediumFontSize}"
+                                                              Width="{StaticResource MediumFontSize}" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Panel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
             <Button Classes="Primary"
-                    IsEnabled="{Binding $parent[modals:PackageBulkUpdaterModal].IsFetching,Converter={x:Static BoolConverters.Not},Mode=OneWay,FallbackValue=False}"
                     Command="{Binding $parent[modals:PackageBulkUpdaterModal].UpdateCommand}">
                 <husk:IconLabel Icon="BoxMultiple"
                                 Text="{x:Static lang:Resources.PackageBulkUpdaterModal_UpdateButtonText}" Spacing="8" />

@@ -888,9 +888,6 @@
     <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
         <value>为实例设置一个新名称</value>
     </data>
-    <data name="PackageBulkUpdaterModal_FetchingLabelText" xml:space="preserve">
-        <value>检查更新中...</value>
-    </data>
     <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
         <value>升级选中</value>
     </data>
@@ -980,5 +977,23 @@
     </data>
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
         <value>固实文件...</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
+        <value>批量更新包版本</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt" xml:space="preserve">
+        <value>检查版本...({0}/{1})</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
+        <value>批量更新包版本</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt" xml:space="preserve">
+        <value>{0} 个包存在新版本</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
+        <value>查看</value>
     </data>
 </root>

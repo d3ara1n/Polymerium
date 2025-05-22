@@ -897,9 +897,6 @@
     <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
         <value>Give the instance a new name</value>
     </data>
-    <data name="PackageBulkUpdaterModal_FetchingLabelText" xml:space="preserve">
-        <value>Check updates...</value>
-    </data>
     <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
         <value>Update Checked</value>
     </data>
@@ -989,5 +986,23 @@
     </data>
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
         <value>Solidifying files...</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
+        <value>Update packages in bulk</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt" xml:space="preserve">
+        <value>Checking updates...({0}/{1})</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
+        <value>Update packages in bulk</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt" xml:space="preserve">
+        <value>{0} packages to be updated</value>
+    </data>
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
+        <value>Review</value>
     </data>
 </root>
