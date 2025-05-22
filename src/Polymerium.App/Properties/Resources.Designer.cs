@@ -1779,6 +1779,60 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} packages to be updated.
+        /// </summary>
+        public static string InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review.
+        /// </summary>
+        public static string InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update packages in bulk.
+        /// </summary>
+        public static string InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking updates...({0}/{1}).
+        /// </summary>
+        public static string InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update packages in bulk.
+        /// </summary>
+        public static string InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Something went wrong.
         /// </summary>
         public static string InstanceSetupView_ReferenceUnavailableLabelText {
@@ -2234,15 +2288,6 @@ namespace Polymerium.App.Properties {
         public static string NewInstanceView_VersionLabelText {
             get {
                 return ResourceManager.GetString("NewInstanceView_VersionLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check updates....
-        /// </summary>
-        public static string PackageBulkUpdaterModal_FetchingLabelText {
-            get {
-                return ResourceManager.GetString("PackageBulkUpdaterModal_FetchingLabelText", resourceCulture);
             }
         }
         

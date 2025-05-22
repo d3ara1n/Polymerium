@@ -31,6 +31,7 @@ using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace Polymerium.App.ViewModels;
 
@@ -392,6 +393,122 @@ public partial class InstanceSetupViewModel(
         navigationService.Navigate<PackageExplorerView>(Basic.Key);
     }
 
+
+    [RelayCommand]
+    private async Task UpdateBatchAsync(SourceCache<InstancePackageModel, Profile.Rice.Entry>? packages)
+    {
+        var cts = new CancellationTokenSource();
+        if (packages != null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            var updates = new List<PackageUpdaterModel>();
+            var total = packages.Items.Count;
+            var notification = new NotificationItem
+            {
+                Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
+                Content = Resources
+                         .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt.Replace("{0}", "0")
+                         .Replace("{1}", packages.Count.ToString()),
+                IsCloseButtonVisible = false
+            };
+            notification.Actions.Add(new NotificationAction(Resources
+                                                               .InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
+                                                            new RelayCommand(Cancel)));
+
+            notificationService.Pop(notification);
+
+            var filter = new Filter(Kind: null,
+                                    Version: guard.Value.Setup.Version,
+                                    Loader: guard.Value.Setup.Loader is not null
+                                                ? LoaderHelper.TryParse(guard.Value.Setup.Loader, out var loader)
+                                                      ? loader.Identity
+                                                      : null
+                                                : null);
+            foreach (var entry in packages.Items)
+            {
+                if (cts.IsCancellationRequested)
+                    break;
+                if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
+                    if (result.Vid is not null)
+                        try
+                        {
+                            // 可以引入并发哈哈但，得客户提出需求再引入
+                            var resolved = await dataService.ResolvePackageAsync(result.Label,
+                                               result.Namespace,
+                                               result.Pid,
+                                               null,
+                                               filter);
+                            if (resolved.VersionId != result.Vid)
+                            {
+                                var package = await dataService.ResolvePackageAsync(result.Label,
+                                                  result.Namespace,
+                                                  result.Pid,
+                                                  result.Vid,
+                                                  Filter.Empty);
+                                var model = new PackageUpdaterModel(entry,
+                                                                    package,
+                                                                    package.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                                    package.VersionId,
+                                                                    package.VersionName,
+                                                                    package.PublishedAt,
+                                                                    resolved.VersionId,
+                                                                    resolved.VersionName,
+                                                                    resolved.PublishedAt);
+                                updates.Add(model);
+                                continue;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            notificationService.PopMessage(ex, entry.Entry.Purl, NotificationLevel.Warning);
+                        }
+
+                total--;
+
+                notification.Content = Resources
+                                      .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
+                                      .Replace("{0}", updates.Count.ToString())
+                                      .Replace("{1}", total.ToString());
+            }
+
+            if (cts.IsCancellationRequested)
+                return;
+
+            notification.Close();
+            var reviewNotification = new NotificationItem
+            {
+                Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
+                Content = Resources
+                         .InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt
+                         .Replace("{0}", updates.Count.ToString())
+            };
+            reviewNotification.Actions.Add(new NotificationAction(Resources
+                                                                     .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
+                                                                  new RelayCommand(Review, CanReview)));
+            notificationService.Pop(reviewNotification);
+
+            void Cancel()
+            {
+                cts.Cancel();
+                notification.Close();
+            }
+
+            bool CanReview() => updates.Count > 0;
+
+            void Review()
+            {
+                var modal = new PackageBulkUpdaterModal
+                {
+                    DataService = dataService,
+                    NotificationService = notificationService,
+                    PersistenceService = persistenceService
+                };
+                modal.SetGuard(guard, updates);
+                overlayService.PopModal(modal);
+                reviewNotification.Close();
+            }
+        }
+    }
+
     [RelayCommand]
     private async Task ExportList()
     {
@@ -400,7 +517,6 @@ public partial class InstanceSetupViewModel(
         var dialog = new ExportPackageListDialog { PackageCount = list.Count };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
-            // TODO: 使用 Notification Progress
             var notification = new NotificationItem
             {
                 Title = "Export package list to file", IsProgressBarVisible = true
@@ -563,23 +679,6 @@ public partial class InstanceSetupViewModel(
                                                                           PersistenceService.ActionKind.EditPackage,
                                                                           model.Entry.Purl,
                                                                           null));
-        }
-    }
-
-
-    [RelayCommand]
-    private void UpdateBatch(SourceCache<InstancePackageModel, Profile.Rice.Entry>? packages)
-    {
-        if (packages != null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
-        {
-            var modal = new PackageBulkUpdaterModal
-            {
-                DataService = dataService,
-                NotificationService = notificationService,
-                PersistenceService = persistenceService
-            };
-            modal.SetGuard(guard, packages);
-            overlayService.PopModal(modal);
         }
     }
 

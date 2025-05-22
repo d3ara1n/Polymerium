@@ -46,7 +46,8 @@ public class NotificationService
             var item = new NotificationItem { Content = message, Title = title, Level = level };
             item.Actions.AddRange(actions);
             Pop(item);
-            if (level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
+            if ((level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
+              && actions is { Length: 0 } or null)
              || forceExpire)
             {
                 item.IsProgressBarVisible = true;
