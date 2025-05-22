@@ -2130,6 +2130,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} has been added to the queue.
+        /// </summary>
+        public static string MarketplaceSearchView_ModpackInstallingNotificationPrompt {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_ModpackInstallingNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading project information failed.
+        /// </summary>
+        public static string MarketplaceSearchView_ModpackLoadingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_ModpackLoadingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear Filter.
         /// </summary>
         public static string MarketplaceSearchView_ResetFilterButtonText {
