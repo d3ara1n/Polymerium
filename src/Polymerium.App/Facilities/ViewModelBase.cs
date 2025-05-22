@@ -19,7 +19,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
 
     public Task InitializeAsync(CancellationToken token) => OnInitializedAsync(token);
 
-    public Task CleanupAsync(CancellationToken token) => OnDeinitializeAsync(token);
+    public Task DeinitializeAsync(CancellationToken token) => OnDeinitializeAsync(token);
 
     #endregion
 }

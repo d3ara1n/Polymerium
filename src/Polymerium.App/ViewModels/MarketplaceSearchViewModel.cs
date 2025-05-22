@@ -12,6 +12,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
@@ -43,7 +44,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
         LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
 
-        // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
         if (bag.Parameter is SearchArguments arguments)
@@ -216,7 +216,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         if (exhibit is not null)
         {
             _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
-            _notificationService.PopMessage("Task has been added to install queue", exhibit.ProjectName);
+            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
+                                                     .Replace("{0}", exhibit.ProjectName),
+                                            exhibit.ProjectId);
         }
     }
 
@@ -273,7 +275,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+                _notificationService.PopMessage(ex,
+                                                Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
+                                                NotificationLevel.Warning);
             }
     }
 
@@ -294,7 +298,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                      version.Namespace,
                                      version.ProjectId,
                                      version.VersionId);
-            _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
+                                                     .Replace("{0}", version.VersionName),
+                                            version.ProjectName);
         }
     }
 

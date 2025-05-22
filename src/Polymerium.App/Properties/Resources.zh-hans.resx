@@ -996,4 +996,10 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>查看</value>
     </data>
+    <data name="MarketplaceSearchView_ModpackInstallingNotificationPrompt" xml:space="preserve">
+        <value>{0} 已添加到队列</value>
+    </data>
+    <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
+        <value>获取项目信息失败</value>
+    </data>
 </root>

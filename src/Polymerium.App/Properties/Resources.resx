@@ -1005,4 +1005,10 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>Review</value>
     </data>
+    <data name="MarketplaceSearchView_ModpackInstallingNotificationPrompt" xml:space="preserve">
+        <value>{0} has been added to the queue</value>
+    </data>
+    <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
+        <value>Loading project information failed</value>
+    </data>
 </root>
