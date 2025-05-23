@@ -38,10 +38,10 @@ public class Snapshot : Collection<Snapshot.Entity>
             var final = entities.FirstOrDefault(x => x.Path == exist.Path);
             if (final != null)
             {
-                if (!exist.Target.Equals(final.Target, StringComparison.InvariantCultureIgnoreCase))
+                if (!exist.Target.Equals(final.Target))
                 {
                     File.Delete(exist.Path);
-                    File.CreateSymbolicLink(final.Path, final.Path);
+                    File.CreateSymbolicLink(final.Path, final.Target);
                 }
 
                 entities.Remove(final);
