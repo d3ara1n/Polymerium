@@ -8,7 +8,6 @@
             xmlns:m="clr-namespace:Polymerium.App.Models"
             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             mc:Ignorable="d"
             x:Class="Polymerium.App.Modals.PackageBulkUpdaterModal">
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="24">
@@ -17,7 +16,7 @@
         <Panel Grid.Row="1">
             <StackPanel VerticalAlignment="Center"
                         Spacing="8"
-                        IsVisible="{Binding $parent[modals:PackageBulkUpdaterModal].Updates.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                        IsVisible="{Binding $parent[modals:PackageBulkUpdaterModal].Updates.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
                 <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                       Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
@@ -30,7 +29,7 @@
                 <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="m:PackageUpdaterModel">
-                            <Border Padding="12" Margin="2" BoxShadow="0 0 4 0 #3F000000"
+                            <Border Padding="12" Margin="3" BoxShadow="0 0 4 0 #3F000000"
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">

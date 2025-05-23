@@ -7,7 +7,6 @@
             xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
             xmlns:async="using:AsyncImageLoader"
             xmlns:fi="using:FluentIcons.Avalonia"
-            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:local="clr-namespace:Polymerium.App.Toasts"
             xmlns:converters="clr-namespace:Polymerium.App.Converters"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
@@ -25,9 +24,9 @@
     <StackPanel Spacing="36">
         <husk:ConstrainedBox AspectRatio="1.78">
             <Panel>
-                <Carousel Name="GalleryCarousel" Theme="{StaticResource SimpleCarouselTheme}"
-                          CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}"
-                          IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}"
+                <Carousel Name="GalleryCarousel"
+                          CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
+                          IsVisible="{Binding Gallery,Converter={x:Static husk:CollectionConverters.IsNotEmpty}}"
                           ItemsSource="{Binding Gallery}">
                     <Carousel.ItemTemplate>
                         <DataTemplate x:DataType="x:Uri">
@@ -38,7 +37,7 @@
                 </Carousel>
                 <Border
                     Opacity="{Binding Opacity,ElementName=IndicatorBar,Mode=OneWay,Converter={x:Static converters:InternalConverters.Weird}}"
-                    CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}">
+                    CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="100%,50%" StartPoint="0%,50%">
                             <GradientStop Offset="0" Color="{DynamicResource SolidColor}" />
@@ -66,7 +65,7 @@
                             </ToolTip.Tip>
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <TextBlock
-                                    Text="{Binding ReferenceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                    Text="{Binding ReferenceLabel,FallbackValue=LABEL,Converter={x:Static husk:StringConverters.ToUpper}}" />
                                 <fi:SymbolIcon Symbol="Open" FontSize="12" />
                             </StackPanel>
                         </Button>
@@ -171,7 +170,7 @@
                 </Border>
                 <Border Name="IndicatorBar" Background="Transparent" HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
-                        IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}">
+                        IsVisible="{Binding Gallery,Converter={x:Static husk:CollectionConverters.IsNotEmpty}}">
                     <Border.Transitions>
                         <Transitions>
                             <DoubleTransition Property="Opacity" Easing="SineEaseInOut"

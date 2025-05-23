@@ -5,7 +5,6 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:local="using:Polymerium.App"
     xmlns:m="using:Polymerium.App.Models"
@@ -40,7 +39,7 @@
         <DockPanel x:Name="Main" Grid.Column="0">
             <Panel>
                 <StackPanel VerticalAlignment="Center"
-                            Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}">
+                            Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}">
                     <StackPanel.Transitions>
                         <Transitions>
                             <DoubleTransition
@@ -207,7 +206,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3">
                     <StackPanel VerticalAlignment="Center"
-                                IsVisible="{Binding View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
+                                IsVisible="{Binding View.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                                 Spacing="8">
                         <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"

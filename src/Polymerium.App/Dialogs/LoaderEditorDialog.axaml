@@ -5,7 +5,6 @@
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:local="clr-namespace:Polymerium.App.Dialogs"
-             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              xmlns:m="clr-namespace:Polymerium.App.Models"
              mc:Ignorable="d" d:DesignWidth="460" IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.LoaderEditorDialog">
@@ -22,7 +21,7 @@
                             <Grid ColumnDefinitions="Auto,*">
                                 <Border Grid.Column="0"
                                         Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Left}}">
+                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Left}}">
                                     <Image
                                         Source="{Binding $parent[local:LoaderEditorDialog].Loader.Thumbnail,FallbackValue={x:Null}}"
                                         Height="36" Width="36" Margin="12" />

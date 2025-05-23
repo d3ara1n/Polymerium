@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="using:Polymerium.App.Controls"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                     xmlns:m="clr-namespace:Polymerium.App.Models"
                     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
 
@@ -59,7 +58,7 @@
                         <StackPanel Spacing="4" Margin="12">
                             <Grid ColumnDefinitions="Auto,Auto,*">
                                 <TextBlock Grid.Column="0"
-                                           Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,Mode=OneWay,Converter={x:Static huskc:StringConverters.ToUpper}}"
+                                           Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,Mode=OneWay,Converter={x:Static husk:StringConverters.ToUpper}}"
                                            FontSize="{StaticResource SmallFontSize}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Grid.Column="1" Text="#" FontSize="{StaticResource SmallFontSize}"

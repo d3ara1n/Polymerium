@@ -7,7 +7,6 @@
              xmlns:cp="using:Polymerium.App.Components"
              xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
              xmlns:controls="clr-namespace:Polymerium.App.Controls"
-             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
              xmlns:collections="clr-namespace:System.Collections.Generic;assembly=System.Collections"
@@ -115,7 +114,7 @@
                                         <Panel MinHeight="120">
                                             <StackPanel VerticalAlignment="Center"
                                                         Spacing="8"
-                                                        IsVisible="{Binding $parent[cp:PackageContainer].TagsView.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                                                        IsVisible="{Binding $parent[cp:PackageContainer].TagsView.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
                                                 <icons:PackIconLucide Kind="Tags"
                                                                       Height="{StaticResource ExtraLargeFontSize}"
                                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -245,7 +244,7 @@
         </Grid>
         <Panel Grid.Column="0" Grid.Row="1">
             <StackPanel VerticalAlignment="Center"
-                        IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
+                        IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                         Spacing="8">
                 <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"

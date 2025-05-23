@@ -8,7 +8,6 @@
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
            xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
            xmlns:m="clr-namespace:Polymerium.App.Models"
-           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            xmlns:v="clr-namespace:Polymerium.App.Views"
            xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
@@ -31,7 +30,7 @@
     </husk:Page.Header>
     <Panel>
         <StackPanel VerticalAlignment="Center"
-                    IsVisible="{Binding Accounts.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
+                    IsVisible="{Binding Accounts.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                     Spacing="8">
             <icons:PackIconLucide Kind="Users" Height="{StaticResource ExtraLargeFontSize}"
                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"

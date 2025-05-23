@@ -3,9 +3,9 @@
                     xmlns:controls="clr-namespace:Polymerium.App.Controls"
                     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                     xmlns:m="clr-namespace:Polymerium.App.Models"
-                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                    xmlns:components="clr-namespace:Polymerium.App.Components">
+                    xmlns:components="clr-namespace:Polymerium.App.Components"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme x:Key="{x:Type controls:ExhibitPackageButton}" TargetType="controls:ExhibitPackageButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
@@ -95,7 +95,7 @@
                         </Border>
                         <Border Grid.Row="1" Padding="8"
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}">
+                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
                             <Grid>
                                 <TextBlock Text="{Binding ProjectName}"
                                            FontWeight="{StaticResource ControlStrongFontWeight}" TextAlignment="Center"

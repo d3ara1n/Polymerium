@@ -7,7 +7,6 @@
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   xmlns:cp="using:Polymerium.App.Components"
                   xmlns:m="using:Polymerium.App.Models"
-                  xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:controls="using:Polymerium.App.Controls"
                   xmlns:v="clr-namespace:Polymerium.App.Views"
                   xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
@@ -19,8 +18,8 @@
     <husk:BusyContainer>
         <husk:BusyContainer.IsBusy>
             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                <Binding Path="State" Converter="{x:Static huskc:ObjectConverters.Match}" ConverterParameter="Updating" />
-                <Binding Path="State" Converter="{x:Static huskc:ObjectConverters.Match}"
+                <Binding Path="State" Converter="{x:Static husk:ObjectConverters.Match}" ConverterParameter="Updating" />
+                <Binding Path="State" Converter="{x:Static husk:ObjectConverters.Match}"
                          ConverterParameter="Deploying" />
             </MultiBinding>
         </husk:BusyContainer.IsBusy>
@@ -33,7 +32,7 @@
                         <husk:ProgressRing.IsIndeterminate>
                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
                                 <Binding Path="UpdatingPending" />
-                                <Binding Path="State" Converter="{x:Static huskc:ObjectConverters.Match}"
+                                <Binding Path="State" Converter="{x:Static husk:ObjectConverters.Match}"
                                          ConverterParameter="Deploying" />
                             </MultiBinding>
                         </husk:ProgressRing.IsIndeterminate>
@@ -77,7 +76,7 @@
                                 <Button DockPanel.Dock="Right" Padding="8,4" Command="{Binding EditLoaderCommand}"
                                         Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                         IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
-                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
+                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Right}}">
                                     <icons:PackIconLucide Kind="ArrowRightLeft" Height="{StaticResource LargeFontSize}"
                                                           Width="{StaticResource LargeFontSize}" />
                                 </Button>
@@ -145,7 +144,7 @@
                                                     </ToolTip.Tip>
                                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                                         <TextBlock
-                                                            Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                                            Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static husk:StringConverters.ToUpper}}" />
                                                         <fi:SymbolIcon Symbol="Open" FontSize="12" />
                                                     </StackPanel>
                                                 </HyperlinkButton>

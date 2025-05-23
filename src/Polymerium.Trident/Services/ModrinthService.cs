@@ -1,4 +1,5 @@
-﻿using Trident.Abstractions.Repositories.Resources;
+﻿using Polymerium.Trident.Models.ModrinthApi;
+using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
@@ -28,4 +29,7 @@ public class ModrinthService
             ResourceKind.DataPack => "datapack",
             _ => "unknown"
         };
+
+    public static Task<IReadOnlyList<SearchHit>> SearchAsync(string query, string facets) =>
+        throw new NotImplementedException();
 }
