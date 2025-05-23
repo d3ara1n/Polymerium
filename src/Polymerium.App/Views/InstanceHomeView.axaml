@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:Polymerium.App.Views"
@@ -96,7 +95,7 @@
             Grid.Row="0"
             Grid.Column="2"
             CornerRadius="{StaticResource MediumCornerRadius}"
-            IsBusy="{Binding State, Converter={x:Static huskc:ObjectConverters.Match}, ConverterParameter=Updating}">
+            IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Updating}">
             <husk:Card
                 Background="{StaticResource LayerBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}"
@@ -425,7 +424,7 @@
                                 BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                                 Foreground="{StaticResource ControlDarkForegroundBrush}"
                                 Command="{Binding PlayCommand}"
-                                IsEnabled="{Binding State, Converter={x:Static huskc:ObjectConverters.Match}, ConverterParameter=Idle}"
+                                IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Theme="{StaticResource LaunchButtonTheme}">
                                 <StackPanel VerticalAlignment="Center" Spacing="6">
                                     <fi:SymbolIcon
@@ -441,7 +440,7 @@
                                         Command="{Binding SwitchModeCommand}"
                                         Margin="0,0,8,0"
                                         HorizontalAlignment="Center"
-                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}"
+                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
                                         Padding="12,6">
                                     <TextBlock
                                         Text="{Binding Mode,Converter={x:Static converters:InternalConverters.LocalizedLaunchModeConverter},FallbackValue=Mode}" />

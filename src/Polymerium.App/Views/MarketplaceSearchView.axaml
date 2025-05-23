@@ -10,7 +10,6 @@
            xmlns:m="using:Polymerium.App.Models"
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
            xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
-           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
@@ -173,7 +172,7 @@
                             <Binding Path="Exhibits.IsFetching" Mode="OneWay" Converter="{x:Static BoolConverters.Not}"
                                      FallbackValue="{x:True}" />
                             <Binding Path="Exhibits.Count" Mode="OneWay"
-                                     Converter="{x:Static huskc:NumberConverters.IsZero}"
+                                     Converter="{x:Static husk:NumberConverters.IsZero}"
                                      FallbackValue="{x:True}" />
                         </MultiBinding>
                     </StackPanel.IsVisible>

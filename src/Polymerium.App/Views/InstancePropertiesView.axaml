@@ -7,7 +7,6 @@
                   xmlns:vm="using:Polymerium.App.ViewModels"
                   xmlns:components="using:Polymerium.App.Components"
                   xmlns:fi="using:FluentIcons.Avalonia"
-                  xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -252,7 +251,7 @@
         </husk:Divider>
         <husk:BusyContainer
             Background="Transparent"
-            IsBusy="{Binding State,Converter={x:Static huskc:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
+            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
             <controls:SettingsEntry Icon="Bug" Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
                                     Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">
                 <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />

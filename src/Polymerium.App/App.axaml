@@ -1,10 +1,11 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              x:Class="Polymerium.App.App"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.Styles>
-        <StyleInclude Source="avares://Huskui.Avalonia/Prelude.axaml" />
+        <husk:HuskuiTheme />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />
     </Application.Styles>

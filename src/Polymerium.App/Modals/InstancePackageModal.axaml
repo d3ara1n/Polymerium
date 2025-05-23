@@ -5,7 +5,6 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:m="using:Polymerium.App.Models"
             xmlns:modals="using:Polymerium.App.Modals"
-            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
@@ -46,7 +45,7 @@
                             </ToolTip.Tip>
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <TextBlock
-                                    Text="{Binding Label,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                    Text="{Binding Label,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
                                 <fi:SymbolIcon Symbol="Open" FontSize="12" />
                             </StackPanel>
                         </HyperlinkButton>
@@ -225,7 +224,7 @@
                         CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="1">
                         <Grid RowDefinitions="Auto,*">
                             <Border Grid.Row="0" Background="{StaticResource ControlBackgroundBrush}"
-                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}">
+                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                                 <Grid>
                                     <DockPanel Margin="6">
                                         <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Margin="4,0"
@@ -248,7 +247,7 @@
                             </Border>
                             <Panel Grid.Row="1">
                                 <StackPanel VerticalAlignment="Center"
-                                            IsVisible="{Binding Tags.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
+                                            IsVisible="{Binding Tags.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                                             Spacing="8">
                                     <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -278,7 +277,7 @@
                                                             CommandParameter="{Binding}"
                                                             Theme="{StaticResource GhostButtonTheme}"
                                                             Padding="4,0"
-                                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
+                                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Right}}">
                                                         <fi:SymbolIcon VerticalAlignment="Center"
                                                                        HorizontalAlignment="Right"
                                                                        FontSize="{Binding $parent[Button].FontSize}"

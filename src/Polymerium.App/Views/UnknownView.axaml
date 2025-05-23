@@ -7,7 +7,6 @@
            xmlns:fi="using:FluentIcons.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:v="using:Polymerium.App.Views"
-           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
@@ -265,7 +264,7 @@
                                         <Grid ColumnDefinitions="Auto,0,Auto,0,Auto">
                                             <Button Grid.Column="0" Theme="{StaticResource GhostButtonTheme}"
                                                     Classes="Small"
-                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Left}}">
+                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Left}}">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                                     <fi:SymbolIcon Symbol="Calendar"
                                                                    FontSize="{StaticResource MediumFontSize}" />
@@ -275,7 +274,7 @@
                                             <husk:Divider Grid.Column="2" Margin="0,4" Orientation="Vertical" />
                                             <Button Grid.Column="4" Theme="{StaticResource GhostButtonTheme}"
                                                     Classes="Small"
-                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
+                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Right}}">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                                     <fi:SymbolIcon Symbol="Clock"
                                                                    FontSize="{StaticResource MediumFontSize}" />

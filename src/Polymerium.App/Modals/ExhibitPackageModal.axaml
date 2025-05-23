@@ -5,7 +5,6 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:m="clr-namespace:Polymerium.App.Models"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
@@ -143,7 +142,7 @@
                 CornerRadius="{StaticResource MediumCornerRadius}">
             <Grid RowDefinitions="Auto,*">
                 <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}">
+                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                     <Panel>
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Margin="10" VerticalAlignment="Top">
                             <ToggleButton Grid.Column="0" Classes="Small" BorderThickness="1"
@@ -186,7 +185,7 @@
                                     </ToolTip.Tip>
                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                         <TextBlock
-                                            Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                            Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
                                         <fi:SymbolIcon Symbol="Open" FontSize="12" />
                                     </StackPanel>
                                 </HyperlinkButton>
@@ -195,8 +194,11 @@
                         </StackPanel>
                     </Panel>
                 </Border>
-                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*,Auto" Margin="18" RowSpacing="12">
-                    <ItemsControl Grid.Row="0" ItemsSource="{Binding Tags}">
+                <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" Margin="18" RowSpacing="12">
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding Summary,FallbackValue=Summary}"
+                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Tags}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <husk:Tag Content="{Binding}" FontSize="{StaticResource MediumFontSize}" />
@@ -208,10 +210,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <TextBlock Grid.Row="1"
-                               Text="{Binding Summary,FallbackValue=Summary}"
-                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
-                    <husk:SwitchPresenter Grid.Row="3"
+                    <husk:SwitchPresenter Grid.Row="2"
                                           Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.State,Mode=OneWay,FallbackValue={x:Null}}"
                                           TargetType="m:ExhibitState">
                         <husk:SwitchCase Value="{x:Null}">
@@ -486,7 +485,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
                                 <husk:ConstrainedBox AspectRatio="1.78"
-                                                     IsVisible="{Binding Gallery.Count,Converter={x:Static huskc:NumberConverters.IsNonZero}}">
+                                                     IsVisible="{Binding Gallery.Count,Converter={x:Static husk:NumberConverters.IsNonZero}}">
                                     <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
                                         <Panel>
                                             <Carousel Name="GalleryCarousel" ItemsSource="{Binding Gallery}">
@@ -541,7 +540,7 @@
                             </Border>
                             <Panel Grid.Row="1">
                                 <StackPanel VerticalAlignment="Center"
-                                            IsVisible="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
+                                            IsVisible="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                                             Spacing="8">
                                     <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -568,16 +567,16 @@
                                                                     <MultiBinding
                                                                         Converter="{x:Static BoolConverters.Or}">
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static huskc:ObjectConverters.Match}"
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
                                                                             ConverterParameter="Editable" />
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static huskc:ObjectConverters.Match}"
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
                                                                             ConverterParameter="Locked" />
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static huskc:ObjectConverters.Match}"
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
                                                                             ConverterParameter="Adding" />
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static huskc:ObjectConverters.Match}"
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
                                                                             ConverterParameter="Modifying" />
                                                                     </MultiBinding>
                                                                 </controls:ExhibitDependencyButton.IsChecked>

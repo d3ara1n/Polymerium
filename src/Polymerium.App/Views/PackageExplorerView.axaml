@@ -10,7 +10,6 @@
                      xmlns:m="clr-namespace:Polymerium.App.Models"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:v="clr-namespace:Polymerium.App.Views"
-                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                      xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                      xmlns:converters="clr-namespace:Polymerium.App.Converters"
                      xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
@@ -44,7 +43,7 @@
                     <Panel>
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
                                    HorizontalAlignment="Center" Margin="8"
-                                   IsVisible="{Binding AddingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
+                                   IsVisible="{Binding AddingPackagesView.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=False}" />
                         <ItemsControl ItemsSource="{Binding AddingPackagesView}"
                                       ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
                             <ItemsControl.ItemsPanel>
@@ -62,7 +61,7 @@
                     <Panel>
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
                                    HorizontalAlignment="Center" Margin="8"
-                                   IsVisible="{Binding ModifyingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
+                                   IsVisible="{Binding ModifyingPackagesView.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=False}" />
                         <ItemsControl ItemsSource="{Binding ModifyingPackagesView}"
                                       ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
                             <ItemsControl.ItemsPanel>
@@ -80,7 +79,7 @@
                     <Panel>
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
                                    HorizontalAlignment="Center" Margin="8"
-                                   IsVisible="{Binding RemovingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
+                                   IsVisible="{Binding RemovingPackagesView.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=False}" />
                         <ItemsControl ItemsSource="{Binding RemovingPackagesView}"
                                       ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
                             <ItemsControl.ItemsPanel>
@@ -98,11 +97,11 @@
                     <Button.IsEnabled>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
                             <Binding Path="AddingPackagesView.Count"
-                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
                             <Binding Path="ModifyingPackagesView.Count"
-                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
                             <Binding Path="RemovingPackagesView.Count"
-                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
@@ -115,11 +114,11 @@
                     <Button.IsEnabled>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
                             <Binding Path="AddingPackagesView.Count"
-                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
                             <Binding Path="ModifyingPackagesView.Count"
-                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
                             <Binding Path="RemovingPackagesView.Count"
-                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
@@ -238,7 +237,7 @@
                                  Converter="{x:Static BoolConverters.Not}"
                                  FallbackValue="{x:True}" />
                         <Binding Path="Exhibits.Count" Mode="OneWay"
-                                 Converter="{x:Static huskc:NumberConverters.IsZero}"
+                                 Converter="{x:Static husk:NumberConverters.IsZero}"
                                  FallbackValue="{x:True}" />
                     </MultiBinding>
                 </StackPanel.IsVisible>

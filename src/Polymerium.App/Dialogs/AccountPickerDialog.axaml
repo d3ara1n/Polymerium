@@ -7,12 +7,11 @@
              xmlns:m="clr-namespace:Polymerium.App.Models"
              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" Title="{x:Static lang:Resources.AccountPickerDialog_Title}"
              x:Class="Polymerium.App.Dialogs.AccountPickerDialog" Width="256" IsPrimaryButtonVisible="True">
     <husk:SwitchPresenter
-        Value="{Binding $parent[local:AccountPickerDialog].AccountsSource.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsNonZero},FallbackValue={x:False}}"
+        Value="{Binding $parent[local:AccountPickerDialog].AccountsSource.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsNonZero},FallbackValue={x:False}}"
         TargetType="x:Boolean">
         <husk:SwitchCase Value="{x:False}">
             <StackPanel Spacing="8" VerticalAlignment="Center" Margin="0,24">
