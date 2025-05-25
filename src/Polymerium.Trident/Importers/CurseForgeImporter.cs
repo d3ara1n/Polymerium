@@ -38,7 +38,7 @@ public class CurseForgeImporter : IProfileImporter
 
     #region IProfileImporter Members
 
-    public string IndexFileName { get; } = "manifest.json";
+    public string IndexFileName => "manifest.json";
 
     public async Task<ImportedProfileContainer> ExtractAsync(CompressedProfilePack pack)
     {
@@ -59,8 +59,7 @@ public class CurseForgeImporter : IProfileImporter
                                                                             .Files
                                                                             .Select(x =>
                                                                                  new
-                                                                                     Profile.Rice.
-                                                                                     Entry(PackageHelper
+                                                                                     Profile.Rice.Entry(PackageHelper
                                                                                             .ToPurl(CurseForgeService
                                                                                                     .LABEL,
                                                                                                  null,

@@ -44,6 +44,30 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddModrinth(this IServiceCollection services)
+    {
+        services
+           .AddRefitClient<
+                IModrinthClient>(_ =>
+                                     new RefitSettings(new
+                                                           SystemTextJsonContentSerializer(new
+                                                               JsonSerializerOptions(JsonSerializerDefaults.Web))))
+           .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(ModrinthService.ENDPOINT);
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+            })
+           .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
+
+        services
+           .AddSingleton<ModrinthService>()
+           .AddTransient<IRepository, ModrinthRepository>()
+           .AddTransient<IProfileImporter, ModrinthImporter>();
+
+        return services;
+    }
+
     public static IServiceCollection AddPrismLauncher(this IServiceCollection services)
     {
         services

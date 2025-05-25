@@ -295,7 +295,7 @@
         <value>导入</value>
     </data>
     <data name="PackageExplorerView_PendingLabelText" xml:space="preserve">
-        <value>操作中</value>
+        <value>待处理</value>
     </data>
     <data name="PackageExplorerView_AddLabelText" xml:space="preserve">
         <value>新增</value>
