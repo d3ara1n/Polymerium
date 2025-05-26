@@ -44,6 +44,16 @@ public class CurseForgeService(ICurseForgeClient client)
             _ => null
         };
 
+    public static string? LoaderIdToName(string? loader) =>
+        loader switch
+        {
+            LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+            LoaderHelper.LOADERID_FORGE => "Forge",
+            LoaderHelper.LOADERID_FABRIC => "Fabric",
+            LoaderHelper.LOADERID_QUILT => "Quilt",
+            _ => null
+        };
+
     public static uint? ResourceKindToClassId(ResourceKind? kind) =>
         kind switch
         {

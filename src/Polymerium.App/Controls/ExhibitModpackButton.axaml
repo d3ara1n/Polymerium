@@ -215,11 +215,11 @@
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <TextBlock Grid.Row="1"
-                                   Text="{Binding Summary,FallbackValue=Summmmmmmmmmmmmmmmmmmmmmmmmmary}"
-                                   MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                                   Margin="12,0"
-                                   ToolTip.Tip="{Binding Summary}" />
+                        <Border Grid.Row="1" ToolTip.Tip="{Binding Summary}">
+                            <TextBlock Text="{Binding Summary,FallbackValue=Summmmmmmmmmmmmmmmmmmmmmmmmmary}"
+                                       MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                                       Margin="12,0" />
+                        </Border>
                         <Border Grid.Row="2">
                             <!-- Filling Spare Space -->
                         </Border>

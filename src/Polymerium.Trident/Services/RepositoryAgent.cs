@@ -41,9 +41,16 @@ public class RepositoryAgent
     public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter) =>
         Redirect(label).SearchAsync(query, filter);
 
-    public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter) =>
+    public Task<Package> ResolveAsync(
+        string label,
+        string? ns,
+        string pid,
+        string? vid,
+        Filter filter,
+        bool cacheEnabled = true) =>
         RetrieveCachedAsync($"package:{PackageHelper.Identify(label, ns, pid, vid, filter)}",
-                            () => Redirect(label).ResolveAsync(ns, pid, vid, filter));
+                            () => Redirect(label).ResolveAsync(ns, pid, vid, filter),
+                            cacheEnabled);
 
 
     public Task<Project> QueryAsync(string label, string? ns, string pid) =>
@@ -72,9 +79,9 @@ public class RepositoryAgent
                                 return await client.GetByteArrayAsync(url).ConfigureAwait(false);
                             });
 
-    private async Task<T> RetrieveCachedAsync<T>(string key, Func<Task<T>> factory)
+    private async Task<T> RetrieveCachedAsync<T>(string key, Func<Task<T>> factory, bool cacheEnabled = true)
     {
-        var cachedJson = await _cache.GetStringAsync(key).ConfigureAwait(false);
+        var cachedJson = cacheEnabled ? await _cache.GetStringAsync(key).ConfigureAwait(false) : null;
         if (cachedJson != null)
             try
             {

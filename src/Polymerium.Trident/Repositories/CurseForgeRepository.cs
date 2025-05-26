@@ -92,6 +92,8 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         if (uint.TryParse(pid, out var modId))
             try
             {
+                // 是否具有 Vid 都应该具有相同次数的 IO Call，以避免其中一个具有更好的性能而受到不公平的待遇
+                // 做不到，LatestFiles 居然并不是最新的，CF 估计有缓存而导致数据迟滞（迟大概三四个月）
                 var mod = await service.GetModAsync(modId).ConfigureAwait(false);
                 if (vid is not null)
                 {
@@ -106,14 +108,24 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                 }
 
                 {
-                    var files = await service
+                    // var loaderNick = CurseForgeService.LoaderIdToName(filter.Loader);
+                    // // GameVersion 是游戏版本，GameVersionName 是游戏版本或加载器版本
+                    // // 如果加载器过滤无效或不存在、如果非模组都将短路加载器判断
+                    // // LatestFiles 基本上是各个主流版本或加载器的最新版本集合，命中率较高，除了有些会把版本 1.21.1 标记为 1.21 的模组
+                    // var found = mod.LatestFiles.FirstOrDefault(x => x.SortableGameVersions.Any(y => y.GameVersion
+                    //                                                               == filter.Version)
+                    //                                                  && (loaderNick == null
+                    //                                                   || mod.ClassId != CurseForgeService.CLASSID_MOD
+                    //                                                   || x.SortableGameVersions.Any(y => y.GameVersionName
+                    //                                                                == loaderNick)));
+                    var file = (await service
                                      .GetModFilesAsync(modId,
                                                        filter.Version,
                                                        mod.ClassId == CurseForgeService.CLASSID_MOD
                                                            ? CurseForgeService.LoaderIdToType(filter.Loader)
-                                                           : null)
-                                     .ConfigureAwait(false);
-                    var file = files.Data.FirstOrDefault();
+                                                           : null,
+                                                       count: 1)
+                                     .ConfigureAwait(false)).Data.FirstOrDefault();
                     if (file is not null)
                         return CurseForgeService.ToPackage(mod, file);
 
