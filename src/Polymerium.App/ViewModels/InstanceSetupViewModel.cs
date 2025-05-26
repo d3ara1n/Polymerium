@@ -408,6 +408,7 @@ public partial class InstanceSetupViewModel(
                 Content = Resources
                          .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt.Replace("{0}", "0")
                          .Replace("{1}", packages.Count.ToString()),
+                IsProgressBarVisible = true,
                 IsCloseButtonVisible = false
             };
             notification.Actions.Add(new NotificationAction(Resources
@@ -431,12 +432,13 @@ public partial class InstanceSetupViewModel(
                     if (result.Vid is not null)
                         try
                         {
-                            // 可以引入并发哈哈但，得客户提出需求再引入
+                            // 可以引入并发哈哈，但得客户提出需求再引入
                             var resolved = await dataService.ResolvePackageAsync(result.Label,
                                                result.Namespace,
                                                result.Pid,
                                                null,
-                                               filter);
+                                               filter,
+                                               false);
                             if (resolved.VersionId != result.Vid)
                             {
                                 var package = await dataService.ResolvePackageAsync(result.Label,
@@ -464,6 +466,7 @@ public partial class InstanceSetupViewModel(
 
                 total--;
 
+                notification.Progress = Math.Min(100d, 100d * updates.Count / total);
                 notification.Content = Resources
                                       .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
                                       .Replace("{0}", updates.Count.ToString())

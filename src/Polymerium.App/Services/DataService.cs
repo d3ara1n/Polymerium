@@ -30,9 +30,15 @@ public class DataService(
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
 
-    public ValueTask<Package> ResolvePackageAsync(string label, string? ns, string pid, string? vid, Filter filter) =>
+    public ValueTask<Package> ResolvePackageAsync(
+        string label,
+        string? ns,
+        string pid,
+        string? vid,
+        Filter filter,
+        bool cachedEnabled = true) =>
         GetOrCreate($"package:{PackageHelper.Identify(label, ns, pid, vid, filter)}",
-                    () => agent.ResolveAsync(label, ns, pid, vid, filter));
+                    () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled));
 
     public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
         GetOrCreate($"bitmap:{url.AbsoluteUri}:{widthDesired}",
