@@ -202,12 +202,8 @@ public class CurseForgeService(ICurseForgeClient client)
 
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
-        var types = (await client.GetVersionTypesAsync().ConfigureAwait(false))
-                   .Data.Where(x => x.Status == 1 && x.Name.StartsWith("Minecraft"))
-                   .Select(x => x.Id);
-        var res = await client.GetVersionsAsync().ConfigureAwait(false);
-        var versions = res.Data.Where(x => types.Contains(x.Type)).SelectMany(x => x.Versions).ToList();
-        return versions;
+        var versions = await client.GetMinecraftVersionsAsync().ConfigureAwait(false);
+        return versions.Data.Select(x => x.VersionString).ToList();
     }
 
     public async Task<SearchResponse<ModInfo>> SearchAsync(

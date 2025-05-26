@@ -7,11 +7,8 @@ namespace Polymerium.Trident.Clients;
 
 public interface ICurseForgeClient
 {
-    [Get("/v1/games/{gameId}/versions")]
-    Task<ArrayResponse<GetVersionsResponse>> GetVersionsAsync(uint gameId = CurseForgeService.GAME_ID);
-
-    [Get("/v1/games/{gameId}/version-types")]
-    Task<ArrayResponse<GetVersionTypeResponse>> GetVersionTypesAsync(uint gameId = CurseForgeService.GAME_ID);
+    [Get("/v1/minecraft/version")]
+    Task<ArrayResponse<GameVersion>> GetMinecraftVersionsAsync(bool? sortDescending = null);
 
     [Get("/v1/mods/search")]
     Task<SearchResponse<ModInfo>> SearchModsAsync(

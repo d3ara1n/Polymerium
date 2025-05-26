@@ -51,7 +51,12 @@ public static class ServiceCollectionExtensions
                 IModrinthClient>(_ =>
                                      new RefitSettings(new
                                                            SystemTextJsonContentSerializer(new
-                                                               JsonSerializerOptions(JsonSerializerDefaults.Web))))
+                                                               JsonSerializerOptions(JsonSerializerDefaults
+                                                                  .Web)
+                                                               {
+                                                                   PropertyNamingPolicy = JsonNamingPolicy
+                                                                      .SnakeCaseLower
+                                                               })))
            .ConfigureHttpClient(client =>
             {
                 client.BaseAddress = new Uri(ModrinthService.ENDPOINT);

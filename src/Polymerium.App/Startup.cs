@@ -52,7 +52,7 @@ public static class Startup
         // Trident
         services
            .AddCurseForge()
-            //.AddModrinth()
+           .AddModrinth()
            .AddPrismLauncher()
            .AddMojangLauncher()
            .AddMicrosoft()
