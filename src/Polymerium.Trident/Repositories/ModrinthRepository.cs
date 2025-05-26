@@ -5,14 +5,36 @@ using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Repositories;
 
-public class ModrinthRepository : IRepository
+public class ModrinthRepository(ModrinthService service) : IRepository
 {
     public string Label => ModrinthService.LABEL;
 
-    public Task<RepositoryStatus> CheckStatusAsync() => throw new NotImplementedException();
+    public async Task<RepositoryStatus> CheckStatusAsync()
+    {
+        var loaders = await service.GetLoadersAsync().ConfigureAwait(false);
+        var supportedLoaders = loaders
+                              .Select(x => ModrinthService.MODLOADER_MAPPINGS.GetValueOrDefault(x))
+                              .Where(x => x != null)
+                              .Select(x => x!)
+                              .ToList();
+        var versions = await service.GetGameVersionsAsync().ConfigureAwait(false);
+        return new RepositoryStatus(supportedLoaders,
+                                    versions,
+                                    [
+                                        ResourceKind.Modpack,
+                                        ResourceKind.Mod,
+                                        ResourceKind.ResourcePack,
+                                        ResourceKind.ShaderPack
+                                    ]);
+    }
 
-    public Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter) =>
-        throw new NotImplementedException();
+    public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
+    {
+        return new PaginationHandle<Exhibit>([],
+                                             50,
+                                             0,
+                                             (pageIndex, token) => Task.FromResult(Enumerable.Empty<Exhibit>()));
+    }
 
     public Task<Project> QueryAsync(string? ns, string pid) => throw new NotImplementedException();
 

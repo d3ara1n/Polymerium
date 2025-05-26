@@ -1,14 +1,15 @@
-﻿using Polymerium.Trident.Models.ModrinthApi;
+﻿using Polymerium.Trident.Clients;
+using Polymerium.Trident.Models.ModrinthApi;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
-public class ModrinthService
+public class ModrinthService(IModrinthClient client)
 {
     public const string LABEL = "modrinth";
 
-    public const string ENDPOINT = "https://api.modrinth.com/v2";
+    public const string ENDPOINT = "https://api.modrinth.com";
     private const string PROJECT_URL = "https://modrinth.com/{0}/{1}";
 
     public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
@@ -30,6 +31,18 @@ public class ModrinthService
             _ => "unknown"
         };
 
-    public static Task<IReadOnlyList<SearchHit>> SearchAsync(string query, string facets) =>
+    public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
+    {
+        var versions = await client.GetGameVersionsAsync().ConfigureAwait(false);
+        return versions.Where(x => x.VersionType == "release").Select(x => x.Version).ToList();
+    }
+
+    public async Task<IReadOnlyList<string>> GetLoadersAsync()
+    {
+        var loaders = await client.GetLoadersAsync().ConfigureAwait(false);
+        return loaders.Select(x => x.Name).ToList();
+    }
+
+    public Task<IReadOnlyList<SearchHit>> SearchAsync(string query, string facets) =>
         throw new NotImplementedException();
 }
