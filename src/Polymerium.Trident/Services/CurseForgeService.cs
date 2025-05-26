@@ -2,6 +2,7 @@
 using Polymerium.Trident.Models.CurseForgeApi;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Services;
@@ -79,26 +80,26 @@ public class CurseForgeService(ICurseForgeClient client)
             _ => "unknown"
         };
 
-    public static ReleaseType ToReleaseType(FileModel.FileReleaseType type) =>
+    public static ReleaseType ToReleaseType(FileInfo.FileReleaseType type) =>
         type switch
         {
-            FileModel.FileReleaseType.Alpha => ReleaseType.Alpha,
-            FileModel.FileReleaseType.Beta => ReleaseType.Beta,
-            FileModel.FileReleaseType.Release => ReleaseType.Release,
+            FileInfo.FileReleaseType.Alpha => ReleaseType.Alpha,
+            FileInfo.FileReleaseType.Beta => ReleaseType.Beta,
+            FileInfo.FileReleaseType.Release => ReleaseType.Release,
             _ => ReleaseType.Release
         };
 
-    public static Uri ToDownloadUrl(FileModel file) =>
+    public static Uri ToDownloadUrl(FileInfo file) =>
         file.DownloadUrl
      ?? new
             Uri($"https://edge.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{Uri.EscapeDataString(file.FileName)}");
 
-    public static string? ToSha1(FileModel file) =>
-        file.Hashes.Any(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1)
-            ? file.Hashes.First(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1).Value
+    public static string? ToSha1(FileInfo file) =>
+        file.Hashes.Any(x => x.Algo == FileInfo.FileHash.HashAlgo.Sha1)
+            ? file.Hashes.First(x => x.Algo == FileInfo.FileHash.HashAlgo.Sha1).Value
             : null;
 
-    public static Requirement ToRequirement(FileModel file)
+    public static Requirement ToRequirement(FileInfo file)
     {
         List<string> gameReq = [];
         List<string> loaderReq = [];
@@ -111,36 +112,35 @@ public class CurseForgeService(ICurseForgeClient client)
         return new Requirement(gameReq, loaderReq);
     }
 
-    public static IEnumerable<Dependency> ToDependencies(FileModel file) =>
+    public static IEnumerable<Dependency> ToDependencies(FileInfo file) =>
         file
-           .Dependencies
-           .Where(x => x.RelationType is FileModel.FileDependency.FileRelationType.RequiredDependency
-                                      or FileModel.FileDependency.FileRelationType.OptionalDependency)
+           .Dependencies.Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
+                                                   or FileInfo.FileDependency.FileRelationType.OptionalDependency)
            .Select(x => new Dependency(LABEL,
                                        null,
                                        x.ModId.ToString(),
                                        null,
-                                       x.RelationType == FileModel.FileDependency.FileRelationType.RequiredDependency));
+                                       x.RelationType == FileInfo.FileDependency.FileRelationType.RequiredDependency));
 
 
-    public static Exhibit ToExhibit(ModModel model) =>
+    public static Exhibit ToExhibit(ModInfo mod) =>
         new(LABEL,
             null,
-            model.Id.ToString(),
-            model.Name,
-            model.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo?.ThumbnailUrl,
-            model.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
-            model.Summary,
-            ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
-            model.DownloadCount,
-            model.Categories.Select(x => x.Name).ToList(),
-            model.Links.WebsiteUrl
-         ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(model.ClassId)))),
-            model.DateCreated,
-            model.DateModified);
+            mod.Id.ToString(),
+            mod.Name,
+            mod.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? mod.Logo.Url : mod.Logo?.ThumbnailUrl,
+            mod.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
+            mod.Summary,
+            ClassIdToResourceKind(mod.ClassId) ?? ResourceKind.Unknown,
+            mod.DownloadCount,
+            mod.Categories.Select(x => x.Name).ToList(),
+            mod.Links.WebsiteUrl
+         ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
+            mod.DateCreated,
+            mod.DateModified);
 
 
-    public static Package ToPackage(ModModel mod, FileModel file) =>
+    public static Package ToPackage(ModInfo mod, FileInfo file) =>
         new(LABEL,
             null,
             mod.Id.ToString(),
@@ -162,7 +162,7 @@ public class CurseForgeService(ICurseForgeClient client)
             ToRequirement(file),
             ToDependencies(file));
 
-    public static Version ToVersion(FileModel file) =>
+    public static Version ToVersion(FileInfo file) =>
         new(LABEL,
             null,
             file.ModId.ToString(),
@@ -175,24 +175,24 @@ public class CurseForgeService(ICurseForgeClient client)
             ToDependencies(file));
 
 
-    public static Project ToProject(ModModel model) =>
+    public static Project ToProject(ModInfo info) =>
         new(LABEL,
             null,
-            model.Id.ToString(),
-            model.Name,
-            model.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo?.ThumbnailUrl,
-            model.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
-            model.Summary,
-            model.Links.WebsiteUrl
+            info.Id.ToString(),
+            info.Name,
+            info.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? info.Logo.Url : info.Logo?.ThumbnailUrl,
+            info.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
+            info.Summary,
+            info.Links.WebsiteUrl
          ?? new Uri(PROJECT_URL
-                   .Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(model.ClassId)))
-                   .Replace("{1}", model.Slug)),
-            ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
-            model.Categories.Select(x => x.Name).ToList(),
-            model.DateCreated,
-            model.DateModified,
-            model.DownloadCount,
-            model.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList());
+                   .Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(info.ClassId)))
+                   .Replace("{1}", info.Slug)),
+            ClassIdToResourceKind(info.ClassId) ?? ResourceKind.Unknown,
+            info.Categories.Select(x => x.Name).ToList(),
+            info.DateCreated,
+            info.DateModified,
+            info.DownloadCount,
+            info.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList());
 
     public async Task<string> GetModDescriptionAsync(uint modId) =>
         (await client.GetModDescriptionAsync(modId).ConfigureAwait(false)).Data;
@@ -210,7 +210,7 @@ public class CurseForgeService(ICurseForgeClient client)
         return versions;
     }
 
-    public async Task<SearchResponse<ModModel>> SearchAsync(
+    public async Task<SearchResponse<ModInfo>> SearchAsync(
         string searchFilter,
         uint? classId,
         string? gameVersion,
@@ -221,20 +221,20 @@ public class CurseForgeService(ICurseForgeClient client)
              .SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize)
              .ConfigureAwait(false);
 
-    public async Task<ModModel> GetModAsync(uint modId)
+    public async Task<ModInfo> GetModAsync(uint modId)
     {
         var rv = await client.GetModAsync(modId).ConfigureAwait(false);
         return rv.Data;
     }
 
 
-    public async Task<FileModel> GetModFileAsync(uint modId, uint fileId)
+    public async Task<FileInfo> GetModFileAsync(uint modId, uint fileId)
     {
         var rv = await client.GetModFileAsync(modId, fileId).ConfigureAwait(false);
         return rv.Data;
     }
 
-    public async Task<ArrayResponse<FileModel>> GetModFilesAsync(
+    public async Task<ArrayResponse<FileInfo>> GetModFilesAsync(
         uint modId,
         string? gameVersion,
         ModLoaderTypeModel? modLoader,

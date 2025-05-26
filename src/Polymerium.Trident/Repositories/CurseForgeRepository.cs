@@ -97,7 +97,8 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                 {
                     if (uint.TryParse(vid, out var fileId))
                     {
-                        var file = await service.GetModFileAsync(modId, fileId).ConfigureAwait(false);
+                        var found = mod.LatestFiles.FirstOrDefault(x => x.Id == fileId);
+                        var file = found ?? await service.GetModFileAsync(modId, fileId).ConfigureAwait(false);
                         return CurseForgeService.ToPackage(mod, file);
                     }
 

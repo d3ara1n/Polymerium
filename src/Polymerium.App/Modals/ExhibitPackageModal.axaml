@@ -524,7 +524,7 @@
                                            VerticalAlignment="Center" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock
-                                        Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Mode=OneWay,FallbackValue=0}" />
+                                        Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Mode=OneWay,FallbackValue=N/A}" />
                                 </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
