@@ -1,15 +1,15 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record FileModel(
+public record FileInfo(
     uint Id,
     uint GameId,
     uint ModId,
     bool IsAvailable,
     string DisplayName,
     string FileName,
-    FileModel.FileReleaseType ReleaseType,
-    FileModel.FileStatusStatus FileStatus,
-    IReadOnlyList<FileModel.FileHash> Hashes,
+    FileInfo.FileReleaseType ReleaseType,
+    FileInfo.FileStatusStatus FileStatus,
+    IReadOnlyList<FileInfo.FileHash> Hashes,
     DateTimeOffset FileDate,
     ulong FileLength,
     ulong DownloadCount,
@@ -17,7 +17,7 @@ public record FileModel(
     Uri? DownloadUrl,
     IReadOnlyList<string> GameVersions,
     IReadOnlyList<SortableGameVersionModel> SortableGameVersions,
-    IReadOnlyList<FileModel.FileDependency> Dependencies,
+    IReadOnlyList<FileInfo.FileDependency> Dependencies,
     bool? ExposeAsAlternative,
     uint? ParentProjectFileId,
     uint? AlternativeFileId,
@@ -26,7 +26,7 @@ public record FileModel(
     bool? IsEarlyAccessContent,
     DateTimeOffset? EarlyAccessEndDate,
     ulong FileFingerprint,
-    IReadOnlyList<FileModel.FileModule> Modules)
+    IReadOnlyList<FileInfo.FileModule> Modules)
 {
     #region FileReleaseType enum
 

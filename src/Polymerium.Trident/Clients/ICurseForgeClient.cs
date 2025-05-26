@@ -1,6 +1,7 @@
 ﻿using Polymerium.Trident.Models.CurseForgeApi;
 using Polymerium.Trident.Services;
 using Refit;
+using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;
 
 namespace Polymerium.Trident.Clients;
 
@@ -13,7 +14,7 @@ public interface ICurseForgeClient
     Task<ArrayResponse<GetVersionTypeResponse>> GetVersionTypesAsync(uint gameId = CurseForgeService.GAME_ID);
 
     [Get("/v1/mods/search")]
-    Task<SearchResponse<ModModel>> SearchModsAsync(
+    Task<SearchResponse<ModInfo>> SearchModsAsync(
         string searchFilter,
         uint? classId,
         string? gameVersion,
@@ -24,13 +25,13 @@ public interface ICurseForgeClient
         uint gameId = CurseForgeService.GAME_ID);
 
     [Get("/v1/mods/{modId}")]
-    Task<ObjectResponse<ModModel>> GetModAsync(uint modId);
+    Task<ObjectResponse<ModInfo>> GetModAsync(uint modId);
 
     [Get("/v1/mods/{modId}/files/{fileId}")]
-    Task<ObjectResponse<FileModel>> GetModFileAsync(uint modId, uint fileId);
+    Task<ObjectResponse<FileInfo>> GetModFileAsync(uint modId, uint fileId);
 
     [Get("/v1/mods/{modId}/files")]
-    Task<ArrayResponse<FileModel>> GetModFilesAsync(
+    Task<ArrayResponse<FileInfo>> GetModFilesAsync(
         uint modId,
         string? gameVersion,
         ModLoaderTypeModel? modLoaderType,

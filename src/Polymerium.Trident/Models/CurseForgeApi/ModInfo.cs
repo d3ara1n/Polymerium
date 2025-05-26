@@ -1,24 +1,31 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record ModModel(
+public record ModInfo(
     uint Id,
     uint GameId,
     string Name,
     string Slug,
-    ModModel.ModLinks Links,
+    ModInfo.ModLinks Links,
     string Summary,
-    ModModel.ModStatus Status,
+    ModInfo.ModStatus Status,
     ulong DownloadCount,
     bool IsFeatured,
     uint PrimaryCategoryId,
     IReadOnlyList<CategoryModel> Categories,
     uint? ClassId,
-    IReadOnlyList<ModModel.ModAuthor> Authors,
-    ModModel.ModAsset? Logo,
-    IReadOnlyList<ModModel.ModAsset> Screenshots,
+    IReadOnlyList<ModInfo.ModAuthor> Authors,
+    ModInfo.ModAsset? Logo,
+    IReadOnlyList<ModInfo.ModAsset> Screenshots,
     uint MainFileId,
+    IReadOnlyList<FileInfo> LatestFiles,
+    DateTimeOffset DateCreated,
     DateTimeOffset DateModified,
-    DateTimeOffset DateCreated)
+    DateTimeOffset DateReleased,
+    bool? AllowModDistribution,
+    uint GamePopularityRank,
+    bool IsAvailable,
+    uint ThumbUpCount,
+    float? Rating)
 {
     #region ModStatus enum
 
