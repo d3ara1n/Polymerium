@@ -13,6 +13,11 @@ public partial class MainWindow : AppWindow
     public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
         AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
 
+    public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
+        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
+                                                          o => o.IsTitleBarVisible,
+                                                          (o, v) => o.IsTitleBarVisible = v);
+
     public MainWindow()
     {
         Instance = this;
@@ -24,11 +29,6 @@ public partial class MainWindow : AppWindow
         get => GetValue(IsLeftPanelModeProperty);
         set => SetValue(IsLeftPanelModeProperty, value);
     }
-
-    public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
-                                                          o => o.IsTitleBarVisible,
-                                                          (o, v) => o.IsTitleBarVisible = v);
 
     public bool IsTitleBarVisible
     {

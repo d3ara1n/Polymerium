@@ -136,7 +136,7 @@ public partial class SettingsViewModel : ViewModelBase
     }
 
     #endregion
-    
+
     #region Language
 
     public LanguageModel[] Languages { get; } = [new("en-us", "Chinglish"), new("zh-Hans", "中国人")];

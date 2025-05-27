@@ -122,7 +122,7 @@ public class CurseForgeService(ICurseForgeClient client)
         return new Requirement(gameReq, loaderReq);
     }
 
-    public static IEnumerable<Dependency> ToDependencies(FileInfo file) =>
+    public static IReadOnlyList<Dependency> ToDependencies(FileInfo file) =>
         file
            .Dependencies.Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
                                                    or FileInfo.FileDependency.FileRelationType.OptionalDependency)
@@ -130,7 +130,8 @@ public class CurseForgeService(ICurseForgeClient client)
                                        null,
                                        x.ModId.ToString(),
                                        null,
-                                       x.RelationType == FileInfo.FileDependency.FileRelationType.RequiredDependency));
+                                       x.RelationType == FileInfo.FileDependency.FileRelationType.RequiredDependency))
+           .ToList();
 
 
     public static Exhibit ToExhibit(ModInfo mod) =>
@@ -222,7 +223,7 @@ public class CurseForgeService(ICurseForgeClient client)
         string? gameVersion,
         ModLoaderTypeModel? modLoader,
         uint index = 0,
-        uint pageSize = 20) =>
+        uint pageSize = 50) =>
         client.SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize);
 
     public async Task<ModInfo> GetModAsync(uint modId)
@@ -243,9 +244,9 @@ public class CurseForgeService(ICurseForgeClient client)
         string? gameVersion,
         ModLoaderTypeModel? modLoader,
         uint index = 0,
-        uint count = 50)
+        uint pageSize = 50)
     {
-        var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, index, count).ConfigureAwait(false);
+        var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, index, pageSize).ConfigureAwait(false);
         return rv;
     }
 }
