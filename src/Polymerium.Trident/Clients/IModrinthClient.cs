@@ -11,6 +11,9 @@ public interface IModrinthClient
     [Get("/v3/tag/loader")]
     Task<IReadOnlyList<ModLoader>> GetLoadersAsync();
 
+    [Get("/v2/tag/project_type")]
+    Task<IReadOnlyList<string>> GetProjectTypesAsync();
+
     [Get("/v2/search")]
     Task<SearchResponse<SearchHit>> SearchAsync(
         string query,
@@ -22,15 +25,17 @@ public interface IModrinthClient
     [Get("/v3/project/{projectId}")]
     Task<ProjectInfo> GetProjectAsync(string projectId);
 
+    [Get("/v3/version/{versionId}")]
+    Task<VersionInfo> GetVersionAsync(string versionId);
+
     [Get("/v3/team/{teamId}/members")]
     Task<IReadOnlyList<MemberInfo>> GetTeamMembersAsync(string teamId);
 
     [Get("/v3/project/{projectId}/version")]
     Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
         string projectId,
-        IEnumerable<string>? loaders = null,
-        IEnumerable<string>? gameVersions = null,
-        bool? featured = null,
+        string? loaders = null,
+        string? gameVersions = null,
         uint? offset = 0,
         uint? limit = 10);
 }

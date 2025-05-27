@@ -1,5 +1,6 @@
 ﻿using Polymerium.Trident.Clients;
 using Polymerium.Trident.Models.ModrinthApi;
+using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -140,6 +141,34 @@ public class ModrinthService(IModrinthClient client)
                            project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url)).ToList());
     }
 
+    public static Package ToPackage(ProjectInfo project, VersionInfo version, MemberInfo? member)
+    {
+        var extracted = project.ProjectTypes.FirstOrDefault();
+        var kind = ProjectTypeToKind(extracted) ?? ResourceKind.Unknown;
+        var file = version.Files.FirstOrDefault(x => x.Primary)
+                ?? version.Files.FirstOrDefault()
+                ?? throw new ResourceNotFoundException($"{project.Id}/{version.Id} has no file available");
+        return new Package(LABEL,
+                           null,
+                           project.Id,
+                           version.Id,
+                           project.Name,
+                           version.VersionNumber,
+                           project.IconUrl,
+                           member?.User.Name ?? member?.User.Username ?? project.TeamId,
+                           project.Summary,
+                           new Uri(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                           kind,
+                           VersionTypeToReleaseType(version.VersionType),
+                           version.DatePublished,
+                           file.Url,
+                           file.Size,
+                           file.Filename,
+                           file.Hashes.Sha1,
+                           ToRequirement(version),
+                           ToDependencies(version));
+    }
+
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
         var versions = await client.GetGameVersionsAsync().ConfigureAwait(false);
@@ -151,6 +180,8 @@ public class ModrinthService(IModrinthClient client)
         var loaders = await client.GetLoadersAsync().ConfigureAwait(false);
         return loaders.Select(x => x.Name).ToList();
     }
+
+    public Task<IReadOnlyList<string>> GetProjectTypesAsync() => client.GetProjectTypesAsync();
 
     public Task<SearchResponse<SearchHit>> SearchAsync(
         string query,
@@ -177,6 +208,8 @@ public class ModrinthService(IModrinthClient client)
 
     public Task<ProjectInfo> GetProjectAsync(string projectId) => client.GetProjectAsync(projectId);
 
+    public Task<VersionInfo> GetVersionAsync(string versionId) => client.GetVersionAsync(versionId);
+
     public Task<IReadOnlyList<MemberInfo>> GetTeamMembersAsync(string teamId) => client.GetTeamMembersAsync(teamId);
 
     public Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
@@ -186,8 +219,8 @@ public class ModrinthService(IModrinthClient client)
         uint offset = 0,
         uint limit = 10) =>
         client.GetProjectVersionsAsync(projectId,
-                                       modLoader is not null ? [modLoader] : null,
-                                       gameVersion is not null ? [gameVersion] : null,
+                                       modLoader is not null ? $"[\"{modLoader}\"]" : null,
+                                       gameVersion is not null ? $"[\"{gameVersion}\"]" : null,
                                        offset: offset,
                                        limit: limit);
 }

@@ -148,6 +148,7 @@ Polymerium 没有遥测。
 - CurseForge Api 用空串代表 null，🐂🍺
 - 这游戏的模组依赖仅供参考，不可解析，毕竟有模组的依赖是两个互相冲突的模组
 - ATM 10 的 import/mods 里塞了和元数据冲突的模组
+- Modrinth Api 中除了搜索其他接口的过滤都在分页后面，导致两个不能一起用，只能本地分页（纯为性能服务了，🚀Blazing fast✨）
 
 <!-- LICENSE -->
 

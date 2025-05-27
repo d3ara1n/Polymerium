@@ -65,6 +65,10 @@ public class DataService(
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () =>
                     {
+                        // DataService 一半都是前端调用
+                        // 真的需要拉取全部版本的情况下只有需要版本匹配的时候都会再次级进行处理
+                        // 此处进行限制避免遇到版本过多
+                        const int LIMIT = 20;
                         var handle = await agent.InspectAsync(label, ns, pid, filter);
                         var rv = new List<Version>();
                         int lastCount;
@@ -75,7 +79,7 @@ public class DataService(
                             handle.PageIndex = index;
                             rv.AddRange(await handle.FetchAsync(CancellationToken.None));
                             index++;
-                        } while (rv.Count != lastCount);
+                        } while (rv.Count != lastCount && rv.Count < LIMIT);
 
                         return rv.AsEnumerable();
                     });

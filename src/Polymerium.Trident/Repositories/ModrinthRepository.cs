@@ -1,4 +1,6 @@
-﻿using Polymerium.Trident.Services;
+﻿using System.Net;
+using Polymerium.Trident.Services;
+using Refit;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -12,21 +14,22 @@ public class ModrinthRepository(ModrinthService service) : IRepository
 
     public async Task<RepositoryStatus> CheckStatusAsync()
     {
-        var loaders = await service.GetLoadersAsync().ConfigureAwait(false);
+        var (loadersTask, versionsTask, typesTask) = (service.GetLoadersAsync(), service.GetGameVersionsAsync(),
+                                                      service.GetProjectTypesAsync());
+        var (loaders, versions, types) = (await loadersTask.ConfigureAwait(false),
+                                          await versionsTask.ConfigureAwait(false),
+                                          await typesTask.ConfigureAwait(false));
         var supportedLoaders = loaders
                               .Select(x => ModrinthService.MODLOADER_MAPPINGS.GetValueOrDefault(x))
                               .Where(x => x != null)
                               .Select(x => x!)
                               .ToList();
-        var versions = await service.GetGameVersionsAsync().ConfigureAwait(false);
-        return new RepositoryStatus(supportedLoaders,
-                                    versions,
-                                    [
-                                        ResourceKind.Modpack,
-                                        ResourceKind.Mod,
-                                        ResourceKind.ResourcePack,
-                                        ResourceKind.ShaderPack
-                                    ]);
+        var supportedKinds = types
+                            .Select(ModrinthService.ProjectTypeToKind)
+                            .Where(x => x != null)
+                            .Select(x => x!.Value)
+                            .ToList();
+        return new RepositoryStatus(supportedLoaders, versions, supportedKinds);
     }
 
     public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
@@ -69,8 +72,39 @@ public class ModrinthRepository(ModrinthService service) : IRepository
     public Task<IEnumerable<Project>> QueryBatchAsync(IEnumerable<(string?, string pid)> batch) =>
         throw new NotImplementedException();
 
-    public Task<Package> ResolveAsync(string? ns, string pid, string? vid, Filter filter) =>
-        throw new NotImplementedException();
+    public async Task<Package> ResolveAsync(string? ns, string pid, string? vid, Filter filter)
+    {
+        try
+        {
+            var project = await service.GetProjectAsync(pid).ConfigureAwait(false);
+            if (vid != null)
+            {
+                var (versionTask, membersTask) = (service.GetVersionAsync(vid).ConfigureAwait(false),
+                                                  service.GetTeamMembersAsync(project.TeamId).ConfigureAwait(false));
+                var (version, members) = (await versionTask, await membersTask);
+                return ModrinthService.ToPackage(project, version, members.FirstOrDefault());
+            }
+            else
+            {
+                var (versionTask, membersTask) =
+                    (service.GetProjectVersionsAsync(pid, filter.Version, ModrinthService.LoaderIdToName(filter.Loader), limit: 1).ConfigureAwait(false),
+                     service.GetTeamMembersAsync(project.TeamId).ConfigureAwait(false));
+                var (version, members) = (await versionTask, await membersTask);
+                return ModrinthService.ToPackage(project,
+                                                 version.FirstOrDefault()
+                                              ?? throw new
+                                                     ResourceNotFoundException($"{pid}/{vid ?? "*"} has no version found"),
+                                                 members.FirstOrDefault());
+            }
+        }
+        catch (ApiException ex)
+        {
+            if (ex.StatusCode == HttpStatusCode.NotFound)
+                throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} not found in the repository");
+
+            throw;
+        }
+    }
 
     public async Task<string> ReadDescriptionAsync(string? ns, string pid)
     {
@@ -78,7 +112,11 @@ public class ModrinthRepository(ModrinthService service) : IRepository
         return project.Description;
     }
 
-    public Task<string> ReadChangelogAsync(string? ns, string pid, string vid) => throw new NotImplementedException();
+    public async Task<string> ReadChangelogAsync(string? ns, string pid, string vid)
+    {
+        var version = await service.GetVersionAsync(vid).ConfigureAwait(false);
+        return version.Changelog ?? string.Empty;
+    }
 
     public async Task<IPaginationHandle<Version>> InspectAsync(string? ns, string pid, Filter filter)
     {
