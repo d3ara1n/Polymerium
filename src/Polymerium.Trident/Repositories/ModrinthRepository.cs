@@ -30,10 +30,27 @@ public class ModrinthRepository(ModrinthService service) : IRepository
 
     public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
     {
-        return new PaginationHandle<Exhibit>([],
-                                             50,
-                                             0,
-                                             (pageIndex, token) => Task.FromResult(Enumerable.Empty<Exhibit>()));
+        var loader = filter.Kind is ResourceKind.Mod ? ModrinthService.LoaderIdToName(filter.Loader) : null;
+        var first = await service
+                         .SearchAsync(query, ModrinthService.ResourceKindToType(filter.Kind), filter.Version, loader)
+                         .ConfigureAwait(false);
+        var initial = first.Hits.Select(ModrinthService.ToExhibit);
+        return new PaginationHandle<Exhibit>(initial,
+                                             first.Limit,
+                                             first.TotalHits,
+                                             async (pageIndex, _) =>
+                                             {
+                                                 var rv = await service
+                                                               .SearchAsync(query,
+                                                                            ModrinthService
+                                                                               .ResourceKindToType(filter.Kind),
+                                                                            filter.Version,
+                                                                            loader,
+                                                                            pageIndex * first.Limit)
+                                                               .ConfigureAwait(false);
+                                                 var exhibits = rv.Hits.Select(ModrinthService.ToExhibit).ToList();
+                                                 return exhibits;
+                                             });
     }
 
     public Task<Project> QueryAsync(string? ns, string pid) => throw new NotImplementedException();
