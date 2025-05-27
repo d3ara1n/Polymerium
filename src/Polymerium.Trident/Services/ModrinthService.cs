@@ -2,6 +2,7 @@
 using Polymerium.Trident.Models.ModrinthApi;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Services;
 
@@ -12,11 +13,11 @@ public class ModrinthService(IModrinthClient client)
     public const string ENDPOINT = "https://api.modrinth.com";
     private const string PROJECT_URL = "https://modrinth.com/{0}/{1}";
 
-    private const string RESOURCENAME_MODPACK = "modpack";
-    private const string RESOURCENAME_MOD = "mod";
-    private const string RESOURCENAME_RESOURCEPACK = "resourcepack";
-    private const string RESOURCENAME_SHADERPACK = "shader";
-    private const string RESOURCENAME_DATAPACK = "datapack";
+    public const string RESOURCENAME_MODPACK = "modpack";
+    public const string RESOURCENAME_MOD = "mod";
+    public const string RESOURCENAME_RESOURCEPACK = "resourcepack";
+    public const string RESOURCENAME_SHADERPACK = "shader";
+    public const string RESOURCENAME_DATAPACK = "datapack";
 
     public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
     {
@@ -69,6 +70,29 @@ public class ModrinthService(IModrinthClient client)
             _ => null
         };
 
+    public static ReleaseType VersionTypeToReleaseType(string type) =>
+        type switch
+        {
+            "release" => ReleaseType.Release,
+            "beta" => ReleaseType.Beta,
+            "alpha" => ReleaseType.Alpha,
+            _ => ReleaseType.Release
+        };
+
+    public static Requirement ToRequirement(VersionInfo version) =>
+        new(version.GameVersions,
+            version
+               .Loaders.Select(x => MODLOADER_MAPPINGS.GetValueOrDefault(x))
+               .Where(x => !string.IsNullOrEmpty(x))
+               .Select(x => x!)
+               .ToList());
+
+    public static IReadOnlyList<Dependency> ToDependencies(VersionInfo version) =>
+        version
+           .Dependencies
+           .Select(x => new Dependency(LABEL, null, x.ProjectId, x.VersionId, x.DependencyType != "optional"))
+           .ToList();
+
     public static Exhibit ToExhibit(SearchHit hit) =>
         new(LABEL,
             null,
@@ -83,6 +107,38 @@ public class ModrinthService(IModrinthClient client)
             new Uri(PROJECT_URL.Replace("{0}", hit.ProjectType).Replace("{1}", hit.Slug)),
             hit.DateCreated,
             hit.DateModified);
+
+    public static Version ToVersion(VersionInfo version) =>
+        new(LABEL,
+            null,
+            version.ProjectId,
+            version.Id,
+            version.VersionNumber,
+            VersionTypeToReleaseType(version.VersionType),
+            version.DatePublished,
+            version.Downloads,
+            ToRequirement(version),
+            ToDependencies(version));
+
+    public static Project ToProject(ProjectInfo project, MemberInfo? member)
+    {
+        var extracted = project.ProjectTypes.FirstOrDefault();
+        var kind = ProjectTypeToKind(extracted) ?? ResourceKind.Unknown;
+        return new Project(LABEL,
+                           null,
+                           project.Id,
+                           project.Name,
+                           project.IconUrl,
+                           member?.User.Name ?? member?.User.Username ?? project.TeamId,
+                           project.Summary,
+                           new Uri(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                           kind,
+                           project.Categories,
+                           project.Published,
+                           project.Updated,
+                           project.Downloads,
+                           project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url)).ToList());
+    }
 
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
@@ -102,7 +158,7 @@ public class ModrinthService(IModrinthClient client)
         string? gameVersion = null,
         string? modLoader = null,
         uint offset = 0,
-        uint limit = 20)
+        uint limit = 10)
     {
         var facets = new List<KeyValuePair<string, string>>();
         if (gameVersion != null)
@@ -118,4 +174,20 @@ public class ModrinthService(IModrinthClient client)
                                   offset: offset,
                                   limit: limit);
     }
+
+    public Task<ProjectInfo> GetProjectAsync(string projectId) => client.GetProjectAsync(projectId);
+
+    public Task<IReadOnlyList<MemberInfo>> GetTeamMembersAsync(string teamId) => client.GetTeamMembersAsync(teamId);
+
+    public Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
+        string projectId,
+        string? gameVersion,
+        string? modLoader,
+        uint offset = 0,
+        uint limit = 10) =>
+        client.GetProjectVersionsAsync(projectId,
+                                       modLoader is not null ? [modLoader] : null,
+                                       gameVersion is not null ? [gameVersion] : null,
+                                       offset: offset,
+                                       limit: limit);
 }
