@@ -21,7 +21,7 @@ public record VersionInfo(
     int? Ordering,
     bool Singleplayer,
     bool ClientAndServer,
-    IReadOnlyList<string> MrpackLoaders,
+    IReadOnlyList<string>? MrpackLoaders,
     bool ServerOnly,
     IReadOnlyList<string> GameVersions,
     bool ClientOnly)
