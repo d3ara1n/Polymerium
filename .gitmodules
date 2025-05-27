@@ -1,0 +1,3 @@
+[submodule "submodules/Huskui.Avalonia"]
+	path = submodules/Huskui.Avalonia
+	url = git@github.com:d3ara1n/Huskui.Avalonia
