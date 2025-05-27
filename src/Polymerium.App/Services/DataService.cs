@@ -38,7 +38,8 @@ public class DataService(
         Filter filter,
         bool cachedEnabled = true) =>
         GetOrCreate($"package:{PackageHelper.Identify(label, ns, pid, vid, filter)}",
-                    () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled));
+                    () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled),
+                    cachedEnabled);
 
     public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
         GetOrCreate($"bitmap:{url.AbsoluteUri}:{widthDesired}",
@@ -103,22 +104,15 @@ public class DataService(
         GetOrCreate($"repository:{label}:status", () => agent.CheckStatusAsync(label));
 
 
-    private ValueTask<T> GetOrCreate<T>(string key, Func<Task<T>> factory) =>
-        cache.GetOrCreate(key,
-                          entry =>
-                          {
-                              entry.SetSlidingExpiration(EXPIRED_IN);
-                              return new ValueTask<T>(Task.Run(async () =>
-                              {
-                                  try
-                                  {
-                                      return await factory();
-                                  }
-                                  catch
-                                  {
-                                      entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
-                                      throw;
-                                  }
-                              }));
-                          });
+    private ValueTask<T> GetOrCreate<T>(string key, Func<Task<T>> factory, bool cachedEnabled = true)
+    {
+        if (cachedEnabled
+         && cache.TryGetValue(key, out var cached)
+         && cached is ValueTask<T> { IsCompletedSuccessfully: true } task)
+            return task;
+
+        var rv = new ValueTask<T>(Task.Run(factory));
+        cache.Set(key, rv, EXPIRED_IN);
+        return rv;
+    }
 }

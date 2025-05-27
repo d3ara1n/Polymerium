@@ -20,5 +20,17 @@ public interface IModrinthClient
         uint limit = 10);
 
     [Get("/v3/project/{projectId}")]
-    Task GetProjectAsync(string projectId);
+    Task<ProjectInfo> GetProjectAsync(string projectId);
+
+    [Get("/v3/team/{teamId}/members")]
+    Task<IReadOnlyList<MemberInfo>> GetTeamMembersAsync(string teamId);
+
+    [Get("/v3/project/{projectId}/version")]
+    Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
+        string projectId,
+        IEnumerable<string>? loaders = null,
+        IEnumerable<string>? gameVersions = null,
+        bool? featured = null,
+        uint? offset = 0,
+        uint? limit = 10);
 }
