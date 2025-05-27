@@ -12,7 +12,7 @@ public record SearchHit(
     IReadOnlyList<string> Versions,
     uint Downloads,
     uint Follows,
-    Uri IconUrl,
+    Uri? IconUrl,
     DateTimeOffset DateCreated,
     DateTimeOffset DateModified,
     string LatestVersion,
@@ -20,5 +20,5 @@ public record SearchHit(
     string ClientSide,
     string ServerSide,
     IReadOnlyList<Uri> Gallery,
-    Uri FeaturedGallery,
+    Uri? FeaturedGallery,
     long? Color);

@@ -11,6 +11,7 @@ namespace Polymerium.Trident.Repositories;
 
 public class CurseForgeRepository(CurseForgeService service) : IRepository
 {
+    private const uint PAGE_SIZE = 20;
     private static readonly Converter CONVERTER = new(new Config { GithubFlavored = false, SmartHrefHandling = true });
 
 
@@ -43,7 +44,8 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                          .SearchAsync(query,
                                       CurseForgeService.ResourceKindToClassId(filter.Kind),
                                       filter.Version,
-                                      loader)
+                                      loader,
+                                      pageSize: PAGE_SIZE)
                          .ConfigureAwait(false);
         var initial = first.Data.Select(CurseForgeService.ToExhibit);
         return new PaginationHandle<Exhibit>(initial,
@@ -57,7 +59,8 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                                                .ResourceKindToClassId(filter.Kind),
                                                                             filter.Version,
                                                                             loader,
-                                                                            pageIndex * first.Pagination.PageSize)
+                                                                            pageIndex * first.Pagination.PageSize,
+                                                                            first.Pagination.PageSize)
                                                                .ConfigureAwait(false);
                                                  var exhibits = rv.Data.Select(CurseForgeService.ToExhibit).ToList();
                                                  return exhibits;
@@ -124,7 +127,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                        mod.ClassId == CurseForgeService.CLASSID_MOD
                                                            ? CurseForgeService.LoaderIdToType(filter.Loader)
                                                            : null,
-                                                       count: 1)
+                                                       pageSize: 1)
                                      .ConfigureAwait(false)).Data.FirstOrDefault();
                     if (file is not null)
                         return CurseForgeService.ToPackage(mod, file);
@@ -189,7 +192,9 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
             var loader = mod.ClassId == CurseForgeService.CLASSID_MOD
                              ? CurseForgeService.LoaderIdToType(filter.Loader)
                              : null;
-            var first = await service.GetModFilesAsync(modId, filter.Version, loader).ConfigureAwait(false);
+            var first = await service
+                             .GetModFilesAsync(modId, filter.Version, loader, pageSize: PAGE_SIZE)
+                             .ConfigureAwait(false);
             var initial = first.Data.Select(CurseForgeService.ToVersion);
             return new PaginationHandle<Version>(initial,
                                                  first.Pagination.PageSize,
@@ -200,7 +205,8 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                                    .GetModFilesAsync(modId,
                                                                         filter.Version,
                                                                         loader,
-                                                                        pageIndex * first.Pagination.PageSize)
+                                                                        pageIndex * first.Pagination.PageSize,
+                                                                        first.Pagination.PageSize)
                                                                    .ConfigureAwait(false);
                                                      return rv.Data.Select(CurseForgeService.ToVersion);
                                                  });
