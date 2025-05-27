@@ -216,16 +216,14 @@ public class CurseForgeService(ICurseForgeClient client)
         return versions.Data.Select(x => x.VersionString).ToList();
     }
 
-    public async Task<SearchResponse<ModInfo>> SearchAsync(
+    public Task<SearchResponse<ModInfo>> SearchAsync(
         string searchFilter,
         uint? classId,
         string? gameVersion,
         ModLoaderTypeModel? modLoader,
         uint index = 0,
-        uint pageSize = 50) =>
-        await client
-             .SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize)
-             .ConfigureAwait(false);
+        uint pageSize = 20) =>
+        client.SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize);
 
     public async Task<ModInfo> GetModAsync(uint modId)
     {

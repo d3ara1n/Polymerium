@@ -12,6 +12,7 @@ public record SearchHit(
     IReadOnlyList<string> Versions,
     uint Downloads,
     uint Follows,
+    Uri IconUrl,
     DateTimeOffset DateCreated,
     DateTimeOffset DateModified,
     string LatestVersion,

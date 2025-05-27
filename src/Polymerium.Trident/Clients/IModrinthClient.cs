@@ -11,8 +11,13 @@ public interface IModrinthClient
     [Get("/v3/tag/loader")]
     Task<IReadOnlyList<ModLoader>> GetLoadersAsync();
 
-    [Get("/v3/search")]
-    Task<IReadOnlyList<SearchHit>> SearchAsync(string query, string facets);
+    [Get("/v2/search")]
+    Task<SearchResponse<SearchHit>> SearchAsync(
+        string query,
+        string facets,
+        string? index = null,
+        uint offset = 0,
+        uint limit = 10);
 
     [Get("/v3/project/{projectId}")]
     Task GetProjectAsync(string projectId);
