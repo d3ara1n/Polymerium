@@ -1014,4 +1014,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>World</value>
     </data>
+    <data name="PackageContainer_StatusLabelText" xml:space="preserve">
+        <value>Status</value>
+    </data>
 </root>

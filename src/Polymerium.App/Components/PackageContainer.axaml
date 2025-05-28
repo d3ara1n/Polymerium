@@ -35,7 +35,9 @@
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    VerticalAlignment="Center" />
                                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                            <TextBlock Grid.Column="0" Text="Status" VerticalAlignment="Bottom" />
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static lang:Resources.PackageContainer_StatusLabelText}"
+                                                       VerticalAlignment="Bottom" />
                                             <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}"
                                                       SelectedItem="{Binding $parent[cp:PackageContainer].FilterEnability,Mode=TwoWay}">
                                                 <TabStrip.ItemTemplate>

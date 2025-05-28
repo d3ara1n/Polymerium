@@ -1005,4 +1005,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>存档</value>
     </data>
+    <data name="PackageContainer_StatusLabelText" xml:space="preserve">
+        <value>状态</value>
+    </data>
 </root>

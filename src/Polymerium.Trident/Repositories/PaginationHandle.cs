@@ -21,7 +21,7 @@ public class PaginationHandle<T>(
             return _currentItems;
 
         var rv = await next(PageIndex, token).ConfigureAwait(false);
-        var currentItems = rv as T[] ?? rv.ToArray();
+        var currentItems = rv as IReadOnlyList<T> ?? rv.ToList();
         _currentItems = currentItems;
         _currentPage = PageIndex;
         return currentItems;
