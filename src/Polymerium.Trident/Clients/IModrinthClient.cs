@@ -34,6 +34,6 @@ public interface IModrinthClient
     [Get("/v3/project/{projectId}/version")]
     Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
         string projectId,
-        string? loaders = null,
-        string? gameVersions = null);
+        string? versionType = null,
+        string? loaders = null);
 }
