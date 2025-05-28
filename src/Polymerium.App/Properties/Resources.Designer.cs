@@ -2418,6 +2418,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string PackageContainer_StatusLabelText {
+            get {
+                return ResourceManager.GetString("PackageContainer_StatusLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string PackageContainer_TagLabelText {
