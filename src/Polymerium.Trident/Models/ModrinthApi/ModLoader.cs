@@ -8,5 +8,9 @@ public record ModLoader(
     IReadOnlyList<string> SupportedFields,
     ModLoader.LoaderMetadata Metadata)
 {
+    #region Nested type: LoaderMetadata
+
     public record LoaderMetadata(bool? Platform);
+
+    #endregion
 }

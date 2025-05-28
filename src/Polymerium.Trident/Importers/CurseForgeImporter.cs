@@ -17,25 +17,6 @@ public class CurseForgeImporter : IProfileImporter
         ["quilt"] = LoaderHelper.LOADERID_QUILT
     };
 
-    private static bool TryExtractLoader(
-        IEnumerable<ManifestModel.MinecraftModel.ModLoaderModel> loaders,
-        out (string Identity, string Version) loader)
-    {
-        var primary = loaders.FirstOrDefault(x => x.Primary);
-        loader = default((string Identity, string Version));
-        if (primary is null || !primary.Id.Contains('-'))
-            return false;
-
-        var name = primary.Id[..primary.Id.IndexOf('-')];
-        var ver = primary.Id[(primary.Id.IndexOf('-') + 1)..];
-        if (LOADER_MAPPINGS.TryGetValue(name, out var mapping))
-            name = mapping;
-
-        loader = (name, ver);
-        return true;
-    }
-
-
     #region IProfileImporter Members
 
     public string IndexFileName => "manifest.json";
@@ -44,7 +25,7 @@ public class CurseForgeImporter : IProfileImporter
     {
         await using var manifestStream = pack.Open(IndexFileName);
         var manifest = await JsonSerializer
-                            .DeserializeAsync<ManifestModel>(manifestStream, JsonSerializerOptions.Web)
+                            .DeserializeAsync<Manifest>(manifestStream, JsonSerializerOptions.Web)
                             .ConfigureAwait(false);
         if (manifest is null || !TryExtractLoader(manifest.Minecraft.ModLoaders, out var loader))
             throw new FormatException($"{IndexFileName} is not a valid manifest");
@@ -58,17 +39,18 @@ public class CurseForgeImporter : IProfileImporter
                                                                          manifest
                                                                             .Files
                                                                             .Select(x =>
-                                                                                 new Profile.Rice.Entry(PackageHelper
-                                                                                        .ToPurl(CurseForgeService
-                                                                                                .LABEL,
-                                                                                             null,
-                                                                                             x.ProjectId
-                                                                                                .ToString(),
-                                                                                             x.FileId
-                                                                                                .ToString()),
-                                                                                     x.Required,
-                                                                                     source,
-                                                                                     []))
+                                                                                 new
+                                                                                     Profile.Rice.Entry(PackageHelper
+                                                                                            .ToPurl(CurseForgeService
+                                                                                                    .LABEL,
+                                                                                                 null,
+                                                                                                 x.ProjectId
+                                                                                                    .ToString(),
+                                                                                                 x.FileId
+                                                                                                    .ToString()),
+                                                                                         x.Required,
+                                                                                         source,
+                                                                                         []))
                                                                             .ToList()),
                                                         new Dictionary<string, object>()),
                                             pack
@@ -84,4 +66,22 @@ public class CurseForgeImporter : IProfileImporter
     }
 
     #endregion
+
+    private static bool TryExtractLoader(
+        IEnumerable<Manifest.MinecraftModel.ModLoaderModel> loaders,
+        out (string Identity, string Version) loader)
+    {
+        var primary = loaders.FirstOrDefault(x => x.Primary);
+        loader = default((string Identity, string Version));
+        if (primary is null || !primary.Id.Contains('-'))
+            return false;
+
+        var name = primary.Id[..primary.Id.IndexOf('-')];
+        var ver = primary.Id[(primary.Id.IndexOf('-') + 1)..];
+        if (LOADER_MAPPINGS.TryGetValue(name, out var mapping))
+            name = mapping;
+
+        loader = (name, ver);
+        return true;
+    }
 }

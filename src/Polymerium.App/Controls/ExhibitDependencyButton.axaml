@@ -44,21 +44,12 @@
                             </Border>
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                        Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}" />
-                            <Panel Grid.Column="2" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal" Spacing="4">
                                 <husk:Tag Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}"
-                                          VerticalAlignment="Center">
-                                    <husk:Tag.IsVisible>
-                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                            <Binding Path="IsRequired" />
-                                            <Binding Path="IsChecked" Mode="OneWay"
-                                                     Converter="{x:Static BoolConverters.Not}"
-                                                     RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                        </MultiBinding>
-                                    </husk:Tag.IsVisible>
-                                </husk:Tag>
+                                          VerticalAlignment="Center" IsVisible="{Binding IsRequired}" />
                                 <components:ExhibitStatePresenter IsVisible="{TemplateBinding IsChecked}"
                                                                   State="{Binding Exhibit.State}" />
-                            </Panel>
+                            </StackPanel>
                         </Grid>
                         <Border Name="Overlay" CornerRadius="{TemplateBinding CornerRadius}"
                                 Background="{StaticResource OverlayHalfBackgroundBrush}"

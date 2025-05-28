@@ -24,13 +24,21 @@ public class DeployEngine(
     DeployEngineOptions options,
     string verificationWatermark) : IEnumerable<StageBase>
 {
+    #region IEnumerable<StageBase> Members
+
     public IEnumerator<StageBase> GetEnumerator() =>
         new DeployEngineEnumerator(new DeployContext(key, setup, provider, options, verificationWatermark));
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    #endregion
+
+    #region Nested type: DeployEngineEnumerator
+
     private class DeployEngineEnumerator(DeployContext context) : IEnumerator<StageBase>
     {
+        #region IEnumerator<StageBase> Members
+
         public void Reset() => throw new NotImplementedException();
 
         public bool MoveNext()
@@ -58,6 +66,8 @@ public class DeployEngine(
             if (Current is IDisposableLifetime disposable)
                 disposable.Dispose();
         }
+
+        #endregion
 
         private StageBase? DecideNext()
         {
@@ -103,4 +113,6 @@ public class DeployEngine(
             return stage;
         }
     }
+
+    #endregion
 }

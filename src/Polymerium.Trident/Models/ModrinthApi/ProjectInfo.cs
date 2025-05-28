@@ -36,7 +36,13 @@ public record ProjectInfo(
     IReadOnlyList<string> MrpackLoaders,
     IReadOnlyList<bool> ServerOnly)
 {
+    #region Nested type: ProjectLicense
+
     public record ProjectLicense(string Id, string Name, Uri? Url);
+
+    #endregion
+
+    #region Nested type: ProjectLinks
 
     public record ProjectLinks(
         ProjectLinks.Links? Other,
@@ -47,8 +53,16 @@ public record ProjectInfo(
         ProjectLinks.Links? Issues,
         ProjectLinks.Links? Website)
     {
+        #region Nested type: Links
+
         public record Links(string Platform, bool Donation, Uri Url);
+
+        #endregion
     }
+
+    #endregion
+
+    #region Nested type: ProjectScreenshot
 
     public record ProjectScreenshot(
         Uri Url,
@@ -58,4 +72,6 @@ public record ProjectInfo(
         string? Description,
         DateTimeOffset Created,
         int Ordering);
+
+    #endregion
 }

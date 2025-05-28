@@ -329,12 +329,11 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 if (exhibit.InstalledVersionId != null)
                     try
                     {
-                        var package = await _dataService
-                                           .ResolvePackageAsync(exhibit.Label,
-                                                                exhibit.Ns,
-                                                                exhibit.ProjectId,
-                                                                exhibit.InstalledVersionId,
-                                                                Filter.Empty);
+                        var package = await _dataService.ResolvePackageAsync(exhibit.Label,
+                                                                             exhibit.Ns,
+                                                                             exhibit.ProjectId,
+                                                                             exhibit.InstalledVersionId,
+                                                                             Filter.Empty);
                         exhibit.InstalledVersionName = package.VersionName;
                     }
                     catch

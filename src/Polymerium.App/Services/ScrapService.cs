@@ -27,10 +27,14 @@ public class ScrapService : IDisposable
         instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
     }
 
+    #region IDisposable Members
+
     public void Dispose()
     {
         _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
     }
+
+    #endregion
 
     private void InstanceManagerOnInstanceLaunching(object? _, LaunchTracker e)
     {

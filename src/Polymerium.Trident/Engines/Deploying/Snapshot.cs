@@ -65,5 +65,9 @@ public class Snapshot : Collection<Snapshot.Entity>
         }
     }
 
+    #region Nested type: Entity
+
     public record Entity(string Path, string Target);
+
+    #endregion
 }

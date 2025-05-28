@@ -46,15 +46,7 @@ public class AvaloniaLifetime : IHostedService
         }
     }
 
-    private void Serve()
-    {
-        Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
-        _lifetime.StopApplication();
-    }
-
-    private void Deserve() { }
-
-    #region IHostLifetime Members
+    #region IHostedService Members
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -65,4 +57,12 @@ public class AvaloniaLifetime : IHostedService
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
     #endregion
+
+    private void Serve()
+    {
+        Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
+        _lifetime.StopApplication();
+    }
+
+    private void Deserve() { }
 }

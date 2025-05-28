@@ -6,6 +6,8 @@ public record RuntimeManifest(
     DateTimeOffset ReleaseTime,
     IReadOnlyList<RuntimeManifest.Runtime> Runtimes)
 {
+    #region Nested type: Runtime
+
     public record Runtime(
         Runtime.ChecksumData Checksum,
         string DownloadType,
@@ -17,8 +19,18 @@ public record RuntimeManifest(
         string Vendor,
         Runtime.VersionData Version)
     {
+        #region Nested type: ChecksumData
+
         public record ChecksumData(string Hash, string Type);
 
+        #endregion
+
+        #region Nested type: VersionData
+
         public record VersionData(uint Major, uint Minor, uint Security);
+
+        #endregion
     }
+
+    #endregion
 }

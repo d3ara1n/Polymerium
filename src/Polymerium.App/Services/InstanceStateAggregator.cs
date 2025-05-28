@@ -27,6 +27,8 @@ public class InstanceStateAggregator : IDisposable
 
     public Subject<ITracklet> Stream { get; } = new();
 
+    #region IDisposable Members
+
     public void Dispose()
     {
         Stream.Dispose();
@@ -34,6 +36,8 @@ public class InstanceStateAggregator : IDisposable
         _instanceManager.InstanceInstalling -= InstanceManagerOnInstanceInstalling;
         _instanceManager.InstanceUpdating -= InstanceManagerOnInstanceUpdating;
     }
+
+    #endregion
 
     private void InstanceManagerOnInstanceUpdating(object? sender, UpdateTracker e)
     {

@@ -26,6 +26,14 @@ public record VersionInfo(
     IReadOnlyList<string> GameVersions,
     bool ClientOnly)
 {
+    #region Nested type: VersionDependency
+
+    public record VersionDependency(string ProjectId, string VersionId, string? FileName, string DependencyType);
+
+    #endregion
+
+    #region Nested type: VersionFile
+
     public record VersionFile(
         VersionFile.FileHashes Hashes,
         Uri Url,
@@ -34,8 +42,12 @@ public record VersionInfo(
         ulong Size,
         string? FileType)
     {
+        #region Nested type: FileHashes
+
         public record FileHashes(string Sha1, string Sha512);
+
+        #endregion
     }
 
-    public record VersionDependency(string ProjectId, string VersionId, string? FileName, string DependencyType);
+    #endregion
 }

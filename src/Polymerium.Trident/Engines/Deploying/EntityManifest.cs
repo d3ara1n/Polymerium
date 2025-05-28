@@ -12,11 +12,27 @@ public class EntityManifest
     public IList<PresentFile> PresentFiles { get; } = new List<PresentFile>();
     public IList<ExplosiveFile> ExplosiveFiles { get; } = new List<ExplosiveFile>();
 
+    #region Nested type: ExplosiveFile
+
+    public record ExplosiveFile(string SourcePath, string TargetDirectory, bool IsDestructive);
+
+    #endregion
+
+    #region Nested type: FragileFile
+
     public record FragileFile(string SourcePath, string TargetPath, Uri Url, string? Hash);
+
+    #endregion
+
+    #region Nested type: PersistentFile
 
     public record PersistentFile(string SourcePath, string TargetPath, bool IsPhantom);
 
+    #endregion
+
+    #region Nested type: PresentFile
+
     public record PresentFile(string Path, Uri Url, string? Hash);
 
-    public record ExplosiveFile(string SourcePath, string TargetDirectory, bool IsDestructive);
+    #endregion
 }
