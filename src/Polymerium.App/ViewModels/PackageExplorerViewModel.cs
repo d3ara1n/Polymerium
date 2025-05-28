@@ -255,6 +255,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
     partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
     {
+        // HACK: 此时 SelectedKind 没回绑，Filter 未更新，因此手动提前打补丁
+        if (value.Kinds?.Any(x => x == Filter.Kind) is not true)
+            Filter = Filter with { Kind = value.Kinds?.FirstOrDefault() ?? Filter.Kind };
         _ = SearchInternalAsync();
     }
 

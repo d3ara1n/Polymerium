@@ -33,7 +33,9 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                         ResourceKind.Modpack,
                                         ResourceKind.Mod,
                                         ResourceKind.ResourcePack,
-                                        ResourceKind.ShaderPack
+                                        ResourceKind.ShaderPack,
+                                        ResourceKind.World,
+                                        ResourceKind.DataPack
                                     ]);
     }
 

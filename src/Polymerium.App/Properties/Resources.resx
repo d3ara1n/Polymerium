@@ -1011,4 +1011,7 @@
     <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
         <value>Loading project information failed</value>
     </data>
+    <data name="ResourceKind_World" xml:space="preserve">
+        <value>World</value>
+    </data>
 </root>

@@ -218,7 +218,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
             _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
                                                      .Replace("{0}", exhibit.ProjectName),
-                                            exhibit.ProjectId);
+                                            exhibit.ProjectName);
         }
     }
 

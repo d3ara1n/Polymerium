@@ -1002,4 +1002,7 @@
     <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
         <value>获取项目信息失败</value>
     </data>
+    <data name="ResourceKind_World" xml:space="preserve">
+        <value>存档</value>
+    </data>
 </root>

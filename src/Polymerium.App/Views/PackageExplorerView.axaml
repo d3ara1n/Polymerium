@@ -200,7 +200,7 @@
                             <TabStrip
                                 Theme="{StaticResource SegmentedTabStripTheme}"
                                 SelectedItem="{Binding SelectedKind,Mode=TwoWay}"
-                                ItemsSource="{Binding SelectedRepository.Kinds}">
+                                ItemsSource="{Binding SelectedRepository.Kinds,Mode=OneWay}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate x:DataType="resources:ResourceKind">
                                         <TextBlock
