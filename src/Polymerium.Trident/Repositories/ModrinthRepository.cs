@@ -87,11 +87,12 @@ public class ModrinthRepository(ModrinthService service) : IRepository
             else
             {
                 var (versionTask, membersTask) =
-                    (service.GetProjectVersionsAsync(pid, filter.Version, ModrinthService.LoaderIdToName(filter.Loader)).ConfigureAwait(false),
+                    (service.GetProjectVersionsAsync(pid, "release", ModrinthService.LoaderIdToName(filter.Loader)).ConfigureAwait(false),
                      service.GetTeamMembersAsync(project.TeamId).ConfigureAwait(false));
                 var (version, members) = (await versionTask, await membersTask);
                 return ModrinthService.ToPackage(project,
-                                                 version.FirstOrDefault()
+                                                 version.FirstOrDefault(x => filter.Version is null
+                                                                          || x.GameVersions.Contains(filter.Version))
                                               ?? throw new
                                                      ResourceNotFoundException($"{pid}/{vid ?? "*"} has no version found"),
                                                  members.FirstOrDefault());
