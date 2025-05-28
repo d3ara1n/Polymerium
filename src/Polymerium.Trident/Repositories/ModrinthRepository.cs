@@ -87,7 +87,7 @@ public class ModrinthRepository(ModrinthService service) : IRepository
             else
             {
                 var (versionTask, membersTask) =
-                    (service.GetProjectVersionsAsync(pid, filter.Version, ModrinthService.LoaderIdToName(filter.Loader), limit: 1).ConfigureAwait(false),
+                    (service.GetProjectVersionsAsync(pid, filter.Version, ModrinthService.LoaderIdToName(filter.Loader)).ConfigureAwait(false),
                      service.GetTeamMembersAsync(project.TeamId).ConfigureAwait(false));
                 var (version, members) = (await versionTask, await membersTask);
                 return ModrinthService.ToPackage(project,
@@ -123,24 +123,9 @@ public class ModrinthRepository(ModrinthService service) : IRepository
         var project = await service.GetProjectAsync(pid).ConfigureAwait(false);
         var type = project.ProjectTypes.FirstOrDefault();
         var loader = type == ModrinthService.RESOURCENAME_MOD ? ModrinthService.LoaderIdToName(filter.Loader) : null;
-        var first = await service
-                         .GetProjectVersionsAsync(pid, filter.Version, loader, limit: PAGE_SIZE)
-                         .ConfigureAwait(false);
-        var initial = first.Select(ModrinthService.ToVersion);
-        // Modrinth 没有分页响应，TotalCount 没法获取，好在 PaginationHandle 和 InfiniteCollection 都不依赖这个值
-        return new PaginationHandle<Version>(initial,
-                                             PAGE_SIZE,
-                                             0,
-                                             async (pageIndex, _) =>
-                                             {
-                                                 var rv = await service
-                                                               .GetProjectVersionsAsync(pid,
-                                                                    filter.Version,
-                                                                    loader,
-                                                                    pageIndex * PAGE_SIZE,
-                                                                    PAGE_SIZE)
-                                                               .ConfigureAwait(false);
-                                                 return rv.Select(ModrinthService.ToVersion);
-                                             });
+        var first = await service.GetProjectVersionsAsync(pid, filter.Version, loader).ConfigureAwait(false);
+        var all = first.Select(ModrinthService.ToVersion).ToList();
+        // Modrinth 的版本无法分页，只能过滤拉取全部之后本地分页
+        return new LocalPaginationHandle<Version>(all, PAGE_SIZE);
     }
 }

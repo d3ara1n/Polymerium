@@ -334,8 +334,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                 exhibit.Ns,
                                                                 exhibit.ProjectId,
                                                                 exhibit.InstalledVersionId,
-                                                                Filter.Empty)
-                                           .ConfigureAwait(false);
+                                                                Filter.Empty);
                         exhibit.InstalledVersionName = package.VersionName;
                     }
                     catch

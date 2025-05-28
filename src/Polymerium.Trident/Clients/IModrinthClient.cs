@@ -35,7 +35,5 @@ public interface IModrinthClient
     Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
         string projectId,
         string? loaders = null,
-        string? gameVersions = null,
-        uint? offset = 0,
-        uint? limit = 10);
+        string? gameVersions = null);
 }
