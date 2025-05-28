@@ -414,6 +414,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
                     guard.Value.Setup.Packages.Add(entry);
                     model.State = ExhibitState.Editable;
                     model.Installed = entry;
+                    model.InstalledVersionName = model.PendingVersionName;
+                    model.InstalledVersionId = model.PendingVersionId;
                 }
                 else if (model is { State: ExhibitState.Removing, Installed: not null })
                 {
@@ -426,6 +428,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                 null));
                     model.State = null;
                     model.Installed = null;
+                    model.InstalledVersionName = null;
+                    model.InstalledVersionId = null;
                 }
                 else if (model is { State: ExhibitState.Modifying, Installed: not null })
                 {
@@ -439,6 +443,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                 old,
                                                                 model.Installed.Purl));
                     model.State = ExhibitState.Editable;
+                    model.InstalledVersionName = model.PendingVersionName;
+                    model.InstalledVersionId = model.PendingVersionId;
                 }
 
             await guard.DisposeAsync();
