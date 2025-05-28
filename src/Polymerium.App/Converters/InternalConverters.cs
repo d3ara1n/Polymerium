@@ -43,6 +43,7 @@ public static class InternalConverters
                 ResourceKind.ResourcePack => Resources.ResourceKind_ResourcePack,
                 ResourceKind.ShaderPack => Resources.ResourceKind_ShaderPack,
                 ResourceKind.DataPack => Resources.ResourceKind_DataPack,
+                ResourceKind.World => Resources.ResourceKind_World,
                 _ => kind.ToString()
             };
         return v;

@@ -2607,6 +2607,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to World.
+        /// </summary>
+        public static string ResourceKind_World {
+            get {
+                return ResourceManager.GetString("ResourceKind_World", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code:.
         /// </summary>
         public static string SafeLock_CodeLabelText {
