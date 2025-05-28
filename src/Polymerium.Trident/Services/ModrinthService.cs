@@ -214,9 +214,7 @@ public class ModrinthService(IModrinthClient client)
 
     public Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
         string projectId,
-        string? gameVersion,
+        string? versionType,
         string? modLoader) =>
-        client.GetProjectVersionsAsync(projectId,
-                                       modLoader is not null ? $"[\"{modLoader}\"]" : null,
-                                       gameVersion is not null ? $"[\"{gameVersion}\"]" : null);
+        client.GetProjectVersionsAsync(projectId, versionType, modLoader is not null ? $"[\"{modLoader}\"]" : null);
 }
