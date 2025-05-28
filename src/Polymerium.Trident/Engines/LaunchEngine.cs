@@ -17,11 +17,17 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
         _inner.EnableRaisingEvents = true;
     }
 
+    #region IAsyncEnumerable<Scrap> Members
+
     public IAsyncEnumerator<Scrap> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(_inner);
         return new LaunchEngineEnumerator(_inner, cancellationToken);
     }
+
+    #endregion
+
+    #region Nested type: LaunchEngineEnumerator
 
     public partial class LaunchEngineEnumerator : IAsyncEnumerator<Scrap>
     {
@@ -41,6 +47,8 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
         }
+
+        #region IAsyncEnumerator<Scrap> Members
 
         public Scrap Current { get; private set; } = null!;
 
@@ -80,6 +88,8 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
                 return false;
             }
         }
+
+        #endregion
 
         private void ProcessOnOutputDataReceived(object sender, DataReceivedEventArgs e)
         {
@@ -126,4 +136,6 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
         [GeneratedRegex(@"\[(.*)\] \[(?<thread>[a-zA-Z0-9\ \-#@]+)/(?<level>[a-zA-Z]+)\](\ \[(?<source>[a-zA-Z0-9\ \\./\-]+)\])?: (?<message>.*)")]
         private static partial Regex GenerateRegex();
     }
+
+    #endregion
 }

@@ -10,6 +10,9 @@ namespace Polymerium.Trident.Repositories;
 public class ModrinthRepository(ModrinthService service) : IRepository
 {
     private const uint PAGE_SIZE = 20;
+
+    #region IRepository Members
+
     public string Label => ModrinthService.LABEL;
 
     public async Task<RepositoryStatus> CheckStatusAsync()
@@ -87,7 +90,7 @@ public class ModrinthRepository(ModrinthService service) : IRepository
             else
             {
                 var (versionTask, membersTask) =
-                    (service.GetProjectVersionsAsync(pid, "release", ModrinthService.LoaderIdToName(filter.Loader)).ConfigureAwait(false),
+                    (service.GetProjectVersionsAsync(pid, null, ModrinthService.LoaderIdToName(filter.Loader)).ConfigureAwait(false),
                      service.GetTeamMembersAsync(project.TeamId).ConfigureAwait(false));
                 var (version, members) = (await versionTask, await membersTask);
                 return ModrinthService.ToPackage(project,
@@ -124,7 +127,7 @@ public class ModrinthRepository(ModrinthService service) : IRepository
         var project = await service.GetProjectAsync(pid).ConfigureAwait(false);
         var type = project.ProjectTypes.FirstOrDefault();
         var loader = type == ModrinthService.RESOURCENAME_MOD ? ModrinthService.LoaderIdToName(filter.Loader) : null;
-        var first = await service.GetProjectVersionsAsync(pid, "release", loader).ConfigureAwait(false);
+        var first = await service.GetProjectVersionsAsync(pid, null, loader).ConfigureAwait(false);
         var all = first
                  .Where(x => filter.Version is null || x.GameVersions.Contains(filter.Version))
                  .Select(ModrinthService.ToVersion)
@@ -132,4 +135,6 @@ public class ModrinthRepository(ModrinthService service) : IRepository
         // Modrinth 的版本无法分页，只能过滤拉取全部之后本地分页
         return new LocalPaginationHandle<Version>(all, PAGE_SIZE);
     }
+
+    #endregion
 }

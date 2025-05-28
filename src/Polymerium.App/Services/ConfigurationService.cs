@@ -32,6 +32,8 @@ public sealed class ConfigurationService : IDisposable
 
     public Configuration Value { get; }
 
+    #region IDisposable Members
+
     public void Dispose()
     {
         try
@@ -46,4 +48,6 @@ public sealed class ConfigurationService : IDisposable
             // ignored
         }
     }
+
+    #endregion
 }

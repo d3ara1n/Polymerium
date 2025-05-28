@@ -7,5 +7,9 @@ public record MinecraftStoreResponse(
     string Signature,
     int KeyId)
 {
+    #region Nested type: Item
+
     public record Item(string Name, string Signature);
+
+    #endregion
 }

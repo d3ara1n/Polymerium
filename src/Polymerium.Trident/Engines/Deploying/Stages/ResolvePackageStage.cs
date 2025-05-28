@@ -38,7 +38,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                                                                       parsed.Vid,
                                                                       false);
 
-                                                  throw new FormatException($"Package {x} is not a valid package");
+                                                  throw new FormatException($"Package {x.Purl} is not a valid package");
                                               }));
         var flatten = new ConcurrentDictionary<Identity, Version>();
 
@@ -133,9 +133,19 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
         ProgressStream.Dispose();
     }
 
-    private record Purl(Identity Identity, string? Vid, bool IsPhantom);
+    #region Nested type: Identity
 
     private record Identity(string Label, string? Namespace, string Pid);
+
+    #endregion
+
+    #region Nested type: Purl
+
+    private record Purl(Identity Identity, string? Vid, bool IsPhantom);
+
+    #endregion
+
+    #region Nested type: Version
 
     private record Version(
         string Vid,
@@ -145,4 +155,6 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
         string? Sha1,
         Uri Download,
         bool IsReliable = true);
+
+    #endregion
 }

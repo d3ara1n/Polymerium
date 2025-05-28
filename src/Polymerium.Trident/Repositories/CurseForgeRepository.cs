@@ -14,7 +14,6 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
     private const uint PAGE_SIZE = 20;
     private static readonly Converter CONVERTER = new(new Config { GithubFlavored = false, SmartHrefHandling = true });
 
-
     #region IRepository Members
 
     public string Label => CurseForgeService.LABEL;

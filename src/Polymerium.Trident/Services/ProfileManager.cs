@@ -188,6 +188,8 @@ public class ProfileManager : IDisposable
         OnProfileUpdated(key, handle.Value);
     }
 
+    #region Nested type: SystemObjectNewtonsoftCompatibleConverter
+
     private class SystemObjectNewtonsoftCompatibleConverter : JsonConverter<object>
     {
         public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -221,6 +223,8 @@ public class ProfileManager : IDisposable
             writer.WriteRawValue(JsonSerializer.Serialize(value));
         }
     }
+
+    #endregion
 
 
     #region Profile Changed Event

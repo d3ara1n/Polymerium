@@ -4,6 +4,8 @@ namespace Polymerium.Trident.Accounts;
 
 public class TrialAccount : IAccount
 {
+    #region IAccount Members
+
     public required string Username { get; init; }
 
     public required string Uuid { get; init; }
@@ -11,6 +13,8 @@ public class TrialAccount : IAccount
     public string AccessToken => "BirdIsTheAccessToken";
 
     public string UserType => "legacy";
+
+    #endregion
 
     public static TrialAccount CreateStewie() =>
         new() { Username = "Stewie", Uuid = Guid.NewGuid().ToString().Replace("-", string.Empty) };

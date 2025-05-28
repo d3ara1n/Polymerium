@@ -10,7 +10,12 @@ namespace Polymerium.App.Services;
 
 public class PersistenceService : IDisposable
 {
+    #region ActionKind enum
+
     public enum ActionKind { Install, Update, Unlock, Reset, Rename, EditPackage, EditLoader }
+
+    #endregion
+
     // Preferences
     // Activities
 
@@ -28,12 +33,16 @@ public class PersistenceService : IDisposable
               .Build();
     });
 
+    #region IDisposable Members
+
     public void Dispose()
     {
         // TODO 在此释放托管资源
         if (_db.IsValueCreated)
             _db.Value.Dispose();
     }
+
+    #endregion
 
     public void AppendAction(Action action)
     {
@@ -149,24 +158,7 @@ public class PersistenceService : IDisposable
         });
     }
 
-    public class Action(string key, ActionKind kind, string? old, string? @new)
-    {
-        public DateTimeOffset At { get; set; } = DateTimeOffset.Now;
-
-        public string Key { get; set; } = key;
-        public ActionKind Kind { get; set; } = kind;
-        public string? Old { get; set; } = old;
-        public string? New { get; set; } = @new;
-    }
-
-    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, bool dieInPeace)
-    {
-        public string Key { get; set; } = key;
-        public DateTime Begin { get; set; } = begin.DateTime;
-        public DateTime End { get; set; } = end.DateTime;
-
-        public bool DieInPeace { get; set; } = dieInPeace;
-    }
+    #region Nested type: Account
 
     public class Account(
         string uuid,
@@ -186,6 +178,10 @@ public class PersistenceService : IDisposable
         public bool IsDefault { get; set; } = isDefault;
     }
 
+    #endregion
+
+    #region Nested type: AccountSelector
+
     public class AccountSelector(string key, string uuid)
     {
         [Column(IsPrimary = true)]
@@ -193,6 +189,35 @@ public class PersistenceService : IDisposable
 
         public string Uuid { get; set; } = uuid;
     }
+
+    #endregion
+
+    #region Nested type: Action
+
+    public class Action(string key, ActionKind kind, string? old, string? @new)
+    {
+        public DateTimeOffset At { get; set; } = DateTimeOffset.Now;
+
+        public string Key { get; set; } = key;
+        public ActionKind Kind { get; set; } = kind;
+        public string? Old { get; set; } = old;
+        public string? New { get; set; } = @new;
+    }
+
+    #endregion
+
+    #region Nested type: Activity
+
+    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, bool dieInPeace)
+    {
+        public string Key { get; set; } = key;
+        public DateTime Begin { get; set; } = begin.DateTime;
+        public DateTime End { get; set; } = end.DateTime;
+
+        public bool DieInPeace { get; set; } = dieInPeace;
+    }
+
+    #endregion
 
     // public class Preference
     // {

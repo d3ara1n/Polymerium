@@ -16,6 +16,9 @@ public abstract class TrackerBase(
     public Exception? FailureReason { get; private set; }
 
     public DateTimeOffset StartedAt { get; private set; } = DateTimeOffset.Now;
+
+    #region IDisposableLifetime Members
+
     public CompositeDisposable DisposableLifetime { get; } = new();
 
     public virtual void Dispose()
@@ -23,6 +26,8 @@ public abstract class TrackerBase(
         _tokenSource.Dispose();
         DisposableLifetime.Dispose();
     }
+
+    #endregion
 
     public event TrackerStateUpdatedHandler? StateUpdated;
 

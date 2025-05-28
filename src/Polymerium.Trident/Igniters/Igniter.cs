@@ -31,6 +31,8 @@ public class Igniter : IBuilder<Process>
     public bool IsDebug { get; set; }
     public char? ClassPathSeparator { get; set; }
 
+    #region IBuilder<Process> Members
+
     public Process Build()
     {
         var separator = ClassPathSeparator ?? (OperatingSystem.IsWindows() ? ';' : ':');
@@ -83,6 +85,8 @@ public class Igniter : IBuilder<Process>
         var process = new Process { StartInfo = start };
         return process;
     }
+
+    #endregion
 
     public Igniter SetMainClass(string mainClass)
     {

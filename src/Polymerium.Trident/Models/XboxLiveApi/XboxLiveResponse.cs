@@ -8,8 +8,16 @@ public record XboxLiveResponse(
     string Token,
     XboxLiveResponse.Claims DisplayClaims)
 {
+    #region Nested type: Claims
+
     public record Claims(Claims.XuiEntry[] Xui)
     {
+        #region Nested type: XuiEntry
+
         public record XuiEntry(string Uhs);
+
+        #endregion
     }
+
+    #endregion
 }

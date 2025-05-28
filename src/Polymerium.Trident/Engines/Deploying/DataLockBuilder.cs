@@ -17,6 +17,8 @@ public class DataLockBuilder : IBuilder<DataLock>
     public IList<DataLock.Parcel> Parcels => _parcels;
     public IList<DataLock.Library> Libraries => _libraries;
 
+    #region IBuilder<DataLock> Members
+
     public DataLock Build()
     {
         ArgumentNullException.ThrowIfNull(_assetIndex);
@@ -35,6 +37,8 @@ public class DataLockBuilder : IBuilder<DataLock>
                             _parcels,
                             _assetIndex);
     }
+
+    #endregion
 
     public DataLockBuilder SetViability(DataLock.ViabilityData viability)
     {
