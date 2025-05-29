@@ -7,6 +7,9 @@
            xmlns:converters="clr-namespace:Polymerium.App.Converters"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+           xmlns:controls="clr-namespace:Polymerium.App.Controls"
+           xmlns:models="clr-namespace:Polymerium.App.Models"
+           xmlns:v="clr-namespace:Polymerium.App.Views"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.MaintenanceStorageView" x:DataType="vm:MaintenanceStorageViewModel"
            Header="Storage Maintenance">
@@ -49,7 +52,7 @@
                     <husk:Tag Content="Instances" Background="#F2D1F3" Foreground="#953EA3" />
                     <TextBlock>
                         <Run
-                            Text="{Binding CacheSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                            Text="{Binding InstanceSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
                             FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <Run Text="GiB" FontSize="18" />
                     </TextBlock>
@@ -59,7 +62,8 @@
         <StackPanel Grid.Row="1" Spacing="4">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <TextBlock Grid.Column="0" Text="Cache" FontSize="{StaticResource LargeFontSize}" />
-                <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Classes="Small">
+                <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                        Command="{Binding PurgeCacheCommand}">
                     <husk:IconLabel Icon="DeleteLines" Text="Purge" />
                 </Button>
             </Grid>
@@ -112,13 +116,33 @@
                             <Run Text="{Binding #AssetProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                         </TextBlock>
                         <ProgressBar Name="AssetProgressBar" Value="{Binding AssetSize}" Maximum="{Binding CacheSize}" />
-
                     </StackPanel>
                 </husk:Card>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Spacing="4">
-            <TextBlock Text="Instances" FontSize="{StaticResource LargeFontSize}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                    <Run Text="/" />
+                    <Run Text="{Binding Instances.Count,Mode=OneWay,FallbackValue=0}" />
+                </TextBlock>
+                <TextBlock Text="Instances" FontSize="{StaticResource LargeFontSize}" />
+            </DockPanel>
+            <ItemsControl ItemsSource="{Binding Instances}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:StorageInstanceModel">
+                        <controls:StorageInstanceButton
+                            Command="{Binding $parent[v:MaintenanceStorageView].((vm:MaintenanceStorageViewModel)DataContext).GotoInstanceCommand,Mode=OneWay,FallbackValue={x:Null}}"
+                            CommandParameter="{Binding}"
+                            TotalSize="{Binding $parent[v:MaintenanceStorageView].((vm:MaintenanceStorageViewModel)DataContext).InstanceSize,FallbackValue=0}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="4" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </StackPanel>
     </Grid>
 </husk:Page>

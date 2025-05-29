@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IconPacks.Avalonia.Lucide;
@@ -18,11 +18,24 @@ using Trident.Abstractions;
 namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager)
-    : InstanceViewModelBase(bag, instanceManager, profileManager)
+    : InstanceViewModelBase(bag.Parameter switch
+                            {
+                                CompositeParameter p => new ViewBag(p.Key),
+                                _ => bag
+                            },
+                            instanceManager,
+                            profileManager)
 {
+    public record CompositeParameter(string Key, Type Subview);
+
     protected override Task OnInitializedAsync(CancellationToken token)
     {
-        Dispatcher.UIThread.Post(() => SelectedPage = PageEntries.FirstOrDefault());
+        SelectedPage = bag.Parameter switch
+                       {
+                           CompositeParameter p => PageEntries.FirstOrDefault(x => x.Page == p.Subview),
+                           _ => null
+                       }
+                    ?? PageEntries.FirstOrDefault();
         return base.OnInitializedAsync(token);
     }
 
@@ -32,7 +45,6 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
     private void OpenFolder()
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        // Process.Start(new ProcessStartInfo(dir) { UseShellExecute = true });
         TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
     }
 
@@ -52,7 +64,7 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
         // Statistics
         // new(typeof(InstanceStatisticsView), PackIconLucideKind.ChartNoAxesCombined),
         // Storage
-        // new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
+        new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
         // Properties
         new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench)
     ];
