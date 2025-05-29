@@ -71,12 +71,6 @@ public partial class InstanceHomeViewModel(
     internal void ViewForTimerLaunch()
     {
         _timerSubscription?.Dispose();
-        // var start = InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch
-        //                 ? DateTimeOffset.Now - launch.StartedAt
-        //                 : TimeSpan.Zero;
-        // _timerSubscription = Observable
-        //                     .Interval(TimeSpan.FromSeconds(1))
-        //                     .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
         if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
         {
             var start = DateTimeOffset.Now - launch.StartedAt;

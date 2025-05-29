@@ -3,16 +3,25 @@ using Avalonia.Animation;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
+using Microsoft.Extensions.Logging;
 using Polymerium.App.Controls;
 
 namespace Polymerium.App.Services;
 
 public class NavigationService
 {
+    #region Injected
+
+    private readonly ILogger _logger;
+
+    #endregion
+
     private Func<bool>? _canGoBackHandler;
     private Action? _clearHistoryHandler;
     private Action? _goBackHandler;
     private Action<Type, object?, IPageTransition>? _navigateHandler;
+
+    public NavigationService(ILogger<NavigationService> logger) => _logger = logger;
 
     public bool CanGoBack => _canGoBackHandler?.Invoke() ?? false;
 
@@ -37,8 +46,11 @@ public class NavigationService
                                                                          DirectionFrom.Right)
                                                                      : new PopUpTransition())));
 
-    public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page =>
+    public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page
+    {
         Navigate(typeof(T), parameter, transition);
+        _logger.LogInformation("Navigating to {} with {}", typeof(T).Name, parameter ?? "(null)");
+    }
 
     public void GoBack() => Dispatcher.UIThread.Post(() => _goBackHandler?.Invoke());
 
