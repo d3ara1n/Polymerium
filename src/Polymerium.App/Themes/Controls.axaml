@@ -16,5 +16,6 @@
         <ResourceInclude Source="/Controls/AccountEntryButton.axaml" />
         <ResourceInclude Source="/Controls/AccountCreationStep.axaml" />
         <ResourceInclude Source="/Controls/Plaque.axaml" />
+        <ResourceInclude Source="/Controls/StorageInstanceButton.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

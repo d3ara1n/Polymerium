@@ -1,16 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
 using Polymerium.App.Facilities;
+using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.App.Views;
+using Polymerium.Trident.Services;
 using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class MaintenanceStorageViewModel : ViewModelBase
+public partial class MaintenanceStorageViewModel(
+    ProfileManager profileManager,
+    NavigationService navigationService) : ViewModelBase
 {
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -24,6 +32,14 @@ public partial class MaintenanceStorageViewModel : ViewModelBase
         (PackageSize, PackageCount) = CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
         (LibrarySize, _) = CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
         (AssetSize, _) = CalculateDirectorySize(PathDef.Default.CacheAssetDirectory);
+
+        foreach (var (key, profile) in profileManager.Profiles)
+        {
+            var dir = PathDef.Default.DirectoryOfHome(key);
+            var (size, _) = CalculateDirectorySize(dir);
+            Instances.Add(new StorageInstanceModel(key, profile.Name, size));
+            InstanceSize += size;
+        }
 
         CacheSize = PackageSize + LibrarySize + AssetSize;
         TotalSize = PackageSize + LibrarySize + AssetSize;
@@ -48,6 +64,27 @@ public partial class MaintenanceStorageViewModel : ViewModelBase
                          });
     }
 
+    #region Commands
+
+    [RelayCommand]
+    private void PurgeCache() { }
+
+    [RelayCommand]
+    private void GotoInstance(StorageInstanceModel? model)
+    {
+        if (model != null)
+            navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
+                                                                            typeof(InstanceStorageView)));
+    }
+
+    #endregion
+
+    #region Direct
+
+    public ObservableCollection<StorageInstanceModel> Instances { get; } = [];
+
+    #endregion
+
     #region Reactive
 
     [ObservableProperty]
@@ -58,6 +95,9 @@ public partial class MaintenanceStorageViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial ulong CacheSize { get; set; }
+
+    [ObservableProperty]
+    public partial ulong InstanceSize { get; set; }
 
     [ObservableProperty]
     public partial ulong PackageSize { get; set; }

@@ -1,8 +1,15 @@
 ﻿namespace Polymerium.App.Facilities;
 
-public class ViewBag(ViewBagFactory factory)
+public class ViewBag
 {
-    public object? Parameter => factory.Bag;
+    private readonly ViewBagFactory? _factory;
+    private readonly object? _parameter;
+
+    public ViewBag(ViewBagFactory factory) => _factory = factory;
+
+    public ViewBag(object? parameter) => _parameter = parameter;
+
+    public object? Parameter => _parameter ?? _factory?.Bag;
 
     public bool IsEmpty => Parameter is null;
 }
