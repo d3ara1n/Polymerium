@@ -18,7 +18,7 @@
     <!--         <TextBlock Text="Total" /> -->
     <!--         <TextBlock> -->
     <!--             <Run -->
-    <!--                 Text="{Binding TotalSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}" -->
+    <!--                 Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}" -->
     <!--                 FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" /> -->
     <!--             <Run Text="GiB" FontSize="18" /> -->
     <!--         </TextBlock> -->
@@ -32,7 +32,7 @@
                 <husk:Tag Content="Total" />
                 <TextBlock>
                     <Run
-                        Text="{Binding TotalSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                        Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
                         FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
                     <Run Text="GiB" FontSize="18" />
                 </TextBlock>
@@ -42,7 +42,7 @@
                     <husk:Tag Content="Cache" Background="#FFD19A" Foreground="#CC4E00" />
                     <TextBlock>
                         <Run
-                            Text="{Binding CacheSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                            Text="{Binding CacheSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
                             FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <Run Text="GiB" FontSize="18" />
                     </TextBlock>
@@ -52,7 +52,7 @@
                     <husk:Tag Content="Instances" Background="#F2D1F3" Foreground="#953EA3" />
                     <TextBlock>
                         <Run
-                            Text="{Binding InstanceSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                            Text="{Binding InstanceSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
                             FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <Run Text="GiB" FontSize="18" />
                     </TextBlock>
@@ -75,7 +75,7 @@
                         <TextBlock Text="Packages" FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
-                                Text="{Binding PackageSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                                Text="{Binding PackageSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #PackageProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
@@ -94,7 +94,7 @@
                         <TextBlock Text="Libraries" FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
-                                Text="{Binding LibrarySize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                                Text="{Binding LibrarySize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #LibraryProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
@@ -110,7 +110,7 @@
                         <TextBlock Text="Assets" FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
-                                Text="{Binding AssetSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                                Text="{Binding AssetSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #AssetProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
