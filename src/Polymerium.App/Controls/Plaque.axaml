@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Polymerium.App.Controls">
+    <ControlTheme x:Key="{x:Type local:Plaque}" TargetType="local:Plaque">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Grid Margin="5" RowDefinitions="*,Auto" RowSpacing="5">
+                        <Border Grid.Row="0" Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource SmallCornerRadius}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Border>
+                        <ContentPresenter Grid.Row="1" Content="{TemplateBinding Header}"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

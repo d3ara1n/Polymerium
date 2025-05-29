@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -15,13 +16,18 @@ public partial class SettingsViewModel : ViewModelBase
     #region Injected
 
     private readonly ConfigurationService _configurationService;
+    private readonly NavigationService _navigationService;
 
     #endregion
 
-    public SettingsViewModel(ConfigurationService configurationService, OverlayService overlayService)
+    public SettingsViewModel(
+        ConfigurationService configurationService,
+        OverlayService overlayService,
+        NavigationService navigationService)
     {
-        _configurationService = configurationService;
         OverlayService = overlayService;
+        _configurationService = configurationService;
+        _navigationService = navigationService;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -70,6 +76,13 @@ public partial class SettingsViewModel : ViewModelBase
                     box.Text = dir;
             }
         }
+    }
+
+    [RelayCommand]
+    private void Navigate(Type? view)
+    {
+        if (view != null)
+            _navigationService.Navigate(view);
     }
 
     #endregion

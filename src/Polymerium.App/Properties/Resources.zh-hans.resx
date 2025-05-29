@@ -562,7 +562,7 @@
         <value>着色器包</value>
     </data>
     <data name="PackageContainer_SourceOriginalText" xml:space="preserve">
-        <value>导入</value>
+        <value>托管</value>
     </data>
     <data name="PackageContainer_SourceLocalText" xml:space="preserve">
         <value>本地</value>

@@ -1,0 +1,124 @@
+﻿<husk:Page xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+           xmlns:converters="clr-namespace:Polymerium.App.Converters"
+           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           x:Class="Polymerium.App.Views.MaintenanceStorageView" x:DataType="vm:MaintenanceStorageViewModel"
+           Header="Storage Maintenance">
+    <!-- <husk:Card HorizontalAlignment="Left" VerticalAlignment="Top"> -->
+    <!--     <StackPanel Spacing="12"> -->
+    <!--         <TextBlock Text="Total" /> -->
+    <!--         <TextBlock> -->
+    <!--             <Run -->
+    <!--                 Text="{Binding TotalSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}" -->
+    <!--                 FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" /> -->
+    <!--             <Run Text="GiB" FontSize="18" /> -->
+    <!--         </TextBlock> -->
+    <!--         <husk:Divider /> -->
+    <!--         ~1~ <lvc:PieChart Width="198" Height="198" Series="{Binding Series}" /> @1@ -->
+    <!--     </StackPanel> -->
+    <!-- </husk:Card> -->
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0" Spacing="4">
+                <husk:Tag Content="Total" />
+                <TextBlock>
+                    <Run
+                        Text="{Binding TotalSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                        FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <Run Text="GiB" FontSize="18" />
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
+                <StackPanel Spacing="4">
+                    <husk:Tag Content="Cache" Background="#FFD19A" Foreground="#CC4E00" />
+                    <TextBlock>
+                        <Run
+                            Text="{Binding CacheSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                            FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <Run Text="GiB" FontSize="18" />
+                    </TextBlock>
+                </StackPanel>
+                <husk:Divider Orientation="Vertical" Margin="6" />
+                <StackPanel Spacing="4">
+                    <husk:Tag Content="Instances" Background="#F2D1F3" Foreground="#953EA3" />
+                    <TextBlock>
+                        <Run
+                            Text="{Binding CacheSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
+                            FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <Run Text="GiB" FontSize="18" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="1" Spacing="4">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <TextBlock Grid.Column="0" Text="Cache" FontSize="{StaticResource LargeFontSize}" />
+                <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Classes="Small">
+                    <husk:IconLabel Icon="DeleteLines" Text="Purge" />
+                </Button>
+            </Grid>
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                <husk:Card Grid.Column="0">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}" />
+                        <TextBlock Text="Packages" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding PackageSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="GiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #PackageProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding PackageCount,FallbackValue=514}" />
+                            <fi:SymbolIcon Symbol="Box" FontSize="{StaticResource SmallFontSize}" />
+                        </TextBlock>
+                        <ProgressBar Name="PackageProgressBar" Value="{Binding PackageSize}"
+                                     Maximum="{Binding CacheSize}" />
+                    </StackPanel>
+                </husk:Card>
+                <husk:Card Grid.Column="1">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="Library" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}" />
+                        <TextBlock Text="Libraries" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding LibrarySize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="GiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #LibraryProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <ProgressBar Name="LibraryProgressBar" Value="{Binding LibrarySize}"
+                                     Maximum="{Binding CacheSize}" />
+                    </StackPanel>
+                </husk:Card>
+                <husk:Card Grid.Column="2">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="CassetteTape" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}" />
+                        <TextBlock Text="Assets" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding AssetSize,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="GiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #AssetProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <ProgressBar Name="AssetProgressBar" Value="{Binding AssetSize}" Maximum="{Binding CacheSize}" />
+
+                    </StackPanel>
+                </husk:Card>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Spacing="4">
+            <TextBlock Text="Instances" FontSize="{StaticResource LargeFontSize}" />
+        </StackPanel>
+    </Grid>
+</husk:Page>

@@ -61,4 +61,16 @@ public static class InternalConverters
             };
         return v;
     });
+
+    public static IValueConverter UnsignedLongToMiBDoubleConverter { get; } = new RelayConverter(v => v switch
+    {
+        ulong l => (double)l / 1024 / 1024,
+        _ => v
+    });
+
+    public static IValueConverter UnsignedLongToGiBDoubleConverter { get; } = new RelayConverter(v => v switch
+    {
+        ulong l => (double)l / 1024 / 1024 / 1024,
+        _ => v
+    });
 }

@@ -91,7 +91,7 @@
                         </Border>
                     </StackPanel>
                 </Grid>
-                <husk:LazyContainer Grid.Column="1" MinWidth="128"
+                <husk:LazyContainer Grid.Column="1" MinWidth="198"
                                     Source="{Binding Reference,FallbackValue={x:Null}}"
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
                     <husk:LazyContainer.BadContent>
@@ -108,69 +108,69 @@
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
                             <Border Background="{StaticResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}" MaxWidth="320">
-                                <Grid RowDefinitions="*,Auto" RowSpacing="4" Margin="4">
-                                    <Border Grid.Row="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                            CornerRadius="{StaticResource MediumCornerRadius}" Padding="12">
-                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
-                                            <Border Grid.Column="0" Height="42" Width="42"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush
-                                                        async:ImageBrushLoader.Source="{Binding Thumbnail,FallbackValue={x:Null}}"
-                                                        Stretch="UniformToFill" />
-                                                </Border.Background>
-                                            </Border>
-                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                                                <TextBlock Text="{Binding ProjectName,FallbackValue=Display}"
-                                                           FontSize="{StaticResource LargeFontSize}"
-                                                           TextTrimming="CharacterEllipsis"
-                                                           FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                           ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
-                                                <HyperlinkButton NavigateUri="{Binding SourceUrl}">
-                                                    <ToolTip.Tip>
-                                                        <StackPanel Spacing="2">
-                                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
-                                                                <TextBlock Grid.Column="0"
-                                                                           Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}"
+                                <controls:Plaque>
+                                    <controls:Plaque.Header>
+                                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto"
+                                              ColumnSpacing="4">
+                                            <fi:SymbolIcon Grid.Column="0" Symbol="Info" Margin="6,0,0,0"
+                                                           FontSize="{StaticResource SmallFontSize}" />
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding VersionName,FallbackValue=Version}"
+                                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                       ToolTip.Tip="{Binding VersionName}" />
+                                            <Button Grid.Column="2"
+                                                    Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
+                                                    Classes="Small"
+                                                    Theme="{StaticResource OutlineButtonTheme}"
+                                                    Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}" />
+                                        </Grid>
+                                    </controls:Plaque.Header>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                        <Border Grid.Column="0" Height="42" Width="42"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <Border.Background>
+                                                <ImageBrush
+                                                    async:ImageBrushLoader.Source="{Binding Thumbnail,FallbackValue={x:Null}}"
+                                                    Stretch="UniformToFill" />
+                                            </Border.Background>
+                                        </Border>
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                                            <TextBlock Text="{Binding ProjectName,FallbackValue=Display}"
+                                                       FontSize="{StaticResource LargeFontSize}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                       ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
+                                            <HyperlinkButton NavigateUri="{Binding SourceUrl}">
+                                                <ToolTip.Tip>
+                                                    <StackPanel Spacing="2">
+                                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                                            <TextBlock Grid.Column="0"
+                                                                       Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}"
+                                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                       FontSize="{StaticResource SmallFontSize}" />
+                                                            <fi:SymbolIcon Grid.Column="1" Symbol="Open"
                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                            FontSize="{StaticResource SmallFontSize}" />
-                                                                <fi:SymbolIcon Grid.Column="1" Symbol="Open"
-                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                               FontSize="{StaticResource SmallFontSize}" />
-                                                            </Grid>
-                                                            <TextBlock
-                                                                Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
-                                                        </StackPanel>
-                                                    </ToolTip.Tip>
-                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                        </Grid>
                                                         <TextBlock
-                                                            Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                                        <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                                            Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
                                                     </StackPanel>
-                                                </HyperlinkButton>
-                                            </StackPanel>
-                                            <Button Grid.Column="2" CornerRadius="{StaticResource FullCornerRadius}"
-                                                    VerticalAlignment="Center" Padding="8"
-                                                    Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}">
-                                                <fi:SymbolIcon Symbol="ArrowRight"
-                                                               FontSize="{StaticResource LargeFontSize}" />
-                                            </Button>
-                                        </Grid>
-                                    </Border>
-                                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto"
-                                          ColumnSpacing="4">
-                                        <fi:SymbolIcon Grid.Column="0" Symbol="Info" Margin="6,0,0,0"
-                                                       FontSize="{StaticResource SmallFontSize}" />
-                                        <TextBlock Grid.Column="1" Text="{Binding VersionName,FallbackValue=Version}"
-                                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                                                   ToolTip.Tip="{Binding VersionName}" />
-                                        <Button Grid.Column="2"
-                                                Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
-                                                Classes="Small"
-                                                Theme="{StaticResource OutlineButtonTheme}"
-                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}" />
+                                                </ToolTip.Tip>
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <TextBlock
+                                                        Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                                </StackPanel>
+                                            </HyperlinkButton>
+                                        </StackPanel>
+                                        <Button Grid.Column="2" CornerRadius="{StaticResource FullCornerRadius}"
+                                                VerticalAlignment="Center" Padding="8"
+                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}">
+                                            <fi:SymbolIcon Symbol="ArrowRight"
+                                                           FontSize="{StaticResource LargeFontSize}" />
+                                        </Button>
                                     </Grid>
-                                </Grid>
+                                </controls:Plaque>
                             </Border>
                         </DataTemplate>
                     </husk:LazyContainer.SourceTemplate>
