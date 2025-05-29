@@ -42,7 +42,7 @@ public partial class MaintenanceStorageViewModel(
         }
 
         CacheSize = PackageSize + LibrarySize + AssetSize;
-        TotalSize = PackageSize + LibrarySize + AssetSize;
+        TotalSize = CacheSize + InstanceSize;
     }
 
     private static (ulong, ulong) CalculateDirectorySize(string path)
