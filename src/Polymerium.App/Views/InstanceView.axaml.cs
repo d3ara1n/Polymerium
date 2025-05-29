@@ -3,8 +3,6 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
@@ -22,36 +20,24 @@ public partial class InstanceView : ScopedPage
                                                                  o => o.NavigateCommand,
                                                                  (o, v) => o.NavigateCommand = v);
 
-    private string _key = string.Empty;
-
-    private ICommand? _navigateCommand;
-
     public InstanceView()
     {
         InitializeComponent();
 
+        Frame.PageActivator = MainWindow.Instance.PageActivator;
         NavigateCommand = new RelayCommand<Type>(Navigate);
     }
 
     public string Key
     {
-        get => _key;
-        set => SetAndRaise(KeyProperty, ref _key, value);
-    }
+        get;
+        set => SetAndRaise(KeyProperty, ref field, value);
+    } = string.Empty;
 
     public ICommand? NavigateCommand
     {
-        get => _navigateCommand;
-        set => SetAndRaise(NavigateCommandProperty, ref _navigateCommand, value);
-    }
-
-    protected override void OnLoaded(RoutedEventArgs e)
-    {
-        base.OnLoaded(e);
-
-        var activator = this.FindAncestorOfType<MainWindow>()?.PageActivator;
-        if (activator != null)
-            Frame.PageActivator = activator;
+        get;
+        set => SetAndRaise(NavigateCommandProperty, ref field, value);
     }
 
 
