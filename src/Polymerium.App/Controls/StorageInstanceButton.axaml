@@ -29,7 +29,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="1"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
-                                Text="{Binding Size,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=12.4}" />
+                                Text="{Binding Size,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=12.4}" />
                             <Run Text="MiB" />
                         </TextBlock>
                         <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Value="{Binding Size}"
