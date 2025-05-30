@@ -254,7 +254,8 @@ public partial class MainWindowContext : ObservableObject
                                                         actions: new NotificationAction(Resources
                                                                .MainWindow_InstanceInstallingSuccessNotificationOpenText,
                                                             ViewInstanceCommand,
-                                                            e.Key));
+                                                            e.Key),
+                                                        forceExpire: true);
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
                                                                 PersistenceService.ActionKind.Install,
