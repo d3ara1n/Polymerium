@@ -25,8 +25,8 @@
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                            HorizontalAlignment="Center" />
             </StackPanel>
-            <ScrollViewer Margin="-18,0">
-                <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}" Margin="18,0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="m:PackageUpdaterModel">
                             <Border Padding="12" Margin="3" BoxShadow="0 0 4 0 #3F000000"
