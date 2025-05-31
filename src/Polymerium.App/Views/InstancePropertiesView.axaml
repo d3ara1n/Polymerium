@@ -242,6 +242,31 @@
                 </StackPanel>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
+        <husk:Divider />
+        <husk:BusyContainer
+            Background="Transparent"
+            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
+            <controls:SettingsEntry Icon="Bug" Title="{x:Static lang:Resources.InstancePropertiesView_DebugTitle}"
+                                    Summary="{x:Static lang:Resources.InstancePropertiesView_DebugSubtitle}">
+                <controls:SettingsEntryItem
+                    Header="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityLabelText}">
+                    <Button Command="{Binding CheckIntegrityCommand}">
+                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityButtonText}" />
+                    </Button>
+                </controls:SettingsEntryItem>
+            </controls:SettingsEntry>
+            <husk:BusyContainer.PendingContent>
+                <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Background="{StaticResource OverlaySolidBackgroundBrush}">
+                    <StackPanel Spacing="12">
+                        <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}"
+                                              HorizontalAlignment="Center" />
+                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
+                    </StackPanel>
+                </husk:Card>
+            </husk:BusyContainer.PendingContent>
+        </husk:BusyContainer>
         <husk:Divider>
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
@@ -252,7 +277,8 @@
         <husk:BusyContainer
             Background="Transparent"
             IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
-            <controls:SettingsEntry Icon="Bug" Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
+            <controls:SettingsEntry Icon="WarningShield"
+                                    Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
                                     Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">
                 <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
                 <controls:SettingsEntryItem
@@ -278,7 +304,7 @@
                                             IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}">
                     <StackPanel Spacing="8">
                         <husk:InfoBar
-                            Content="{x:Static lang:Resources.InstancePropertiesView_LinkerInfo}" />
+                            Content="{x:Static lang:Resources.InstancePropertiesView_LinkerPrompt}" />
                         <Button Command="{Binding UnlockInstanceCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <fi:SymbolIcon Symbol="WarningLockOpen" FontSize="{StaticResource MediumFontSize}" />
