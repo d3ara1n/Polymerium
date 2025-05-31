@@ -243,8 +243,10 @@ public partial class InstanceHomeViewModel(
                 {
                     var profile = ProfileManager.GetImmutable(Basic.Key);
                     // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
+                    // Full Check Mode 只有在检查文件完整性时为 true，不随用户决定
                     var deploy =
                         new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
+                                          false,
                                           profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false));
                     var launch = new LaunchOptions(javaHomeLocator: major =>
                                                        profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,

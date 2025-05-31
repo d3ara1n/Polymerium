@@ -177,7 +177,9 @@ public class InstanceManager(
                                       provider,
                                       new DeployEngineOptions
                                       {
-                                          FastMode = options.FastMode, ResolveDependency = options.ResolveDependency
+                                          FastMode = options.FastMode,
+                                          FullCheckMode = options.FullCheckMod,
+                                          ResolveDependency = options.ResolveDependency
                                       },
                                       ComputeWatermark(options));
 

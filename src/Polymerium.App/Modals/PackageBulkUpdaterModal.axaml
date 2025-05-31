@@ -44,14 +44,16 @@
                                         <StackPanel Grid.Row="0">
                                             <TextBlock Text="{Binding NewVersionName}"
                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                                       Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                       TextTrimming="CharacterEllipsis" />
                                             <TextBlock Text="{Binding NewVersionTime}"
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                        FontSize="{StaticResource SmallFontSize}" />
                                         </StackPanel>
                                         <StackPanel Grid.Row="1">
                                             <TextBlock Text="{Binding OldVersionName}"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                       TextTrimming="CharacterEllipsis" />
                                             <TextBlock Text="{Binding OldVersionTime}"
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                        FontSize="{StaticResource SmallFontSize}" />

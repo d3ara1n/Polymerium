@@ -213,7 +213,7 @@
     <data name="InstancePropertiesView_LinkerLabelText" xml:space="preserve">
         <value>Link</value>
     </data>
-    <data name="InstancePropertiesView_LinkerInfo" xml:space="preserve">
+    <data name="InstancePropertiesView_LinkerPrompt" xml:space="preserve">
         <value>Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages.</value>
     </data>
     <data name="InstancePropertiesView_InoperableLabelText" xml:space="preserve">
@@ -1016,5 +1016,20 @@
     </data>
     <data name="PackageContainer_StatusLabelText" xml:space="preserve">
         <value>Status</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
+        <value>Thumbnail</value>
+    </data>
+    <data name="InstancePropertiesView_DebugTitle" xml:space="preserve">
+        <value>Debug</value>
+    </data>
+    <data name="InstancePropertiesView_CheckIntegrityButtonText" xml:space="preserve">
+        <value>Build in Full Check Mode</value>
+    </data>
+    <data name="InstancePropertiesView_DebugSubtitle" xml:space="preserve">
+        <value>Having problems? Try these options</value>
+    </data>
+    <data name="InstancePropertiesView_CheckIntegrityLabelText" xml:space="preserve">
+        <value>Check Integrity</value>
     </data>
 </root>

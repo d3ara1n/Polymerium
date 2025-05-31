@@ -50,7 +50,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                             {
                                 case EntityManifest.FragileFile fragile:
                                 {
-                                    if (!Verify(fragile.SourcePath, fragile.Hash))
+                                    if (!Verify(fragile.SourcePath, fragile.Hash, Context.Options.FullCheckMode))
                                     {
                                         logger.LogDebug("Starting download fragile file {} from {}",
                                                         fragile.SourcePath,
@@ -80,7 +80,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                 }
                                 case EntityManifest.PresentFile present:
                                 {
-                                    if (!Verify(present.Path, present.Hash))
+                                    if (!Verify(present.Path, present.Hash, Context.Options.FullCheckMode))
                                     {
                                         var dir = Path.GetDirectoryName(present.Path);
                                         if (dir != null && !Directory.Exists(dir))
@@ -194,11 +194,11 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         Context.IsSolidified = true;
     }
 
-    private static bool Verify(string path, string? hash)
+    private static bool Verify(string path, string? hash, bool fullCheck)
     {
         if (File.Exists(path))
         {
-            if (hash != null)
+            if (fullCheck && hash != null)
             {
                 using var reader = new FileStream(path, FileMode.Open, FileAccess.Read);
                 var computed = Convert.ToHexString(SHA1.HashData(reader));

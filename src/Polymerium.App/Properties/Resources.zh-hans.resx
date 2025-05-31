@@ -204,7 +204,7 @@
     <data name="InstancePropertiesView_LinkerLabelText" xml:space="preserve">
         <value>关联</value>
     </data>
-    <data name="InstancePropertiesView_LinkerInfo" xml:space="preserve">
+    <data name="InstancePropertiesView_LinkerPrompt" xml:space="preserve">
         <value>实例会保存并链接关于整合包的引用，以此实现实例的更新，但代价是无法更改/移除整合包带来的包版本。解锁/取消链接实例会失去这些能力和限制。</value>
     </data>
     <data name="InstancePropertiesView_InoperableLabelText" xml:space="preserve">
@@ -1007,5 +1007,20 @@
     </data>
     <data name="PackageContainer_StatusLabelText" xml:space="preserve">
         <value>状态</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
+        <value>图标</value>
+    </data>
+    <data name="InstancePropertiesView_DebugTitle" xml:space="preserve">
+        <value>调试</value>
+    </data>
+    <data name="InstancePropertiesView_CheckIntegrityButtonText" xml:space="preserve">
+        <value>进行一次完整构建</value>
+    </data>
+    <data name="InstancePropertiesView_DebugSubtitle" xml:space="preserve">
+        <value>试试用这些选项解决问题</value>
+    </data>
+    <data name="InstancePropertiesView_CheckIntegrityLabelText" xml:space="preserve">
+        <value>检查完整性</value>
     </data>
 </root>

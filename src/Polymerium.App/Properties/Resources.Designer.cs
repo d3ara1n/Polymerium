@@ -1374,6 +1374,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Build in Full Check Mode.
+        /// </summary>
+        public static string InstancePropertiesView_CheckIntegrityButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_CheckIntegrityButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Integrity.
+        /// </summary>
+        public static string InstancePropertiesView_CheckIntegrityLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_CheckIntegrityLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to These settings are applied instantly and can&apos;t be recovered.
         /// </summary>
         public static string InstancePropertiesView_DangerZoneSubtitle {
@@ -1388,6 +1406,24 @@ namespace Polymerium.App.Properties {
         public static string InstancePropertiesView_DangerZoneTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_DangerZoneTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Having problems? Try these options.
+        /// </summary>
+        public static string InstancePropertiesView_DebugSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_DebugSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string InstancePropertiesView_DebugTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_DebugTitle", resourceCulture);
             }
         }
         
@@ -1482,20 +1518,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages..
-        /// </summary>
-        public static string InstancePropertiesView_LinkerInfo {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_LinkerInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Link.
         /// </summary>
         public static string InstancePropertiesView_LinkerLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_LinkerLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages..
+        /// </summary>
+        public static string InstancePropertiesView_LinkerPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_LinkerPrompt", resourceCulture);
             }
         }
         
@@ -1658,6 +1694,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePropertiesView_SelectButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_SelectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thumbnail.
+        /// </summary>
+        public static string InstancePropertiesView_ThumbnailLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ThumbnailLabelText", resourceCulture);
             }
         }
         

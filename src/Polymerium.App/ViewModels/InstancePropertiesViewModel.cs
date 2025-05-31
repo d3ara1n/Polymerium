@@ -13,6 +13,7 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions;
@@ -159,6 +160,12 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                     box.Text = dir;
             }
         }
+    }
+
+    [RelayCommand]
+    private void CheckIntegrity()
+    {
+        InstanceManager.Deploy(Basic.Key, new DeployOptions(false, true, BehaviorResolveDependency));
     }
 
     [RelayCommand]
