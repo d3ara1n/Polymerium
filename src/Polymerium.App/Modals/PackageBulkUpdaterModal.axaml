@@ -25,8 +25,8 @@
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                            HorizontalAlignment="Center" />
             </StackPanel>
-            <ScrollViewer Margin="-18,0" Padding="18,0">
-                <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}">
+            <ScrollViewer Margin="-18,0">
+                <ItemsControl ItemsSource="{Binding $parent[modals:PackageBulkUpdaterModal].Updates}" Margin="18,0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="m:PackageUpdaterModel">
                             <Border Padding="12" Margin="3" BoxShadow="0 0 4 0 #3F000000"
@@ -40,25 +40,23 @@
                                             <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
                                         </Border.Background>
                                     </Border>
-                                    <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
-                                        <StackPanel Grid.Row="0">
-                                            <TextBlock Text="{Binding NewVersionName}"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                                       TextTrimming="CharacterEllipsis" />
-                                            <TextBlock Text="{Binding NewVersionTime}"
-                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                       FontSize="{StaticResource SmallFontSize}" />
-                                        </StackPanel>
-                                        <StackPanel Grid.Row="1">
-                                            <TextBlock Text="{Binding OldVersionName}"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       TextTrimming="CharacterEllipsis" />
-                                            <TextBlock Text="{Binding OldVersionTime}"
-                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                       FontSize="{StaticResource SmallFontSize}" />
-                                        </StackPanel>
-                                    </Grid>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding NewVersionName}"
+                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                   Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding NewVersionTime}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding OldVersionName}"
+                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding OldVersionTime}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
                                     <Grid Grid.Column="2" RowDefinitions="*,*">
                                         <CheckBox Grid.Row="0" VerticalAlignment="Center"
                                                   HorizontalAlignment="Right"
