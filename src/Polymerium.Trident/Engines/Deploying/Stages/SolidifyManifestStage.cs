@@ -50,7 +50,8 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                             {
                                 case EntityManifest.FragileFile fragile:
                                 {
-                                    if (!Verify(fragile.SourcePath, fragile.Hash, Context.Options.FullCheckMode))
+                                    if (!Verify(fragile.SourcePath,
+                                                Context.Options.FullCheckMode ? fragile.Hash : null))
                                     {
                                         logger.LogDebug("Starting download fragile file {} from {}",
                                                         fragile.SourcePath,
@@ -64,8 +65,12 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                                                       .ConfigureAwait(false);
                                         await using var writer = new FileStream(fragile.SourcePath,
                                                                                     FileMode.Create,
-                                                                                    FileAccess.Write);
+                                                                                    FileAccess.Write,
+                                                                                    FileShare.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
+                                        var file = new FileInfo(fragile.SourcePath);
+                                        if (file.Exists)
+                                            file.IsReadOnly = true;
                                     }
                                     else
                                     {
@@ -80,7 +85,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                 }
                                 case EntityManifest.PresentFile present:
                                 {
-                                    if (!Verify(present.Path, present.Hash, Context.Options.FullCheckMode))
+                                    if (!Verify(present.Path, Context.Options.FullCheckMode ? present.Hash : null))
                                     {
                                         var dir = Path.GetDirectoryName(present.Path);
                                         if (dir != null && !Directory.Exists(dir))
@@ -89,9 +94,14 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         await using var reader = await client
                                                                       .GetStreamAsync(present.Url, cancel.Token)
                                                                       .ConfigureAwait(false);
-                                        await using var writer =
-                                            new FileStream(present.Path, FileMode.Create, FileAccess.Write);
+                                        await using var writer = new FileStream(present.Path,
+                                                                                    FileMode.Create,
+                                                                                    FileAccess.Write,
+                                                                                    FileShare.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
+                                        var file = new FileInfo(present.Path);
+                                        if (file.Exists)
+                                            file.IsReadOnly = true;
                                     }
                                     else
                                     {
@@ -104,27 +114,23 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                 }
                                 case EntityManifest.PersistentFile persistent:
                                 {
-                                    if (!File.Exists(persistent.TargetPath))
+                                    if (persistent.IsPhantom)
+                                    {
+                                        logger.LogDebug("Linking persistent file from {} to {}",
+                                                        persistent.SourcePath,
+                                                        persistent.TargetPath);
+                                        entities.Add(new Snapshot.Entity(persistent.TargetPath, persistent.SourcePath));
+                                    }
+                                    else if (!File.Exists(persistent.TargetPath))
                                     {
                                         var dir = Path.GetDirectoryName(persistent.TargetPath);
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
 
-                                        if (persistent.IsPhantom)
-                                        {
-                                            logger.LogDebug("Linking persistent file from {} to {}",
-                                                            persistent.SourcePath,
-                                                            persistent.TargetPath);
-                                            entities.Add(new Snapshot.Entity(persistent.TargetPath,
-                                                                             persistent.SourcePath));
-                                        }
-                                        else
-                                        {
-                                            logger.LogDebug("Copying persistent file from {} to {}",
-                                                            persistent.SourcePath,
-                                                            persistent.TargetPath);
-                                            File.Copy(persistent.SourcePath, persistent.TargetPath);
-                                        }
+                                        logger.LogDebug("Copying persistent file from {} to {}",
+                                                        persistent.SourcePath,
+                                                        persistent.TargetPath);
+                                        File.Copy(persistent.SourcePath, persistent.TargetPath);
                                     }
                                     else
                                     {
@@ -194,11 +200,11 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         Context.IsSolidified = true;
     }
 
-    private static bool Verify(string path, string? hash, bool fullCheck)
+    private static bool Verify(string path, string? hash)
     {
         if (File.Exists(path))
         {
-            if (fullCheck && hash != null)
+            if (hash != null)
             {
                 using var reader = new FileStream(path, FileMode.Open, FileAccess.Read);
                 var computed = Convert.ToHexString(SHA1.HashData(reader));
