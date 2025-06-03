@@ -56,27 +56,37 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
                 manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, nativesDir, false));
         }
 
+        var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
         var importDir = PathDef.Default.DirectoryOfImport(Context.Key);
+        var persistDir = PathDef.Default.DirectoryOfPersist(Context.Key);
+        PopulatePersistent(manifest.PersistentFiles, importDir, buildDir, false);
+        PopulatePersistent(manifest.PersistentFiles, persistDir, buildDir, true);
 
-        if (Directory.Exists(importDir))
+        Context.Manifest = manifest;
+    }
+
+    private static void PopulatePersistent(
+        IList<EntityManifest.PersistentFile> collection,
+        string baseDir,
+        string targetDir,
+        bool phantom)
+    {
+        if (Directory.Exists(baseDir))
         {
-            var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
             var dirs = new Stack<string>();
-            dirs.Push(importDir);
+            dirs.Push(baseDir);
 
             while (dirs.TryPop(out var sub))
             {
                 foreach (var file in Directory.GetFiles(sub))
-                    manifest.PersistentFiles.Add(new EntityManifest.PersistentFile(file,
-                                                                    Path.Combine(buildDir, Path.GetRelativePath(importDir, file)),
-                                                                    false));
+                    collection.Add(new EntityManifest.PersistentFile(file,
+                                                                     Path.Combine(targetDir,
+                                                                         Path.GetRelativePath(baseDir, file)),
+                                                                     phantom));
                 foreach (var dir in Directory.GetDirectories(sub))
                     dirs.Push(dir);
             }
         }
-
-
-        Context.Manifest = manifest;
     }
 
     private async ValueTask<MinecraftAssetIndex?> GetAssetIndexAsync(string indexFile, Uri url, string hash)
