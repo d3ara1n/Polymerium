@@ -8,14 +8,14 @@ using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Dialogs;
 
-public partial class ExportPackageListDialog : Dialog
+public partial class PackageListExporterDialog : Dialog
 {
-    public static readonly DirectProperty<ExportPackageListDialog, int> PackageCountProperty =
-        AvaloniaProperty.RegisterDirect<ExportPackageListDialog, int>(nameof(PackageCount),
-                                                                      o => o.PackageCount,
-                                                                      (o, v) => o.PackageCount = v);
+    public static readonly DirectProperty<PackageListExporterDialog, int> PackageCountProperty =
+        AvaloniaProperty.RegisterDirect<PackageListExporterDialog, int>(nameof(PackageCount),
+                                                                        o => o.PackageCount,
+                                                                        (o, v) => o.PackageCount = v);
 
-    public ExportPackageListDialog() => InitializeComponent();
+    public PackageListExporterDialog() => InitializeComponent();
 
     public int PackageCount
     {

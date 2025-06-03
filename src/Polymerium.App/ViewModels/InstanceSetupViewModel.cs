@@ -517,7 +517,7 @@ public partial class InstanceSetupViewModel(
     {
         var profile = ProfileManager.GetImmutable(Basic.Key);
         var list = new List<Profile.Rice.Entry>(profile.Setup.Packages);
-        var dialog = new ExportPackageListDialog { PackageCount = list.Count };
+        var dialog = new PackageListExporterDialog { PackageCount = list.Count };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             var notification = new NotificationItem
