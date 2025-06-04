@@ -18,7 +18,7 @@
     <Panel>
         <Grid RowDefinitions="Auto,0,*">
             <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="6">
-                <Border CornerRadius="{StaticResource MediumCornerRadius}" Padding="{StaticResource CardContentMargin}"
+                <Border CornerRadius="{OnPlatform Default=3,Windows=5}" Padding="{StaticResource CardContentMargin}"
                         Margin="-10,-10,-10,0">
                     <Border.Background>
                         <ImageBrush Source="{Binding HeaderImage}" Stretch="Fill" />
