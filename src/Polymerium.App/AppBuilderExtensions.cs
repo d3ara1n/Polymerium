@@ -12,12 +12,21 @@ public static class AppBuilderExtensions
         appBuilder
            .ConfigureFonts(fontManager =>
             {
-                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:BaiJamjuree"),
+                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:Manrope"),
                                                                          new
-                                                                             Uri("avares://Polymerium.App/Assets/Fonts/BaiJamjuree")));
+                                                                             Uri("avares://Polymerium.App/Assets/Fonts/Manrope")));
+                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:AidianFengYaHei"),
+                                                                         new
+                                                                             Uri("avares://Polymerium.App/Assets/Fonts/AidianFengYaHei")));
             })
-           .With(new FontManagerOptions { DefaultFamilyName = "fonts:BaiJamjuree#Bai Jamjuree" });
-
+           .With(new FontManagerOptions
+            {
+                DefaultFamilyName = "fonts:Manrope#Manrope",
+                FontFallbacks =
+                [
+                    new FontFallback { FontFamily = new FontFamily("fonts:AidianFengYaHei#爱点风雅黑") }
+                ]
+            });
         return appBuilder;
     }
 }

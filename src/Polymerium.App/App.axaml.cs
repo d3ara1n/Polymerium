@@ -122,7 +122,7 @@ public class App : Application
             if (page is not null && type is not null)
             {
                 if (!type.IsAssignableTo(typeof(ObservableObject)))
-                    throw new ArgumentOutOfRangeException(nameof(type),
+                    throw new ArgumentOutOfRangeException(nameof(view),
                                                           type,
                                                           $"{view.Name} was bound to a view model which is not derived from ObservableObject");
 
