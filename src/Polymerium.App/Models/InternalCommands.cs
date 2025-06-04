@@ -11,7 +11,7 @@ public static class InternalCommands
 {
     public static ICommand OpenUriCommand { get; } = new RelayCommand<Uri>(uri =>
     {
-        if (uri != null)
+        if (uri != null && uri.IsAbsoluteUri)
             TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(uri);
     });
 
