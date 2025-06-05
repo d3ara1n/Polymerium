@@ -190,7 +190,10 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
             Directory.CreateDirectory(buildDir);
         await File
              .WriteAllTextAsync(Path.Combine(buildDir, "allowed_symlinks.txt"),
-                                $"[prefix]{PathDef.Default.CachePackageDirectory}",
+                                $"""
+                                 [prefix]{PathDef.Default.CachePackageDirectory}
+                                 [prefix]{PathDef.Default.DirectoryOfPersist(Context.Key)}
+                                 """,
                                 cancel.Token)
              .ConfigureAwait(false);
 
@@ -206,7 +209,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         {
             if (hash != null)
             {
-                using var reader = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using var reader = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                 var computed = Convert.ToHexString(SHA1.HashData(reader));
                 return hash.Equals(computed, StringComparison.InvariantCultureIgnoreCase);
             }

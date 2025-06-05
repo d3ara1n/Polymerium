@@ -8,4 +8,6 @@ public partial class MessageDialog : Dialog
     {
         InitializeComponent();
     }
+
+    protected override bool ValidateResult(object? result) => true;
 }
