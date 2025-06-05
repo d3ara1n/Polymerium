@@ -17,7 +17,9 @@
         <controls:SettingsEntry Title="{x:Static lang:Resources.SettingsView_SuperPowerTitle}" Icon="Wand"
                                 Summary="{x:Static lang:Resources.SettingsView_SuperPowerSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SuperPowerLabelText}">
-                <ToggleSwitch IsChecked="{Binding SuperPowerActivated,Mode=TwoWay}" />
+                <ToggleSwitch IsChecked="{Binding SuperPowerActivated,Mode=TwoWay}"
+                              OnContent="{x:Static lang:Resources.Enum_On}"
+                              OffContent="{x:Static lang:Resources.Enum_Off}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
