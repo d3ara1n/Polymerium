@@ -183,7 +183,6 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="2"
-                    IsVisible="False"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                     CommandParameter="{x:Type v:InstanceStatisticsView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">

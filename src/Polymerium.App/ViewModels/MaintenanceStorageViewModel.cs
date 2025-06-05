@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,9 @@ namespace Polymerium.App.ViewModels;
 
 public partial class MaintenanceStorageViewModel(
     ProfileManager profileManager,
-    NavigationService navigationService) : ViewModelBase
+    NavigationService navigationService,
+    OverlayService overlayService,
+    NotificationService notificationService) : ViewModelBase
 {
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -64,10 +67,31 @@ public partial class MaintenanceStorageViewModel(
                          });
     }
 
+    private static void PurgeDirectory(string path)
+    {
+        if (Directory.Exists(path))
+            Directory.Delete(path, true);
+    }
+
     #region Commands
 
     [RelayCommand]
-    private void PurgeCache() { }
+    private async Task PurgeCache()
+    {
+        if (await overlayService.RequestConfirmationAsync("Are you sure you want to purge the cache?"))
+        {
+            try
+            {
+                PurgeDirectory(PathDef.Default.CacheDirectory);
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to purge cache");
+            }
+
+            Calculate();
+        }
+    }
 
     [RelayCommand]
     private void GotoInstance(StorageInstanceModel? model)
