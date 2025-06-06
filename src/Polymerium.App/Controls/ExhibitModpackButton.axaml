@@ -224,7 +224,7 @@
                             <!-- Filling Spare Space -->
                         </Border>
                         <ItemsControl Grid.Row="3" ItemsSource="{Binding Tags}" Margin="12"
-                                      Background="Transparent" MaxHeight="40">
+                                      Background="Transparent">
                             <ToolTip.Tip>
                                 <ItemsControl ItemsSource="{Binding Tags}">
                                     <ItemsControl.ItemsPanel>
