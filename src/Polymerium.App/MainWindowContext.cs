@@ -326,6 +326,7 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationPrompt,
                                                         e.Key,
                                                         NotificationLevel.Success,
+                                                        true,
                                                         actions: new NotificationAction(Resources
                                                                .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
                                                             ViewInstanceCommand,

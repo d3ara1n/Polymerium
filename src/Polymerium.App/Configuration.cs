@@ -22,7 +22,7 @@ public class Configuration
     public const string GAME_WINDOW_HEIGHT = "Game.Window.Height";
     public const string GAME_WINDOW_WIDTH = "Game.Window.Width";
 
-    private static readonly IReadOnlyDictionary<string, object?> Defaults = new Dictionary<string, object?>
+    private static readonly Dictionary<string, object?> Defaults = new Dictionary<string, object?>
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
         { APPLICATION_TITLEBAR_VISIBILITY, !OperatingSystem.IsLinux() },
