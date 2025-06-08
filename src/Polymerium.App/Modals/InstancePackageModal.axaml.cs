@@ -16,6 +16,7 @@ namespace Polymerium.App.Modals;
 
 public partial class InstancePackageModal : Modal
 {
+
     public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyVersionsProperty =
         AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyVersions),
                                                                            o => o.LazyVersions,
@@ -44,6 +45,7 @@ public partial class InstancePackageModal : Modal
     public required OverlayService OverlayService { get; init; }
     public required PersistenceService PersistenceService { get; init; }
 
+
     private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
 
     public LazyObject? LazyVersions
@@ -63,8 +65,7 @@ public partial class InstancePackageModal : Modal
         get;
         set => SetAndRaise(SelectedVersionProxyProperty, ref field, value);
     }
-
-
+    
     private LazyObject ConstructVersions()
     {
         var lazy = new LazyObject(async t =>
