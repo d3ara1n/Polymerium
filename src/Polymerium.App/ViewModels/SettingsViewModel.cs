@@ -13,13 +13,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
-    #region Injected
-
-    private readonly ConfigurationService _configurationService;
-    private readonly NavigationService _navigationService;
-
-    #endregion
-
     public SettingsViewModel(
         ConfigurationService configurationService,
         OverlayService overlayService,
@@ -57,6 +50,13 @@ public partial class SettingsViewModel : ViewModelBase
     #region Service Export
 
     public OverlayService OverlayService { get; }
+
+    #endregion
+
+    #region Injected
+
+    private readonly ConfigurationService _configurationService;
+    private readonly NavigationService _navigationService;
 
     #endregion
 

@@ -23,6 +23,12 @@ public partial class MaintenanceStorageViewModel(
     OverlayService overlayService,
     NotificationService notificationService) : ViewModelBase
 {
+    #region Direct
+
+    public ObservableCollection<StorageInstanceModel> Instances { get; } = [];
+
+    #endregion
+
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         await Task.Run(Calculate, token);
@@ -100,12 +106,6 @@ public partial class MaintenanceStorageViewModel(
             navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
                                                                             typeof(InstanceStorageView)));
     }
-
-    #endregion
-
-    #region Direct
-
-    public ObservableCollection<StorageInstanceModel> Instances { get; } = [];
 
     #endregion
 

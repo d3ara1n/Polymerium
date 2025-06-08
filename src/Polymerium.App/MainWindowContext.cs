@@ -327,10 +327,10 @@ public partial class MainWindowContext : ObservableObject
                                                         e.Key,
                                                         NotificationLevel.Success,
                                                         true,
-                                                        actions: new NotificationAction(Resources
-                                                               .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
-                                                            ViewInstanceCommand,
-                                                            e.Key));
+                                                        new NotificationAction(Resources
+                                                                                  .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
+                                                                               ViewInstanceCommand,
+                                                                               e.Key));
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
                                                                 PersistenceService.ActionKind.Update,

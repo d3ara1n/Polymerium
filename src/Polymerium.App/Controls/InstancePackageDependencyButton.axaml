@@ -1,12 +1,11 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                    xmlns:m="clr-namespace:Polymerium.App.Models"
                     xmlns:local="clr-namespace:Polymerium.App.Controls"
+                    xmlns:m="clr-namespace:Polymerium.App.Models"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:components="clr-namespace:Polymerium.App.Components"
                     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
-    <ControlTheme x:Key="{x:Type local:ExhibitDependencyButton}" TargetType="local:ExhibitDependencyButton">
+    <ControlTheme x:Key="{x:Type local:InstancePackageDependencyButton}"
+                  TargetType="local:InstancePackageDependencyButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Padding" Value="12,10" />
@@ -15,7 +14,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:ExhibitDependencyModel">
+            <ControlTemplate x:DataType="m:InstancePackageDependencyModel">
                 <Panel Name="Container">
                     <Panel Margin="4,2">
                         <Border Name="Background"
@@ -38,17 +37,22 @@
                                     CornerRadius="{StaticResource SmallCornerRadius}"
                                     Height="24" Width="24">
                                 <Border.Background>
-                                    <ImageBrush
-                                        async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                    <ImageBrush Source="{Binding Thumbnail}" />
                                 </Border.Background>
                             </Border>
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                        Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}" />
                             <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal" Spacing="4">
-                                <husk:Tag Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}"
-                                          VerticalAlignment="Center" IsVisible="{Binding IsRequired}" />
-                                <components:ExhibitStatePresenter IsVisible="{TemplateBinding IsChecked}"
-                                                                  State="{Binding Exhibit.State}" />
+                                <husk:Tag
+                                    Content="{x:Static lang:Resources.InstancePackageDependencyButton_RequiredTagText}"
+                                    VerticalAlignment="Center" IsVisible="{Binding IsRequired}" />
+                                <husk:Tag VerticalAlignment="Center">
+                                    <TextBlock>
+                                        <Run
+                                            Text="{x:Static lang:Resources.InstancePackageDependencyButton_RefCountTagText}" />
+                                        <Run Text="{Binding RefCount}" />
+                                    </TextBlock>
+                                </husk:Tag>
                             </StackPanel>
                         </Grid>
                         <Border Name="Overlay" CornerRadius="{TemplateBinding CornerRadius}"
@@ -70,7 +74,7 @@
                             BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                             Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                             CornerRadius="{StaticResource SmallCornerRadius}" Margin="0,4"
-                            IsVisible="{Binding Exhibit.Installed.Enabled,Mode=OneTime,FallbackValue={x:False}}">
+                            IsVisible="{Binding Installed.IsEnabled,Mode=OneWay,FallbackValue={x:False}}">
                         <Border.Transitions>
                             <Transitions>
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"

@@ -27,7 +27,7 @@
                         </Transitions>
                     </Border.Transitions>
                     <ToolTip.Tip>
-                        <Grid RowDefinitions="*,Auto" MaxWidth="300" Margin="-12,-8">
+                        <Grid RowDefinitions="*,Auto" MaxWidth="300" Margin="{StaticResource ToolTipFillMargin}">
                             <Border Grid.Row="0">
                                 <StackPanel Margin="12">
                                     <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
@@ -36,11 +36,14 @@
                                     <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
-                            <Border Grid.Row="1" Background="{StaticResource ControlBackgroundBrush}" Padding="6">
+                            <Border Grid.Row="1" Background="{StaticResource ControlBackgroundBrush}"
+                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                    Padding="6">
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                     <Border Grid.Column="0" BorderBrush="{StaticResource ControlBorderBrush}"
                                             BorderThickness="1" HorizontalAlignment="Left"
-                                            Padding="4,2" CornerRadius="{StaticResource SmallCornerRadius}"
+                                            Padding="4,2"
+                                            CornerRadius="{StaticResource SmallCornerRadius}"
                                             Background="{StaticResource LayerBackgroundBrush}">
                                         <StackPanel Orientation="Horizontal" Spacing="4">
                                             <icons:PackIconLucide Kind="CircleUser"

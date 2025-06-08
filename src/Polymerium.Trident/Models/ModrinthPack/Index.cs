@@ -9,6 +9,8 @@ public record Index(
     IReadOnlyList<Index.IndexFile> Files,
     IDictionary<string, string> Dependencies)
 {
+    #region Nested type: IndexFile
+
     public record IndexFile(
         string Path,
         IndexFile.FileHashes Hashes,
@@ -16,8 +18,18 @@ public record Index(
         IReadOnlyList<Uri> Downloads,
         ulong FileSize)
     {
-        public record FileHashes(string Sha1, string Sha512);
+        #region Nested type: FileEnv
 
         public record FileEnv(string Client, string Server);
+
+        #endregion
+
+        #region Nested type: FileHashes
+
+        public record FileHashes(string Sha1, string Sha512);
+
+        #endregion
     }
+
+    #endregion
 }

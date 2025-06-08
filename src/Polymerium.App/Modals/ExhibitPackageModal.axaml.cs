@@ -119,7 +119,7 @@ public partial class ExhibitPackageModal : Modal
     {
         get;
         set => SetAndRaise(SelectedVersionModeProperty, ref field, value);
-    } = 1;
+    }
 
 
     private ExhibitPackageModel Package => (DataContext as ExhibitPackageModel)!;
@@ -173,7 +173,11 @@ public partial class ExhibitPackageModal : Modal
         }
 
         if (change.Property == SelectedVersionProperty || change.Property == SelectedVersionModeProperty)
+        {
             LazyDependencies = ConstructDependencies();
+            ApplyCommand.NotifyCanExecuteChanged();
+        }
+
         if (change.Property == SelectedVersionProperty)
             LazyChangelog = ConstructChangelog();
         if (change.Property == IsDetailPanelVisibleProperty)
@@ -292,15 +296,28 @@ public partial class ExhibitPackageModal : Modal
                                              .InstalledVersionId,
                                           _ => Exhibit.PendingVersionId
                                       };
-                                      if (versionId != null && value is ExhibitVersionCollection versions)
+
+
+                                      if (value is ExhibitVersionCollection versions)
                                       {
-                                          var installed = versions.FirstOrDefault(x => x.VersionId == versionId);
-                                          if (installed != null)
+                                          if (versionId != null)
+                                          {
+                                              var installed = versions.FirstOrDefault(x => x.VersionId == versionId);
+                                              if (installed != null)
+                                                  Dispatcher.UIThread.Post(() =>
+                                                  {
+                                                      SelectedVersion = installed;
+                                                      SelectedVersionMode = 0;
+                                                  });
+                                          }
+                                          else
+                                          {
                                               Dispatcher.UIThread.Post(() =>
                                               {
-                                                  SelectedVersion = installed;
+                                                  SelectedVersion = versions.FirstOrDefault();
                                                   SelectedVersionMode = 0;
                                               });
+                                          }
                                       }
                                   });
 
@@ -315,7 +332,9 @@ public partial class ExhibitPackageModal : Modal
         RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
     }
 
-    [RelayCommand]
+    private bool CanApply() => SelectedVersionMode == 1 || (SelectedVersionMode == 0 && SelectedVersion != null);
+
+    [RelayCommand(CanExecute = nameof(CanApply))]
     private void Apply()
     {
         if (Exhibit.State is null)

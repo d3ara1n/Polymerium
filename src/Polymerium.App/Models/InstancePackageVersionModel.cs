@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Trident.Abstractions.Repositories.Resources;
@@ -11,7 +12,8 @@ public partial class InstancePackageVersionModel(
     string compatibleLoaders,
     string compatibleVersions,
     DateTimeOffset publishedAt,
-    ReleaseType releaseType) : InstancePackageVersionModelBase
+    ReleaseType releaseType,
+    IReadOnlyList<Dependency> dependencies) : InstancePackageVersionModelBase
 {
     #region Reactive
 
@@ -30,6 +32,8 @@ public partial class InstancePackageVersionModel(
     public string PublishedAt => publishedAt.Humanize();
 
     public ReleaseType ReleaseTypeRaw => releaseType;
+
+    public IReadOnlyList<Dependency> Dependencies => dependencies;
 
     #endregion
 }
