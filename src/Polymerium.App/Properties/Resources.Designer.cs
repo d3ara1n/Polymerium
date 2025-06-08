@@ -951,15 +951,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
-        /// </summary>
-        public static string InstanceDashboardToast_Title {
-            get {
-                return ResourceManager.GetString("InstanceDashboardToast_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to INSTALLING.
         /// </summary>
         public static string InstanceEntryButton_InstallTagText {
@@ -1284,11 +1275,38 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refs:.
+        /// </summary>
+        public static string InstancePackageDependencyButton_RefCountTagText {
+            get {
+                return ResourceManager.GetString("InstancePackageDependencyButton_RefCountTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string InstancePackageDependencyButton_RequiredTagText {
+            get {
+                return ResourceManager.GetString("InstancePackageDependencyButton_RequiredTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string InstancePackageModal_AddTagButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_AddTagButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies.
+        /// </summary>
+        public static string InstancePackageModal_DependenciesTabText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_DependenciesTabText", resourceCulture);
             }
         }
         

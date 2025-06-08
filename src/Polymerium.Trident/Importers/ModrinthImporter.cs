@@ -18,55 +18,6 @@ public class ModrinthImporter : IProfileImporter
         ["quilt-loader"] = LoaderHelper.LOADERID_QUILT
     };
 
-    private bool TryExtractLoader(
-        IDictionary<string, string> dependencies,
-        out (string Identity, string Version) loader)
-    {
-        foreach (var (k, v) in dependencies)
-            if (LOADER_MAPPINGS.TryGetValue(k, out var mapping))
-            {
-                loader = (mapping, v);
-                return true;
-            }
-
-        loader = default((string, string));
-        return false;
-    }
-
-    private bool TryExtractVersion(IDictionary<string, string> dependencies, [MaybeNullWhen(false)] out string version)
-    {
-        if (dependencies.TryGetValue("minecraft", out var v))
-        {
-            version = v;
-            return true;
-        }
-
-        version = null;
-        return false;
-    }
-
-    private Profile.Rice.Entry ToPackage(Index.IndexFile file)
-    {
-        var download = file.Downloads.FirstOrDefault(x => x.Host == "cdn.modrinth.com");
-        // https://cdn.modrinth.com/data/88888888/versions/88888888/filename.jar
-        if (download != null)
-        {
-            var path = download.AbsolutePath;
-            if (path.Length > 32)
-            {
-                var projectId = path[6..14];
-                var versionId = path[24..32];
-                return new Profile.Rice.Entry(PackageHelper.ToPurl(ModrinthService.LABEL, null, projectId, versionId),
-                                              true,
-                                              null,
-                                              []);
-            }
-        }
-
-        // or dead end
-        throw new NotSupportedException($"{file.Path} can not be recognized as an attachment");
-    }
-
     #region IProfileImporter Members
 
     public string IndexFileName => "modrinth.index.json";
@@ -116,4 +67,53 @@ public class ModrinthImporter : IProfileImporter
     }
 
     #endregion
+
+    private bool TryExtractLoader(
+        IDictionary<string, string> dependencies,
+        out (string Identity, string Version) loader)
+    {
+        foreach (var (k, v) in dependencies)
+            if (LOADER_MAPPINGS.TryGetValue(k, out var mapping))
+            {
+                loader = (mapping, v);
+                return true;
+            }
+
+        loader = default((string, string));
+        return false;
+    }
+
+    private bool TryExtractVersion(IDictionary<string, string> dependencies, [MaybeNullWhen(false)] out string version)
+    {
+        if (dependencies.TryGetValue("minecraft", out var v))
+        {
+            version = v;
+            return true;
+        }
+
+        version = null;
+        return false;
+    }
+
+    private Profile.Rice.Entry ToPackage(Index.IndexFile file)
+    {
+        var download = file.Downloads.FirstOrDefault(x => x.Host == "cdn.modrinth.com");
+        // https://cdn.modrinth.com/data/88888888/versions/88888888/filename.jar
+        if (download != null)
+        {
+            var path = download.AbsolutePath;
+            if (path.Length > 32)
+            {
+                var projectId = path[6..14];
+                var versionId = path[24..32];
+                return new Profile.Rice.Entry(PackageHelper.ToPurl(ModrinthService.LABEL, null, projectId, versionId),
+                                              true,
+                                              null,
+                                              []);
+            }
+        }
+
+        // or dead end
+        throw new NotSupportedException($"{file.Path} can not be recognized as an attachment");
+    }
 }

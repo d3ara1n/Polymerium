@@ -22,10 +22,7 @@ public static class AppBuilderExtensions
            .With(new FontManagerOptions
             {
                 DefaultFamilyName = "fonts:Manrope#Manrope",
-                FontFallbacks =
-                [
-                    new FontFallback { FontFamily = new FontFamily("fonts:AidianFengYaHei#爱点风雅黑") }
-                ]
+                FontFallbacks = [new FontFallback { FontFamily = new FontFamily("fonts:AidianFengYaHei#爱点风雅黑") }]
             });
         return appBuilder;
     }

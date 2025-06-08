@@ -825,9 +825,6 @@
     <data name="ExhibitModpackToast_InstallButtonText" xml:space="preserve">
         <value>Install</value>
     </data>
-    <data name="InstanceDashboardToast_Title" xml:space="preserve">
-        <value>Dashboard</value>
-    </data>
     <data name="JavaHomeContainer_ReqeustJavaTitle" xml:space="preserve">
         <value>Select a Java executable</value>
     </data>
@@ -1031,5 +1028,14 @@
     </data>
     <data name="InstancePropertiesView_CheckIntegrityLabelText" xml:space="preserve">
         <value>Check Integrity</value>
+    </data>
+    <data name="InstancePackageDependencyButton_RequiredTagText" xml:space="preserve">
+        <value>Required</value>
+    </data>
+    <data name="InstancePackageDependencyButton_RefCountTagText" xml:space="preserve">
+        <value>Refs:</value>
+    </data>
+    <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
+        <value>Dependencies</value>
     </data>
 </root>

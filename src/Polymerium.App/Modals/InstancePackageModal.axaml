@@ -9,6 +9,7 @@
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+            xmlns:controls="clr-namespace:Polymerium.App.Controls"
             mc:Ignorable="d" MinWidth="360" Margin="64"
             x:Class="Polymerium.App.Modals.InstancePackageModal" x:DataType="m:InstancePackageModel">
     <husk:ConstrainedBox AspectRatio="0.8">
@@ -292,6 +293,23 @@
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>
                     </Grid>
+                </TabItem>
+                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependenciesTabText}">
+                    <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyDependencies}">
+                        <husk:LazyContainer.SourceTemplate>
+                            <DataTemplate DataType="m:InstancePackageDependencyCollection">
+                                <ItemsControl
+                                    ItemsSource="{Binding Mode=OneWay}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="m:InstancePackageDependencyModel">
+                                            <controls:InstancePackageDependencyButton
+                                                IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </husk:LazyContainer.SourceTemplate>
+                    </husk:LazyContainer>
                 </TabItem>
             </TabControl>
             <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">

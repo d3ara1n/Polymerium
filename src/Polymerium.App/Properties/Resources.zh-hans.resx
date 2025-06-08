@@ -813,9 +813,6 @@
     <data name="Dialog_DismissButtonText" xml:space="preserve">
         <value>关闭</value>
     </data>
-    <data name="InstanceDashboardToast_Title" xml:space="preserve">
-        <value>大师伯德</value>
-    </data>
     <data name="ExhibitModpackToast_InstallButtonText" xml:space="preserve">
         <value>安装</value>
     </data>
@@ -1022,5 +1019,14 @@
     </data>
     <data name="InstancePropertiesView_CheckIntegrityLabelText" xml:space="preserve">
         <value>检查完整性</value>
+    </data>
+    <data name="InstancePackageDependencyButton_RequiredTagText" xml:space="preserve">
+        <value>必需</value>
+    </data>
+    <data name="InstancePackageDependencyButton_RefCountTagText" xml:space="preserve">
+        <value>引用：</value>
+    </data>
+    <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
+        <value>依赖</value>
     </data>
 </root>

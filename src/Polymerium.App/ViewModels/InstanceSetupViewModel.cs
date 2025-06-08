@@ -139,7 +139,8 @@ public partial class InstanceSetupViewModel(
                                                                          .Select(LoaderHelper.ToDisplayName)),
                                                             string.Join(",", p.Requirements.AnyOfVersions),
                                                             p.PublishedAt,
-                                                            p.ReleaseType) { IsCurrent = true },
+                                                            p.ReleaseType,
+                                                            p.Dependencies) { IsCurrent = true },
                                                         p.Author,
                                                         p.Summary,
                                                         p.Reference,
@@ -316,6 +317,7 @@ public partial class InstanceSetupViewModel(
                 DataService = dataService,
                 OverlayService = overlayService,
                 PersistenceService = persistenceService,
+                OriginalCollection = Stage.Items,
                 Filter = new Filter(Kind: model.Kind,
                                     Version: Basic.Version,
                                     Loader: Basic.Loader is not null

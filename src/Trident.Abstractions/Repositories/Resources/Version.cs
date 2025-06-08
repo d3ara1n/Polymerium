@@ -10,4 +10,4 @@ public record Version(
     DateTimeOffset PublishedAt,
     ulong DownloadCount,
     Requirement Requirements,
-    IEnumerable<Dependency> Dependencies);
+    IReadOnlyList<Dependency> Dependencies);

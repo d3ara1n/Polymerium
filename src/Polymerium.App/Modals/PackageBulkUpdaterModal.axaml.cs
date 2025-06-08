@@ -66,7 +66,8 @@ public partial class PackageBulkUpdaterModal : Modal
                                                                   string.Join(",",
                                                                               model.Package.Requirements.AnyOfVersions),
                                                                   model.NewVersionTimeRaw,
-                                                                  model.Package.ReleaseType);
+                                                                  model.Package.ReleaseType,
+                                                                  model.Package.Dependencies);
             // 设置 Version 会同步到 Entry.Purl
             PersistenceService.AppendAction(new PersistenceService.Action(_guard!.Key,
                                                                           PersistenceService.ActionKind.EditPackage,

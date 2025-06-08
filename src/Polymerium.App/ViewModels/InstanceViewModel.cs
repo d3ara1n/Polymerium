@@ -26,8 +26,6 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
                             instanceManager,
                             profileManager)
 {
-    public record CompositeParameter(string Key, Type Subview);
-
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         SelectedPage = bag.Parameter switch
@@ -47,6 +45,12 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
     }
+
+    #endregion
+
+    #region Nested type: CompositeParameter
+
+    public record CompositeParameter(string Key, Type Subview);
 
     #endregion
 
