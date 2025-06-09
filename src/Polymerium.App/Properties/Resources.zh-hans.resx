@@ -1035,4 +1035,7 @@
     <data name="SettingsView_AccentColorLabelText" xml:space="preserve">
         <value>强调色</value>
     </data>
+    <data name="DeployStage_EnsureRuntime" xml:space="preserve">
+        <value>保底运行时...</value>
+    </data>
 </root>

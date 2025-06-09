@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Reactive.Subjects;
 using System.Security.Cryptography;
@@ -63,20 +64,16 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         await using var reader = await client
                                                                       .GetStreamAsync(fragile.Url, cancel.Token)
                                                                       .ConfigureAwait(false);
-                                        await using var writer = new FileStream(fragile.SourcePath,
-                                                                                    FileMode.Create,
-                                                                                    FileAccess.Write,
-                                                                                    FileShare.Write);
+                                        var writer = new FileStream(fragile.SourcePath,
+                                                                    FileMode.Create,
+                                                                    FileAccess.Write,
+                                                                    FileShare.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
+                                        await writer.FlushAsync(cancel.Token).ConfigureAwait(false);
+                                        writer.Close();
                                         var file = new FileInfo(fragile.SourcePath);
                                         if (file.Exists)
                                             file.IsReadOnly = true;
-                                    }
-                                    else
-                                    {
-                                        logger.LogDebug("Skipped download fragile file {} from {}",
-                                                        fragile.SourcePath,
-                                                        fragile.Url);
                                     }
 
                                     entities.Add(new Snapshot.Entity(fragile.TargetPath, fragile.SourcePath));
@@ -94,20 +91,16 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         await using var reader = await client
                                                                       .GetStreamAsync(present.Url, cancel.Token)
                                                                       .ConfigureAwait(false);
-                                        await using var writer = new FileStream(present.Path,
-                                                                                    FileMode.Create,
-                                                                                    FileAccess.Write,
-                                                                                    FileShare.Write);
+                                        var writer = new FileStream(present.Path,
+                                                                    FileMode.Create,
+                                                                    FileAccess.Write,
+                                                                    FileShare.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
+                                        await writer.FlushAsync(cancel.Token).ConfigureAwait(false);
+                                        writer.Close();
                                         var file = new FileInfo(present.Path);
                                         if (file.Exists)
                                             file.IsReadOnly = true;
-                                    }
-                                    else
-                                    {
-                                        logger.LogDebug("Skipped download present file {} from {}",
-                                                        present.Path,
-                                                        present.Url);
                                     }
 
                                     break;
@@ -131,10 +124,6 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                                         persistent.SourcePath,
                                                         persistent.TargetPath);
                                         File.Copy(persistent.SourcePath, persistent.TargetPath);
-                                    }
-                                    else
-                                    {
-                                        logger.LogDebug("Skipped persistent file {}", persistent.SourcePath);
                                     }
 
                                     break;
@@ -189,12 +178,17 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                                           FileShare.Read),
                                            ZipArchiveMode.Read,
                                            false);
+            var nested = HasSingleRootDirectory(zip, out var rootDir, !explosive.Unwrap);
             foreach (var entry in zip.Entries)
             {
-                var path = Path.Combine(explosive.TargetDirectory, entry.FullName);
+                if (entry.Length == 0)
+                    continue;
+                var path = Path.Combine(explosive.TargetDirectory,
+                                        nested && !string.IsNullOrEmpty(rootDir)
+                                            ? entry.FullName[(rootDir.Length + 1)..]
+                                            : entry.FullName);
                 // Skip the empty file and directory(Length == 0 as well)
-                if (entry.Length > 0
-                 && (!File.Exists(path) || File.GetLastWriteTimeUtc(path) < entry.LastWriteTime.UtcDateTime))
+                if (!File.Exists(path) || File.GetLastWriteTimeUtc(path) < entry.LastWriteTime.UtcDateTime)
                 {
                     var dir = Path.GetDirectoryName(path);
                     if (dir != null && !Directory.Exists(dir))
@@ -206,11 +200,6 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                     writer.Close();
                     // 用 await using 会导致处置写入发生在设置属性后而覆盖值
                     File.SetLastWriteTimeUtc(path, entry.LastWriteTime.UtcDateTime);
-                }
-                else
-                {
-                    var last = File.GetLastWriteTime(path);
-                    Debug.WriteLine(last);
                 }
             }
 
@@ -235,6 +224,48 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         logger.LogInformation("Solidifying finished in {ms}ms", watch.ElapsedMilliseconds);
 
         Context.IsSolidified = true;
+    }
+
+    /// <summary>
+    ///     检查压缩包是否只有一个根目录，所有文件都在该目录内
+    /// </summary>
+    /// <param name="archive">要检查的ZipArchive</param>
+    /// <param name="rootDirName">如果存在单根目录，返回该目录名</param>
+    /// <param name="skip">是否跳过检查，直接返回false</param>
+    /// <returns>如果所有文件都在一个根目录内，返回true</returns>
+    public static bool HasSingleRootDirectory(
+        ZipArchive archive,
+        [MaybeNullWhen(false)] out string rootDirName,
+        bool skip = false)
+    {
+        rootDirName = null;
+
+        if (skip || archive.Entries.Count == 0)
+            return false;
+        // 获取所有条目的路径
+        var entries = archive.Entries.Select(e => e.FullName).Where(x => x.Length > 0).ToList();
+
+        foreach (var entry in entries)
+        {
+            // 获取根级别项目（第一个目录或文件名）
+            string rootItem;
+            var slashIndex = entry.IndexOf('/');
+
+            if (slashIndex >= 0)
+                rootItem = entry[..slashIndex];
+            else
+                // 如果没有斜杠，则整个条目是根级别项目
+                rootItem = entry;
+
+            if (rootDirName is null)
+                rootDirName = rootItem;
+            else if (rootItem != rootDirName)
+                return false;
+        }
+
+        #pragma warning disable CS8762 // 在某些条件下退出时，参数必须具有非 null 值。
+        return true;
+        #pragma warning restore CS8762 // 在某些条件下退出时，参数必须具有非 null 值。
     }
 
     private static bool Verify(string path, string? hash)

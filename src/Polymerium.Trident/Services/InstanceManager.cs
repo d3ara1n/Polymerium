@@ -67,7 +67,11 @@ public class InstanceManager(
         return Convert.ToHexString(SHA1.HashData(data));
     }
 
-    public void DeployAndLaunch(string key, DeployOptions deploy, LaunchOptions launch)
+    public void DeployAndLaunch(
+        string key,
+        DeployOptions deploy,
+        LaunchOptions launch,
+        JavaHomeLocatorDelegate javaHomeLocator)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
@@ -80,19 +84,19 @@ public class InstanceManager(
             if (artifact != null
              && artifact.Verify(key, profileManager.GetImmutable(key).Setup, ComputeWatermark(deploy)))
             {
-                Launch(key, launch);
+                Launch(key, launch, javaHomeLocator);
                 return;
             }
         }
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t, deploy)
+                                        async t => await DeployInternalAsync((DeployTracker)t, deploy, javaHomeLocator)
                                                       .ConfigureAwait(false),
                                         t =>
                                         {
                                             TrackerOnCompleted(t);
                                             if (t is { State: TrackerState.Finished })
-                                                Launch(key, launch);
+                                                Launch(key, launch, javaHomeLocator);
                                         });
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -152,13 +156,13 @@ public class InstanceManager(
 
     #region Deploy
 
-    public DeployTracker Deploy(string key, DeployOptions options)
+    public DeployTracker Deploy(string key, DeployOptions options, JavaHomeLocatorDelegate javaHomeLocator)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t, options)
+                                        async t => await DeployInternalAsync((DeployTracker)t, options, javaHomeLocator)
                                                       .ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
@@ -167,7 +171,10 @@ public class InstanceManager(
         return tracker;
     }
 
-    private async Task DeployInternalAsync(DeployTracker tracker, DeployOptions options)
+    private async Task DeployInternalAsync(
+        DeployTracker tracker,
+        DeployOptions options,
+        JavaHomeLocatorDelegate javaHomeLocator)
     {
         logger.LogInformation("Begin deploy {}", tracker.Key);
 
@@ -181,7 +188,8 @@ public class InstanceManager(
                                           FullCheckMode = options.FullCheckMod,
                                           ResolveDependency = options.ResolveDependency
                                       },
-                                      ComputeWatermark(options));
+                                      ComputeWatermark(options),
+                                      javaHomeLocator);
 
         var watch = Stopwatch.StartNew();
         foreach (var stage in engine)
@@ -239,13 +247,13 @@ public class InstanceManager(
 
     #region Launch
 
-    public LaunchTracker Launch(string key, LaunchOptions options)
+    public LaunchTracker Launch(string key, LaunchOptions options, JavaHomeLocatorDelegate javaHomeLocator)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new LaunchTracker(key,
-                                        async t => await LaunchInternalAsync((LaunchTracker)t, options)
+                                        async t => await LaunchInternalAsync((LaunchTracker)t, options, javaHomeLocator)
                                                       .ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
@@ -254,7 +262,10 @@ public class InstanceManager(
         return tracker;
     }
 
-    private async Task LaunchInternalAsync(LaunchTracker tracker, LaunchOptions options)
+    private async Task LaunchInternalAsync(
+        LaunchTracker tracker,
+        LaunchOptions options,
+        JavaHomeLocatorDelegate javaHomeLocator)
     {
         logger.LogInformation("Begin launch {}", tracker.Key);
 
@@ -278,7 +289,7 @@ public class InstanceManager(
 
             try
             {
-                var javaHome = options.JavaHomeLocator(artifact.JavaMajorVersion);
+                var javaHome = javaHomeLocator(artifact.JavaMajorVersion);
                 var workingDir = PathDef.Default.DirectoryOfBuild(tracker.Key);
                 var libraryDir = PathDef.Default.CacheLibraryDirectory;
                 var assetDir = PathDef.Default.CacheAssetDirectory;
@@ -339,7 +350,8 @@ public class InstanceManager(
                         await process.WaitForExitAsync(tracker.Token).ConfigureAwait(false);
 
                         if (process.ExitCode != 0)
-                            throw new Exception($"The process has exited with non-zero code {process.ExitCode}");
+                            throw new ProcessFaultedException(process.ExitCode,
+                                                              $"The process has exited with non-zero code {process.ExitCode}");
                     }
 
                     process.Close();

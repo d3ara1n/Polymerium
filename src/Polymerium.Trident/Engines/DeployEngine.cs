@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Engines.Deploying.Stages;
+using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Reactive;
 
@@ -22,12 +23,18 @@ public class DeployEngine(
     Profile.Rice setup,
     IServiceProvider provider,
     DeployEngineOptions options,
-    string verificationWatermark) : IEnumerable<StageBase>
+    string verificationWatermark,
+    JavaHomeLocatorDelegate javaHomeLocator) : IEnumerable<StageBase>
 {
     #region IEnumerable<StageBase> Members
 
     public IEnumerator<StageBase> GetEnumerator() =>
-        new DeployEngineEnumerator(new DeployContext(key, setup, provider, options, verificationWatermark));
+        new DeployEngineEnumerator(new DeployContext(key,
+                                                     setup,
+                                                     provider,
+                                                     options,
+                                                     verificationWatermark,
+                                                     javaHomeLocator));
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -85,6 +92,9 @@ public class DeployEngine(
                 if (context.Options.FastMode)
                     // Fast-Forward
                     return null;
+                if (!context.IsRuntimeEnsured)
+                    return CreateStage<EnsureRuntimeStage>();
+                
                 return CreateStage<GenerateManifestStage>();
             }
 
@@ -94,7 +104,7 @@ public class DeployEngine(
                 if (!context.IsVanillaInstalled)
                     return CreateStage<InstallVanillaStage>();
 
-                if (!context.IsLoaderProcess)
+                if (!context.IsLoaderProcessed)
                     return CreateStage<ProcessLoaderStage>();
 
                 if (!context.IsPackageResolved)

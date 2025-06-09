@@ -17,6 +17,7 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
+using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions;
@@ -446,15 +447,18 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        e.Key,
-                                                        actions:
-                                                        [
-                                                            new NotificationAction(Resources
-                                                                   .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
-                                                                ViewLogCommand,
-                                                                e)
-                                                        ]);
+                        if (e.FailureReason is ProcessFaultedException)
+                            _notificationService.PopMessage(e.FailureReason,
+                                                            e.Key,
+                                                            actions:
+                                                            [
+                                                                new NotificationAction(Resources
+                                                                       .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
+                                                                    ViewLogCommand,
+                                                                    e)
+                                                            ]);
+                        else
+                            _notificationService.PopMessage(e.FailureReason, e.Key);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
                                                                     e.StartedAt,

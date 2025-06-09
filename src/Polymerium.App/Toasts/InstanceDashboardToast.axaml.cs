@@ -61,6 +61,7 @@ public partial class InstanceDashboardToast : Toast
 
     private void ViewerOnScrollChanged(object? sender, ScrollChangedEventArgs e)
     {
+        e.Handled = true;
         if (e.OffsetDelta.Y < 0)
         {
             _debounce++;

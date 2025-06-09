@@ -26,7 +26,6 @@ public class PathDef
 
     public static PathDef Default { get; } = new();
 
-
     public string Home { get; }
 
     #region Private Folder
@@ -47,6 +46,10 @@ public class PathDef
     public string CacheLibraryDirectory => Path.Combine(CacheDirectory, "libraries");
     public string CachePackageDirectory => Path.Combine(CacheDirectory, "packages");
     public string CacheRuntimeDirectory => Path.Combine(CacheDirectory, "runtimes");
+
+    public string FileOfRuntimeBundle(uint major) => Path.Combine(CacheRuntimeDirectory, $"{major}.zip");
+
+    public string DirectoryOfRuntime(uint major) => Path.Combine(CacheRuntimeDirectory, major.ToString());
 
     public string FileOfLibrary(string ns, string name, string version, string? platform, string extension)
     {

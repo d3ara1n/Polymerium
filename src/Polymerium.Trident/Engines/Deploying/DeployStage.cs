@@ -2,5 +2,12 @@
 
 public enum DeployStage
 {
-    CheckArtifact, InstallVanilla, ProcessLoader, ResolvePackage, BuildArtifact, GenerateManifest, SolidifyManifest
+    CheckArtifact,
+    InstallVanilla,
+    ProcessLoader,
+    ResolvePackage,
+    BuildArtifact,
+    EnsureRuntime,
+    GenerateManifest,
+    SolidifyManifest
 }

@@ -1044,4 +1044,7 @@
     <data name="SettingsView_AccentColorLabelText" xml:space="preserve">
         <value>Accent Color</value>
     </data>
+    <data name="DeployStage_EnsureRuntime" xml:space="preserve">
+        <value>Ensuring runtime...</value>
+    </data>
 </root>
