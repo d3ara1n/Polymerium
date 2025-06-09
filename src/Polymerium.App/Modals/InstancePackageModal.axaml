@@ -16,6 +16,9 @@
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
             <Border Grid.Row="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Padding="12"
                     CornerRadius="{StaticResource MediumCornerRadius}">
+                <ToolTip.Tip>
+                    <TextBlock Text="{Binding ProjectName}" />
+                </ToolTip.Tip>
                 <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
                     <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Height="48" Width="48"
                             CornerRadius="{StaticResource SmallCornerRadius}">
@@ -59,6 +62,9 @@
                         <Setter Property="Margin" Value="0" />
                     </Style>
                 </TabControl.Styles>
+                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_BasicsTabText}">
+                    <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
+                </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_TagsTabText}">
                     <Border
                         BorderBrush="{StaticResource ControlBorderBrush}"

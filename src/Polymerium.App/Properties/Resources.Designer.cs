@@ -1302,6 +1302,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basics.
+        /// </summary>
+        public static string InstancePackageModal_BasicsTabText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BasicsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dependencies.
         /// </summary>
         public static string InstancePackageModal_DependenciesTabText {
@@ -2711,6 +2720,15 @@ namespace Polymerium.App.Properties {
         public static string SafeLock_Title {
             get {
                 return ResourceManager.GetString("SafeLock_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent Color.
+        /// </summary>
+        public static string SettingsView_AccentColorLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_AccentColorLabelText", resourceCulture);
             }
         }
         

@@ -90,8 +90,10 @@
                     </TextBlock.Effect>
                     <TextBlock.Foreground>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                            <GradientStop Offset="0" Color="#f6d365" />
-                            <GradientStop Offset="1" Color="#fda085" />
+                            <!-- <GradientStop Offset="0" Color="#f6d365" /> -->
+                            <!-- <GradientStop Offset="1" Color="#fda085" /> -->
+                            <GradientStop Offset="0" Color="{DynamicResource Accent5Color}" />
+                            <GradientStop Offset="1" Color="{DynamicResource Accent10Color}" />
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>

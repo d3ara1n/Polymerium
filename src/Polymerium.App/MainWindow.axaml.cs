@@ -4,6 +4,7 @@ using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
+using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App;
@@ -69,6 +70,12 @@ public partial class MainWindow : AppWindow
             2 => ThemeVariant.Dark,
             _ => ThemeVariant.Default
         };
+
+    internal void SetColorVariant(AccentColor accent)
+    {
+        if (Application.Current is App { Theme: { } theme })
+            theme.Accent = accent;
+    }
 
     #region Navigation Service
 
