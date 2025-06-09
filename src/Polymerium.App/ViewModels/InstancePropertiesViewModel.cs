@@ -11,6 +11,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -165,7 +166,9 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private void CheckIntegrity()
     {
-        InstanceManager.Deploy(Basic.Key, new DeployOptions(false, true, BehaviorResolveDependency));
+        var profile = ProfileManager.GetImmutable(Basic.Key);
+        var locator = JavaHelper.MakeLocator(profile, _configurationService.Value);
+        InstanceManager.Deploy(Basic.Key, new DeployOptions(false, true, BehaviorResolveDependency), locator);
     }
 
     [RelayCommand]

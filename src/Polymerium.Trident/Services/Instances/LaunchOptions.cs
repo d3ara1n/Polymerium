@@ -1,5 +1,4 @@
-﻿using Polymerium.Trident.Exceptions;
-using Polymerium.Trident.Igniters;
+﻿using Polymerium.Trident.Igniters;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.Trident.Services.Instances;
@@ -10,8 +9,7 @@ public class LaunchOptions(
     IAccount? account = null,
     (uint, uint)? windowSize = null,
     uint maxMemory = 4096,
-    string? additionalArguments = null,
-    JavaHomeLocatorDelegate? javaHomeLocator = null)
+    string? additionalArguments = null)
 {
     public LaunchMode Mode { get; set; } = launchMode;
 
@@ -21,7 +19,4 @@ public class LaunchOptions(
     public string AdditionalArguments { get; set; } = additionalArguments ?? string.Empty;
 
     public string Brand { get; set; } = brand ?? "Trident";
-
-    public JavaHomeLocatorDelegate JavaHomeLocator { get; set; } =
-        javaHomeLocator ?? (v => throw new JavaNotFoundException(v));
 }

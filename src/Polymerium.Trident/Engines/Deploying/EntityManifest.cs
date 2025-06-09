@@ -14,7 +14,7 @@ public class EntityManifest
 
     #region Nested type: ExplosiveFile
 
-    public record ExplosiveFile(string SourcePath, string TargetDirectory, bool IsDestructive);
+    public record ExplosiveFile(string SourcePath, string TargetDirectory, bool Unwrap = false);
 
     #endregion
 

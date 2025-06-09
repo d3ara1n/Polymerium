@@ -41,6 +41,7 @@ public partial class MaintenanceStorageViewModel(
         (PackageSize, PackageCount) = CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
         (LibrarySize, _) = CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
         (AssetSize, _) = CalculateDirectorySize(PathDef.Default.CacheAssetDirectory);
+        (RuntimeSize, _) = CalculateDirectorySize(PathDef.Default.CacheRuntimeDirectory);
 
         foreach (var (key, profile) in profileManager.Profiles)
         {
@@ -50,7 +51,7 @@ public partial class MaintenanceStorageViewModel(
             InstanceSize += size;
         }
 
-        CacheSize = PackageSize + LibrarySize + AssetSize;
+        CacheSize = PackageSize + LibrarySize + AssetSize + RuntimeSize;
         TotalSize = CacheSize + InstanceSize;
     }
 
@@ -134,6 +135,9 @@ public partial class MaintenanceStorageViewModel(
 
     [ObservableProperty]
     public partial ulong AssetSize { get; set; }
+
+    [ObservableProperty]
+    public partial ulong RuntimeSize { get; set; }
 
     #endregion
 }

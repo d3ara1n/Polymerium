@@ -67,7 +67,7 @@
                     <husk:IconLabel Icon="DeleteLines" Text="Purge" />
                 </Button>
             </Grid>
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
                 <husk:Card Grid.Column="0">
                     <StackPanel Spacing="4">
                         <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
@@ -116,6 +116,22 @@
                             <Run Text="{Binding #AssetProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                         </TextBlock>
                         <ProgressBar Name="AssetProgressBar" Value="{Binding AssetSize}" Maximum="{Binding CacheSize}" />
+                    </StackPanel>
+                </husk:Card>
+                <husk:Card Grid.Column="3">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="ShipWheel" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}" />
+                        <TextBlock Text="Runtimes" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding RuntimeSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="GiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #RuntimeProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <ProgressBar Name="RuntimeProgressBar" Value="{Binding RuntimeSize}"
+                                     Maximum="{Binding CacheSize}" />
                     </StackPanel>
                 </husk:Card>
             </Grid>

@@ -53,7 +53,15 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
                                                      lib.Id.Extension);
             manifest.PresentFiles.Add(new EntityManifest.PresentFile(path, lib.Url, lib.Sha1));
             if (lib.IsNative)
-                manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, nativesDir, false));
+                manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, nativesDir));
+        }
+
+        if (Context.Runtime != null)
+        {
+            var path = PathDef.Default.FileOfRuntimeBundle(Context.Runtime.Major);
+            var dir = PathDef.Default.DirectoryOfRuntime(Context.Runtime.Major);
+            manifest.PresentFiles.Add(new EntityManifest.PresentFile(path, Context.Runtime.Url, null));
+            manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, dir, true));
         }
 
         var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);

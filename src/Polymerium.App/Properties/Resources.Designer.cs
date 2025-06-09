@@ -438,6 +438,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ensuring runtime....
+        /// </summary>
+        public static string DeployStage_EnsureRuntime {
+            get {
+                return ResourceManager.GetString("DeployStage_EnsureRuntime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generating manifest....
         /// </summary>
         public static string DeployStage_GenerateManifest {

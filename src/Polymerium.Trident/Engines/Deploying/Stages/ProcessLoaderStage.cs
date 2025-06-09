@@ -43,7 +43,7 @@ public class ProcessLoaderStage(
                         throw new FormatException($"{parsed.Identity} is not known loader");
                 }
 
-        Context.IsLoaderProcess = true;
+        Context.IsLoaderProcessed = true;
     }
 
     private async Task InstallForgeAsync(DataLockBuilder builder, string uid, string version, CancellationToken token)
