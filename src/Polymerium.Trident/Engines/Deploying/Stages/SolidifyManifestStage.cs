@@ -164,22 +164,56 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
 
         foreach (var explosive in manifest.ExplosiveFiles)
         {
-            if (Directory.Exists(explosive.TargetDirectory) && explosive.IsDestructive)
+            // if (Directory.Exists(explosive.TargetDirectory) && explosive.IsDestructive)
+            // {
+            //     // 只有 build 目录里才具有摧毁性
+            //     var full = Path.GetFullPath(explosive.TargetDirectory);
+            //     if (full.StartsWith(fullBuildDir))
+            //     {
+            //         logger.LogDebug("Destroying {}", full);
+            //         Directory.Delete(explosive.TargetDirectory, true);
+            //     }
+            // }
+            //
+            // if (!Directory.Exists(explosive.TargetDirectory))
+            //     Directory.CreateDirectory(explosive.TargetDirectory);
+            //
+            // logger.LogDebug("Extracting {} to {}", explosive.SourcePath, explosive.TargetDirectory);
+            // ZipFile.ExtractToDirectory(explosive.SourcePath, explosive.TargetDirectory, true);
+            // ProgressStream.OnNext((++downloaded, files.Count + manifest.ExplosiveFiles.Count));
+
+            logger.LogDebug("Extracting {} to {}", explosive.SourcePath, explosive.TargetDirectory);
+            using var zip = new ZipArchive(new FileStream(explosive.SourcePath,
+                                                          FileMode.Open,
+                                                          FileAccess.Read,
+                                                          FileShare.Read),
+                                           ZipArchiveMode.Read,
+                                           false);
+            foreach (var entry in zip.Entries)
             {
-                // 只有 build 目录里才具有摧毁性
-                var full = Path.GetFullPath(explosive.TargetDirectory);
-                if (full.StartsWith(fullBuildDir))
+                var path = Path.Combine(explosive.TargetDirectory, entry.FullName);
+                // Skip the empty file and directory(Length == 0 as well)
+                if (entry.Length > 0
+                 && (!File.Exists(path) || File.GetLastWriteTimeUtc(path) < entry.LastWriteTime.UtcDateTime))
                 {
-                    logger.LogDebug("Destroying {}", full);
-                    Directory.Delete(explosive.TargetDirectory, true);
+                    var dir = Path.GetDirectoryName(path);
+                    if (dir != null && !Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
+                    await using var reader = entry.Open();
+                    var writer = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Write);
+                    await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
+                    await writer.FlushAsync(cancel.Token).ConfigureAwait(false);
+                    writer.Close();
+                    // 用 await using 会导致处置写入发生在设置属性后而覆盖值
+                    File.SetLastWriteTimeUtc(path, entry.LastWriteTime.UtcDateTime);
+                }
+                else
+                {
+                    var last = File.GetLastWriteTime(path);
+                    Debug.WriteLine(last);
                 }
             }
 
-            if (!Directory.Exists(explosive.TargetDirectory))
-                Directory.CreateDirectory(explosive.TargetDirectory);
-
-            logger.LogDebug("Extracting {} to {}", explosive.SourcePath, explosive.TargetDirectory);
-            ZipFile.ExtractToDirectory(explosive.SourcePath, explosive.TargetDirectory, true);
             ProgressStream.OnNext((++downloaded, files.Count + manifest.ExplosiveFiles.Count));
         }
 

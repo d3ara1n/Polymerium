@@ -26,6 +26,7 @@ public partial class SettingsViewModel : ViewModelBase
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
+        AccentColor = configurationService.Value.ApplicationStyleAccent;
         BackgroundMode = configurationService.Value.ApplicationStyleBackground;
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
