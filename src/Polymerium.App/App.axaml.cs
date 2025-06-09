@@ -24,6 +24,9 @@ public class App : Application
 {
     private static int activatorErrorCount;
 
+    public HuskuiTheme? Theme { get; private set; }
+
+
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
@@ -31,6 +34,13 @@ public class App : Application
         AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowOrDump(e.ExceptionObject, e.IsTerminating);
         TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
         Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
+
+        foreach (var styles in Styles)
+            if (styles is HuskuiTheme husk)
+            {
+                Theme = husk;
+                break;
+            }
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.MainWindow = ConstructWindow();

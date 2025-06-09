@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -121,6 +122,21 @@ public partial class SettingsViewModel : ViewModelBase
         _configurationService.Value.ApplicationLeftPanelMode = rv;
         MainWindow.Instance.IsLeftPanelMode = rv;
     }
+
+    #endregion
+
+    #region AccentColor
+
+    [ObservableProperty]
+    public partial AccentColor AccentColor { get; set; }
+
+    partial void OnAccentColorChanged(AccentColor value)
+    {
+        _configurationService.Value.ApplicationStyleAccent = value;
+        MainWindow.Instance.SetColorVariant(value);
+    }
+
+    public AccentColor[] AccentColors { get; } = Enum.GetValues<AccentColor>();
 
     #endregion
 

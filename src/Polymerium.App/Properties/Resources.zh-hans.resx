@@ -1029,4 +1029,10 @@
     <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
         <value>依赖</value>
     </data>
+    <data name="InstancePackageModal_BasicsTabText" xml:space="preserve">
+        <value>基本</value>
+    </data>
+    <data name="SettingsView_AccentColorLabelText" xml:space="preserve">
+        <value>强调色</value>
+    </data>
 </root>

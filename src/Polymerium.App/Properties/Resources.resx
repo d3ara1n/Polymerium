@@ -1038,4 +1038,10 @@
     <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
         <value>Dependencies</value>
     </data>
+    <data name="InstancePackageModal_BasicsTabText" xml:space="preserve">
+        <value>Basics</value>
+    </data>
+    <data name="SettingsView_AccentColorLabelText" xml:space="preserve">
+        <value>Accent Color</value>
+    </data>
 </root>

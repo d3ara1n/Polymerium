@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Huskui.Avalonia;
 
 namespace Polymerium.App;
 
@@ -8,6 +9,7 @@ public class Configuration
     public const string APPLICATION_SUPERPOWER_ACTIVATED = "Application.SuperpowerActivated";
     public const string APPLICATION_TITLEBAR_VISIBILITY = "Application.TitleBar.Visibility";
     public const string APPLICATION_LEFT_PANEL_MODE = "Application.LeftPanelMode";
+    public const string APPLICATION_STYLE_ACCENT = "Application.Style.Accent";
     public const string APPLICATION_STYLE_BACKGROUND = "Application.Style.Background";
     public const string APPLICATION_STYLE_THEME_VARIANT = "Application.Style.ThemeVariant";
     public const string APPLICATION_LANGUAGE = "Application.Language";
@@ -27,6 +29,7 @@ public class Configuration
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
         { APPLICATION_TITLEBAR_VISIBILITY, !OperatingSystem.IsLinux() },
         { APPLICATION_LEFT_PANEL_MODE, false },
+        { APPLICATION_STYLE_ACCENT, AccentColor.Neutral },
         { APPLICATION_STYLE_BACKGROUND, 0 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, "en_US" },
@@ -45,6 +48,7 @@ public class Configuration
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
     public bool ApplicationTitleBarVisibility { get; set; } = AccessDefault<bool>(APPLICATION_TITLEBAR_VISIBILITY);
     public bool ApplicationLeftPanelMode { get; set; } = AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);
+    public AccentColor ApplicationStyleAccent { get; set; } = AccessDefault<AccentColor>(APPLICATION_STYLE_ACCENT);
     public int ApplicationStyleBackground { get; set; } = AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
     public int ApplicationStyleThemeVariant { get; set; } = AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);
     public string ApplicationLanguage { get; set; } = AccessDefault<string>(APPLICATION_LANGUAGE);
