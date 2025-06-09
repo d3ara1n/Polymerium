@@ -181,6 +181,7 @@ public class App : Application
 
         var window = new MainWindow { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
 
+        window.SetColorVariant(configuration.Value.ApplicationStyleAccent);
         window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
         window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
         window.IsTitleBarVisible = configuration.Value.ApplicationTitleBarVisibility;
