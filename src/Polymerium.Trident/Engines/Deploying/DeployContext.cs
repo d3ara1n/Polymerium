@@ -15,11 +15,11 @@ public class DeployContext(
 
     internal DataLock? Artifact;
     internal DataLockBuilder? ArtifactBuilder;
-    internal bool IsVanillaInstalled = false;
     internal bool IsLoaderProcessed = false;
     internal bool IsPackageResolved = false;
-    internal bool IsSolidified = false;
     internal bool IsRuntimeEnsured = false;
+    internal bool IsSolidified = false;
+    internal bool IsVanillaInstalled = false;
     internal EntityManifest? Manifest;
     internal BundledRuntime? Runtime;
     public string Key => key;

@@ -96,7 +96,7 @@
                                 <StackPanel VerticalAlignment="Center"
                                             IsVisible="{Binding Tags.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                                             Spacing="8">
-                                    <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
+                                    <icons:PackIconLucide Kind="Tag" Height="{StaticResource ExtraLargeFontSize}"
                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                           Width="{StaticResource ExtraLargeFontSize}"
                                                           HorizontalAlignment="Center" />
@@ -304,15 +304,30 @@
                     <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyDependencies}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="m:InstancePackageDependencyCollection">
-                                <ItemsControl
-                                    ItemsSource="{Binding Mode=OneWay}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="m:InstancePackageDependencyModel">
-                                            <controls:InstancePackageDependencyButton
-                                                IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                <Panel>
+                                    <StackPanel VerticalAlignment="Center"
+                                                IsVisible="{Binding Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
+                                                Spacing="8">
+                                        <icons:PackIconLucide Kind="Eclipse"
+                                                              Height="{StaticResource ExtraLargeFontSize}"
+                                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                              Width="{StaticResource ExtraLargeFontSize}"
+                                                              HorizontalAlignment="Center" />
+                                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                                   FontSize="{StaticResource LargeFontSize}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                    <ItemsControl
+                                        ItemsSource="{Binding Mode=OneWay}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="m:InstancePackageDependencyModel">
+                                                <controls:InstancePackageDependencyButton
+                                                    IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Panel>
                             </DataTemplate>
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
