@@ -29,7 +29,7 @@ public class Configuration
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
         { APPLICATION_TITLEBAR_VISIBILITY, !OperatingSystem.IsLinux() },
         { APPLICATION_LEFT_PANEL_MODE, false },
-        { APPLICATION_STYLE_ACCENT, AccentColor.Neutral },
+        { APPLICATION_STYLE_ACCENT, AccentColor.Amber },
         { APPLICATION_STYLE_BACKGROUND, 0 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, "en_US" },
