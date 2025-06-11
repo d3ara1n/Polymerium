@@ -94,7 +94,7 @@ public class DeployEngine(
                     return null;
                 if (!context.IsRuntimeEnsured)
                     return CreateStage<EnsureRuntimeStage>();
-                
+
                 return CreateStage<GenerateManifestStage>();
             }
 

@@ -255,7 +255,7 @@ public partial class InstanceHomeViewModel(
                                                                        configurationService.Value
                                                                           .GameJavaAdditionalArguments),
                                                    maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                            configurationService.Value.GameJavaMaxMemory),
+                                                       configurationService.Value.GameJavaMaxMemory),
                                                    windowSize:
                                                    (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, configurationService.Value.GameWindowInitialWidth),
                                                     profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
