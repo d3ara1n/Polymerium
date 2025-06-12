@@ -170,13 +170,31 @@ public class App : Application
         }
     }
 
+    private static CultureInfo GetSafeCultureInfo(string cultureName)
+    {
+        try
+        {
+            return CultureInfo.GetCultureInfo(cultureName);
+        }
+        catch (CultureNotFoundException)
+        {
+            // 回退到英语（美国）
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+        catch (ArgumentException)
+        {
+            // 处理无效的文化名称参数
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+    }
+
     private static Window ConstructWindow()
     {
         if (Program.AppHost is null)
-            return new MainWindow();
+            return new Window();
 
         var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
-        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(configuration.Value.ApplicationLanguage);
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configuration.Value.ApplicationLanguage);
         Properties.Resources.Culture = CultureInfo.CurrentUICulture;
 
         var window = new MainWindow { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
