@@ -39,9 +39,7 @@ public partial class MainWindowContext : ObservableObject
         InstanceManager instanceManager,
         NotificationService notificationService,
         NavigationService navigationService,
-        OverlayService overlayService,
-        PersistenceService persistenceService,
-        ScrapService scrapService)
+        PersistenceService persistenceService)
     {
         _notificationService = notificationService;
         _navigationService = navigationService;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Huskui.Avalonia;
 
 namespace Polymerium.App;
@@ -32,7 +33,7 @@ public class Configuration
         { APPLICATION_STYLE_ACCENT, AccentColor.Amber },
         { APPLICATION_STYLE_BACKGROUND, 0 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
-        { APPLICATION_LANGUAGE, "en_US" },
+        { APPLICATION_LANGUAGE, CultureInfo.InstalledUICulture.Name },
         { INTERFACE_SETUP_LAYOUT, 0 },
         { INTERFACE_MARKETPLACE_LAYOUT, 0 },
         { RUNTIME_JAVA_HOME_8, string.Empty },

@@ -64,16 +64,12 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         await using var reader = await client
                                                                       .GetStreamAsync(fragile.Url, cancel.Token)
                                                                       .ConfigureAwait(false);
-                                        var writer = new FileStream(fragile.SourcePath,
-                                                                    FileMode.Create,
-                                                                    FileAccess.Write,
-                                                                    FileShare.Write);
+                                        await using var writer = new FileStream(fragile.SourcePath,
+                                                                                    FileMode.Create,
+                                                                                    FileAccess.Write,
+                                                                                    FileShare.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
                                         await writer.FlushAsync(cancel.Token).ConfigureAwait(false);
-                                        writer.Close();
-                                        var file = new FileInfo(fragile.SourcePath);
-                                        if (file.Exists)
-                                            file.IsReadOnly = true;
                                     }
 
                                     entities.Add(new Snapshot.Entity(fragile.TargetPath, fragile.SourcePath));
@@ -91,16 +87,12 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         await using var reader = await client
                                                                       .GetStreamAsync(present.Url, cancel.Token)
                                                                       .ConfigureAwait(false);
-                                        var writer = new FileStream(present.Path,
-                                                                    FileMode.Create,
-                                                                    FileAccess.Write,
-                                                                    FileShare.Write);
+                                        await using var writer = new FileStream(present.Path,
+                                                                                    FileMode.Create,
+                                                                                    FileAccess.Write,
+                                                                                    FileShare.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
                                         await writer.FlushAsync(cancel.Token).ConfigureAwait(false);
-                                        writer.Close();
-                                        var file = new FileInfo(present.Path);
-                                        if (file.Exists)
-                                            file.IsReadOnly = true;
                                     }
 
                                     break;

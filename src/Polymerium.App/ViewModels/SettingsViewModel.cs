@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -169,7 +170,12 @@ public partial class SettingsViewModel : ViewModelBase
 
     #region Language
 
-    public LanguageModel[] Languages { get; } = [new("en-us", "Chinglish"), new("zh-Hans", "中国人")];
+    private static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
+
+    public LanguageModel[] Languages { get; } = SupportedLanguages
+                                               .Select(CultureInfo.GetCultureInfo)
+                                               .Select(x => new LanguageModel(x))
+                                               .ToArray();
 
     [ObservableProperty]
     public partial LanguageModel Language { get; set; }
