@@ -18,13 +18,10 @@
         <Setter Property="IsMaximized" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Margin" Value=" 7" />
-        <!-- <Setter Property="Effect"> -->
-        <!--     <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="8" Opacity="0.1" /> -->
-        <!-- </Setter> -->
-
+        
         <Style Selector="^[IsMaximized=True]">
             <Setter Property="CornerRadius" Value="0" />
-            <Setter Property="Margin" Value="0,0,7,0" />
+            <Setter Property="Margin" Value="0" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>
