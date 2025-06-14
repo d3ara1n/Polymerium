@@ -16,6 +16,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
+using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
 using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Services;
@@ -39,11 +40,15 @@ public partial class MainWindowContext : ObservableObject
         InstanceManager instanceManager,
         NotificationService notificationService,
         NavigationService navigationService,
-        PersistenceService persistenceService)
+        PersistenceService persistenceService,
+        ConfigurationService configurationService)
     {
+        _profileManager = profileManager;
+        _instanceManager = instanceManager;
         _notificationService = notificationService;
         _navigationService = navigationService;
         _persistenceService = persistenceService;
+        _configurationService = configurationService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -68,6 +73,9 @@ public partial class MainWindowContext : ObservableObject
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
+    private readonly InstanceManager _instanceManager;
+    private readonly ConfigurationService _configurationService;
+    private readonly ProfileManager _profileManager;
 
     #endregion
 
@@ -110,6 +118,32 @@ public partial class MainWindowContext : ObservableObject
                                                 "Failed to open log file",
                                                 NotificationLevel.Warning);
         }
+    }
+
+    [RelayCommand]
+    private void OpenFolder(string? key)
+    {
+        if (key != null)
+        {
+            var dir = PathDef.Default.DirectoryOfHome(key);
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
+        }
+    }
+
+    [RelayCommand]
+    private void GotoProperties(string? key)
+    {
+        if (key != null)
+            _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
+                                                                             typeof(InstancePropertiesView)));
+    }
+
+    [RelayCommand]
+    private void GotoSetup(string? key)
+    {
+        if (key != null)
+            _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
+                                                                             typeof(InstanceSetupView)));
     }
 
     #endregion

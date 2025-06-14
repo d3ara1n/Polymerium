@@ -30,7 +30,6 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         logger.LogInformation("Created solidifying tasks of {}", files.Count + manifest.ExplosiveFiles.Count);
 
         var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
-        var fullBuildDir = Path.GetFullPath(buildDir);
 
         var downloaded = 0;
         var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount - 1, 1));
@@ -51,8 +50,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                             {
                                 case EntityManifest.FragileFile fragile:
                                 {
-                                    if (!Verify(fragile.SourcePath,
-                                                Context.Options.FullCheckMode ? fragile.Hash : null))
+                                    if (!Verify(fragile.SourcePath, fragile.Hash))
                                     {
                                         logger.LogDebug("Starting download fragile file {} from {}",
                                                         fragile.SourcePath,
@@ -78,7 +76,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                 }
                                 case EntityManifest.PresentFile present:
                                 {
-                                    if (!Verify(present.Path, Context.Options.FullCheckMode ? present.Hash : null))
+                                    if (!Verify(present.Path, present.Hash))
                                     {
                                         var dir = Path.GetDirectoryName(present.Path);
                                         if (dir != null && !Directory.Exists(dir))
