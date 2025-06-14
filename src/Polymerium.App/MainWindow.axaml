@@ -224,7 +224,25 @@
                                     <controls:InstanceEntryButton
                                         Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
                                         CommandParameter="{Binding Basic.Key}"
-                                        State="{Binding State,Mode=OneWay}" />
+                                        State="{Binding State,Mode=OneWay}">
+                                        <controls:InstanceEntryButton.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuItem Header="Open Folder"
+                                                          Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
+                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                                          CommandParameter="{Binding Basic.Key}" />
+                                                <MenuItem Header="-" />
+                                                <MenuItem Header="Setup"
+                                                          Icon="{fie:SymbolIcon Symbol=BoxMultiple,FontSize={StaticResource MediumFontSize}}"
+                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand,FallbackValue={x:Null}}"
+                                                          CommandParameter="{Binding Basic.Key}" />
+                                                <MenuItem Header="Properties"
+                                                          Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,FontSize={StaticResource MediumFontSize}}"
+                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand,FallbackValue={x:Null}}"
+                                                          CommandParameter="{Binding Basic.Key}" />
+                                            </MenuFlyout>
+                                        </controls:InstanceEntryButton.ContextFlyout>
+                                    </controls:InstanceEntryButton>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
