@@ -91,13 +91,18 @@ public partial class InstancePackageModal : Modal
                                                                 Model.ProjectId,
                                                                 vid,
                                                                 Filter);
+            var refCount = (uint)OriginalCollection.Count(x => x.Version is InstancePackageVersionModel version
+                                                            && version.Dependencies.Any(z => z.Label == Model.Label
+                                                                && z.Namespace == Model.Namespace
+                                                                && z.Pid == Model.ProjectId));
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
-                            var count = OriginalCollection.Count(y => y.Version is InstancePackageVersionModel version
-                                                                   && version.Dependencies.Any(z => z.Label == x.Label
-                                                                       && z.Namespace == x.Namespace
-                                                                       && z.Pid == x.Pid));
+                            var count =
+                                (uint)OriginalCollection.Count(y => y.Version is InstancePackageVersionModel version
+                                                                 && version.Dependencies.Any(z => z.Label == x.Label
+                                                                     && z.Namespace == x.Namespace
+                                                                     && z.Pid == x.Pid));
                             var found = OriginalCollection.FirstOrDefault(y => y.Label == x.Label
                                                                             && y.Namespace == x.Namespace
                                                                             && y.ProjectId == x.Pid);
@@ -108,7 +113,7 @@ public partial class InstancePackageModal : Modal
                                                                           x.Vid,
                                                                           found.ProjectName,
                                                                           found.Thumbnail,
-                                                                          (uint)count,
+                                                                          count,
                                                                           x.IsRequired) { Installed = found };
 
                             var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
@@ -121,12 +126,12 @@ public partial class InstancePackageModal : Modal
                                                                       x.Vid,
                                                                       project.ProjectName,
                                                                       thumbnail,
-                                                                      (uint)count,
+                                                                      count,
                                                                       x.IsRequired);
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
-            var rv = new InstancePackageDependencyCollection(tasks.Select(x => x.Result).ToList());
+            var rv = new InstancePackageDependencyCollection(refCount, tasks.Select(x => x.Result).ToList());
             return rv;
         });
         return lazy;

@@ -304,30 +304,49 @@
                     <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyDependencies}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="m:InstancePackageDependencyCollection">
-                                <Panel>
-                                    <StackPanel VerticalAlignment="Center"
-                                                IsVisible="{Binding Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
-                                                Spacing="8">
-                                        <icons:PackIconLucide Kind="Eclipse"
-                                                              Height="{StaticResource ExtraLargeFontSize}"
-                                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                              Width="{StaticResource ExtraLargeFontSize}"
-                                                              HorizontalAlignment="Center" />
-                                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                                   FontSize="{StaticResource LargeFontSize}"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                   HorizontalAlignment="Center" />
-                                    </StackPanel>
-                                    <ItemsControl
-                                        ItemsSource="{Binding Mode=OneWay}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="m:InstancePackageDependencyModel">
-                                                <controls:InstancePackageDependencyButton
-                                                    IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Panel>
+                                <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                                    <Border Grid.Row="0" Padding="4"
+                                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                            <TextBlock Grid.Column="0" Text="Dependant Count:" Margin="8"
+                                                       VerticalAlignment="Center" />
+                                            <Border Grid.Column="1" Padding="12,6"
+                                                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock Text="{Binding RefCount}"
+                                                           FontSize="{StaticResource LargeFontSize}" FontWeight="Bold"
+                                                           VerticalAlignment="Center" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                    <Panel Grid.Row="1">
+                                        <StackPanel VerticalAlignment="Center"
+                                                    IsVisible="{Binding Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
+                                                    Spacing="8">
+                                            <icons:PackIconLucide Kind="Eclipse"
+                                                                  Height="{StaticResource ExtraLargeFontSize}"
+                                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                  Width="{StaticResource ExtraLargeFontSize}"
+                                                                  HorizontalAlignment="Center" />
+                                            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                                       FontSize="{StaticResource LargeFontSize}"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                       HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                        <ScrollViewer>
+                                            <ItemsControl
+                                                ItemsSource="{Binding Mode=OneWay}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="m:InstancePackageDependencyModel">
+                                                        <controls:InstancePackageDependencyButton
+                                                            IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Panel>
+                                </Grid>
                             </DataTemplate>
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
