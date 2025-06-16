@@ -11,7 +11,7 @@ public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
     protected override async Task OnProcessAsync(CancellationToken token)
     {
         var artifactPath = PathDef.Default.FileOfLockData(Context.Key);
-        if (File.Exists(artifactPath))
+        if (!Context.Options.FullCheckMode && File.Exists(artifactPath))
         {
             try
             {
