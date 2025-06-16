@@ -125,7 +125,7 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private async Task Deploy(string key) => _instanceService.Deploy(key);
+    private void Deploy(string key) => _instanceService.Deploy(key);
 
     [RelayCommand]
     private void OpenFolder(string? key)
