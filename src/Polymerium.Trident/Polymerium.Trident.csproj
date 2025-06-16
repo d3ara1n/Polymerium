@@ -13,17 +13,17 @@
 
     <ItemGroup>
         <PackageReference Include="IBuilder" Version="0.3.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0-preview.3.25171.5"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0-preview.3.25171.5"/>
-        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.0-preview.3.25172.1"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0-preview.5.25277.114"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0-preview.5.25277.114"/>
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.0-preview.5.25277.114"/>
         <PackageReference Include="Mime-Detective" Version="25.4.25"/>
         <PackageReference Include="ObservableCollections" Version="3.3.3"/>
         <PackageReference Include="Refit" Version="8.0.0"/>
         <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0"/>
         <PackageReference Include="ReverseMarkdown" Version="4.7.0"/>
         <PackageReference Include="Semver" Version="3.0.0"/>
-        <PackageReference Include="System.Net.Http.Json" Version="10.0.0-preview.3.25171.5"/>
-        <PackageReference Include="System.Text.Json" Version="10.0.0-preview.3.25171.5"/>
+        <PackageReference Include="System.Net.Http.Json" Version="10.0.0-preview.5.25277.114"/>
+        <PackageReference Include="System.Text.Json" Version="10.0.0-preview.5.25277.114"/>
     </ItemGroup>
 
     <ItemGroup>
