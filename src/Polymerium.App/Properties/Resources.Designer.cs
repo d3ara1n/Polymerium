@@ -294,24 +294,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mark as Default.
-        /// </summary>
-        public static string AccountEntryButton_MarkAsDefaultMenuText {
-            get {
-                return ResourceManager.GetString("AccountEntryButton_MarkAsDefaultMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string AccountEntryButton_RemoveMenuText {
-            get {
-                return ResourceManager.GetString("AccountEntryButton_RemoveMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enrolled.
         /// </summary>
         public static string AccountEntryModal_EnrolledLabelText {
@@ -407,6 +389,24 @@ namespace Polymerium.App.Properties {
         public static string AccountsView_AddAccountButtonText {
             get {
                 return ResourceManager.GetString("AccountsView_AddAccountButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark as Default.
+        /// </summary>
+        public static string AccountsView_MarkAsDefaultMenuText {
+            get {
+                return ResourceManager.GetString("AccountsView_MarkAsDefaultMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string AccountsView_RemoveMenuText {
+            get {
+                return ResourceManager.GetString("AccountsView_RemoveMenuText", resourceCulture);
             }
         }
         
@@ -623,15 +623,6 @@ namespace Polymerium.App.Properties {
         public static string ExhibitModpackButton_InstallButtonText {
             get {
                 return ResourceManager.GetString("ExhibitModpackButton_InstallButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Website.
-        /// </summary>
-        public static string ExhibitModpackButton_OpenWebsiteMenuText {
-            get {
-                return ResourceManager.GetString("ExhibitModpackButton_OpenWebsiteMenuText", resourceCulture);
             }
         }
         
@@ -1230,15 +1221,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string InstancePackageButton_ActiveMenuText {
-            get {
-                return ResourceManager.GetString("InstancePackageButton_ActiveMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Auto Version.
         /// </summary>
         public static string InstancePackageButton_AutoVersionTagText {
@@ -1257,29 +1239,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Website.
-        /// </summary>
-        public static string InstancePackageButton_OpenWebsiteMenuText {
-            get {
-                return ResourceManager.GetString("InstancePackageButton_OpenWebsiteMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Original.
         /// </summary>
         public static string InstancePackageButton_OriginalTagText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_OriginalTagText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string InstancePackageButton_RemoveMenuText {
-            get {
-                return ResourceManager.GetString("InstancePackageButton_RemoveMenuText", resourceCulture);
             }
         }
         
@@ -2040,6 +2004,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deploy.
+        /// </summary>
+        public static string MainWindow_DeployMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_DeployMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string MainWindow_HomeButtonText {
@@ -2157,6 +2130,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Folder.
+        /// </summary>
+        public static string MainWindow_OpenFolderMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_OpenFolderMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        public static string MainWindow_PlayMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_PlayMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string MainWindow_PropertiesMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_PropertiesMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setup.
+        /// </summary>
+        public static string MainWindow_SetupMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_SetupMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Everything(mostly) begins here.
         /// </summary>
         public static string MarketplacePortalView_DiscoveryCenterSubtitle {
@@ -2225,6 +2234,15 @@ namespace Polymerium.App.Properties {
         public static string MarketplaceSearchView_ModpackLoadingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MarketplaceSearchView_ModpackLoadingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Website.
+        /// </summary>
+        public static string MarketplaceSearchView_OpenWebsiteMenuText {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_OpenWebsiteMenuText", resourceCulture);
             }
         }
         
@@ -2409,6 +2427,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string PackageContainer_ActiveMenuText {
+            get {
+                return ResourceManager.GetString("PackageContainer_ActiveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Batch Update.
         /// </summary>
         public static string PackageContainer_BatchUpdateMenuText {
@@ -2459,6 +2486,24 @@ namespace Polymerium.App.Properties {
         public static string PackageContainer_GetMoreButtonText {
             get {
                 return ResourceManager.GetString("PackageContainer_GetMoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Website.
+        /// </summary>
+        public static string PackageContainer_OpenWebsiteMenuText {
+            get {
+                return ResourceManager.GetString("PackageContainer_OpenWebsiteMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string PackageContainer_RemoveMenuText {
+            get {
+                return ResourceManager.GetString("PackageContainer_RemoveMenuText", resourceCulture);
             }
         }
         

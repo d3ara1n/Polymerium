@@ -48,10 +48,10 @@
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>No Entries</value>
     </data>
-    <data name="AccountEntryButton_MarkAsDefaultMenuText" xml:space="preserve">
+    <data name="AccountsView_MarkAsDefaultMenuText" xml:space="preserve">
         <value>Mark as Default</value>
     </data>
-    <data name="AccountEntryButton_RemoveMenuText" xml:space="preserve">
+    <data name="AccountsView_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
     <data name="ExceptionView_Title" xml:space="preserve">
@@ -606,7 +606,7 @@
     <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
         <value>Required</value>
     </data>
-    <data name="ExhibitModpackButton_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="MarketplaceSearchView_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
     <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
@@ -624,13 +624,13 @@
     <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
         <value>RUNNING</value>
     </data>
-    <data name="InstancePackageButton_ActiveMenuText" xml:space="preserve">
+    <data name="PackageContainer_ActiveMenuText" xml:space="preserve">
         <value>Active</value>
     </data>
-    <data name="InstancePackageButton_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="PackageContainer_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
-    <data name="InstancePackageButton_RemoveMenuText" xml:space="preserve">
+    <data name="PackageContainer_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
@@ -1046,5 +1046,20 @@
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
         <value>Ensuring runtime...</value>
+    </data>
+    <data name="MainWindow_PlayMenuText" xml:space="preserve">
+        <value>Play</value>
+    </data>
+    <data name="MainWindow_DeployMenuText" xml:space="preserve">
+        <value>Deploy</value>
+    </data>
+    <data name="MainWindow_OpenFolderMenuText" xml:space="preserve">
+        <value>Open Folder</value>
+    </data>
+    <data name="MainWindow_SetupMenuText" xml:space="preserve">
+        <value>Setup</value>
+    </data>
+    <data name="MainWindow_PropertiesMenuText" xml:space="preserve">
+        <value>Properties</value>
     </data>
 </root>

@@ -5,8 +5,6 @@
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                     xmlns:m="using:Polymerium.App.Models"
                     xmlns:converters="using:Polymerium.App.Converters"
-                    xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
-                    xmlns:cp="clr-namespace:Polymerium.App.Components"
                     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <Design.PreviewWith>
@@ -18,29 +16,6 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="BasePackageEntryButtonTheme" TargetType="local:InstancePackageButton">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="ContextFlyout">
-            <MenuFlyout x:DataType="m:InstancePackageModel">
-                <MenuItem Header="{x:Static lang:Resources.InstancePackageButton_ActiveMenuText}"
-                          IsChecked="{Binding IsEnabled,Mode=TwoWay}"
-                          ToggleType="CheckBox"
-                          Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
-                <MenuItem Header="-" />
-                <MenuItem Header="{x:Static lang:Resources.InstancePackageButton_OpenWebsiteMenuText}"
-                          Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                          CommandParameter="{Binding Reference}"
-                          Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-                <!-- <MenuItem Header="Add to Favorites" -->
-                <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
-                <!-- <MenuItem Header="Remove from Favorite" -->
-                <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
-                <MenuItem Header="-" />
-                <MenuItem Header="{x:Static lang:Resources.InstancePackageButton_RemoveMenuText}"
-                          Command="{Binding $parent[cp:PackageContainer].RemoveCommand,Mode=OneWay}"
-                          CommandParameter="{Binding }"
-                          IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
-                          Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
-            </MenuFlyout>
-        </Setter>
     </ControlTheme>
 
     <ControlTheme x:Key="ListPackageEntryButtonTheme" TargetType="local:InstancePackageButton"

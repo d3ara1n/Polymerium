@@ -185,8 +185,8 @@ public class InstanceManager(
                                       new DeployEngineOptions
                                       {
                                           FastMode = options.FastMode,
-                                          FullCheckMode = options.FullCheckMod,
-                                          ResolveDependency = options.ResolveDependency
+                                          ResolveDependency = options.ResolveDependency,
+                                          FullCheckMode = options.FullCheckMod
                                       },
                                       ComputeWatermark(options),
                                       javaHomeLocator);

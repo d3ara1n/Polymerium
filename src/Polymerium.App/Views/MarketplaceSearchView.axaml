@@ -15,6 +15,27 @@
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
            x:Class="Polymerium.App.Views.MarketplaceSearchView" x:Name="Exhibition">
+    <husk:Page.Resources>
+        <MenuFlyout x:Key="ExhibitModpackButtonFlyout" x:DataType="m:ExhibitModel">
+            <MenuItem Header="{x:Static lang:Resources.MarketplaceSearchView_OpenWebsiteMenuText}"
+                      Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).OpenWebsiteCommand,FallbackValue={x:Null}}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <icons:PackIconLucide Kind="ExternalLink"
+                                          Height="{StaticResource MediumFontSize}"
+                                          Width="{StaticResource MediumFontSize}"
+                                          VerticalAlignment="Center" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <!-- <MenuItem Header="Save to Favorites"> -->
+            <!--     <MenuItem.Icon> -->
+            <!--         <icons:PackIconLucide Kind="Bookmark" -->
+            <!--             Height="10" Width="10" -->
+            <!--             VerticalAlignment="Center" /> -->
+            <!--     </MenuItem.Icon> -->
+            <!-- </MenuItem> -->
+        </MenuFlyout>
+    </husk:Page.Resources>
     <Panel>
         <Grid RowDefinitions="Auto,0,*">
             <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="6">
@@ -115,6 +136,7 @@
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
+                                                    ContextFlyout="{StaticResource ExhibitModpackButtonFlyout}"
                                                     Theme="{StaticResource ListExhibitModpackButtonTheme}"
                                                     Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding}" />
@@ -131,6 +153,7 @@
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
+                                                    ContextFlyout="{StaticResource ExhibitModpackButtonFlyout}"
                                                     Theme="{StaticResource GridExhibitModpackButtonTheme}"
                                                     Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding}" />

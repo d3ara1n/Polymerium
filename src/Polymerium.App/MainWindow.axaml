@@ -227,19 +227,30 @@
                                         State="{Binding State,Mode=OneWay}">
                                         <controls:InstanceEntryButton.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuItem Header="Open Folder"
-                                                          Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
-                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                                <MenuItem Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
+                                                          Icon="{fie:SymbolIcon Symbol=Rocket,FontSize={StaticResource MediumFontSize}}"
+                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).PlayCommand,FallbackValue={x:Null}}"
+                                                          CommandParameter="{Binding Basic.Key}" />
+                                                <MenuItem Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
+                                                          Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,FontSize={StaticResource MediumFontSize}}"
+                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand,FallbackValue={x:Null}}"
                                                           CommandParameter="{Binding Basic.Key}" />
                                                 <MenuItem Header="-" />
-                                                <MenuItem Header="Setup"
+                                                <MenuItem
+                                                    Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
+                                                    Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
+                                                    Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                                    CommandParameter="{Binding Basic.Key}" />
+                                                <MenuItem Header="-" />
+                                                <MenuItem Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
                                                           Icon="{fie:SymbolIcon Symbol=BoxMultiple,FontSize={StaticResource MediumFontSize}}"
                                                           Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand,FallbackValue={x:Null}}"
                                                           CommandParameter="{Binding Basic.Key}" />
-                                                <MenuItem Header="Properties"
-                                                          Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,FontSize={StaticResource MediumFontSize}}"
-                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand,FallbackValue={x:Null}}"
-                                                          CommandParameter="{Binding Basic.Key}" />
+                                                <MenuItem
+                                                    Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
+                                                    Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,FontSize={StaticResource MediumFontSize}}"
+                                                    Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand,FallbackValue={x:Null}}"
+                                                    CommandParameter="{Binding Basic.Key}" />
                                             </MenuFlyout>
                                         </controls:InstanceEntryButton.ContextFlyout>
                                     </controls:InstanceEntryButton>

@@ -39,10 +39,10 @@
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>空列表</value>
     </data>
-    <data name="AccountEntryButton_MarkAsDefaultMenuText" xml:space="preserve">
+    <data name="AccountsView_MarkAsDefaultMenuText" xml:space="preserve">
         <value>标记为默认</value>
     </data>
-    <data name="AccountEntryButton_RemoveMenuText" xml:space="preserve">
+    <data name="AccountsView_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
     <data name="ExceptionView_Title" xml:space="preserve">
@@ -597,7 +597,7 @@
     <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
         <value>必需</value>
     </data>
-    <data name="ExhibitModpackButton_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="MarketplaceSearchView_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
     <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
@@ -615,13 +615,13 @@
     <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
         <value>运行中</value>
     </data>
-    <data name="InstancePackageButton_ActiveMenuText" xml:space="preserve">
+    <data name="PackageContainer_ActiveMenuText" xml:space="preserve">
         <value>激活</value>
     </data>
-    <data name="InstancePackageButton_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="PackageContainer_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
-    <data name="InstancePackageButton_RemoveMenuText" xml:space="preserve">
+    <data name="PackageContainer_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
@@ -1037,5 +1037,20 @@
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
         <value>保底运行时...</value>
+    </data>
+    <data name="MainWindow_PlayMenuText" xml:space="preserve">
+        <value>开始</value>
+    </data>
+    <data name="MainWindow_DeployMenuText" xml:space="preserve">
+        <value>部署</value>
+    </data>
+    <data name="MainWindow_OpenFolderMenuText" xml:space="preserve">
+        <value>浏览目录</value>
+    </data>
+    <data name="MainWindow_SetupMenuText" xml:space="preserve">
+        <value>配置</value>
+    </data>
+    <data name="MainWindow_PropertiesMenuText" xml:space="preserve">
+        <value>属性</value>
     </data>
 </root>
