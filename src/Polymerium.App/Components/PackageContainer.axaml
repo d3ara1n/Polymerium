@@ -13,6 +13,29 @@
              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
+    <UserControl.Resources>
+        <MenuFlyout x:Key="InstancePackageButtonFlyout" x:DataType="m:InstancePackageModel">
+            <MenuItem Header="{x:Static lang:Resources.PackageContainer_ActiveMenuText}"
+                      IsChecked="{Binding IsEnabled,Mode=TwoWay}"
+                      ToggleType="CheckBox"
+                      Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem Header="-" />
+            <MenuItem Header="{x:Static lang:Resources.PackageContainer_OpenWebsiteMenuText}"
+                      Command="{x:Static m:InternalCommands.OpenUriCommand}"
+                      CommandParameter="{Binding Reference}"
+                      Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
+            <!-- <MenuItem Header="Add to Favorites" -->
+            <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
+            <!-- <MenuItem Header="Remove from Favorite" -->
+            <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
+            <MenuItem Header="-" />
+            <MenuItem Header="{x:Static lang:Resources.PackageContainer_RemoveMenuText}"
+                      Command="{Binding $parent[cp:PackageContainer].RemoveCommand,Mode=OneWay}"
+                      CommandParameter="{Binding }"
+                      IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
+                      Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
+        </MenuFlyout>
+    </UserControl.Resources>
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*,Auto" Margin="16,8"
               ColumnSpacing="12">
@@ -172,10 +195,12 @@
                                 Icon="LayoutList">
                                 <m:ListTemplateCombinationModel.ItemTemplate>
                                     <DataTemplate x:DataType="m:InstancePackageModel">
-                                        <controls:InstancePackageButton Margin="0,3"
-                                                                        Theme="{StaticResource ListPackageEntryButtonTheme}"
-                                                                        Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
-                                                                        CommandParameter="{Binding}" />
+                                        <controls:InstancePackageButton
+                                            Margin="0,3"
+                                            ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
+                                            Theme="{StaticResource ListPackageEntryButtonTheme}"
+                                            Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
+                                            CommandParameter="{Binding}" />
                                     </DataTemplate>
                                 </m:ListTemplateCombinationModel.ItemTemplate>
                                 <m:ListTemplateCombinationModel.ItemsPanelTemplate>
@@ -188,10 +213,12 @@
                                 Icon="LayoutGrid">
                                 <m:ListTemplateCombinationModel.ItemTemplate>
                                     <DataTemplate x:DataType="m:InstancePackageModel">
-                                        <controls:InstancePackageButton ToolTip.Tip="{Binding ProjectName}"
-                                                                        Theme="{StaticResource GridPackageEntryButtonTheme}"
-                                                                        Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
-                                                                        CommandParameter="{Binding}" />
+                                        <controls:InstancePackageButton
+                                            ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
+                                            ToolTip.Tip="{Binding ProjectName}"
+                                            Theme="{StaticResource GridPackageEntryButtonTheme}"
+                                            Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
+                                            CommandParameter="{Binding}" />
                                     </DataTemplate>
                                 </m:ListTemplateCombinationModel.ItemTemplate>
                                 <m:ListTemplateCombinationModel.ItemsPanelTemplate>

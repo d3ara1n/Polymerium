@@ -74,6 +74,7 @@ public static class Startup
            .AddSingleton<OverlayService>()
            .AddSingleton<DataService>()
            .AddSingleton<PersistenceService>()
-           .AddSingleton<ScrapService>();
+           .AddSingleton<ScrapService>()
+           .AddSingleton<InstanceService>();
     }
 }

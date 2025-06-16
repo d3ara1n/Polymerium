@@ -11,10 +11,8 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
-using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions;
@@ -34,13 +32,15 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         NotificationService notificationService,
         NavigationService navigationService,
         ConfigurationService configurationService,
-        PersistenceService persistenceService) : base(bag, instanceManager, profileManager)
+        PersistenceService persistenceService,
+        InstanceService instanceService) : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
         _navigationService = navigationService;
         _configurationService = configurationService;
         _persistenceService = persistenceService;
+        _instanceService = instanceService;
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
@@ -142,6 +142,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     private readonly NavigationService _navigationService;
     private readonly ConfigurationService _configurationService;
     private readonly PersistenceService _persistenceService;
+    private readonly InstanceService _instanceService;
 
     #endregion
 
@@ -166,9 +167,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private void CheckIntegrity()
     {
-        var profile = ProfileManager.GetImmutable(Basic.Key);
-        var locator = JavaHelper.MakeLocator(profile, _configurationService.Value);
-        InstanceManager.Deploy(Basic.Key, new DeployOptions(false, true, BehaviorResolveDependency), locator);
+        _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
     }
 
     [RelayCommand]

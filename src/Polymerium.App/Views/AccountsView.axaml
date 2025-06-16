@@ -52,12 +52,12 @@
                         CommandParameter="{Binding}">
                         <controls:AccountEntryButton.ContextFlyout>
                             <MenuFlyout>
-                                <MenuItem Header="{x:Static lang:Resources.AccountEntryButton_MarkAsDefaultMenuText}"
+                                <MenuItem Header="{x:Static lang:Resources.AccountsView_MarkAsDefaultMenuText}"
                                           Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,FontSize={StaticResource MediumFontSize}}"
                                           IsEnabled="{Binding IsDefault,Converter={x:Static BoolConverters.Not},Mode=OneWay}"
                                           Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).MarkAsDefaultAccountCommand,Mode=OneWay,FallbackValue={x:Null}}"
                                           CommandParameter="{Binding}" />
-                                <MenuItem Header="{x:Static lang:Resources.AccountEntryButton_RemoveMenuText}"
+                                <MenuItem Header="{x:Static lang:Resources.AccountsView_RemoveMenuText}"
                                           Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}"
                                           Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).RemoveAccountCommand,Mode=OneWay,FallbackValue={x:Null}}"
                                           CommandParameter="{Binding}" />

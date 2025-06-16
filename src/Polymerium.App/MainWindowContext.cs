@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -19,6 +20,7 @@ using Polymerium.App.Utilities;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
 using Polymerium.Trident.Exceptions;
+using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions;
@@ -41,14 +43,12 @@ public partial class MainWindowContext : ObservableObject
         NotificationService notificationService,
         NavigationService navigationService,
         PersistenceService persistenceService,
-        ConfigurationService configurationService)
+        InstanceService instanceService)
     {
-        _profileManager = profileManager;
-        _instanceManager = instanceManager;
         _notificationService = notificationService;
         _navigationService = navigationService;
         _persistenceService = persistenceService;
-        _configurationService = configurationService;
+        _instanceService = instanceService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -73,9 +73,7 @@ public partial class MainWindowContext : ObservableObject
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
-    private readonly InstanceManager _instanceManager;
-    private readonly ConfigurationService _configurationService;
-    private readonly ProfileManager _profileManager;
+    private readonly InstanceService _instanceService;
 
     #endregion
 
@@ -119,6 +117,15 @@ public partial class MainWindowContext : ObservableObject
                                                 NotificationLevel.Warning);
         }
     }
+
+    [RelayCommand]
+    private async Task PlayAsync(string key)
+    {
+        await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+    }
+
+    [RelayCommand]
+    private async Task Deploy(string key) => _instanceService.Deploy(key);
 
     [RelayCommand]
     private void OpenFolder(string? key)
