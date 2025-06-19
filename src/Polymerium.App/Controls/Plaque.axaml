@@ -1,6 +1,10 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Polymerium.App.Controls">
+                    xmlns:local="clr-namespace:Polymerium.App.Controls"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+
+    <x:Double x:Key="PlaqueSpacing">5</x:Double>
+
     <ControlTheme x:Key="{x:Type local:Plaque}" TargetType="local:Plaque">
         <Setter Property="Padding" Value="12" />
         <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
@@ -8,7 +12,9 @@
             <ControlTemplate>
                 <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Grid Margin="5" RowDefinitions="*,Auto" RowSpacing="5">
+                    <Grid
+                        Margin="{Binding Source={StaticResource PlaqueSpacing},Converter={x:Static husk:ThicknessConverters.FromDouble}}"
+                        RowDefinitions="*,Auto" RowSpacing="{StaticResource PlaqueSpacing}">
                         <Border Grid.Row="0" Background="{TemplateBinding Background}"
                                 CornerRadius="{StaticResource SmallCornerRadius}" Padding="{TemplateBinding Padding}">
                             <ContentPresenter Content="{TemplateBinding Content}"

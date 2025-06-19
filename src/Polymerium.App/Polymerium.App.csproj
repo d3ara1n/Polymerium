@@ -8,6 +8,7 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
         <LangVersion>preview</LangVersion>
+        <Version>0.7.0-rc.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -41,6 +42,7 @@
         <PackageReference Include="Semver" Version="3.0.0"/>
         <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.3.0"/>
         <PackageReference Include="HotAvalonia" Version="3.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Velopack" Version="0.0.1298"/>
     </ItemGroup>
 
     <ItemGroup>
