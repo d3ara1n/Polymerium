@@ -10,6 +10,8 @@
            xmlns:cp="clr-namespace:Polymerium.App.Components"
            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            xmlns:v="clr-namespace:Polymerium.App.Views"
+           xmlns:app="clr-namespace:Polymerium.App"
+           xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.SettingsView" Header="{x:Static lang:Resources.SettingsView_Title}"
            x:DataType="vm:SettingsViewModel">
@@ -195,36 +197,71 @@
             <controls:SettingsEntryItem Header="Updates">
                 <controls:Plaque>
                     <controls:Plaque.Header>
-                        <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
-                            <TextBlock Text="Check for updates" />
-                        </Button>
+                        <!-- 切换依据是 AvailableUpdate 是否不为空 -->
+                        <!-- <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small" -->
+                        <!--         Command="{Binding CheckUpdatesCommand}"> -->
+                        <!--     <TextBlock Text="Check for updates" /> -->
+                        <!-- </Button> -->
+                        <DockPanel HorizontalSpacing="{StaticResource PlaqueSpacing}">
+                            <Button DockPanel.Dock="Right" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
+                                    Command="{Binding CheckUpdatesCommand}">
+                                <fi:SymbolIcon Symbol="ArrowClockwise" HorizontalAlignment="Center"
+                                               FontSize="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Classes="Small Primary">
+                                <TextBlock Text="Update &amp; Restart" />
+                            </Button>
+                        </DockPanel>
                     </controls:Plaque.Header>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
                         <StackPanel Grid.Column="0" Spacing="4">
                             <TextBlock Text="Polymerium" FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="v0.1.0" FontSize="{StaticResource LargeFontSize}" />
+                            <TextBlock Text="{Binding VersionString,FallbackValue=v0.1.0}"
+                                       FontSize="{StaticResource LargeFontSize}" />
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <TextBlock Text="In Dev"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <husk:SwitchPresenter Value="{x:Static app:Program.Debug}" TargetType="x:Boolean">
+                                    <husk:SwitchCase Value="{x:True}">
+                                        <TextBlock Text="In Dev"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}" />
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="{x:False}">
+                                        <TextBlock Text="Prod"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}" />
+                                    </husk:SwitchCase>
+                                </husk:SwitchPresenter>
                                 <husk:Divider Orientation="Vertical" Margin="2" />
                                 <TextBlock Text="Eternal"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            FontSize="{StaticResource SmallFontSize}" />
                             </StackPanel>
                         </StackPanel>
-                        <!-- <husk:Tag Grid.Column="1" Classes="Primary" VerticalAlignment="Top" -->
-                        <!--           HorizontalAlignment="Center"> -->
-                        <!--     <husk:IconLabel Icon="SparkleCircle" Variant="Filled" Text="Update available" /> -->
-                        <!-- </husk:Tag> -->
-                        <husk:Tag Grid.Column="1" VerticalAlignment="Top"
-                                  HorizontalAlignment="Center">
-                            <husk:IconLabel Icon="DismissCircle" Variant="Filled" Text="Update unavailable" />
-                        </husk:Tag>
-                        <!-- <husk:Tag Grid.Column="1" Classes="Success" VerticalAlignment="Top" -->
-                        <!--           HorizontalAlignment="Center"> -->
-                        <!--     <husk:IconLabel Icon="CheckmarkCircle" Variant="Filled" Text="Up to date" /> -->
-                        <!-- </husk:Tag> -->
+                        <StackPanel Grid.Column="1" Spacing="4" TextBlock.TextAlignment="Right">
+                            <husk:Tag Classes="Small Primary" VerticalAlignment="Top"
+                                      HorizontalAlignment="Center">
+                                <husk:IconLabel Icon="SparkleCircle" Variant="Filled" Text="Update available" />
+                            </husk:Tag>
+                            <!-- <husk:Tag Classes="Small" VerticalAlignment="Top" -->
+                            <!--           HorizontalAlignment="Center"> -->
+                            <!--     <husk:IconLabel Icon="DismissCircle" Variant="Filled" Text="Update unavailable" /> -->
+                            <!-- </husk:Tag> -->
+                            <!-- <husk:Tag Classes="Small Success" VerticalAlignment="Top" -->
+                            <!--           HorizontalAlignment="Center"> -->
+                            <!--     <husk:IconLabel Icon="CheckmarkCircle" Variant="Filled" Text="Up to date" /> -->
+                            <!-- </husk:Tag> -->
+                            <TextBlock Text="{Binding VersionString,FallbackValue=v0.2.0}"
+                                       FontSize="{StaticResource LargeFontSize}" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
+                                <TextBlock Text="Prod"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           FontSize="{StaticResource SmallFontSize}" />
+                                <husk:Divider Orientation="Vertical" Margin="2" />
+                                <TextBlock Text="2025/6/19"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           FontSize="{StaticResource SmallFontSize}" />
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </controls:Plaque>
             </controls:SettingsEntryItem>

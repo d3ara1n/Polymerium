@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Velopack;
 
 namespace Polymerium.App.Services;
 
@@ -60,6 +61,8 @@ public class AvaloniaLifetime : IHostedService
 
     private void Serve()
     {
+        if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
+            VelopackApp.Build().Run();
         Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
         _lifetime.StopApplication();
     }

@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -88,11 +89,27 @@ public partial class SettingsViewModel : ViewModelBase
             _navigationService.Navigate(view);
     }
 
+    [RelayCommand]
+    private async Task CheckUpdatesAsync()
+    {
+        // var mgr = new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium", null, true));
+        // var result = await mgr.CheckForUpdatesAsync();
+        // if (result != null) { }
+    }
+
+    #endregion
+
+    #region Updates
+
+    public string VersionString { get; } =
+        $"v{typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unknown"}";
+
     #endregion
 
     #region SuperPowerActivated
 
     [ObservableProperty]
+
     public partial bool SuperPowerActivated { get; set; }
 
     partial void OnSuperPowerActivatedChanged(bool value) =>
