@@ -97,12 +97,26 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                 }
                                 case EntityManifest.PersistentFile persistent:
                                 {
+                                    // 如果是虚文件（例如持久化文件功能），则在创建软链接前尝试确保目标文件不存在
+                                    // 不是虚文件时策略更简单，无则复制有则不管
                                     if (persistent.IsPhantom)
                                     {
-                                        logger.LogDebug("Linking persistent file from {} to {}",
-                                                        persistent.SourcePath,
-                                                        persistent.TargetPath);
-                                        entities.Add(new Snapshot.Entity(persistent.TargetPath, persistent.SourcePath));
+                                        if (File.Exists(persistent.TargetPath))
+                                        {
+                                            if (File.Exists(persistent.SourcePath))
+                                                File.Delete(persistent.TargetPath);
+                                            else
+                                                File.Move(persistent.TargetPath, persistent.SourcePath);
+                                        }
+
+                                        if (File.Exists(persistent.SourcePath))
+                                        {
+                                            logger.LogDebug("Linking persistent file from {} to {}",
+                                                            persistent.SourcePath,
+                                                            persistent.TargetPath);
+                                            entities.Add(new Snapshot.Entity(persistent.TargetPath,
+                                                                             persistent.SourcePath));
+                                        }
                                     }
                                     else if (!File.Exists(persistent.TargetPath))
                                     {
