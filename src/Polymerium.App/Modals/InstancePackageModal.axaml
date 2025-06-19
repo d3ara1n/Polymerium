@@ -309,14 +309,19 @@
                                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                             CornerRadius="{StaticResource MediumCornerRadius}">
                                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                                            <TextBlock Grid.Column="0" Text="Dependant Count:" Margin="8"
+                                            <TextBlock Grid.Column="0" Text="Dependant Count:" Margin="8,0"
                                                        VerticalAlignment="Center" />
-                                            <Border Grid.Column="1" Padding="12,6"
+                                            <Border Grid.Column="1" Padding="8,4"
                                                     Background="{StaticResource OverlaySolidBackgroundBrush}"
                                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <TextBlock Text="{Binding RefCount}"
-                                                           FontSize="{StaticResource LargeFontSize}" FontWeight="Bold"
-                                                           VerticalAlignment="Center" />
+                                                <TextBlock FontSize="{StaticResource LargeFontSize}" FontWeight="Bold"
+                                                           VerticalAlignment="Center">
+                                                    <Run Text="{Binding StrongRefCount}"
+                                                         Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                                    <Run Text=" / "
+                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                    <Run Text="{Binding RefCount}" />
+                                                </TextBlock>
                                             </Border>
                                         </Grid>
                                     </Border>
