@@ -95,6 +95,11 @@ public partial class InstancePackageModal : Modal
                                                             && version.Dependencies.Any(z => z.Label == Model.Label
                                                                 && z.Namespace == Model.Namespace
                                                                 && z.Pid == Model.ProjectId));
+            var strongRefCount = (uint)OriginalCollection.Count(x => x.Version is InstancePackageVersionModel version
+                                                                  && version.Dependencies.Any(z => z.IsRequired
+                                                                      && z.Label == Model.Label
+                                                                      && z.Namespace == Model.Namespace
+                                                                      && z.Pid == Model.ProjectId));
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
@@ -131,7 +136,9 @@ public partial class InstancePackageModal : Modal
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
-            var rv = new InstancePackageDependencyCollection(refCount, tasks.Select(x => x.Result).ToList());
+            var rv = new InstancePackageDependencyCollection(refCount,
+                                                             strongRefCount,
+                                                             tasks.Select(x => x.Result).ToList());
             return rv;
         });
         return lazy;
