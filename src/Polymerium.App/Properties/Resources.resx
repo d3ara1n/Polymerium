@@ -265,7 +265,7 @@
         <value>With the keywords in...</value>
     </data>
     <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
-        <value>Query</value>
+        <value>Search</value>
     </data>
     <data name="MarketplaceSearchView_ResultCountLabelText" xml:space="preserve">
         <value>Results:</value>
@@ -328,7 +328,7 @@
         <value>Search by names and names...</value>
     </data>
     <data name="PackageExplorerView_SearchButtonText" xml:space="preserve">
-        <value>Query</value>
+        <value>Search</value>
     </data>
     <data name="SettingsView_Title" xml:space="preserve">
         <value>Application Settings</value>

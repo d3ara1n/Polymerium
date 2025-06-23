@@ -2274,7 +2274,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query.
+        ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string MarketplaceSearchView_SearchButtonText {
             get {
@@ -2643,7 +2643,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query.
+        ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string PackageExplorerView_SearchButtonText {
             get {
