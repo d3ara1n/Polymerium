@@ -11,6 +11,8 @@ using Huskui.Avalonia;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Velopack;
+using Velopack.Sources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -19,11 +21,13 @@ public partial class SettingsViewModel : ViewModelBase
     public SettingsViewModel(
         ConfigurationService configurationService,
         OverlayService overlayService,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        NotificationService notificationService)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
         _navigationService = navigationService;
+        _notificationService = notificationService;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -61,6 +65,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     private readonly ConfigurationService _configurationService;
     private readonly NavigationService _navigationService;
+    private readonly NotificationService _notificationService;
 
     #endregion
 
@@ -89,20 +94,38 @@ public partial class SettingsViewModel : ViewModelBase
             _navigationService.Navigate(view);
     }
 
-    [RelayCommand]
+    private bool CanCheckUpdate() => UpdateState != AppUpdateState.Unavailable;
+
+    [RelayCommand(CanExecute = nameof(CanCheckUpdate))]
     private async Task CheckUpdatesAsync()
     {
-        // var mgr = new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium", null, true));
-        // var result = await mgr.CheckForUpdatesAsync();
-        // if (result != null) { }
+        try
+        {
+            var mgr = new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium", null, true));
+            var result = await mgr.CheckForUpdatesAsync();
+            if (result != null) { }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to check updates");
+        }
     }
 
     #endregion
 
     #region Updates
 
-    public string VersionString { get; } =
-        $"v{typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unknown"}";
+    public string VersionString { get; } = typeof(Program)
+                                          .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                                         ?.InformationalVersion.Split("+")[0]
+                                        ?? "Unknown";
+
+    [ObservableProperty]
+    public partial AppUpdateState UpdateState { get; set; } =
+        Program.Debug ? AppUpdateState.Unavailable : AppUpdateState.Idle;
+
+    [ObservableProperty]
+    public partial AppUpdateModel? UpdateTarget { get; set; }
 
     #endregion
 
