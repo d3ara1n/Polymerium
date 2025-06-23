@@ -209,8 +209,8 @@
                                         <fi:SymbolIcon Symbol="ArrowClockwise" HorizontalAlignment="Center"
                                                        FontSize="{StaticResource SmallFontSize}" />
                                     </Button>
-                                    <Button Classes="Small Primary">
-                                        <TextBlock Text="Update &amp; Restart" />
+                                    <Button Classes="Small Primary" Command="{Binding ApplyUpdateCommand}">
+                                        <TextBlock Text="Apply update" />
                                     </Button>
                                 </DockPanel>
                             </husk:SwitchCase>
@@ -278,11 +278,21 @@
                                                 FontSize="{StaticResource LargeFontSize}" />
                                             <StackPanel Orientation="Horizontal" Spacing="4"
                                                         HorizontalAlignment="Right">
-                                                <TextBlock Text="Prod"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                           FontSize="{StaticResource SmallFontSize}" />
+                                                <husk:SwitchPresenter Value="{Binding IsPrerelease}"
+                                                                      TargetType="x:Boolean">
+                                                    <husk:SwitchCase Value="{x:True}">
+                                                        <TextBlock Text="Pre-release"
+                                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                   FontSize="{StaticResource SmallFontSize}" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="{x:False}">
+                                                        <TextBlock Text="Release"
+                                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                   FontSize="{StaticResource SmallFontSize}" />
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
                                                 <husk:Divider Orientation="Vertical" Margin="2" />
-                                                <TextBlock Text="2025/6/19"
+                                                <TextBlock Text="Eternal"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                            FontSize="{StaticResource SmallFontSize}" />
                                             </StackPanel>

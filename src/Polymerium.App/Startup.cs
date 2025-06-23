@@ -12,6 +12,8 @@ using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
+using Velopack;
+using Velopack.Sources;
 
 namespace Polymerium.App;
 
@@ -75,6 +77,9 @@ public static class Startup
            .AddSingleton<DataService>()
            .AddSingleton<PersistenceService>()
            .AddSingleton<ScrapService>()
-           .AddSingleton<InstanceService>();
+           .AddSingleton<InstanceService>()
+           .AddSingleton<UpdateManager>(_ => new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium",
+                                                                                    null,
+                                                                                    true)));
     }
 }

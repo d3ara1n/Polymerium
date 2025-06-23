@@ -8,11 +8,11 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
+using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Velopack;
-using Velopack.Sources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -22,12 +22,14 @@ public partial class SettingsViewModel : ViewModelBase
         ConfigurationService configurationService,
         OverlayService overlayService,
         NavigationService navigationService,
-        NotificationService notificationService)
+        NotificationService notificationService,
+        UpdateManager updateManager)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
         _navigationService = navigationService;
         _notificationService = notificationService;
+        _updateManager = updateManager;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -66,6 +68,7 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly ConfigurationService _configurationService;
     private readonly NavigationService _navigationService;
     private readonly NotificationService _notificationService;
+    private readonly UpdateManager _updateManager;
 
     #endregion
 
@@ -101,13 +104,34 @@ public partial class SettingsViewModel : ViewModelBase
     {
         try
         {
-            var mgr = new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium", null, true));
-            var result = await mgr.CheckForUpdatesAsync();
-            if (result != null) { }
+            var result = await _updateManager.CheckForUpdatesAsync();
+            if (result != null)
+                UpdateTarget = new AppUpdateModel(result);
         }
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex, "Failed to check updates");
+        }
+    }
+
+    private bool CanApplyUpdate() => UpdateTarget != null;
+
+    [RelayCommand(CanExecute = nameof(CanApplyUpdate))]
+    private async Task ApplyUpdateAsync(AppUpdateModel? model)
+    {
+        if (model == null)
+            return;
+        var notification = new NotificationItem
+        {
+            IsProgressBarVisible = true, Title = "Apply the update", Content = "Downloading..."
+        };
+        try
+        {
+            await _updateManager.DownloadUpdatesAsync(model.Update, x => notification.Progress = x);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to download update");
         }
     }
 
