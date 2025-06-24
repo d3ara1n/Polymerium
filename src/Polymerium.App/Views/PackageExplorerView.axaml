@@ -181,6 +181,7 @@
                                                       Width="{StaticResource MediumFontSize}">
                                     <husk:SwitchCase Value="True">
                                         <husk:ProgressRing
+                                            Theme="{StaticResource SolidProgressRingTheme}"
                                             IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
                                             StrokeWidth="2" TrackStrokeWidth="2" />
                                     </husk:SwitchCase>
