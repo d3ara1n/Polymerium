@@ -52,6 +52,30 @@
                 <Setter Property="RenderTransform" Value="scaleY(0.98)" />
             </Style>
         </ControlTheme>
+        <ControlTheme x:Key="AlternativeLaunchButtonTheme" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ControlAccentBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentBorderBrush}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Name="Container" Padding="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                        <Border Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <!-- <Style Selector="^:disabled /template/ Border#Container"> -->
+            <!--     <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" /> -->
+            <!-- </Style> -->
+        </ControlTheme>
     </controls:Subpage.Resources>
     <Grid MaxWidth="1024" MaxHeight="750" RowDefinitions="*,*,100" ColumnSpacing="24" RowSpacing="24">
         <Grid.ColumnDefinitions>
@@ -423,7 +447,7 @@
                                 Foreground="{StaticResource ControlDarkForegroundBrush}"
                                 Command="{Binding PlayCommand}"
                                 IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
-                                Theme="{StaticResource LaunchButtonTheme}">
+                                Theme="{StaticResource AlternativeLaunchButtonTheme}">
                                 <StackPanel VerticalAlignment="Center" Spacing="6">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
