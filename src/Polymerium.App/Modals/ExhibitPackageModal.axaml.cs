@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
@@ -387,6 +388,18 @@ public partial class ExhibitPackageModal : Modal
         Exhibit.PendingVersionName = null;
         ModifyPendingCallback(Exhibit);
         Dismiss();
+    }
+
+    [RelayCommand]
+    private void NavigateUri(string? url)
+    {
+        if (url is not null && Package.Reference is not null)
+        {
+            var rev = new Uri(url, UriKind.RelativeOrAbsolute);
+            TopLevel
+               .GetTopLevel(this)
+              ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new Uri(Package.Reference, rev));
+        }
     }
 
     #endregion

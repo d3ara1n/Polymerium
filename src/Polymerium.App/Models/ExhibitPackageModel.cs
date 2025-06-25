@@ -12,8 +12,7 @@ public class ExhibitPackageModel(
     string projectId,
     string projectName,
     string authorName,
-    string referenceLabel,
-    Uri? referenceUrl,
+    Uri? reference,
     Uri? thumbnail,
     IReadOnlyList<string> tags,
     ulong downloadCount,
@@ -28,8 +27,7 @@ public class ExhibitPackageModel(
     public string ProjectId => projectId;
     public string ProjectName => projectName;
     public string AuthorName => authorName;
-    public string ReferenceLabel => referenceLabel;
-    public Uri? ReferenceUrl => referenceUrl;
+    public Uri? Reference => reference;
     public Uri Thumbnail => thumbnail ?? AssetUriIndex.DIRT_IMAGE;
     public IReadOnlyList<string> Tags => tags;
     public string Summary => summary;

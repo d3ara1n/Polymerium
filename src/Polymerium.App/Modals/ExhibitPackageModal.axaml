@@ -12,6 +12,7 @@
             xmlns:controls="clr-namespace:Polymerium.App.Controls"
             xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+            xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="660" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
@@ -167,7 +168,7 @@
                                        TextAlignment="Center" FontSize="{StaticResource LargeFontSize}"
                                        TextWrapping="Wrap" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
-                                <HyperlinkButton NavigateUri="{Binding ReferenceUrl}">
+                                <HyperlinkButton NavigateUri="{Binding Reference}">
                                     <ToolTip.Tip>
                                         <StackPanel Spacing="2">
                                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
@@ -185,7 +186,7 @@
                                     </ToolTip.Tip>
                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                         <TextBlock
-                                            Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                            Text="{Binding Label,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
                                         <fi:SymbolIcon Symbol="Open" FontSize="12" />
                                     </StackPanel>
                                 </HyperlinkButton>
@@ -507,7 +508,12 @@
                                     Source="{Binding $parent[modals:ExhibitPackageModal].LazyDescription}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="x:String">
-                                            <mdxaml:MarkdownScrollViewer Markdown="{Binding}" Margin="12" />
+                                            <mdxaml:MarkdownScrollViewer Markdown="{Binding}" Margin="12">
+                                                <mdxaml:MarkdownScrollViewer.Engine>
+                                                    <md:Markdown
+                                                        HyperlinkCommand="{Binding $parent[modals:ExhibitPackageModal].NavigateUriCommand}" />
+                                                </mdxaml:MarkdownScrollViewer.Engine>
+                                            </mdxaml:MarkdownScrollViewer>
                                         </DataTemplate>
                                     </husk:LazyContainer.SourceTemplate>
                                 </husk:LazyContainer>
