@@ -228,48 +228,21 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         if (exhibit is not null)
             try
             {
-                var versions = await _dataService.InspectVersionsAsync(exhibit.Label,
-                                                                       exhibit.Ns,
-                                                                       exhibit.ProjectId,
-                                                                       Filter.Empty with
-                                                                       {
-                                                                           Kind = ResourceKind.Modpack
-                                                                       });
                 var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
-                var model = new ExhibitModpackModel(project.ProjectName,
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
                                                     project.Author,
-                                                    project.Label,
                                                     project.Reference,
                                                     project.Tags,
                                                     project.DownloadCount,
                                                     project.Summary,
-                                                    string.Empty,
                                                     project.UpdatedAt,
-                                                    project.Gallery.Select(x => x.Url).ToList(),
-                                                    versions
-                                                       .Select(x => new ExhibitVersionModel(project.Label,
-                                                                   project.Namespace,
-                                                                   project.ProjectName,
-                                                                   project.ProjectId,
-                                                                   x.VersionName,
-                                                                   x.VersionId,
-                                                                   string.Join(",",
-                                                                               x.Requirements.AnyOfLoaders
-                                                                                  .Select(LoaderHelper
-                                                                                      .ToDisplayName)),
-                                                                   string.Join(",", x.Requirements.AnyOfVersions),
-                                                                   string.Empty,
-                                                                   x.PublishedAt,
-                                                                   x.DownloadCount,
-                                                                   x.ReleaseType,
-                                                                   PackageHelper.ToPurl(x.Label,
-                                                                       x.Namespace,
-                                                                       x.ProjectId,
-                                                                       x.VersionId)))
-                                                       .ToList());
+                                                    project.Gallery.Select(x => x.Url).ToList());
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model, InstallCommand = InstallVersionCommand
+                    DataService = _dataService, DataContext = model, InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }

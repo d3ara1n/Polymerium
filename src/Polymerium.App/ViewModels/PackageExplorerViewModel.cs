@@ -350,7 +350,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                     project.ProjectId,
                                                     project.ProjectName,
                                                     project.Author,
-                                                    project.Label,
                                                     project.Reference,
                                                     project.Thumbnail,
                                                     project.Tags,

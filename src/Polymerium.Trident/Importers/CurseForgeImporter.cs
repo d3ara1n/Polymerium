@@ -39,17 +39,18 @@ public class CurseForgeImporter : IProfileImporter
                                                                          manifest
                                                                             .Files
                                                                             .Select(x =>
-                                                                                 new Profile.Rice.Entry(PackageHelper
-                                                                                        .ToPurl(CurseForgeService
-                                                                                                .LABEL,
-                                                                                             null,
-                                                                                             x.ProjectId
-                                                                                                .ToString(),
-                                                                                             x.FileId
-                                                                                                .ToString()),
-                                                                                     x.Required,
-                                                                                     source,
-                                                                                     []))
+                                                                                 new
+                                                                                     Profile.Rice.Entry(PackageHelper
+                                                                                            .ToPurl(CurseForgeService
+                                                                                                    .LABEL,
+                                                                                                 null,
+                                                                                                 x.ProjectId
+                                                                                                    .ToString(),
+                                                                                                 x.FileId
+                                                                                                    .ToString()),
+                                                                                         x.Required,
+                                                                                         source,
+                                                                                         []))
                                                                             .ToList()),
                                                         new Dictionary<string, object>()),
                                             pack

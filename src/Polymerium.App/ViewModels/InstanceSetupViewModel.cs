@@ -343,40 +343,20 @@ public partial class InstanceSetupViewModel(
                                                                           Kind = ResourceKind.Modpack
                                                                       });
                 var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
-                var model = new ExhibitModpackModel(project.ProjectName,
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
                                                     project.Author,
-                                                    project.Label,
                                                     project.Reference,
                                                     project.Tags,
                                                     project.DownloadCount,
                                                     project.Summary,
-                                                    string.Empty,
                                                     project.UpdatedAt,
-                                                    project.Gallery.Select(x => x.Url).ToList(),
-                                                    versions
-                                                       .Select(x => new ExhibitVersionModel(project.Label,
-                                                                   project.Namespace,
-                                                                   project.ProjectName,
-                                                                   project.ProjectId,
-                                                                   x.VersionName,
-                                                                   x.VersionId,
-                                                                   string.Join(",",
-                                                                               x.Requirements.AnyOfLoaders
-                                                                                  .Select(LoaderHelper
-                                                                                      .ToDisplayName)),
-                                                                   string.Join(",", x.Requirements.AnyOfVersions),
-                                                                   string.Empty,
-                                                                   x.PublishedAt,
-                                                                   x.DownloadCount,
-                                                                   x.ReleaseType,
-                                                                   PackageHelper.ToPurl(x.Label,
-                                                                       x.Namespace,
-                                                                       x.ProjectId,
-                                                                       x.VersionId)))
-                                                       .ToList());
+                                                    project.Gallery.Select(x => x.Url).ToList());
                 overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model, InstallCommand = InstallVersionCommand
+                    DataService = dataService, DataContext = model, InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }

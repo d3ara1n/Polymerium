@@ -1,9 +1,16 @@
-﻿using Avalonia;
+﻿using System;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Toasts;
 
@@ -11,6 +18,16 @@ public partial class ExhibitModpackToast : Toast
 {
     public static readonly StyledProperty<IRelayCommand<ExhibitVersionModel>?> InstallCommandProperty =
         AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(nameof(InstallCommand));
+
+    public static readonly DirectProperty<ExhibitModpackToast, LazyObject?> LazyDescriptionProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(nameof(LazyDescription),
+                                                                          o => o.LazyDescription,
+                                                                          (o, v) => o.LazyDescription = v);
+
+    public static readonly DirectProperty<ExhibitModpackToast, LazyObject?> LazyVersionsProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(nameof(LazyVersions),
+                                                                          o => o.LazyVersions,
+                                                                          (o, v) => o.LazyVersions = v);
 
     public ExhibitModpackToast() => InitializeComponent();
 
@@ -20,12 +37,86 @@ public partial class ExhibitModpackToast : Toast
         set => SetValue(InstallCommandProperty, value);
     }
 
-    private void SourceLinkButton_OnClick(object? sender, RoutedEventArgs e)
+    public required DataService DataService { get; set; }
+
+    public LazyObject? LazyVersions
     {
-        if (DataContext is ExhibitModpackModel { ReferenceUrl: not null } model)
+        get;
+        set => SetAndRaise(LazyVersionsProperty, ref field, value);
+    }
+
+
+    private ExhibitModpackModel Modpack => (ExhibitModpackModel)DataContext!;
+
+    public LazyObject? LazyDescription
+    {
+        get;
+        set => SetAndRaise(LazyDescriptionProperty, ref field, value);
+    }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+
+        LoadVersions();
+        LoadDescription();
+    }
+
+    private void LoadVersions()
+    {
+        LazyVersions = new LazyObject(async _ =>
         {
-            var toplevel = TopLevel.GetTopLevel(this);
-            toplevel?.Launcher.LaunchUriAsync(model.ReferenceUrl);
+            var project = Modpack;
+            var versions = await DataService.InspectVersionsAsync(project.Label,
+                                                                  project.Namespace,
+                                                                  project.ProjectId,
+                                                                  Filter.Empty with { Kind = ResourceKind.Modpack });
+            return new ExhibitVersionCollection(versions
+                                               .Select(x => new ExhibitVersionModel(project.Label,
+                                                           project.Namespace,
+                                                           project.ProjectName,
+                                                           project.ProjectId,
+                                                           x.VersionName,
+                                                           x.VersionId,
+                                                           string.Join(",",
+                                                                       x.Requirements.AnyOfLoaders
+                                                                        .Select(LoaderHelper.ToDisplayName)),
+                                                           string.Join(",", x.Requirements.AnyOfVersions),
+                                                           string.Empty,
+                                                           x.PublishedAt,
+                                                           x.DownloadCount,
+                                                           x.ReleaseType,
+                                                           PackageHelper.ToPurl(x.Label,
+                                                                                    x.Namespace,
+                                                                                    x.ProjectId,
+                                                                                    x.VersionId)))
+                                               .ToList());
+        });
+    }
+
+    private void LoadDescription()
+    {
+        LazyDescription = new LazyObject(async _ =>
+        {
+            var description =
+                await DataService.ReadDescriptionAsync(Modpack.Label, Modpack.Namespace, Modpack.ProjectId);
+            return description;
+        });
+    }
+
+    #region Commands
+
+    [RelayCommand]
+    private void NavigateUri(string? url)
+    {
+        if (url is not null)
+        {
+            var rev = new Uri(url, UriKind.RelativeOrAbsolute);
+            TopLevel
+               .GetTopLevel(this)
+              ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new Uri(Modpack.Reference, rev));
         }
     }
+
+    #endregion
 }
