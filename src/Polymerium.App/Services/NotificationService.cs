@@ -68,17 +68,52 @@ public class NotificationService
                    false,
                    actions);
 
-    public void PopProgress(
+    public ProgressHandle PopProgress(
         string message,
         string title = "Progress",
         NotificationLevel level = NotificationLevel.Information) =>
-        Dispatcher.UIThread.Post(() =>
+        Dispatcher.UIThread.Invoke(() =>
         {
             var item = new NotificationItem
             {
                 Content = message, Title = title, Level = level, IsProgressBarVisible = true
             };
-            // TODO: return IProgressReporter
             Pop(item);
+
+            return new ProgressHandle(item);
         });
+
+    #region Nested type: ProgressHandle
+
+    public class ProgressHandle(NotificationItem item) : IProgress<double>, IProgress<string>, IDisposable
+    {
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            item.Close();
+        }
+
+        #endregion
+
+        #region IProgress<double> Members
+
+        public void Report(double value)
+        {
+            item.Progress = value;
+        }
+
+        #endregion
+
+        #region IProgress<string> Members
+
+        public void Report(string value)
+        {
+            item.Content = value;
+        }
+
+        #endregion
+    }
+
+    #endregion
 }
