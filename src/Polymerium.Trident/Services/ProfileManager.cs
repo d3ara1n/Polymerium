@@ -149,10 +149,7 @@ public class ProfileManager : IDisposable
         IReadOnlyList<string> packages,
         IDictionary<string, object> overrides)
     {
-        var handle = _profiles.FirstOrDefault(x => x.Key == key);
-        if (handle is null)
-            throw new InvalidOperationException($"{key} is not in profiles");
-
+        var handle = _profiles.FirstOrDefault(x => x.Key == key) ?? throw new InvalidOperationException($"{key} is not in profiles");
         var changeSet = packages.ToDictionary(PackageHelper.ExtractProjectIdentityIfValid);
         var removeSet = new List<Profile.Rice.Entry>();
         foreach (var entry in handle.Value.Setup.Packages.Where(x => x.Source == handle.Value.Setup.Source))
