@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Avalonia;
 using Microsoft.Extensions.Hosting;
+using Velopack;
 
 namespace Polymerium.App;
 
@@ -26,6 +27,8 @@ internal static class Program
 
     public static void Main(string[] args)
     {
+        if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
+            VelopackApp.Build().Run();
         var builder = Host.CreateApplicationBuilder(args);
         Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
         AppHost = builder.Build();

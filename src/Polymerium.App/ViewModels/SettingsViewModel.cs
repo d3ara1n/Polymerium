@@ -8,7 +8,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
-using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -106,7 +106,14 @@ public partial class SettingsViewModel : ViewModelBase
         {
             var result = await _updateManager.CheckForUpdatesAsync();
             if (result != null)
+            {
                 UpdateTarget = new AppUpdateModel(result);
+                UpdateState = AppUpdateState.Found;
+            }
+            else
+            {
+                UpdateState = AppUpdateState.Latest;
+            }
         }
         catch (Exception ex)
         {
@@ -121,18 +128,33 @@ public partial class SettingsViewModel : ViewModelBase
     {
         if (model == null)
             return;
-        var notification = new NotificationItem
-        {
-            IsProgressBarVisible = true, Title = "Apply the update", Content = "Downloading..."
-        };
+
+        var progress = _notificationService.PopProgress("Downloading...", "Apply the update");
         try
         {
-            await _updateManager.DownloadUpdatesAsync(model.Update, x => notification.Progress = x);
+            await _updateManager.DownloadUpdatesAsync(model.Update, x => progress.Report(x));
+            progress.Dispose();
+            _notificationService.PopMessage("Restart required to take effect",
+                                            "Apply the update",
+                                            actions:
+                                            [
+                                                new NotificationAction("Restart", RestartAndUpdateCommand, model)
+                                            ]);
         }
         catch (Exception ex)
         {
+            progress.Dispose();
             _notificationService.PopMessage(ex, "Failed to download update");
         }
+    }
+
+    private bool CanRestartAndUpdate(AppUpdateModel? model) => model is not null;
+
+    [RelayCommand(CanExecute = nameof(CanRestartAndUpdate))]
+    private void RestartAndUpdate(AppUpdateModel? model)
+    {
+        if (model != null)
+            _updateManager.ApplyUpdatesAndRestart(model.Update);
     }
 
     #endregion

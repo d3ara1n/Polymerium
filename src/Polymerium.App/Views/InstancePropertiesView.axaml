@@ -156,41 +156,6 @@
         <husk:Divider />
         <controls:SettingsEntry Icon="HardDrive" Title="Persistence Storage (WIP)"
                                 Summary="Files or folders that are shared across builds">
-            <!-- <controls:SettingsEntryItem Header="Plans"> -->
-            <!--     <TabStrip SelectedIndex="1" AutoScrollToSelectedItem="False"> -->
-            <!--         <TabStrip.ItemsPanel> -->
-            <!--             <ItemsPanelTemplate> -->
-            <!--                 <Grid ColumnDefinitions="*,*" ColumnSpacing="6"/> -->
-            <!--             </ItemsPanelTemplate> -->
-            <!--         </TabStrip.ItemsPanel> -->
-            <!--         <TabStripItem Grid.Column="0" Background="{StaticResource LayerBackgroundBrush}"> -->
-            <!--             <StackPanel Spacing="4"> -->
-            <!--                 <StackPanel Orientation="Horizontal" Spacing="8"> -->
-            <!--                     <TextBlock Text="Active" FontSize="{StaticResource LargeFontSize}" /> -->
-            <!--                 </StackPanel> -->
-            <!--                 <TextBlock Text="Sharing files and folders below" TextWrapping="Wrap" /> -->
-            <!--                 <Border Background="{StaticResource ControlBackgroundBrush}" -->
-            <!--                         CornerRadius="{StaticResource SmallCornerRadius}"> -->
-            <!--                     <StackPanel Margin="8,4"> -->
-            <!--                         <TextBlock Text="config" /> -->
-            <!--                         <TextBlock Text="defaultconfigs" /> -->
-            <!--                         <TextBlock Text="logs" /> -->
-            <!--                         <TextBlock Text="saves" /> -->
-            <!--                         <TextBlock Text="screenshots" /> -->
-            <!--                         <TextBlock Text="options.txt" /> -->
-            <!--                         <TextBlock Text="server.dat" /> -->
-            <!--                     </StackPanel> -->
-            <!--                 </Border> -->
-            <!--             </StackPanel> -->
-            <!--         </TabStripItem> -->
-            <!--         <TabStripItem Grid.Column="1" Background="{StaticResource LayerBackgroundBrush}"> -->
-            <!--             <StackPanel Spacing="4"> -->
-            <!--                 <TextBlock Text="Inactive" FontSize="{StaticResource LargeFontSize}" /> -->
-            <!--                 <TextBlock Text="No files or folders are shared" TextWrapping="Wrap" /> -->
-            <!--             </StackPanel> -->
-            <!--         </TabStripItem> -->
-            <!--     </TabStrip> -->
-            <!-- </controls:SettingsEntryItem> -->
             <controls:SettingsEntryItem Header="Folders">
                 <StackPanel Spacing="4">
                     <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
