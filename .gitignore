@@ -367,4 +367,5 @@ FodyWeavers.xsd
 
 appsettings.*.json
 build/
-Release/
+Releases/
+publish/

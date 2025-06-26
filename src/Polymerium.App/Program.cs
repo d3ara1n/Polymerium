@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using Avalonia;
 using Microsoft.Extensions.Hosting;
 using Velopack;
@@ -9,7 +10,11 @@ namespace Polymerium.App;
 internal static class Program
 {
     public static readonly string Brand = "Polymerium";
-    public static readonly string Version = typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
+
+    public static readonly string Version = typeof(Program).Assembly
+                                                           .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                                                          ?.InformationalVersion
+                                         ?? typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
 
     // // Initialization code. Don't use any Avalonia, third-party APIs or any
     // // SynchronizationContext-reliant code before AppMain is called: things aren't initialized

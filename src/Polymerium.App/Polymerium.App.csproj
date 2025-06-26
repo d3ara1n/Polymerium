@@ -8,7 +8,10 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
         <LangVersion>preview</LangVersion>
-        <Version>0.7.0-rc.0</Version>
+
+        <!-- GitVersion properties -->
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <UseGitVersionTask>true</UseGitVersionTask>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,6 +25,10 @@
         <PackageReference Include="DynamicData" Version="9.4.1"/>
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.303"/>
         <PackageReference Include="FreeSql.Provider.SqliteCore" Version="3.5.208"/>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Humanizer" Version="3.0.0-beta.96"/>
         <PackageReference Include="IconPacks.Avalonia.Lucide" Version="1.0.0"/>
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc5.4"/>
