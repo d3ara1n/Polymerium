@@ -1,0 +1,96 @@
+name: Release Application
+
+on:
+    pull_request:
+        branches:
+            - main
+            - 'release/**'
+        types: [ closed ]
+    workflow_dispatch:  # 允许手动触发
+
+jobs:
+    build-and-publish:
+        name: Build and Publish with Velopack
+        # 只在 PR 被合并时执行，或手动触发时执行
+        if: (github.event.pull_request.merged == true) || (github.event_name == 'workflow_dispatch')
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                include:
+                    -   os: windows-latest
+                        runtime: win-x64
+                    -   os: ubuntu-latest
+                        runtime: linux-x64
+                    # - os: macos-latest
+                    #   runtime: osx-x64
+        
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@v4
+                with:
+                    submodules: recursive
+
+            -   name: Setup .NET SDK
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: 9.0.x
+
+            -   name: Install GitVersion
+                uses: gittools/actions/gitversion/setup@v3.2.1
+                with:
+                    versionSpec: '6.x'
+
+            -   name: Determine Version
+                id: gitversion
+                uses: gittools/actions/gitversion/execute@v3.2.1
+                with:
+                    useConfigFile: true
+
+            -   name: Install Velopack CLI
+                run: dotnet tool install -g vpk
+
+            -   name: Publish Application
+                run: |
+                    dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
+
+            -   name: Determine release type
+                id: get_version
+                run: |
+                    $version = "${{ steps.gitversion.outputs.semVer }}"
+                    echo "version=$version" >> $env:GITHUB_OUTPUT
+                    
+                    # Check if version contains prerelease tag or metadata
+                    if ("${{ steps.gitversion.outputs.preReleaseTag }}" -ne "" -or "$version" -match '\+') {
+                        echo "is_prerelease=true" >> $env:GITHUB_OUTPUT
+                        echo "release_name=v$version (Preview)" >> $env:GITHUB_OUTPUT
+                    } else {
+                        echo "is_prerelease=false" >> $env:GITHUB_OUTPUT
+                        echo "release_name=v$version" >> $env:GITHUB_OUTPUT
+                    }
+
+            -   name: Pack with Velopack
+                run: |
+                    vpk pack --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --mainExe Polymerium.App.exe
+
+            -   name: Create Git Tag
+                run: |
+                    $tagName = "v${{ steps.get_version.outputs.version }}"
+                    git config user.name "github-actions[bot]"
+                    git config user.email "github-actions[bot]@users.noreply.github.com"
+                    
+                    # Check if tag already exists
+                    $tagExists = git tag -l $tagName
+                    if (-not $tagExists) {
+                        git tag $tagName
+                        git push origin $tagName
+                        Write-Host "Created and pushed tag: $tagName" -ForegroundColor Green
+                    } else {
+                        Write-Host "Tag $tagName already exists, skipping..." -ForegroundColor Yellow
+                    }
+
+            -   name: Upload to GitHub Releases
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    $preFlag = if ("${{ steps.get_version.outputs.is_prerelease }}" -eq "true") { "--pre" } else { "" }
+                    vpk upload github --repoUrl ${{ github.repository }} --publish $preFlag --releaseName "${{ steps.get_version.outputs.release_name }}" --tag "v${{ steps.get_version.outputs.version }}" --token ${{ secrets.GITHUB_TOKEN }}
