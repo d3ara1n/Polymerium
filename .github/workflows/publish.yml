@@ -91,7 +91,7 @@ jobs:
                         pre_flag="--pre"
                     fi
 
-                    vpk upload github --repoUrl ${{ github.repositoryUrl }} $pre_flag \
+                    vpk upload github --repoUrl https://github.com/${{ github.repository }} $pre_flag \
                       --releaseName "${{ steps.get_version.outputs.release_name }}" \
                       --tag "v${{ steps.get_version.outputs.version }}" \
                       --token ${{ secrets.GITHUB_TOKEN }}
