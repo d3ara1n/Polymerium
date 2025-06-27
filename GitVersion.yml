@@ -2,5 +2,6 @@ mode: ContinuousDelivery
 branches:
   main:
     label: ''
+    increment: None
 ignore:
   sha: []
