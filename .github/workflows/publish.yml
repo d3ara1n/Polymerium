@@ -4,11 +4,10 @@ on:
     push:
         tags:
             - 'v*'
-    workflow_dispatch:
 
 permissions:
   contents: write
-  
+
 jobs:
     build-and-publish:
         name: Build and Publish with Velopack for ${{ matrix.os }}-${{ matrix.runtime }}
@@ -94,7 +93,7 @@ jobs:
                     fi
 
                     vpk upload github --repoUrl https://github.com/${{ github.repository }} $pre_flag \
-                      --releaseName "${{ steps.get_version.outputs.release_name }}" \
+                      --releaseName "${{ github.ref }}" \
                       --tag "${{ github.ref }}" \
                       --token ${{ secrets.GITHUB_TOKEN }}
                 shell: bash
