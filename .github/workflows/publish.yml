@@ -43,6 +43,10 @@ jobs:
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
 
+            -   name: Install git-cliff
+                run: |
+                    cargo install git-cliff
+
             -   name: Publish Application
                 run: |
                     dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
@@ -60,7 +64,14 @@ jobs:
                     } else {
                         echo "is_prerelease=false" >> $env:GITHUB_OUTPUT
                         echo "release_name=v$version" >> $env:GITHUB_OUTPUT
-                    }
+                    }   
+
+            -   name: Generate Changelog
+                id: changelog
+                run: |
+                    $version = "${{ steps.gitversion.outputs.semVer }}"
+                    git cliff --tag "v$version" > changelog.md
+                    echo "changelog_file=changelog.md" >> $env:GITHUB_OUTPUT
 
             -   name: Pack with Velopack
                 run: |
@@ -71,4 +82,4 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
                     $preFlag = if ("${{ steps.get_version.outputs.is_prerelease }}" -eq "true") { "--pre" } else { "" }
-                    vpk upload github --repoUrl ${{ github.repository }} --publish $preFlag --releaseName "${{ steps.get_version.outputs.release_name }}" --tag "v${{ steps.get_version.outputs.version }}" --token ${{ secrets.GITHUB_TOKEN }}
+                    vpk upload github --repoUrl ${{ github.repository }} --publish $preFlag --releaseName "${{ steps.get_version.outputs.release_name }}" --tag "v${{ steps.get_version.outputs.version }}" --description "./changelog.md" --token ${{ secrets.GITHUB_TOKEN }}
