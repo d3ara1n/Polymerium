@@ -6,7 +6,9 @@ on:
             - 'v*'
     workflow_dispatch:
 
-
+permissions:
+  contents: write
+  
 jobs:
     build-and-publish:
         name: Build and Publish with Velopack for ${{ matrix.os }}-${{ matrix.runtime }}
@@ -97,24 +99,24 @@ jobs:
                       --token ${{ secrets.GITHUB_TOKEN }}
                 shell: bash
 
-            # -   name: Create GitHub Release
-            #     id: create_release
-            #     uses: actions/create-release@v1
-            #     with:
-            #         tag_name: "${{ github.ref }}"
-            #         release_name: ${{ steps.get_version.outputs.release_name }}
-            #         body_path: changelog.md
-            #         draft: true
-            #         prerelease: ${{ steps.get_version.outputs.is_prerelease }}
-            #     env:
-            #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            # -   name: Upload Velopack Artifacts
-            #     uses: actions/upload-release-asset@v1
-            #     with:
-            #         upload_url: ${{ steps.create_release.outputs.upload_url }}
-            #         asset_path: src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish
-            #         asset_name: Polymerium-${{ matrix.runtime }}.zip
-            #         asset_content_type: application/zip
-            #     env:
-            #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Create GitHub Release
+                id: create_release
+                uses: actions/create-release@v1
+                with:
+                    tag_name: "${{ github.ref }}"
+                    release_name: ${{ steps.get_version.outputs.release_name }}
+                    body_path: changelog.md
+                    draft: true
+                    prerelease: ${{ steps.get_version.outputs.is_prerelease }}
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+            -   name: Upload Velopack Artifacts
+                uses: actions/upload-release-asset@v1
+                with:
+                    upload_url: ${{ steps.create_release.outputs.upload_url }}
+                    asset_path: src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish
+                    asset_name: Polymerium-${{ matrix.runtime }}.zip
+                    asset_content_type: application/zip
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
