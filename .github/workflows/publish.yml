@@ -75,6 +75,7 @@ jobs:
                     version="${{ steps.gitversion.outputs.semVer }}"
                     git cliff --tag "v$version" > changelog.md
                     echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
+                shell: bash
 
             -   name: Pack with Velopack
                 run: |
