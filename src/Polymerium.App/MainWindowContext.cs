@@ -521,6 +521,10 @@ public partial class MainWindowContext : ObservableObject
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    false));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
