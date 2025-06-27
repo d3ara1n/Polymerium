@@ -9,12 +9,15 @@ on:
 
 jobs:
     build-and-publish:
-        name: Build and Publish with Velopack for ${{ matrix.runtime }}
-        runs-on: windows-latest
+        name: Build and Publish with Velopack for ${{ matrix.os }}-${{ matrix.runtime }}
         strategy:
             matrix:
-                runtime:
-                    - win-x64
+                include:
+                    - os: windows-latest
+                      runtime: win-x64
+                    # - os: ubuntu-latest
+                    #   runtime: linux-x64
+        runs-on: ${{ matrix.os }}
 
         steps:
             -   name: Checkout Repository
@@ -42,9 +45,9 @@ jobs:
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
             
-            #            -   name: Install git-cliff
-            #                run: |
-            #                    cargo install git-cliff
+            -   name: Install git-cliff
+                run: |
+                    cargo install git-cliff
 
             -   name: Publish Application
                 run: |
@@ -54,31 +57,47 @@ jobs:
                 id: get_version
                 run: |
                     $version = "${{ steps.gitversion.outputs.semVer }}"
-                    echo "version=$version" >> $env:GITHUB_OUTPUT
+                    echo "version=$version" >> $GITHUB_OUTPUT
 
                     # Check if version contains prerelease tag or metadata
-                    if ("${{ steps.gitversion.outputs.preReleaseTag }}" -ne "" -or "$version" -match '\+') {
-                        echo "is_prerelease=true" >> $env:GITHUB_OUTPUT
-                        echo "release_name=v$version (Preview)" >> $env:GITHUB_OUTPUT
-                    } else {
-                        echo "is_prerelease=false" >> $env:GITHUB_OUTPUT
-                        echo "release_name=v$version" >> $env:GITHUB_OUTPUT
-                    }   
+                    if [ "${{ steps.gitversion.outputs.preReleaseTag }}" != "" ] || [[ "$version" == *+* ]]; then
+                        echo "is_prerelease=true" >> $GITHUB_OUTPUT
+                        echo "release_name=v$version (Preview)" >> $GITHUB_OUTPUT
+                    else
+                        echo "is_prerelease=false" >> $GITHUB_OUTPUT
+                        echo "release_name=v$version" >> $GITHUB_OUTPUT
+                    fi
+                shell: bash
 
-            #            -   name: Generate Changelog
-            #                id: changelog
-            #                run: |
-            #                    $version = "${{ steps.gitversion.outputs.semVer }}"
-            #                    git cliff --tag "v$version" > changelog.md
-            #                    echo "changelog_file=changelog.md" >> $env:GITHUB_OUTPUT
+            -   name: Generate Changelog
+                id: changelog
+                run: |
+                               $version = "${{ steps.gitversion.outputs.semVer }}"
+                               git cliff --tag "v$version" > changelog.md
+                               echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
 
             -   name: Pack with Velopack
                 run: |
-                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --mainExe Polymerium.App.exe
+                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe Polymerium.App.exe
 
-            -   name: Upload to GitHub Releases
+            -   name: Create GitHub Release
+                id: create_release
+                uses: actions/create-release@v1
+                with:
+                    tag_name: v${{ steps.get_version.outputs.version }}
+                    release_name: ${{ steps.get_version.outputs.release_name }}
+                    body_path: changelog.md
+                    draft: true
+                    prerelease: ${{ steps.get_version.outputs.is_prerelease }}
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                run: |
-                    $preFlag = if ("${{ steps.get_version.outputs.is_prerelease }}" -eq "true") { "--pre" } else { "" }
-                    vpk upload github --repoUrl ${{ github.repository }} --publish $preFlag --releaseName "${{ steps.get_version.outputs.release_name }}" --tag "v${{ steps.get_version.outputs.version }}" --token ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Upload Velopack Artifacts
+                uses: actions/upload-release-asset@v1
+                with:
+                    upload_url: ${{ steps.create_release.outputs.upload_url }}
+                    asset_path: src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish
+                    asset_name: Polymerium-${{ matrix.runtime }}.zip
+                    asset_content_type: application/zip
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
