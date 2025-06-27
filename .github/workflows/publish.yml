@@ -86,8 +86,16 @@ jobs:
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    $preFlag = if ("${{ steps.get_version.outputs.is_prerelease }}" -eq "true") { "--pre" } else { "" }
-                    vpk upload github --repoUrl ${{ github.repositoryUrl }} --publish $preFlag --releaseName "${{ steps.get_version.outputs.release_name }}" --tag "v${{ steps.get_version.outputs.version }}" --token ${{ secrets.GITHUB_TOKEN }}
+                    pre_flag=""
+                    if [ "${{ steps.get_version.outputs.is_prerelease }}" = "true" ]; then
+                        pre_flag="--pre"
+                    fi
+
+                    vpk upload github --repoUrl ${{ github.repositoryUrl }} $pre_flag \
+                      --releaseName "${{ steps.get_version.outputs.release_name }}" \
+                      --tag "v${{ steps.get_version.outputs.version }}" \
+                      --token ${{ secrets.GITHUB_TOKEN }}
+                shell: bash
 
             # -   name: Create GitHub Release
             #     id: create_release
