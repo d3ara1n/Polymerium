@@ -9,17 +9,13 @@ on:
 
 jobs:
     build-and-publish:
-        name: Build and Publish with Velopack
-        runs-on: ${{ matrix.os }}
+        name: Build and Publish with Velopack for ${{ matrix.runtime }}
+        runs-on: windows-latest
         strategy:
             matrix:
-                include:
-                    -   os: windows-latest
-                        runtime: win-x64
-                    -   os: ubuntu-latest
-                        runtime: linux-x64
-                    # - os: macos-latest
-                    #   runtime: osx-x64
+                runtime:
+                    - win-x64
+                    - linux-x64
 
         steps:
             -   name: Checkout Repository
@@ -68,7 +64,7 @@ jobs:
 
             -   name: Pack with Velopack
                 run: |
-                    vpk pack --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --mainExe Polymerium.App.exe
+                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --mainExe Polymerium.App.exe
 
             -   name: Upload to GitHub Releases
                 env:
