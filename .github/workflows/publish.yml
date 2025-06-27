@@ -56,7 +56,7 @@ jobs:
             -   name: Determine release type
                 id: get_version
                 run: |
-                    $version = "${{ steps.gitversion.outputs.semVer }}"
+                    version="${{ steps.gitversion.outputs.semVer }}"
                     echo "version=$version" >> $GITHUB_OUTPUT
 
                     # Check if version contains prerelease tag or metadata
@@ -72,32 +72,40 @@ jobs:
             -   name: Generate Changelog
                 id: changelog
                 run: |
-                               $version = "${{ steps.gitversion.outputs.semVer }}"
-                               git cliff --tag "v$version" > changelog.md
-                               echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
+                    version="${{ steps.gitversion.outputs.semVer }}"
+                    git cliff --tag "v$version" > changelog.md
+                    echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
 
             -   name: Pack with Velopack
                 run: |
                     vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe Polymerium.App.exe
 
-            -   name: Create GitHub Release
-                id: create_release
-                uses: actions/create-release@v1
-                with:
-                    tag_name: v${{ steps.get_version.outputs.version }}
-                    release_name: ${{ steps.get_version.outputs.release_name }}
-                    body_path: changelog.md
-                    draft: true
-                    prerelease: ${{ steps.get_version.outputs.is_prerelease }}
+            
+            -   name: Upload to GitHub Releases
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    $preFlag = if ("${{ steps.get_version.outputs.is_prerelease }}" -eq "true") { "--pre" } else { "" }
+                    vpk upload github --repoUrl ${{ github.repositoryUrl }} --publish $preFlag --releaseName "${{ steps.get_version.outputs.release_name }}" --tag "v${{ steps.get_version.outputs.version }}" --token ${{ secrets.GITHUB_TOKEN }}
 
-            -   name: Upload Velopack Artifacts
-                uses: actions/upload-release-asset@v1
-                with:
-                    upload_url: ${{ steps.create_release.outputs.upload_url }}
-                    asset_path: src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish
-                    asset_name: Polymerium-${{ matrix.runtime }}.zip
-                    asset_content_type: application/zip
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            # -   name: Create GitHub Release
+            #     id: create_release
+            #     uses: actions/create-release@v1
+            #     with:
+            #         tag_name: v${{ steps.get_version.outputs.version }}
+            #         release_name: ${{ steps.get_version.outputs.release_name }}
+            #         body_path: changelog.md
+            #         draft: true
+            #         prerelease: ${{ steps.get_version.outputs.is_prerelease }}
+            #     env:
+            #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            # -   name: Upload Velopack Artifacts
+            #     uses: actions/upload-release-asset@v1
+            #     with:
+            #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+            #         asset_path: src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish
+            #         asset_name: Polymerium-${{ matrix.runtime }}.zip
+            #         asset_content_type: application/zip
+            #     env:
+            #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
