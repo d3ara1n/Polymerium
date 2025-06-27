@@ -1,18 +1,13 @@
 name: Release Application
 
 on:
-    pull_request:
-        branches:
-            - main
-            - 'release/**'
-        types: [ closed ]
-    workflow_dispatch:  # 允许手动触发
+    push:
+        tags:
+            - 'v*'
 
 jobs:
     build-and-publish:
         name: Build and Publish with Velopack
-        # 只在 PR 被合并时执行，或手动触发时执行
-        if: (github.event.pull_request.merged == true) || (github.event_name == 'workflow_dispatch')
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
@@ -23,7 +18,7 @@ jobs:
                         runtime: linux-x64
                     # - os: macos-latest
                     #   runtime: osx-x64
-        
+
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
@@ -58,7 +53,7 @@ jobs:
                 run: |
                     $version = "${{ steps.gitversion.outputs.semVer }}"
                     echo "version=$version" >> $env:GITHUB_OUTPUT
-                    
+
                     # Check if version contains prerelease tag or metadata
                     if ("${{ steps.gitversion.outputs.preReleaseTag }}" -ne "" -or "$version" -match '\+') {
                         echo "is_prerelease=true" >> $env:GITHUB_OUTPUT
@@ -71,22 +66,6 @@ jobs:
             -   name: Pack with Velopack
                 run: |
                     vpk pack --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --mainExe Polymerium.App.exe
-
-            -   name: Create Git Tag
-                run: |
-                    $tagName = "v${{ steps.get_version.outputs.version }}"
-                    git config user.name "github-actions[bot]"
-                    git config user.email "github-actions[bot]@users.noreply.github.com"
-                    
-                    # Check if tag already exists
-                    $tagExists = git tag -l $tagName
-                    if (-not $tagExists) {
-                        git tag $tagName
-                        git push origin $tagName
-                        Write-Host "Created and pushed tag: $tagName" -ForegroundColor Green
-                    } else {
-                        Write-Host "Tag $tagName already exists, skipping..." -ForegroundColor Yellow
-                    }
 
             -   name: Upload to GitHub Releases
                 env:
