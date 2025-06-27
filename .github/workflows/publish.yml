@@ -15,7 +15,6 @@ jobs:
             matrix:
                 runtime:
                     - win-x64
-                    - linux-x64
 
         steps:
             -   name: Checkout Repository
