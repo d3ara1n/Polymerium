@@ -123,6 +123,7 @@
                             </TextBlock>
                         </StackPanel>
                     </husk:NotificationItem>
+                    <Slider Value="50" />
                     <DockPanel>
                         <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
                             <ComboBoxItem Content="这是一个 1" />
