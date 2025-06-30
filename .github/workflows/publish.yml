@@ -74,7 +74,7 @@ jobs:
                 id: changelog
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
-                    git cliff --tag "${{ github.ref }}" > changelog.md
+                    git cliff --tag "${{ github.ref_name }}" -o changelog.md
                     echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
                 shell: bash
 
@@ -93,8 +93,8 @@ jobs:
                     fi
 
                     vpk upload github --repoUrl https://github.com/${{ github.repository }} $pre_flag \
-                      --releaseName "${{ github.ref }}" \
-                      --tag "${{ github.ref }}" \
+                      --releaseName "${{ steps.get_version.outputs.release_name }}" \
+                      --tag "${{ github.ref_name }}" \
                       --token ${{ secrets.GITHUB_TOKEN }}
                 shell: bash
 
@@ -102,7 +102,7 @@ jobs:
 #                id: create_release
 #                uses: actions/create-release@v1
 #                with:
-#                    tag_name: "${{ github.ref }}"
+#                    tag_name: "${{ github.ref_name }}"
 #                    release_name: ${{ steps.get_version.outputs.release_name }}
 #                    body_path: changelog.md
 #                    draft: true
