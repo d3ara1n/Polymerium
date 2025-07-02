@@ -66,7 +66,7 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
         // Widgets
         new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
         // Statistics
-        new(typeof(InstanceStatisticsView), PackIconLucideKind.ChartNoAxesCombined),
+        new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
         // Storage
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
         // Properties
