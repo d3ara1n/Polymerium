@@ -184,7 +184,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstanceStatisticsView}"
+                    CommandParameter="{x:Type v:InstanceActivitiesView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <TextBlock FontSize="{StaticResource SmallFontSize}"

@@ -11,8 +11,8 @@ public class MinecraftService(IMinecraftClient client)
     public async Task<MinecraftLoginResponse> AuthenticateByXboxLiveServiceTokenAsync(string token, string uhs)
     {
         var response = await client
-                            .AccquireAccessTokenByXboxServiceTokenAsync(new
-                                                                            AcquireAccessTokenByXboxServiceTokenRequest($"XBL3.0 x={uhs};{token}"))
+                            .AcquireAccessTokenByXboxServiceTokenAsync(new
+                                                                           AcquireAccessTokenByXboxServiceTokenRequest($"XBL3.0 x={uhs};{token}"))
                             .ConfigureAwait(false);
         if (!string.IsNullOrEmpty(response.Error))
             throw response.Error switch

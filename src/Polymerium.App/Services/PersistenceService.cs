@@ -44,10 +44,21 @@ public class PersistenceService : IDisposable
 
     #endregion
 
+    #region Actions
+
     public void AppendAction(Action action)
     {
         _db.Value.Insert(action).ExecuteAffrows();
     }
+
+    public IReadOnlyList<Action> GetLatestActions(string key, int limit = 10)
+    {
+        return _db.Value.Select<Action>().Where(x => x.Key == key).OrderByDescending(x => x.At).Take(limit).ToList();
+    }
+
+    #endregion
+
+    #region Activity
 
     public void AppendActivity(Activity activity)
     {
@@ -85,6 +96,10 @@ public class PersistenceService : IDisposable
 
         return (double)(keyTotalSeconds / allTotalSeconds);
     }
+
+    #endregion
+
+    #region Accounts
 
     public void AppendAccount(Account account)
     {
@@ -132,6 +147,10 @@ public class PersistenceService : IDisposable
         _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.Data, data).ExecuteAffrows();
     }
 
+    #endregion
+
+    #region AccountSelectors
+
     public AccountSelector? GetAccountSelector(string key)
     {
         return _db.Value.Select<AccountSelector>().Where(x => x.Key == key).First();
@@ -157,6 +176,8 @@ public class PersistenceService : IDisposable
             }
         });
     }
+
+    #endregion
 
     #region Nested type: Account
 
@@ -196,7 +217,7 @@ public class PersistenceService : IDisposable
 
     public class Action(string key, ActionKind kind, string? old, string? @new)
     {
-        public DateTimeOffset At { get; set; } = DateTimeOffset.Now;
+        public DateTime At { get; set; } = DateTime.Now;
 
         public string Key { get; set; } = key;
         public ActionKind Kind { get; set; } = kind;

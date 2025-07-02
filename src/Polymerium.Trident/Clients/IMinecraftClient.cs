@@ -6,7 +6,7 @@ namespace Polymerium.Trident.Clients;
 public interface IMinecraftClient
 {
     [Post("/authentication/login_with_xbox")]
-    Task<MinecraftLoginResponse> AccquireAccessTokenByXboxServiceTokenAsync(
+    Task<MinecraftLoginResponse> AcquireAccessTokenByXboxServiceTokenAsync(
         [Body] AcquireAccessTokenByXboxServiceTokenRequest request);
 
     [Get("/entitlements/mcstore")]

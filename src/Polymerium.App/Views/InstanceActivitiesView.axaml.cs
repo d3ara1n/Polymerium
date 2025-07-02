@@ -2,9 +2,9 @@
 
 namespace Polymerium.App.Views;
 
-public partial class InstanceStatisticsView : Subpage
+public partial class InstanceActivitiesView : Subpage
 {
-    public InstanceStatisticsView()
+    public InstanceActivitiesView()
     {
         InitializeComponent();
     }
