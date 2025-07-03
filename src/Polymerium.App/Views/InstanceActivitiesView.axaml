@@ -6,31 +6,57 @@
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+                  xmlns:m="clr-namespace:Polymerium.App.Models"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceActivitiesView"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled" x:DataType="vm:InstanceActivitiesViewModel">
     <Grid RowDefinitions="256,*" RowSpacing="8">
         <Grid Grid.Row="0" ColumnDefinitions="212,*" ColumnSpacing="8">
             <husk:Card Grid.Column="0" />
             <husk:Card Grid.Column="1" />
         </Grid>
-        <Grid Grid.Row="1" ColumnDefinitions="*,256" ColumnSpacing="8">
-            <husk:Card Grid.Column="0">
-                <Panel>
-                    <StackPanel VerticalAlignment="Center"
-                                Spacing="8">
-                        <iconPacks:PackIconLucide Kind="Grid2x2" Height="{StaticResource ExtraLargeFontSize}"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                  Width="{StaticResource ExtraLargeFontSize}"
-                                                  HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                   FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
-                    </StackPanel>
-                </Panel>
+        <Grid Grid.Row="1" ColumnDefinitions="*" ColumnSpacing="8">
+            <husk:Card Grid.Column="0" Padding="0">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto"
+                          Margin="{Binding Source={StaticResource CardContentMargin},Converter={x:Static husk:ThicknessConverters.WithoutBottom}}">
+                        <TextBlock Grid.Column="0" Text="Changelog"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Grid.Column="1" Text="Pager Placeholder" />
+                    </Grid>
+                    <Panel>
+                        <StackPanel VerticalAlignment="Center"
+                                    Spacing="8"
+                                    IsVisible="{Binding PagedActionCollection.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:True}}">
+                            <iconPacks:PackIconLucide Kind="Grid2x2" Height="{StaticResource ExtraLargeFontSize}"
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                      Width="{StaticResource ExtraLargeFontSize}"
+                                                      HorizontalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                       FontSize="{StaticResource LargeFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <ScrollViewer>
+                            <ItemsControl Margin="{StaticResource CardContentMargin}"
+                                          ItemsSource="{Binding PagedActionCollection}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Spacing="6" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="m:InstanceActionModel">
+                                        <controls:InstanceActionCard />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Panel>
+                </DockPanel>
             </husk:Card>
-            <husk:Card Grid.Column="1" />
         </Grid>
     </Grid>
 </controls:Subpage>

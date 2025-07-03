@@ -70,7 +70,7 @@ public partial class ExhibitModpackToast : Toast
             var versions = await DataService.InspectVersionsAsync(project.Label,
                                                                   project.Namespace,
                                                                   project.ProjectId,
-                                                                  Filter.Empty with { Kind = ResourceKind.Modpack });
+                                                                  Filter.None with { Kind = ResourceKind.Modpack });
             return new ExhibitVersionCollection(versions
                                                .Select(x => new ExhibitVersionModel(project.Label,
                                                            project.Namespace,

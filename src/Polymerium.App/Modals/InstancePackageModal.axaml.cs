@@ -153,7 +153,7 @@ public partial class InstancePackageModal : Modal
                                       var versions = await DataService.InspectVersionsAsync(Model.Label,
                                                          Model.Namespace,
                                                          Model.ProjectId,
-                                                         IsFilterEnabled ? Filter : Filter.Empty);
+                                                         IsFilterEnabled ? Filter : Filter.None);
                                       return new InstancePackageVersionCollection(versions
                                          .Select<Version,
                                               InstancePackageVersionModelBase>(x => Model is

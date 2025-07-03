@@ -76,7 +76,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                                                       parsed.Identity.Namespace,
                                                       parsed.Identity.Pid,
                                                       parsed.Vid,
-                                                      Filter.Empty with
+                                                      Filter.None with
                                                       {
                                                           Loader = loader, Version = Context.Setup.Version
                                                       })

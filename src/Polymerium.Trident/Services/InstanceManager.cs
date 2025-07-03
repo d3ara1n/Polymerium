@@ -407,7 +407,7 @@ public class InstanceManager(
     {
         logger.LogInformation("Begin install package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key.Key);
         var package = await repositories
-                           .ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack })
+                           .ResolveAsync(label, ns, pid, vid, Filter.None with { Kind = ResourceKind.Modpack })
                            .ConfigureAwait(false);
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
@@ -471,7 +471,7 @@ public class InstanceManager(
     {
         logger.LogInformation("Begin update {} from package {}", key, PackageHelper.ToPurl(label, ns, pid, vid));
         var package = await repositories
-                           .ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack })
+                           .ResolveAsync(label, ns, pid, vid, Filter.None with { Kind = ResourceKind.Modpack })
                            .ConfigureAwait(false);
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
