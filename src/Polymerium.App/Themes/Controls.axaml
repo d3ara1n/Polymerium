@@ -18,5 +18,6 @@
         <ResourceInclude Source="/Controls/Plaque.axaml" />
         <ResourceInclude Source="/Controls/StorageInstanceButton.axaml" />
         <ResourceInclude Source="/Controls/InstancePackageDependencyButton.axaml" />
+        <ResourceInclude Source="/Controls/InstanceActionCard.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

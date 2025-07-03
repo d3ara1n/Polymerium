@@ -262,7 +262,7 @@ public partial class ExhibitPackageModal : Modal
                                       var versions = (await DataService.InspectVersionsAsync(Package.Label,
                                                           Package.Namespace,
                                                           Package.ProjectId,
-                                                          IsFilterEnabled ? Filter : Filter.Empty)).ToArray();
+                                                          IsFilterEnabled ? Filter : Filter.None)).ToArray();
                                       var project = Package;
                                       var rv = new ExhibitVersionCollection(versions
                                                                            .Select(x =>

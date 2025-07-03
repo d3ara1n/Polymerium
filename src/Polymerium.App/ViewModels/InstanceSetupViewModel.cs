@@ -119,7 +119,7 @@ public partial class InstanceSetupViewModel(
                     else
                     {
                         var p = await dataService
-                                     .ResolvePackageAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.Empty)
+                                     .ResolvePackageAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.None)
                                      .ConfigureAwait(false);
 
                         var t = p.Thumbnail is not null
@@ -174,7 +174,7 @@ public partial class InstanceSetupViewModel(
                                                         @namespace,
                                                         pid,
                                                         vid,
-                                                        Filter.Empty with { Kind = ResourceKind.Modpack })
+                                                        Filter.None with { Kind = ResourceKind.Modpack })
                                    .ConfigureAwait(false);
 
                 return new InstanceReferenceModel(purl,
@@ -338,7 +338,7 @@ public partial class InstanceSetupViewModel(
                 var versions = await dataService.InspectVersionsAsync(source.Label,
                                                                       source.Namespace,
                                                                       source.Pid,
-                                                                      Filter.Empty with
+                                                                      Filter.None with
                                                                       {
                                                                           Kind = ResourceKind.Modpack
                                                                       });
@@ -424,7 +424,7 @@ public partial class InstanceSetupViewModel(
                                                   result.Namespace,
                                                   result.Pid,
                                                   result.Vid,
-                                                  Filter.Empty);
+                                                  Filter.None);
                                 var model = new PackageUpdaterModel(entry,
                                                                     package,
                                                                     package.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
@@ -518,7 +518,7 @@ public partial class InstanceSetupViewModel(
                                                                             result.Namespace,
                                                                             result.Pid,
                                                                             result.Vid,
-                                                                            Filter.Empty);
+                                                                            Filter.None);
                         name = package.ProjectName;
                         version = package.VersionName;
                     }
@@ -584,7 +584,7 @@ public partial class InstanceSetupViewModel(
                 var page = await dataService.InspectVersionsAsync(result.Label,
                                                                   result.Namespace,
                                                                   result.Pid,
-                                                                  Filter.Empty with
+                                                                  Filter.None with
                                                                   {
                                                                       Kind = ResourceKind.Modpack,
                                                                       Version = Basic.Version

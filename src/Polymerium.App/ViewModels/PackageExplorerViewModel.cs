@@ -262,7 +262,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
     }
 
     [ObservableProperty]
-    public partial Filter Filter { get; set; } = Filter.Empty with { Kind = ResourceKind.Mod };
+    public partial Filter Filter { get; set; } = Filter.None with { Kind = ResourceKind.Mod };
 
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
@@ -333,7 +333,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                              exhibit.Ns,
                                                                              exhibit.ProjectId,
                                                                              exhibit.InstalledVersionId,
-                                                                             Filter.Empty);
+                                                                             Filter.None);
                         exhibit.InstalledVersionName = package.VersionName;
                     }
                     catch

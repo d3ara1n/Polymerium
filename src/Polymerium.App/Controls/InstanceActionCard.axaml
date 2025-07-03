@@ -1,0 +1,84 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Polymerium.App.Controls"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:m="clr-namespace:Polymerium.App.Models"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+    <ControlTheme x:Key="{x:Type local:InstanceActionCard}" TargetType="local:InstanceActionCard">
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:InstanceActionModel">
+                <DockPanel HorizontalSpacing="6">
+                    <Button Classes="Small" Theme="{StaticResource OutlineButtonTheme}" DockPanel.Dock="Right">
+                        <StackPanel>
+                            <fi:SymbolIcon Symbol="ArrowUndo" HorizontalAlignment="Center" />
+                            <TextBlock Text="Undo" />
+                        </StackPanel>
+                    </Button>
+                    <Border BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
+                            CornerRadius="{StaticResource SmallCornerRadius}" Padding="8,6">
+                        <Grid ColumnDefinitions="Auto,*,*,Auto" ColumnSpacing="8">
+                            <Border Grid.Column="0" Height="38"
+                                    Width="38"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Border.Background>
+                                    <ImageBrush Source="{Binding Thumbnail}" />
+                                </Border.Background>
+                            </Border>
+                            <Grid Grid.Column="1" RowDefinitions="*,*">
+                                <TextBlock Grid.Row="0" Text="{Binding ProjectName}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                <husk:SwitchPresenter Grid.Row="1"
+                                                      Value="{Binding Kind}"
+                                                      TargetType="m:InstanceActionKind">
+                                    <husk:SwitchCase Value="Add">
+                                        <husk:Tag Classes="Status Small Success">
+                                            <husk:IconLabel Icon="Add" Text="Add" />
+                                        </husk:Tag>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Remove">
+                                        <husk:Tag Classes="Status Small Danger">
+                                            <husk:IconLabel Icon="Dismiss" Text="Remove" />
+                                        </husk:Tag>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Update">
+                                        <husk:Tag Classes="Status Small Warning">
+                                            <husk:IconLabel Icon="ArrowUp" Text="Update" />
+                                        </husk:Tag>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Unknown">
+                                        <husk:Tag Classes="Status Small" Content="Unknown" />
+                                    </husk:SwitchCase>
+                                </husk:SwitchPresenter>
+                            </Grid>
+                            <husk:SwitchPresenter Grid.Column="2" Value="{Binding Kind}"
+                                                  TargetType="m:InstanceActionKind"
+                                                  VerticalAlignment="Center">
+                                <husk:SwitchCase Value="Add">
+                                    <TextBlock Text="{Binding NewVersionName}"
+                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                </husk:SwitchCase>
+                                <husk:SwitchCase Value="Remove">
+                                    <TextBlock Text="{Binding OldVersionName}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                </husk:SwitchCase>
+                                <husk:SwitchCase Value="Update">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding NewVersionName}"
+                                                   Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                        <TextBlock Text="{Binding OldVersionName}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    </StackPanel>
+                                </husk:SwitchCase>
+                            </husk:SwitchPresenter>
+                            <StackPanel Grid.Column="3">
+                                <TextBlock HorizontalAlignment="Right" Text="{Binding ModifiedAt}"
+                                           FontSize="{StaticResource SmallFontSize}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

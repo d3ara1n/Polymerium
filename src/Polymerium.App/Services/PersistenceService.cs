@@ -51,9 +51,15 @@ public class PersistenceService : IDisposable
         _db.Value.Insert(action).ExecuteAffrows();
     }
 
-    public IReadOnlyList<Action> GetLatestActions(string key, int limit = 10)
+    public IReadOnlyList<Action> GetLatestActions(string key, int index = 0, int limit = 10)
     {
-        return _db.Value.Select<Action>().Where(x => x.Key == key).OrderByDescending(x => x.At).Take(limit).ToList();
+        return _db
+              .Value.Select<Action>()
+              .Where(x => x.Key == key)
+              .OrderByDescending(x => x.At)
+              .Skip(index)
+              .Take(limit)
+              .ToList();
     }
 
     #endregion

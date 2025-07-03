@@ -1,4 +1,6 @@
 ﻿using System;
+using Avalonia.Media.Imaging;
+using Humanizer;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
@@ -10,6 +12,7 @@ public class InstanceActionModel(
     string? oldVersionName,
     string? newVersionId,
     string? newVersionName,
+    Bitmap thumbnail,
     DateTimeOffset modifiedAt) : ModelBase
 {
     #region Direct
@@ -19,7 +22,7 @@ public class InstanceActionModel(
         get
         {
             if (oldVersionId != null && newVersionId != null)
-                return InstanceActionKind.Unknown;
+                return InstanceActionKind.Update;
 
             if (oldVersionId == null && newVersionId != null)
                 return InstanceActionKind.Add;
@@ -30,6 +33,17 @@ public class InstanceActionModel(
             return InstanceActionKind.Unknown;
         }
     }
+
+    public string ProjectId => projectId;
+    public string ProjectName => projectName;
+    public string? OldVersionId => oldVersionId;
+    public string? OldVersionName => oldVersionName;
+    public string? NewVersionId => newVersionId;
+    public string? NewVersionName => newVersionName;
+    public Bitmap Thumbnail => thumbnail;
+
+    public DateTimeOffset ModifiedAtRaw => modifiedAt;
+    public string ModifiedAt => modifiedAt.Humanize();
 
     #endregion
 }
