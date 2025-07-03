@@ -8,9 +8,11 @@
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstanceActionModel">
                 <DockPanel HorizontalSpacing="6">
-                    <Button Classes="Small" Theme="{StaticResource OutlineButtonTheme}" DockPanel.Dock="Right">
-                        <StackPanel>
-                            <fi:SymbolIcon Symbol="ArrowUndo" HorizontalAlignment="Center" />
+                    <Button DockPanel.Dock="Right" Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
+                            IsEnabled="{Binding CanUndo}">
+                        <StackPanel VerticalAlignment="Center">
+                            <fi:SymbolIcon Symbol="ArrowUndo" HorizontalAlignment="Center"
+                                           FontSize="{StaticResource LargeFontSize}" />
                             <TextBlock Text="Undo" />
                         </StackPanel>
                     </Button>

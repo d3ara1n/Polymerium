@@ -67,7 +67,9 @@ public partial class InstanceActivitiesViewModel(
                                                        newPackage?.VersionId,
                                                        newPackage?.VersionName,
                                                        thumbnail,
-                                                       x.At);
+                                                       x.At,
+                                                       (newPackage?.Kind ?? oldPackage?.Kind) is not ResourceKind
+                                                          .Modpack);
                     })
                    .ToArray();
 

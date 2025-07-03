@@ -13,7 +13,8 @@ public class InstanceActionModel(
     string? newVersionId,
     string? newVersionName,
     Bitmap thumbnail,
-    DateTimeOffset modifiedAt) : ModelBase
+    DateTimeOffset modifiedAt,
+    bool canUndo) : ModelBase
 {
     #region Direct
 
@@ -44,6 +45,8 @@ public class InstanceActionModel(
 
     public DateTimeOffset ModifiedAtRaw => modifiedAt;
     public string ModifiedAt => modifiedAt.Humanize();
+
+    public bool CanUndo => canUndo;
 
     #endregion
 }
