@@ -13,9 +13,13 @@
         <ItemsControl ItemsSource="{Binding Widgets}" VerticalAlignment="Top">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="widgets:WidgetBase">
-                    <husk:Card Padding="0">
-                        <Grid RowDefinitions="Auto,Auto,*">
-                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <Grid RowDefinitions="Auto,*">
+                        <Border Grid.Row="0"
+                                Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                                BorderThickness="1" BorderBrush="{StaticResource ControlAccentBorderBrush}"
+                                Padding="8,4"
+                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                            <Grid ColumnDefinitions="*,Auto">
                                 <TextBlock Grid.Column="0" Text="{Binding Title}" Margin="12,0"
                                            VerticalAlignment="Center" />
                                 <ToggleButton Grid.Column="1" Theme="{StaticResource GhostToggleButtonTheme}"
@@ -24,11 +28,16 @@
                                                           Height="{StaticResource SmallFontSize}" />
                                 </ToggleButton>
                             </Grid>
-                            <husk:Divider Grid.Row="1" />
-                            <ContentControl Grid.Row="2" Content="{Binding}" ContentTemplate="{Binding FullTemplate}"
+                        </Border>
+                        <Border Grid.Row="1" BorderThickness="1,0,1,1"
+                                Background="{StaticResource CardBackgroundBrush}"
+                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                Padding="12"
+                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                            <ContentControl Content="{Binding}" ContentTemplate="{Binding FullTemplate}"
                                             Padding="12" />
-                        </Grid>
-                    </husk:Card>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerTheme>
