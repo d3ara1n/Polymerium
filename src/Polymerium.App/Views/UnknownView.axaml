@@ -140,10 +140,15 @@
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
                                           IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
-
                             <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
                                 <TextBlock Text="Make it REAL" />
                             </CheckBox>
+                            <RadioButton IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                                <TextBlock Text="On" />
+                            </RadioButton>
+                            <RadioButton
+                                IsChecked="{Binding IsEnabled,ElementName=ComboBox,Converter={x:Static BoolConverters.Not}}"
+                                Content="Off" />
                         </StackPanel>
                     </DockPanel>
                     <husk:InfoBar Header="You know what?">
