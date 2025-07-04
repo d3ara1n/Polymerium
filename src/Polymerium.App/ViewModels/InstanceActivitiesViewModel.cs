@@ -69,7 +69,8 @@ public partial class InstanceActivitiesViewModel(
                                                        thumbnail,
                                                        x.At,
                                                        (newPackage?.Kind ?? oldPackage?.Kind) is not ResourceKind
-                                                          .Modpack);
+                                                          .Modpack
+                                                    && false);
                     })
                    .ToArray();
 
