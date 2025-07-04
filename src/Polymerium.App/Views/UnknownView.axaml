@@ -146,9 +146,9 @@
                             <RadioButton IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
                                 <TextBlock Text="On" />
                             </RadioButton>
-                            <RadioButton
-                                IsChecked="{Binding IsEnabled,ElementName=ComboBox,Converter={x:Static BoolConverters.Not}}"
-                                Content="Off" />
+                            <RadioButton Theme="{StaticResource AlternativeRadioButtonTheme}"
+                                         IsChecked="{Binding IsEnabled,ElementName=ComboBox,Converter={x:Static BoolConverters.Not}}"
+                                         Content="Off" />
                         </StackPanel>
                     </DockPanel>
                     <husk:InfoBar Header="You know what?">

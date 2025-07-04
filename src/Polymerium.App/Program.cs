@@ -29,11 +29,12 @@ internal static class Program
     internal static IHost? AppHost { get; private set; }
 
     public static bool Debug { get; private set; } = Debugger.IsAttached;
+    public static bool FirstRun { get; private set; }
 
     public static void Main(string[] args)
     {
         if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
-            VelopackApp.Build().Run();
+            VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
         var builder = Host.CreateApplicationBuilder(args);
         Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
         AppHost = builder.Build();
