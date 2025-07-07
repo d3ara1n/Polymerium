@@ -143,6 +143,10 @@
                             <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
                                 <TextBlock Text="Make it REAL" />
                             </CheckBox>
+                            <CheckBox Theme="{StaticResource AlternativeCheckBoxTheme}" IsThreeState="True"
+                                      IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                                <TextBlock Text="Make it HARD" />
+                            </CheckBox>
                             <RadioButton IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
                                 <TextBlock Text="On" />
                             </RadioButton>
