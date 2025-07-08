@@ -18,7 +18,7 @@
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6"/>
         <PackageReference Include="Mime-Detective" Version="25.4.25"/>
-        <PackageReference Include="ObservableCollections" Version="3.3.3"/>
+        <PackageReference Include="ObservableCollections" Version="3.3.4"/>
         <PackageReference Include="Refit" Version="8.0.0"/>
         <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0"/>
         <PackageReference Include="ReverseMarkdown" Version="4.7.0"/>
