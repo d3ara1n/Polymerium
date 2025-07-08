@@ -6,8 +6,7 @@
 ## I.关于
 
 [![Screenshot][product-screenshot]](#i关于)
-
-(More screenshots checkout [Screenshots](assets/screenshots))
+👆从打开到启动游戏速通👆
 
 ## I.About
 
