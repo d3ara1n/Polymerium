@@ -62,6 +62,50 @@ public partial class MainWindowContext : ObservableObject
                                                                                ?? DateTimeOffset.MinValue))
            .Subscribe();
         View = view;
+
+        if (Program.FirstRun && OperatingSystem.IsWindows())
+            Task.Run(CheckForPrivilegeAsync);
+    }
+
+    private async Task CheckForPrivilegeAsync()
+    {
+        // 这里的逻辑是通过 ~/.trident/.polymerium/first_run 文件判断是否完成初次启动检查
+        // 通过对上述文件创建 ~/.trident.polymerium/symlink 的文件链接判断是否已完成提权设置
+
+        var first = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "first_run");
+        var symlink = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "symlink");
+
+        if (File.Exists(first)
+         && File.Exists(symlink)
+         && File.ResolveLinkTarget(symlink, false) is { FullName: { } file }
+         && first.Equals(file, StringComparison.InvariantCultureIgnoreCase))
+            // 曾经的版本或是神秘力量完成了测试
+            return;
+
+        var dir = Path.GetDirectoryName(first);
+        if (dir != null && !Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+        if (!File.Exists(first))
+            // 这里是没有用 try catch guard 的，要是出现异常奔溃那我没话说
+            await File.WriteAllTextAsync(first, "say u say me");
+
+        if (File.Exists(symlink))
+            File.Delete(symlink);
+
+        try
+        {
+            File.CreateSymbolicLink(symlink, first);
+        }
+        catch (IOException io) when (io.HResult == 1314)
+        {
+            // TODO: 弹出 Modal 提示开启开发者模式
+            // 经过测试最新版本 Windows 11 即使不开启也可以直接创建软链接，是否与管理员账号且账号无密码有关？
+            _notificationService.PopMessage(io, "Failed to create symlink");
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to create symlink");
+        }
     }
 
 
