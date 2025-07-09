@@ -288,7 +288,7 @@
         </controls:SettingsEntry>
         <husk:Divider />
         <controls:SettingsEntry Icon="Camera" Title="Snapshots (WIP)" Summary="Backup, yes, it's called backup">
-            <controls:SettingsEntryItem Header="Taken Automatically When (Shooting Trigger)">
+            <controls:SettingsEntryItem Header="Taken Automatically When">
                 <ComboBox SelectedIndex="0">
                     <ComboBoxItem Content="Never" />
                     <ComboBoxItem Content="Built" />

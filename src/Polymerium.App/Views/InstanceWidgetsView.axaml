@@ -7,6 +7,7 @@
                   xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                   xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
                   x:Class="Polymerium.App.Views.InstanceWidgetsView" x:DataType="vm:InstanceWidgetsViewModel">
     <Grid>
@@ -17,12 +18,18 @@
                         <Border Grid.Row="0"
                                 Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
                                 BorderThickness="1" BorderBrush="{StaticResource ControlAccentBorderBrush}"
-                                Padding="8,4"
+                                Padding="12,4"
                                 CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Grid.Column="0" Text="{Binding Title}" Margin="12,0"
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <!-- Grab Handle: Avalonia 没有 Grab 指针，而且本来就没法 ReOrder 所以这个图标仅供装饰 -->
+                                <Border Grid.Column="0" Cursor="SizeAll">
+                                    <fi:SymbolIcon Symbol="ReOrderDotsVertical"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource MediumFontSize}" />
+                                </Border>
+                                <TextBlock Grid.Column="1" Text="{Binding Title}"
                                            VerticalAlignment="Center" />
-                                <ToggleButton Grid.Column="1" Theme="{StaticResource GhostToggleButtonTheme}"
+                                <ToggleButton Grid.Column="2" Theme="{StaticResource GhostToggleButtonTheme}"
                                               IsChecked="{Binding IsPinned}" Classes="Small" Margin="4">
                                     <icons:PackIconLucide Kind="Pin" Width="{StaticResource SmallFontSize}"
                                                           Height="{StaticResource SmallFontSize}" />
@@ -54,15 +61,5 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <!-- <husk:FlexWrapPanel RowSpacing="8" ColumnSpacing="8"> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="360" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
-        <!-- </husk:FlexWrapPanel> -->
     </Grid>
 </controls:Subpage>
