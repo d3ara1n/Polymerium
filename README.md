@@ -38,8 +38,8 @@ Go back read the last section and you get it.
 
 ### 3.跨平台 | Cross-platform
 
-- Windows
-- Linux
+- Windows 10+
+- Linux(WIP)
 - macOS(Planning)
 
 ### 4.使用以下技术栈和工具构建 | Tech stack and toolchain
