@@ -89,7 +89,7 @@ public partial class UnknownViewModel(
     [RelayCommand]
     private void Debug()
     {
-        overlayService.PopModal(new AccountEntryModal());
+        overlayService.PopModal(new PrivilegeRequirementModal());
     }
 
     #endregion
