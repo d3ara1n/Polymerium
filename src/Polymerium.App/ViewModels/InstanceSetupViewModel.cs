@@ -442,7 +442,7 @@ public partial class InstanceSetupViewModel(
 
                 total--;
 
-                notification.Progress = Math.Min(100d, 100d * total / packages.Items.Count);
+                notification.Progress = Math.Min(100d, 100d * (packages.Items.Count - total) / packages.Items.Count);
                 notification.Content = Resources
                                       .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
                                       .Replace("{0}", updates.Count.ToString())
