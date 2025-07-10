@@ -22,6 +22,13 @@ public partial class InstanceActivitiesViewModel(
     DataService dataService,
     PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IReadOnlyList<InstanceActionModel>? PagedActionCollection { get; set; }
+
+    #endregion
+
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         // 修改列表就应该改成分页，每次切换页的时候批量加载 [Project(OldVersion, NewVersion, Kind)]
@@ -78,11 +85,4 @@ public partial class InstanceActivitiesViewModel(
         var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
         PagedActionCollection = results;
     }
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<InstanceActionModel>? PagedActionCollection { get; set; }
-
-    #endregion
 }
