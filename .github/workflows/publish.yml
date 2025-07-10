@@ -6,7 +6,7 @@ on:
             - 'v*'
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
     build-and-publish:
@@ -14,8 +14,8 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - os: windows-latest
-                      runtime: win-x64
+                    -   os: windows-latest
+                        runtime: win-x64
                     # - os: ubuntu-latest
                     #   runtime: linux-x64
         runs-on: ${{ matrix.os }}
@@ -45,7 +45,7 @@ jobs:
 
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
-            
+
             -   name: Install git-cliff
                 run: |
                     cargo install git-cliff
@@ -82,7 +82,7 @@ jobs:
                 run: |
                     vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe Polymerium.App.exe
 
-            
+
             -   name: Upload to GitHub Releases
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

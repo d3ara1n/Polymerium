@@ -44,6 +44,67 @@ public class PersistenceService : IDisposable
 
     #endregion
 
+    #region Nested type: Account
+
+    public class Account(
+        string uuid,
+        string kind,
+        string data,
+        DateTime enrolledAt,
+        DateTime? lastUsedAt,
+        bool isDefault)
+    {
+        [Column(IsPrimary = true)]
+        public string Uuid { get; set; } = uuid;
+
+        public string Kind { get; set; } = kind;
+        public string Data { get; set; } = data;
+        public DateTime EnrolledAt { get; set; } = enrolledAt;
+        public DateTime? LastUsedAt { get; set; } = lastUsedAt;
+        public bool IsDefault { get; set; } = isDefault;
+    }
+
+    #endregion
+
+    #region Nested type: AccountSelector
+
+    public class AccountSelector(string key, string uuid)
+    {
+        [Column(IsPrimary = true)]
+        public string Key { get; set; } = key;
+
+        public string Uuid { get; set; } = uuid;
+    }
+
+    #endregion
+
+    #region Nested type: Action
+
+    public class Action(string key, ActionKind kind, string? old, string? @new)
+    {
+        public DateTime At { get; set; } = DateTime.Now;
+
+        public string Key { get; set; } = key;
+        public ActionKind Kind { get; set; } = kind;
+        public string? Old { get; set; } = old;
+        public string? New { get; set; } = @new;
+    }
+
+    #endregion
+
+    #region Nested type: Activity
+
+    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, bool dieInPeace)
+    {
+        public string Key { get; set; } = key;
+        public DateTime Begin { get; set; } = begin.DateTime;
+        public DateTime End { get; set; } = end.DateTime;
+
+        public bool DieInPeace { get; set; } = dieInPeace;
+    }
+
+    #endregion
+
     #region Actions
 
     public void AppendAction(Action action)
@@ -181,67 +242,6 @@ public class PersistenceService : IDisposable
                 _db.Value.Insert(new AccountSelector(key, uuid)).ExecuteAffrows();
             }
         });
-    }
-
-    #endregion
-
-    #region Nested type: Account
-
-    public class Account(
-        string uuid,
-        string kind,
-        string data,
-        DateTime enrolledAt,
-        DateTime? lastUsedAt,
-        bool isDefault)
-    {
-        [Column(IsPrimary = true)]
-        public string Uuid { get; set; } = uuid;
-
-        public string Kind { get; set; } = kind;
-        public string Data { get; set; } = data;
-        public DateTime EnrolledAt { get; set; } = enrolledAt;
-        public DateTime? LastUsedAt { get; set; } = lastUsedAt;
-        public bool IsDefault { get; set; } = isDefault;
-    }
-
-    #endregion
-
-    #region Nested type: AccountSelector
-
-    public class AccountSelector(string key, string uuid)
-    {
-        [Column(IsPrimary = true)]
-        public string Key { get; set; } = key;
-
-        public string Uuid { get; set; } = uuid;
-    }
-
-    #endregion
-
-    #region Nested type: Action
-
-    public class Action(string key, ActionKind kind, string? old, string? @new)
-    {
-        public DateTime At { get; set; } = DateTime.Now;
-
-        public string Key { get; set; } = key;
-        public ActionKind Kind { get; set; } = kind;
-        public string? Old { get; set; } = old;
-        public string? New { get; set; } = @new;
-    }
-
-    #endregion
-
-    #region Nested type: Activity
-
-    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, bool dieInPeace)
-    {
-        public string Key { get; set; } = key;
-        public DateTime Begin { get; set; } = begin.DateTime;
-        public DateTime End { get; set; } = end.DateTime;
-
-        public bool DieInPeace { get; set; } = dieInPeace;
     }
 
     #endregion

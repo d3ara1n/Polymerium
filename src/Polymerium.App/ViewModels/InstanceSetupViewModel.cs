@@ -338,10 +338,7 @@ public partial class InstanceSetupViewModel(
                 var versions = await dataService.InspectVersionsAsync(source.Label,
                                                                       source.Namespace,
                                                                       source.Pid,
-                                                                      Filter.None with
-                                                                      {
-                                                                          Kind = ResourceKind.Modpack
-                                                                      });
+                                                                      Filter.None with { Kind = ResourceKind.Modpack });
                 var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
