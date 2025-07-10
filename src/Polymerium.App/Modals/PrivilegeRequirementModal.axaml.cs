@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Modals;
 
-public partial class PrivilegeRequirementModal : Modal
+public partial  class PrivilegeRequirementModal : Modal
 {
     public PrivilegeRequirementModal()
     {
