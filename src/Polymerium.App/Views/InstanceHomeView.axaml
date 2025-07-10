@@ -97,7 +97,6 @@
             CornerRadius="{StaticResource MediumCornerRadius}"
             IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Updating}">
             <husk:Card
-                Background="{StaticResource LayerBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}"
                 BorderThickness="1">
                 <Grid RowDefinitions="Auto,*,Auto" RowSpacing="8">
@@ -193,7 +192,7 @@
                     </StackPanel>
                 </Button>
             </Grid>
-            <husk:Card Grid.Row="2" Background="{StaticResource LayerBackgroundBrush}">
+            <husk:Card Grid.Row="2">
                 <Grid RowDefinitions="*,12,Auto">
                     <Panel
                         Grid.Row="0"
@@ -267,7 +266,7 @@
                     Margin="0,0,0,12"
                     Orientation="Horizontal"
                     Spacing="12">
-                    <husk:Card Width="198" Background="{StaticResource LayerBackgroundBrush}">
+                    <husk:Card Width="198">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -280,7 +279,7 @@
                                 Text="Never" />
                         </StackPanel>
                     </husk:Card>
-                    <husk:Card Width="198" Background="{StaticResource LayerBackgroundBrush}">
+                    <husk:Card Width="198">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -293,7 +292,7 @@
                                 Text="Be" />
                         </StackPanel>
                     </husk:Card>
-                    <husk:Card Width="198" Background="{StaticResource LayerBackgroundBrush}">
+                    <husk:Card Width="198">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -323,8 +322,7 @@
             <husk:Card
                 Grid.Row="1"
                 Grid.Column="0"
-                Padding="0"
-                Background="{StaticResource LayerBackgroundBrush}">
+                Padding="0">
                 <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <husk:SwitchPresenter
@@ -410,8 +408,7 @@
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 Grid.Column="1"
-                Padding="0"
-                Background="{StaticResource LayerBackgroundBrush}">
+                Padding="0">
                 <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <Grid ColumnDefinitions="Auto,0,Auto">

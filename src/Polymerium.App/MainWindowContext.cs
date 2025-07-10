@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
@@ -43,12 +44,14 @@ public partial class MainWindowContext : ObservableObject
         NotificationService notificationService,
         NavigationService navigationService,
         PersistenceService persistenceService,
-        InstanceService instanceService)
+        InstanceService instanceService,
+        OverlayService overlayService)
     {
         _notificationService = notificationService;
         _navigationService = navigationService;
         _persistenceService = persistenceService;
         _instanceService = instanceService;
+        _overlayService = overlayService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -63,7 +66,7 @@ public partial class MainWindowContext : ObservableObject
            .Subscribe();
         View = view;
 
-        if (Program.FirstRun && OperatingSystem.IsWindows())
+        if (!Program.Debug && Program.FirstRun && OperatingSystem.IsWindows())
             Task.Run(CheckForPrivilegeAsync);
     }
 
@@ -100,7 +103,7 @@ public partial class MainWindowContext : ObservableObject
         {
             // TODO: 弹出 Modal 提示开启开发者模式
             // 经过测试最新版本 Windows 11 即使不开启也可以直接创建软链接，是否与管理员账号且账号无密码有关？
-            _notificationService.PopMessage(io, "Failed to create symlink");
+            _overlayService.PopModal(new PrivilegeRequirementModal());
         }
         catch (Exception ex)
         {
@@ -118,6 +121,7 @@ public partial class MainWindowContext : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 
