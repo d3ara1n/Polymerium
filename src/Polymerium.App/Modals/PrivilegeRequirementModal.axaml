@@ -3,7 +3,45 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-            x:Class="Polymerium.App.Modals.PrivilegeRequirementModal">
-    Welcome to Avalonia!
+            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="322" MinHeight="366"
+            x:Class="Polymerium.App.Modals.PrivilegeRequirementModal" Padding="0">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Margin="6"
+                CornerRadius="{StaticResource LargeCornerRadius}">
+            <Grid ColumnDefinitions="Auto,Auto,Auto" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Margin="0,48" ColumnSpacing="24">
+                <icons:PackIconLucide Grid.Column="0" Kind="Wrench" Height="{StaticResource ExtraLargeFontSize}" />
+                <icons:PackIconLucide Grid.Column="1" Kind="ArrowRight" Height="{StaticResource LargeFontSize}"
+                                      VerticalAlignment="Center" />
+                <icons:PackIconLucide Grid.Column="2" Kind="LockOpen" Height="{StaticResource ExtraLargeFontSize}" />
+            </Grid>
+        </Border>
+        <Grid RowDefinitions="Auto,*,Auto,Auto" Margin="{StaticResource ModalContentMargin}" RowSpacing="12">
+            <TextBlock Grid.Row="0" Text="Before you go..." FontWeight="{StaticResource ControlStrongFontWeight}"
+                       FontSize="{StaticResource LargeFontSize}" />
+            <TextBlock Grid.Row="1" TextWrapping="Wrap">
+                <Run
+                    Text="Please check whether you have ENABLED [Developer Mode] in [Windows Settings]. It's required to deploying the instances." />
+                <LineBreak />
+                <HyperlinkButton NavigateUri="ms-settings:developers">
+                    <TextBlock Text="Navigate →" />
+                </HyperlinkButton>
+            </TextBlock>
+            <TextBlock Grid.Row="2">
+                <Run TextDecorations="Underline" Text="Is it safe?" />
+                <LineBreak />
+                <Run Text="It's required only for creating symlinks." />
+            </TextBlock>
+            <Grid Grid.Row="3" ColumnDefinitions="Auto,*,Auto">
+                <Button Grid.Column="0" Command="{Binding $parent[modals:PrivilegeRequirementModal].DismissCommand}">
+                    <TextBlock Text="Ignore" />
+                </Button>
+                <Button Grid.Column="2" Classes="Primary">
+                    <TextBlock Text="Done" />
+                </Button>
+            </Grid>
+        </Grid>
+    </DockPanel>
 </husk:Modal>
