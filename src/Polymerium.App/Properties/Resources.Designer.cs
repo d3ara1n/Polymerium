@@ -528,6 +528,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Enum_Day {
+            get {
+                return ResourceManager.GetString("Enum_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string Enum_Disabled {
@@ -542,6 +551,15 @@ namespace Polymerium.App.Properties {
         public static string Enum_Enabled {
             get {
                 return ResourceManager.GetString("Enum_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Enum_Month {
+            get {
+                return ResourceManager.GetString("Enum_Month", resourceCulture);
             }
         }
         
@@ -587,6 +605,24 @@ namespace Polymerium.App.Properties {
         public static string Enum_Vanilla {
             get {
                 return ResourceManager.GetString("Enum_Vanilla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Week.
+        /// </summary>
+        public static string Enum_Week {
+            get {
+                return ResourceManager.GetString("Enum_Week", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string Enum_Year {
+            get {
+                return ResourceManager.GetString("Enum_Year", resourceCulture);
             }
         }
         
