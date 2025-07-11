@@ -112,14 +112,12 @@ public class PersistenceService : IDisposable
         _db.Value.Insert(action).ExecuteAffrows();
     }
 
-    public IReadOnlyList<Action> GetLatestActions(string key, int index = 0, int limit = 10)
+    public IReadOnlyList<Action> GetLatestActions(string key, DateTimeOffset since)
     {
         return _db
               .Value.Select<Action>()
-              .Where(x => x.Key == key)
+              .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage && x.At >= since.UtcDateTime)
               .OrderByDescending(x => x.At)
-              .Skip(index)
-              .Take(limit)
               .ToList();
     }
 

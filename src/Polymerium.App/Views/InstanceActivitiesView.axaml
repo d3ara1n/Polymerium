@@ -17,11 +17,13 @@
                 <Border Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource CardBackgroundBrush}"
                         BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                         CornerRadius="{StaticResource MediumCornerRadius}" />
-                <Border Grid.Row="0" Grid.RowSpan="2" Margin="12,0" Background="Blue"
+                <Border Grid.Row="0" Grid.RowSpan="2" Margin="12,0"
+                        Background="{StaticResource ControlBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}" />
                 <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="12">
                     <TextBlock Text="Total Play" />
-                    <TextBlock Grid.Column="1" Text="128 hrs" FontSize="{StaticResource ExtraLargeFontSize}"
+                    <TextBlock Grid.Column="1" Text="{Binding TotalPlayTime,FallbackValue=128 hrs}"
+                               FontSize="{StaticResource ExtraLargeFontSize}"
                                Foreground="{StaticResource ControlAccentForegroundBrush}" />
                 </Grid>
             </Grid>
@@ -35,37 +37,51 @@
                         <TextBlock Grid.Column="0" Text="Changelog"
                                    FontWeight="{StaticResource ControlStrongFontWeight}"
                                    FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock Grid.Column="1" Text="Pager Placeholder" />
+                        <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}"
+                                  SelectedIndex="{Binding SinceDayIndex,Mode=TwoWay}">
+                            <TabStripItem Content="{x:Static lang:Resources.Enum_Day}" />
+                            <TabStripItem Content="{x:Static lang:Resources.Enum_Week}" />
+                            <TabStripItem Content="{x:Static lang:Resources.Enum_Month}" />
+                            <TabStripItem Content="{x:Static lang:Resources.Enum_Year}" />
+                            <TabStripItem Content="{x:Static lang:Resources.Enum_All}" />
+                        </TabStrip>
                     </Grid>
-                    <Panel>
-                        <StackPanel VerticalAlignment="Center"
-                                    Spacing="8"
-                                    IsVisible="{Binding PagedActionCollection.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:True}}">
-                            <iconPacks:PackIconLucide Kind="Grid2x2" Height="{StaticResource ExtraLargeFontSize}"
-                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                      Width="{StaticResource ExtraLargeFontSize}"
-                                                      HorizontalAlignment="Center" />
-                            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
-                        </StackPanel>
-                        <ScrollViewer>
-                            <ItemsControl Margin="{StaticResource CardContentMargin}"
-                                          ItemsSource="{Binding PagedActionCollection}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Spacing="6" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="m:InstanceActionModel">
-                                        <controls:InstanceActionCard />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Panel>
+                    <husk:LazyContainer Source="{Binding PagedActions}">
+                        <husk:LazyContainer.SourceTemplate>
+                            <DataTemplate DataType="m:InstanceActionCollection">
+                                <Panel>
+                                    <StackPanel VerticalAlignment="Center"
+                                                Spacing="8"
+                                                IsVisible="{Binding Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:True}}">
+                                        <iconPacks:PackIconLucide Kind="Grid2x2"
+                                                                  Height="{StaticResource ExtraLargeFontSize}"
+                                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                  Width="{StaticResource ExtraLargeFontSize}"
+                                                                  HorizontalAlignment="Center" />
+                                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                                   FontSize="{StaticResource LargeFontSize}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                    <ScrollViewer>
+                                        <ItemsControl Margin="{StaticResource CardContentMargin}"
+                                                      ItemsSource="{Binding}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Spacing="6" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="m:InstanceActionModel">
+                                                    <controls:InstanceActionCard />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Panel>
+                            </DataTemplate>
+                        </husk:LazyContainer.SourceTemplate>
+                    </husk:LazyContainer>
                 </DockPanel>
             </husk:Card>
         </Grid>

@@ -1053,4 +1053,16 @@
     <data name="MainWindow_PropertiesMenuText" xml:space="preserve">
         <value>属性</value>
     </data>
+    <data name="Enum_Month" xml:space="preserve">
+        <value>月</value>
+    </data>
+    <data name="Enum_Day" xml:space="preserve">
+        <value>日</value>
+    </data>
+    <data name="Enum_Week" xml:space="preserve">
+        <value>周</value>
+    </data>
+    <data name="Enum_Year" xml:space="preserve">
+        <value>年</value>
+    </data>
 </root>
