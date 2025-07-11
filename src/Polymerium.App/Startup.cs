@@ -78,6 +78,7 @@ public static class Startup
            .AddSingleton<PersistenceService>()
            .AddSingleton<ScrapService>()
            .AddSingleton<InstanceService>()
+           .AddSingleton<WidgetHostService>()
            .AddSingleton<UpdateManager>(_ => new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium",
                                                                                     null,
                                                                                     true)));

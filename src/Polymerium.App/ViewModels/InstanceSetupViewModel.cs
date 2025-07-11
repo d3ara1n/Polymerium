@@ -299,9 +299,27 @@ public partial class InstanceSetupViewModel(
             if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
             {
                 if (dialog.Result is LoaderCandidateSelectionModel selection)
-                    guard.Value.Setup.Loader = LoaderHelper.ToLurl(selection.Id, selection.Version);
+                {
+                    var old = guard.Value.Setup.Loader;
+                    var lurl = LoaderHelper.ToLurl(selection.Id, selection.Version);
+                    guard.Value.Setup.Loader = lurl;
+                    if (old != lurl)
+                        persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                   PersistenceService.ActionKind.EditLoader,
+                                                                   old,
+                                                                   lurl));
+                }
                 else
+                {
+                    var old = guard.Value.Setup.Loader;
                     guard.Value.Setup.Loader = null;
+                    if (old != null)
+                        persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                   PersistenceService.ActionKind.EditLoader,
+                                                                   old,
+                                                                   null));
+                }
+
                 await guard.DisposeAsync();
             }
     }
