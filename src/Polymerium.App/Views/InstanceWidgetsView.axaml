@@ -30,6 +30,7 @@
                                 <TextBlock Grid.Column="1" Text="{Binding Title}"
                                            VerticalAlignment="Center" />
                                 <ToggleButton Grid.Column="2" Theme="{StaticResource GhostToggleButtonTheme}"
+                                              IsVisible="{Binding SlimTemplate,Converter={x:Static ObjectConverters.IsNotNull}}"
                                               IsChecked="{Binding IsPinned}" Classes="Small" Margin="4">
                                     <icons:PackIconLucide Kind="Pin" Width="{StaticResource SmallFontSize}"
                                                           Height="{StaticResource SmallFontSize}" />
