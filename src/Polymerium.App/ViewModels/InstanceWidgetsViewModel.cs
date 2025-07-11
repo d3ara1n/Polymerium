@@ -14,6 +14,7 @@ public class InstanceWidgetsViewModel : InstanceViewModelBase
         Widgets =
         [
             new NoteWidget { Context = context },
+            new ConnectionTestWidget { Context = context },
             new DummyWidget { Context = context, Title = "Log Viewer" },
             new DummyWidget { Context = context, Title = "Nbt Editor" },
             new DummyWidget { Context = context, Title = "IDK" }
