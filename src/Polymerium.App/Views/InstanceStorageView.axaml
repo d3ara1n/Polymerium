@@ -5,4 +5,5 @@
                   xmlns:controls="using:Polymerium.App.Controls"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceStorageView">
+    WIP
 </controls:Subpage>
