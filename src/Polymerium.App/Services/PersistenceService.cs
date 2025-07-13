@@ -116,7 +116,7 @@ public class PersistenceService : IDisposable
     {
         return _db
               .Value.Select<Action>()
-              .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage && x.At >= since.UtcDateTime)
+              .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage && x.At >= since.LocalDateTime)
               .OrderByDescending(x => x.At)
               .ToList();
     }
@@ -140,6 +140,15 @@ public class PersistenceService : IDisposable
         var totalSeconds = _db
                           .Value.Select<Activity>()
                           .Where(x => x.Key == key)
+                          .Sum(x => (x.End - x.Begin).TotalSeconds);
+        return TimeSpan.FromSeconds((double)totalSeconds);
+    }
+
+    public TimeSpan GetDayPlayTime(string key, DateTimeOffset date)
+    {
+        var totalSeconds = _db
+                          .Value.Select<Activity>()
+                          .Where(x => x.Key == key && x.End.Date == date.DateTime.Date)
                           .Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }

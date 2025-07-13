@@ -74,7 +74,7 @@ jobs:
                 id: changelog
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
-                    git cliff --tag "${{ github.ref_name }}" -o changelog.md
+                    git cliff --latest -o changelog.md
                     echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
                 shell: bash
 
