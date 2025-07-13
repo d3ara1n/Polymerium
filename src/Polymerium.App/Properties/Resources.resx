@@ -1074,4 +1074,28 @@
     <data name="Enum_Year" xml:space="preserve">
         <value>Year</value>
     </data>
+    <data name="Week_Sunday" xml:space="preserve">
+        <value>Sun</value>
+    </data>
+    <data name="Week_Monday" xml:space="preserve">
+        <value>Mon</value>
+    </data>
+    <data name="Week_Tuesday" xml:space="preserve">
+        <value>Tue</value>
+    </data>
+    <data name="Week_Wednesday" xml:space="preserve">
+        <value>Wed</value>
+    </data>
+    <data name="Week_Thursday" xml:space="preserve">
+        <value>Thu</value>
+    </data>
+    <data name="Week_Friday" xml:space="preserve">
+        <value>Fri</value>
+    </data>
+    <data name="Week_Saturday" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="Enum_Hour" xml:space="preserve">
+        <value>Hour</value>
+    </data>
 </root>

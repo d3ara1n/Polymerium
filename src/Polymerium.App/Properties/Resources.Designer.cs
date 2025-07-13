@@ -555,6 +555,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hour.
+        /// </summary>
+        public static string Enum_Hour {
+            get {
+                return ResourceManager.GetString("Enum_Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Month.
         /// </summary>
         public static string Enum_Month {
@@ -3206,6 +3215,69 @@ namespace Polymerium.App.Properties {
         public static string UserInputDialog_Title {
             get {
                 return ResourceManager.GetString("UserInputDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fri.
+        /// </summary>
+        public static string Week_Friday {
+            get {
+                return ResourceManager.GetString("Week_Friday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mon.
+        /// </summary>
+        public static string Week_Monday {
+            get {
+                return ResourceManager.GetString("Week_Monday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sat.
+        /// </summary>
+        public static string Week_Saturday {
+            get {
+                return ResourceManager.GetString("Week_Saturday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sun.
+        /// </summary>
+        public static string Week_Sunday {
+            get {
+                return ResourceManager.GetString("Week_Sunday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thu.
+        /// </summary>
+        public static string Week_Thursday {
+            get {
+                return ResourceManager.GetString("Week_Thursday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tue.
+        /// </summary>
+        public static string Week_Tuesday {
+            get {
+                return ResourceManager.GetString("Week_Tuesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wed.
+        /// </summary>
+        public static string Week_Wednesday {
+            get {
+                return ResourceManager.GetString("Week_Wednesday", resourceCulture);
             }
         }
     }

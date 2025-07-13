@@ -1065,4 +1065,28 @@
     <data name="Enum_Year" xml:space="preserve">
         <value>年</value>
     </data>
+    <data name="Week_Friday" xml:space="preserve">
+        <value>五</value>
+    </data>
+    <data name="Week_Monday" xml:space="preserve">
+        <value>一</value>
+    </data>
+    <data name="Week_Saturday" xml:space="preserve">
+        <value>六</value>
+    </data>
+    <data name="Week_Sunday" xml:space="preserve">
+        <value>日</value>
+    </data>
+    <data name="Week_Thursday" xml:space="preserve">
+        <value>四</value>
+    </data>
+    <data name="Week_Tuesday" xml:space="preserve">
+        <value>二</value>
+    </data>
+    <data name="Week_Wednesday" xml:space="preserve">
+        <value>三</value>
+    </data>
+    <data name="Enum_Hour" xml:space="preserve">
+        <value>时</value>
+    </data>
 </root>

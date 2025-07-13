@@ -8,6 +8,7 @@
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                   xmlns:m="clr-namespace:Polymerium.App.Models"
+                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceActivitiesView"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled" x:DataType="vm:InstanceActivitiesViewModel">
@@ -27,7 +28,11 @@
                                Foreground="{StaticResource ControlAccentForegroundBrush}" />
                 </Grid>
             </Grid>
-            <husk:Card Grid.Column="1" />
+            <husk:Card Grid.Column="1">
+                <lvc:CartesianChart Series="{Binding WeekSeries}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}" />
+            </husk:Card>
         </Grid>
         <Grid Grid.Row="1" ColumnDefinitions="*" ColumnSpacing="8">
             <husk:Card Grid.Column="0" Padding="0">

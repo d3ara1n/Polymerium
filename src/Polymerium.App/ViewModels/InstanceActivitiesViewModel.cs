@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Huskui.Avalonia.Models;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -33,7 +37,7 @@ public partial class InstanceActivitiesViewModel(
     [ObservableProperty]
     public partial LazyObject? PagedActions { get; set; }
 
-    public string TotalPlayTime { get; set; } = TimeSpan.Zero.Humanize();
+    public string TotalPlayTime => TotalPlayTimeRaw.Humanize(precision: 2);
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
@@ -42,12 +46,48 @@ public partial class InstanceActivitiesViewModel(
     [ObservableProperty]
     public partial int SinceDayIndex { get; set; } = -1;
 
+    [ObservableProperty]
+    public partial ISeries<double>[]? WeekSeries { get; set; }
+
+    [ObservableProperty]
+    public partial IEnumerable<Axis>? XAxes { get; set; }
+
+    [ObservableProperty]
+    public partial IEnumerable<Axis>? YAxes { get; set; }
+
     #endregion
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
         SinceDayIndex = 0;
+
+        int[] days = [-6, -5, -4, -3, -2, -1, 0];
+        var times = days
+                   .Select(x => persistenceService.GetDayPlayTime(Basic.Key, DateTime.Now.AddDays(x)))
+                   .Select(x => x.TotalHours)
+                   .ToArray();
+
+        WeekSeries = [new ColumnSeries<double>(times) { Name = "Play Time (Hours)" }];
+
+        // Configure X-axis with day labels
+        var dayLabels = days
+                       .Select(x => DateTimeOffset.Now.AddDays(x).DayOfWeek switch
+                        {
+                            DayOfWeek.Sunday => "Sun",
+                            DayOfWeek.Monday => "Mon",
+                            DayOfWeek.Tuesday => "Tue",
+                            DayOfWeek.Wednesday => "Wed",
+                            DayOfWeek.Thursday => "Thu",
+                            DayOfWeek.Friday => "Fri",
+                            DayOfWeek.Saturday => "Sat",
+                            _ => throw new ArgumentOutOfRangeException(nameof(x), x, null)
+                        })
+                       .ToArray();
+        XAxes = [new Axis { Labels = dayLabels, ForceStepToMin = true, MinStep = 1 }];
+
+        // Configure Y-axis for hours
+        YAxes = [new Axis { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
