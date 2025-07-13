@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Huskui.Avalonia.Models;
@@ -37,7 +39,7 @@ public partial class InstanceActivitiesViewModel(
     [ObservableProperty]
     public partial LazyObject? PagedActions { get; set; }
 
-    public string TotalPlayTime => TotalPlayTimeRaw.Humanize(precision: 2);
+    public string TotalPlayTime => TotalPlayTimeRaw.Humanize();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
