@@ -4,15 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Huskui.Avalonia.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -31,34 +27,6 @@ public partial class InstanceActivitiesViewModel(
     DataService dataService,
     PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<InstanceActionModel>? PagedActionCollection { get; set; }
-
-    [ObservableProperty]
-    public partial LazyObject? PagedActions { get; set; }
-
-    public string TotalPlayTime => TotalPlayTimeRaw.Humanize();
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
-    public partial TimeSpan TotalPlayTimeRaw { get; set; }
-
-    [ObservableProperty]
-    public partial int SinceDayIndex { get; set; } = -1;
-
-    [ObservableProperty]
-    public partial ISeries<double>[]? WeekSeries { get; set; }
-
-    [ObservableProperty]
-    public partial IEnumerable<Axis>? XAxes { get; set; }
-
-    [ObservableProperty]
-    public partial IEnumerable<Axis>? YAxes { get; set; }
-
-    #endregion
-
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
@@ -161,4 +129,32 @@ public partial class InstanceActivitiesViewModel(
         });
         PagedActions = lazy;
     }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IReadOnlyList<InstanceActionModel>? PagedActionCollection { get; set; }
+
+    [ObservableProperty]
+    public partial LazyObject? PagedActions { get; set; }
+
+    public string TotalPlayTime => TotalPlayTimeRaw.Humanize();
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
+    public partial TimeSpan TotalPlayTimeRaw { get; set; }
+
+    [ObservableProperty]
+    public partial int SinceDayIndex { get; set; } = -1;
+
+    [ObservableProperty]
+    public partial ISeries<double>[]? WeekSeries { get; set; }
+
+    [ObservableProperty]
+    public partial IEnumerable<Axis>? XAxes { get; set; }
+
+    [ObservableProperty]
+    public partial IEnumerable<Axis>? YAxes { get; set; }
+
+    #endregion
 }

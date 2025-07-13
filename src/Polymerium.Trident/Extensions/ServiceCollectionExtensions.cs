@@ -51,8 +51,7 @@ public static class ServiceCollectionExtensions
                 IModrinthClient>(_ =>
                                      new RefitSettings(new
                                                            SystemTextJsonContentSerializer(new
-                                                               JsonSerializerOptions(JsonSerializerDefaults
-                                                                  .Web)
+                                                               JsonSerializerOptions(JsonSerializerDefaults.Web)
                                                                {
                                                                    PropertyNamingPolicy = JsonNamingPolicy
                                                                       .SnakeCaseLower
@@ -127,8 +126,7 @@ public static class ServiceCollectionExtensions
                                       new
                                           RefitSettings(new
                                                             SystemTextJsonContentSerializer(new
-                                                                JsonSerializerOptions(JsonSerializerDefaults
-                                                                   .Web)
+                                                                JsonSerializerOptions(JsonSerializerDefaults.Web)
                                                                 {
                                                                     PropertyNamingPolicy = JsonNamingPolicy
                                                                        .SnakeCaseLower
@@ -140,7 +138,8 @@ public static class ServiceCollectionExtensions
                                                   { StatusCode: HttpStatusCode.BadRequest } => null,
                                                   { RequestMessage: not null } => await ApiException
                                                      .Create(message.RequestMessage,
-                                                             message.RequestMessage.Method,
+                                                             message.RequestMessage
+                                                                    .Method,
                                                              message,
                                                              dummy)
                                                      .ConfigureAwait(false),
@@ -203,8 +202,7 @@ public static class ServiceCollectionExtensions
                 IMinecraftClient>(_ =>
                                       new RefitSettings(new
                                                             SystemTextJsonContentSerializer(new
-                                                                JsonSerializerOptions(JsonSerializerDefaults
-                                                                   .Web)
+                                                                JsonSerializerOptions(JsonSerializerDefaults.Web)
                                                                 {
                                                                     PropertyNamingPolicy = JsonNamingPolicy
                                                                        .SnakeCaseLower

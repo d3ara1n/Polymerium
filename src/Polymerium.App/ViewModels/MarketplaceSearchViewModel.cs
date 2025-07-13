@@ -242,7 +242,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                     project.Gallery.Select(x => x.Url).ToList());
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataService = _dataService, DataContext = model, InstallCommand = InstallVersionCommand
+                    DataService = _dataService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }
