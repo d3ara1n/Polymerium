@@ -305,9 +305,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = lurl;
                     if (old != lurl)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                   PersistenceService.ActionKind.EditLoader,
-                                                                   old,
-                                                                   lurl));
+                                                            PersistenceService.ActionKind.EditLoader,
+                                                            old,
+                                                            lurl));
                 }
                 else
                 {
@@ -315,9 +315,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = null;
                     if (old != null)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                   PersistenceService.ActionKind.EditLoader,
-                                                                   old,
-                                                                   null));
+                                                            PersistenceService.ActionKind.EditLoader,
+                                                            old,
+                                                            null));
                 }
 
                 await guard.DisposeAsync();
@@ -371,7 +371,9 @@ public partial class InstanceSetupViewModel(
                                                     project.Gallery.Select(x => x.Url).ToList());
                 overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataService = dataService, DataContext = model, InstallCommand = InstallVersionCommand
+                    DataService = dataService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }

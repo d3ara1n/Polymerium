@@ -124,8 +124,9 @@ public class CurseForgeService(ICurseForgeClient client)
 
     public static IReadOnlyList<Dependency> ToDependencies(FileInfo file) =>
         file
-           .Dependencies.Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
-                                                   or FileInfo.FileDependency.FileRelationType.OptionalDependency)
+           .Dependencies
+           .Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
+                                      or FileInfo.FileDependency.FileRelationType.OptionalDependency)
            .Select(x => new Dependency(LABEL,
                                        null,
                                        x.ModId.ToString(),
