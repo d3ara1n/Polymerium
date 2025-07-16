@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
@@ -132,8 +133,10 @@ public partial class SettingsViewModel : ViewModelBase
         var progress = _notificationService.PopProgress("Downloading...", "Apply the update");
         try
         {
-            await _updateManager.DownloadUpdatesAsync(model.Update, x => progress.Report(x));
-            progress.Dispose();
+            // 即使处置了也没事，内部会处理空引用
+            // ReSharper disable once AccessToDisposedClosure
+            void Report(int value) => Dispatcher.UIThread.Post(() => progress.Report(value));
+            await _updateManager.DownloadUpdatesAsync(model.Update, Report);
             _notificationService.PopMessage("Restart required to take effect",
                                             "Apply the update",
                                             actions:
@@ -146,6 +149,8 @@ public partial class SettingsViewModel : ViewModelBase
             progress.Dispose();
             _notificationService.PopMessage(ex, "Failed to download update");
         }
+
+        progress.Dispose();
     }
 
     private bool CanRestartAndUpdate(AppUpdateModel? model) => model is not null;

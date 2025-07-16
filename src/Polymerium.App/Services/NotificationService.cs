@@ -87,10 +87,13 @@ public class NotificationService
 
     public class ProgressHandle(NotificationItem item) : IProgress<double>, IProgress<string>, IDisposable
     {
+        public bool IsDisposed { get; private set; }
+
         #region IDisposable Members
 
         public void Dispose()
         {
+            IsDisposed = true;
             item.Close();
         }
 
@@ -100,7 +103,8 @@ public class NotificationService
 
         public void Report(double value)
         {
-            item.Progress = value;
+            if (!IsDisposed)
+                item.Progress = value;
         }
 
         #endregion
@@ -109,7 +113,8 @@ public class NotificationService
 
         public void Report(string value)
         {
-            item.Content = value;
+            if (!IsDisposed)
+                item.Content = value;
         }
 
         #endregion
