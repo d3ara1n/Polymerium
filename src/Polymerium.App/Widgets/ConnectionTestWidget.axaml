@@ -4,32 +4,45 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:local="clr-namespace:Polymerium.App.Widgets"
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                  xmlns:m="clr-namespace:Polymerium.App.Models"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Widgets.ConnectionTestWidget" Title="Connection Test">
     <local:WidgetBase.FullTemplate>
         <DataTemplate DataType="local:ConnectionTestWidget">
-            <StackPanel>
+            <StackPanel Spacing="12">
                 <Button Classes="Primary" HorizontalAlignment="Center">
                     <TextBlock Text="Perform" />
                 </Button>
                 <!-- 下面是一个测试结果条目的样式，进度条的颜色会随着百分比分阶段使用Success/Warning(50%)/Danger(100%) -->
-                <Border BoxShadow="0 2 4 0 #3F000000"
-                        Margin="2" CornerRadius="{StaticResource SmallCornerRadius}">
-                    <DockPanel>
-                        <ProgressBar DockPanel.Dock="Bottom" Maximum="200" Value="138"
-                                     CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                     Background="{StaticResource ControlWarningForegroundBrush}" />
-                        <Border
-                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
-                            Background="{StaticResource OverlaySolidBackgroundBrush}">
-                            <Grid ColumnDefinitions="*,Auto" Margin="16,12">
-                                <TextBlock Grid.Column="0" Text="api.modrinth.net" />
-                                <TextBlock Grid.Column="1" Text="{Binding Source=138,StringFormat={}{0}ms}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            </Grid>
-                        </Border>
-                    </DockPanel>
-                </Border>
+                <ItemsControl>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="6" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="m:ConnectionTestSiteModel">
+                            <Border BoxShadow="0 2 4 0 #3F000000"
+                                    Margin="2" CornerRadius="{StaticResource SmallCornerRadius}">
+                                <DockPanel>
+                                    <ProgressBar DockPanel.Dock="Bottom" Maximum="200" Value="138"
+                                                 CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                                 Background="{StaticResource ControlWarningForegroundBrush}" />
+                                    <Border
+                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
+                                        Background="{StaticResource OverlaySolidBackgroundBrush}">
+                                        <Grid ColumnDefinitions="*,Auto" Margin="16,12">
+                                            <TextBlock Grid.Column="0" Text="{Binding Display}" />
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding Source={Binding Latency},StringFormat={}{0}ms}"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        </Grid>
+                                    </Border>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </DataTemplate>
     </local:WidgetBase.FullTemplate>
