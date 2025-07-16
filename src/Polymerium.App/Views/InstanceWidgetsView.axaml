@@ -42,8 +42,7 @@
                                 BorderBrush="{StaticResource ControlBorderBrush}"
                                 Padding="12"
                                 CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
-                            <ContentControl Content="{Binding}" ContentTemplate="{Binding FullTemplate}"
-                                            Padding="12" />
+                            <ContentControl Content="{Binding}" ContentTemplate="{Binding FullTemplate}" />
                         </Border>
                     </Grid>
                 </DataTemplate>
