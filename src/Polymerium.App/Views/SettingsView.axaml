@@ -209,7 +209,8 @@
                                         <fi:SymbolIcon Symbol="ArrowClockwise" HorizontalAlignment="Center"
                                                        FontSize="{StaticResource SmallFontSize}" />
                                     </Button>
-                                    <Button Classes="Small Primary" Command="{Binding ApplyUpdateCommand}">
+                                    <Button Classes="Small Primary" Command="{Binding ApplyUpdateCommand}"
+                                            CommandParameter="{Binding UpdateTarget}">
                                         <TextBlock Text="Apply update" />
                                     </Button>
                                 </DockPanel>
@@ -292,7 +293,7 @@
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
                                                 <husk:Divider Orientation="Vertical" Margin="2" />
-                                                <TextBlock Text="Eternal"
+                                                <TextBlock Text="Unknown"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                            FontSize="{StaticResource SmallFontSize}" />
                                             </StackPanel>
