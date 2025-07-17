@@ -5,7 +5,7 @@
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.Styles>
-        <husk:HuskuiTheme />
+        <husk:HuskuiTheme Corner="None" />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />
     </Application.Styles>
