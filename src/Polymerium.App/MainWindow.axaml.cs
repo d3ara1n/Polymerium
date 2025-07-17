@@ -51,8 +51,8 @@ public partial class MainWindow : AppWindow
         {
             0 =>
             [
-                WindowTransparencyLevel.Mica,
                 WindowTransparencyLevel.AcrylicBlur,
+                WindowTransparencyLevel.Mica,
                 WindowTransparencyLevel.Blur,
                 WindowTransparencyLevel.None
             ],
