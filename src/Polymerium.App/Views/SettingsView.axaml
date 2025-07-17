@@ -93,6 +93,16 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}"
+                                        IsVisible="False">
+                <ComboBox ItemsSource="{Binding CornerStyles}" SelectedIndex="{Binding CornerStyle,Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="husk:CornerStyle">
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_BackgroundStyleLabelText}">
                 <ComboBox SelectedIndex="{Binding BackgroundMode,Mode=TwoWay}">
                     <ComboBoxItem Content="{x:Static lang:Resources.SettingsView_BackgroundStyleAutoText}" />

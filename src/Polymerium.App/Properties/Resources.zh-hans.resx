@@ -1089,4 +1089,7 @@
     <data name="Enum_Hour" xml:space="preserve">
         <value>时</value>
     </data>
+    <data name="SettingsView_CornerStyleLabelText" xml:space="preserve">
+        <value>圆角</value>
+    </data>
 </root>

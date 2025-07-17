@@ -1098,4 +1098,7 @@
     <data name="Enum_Hour" xml:space="preserve">
         <value>Hour</value>
     </data>
+    <data name="SettingsView_CornerStyleLabelText" xml:space="preserve">
+        <value>Corner Radius</value>
+    </data>
 </root>

@@ -36,6 +36,7 @@ public partial class SettingsViewModel : ViewModelBase
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
         AccentColor = configurationService.Value.ApplicationStyleAccent;
+        CornerStyle = configurationService.Value.ApplicationStyleCorner;
         BackgroundMode = configurationService.Value.ApplicationStyleBackground;
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
@@ -230,6 +231,21 @@ public partial class SettingsViewModel : ViewModelBase
     }
 
     public AccentColor[] AccentColors { get; } = Enum.GetValues<AccentColor>();
+
+    #endregion
+
+    #region CornerStyle
+
+    [ObservableProperty]
+    public partial CornerStyle CornerStyle { get; set; }
+
+    partial void OnCornerStyleChanged(CornerStyle value)
+    {
+        _configurationService.Value.ApplicationStyleCorner = value;
+        MainWindow.Instance.SetCornerStyle(value);
+    }
+
+    public CornerStyle[] CornerStyles { get; } = Enum.GetValues<CornerStyle>();
 
     #endregion
 

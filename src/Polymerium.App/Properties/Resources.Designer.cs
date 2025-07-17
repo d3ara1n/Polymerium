@@ -2886,6 +2886,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Corner Radius.
+        /// </summary>
+        public static string SettingsView_CornerStyleLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_CornerStyleLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The look, the language, the font.
         /// </summary>
         public static string SettingsView_DisplaySubtitle {
