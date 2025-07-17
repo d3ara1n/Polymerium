@@ -77,6 +77,12 @@ public partial class MainWindow : AppWindow
             theme.Accent = accent;
     }
 
+    internal void SetCornerStyle(CornerStyle corner)
+    {
+        if (Application.Current is App { Theme: { } theme })
+            theme.Corner = corner;
+    }
+
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
