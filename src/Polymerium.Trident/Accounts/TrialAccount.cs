@@ -10,7 +10,7 @@ public class TrialAccount : IAccount
 
     public required string Uuid { get; init; }
 
-    public string AccessToken => "BirdIsTheAccessToken";
+    public string AccessToken => "bird_is_the_word";
 
     public string UserType => "legacy";
 
