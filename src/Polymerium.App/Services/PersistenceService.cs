@@ -58,6 +58,8 @@ public class PersistenceService : IDisposable
         public string Uuid { get; set; } = uuid;
 
         public string Kind { get; set; } = kind;
+
+        [Column(DbType = "BLOB")]
         public string Data { get; set; } = data;
         public DateTime EnrolledAt { get; set; } = enrolledAt;
         public DateTime? LastUsedAt { get; set; } = lastUsedAt;
