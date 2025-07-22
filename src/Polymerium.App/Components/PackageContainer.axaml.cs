@@ -270,9 +270,25 @@ public partial class PackageContainer : UserControl
 
     private static Func<InstancePackageModel, bool> BuildTextFilter(string filter) =>
         x => string.IsNullOrEmpty(filter)
-          || (x is { ProjectId: { } id, ProjectName: { } name, Summary: { } summary }
-           && (id.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
-            || name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)));
+          || (x is
+              {
+                  ProjectId: { } pid,
+                  ProjectName: { } name,
+                  Author: { } author,
+                  Summary: { } summary,
+                  Version: { } version
+              }
+           && filter
+             .Split(' ')
+             .All(y => y switch
+              {
+                  ['@', .. var a] => author.Contains(a, StringComparison.OrdinalIgnoreCase),
+                  ['#', .. var s] => summary.Contains(s, StringComparison.OrdinalIgnoreCase),
+                  ['!', .. var i] => pid.Contains(i, StringComparison.OrdinalIgnoreCase)
+                                  || version is InstancePackageVersionModel v
+                                  && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase),
+                  _ => name.Contains(y, StringComparison.OrdinalIgnoreCase)
+              }));
 
     private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>
         x => tags is null or { Count: 0 } || tags.All(x.Tags.Contains);
