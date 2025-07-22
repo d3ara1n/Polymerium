@@ -27,7 +27,7 @@ public partial class InstanceActivitiesViewModel(
     DataService dataService,
     PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    protected override async Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializedAsync(CancellationToken token)
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
         SinceDayIndex = 0;
@@ -58,6 +58,8 @@ public partial class InstanceActivitiesViewModel(
 
         // Configure Y-axis for hours
         YAxes = [new Axis { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
+
+        return Task.CompletedTask;
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
