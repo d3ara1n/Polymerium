@@ -19,6 +19,8 @@ public partial class MarketplacePortalViewModel(
     NavigationService navigationService,
     DataService dataService) : ViewModelBase
 {
+    #region Overrides
+
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
@@ -39,6 +41,8 @@ public partial class MarketplacePortalViewModel(
         HeadNews = models.FirstOrDefault();
         TailNews = models.Skip(1).ToList();
     }
+
+    #endregion
 
     #region Reactive
 

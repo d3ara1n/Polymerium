@@ -18,6 +18,9 @@ public partial class UnknownViewModel(
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
+
+    #region Overrides
+
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         await Task.Delay(TimeSpan.FromSeconds(7), token);
@@ -29,6 +32,8 @@ public partial class UnknownViewModel(
             var accent3 = Application.Current.PlatformSettings.GetColorValues().AccentColor3;
         }
     }
+
+    #endregion
 
     #region Commands
 

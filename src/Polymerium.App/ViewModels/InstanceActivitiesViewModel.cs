@@ -27,56 +27,7 @@ public partial class InstanceActivitiesViewModel(
     DataService dataService,
     PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    protected override async Task OnInitializedAsync(CancellationToken token)
-    {
-        TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
-        SinceDayIndex = 0;
-
-        int[] days = [-6, -5, -4, -3, -2, -1, 0];
-        var times = days
-                   .Select(x => persistenceService.GetDayPlayTime(Basic.Key, DateTime.Now.AddDays(x)))
-                   .Select(x => x.TotalHours)
-                   .ToArray();
-
-        WeekSeries = [new ColumnSeries<double>(times) { Name = "Play Time (Hours)" }];
-
-        // Configure X-axis with day labels
-        var dayLabels = days
-                       .Select(x => DateTimeOffset.Now.AddDays(x).DayOfWeek switch
-                        {
-                            DayOfWeek.Sunday => "Sun",
-                            DayOfWeek.Monday => "Mon",
-                            DayOfWeek.Tuesday => "Tue",
-                            DayOfWeek.Wednesday => "Wed",
-                            DayOfWeek.Thursday => "Thu",
-                            DayOfWeek.Friday => "Fri",
-                            DayOfWeek.Saturday => "Sat",
-                            _ => throw new ArgumentOutOfRangeException(nameof(x), x, null)
-                        })
-                       .ToArray();
-        XAxes = [new Axis { Labels = dayLabels, ForceStepToMin = true, MinStep = 1 }];
-
-        // Configure Y-axis for hours
-        YAxes = [new Axis { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
-    }
-
-    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-        base.OnPropertyChanged(e);
-
-        if (e.PropertyName == nameof(SinceDayIndex))
-        {
-            var since = DateTimeOffset.Now.AddDays(SinceDayIndex switch
-            {
-                0 => -1,
-                1 => -7,
-                2 => -30,
-                3 => -365,
-                _ => -114514
-            });
-            LoadPage(since);
-        }
-    }
+    #region Other
 
     private void LoadPage(DateTimeOffset since)
     {
@@ -129,6 +80,64 @@ public partial class InstanceActivitiesViewModel(
         });
         PagedActions = lazy;
     }
+
+    #endregion
+
+    #region Overrides
+
+    protected override async Task OnInitializedAsync(CancellationToken token)
+    {
+        TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
+        SinceDayIndex = 0;
+
+        int[] days = [-6, -5, -4, -3, -2, -1, 0];
+        var times = days
+                   .Select(x => persistenceService.GetDayPlayTime(Basic.Key, DateTime.Now.AddDays(x)))
+                   .Select(x => x.TotalHours)
+                   .ToArray();
+
+        WeekSeries = [new ColumnSeries<double>(times) { Name = "Play Time (Hours)" }];
+
+        // Configure X-axis with day labels
+        var dayLabels = days
+                       .Select(x => DateTimeOffset.Now.AddDays(x).DayOfWeek switch
+                        {
+                            DayOfWeek.Sunday => "Sun",
+                            DayOfWeek.Monday => "Mon",
+                            DayOfWeek.Tuesday => "Tue",
+                            DayOfWeek.Wednesday => "Wed",
+                            DayOfWeek.Thursday => "Thu",
+                            DayOfWeek.Friday => "Fri",
+                            DayOfWeek.Saturday => "Sat",
+                            _ => throw new ArgumentOutOfRangeException(nameof(x), x, null)
+                        })
+                       .ToArray();
+        XAxes = [new Axis { Labels = dayLabels, ForceStepToMin = true, MinStep = 1 }];
+
+        // Configure Y-axis for hours
+        YAxes = [new Axis { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
+    }
+
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+
+        if (e.PropertyName == nameof(SinceDayIndex))
+        {
+            var since = DateTimeOffset.Now.AddDays(SinceDayIndex switch
+            {
+                0 => -1,
+                1 => -7,
+                2 => -30,
+                3 => -365,
+                _ => -114514
+            });
+            LoadPage(since);
+        }
+    }
+
+    #endregion
 
     #region Reactive
 

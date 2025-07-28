@@ -46,14 +46,7 @@ public partial class InstanceHomeViewModel(
     private IDisposable? _timerSubscription;
 
 
-    protected override void OnUpdateModel(string key, Profile profile)
-    {
-        base.OnUpdateModel(key, profile);
-        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-        Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
-        PackageCount = profile.Setup.Packages.Count;
-        UpdateTime(key);
-    }
+    #region Other
 
     private void UpdateTime(string key)
     {
@@ -80,6 +73,10 @@ public partial class InstanceHomeViewModel(
     {
         _timerSubscription?.Dispose();
     }
+
+    #endregion
+
+    #region Overrides
 
     protected override Task OnInitializedAsync(CancellationToken token)
     {
@@ -109,6 +106,18 @@ public partial class InstanceHomeViewModel(
         _timerSubscription?.Dispose();
         return base.OnDeinitializeAsync(token);
     }
+
+
+    protected override void OnUpdateModel(string key, Profile profile)
+    {
+        base.OnUpdateModel(key, profile);
+        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
+        Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
+        PackageCount = profile.Setup.Packages.Count;
+        UpdateTime(key);
+    }
+
+    #endregion
 
     #region Tracking
 

@@ -31,6 +31,8 @@ public partial class NewInstanceViewModel(
     DataService dataService,
     PersistenceService persistenceService) : ViewModelBase
 {
+    #region Overrides
+
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
@@ -43,6 +45,8 @@ public partial class NewInstanceViewModel(
         VersionName = game.Versions.FirstOrDefault(x => x.Recommended)?.Version ?? string.Empty;
         IsVersionLoaded = true;
     }
+
+    #endregion
 
     #region Commands
 

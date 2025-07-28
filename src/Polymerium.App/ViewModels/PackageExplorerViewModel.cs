@@ -29,7 +29,11 @@ namespace Polymerium.App.ViewModels;
 
 public partial class PackageExplorerViewModel : ViewModelBase
 {
+    #region Fields
+
     private readonly CompositeDisposable _subscriptions = new();
+
+    #endregion
 
     public PackageExplorerViewModel(
         ViewBag bag,
@@ -92,7 +96,13 @@ public partial class PackageExplorerViewModel : ViewModelBase
         RemovingPackagesView = removing;
     }
 
+    #region Properties
+
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
+
+    #endregion
+
+    #region Overrides
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -106,6 +116,10 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 repository.Kinds = status.SupportedKinds.Where(x => x != ResourceKind.Modpack).ToList();
             }
     }
+
+    #endregion
+
+    #region Other
 
     private void ModifyPending(ExhibitModel model)
     {
@@ -235,6 +249,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
             Debug.WriteLine(ex);
         }
     }
+
+    #endregion
 
     #region Collections
 
@@ -405,9 +421,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                        null,
                                                        []);
                     _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                         PersistenceService.ActionKind.EditPackage,
-                                                         null,
-                                                         entry.Purl));
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                null,
+                                                                entry.Purl));
                     guard.Value.Setup.Packages.Add(entry);
                     model.State = ExhibitState.Editable;
                     model.Installed = entry;
@@ -420,9 +436,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
                     if (exist != null)
                         guard.Value.Setup.Packages.Remove(exist);
                     _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                         PersistenceService.ActionKind.EditPackage,
-                                                         model.Installed.Purl,
-                                                         null));
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                model.Installed.Purl,
+                                                                null));
                     model.State = null;
                     model.Installed = null;
                     model.InstalledVersionName = null;
@@ -436,9 +452,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                 model.ProjectId,
                                                                 model.PendingVersionId);
                     _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                         PersistenceService.ActionKind.EditPackage,
-                                                         old,
-                                                         model.Installed.Purl));
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                old,
+                                                                model.Installed.Purl));
                     model.State = ExhibitState.Editable;
                     model.InstalledVersionName = model.PendingVersionName;
                     model.InstalledVersionId = model.PendingVersionId;

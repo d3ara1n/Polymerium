@@ -47,9 +47,7 @@ public partial class InstanceSetupViewModel(
     PersistenceService persistenceService,
     ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    private CancellationTokenSource? _pageCancellationTokenSource;
-    private CancellationTokenSource? _refreshingCancellationTokenSource;
-    private IDisposable? _updatingSubscription;
+    #region Other
 
     private void TriggerRefresh(CancellationToken token)
     {
@@ -195,6 +193,18 @@ public partial class InstanceSetupViewModel(
         }
     }
 
+    #endregion
+
+    #region Fields
+
+    private CancellationTokenSource? _pageCancellationTokenSource;
+    private CancellationTokenSource? _refreshingCancellationTokenSource;
+    private IDisposable? _updatingSubscription;
+
+    #endregion
+
+    #region Overrides
+
     protected override void OnUpdateModel(string key, Profile profile)
     {
         base.OnUpdateModel(key, profile);
@@ -227,6 +237,10 @@ public partial class InstanceSetupViewModel(
 
         return base.OnDeinitializeAsync(token);
     }
+
+    #endregion
+
+    #region State
 
     protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
@@ -274,6 +288,8 @@ public partial class InstanceSetupViewModel(
                                .DisposeWith(update);
     }
 
+    #endregion
+
     #region Commands
 
     [RelayCommand]
@@ -305,9 +321,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = lurl;
                     if (old != lurl)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                            PersistenceService.ActionKind.EditLoader,
-                                                            old,
-                                                            lurl));
+                                                                   PersistenceService.ActionKind.EditLoader,
+                                                                   old,
+                                                                   lurl));
                 }
                 else
                 {
@@ -315,9 +331,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = null;
                     if (old != null)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                            PersistenceService.ActionKind.EditLoader,
-                                                            old,
-                                                            null));
+                                                                   PersistenceService.ActionKind.EditLoader,
+                                                                   old,
+                                                                   null));
                 }
 
                 await guard.DisposeAsync();

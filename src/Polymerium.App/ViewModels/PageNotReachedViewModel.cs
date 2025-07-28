@@ -13,6 +13,10 @@ public partial class PageNotReachedViewModel : ViewModelBase
             Message = "How about we explore the area ahead of us later?";
     }
 
+    #region Reactive
+
     [ObservableProperty]
     public partial string Message { get; set; }
+
+    #endregion
 }

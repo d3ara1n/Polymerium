@@ -61,6 +61,7 @@ public class PersistenceService : IDisposable
 
         [Column(DbType = "BLOB")]
         public string Data { get; set; } = data;
+
         public DateTime EnrolledAt { get; set; } = enrolledAt;
         public DateTime? LastUsedAt { get; set; } = lastUsedAt;
         public bool IsDefault { get; set; } = isDefault;

@@ -57,7 +57,13 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         }
     }
 
+    #region Properties
+
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
+
+    #endregion
+
+    #region Overrides
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -93,6 +99,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                      .ToList();
             }
     }
+
+    #endregion
 
     #region Nested type: SearchArguments
 

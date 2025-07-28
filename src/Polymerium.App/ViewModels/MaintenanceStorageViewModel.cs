@@ -36,6 +36,8 @@ public partial class MaintenanceStorageViewModel(
         await base.OnInitializedAsync(token);
     }
 
+    #region Other
+
     private void Calculate()
     {
         (PackageSize, PackageCount) = CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
@@ -80,6 +82,8 @@ public partial class MaintenanceStorageViewModel(
             Directory.Delete(path, true);
     }
 
+    #endregion
+
     #region Commands
 
     [RelayCommand]
@@ -105,7 +109,7 @@ public partial class MaintenanceStorageViewModel(
     {
         if (model != null)
             navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
-                                                         typeof(InstanceStorageView)));
+                                                                            typeof(InstanceStorageView)));
     }
 
     #endregion
