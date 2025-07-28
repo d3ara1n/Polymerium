@@ -8,7 +8,7 @@ namespace Polymerium.App.Widgets;
 public partial class ConnectionTestWidget : WidgetBase
 {
     public ConnectionTestWidget() => AvaloniaXamlLoader.Load(this);
-    
+
     #region Direct
 
     public ObservableCollection<ConnectionTestSiteModel> Sites { get; } = new();

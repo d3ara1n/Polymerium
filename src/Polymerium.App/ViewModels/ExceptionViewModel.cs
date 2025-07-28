@@ -15,9 +15,13 @@ public partial class ExceptionViewModel : ViewModelBase
         }
     }
 
+    #region Reactive
+
     [ObservableProperty]
     public partial string Message { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial string StackTrace { get; set; } = string.Empty;
+
+    #endregion
 }

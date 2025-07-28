@@ -31,6 +31,9 @@ public partial class AccountsViewModel(
 
     #endregion
 
+
+    #region Other
+
     private bool Finish(IAccount account)
     {
         var found = persistenceService.GetAccount(account.Uuid);
@@ -52,6 +55,10 @@ public partial class AccountsViewModel(
         return true;
     }
 
+    #endregion
+
+    #region Lifecycle
+
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         var defaultAccount = persistenceService.GetDefaultAccount();
@@ -69,6 +76,8 @@ public partial class AccountsViewModel(
 
         return base.OnInitializedAsync(token);
     }
+
+    #endregion
 
     #region Commands
 

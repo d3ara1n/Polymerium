@@ -7,10 +7,14 @@ namespace Polymerium.App.ViewModels;
 
 public class LandingViewModel(NavigationService navigationService) : ViewModelBase
 {
+    #region Lifecycle
+
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         // This page is always the root page
         navigationService.ClearHistory();
         return base.OnInitializedAsync(token);
     }
+
+    #endregion
 }

@@ -45,13 +45,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
 
-    protected override void OnUpdateModel(string key, Profile profile)
-    {
-        base.OnUpdateModel(key, profile);
-
-        NameOverwrite = profile.Name;
-        ThumbnailOverwrite = Basic.Thumbnail;
-    }
+    #region Other
 
     private string AccessOverrideString<T>(string key)
     {
@@ -77,6 +71,43 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             _owned.Value.Overrides[key] = value;
         else
             _owned.Value.Overrides.Remove(key);
+    }
+
+
+    private async Task WriteIconAsync()
+    {
+        // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
+        try
+        {
+            var path = ProfileHelper.PickIcon(Basic.Key);
+            if (path != null && File.Exists(path))
+                File.Delete(path);
+            using var stream = new MemoryStream();
+            ThumbnailOverwrite.Save(stream);
+            stream.Position = 0;
+            var extension = FileHelper.GuessBitmapExtension(stream);
+            stream.Position = 0;
+            var iconPath = PathDef.Default.FileOfIcon(Basic.Key, extension);
+            await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
+            await stream.CopyToAsync(writer);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex,
+                                            Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle);
+        }
+    }
+
+    #endregion
+
+    #region Overrides
+
+    protected override void OnUpdateModel(string key, Profile profile)
+    {
+        base.OnUpdateModel(key, profile);
+
+        NameOverwrite = profile.Name;
+        ThumbnailOverwrite = Basic.Thumbnail;
     }
 
     protected override Task OnInitializedAsync(CancellationToken token)
@@ -111,29 +142,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         await base.OnDeinitializeAsync(token);
     }
 
-    private async Task WriteIconAsync()
-    {
-        // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
-        try
-        {
-            var path = ProfileHelper.PickIcon(Basic.Key);
-            if (path != null && File.Exists(path))
-                File.Delete(path);
-            using var stream = new MemoryStream();
-            ThumbnailOverwrite.Save(stream);
-            stream.Position = 0;
-            var extension = FileHelper.GuessBitmapExtension(stream);
-            stream.Position = 0;
-            var iconPath = PathDef.Default.FileOfIcon(Basic.Key, extension);
-            await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
-            await stream.CopyToAsync(writer);
-        }
-        catch (Exception ex)
-        {
-            _notificationService.PopMessage(ex,
-                                            Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle);
-        }
-    }
+    #endregion
 
     #region Injected
 
