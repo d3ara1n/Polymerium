@@ -123,7 +123,7 @@ public class CurseForgeService(ICurseForgeClient client)
     }
 
     public static IReadOnlyList<Dependency> ToDependencies(FileInfo file) =>
-        file
+        [.. file
            .Dependencies
            .Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
                                       or FileInfo.FileDependency.FileRelationType.OptionalDependency)
@@ -131,8 +131,7 @@ public class CurseForgeService(ICurseForgeClient client)
                                        null,
                                        x.ModId.ToString(),
                                        null,
-                                       x.RelationType == FileInfo.FileDependency.FileRelationType.RequiredDependency))
-           .ToList();
+                                       x.RelationType == FileInfo.FileDependency.FileRelationType.RequiredDependency))];
 
 
     public static Exhibit ToExhibit(ModInfo mod) =>
@@ -145,7 +144,7 @@ public class CurseForgeService(ICurseForgeClient client)
             mod.Summary,
             ClassIdToResourceKind(mod.ClassId) ?? ResourceKind.Unknown,
             mod.DownloadCount,
-            mod.Categories.Select(x => x.Name).ToList(),
+            [.. mod.Categories.Select(x => x.Name)],
             mod.Links.WebsiteUrl
          ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
             mod.DateCreated,
@@ -200,11 +199,11 @@ public class CurseForgeService(ICurseForgeClient client)
                    .Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(info.ClassId)))
                    .Replace("{1}", info.Slug)),
             ClassIdToResourceKind(info.ClassId) ?? ResourceKind.Unknown,
-            info.Categories.Select(x => x.Name).ToList(),
+            [.. info.Categories.Select(x => x.Name)],
             info.DateCreated,
             info.DateModified,
             info.DownloadCount,
-            info.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList());
+            [.. info.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url))]);
 
     public async Task<string> GetModDescriptionAsync(uint modId) =>
         (await client.GetModDescriptionAsync(modId).ConfigureAwait(false)).Data;
@@ -215,7 +214,7 @@ public class CurseForgeService(ICurseForgeClient client)
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
         var versions = await client.GetMinecraftVersionsAsync().ConfigureAwait(false);
-        return versions.Data.Select(x => x.VersionString).ToList();
+        return [.. versions.Data.Select(x => x.VersionString)];
     }
 
     public Task<SearchResponse<ModInfo>> SearchAsync(

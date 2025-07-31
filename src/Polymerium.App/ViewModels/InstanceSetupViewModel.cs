@@ -384,7 +384,7 @@ public partial class InstanceSetupViewModel(
                                                     project.DownloadCount,
                                                     project.Summary,
                                                     project.UpdatedAt,
-                                                    project.Gallery.Select(x => x.Url).ToList());
+                                                    [.. project.Gallery.Select(x => x.Url)]);
                 overlayService.PopToast(new ExhibitModpackToast
                 {
                     DataService = dataService,
@@ -566,7 +566,7 @@ public partial class InstanceSetupViewModel(
                 output.Add(new ExportedEntry(entry.Purl,
                                              entry.Enabled,
                                              entry.Source,
-                                             entry.Tags.ToArray(),
+                                             [.. entry.Tags],
                                              name,
                                              version));
                 notification.Progress = output.Count;

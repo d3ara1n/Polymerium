@@ -83,7 +83,7 @@ public partial class GameVersionPickerDialog : Dialog
 
     public void SetItems(IReadOnlyList<GameVersionModel> versions)
     {
-        Types = versions.Select(x => x.TypeRaw).Distinct().ToArray();
+        Types = [.. versions.Select(x => x.TypeRaw).Distinct()];
         _versions.Clear();
         _versions.AddOrUpdate(versions);
     }

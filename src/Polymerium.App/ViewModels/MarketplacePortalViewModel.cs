@@ -39,7 +39,7 @@ public partial class MarketplacePortalViewModel(
                      })
                     .ToArray();
         HeadNews = models.FirstOrDefault();
-        TailNews = models.Skip(1).ToList();
+        TailNews = [.. models.Skip(1)];
     }
 
     #endregion

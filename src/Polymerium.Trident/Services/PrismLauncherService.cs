@@ -40,11 +40,10 @@ public class PrismLauncherService(IPrismLauncherClient client)
         CancellationToken token)
     {
         var index = await client.GetComponentIndexAsync(uid, token).ConfigureAwait(false);
-        return index
+        return [.. index
               .Versions.Where(x => x.Requires.Any(y => y.Uid == UID_INTERMEDIARY
                                                     || (y.Uid == UID_MINECRAFT
-                                                     && (y.Suggest == version || y.Equal == version))))
-              .ToList();
+                                                     && (y.Suggest == version || y.Equal == version))))];
     }
 
     public Task<ComponentIndex> GetMinecraftVersionsAsync(CancellationToken token) =>

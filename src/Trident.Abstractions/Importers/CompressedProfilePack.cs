@@ -11,7 +11,7 @@ public class CompressedProfilePack
     public CompressedProfilePack(Stream input)
     {
         _archive = new ZipArchive(input, ZipArchiveMode.Read, true);
-        FileNames = _archive.Entries.Select(x => x.FullName).ToList();
+        FileNames = [.. _archive.Entries.Select(x => x.FullName)];
     }
 
     public IReadOnlyList<string> FileNames { get; }
