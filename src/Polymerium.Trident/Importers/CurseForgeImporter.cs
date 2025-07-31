@@ -36,7 +36,7 @@ public class CurseForgeImporter : IProfileImporter
                                                                          manifest.Minecraft.Version,
                                                                          LoaderHelper.ToLurl(loader.Identity,
                                                                              loader.Version),
-                                                                         manifest
+                                                                         [.. manifest
                                                                             .Files
                                                                             .Select(x =>
                                                                                  new
@@ -51,8 +51,7 @@ public class CurseForgeImporter : IProfileImporter
                                                                                                     .ToString()),
                                                                                          x.Required,
                                                                                          source,
-                                                                                         []))
-                                                                            .ToList()),
+                                                                                         []))]),
                                                         new Dictionary<string, object>()),
                                             pack
                                                .FileNames

@@ -113,7 +113,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
             if (repository.Loaders == null || repository.Versions == null)
             {
                 var status = await _dataService.CheckStatusAsync(repository.Label);
-                repository.Kinds = status.SupportedKinds.Where(x => x != ResourceKind.Modpack).ToList();
+                repository.Kinds = [.. status.SupportedKinds.Where(x => x != ResourceKind.Modpack)];
             }
     }
 
@@ -372,7 +372,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                     project.DownloadCount,
                                                     project.Summary,
                                                     project.UpdatedAt,
-                                                    project.Gallery.Select(x => x.Url).ToList());
+                                                    [.. project.Gallery.Select(x => x.Url)]);
 
                 _overlayService.PopModal(new ExhibitPackageModal
                 {

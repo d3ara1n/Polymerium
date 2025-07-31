@@ -138,7 +138,7 @@ public partial class InstancePackageModal : Modal
             await Task.WhenAll(tasks);
             var rv = new InstancePackageDependencyCollection(refCount,
                                                              strongRefCount,
-                                                             tasks.Select(x => x.Result).ToList());
+                                                             [.. tasks.Select(x => x.Result)]);
             return rv;
         });
         return lazy;
@@ -154,7 +154,7 @@ public partial class InstancePackageModal : Modal
                                                          Model.Namespace,
                                                          Model.ProjectId,
                                                          IsFilterEnabled ? Filter : Filter.None);
-                                      return new InstancePackageVersionCollection(versions
+                                      return new InstancePackageVersionCollection([.. versions
                                          .Select<Version,
                                               InstancePackageVersionModelBase>(x => Model is
                                                                                        {
@@ -176,8 +176,7 @@ public partial class InstancePackageModal : Modal
                                                                                                       .AnyOfVersions),
                                                                                                x.PublishedAt,
                                                                                                x.ReleaseType,
-                                                                                               x.Dependencies))
-                                         .ToList());
+                                                                                               x.Dependencies))]);
                                   },
                                   _ =>
                                   {

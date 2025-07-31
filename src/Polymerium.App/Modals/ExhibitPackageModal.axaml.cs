@@ -247,7 +247,7 @@ public partial class ExhibitPackageModal : Modal
             await Task.WhenAll(tasks);
             var rv = new ExhibitDependencyCollection(package.VersionName,
                                                      package.VersionId,
-                                                     tasks.Select(x => x.Result).ToList());
+                                                     [.. tasks.Select(x => x.Result)]);
             return rv;
         });
         return lazy;
@@ -264,7 +264,7 @@ public partial class ExhibitPackageModal : Modal
                                                           Package.ProjectId,
                                                           IsFilterEnabled ? Filter : Filter.None)).ToArray();
                                       var project = Package;
-                                      var rv = new ExhibitVersionCollection(versions
+                                      var rv = new ExhibitVersionCollection([.. versions
                                                                            .Select(x =>
                                                                                 new ExhibitVersionModel(project.Label,
                                                                                     project.Namespace,
@@ -285,8 +285,7 @@ public partial class ExhibitPackageModal : Modal
                                                                                     PackageHelper.ToPurl(x.Label,
                                                                                         x.Namespace,
                                                                                         x.ProjectId,
-                                                                                        x.VersionId)))
-                                                                           .ToList());
+                                                                                        x.VersionId)))]);
                                       return rv;
                                   },
                                   value =>

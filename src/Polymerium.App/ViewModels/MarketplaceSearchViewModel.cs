@@ -76,7 +76,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             if (repository.Loaders == null || repository.Versions == null)
             {
                 var status = await _dataService.CheckStatusAsync(repository.Label);
-                repository.Loaders = status
+                repository.Loaders = [.. status
                                     .SupportedLoaders.Select(x => new LoaderBasicModel(x,
                                                                  x switch
                                                                  {
@@ -86,17 +86,15 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                                      LoaderHelper.LOADERID_QUILT => "QUILT",
                                                                      LoaderHelper.LOADERID_FLINT => "Flint Loader",
                                                                      _ => x
-                                                                 }))
-                                    .ToList();
-                repository.Versions = status
+                                                                 }))];
+                repository.Versions = [.. status
                                      .SupportedVersions
                                      .OrderByDescending(x => SemVersion.TryParse(x,
                                                                  SemVersionStyles.OptionalPatch,
                                                                  out var sem)
                                                                  ? sem
                                                                  : new SemVersion(0, 0, 0),
-                                                        SemVersion.SortOrderComparer)
-                                     .ToList();
+                                                        SemVersion.SortOrderComparer)];
             }
     }
 
@@ -247,7 +245,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                     project.DownloadCount,
                                                     project.Summary,
                                                     project.UpdatedAt,
-                                                    project.Gallery.Select(x => x.Url).ToList());
+                                                    [.. project.Gallery.Select(x => x.Url)]);
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
                     DataService = _dataService,

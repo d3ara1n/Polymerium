@@ -84,11 +84,10 @@ public partial class LoaderEditorDialog : Dialog
                 if (token.IsCancellationRequested)
                     return null;
                 var index = await DataService.GetComponentVersionsAsync(SelectedLoader, GameVersion);
-                return new LoaderCandidateVersionCollectionModel(index
+                return new LoaderCandidateVersionCollectionModel([.. index
                                                                 .OrderByDescending(x => x.ReleaseTime)
                                                                 .Select(x => new LoaderCandidateVersionModel(x.Version,
-                                                                            x.Recommended))
-                                                                .ToList());
+                                                                            x.Recommended))]);
             });
             LazyVersions = lazy;
         }

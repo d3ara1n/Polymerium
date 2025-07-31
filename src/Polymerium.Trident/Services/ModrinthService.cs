@@ -82,17 +82,15 @@ public class ModrinthService(IModrinthClient client)
 
     public static Requirement ToRequirement(VersionInfo version) =>
         new(version.GameVersions,
-            version
+            [.. version
                .Loaders.Select(x => MODLOADER_MAPPINGS.GetValueOrDefault(x))
                .Where(x => !string.IsNullOrEmpty(x))
-               .Select(x => x!)
-               .ToList());
+               .Select(x => x!)]);
 
     public static IReadOnlyList<Dependency> ToDependencies(VersionInfo version) =>
-        version
+        [.. version
            .Dependencies
-           .Select(x => new Dependency(LABEL, null, x.ProjectId, x.VersionId, x.DependencyType != "optional"))
-           .ToList();
+           .Select(x => new Dependency(LABEL, null, x.ProjectId, x.VersionId, x.DependencyType != "optional"))];
 
     public static Exhibit ToExhibit(SearchHit hit) =>
         new(LABEL,
@@ -138,7 +136,7 @@ public class ModrinthService(IModrinthClient client)
                            project.Published,
                            project.Updated,
                            project.Downloads,
-                           project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url)).ToList());
+                           [.. project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url))]);
     }
 
     public static Package ToPackage(ProjectInfo project, VersionInfo version, MemberInfo? member)
@@ -172,13 +170,13 @@ public class ModrinthService(IModrinthClient client)
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
         var versions = await client.GetGameVersionsAsync().ConfigureAwait(false);
-        return versions.Where(x => x.VersionType == "release").Select(x => x.Version).ToList();
+        return [.. versions.Where(x => x.VersionType == "release").Select(x => x.Version)];
     }
 
     public async Task<IReadOnlyList<string>> GetLoadersAsync()
     {
         var loaders = await client.GetLoadersAsync().ConfigureAwait(false);
-        return loaders.Select(x => x.Name).ToList();
+        return [.. loaders.Select(x => x.Name)];
     }
 
     public Task<IReadOnlyList<string>> GetProjectTypesAsync() => client.GetProjectTypesAsync();

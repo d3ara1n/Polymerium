@@ -71,7 +71,7 @@ public partial class ExhibitModpackToast : Toast
                                                                   project.Namespace,
                                                                   project.ProjectId,
                                                                   Filter.None with { Kind = ResourceKind.Modpack });
-            return new ExhibitVersionCollection(versions
+            return new ExhibitVersionCollection([.. versions
                                                .Select(x => new ExhibitVersionModel(project.Label,
                                                            project.Namespace,
                                                            project.ProjectName,
@@ -89,8 +89,7 @@ public partial class ExhibitModpackToast : Toast
                                                            PackageHelper.ToPurl(x.Label,
                                                                                     x.Namespace,
                                                                                     x.ProjectId,
-                                                                                    x.VersionId)))
-                                               .ToList());
+                                                                                    x.VersionId)))]);
         });
     }
 
