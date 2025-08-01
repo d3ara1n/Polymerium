@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -412,7 +413,6 @@ public partial class InstanceSetupViewModel(
         var cts = new CancellationTokenSource();
         if (packages != null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
-            var updates = new List<PackageUpdaterModel>();
             var total = packages.Items.Count;
             var notification = new NotificationItem
             {
@@ -436,53 +436,20 @@ public partial class InstanceSetupViewModel(
                                                       ? loader.Identity
                                                       : null
                                                 : null);
-            foreach (var entry in packages.Items)
+
+            var updates = new ConcurrentBag<PackageUpdaterModel>();
+            try
             {
-                if (cts.IsCancellationRequested)
-                    break;
-                if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
-                    if (result.Vid is not null)
-                        try
-                        {
-                            // 可以引入并发哈哈，但得客户提出需求再引入
-                            var resolved = await dataService.ResolvePackageAsync(result.Label,
-                                               result.Namespace,
-                                               result.Pid,
-                                               null,
-                                               filter,
-                                               false);
-                            if (resolved.VersionId != result.Vid)
-                            {
-                                var package = await dataService.ResolvePackageAsync(result.Label,
-                                                  result.Namespace,
-                                                  result.Pid,
-                                                  result.Vid,
-                                                  Filter.None);
-                                var model = new PackageUpdaterModel(entry,
-                                                                    package,
-                                                                    package.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
-                                                                    package.VersionId,
-                                                                    package.VersionName,
-                                                                    package.PublishedAt,
-                                                                    resolved.VersionId,
-                                                                    resolved.VersionName,
-                                                                    resolved.PublishedAt);
-                                updates.Add(model);
-                                continue;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            notificationService.PopMessage(ex, entry.Entry.Purl, NotificationLevel.Warning);
-                        }
-
-                total--;
-
-                notification.Progress = Math.Min(100d, 100d * (packages.Items.Count - total) / packages.Items.Count);
-                notification.Content = Resources
-                                      .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
-                                      .Replace("{0}", updates.Count.ToString())
-                                      .Replace("{1}", total.ToString());
+                // 值设置太大会触发 API 限制
+                var semaphore = new SemaphoreSlim(2);
+                var tasks = packages.Items.Select(x => UpdateAsync(x, semaphore, cts.Token));
+                await Task.WhenAll(tasks);
+                semaphore.Dispose();
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
 
             if (cts.IsCancellationRequested)
@@ -501,13 +468,70 @@ public partial class InstanceSetupViewModel(
                                                                   new RelayCommand(Review, CanReview)));
             notificationService.Pop(reviewNotification);
 
+            async Task UpdateAsync(InstancePackageModel entry, SemaphoreSlim semaphore, CancellationToken token)
+            {
+                if (token.IsCancellationRequested)
+                    return;
+                await semaphore.WaitAsync(token);
+                if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
+                    if (result.Vid is not null)
+                        try
+                        {
+                            var resolved = await dataService
+                                                .ResolvePackageAsync(result.Label,
+                                                                     result.Namespace,
+                                                                     result.Pid,
+                                                                     null,
+                                                                     filter,
+                                                                     false)
+                                                .ConfigureAwait(false);
+                            if (resolved.VersionId != result.Vid)
+                            {
+                                var package = await dataService
+                                                   .ResolvePackageAsync(result.Label,
+                                                                        result.Namespace,
+                                                                        result.Pid,
+                                                                        result.Vid,
+                                                                        Filter.None)
+                                                   .ConfigureAwait(false);
+                                var model = new PackageUpdaterModel(entry,
+                                                                    package,
+                                                                    package.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                                    package.VersionId,
+                                                                    package.VersionName,
+                                                                    package.PublishedAt,
+                                                                    resolved.VersionId,
+                                                                    resolved.VersionName,
+                                                                    resolved.PublishedAt);
+                                updates.Add(model);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            notificationService.PopMessage(ex, entry.Entry.Purl, NotificationLevel.Warning);
+                        }
+
+                Interlocked.Decrement(ref total);
+                semaphore.Release();
+
+                Dispatcher.UIThread.Post(() =>
+                {
+                    notification.Progress = Math.Min(100d,
+                                                     100d * (packages.Items.Count - total) / packages.Items.Count);
+                    notification.Content = Resources
+                                          .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
+                                          .Replace("{0}", updates.Count.ToString())
+                                          .Replace("{1}", total.ToString());
+                });
+            }
+
             void Cancel()
             {
                 cts.Cancel();
                 notification.Close();
             }
 
-            bool CanReview() => updates.Count > 0;
+            bool CanReview() => !updates.IsEmpty;
 
             void Review()
             {
@@ -517,7 +541,7 @@ public partial class InstanceSetupViewModel(
                     NotificationService = notificationService,
                     PersistenceService = persistenceService
                 };
-                modal.SetGuard(guard, updates);
+                modal.SetGuard(guard, updates.ToList());
                 overlayService.PopModal(modal);
                 reviewNotification.Close();
             }
