@@ -71,25 +71,26 @@ public partial class ExhibitModpackToast : Toast
                                                                   project.Namespace,
                                                                   project.ProjectId,
                                                                   Filter.None with { Kind = ResourceKind.Modpack });
-            return new ExhibitVersionCollection([.. versions
-                                               .Select(x => new ExhibitVersionModel(project.Label,
-                                                           project.Namespace,
-                                                           project.ProjectName,
-                                                           project.ProjectId,
-                                                           x.VersionName,
-                                                           x.VersionId,
-                                                           string.Join(",",
-                                                                       x.Requirements.AnyOfLoaders
-                                                                        .Select(LoaderHelper.ToDisplayName)),
-                                                           string.Join(",", x.Requirements.AnyOfVersions),
-                                                           string.Empty,
-                                                           x.PublishedAt,
-                                                           x.DownloadCount,
-                                                           x.ReleaseType,
-                                                           PackageHelper.ToPurl(x.Label,
-                                                                                    x.Namespace,
-                                                                                    x.ProjectId,
-                                                                                    x.VersionId)))]);
+            return new ExhibitVersionCollection([
+                .. versions.Select(x => new ExhibitVersionModel(project.Label,
+                                                                project.Namespace,
+                                                                project.ProjectName,
+                                                                project.ProjectId,
+                                                                x.VersionName,
+                                                                x.VersionId,
+                                                                string.Join(",",
+                                                                            x.Requirements.AnyOfLoaders
+                                                                             .Select(LoaderHelper.ToDisplayName)),
+                                                                string.Join(",", x.Requirements.AnyOfVersions),
+                                                                string.Empty,
+                                                                x.PublishedAt,
+                                                                x.DownloadCount,
+                                                                x.ReleaseType,
+                                                                PackageHelper.ToPurl(x.Label,
+                                                                    x.Namespace,
+                                                                    x.ProjectId,
+                                                                    x.VersionId)))
+            ]);
         });
     }
 

@@ -76,25 +76,33 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             if (repository.Loaders == null || repository.Versions == null)
             {
                 var status = await _dataService.CheckStatusAsync(repository.Label);
-                repository.Loaders = [.. status
-                                    .SupportedLoaders.Select(x => new LoaderBasicModel(x,
-                                                                 x switch
-                                                                 {
-                                                                     LoaderHelper.LOADERID_FORGE => "Forge",
-                                                                     LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                                                                     LoaderHelper.LOADERID_FABRIC => "Fabric",
-                                                                     LoaderHelper.LOADERID_QUILT => "QUILT",
-                                                                     LoaderHelper.LOADERID_FLINT => "Flint Loader",
-                                                                     _ => x
-                                                                 }))];
-                repository.Versions = [.. status
-                                     .SupportedVersions
-                                     .OrderByDescending(x => SemVersion.TryParse(x,
-                                                                 SemVersionStyles.OptionalPatch,
-                                                                 out var sem)
-                                                                 ? sem
-                                                                 : new SemVersion(0, 0, 0),
-                                                        SemVersion.SortOrderComparer)];
+                repository.Loaders =
+                [
+                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x,
+                                                                                    x switch
+                                                                                    {
+                                                                                        LoaderHelper.LOADERID_FORGE =>
+                                                                                            "Forge",
+                                                                                        LoaderHelper.LOADERID_NEOFORGE
+                                                                                            => "NeoForge",
+                                                                                        LoaderHelper.LOADERID_FABRIC =>
+                                                                                            "Fabric",
+                                                                                        LoaderHelper.LOADERID_QUILT =>
+                                                                                            "QUILT",
+                                                                                        LoaderHelper.LOADERID_FLINT =>
+                                                                                            "Flint Loader",
+                                                                                        _ => x
+                                                                                    }))
+                ];
+                repository.Versions =
+                [
+                    .. status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x,
+                                                                           SemVersionStyles.OptionalPatch,
+                                                                           out var sem)
+                                                                           ? sem
+                                                                           : new SemVersion(0, 0, 0),
+                                                                  SemVersion.SortOrderComparer)
+                ];
             }
     }
 
