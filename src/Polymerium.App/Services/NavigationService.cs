@@ -1,6 +1,5 @@
 ﻿using System;
 using Avalonia.Animation;
-using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
 using Microsoft.Extensions.Logging;
@@ -38,13 +37,12 @@ public class NavigationService
     }
 
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null) =>
-        Dispatcher.UIThread.Post(() => _navigateHandler?.Invoke(page,
-                                                                parameter,
-                                                                transition
-                                                             ?? (page.IsAssignableTo(typeof(ScopedPage))
-                                                                     ? new PageCoverOverTransition(null,
-                                                                         DirectionFrom.Right)
-                                                                     : new PopUpTransition())));
+        _navigateHandler?.Invoke(page,
+                                 parameter,
+                                 transition
+                              ?? (page.IsAssignableTo(typeof(ScopedPage))
+                                      ? new PageCoverOverTransition(null, DirectionFrom.Right)
+                                      : new PopUpTransition()));
 
     public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page
     {
@@ -52,7 +50,7 @@ public class NavigationService
         _logger.LogInformation("Navigating to {} with {}", typeof(T).Name, parameter ?? "(null)");
     }
 
-    public void GoBack() => Dispatcher.UIThread.Post(() => _goBackHandler?.Invoke());
+    public void GoBack() => _goBackHandler?.Invoke();
 
-    public void ClearHistory() => Dispatcher.UIThread.Post(() => _clearHistoryHandler?.Invoke());
+    public void ClearHistory() => _clearHistoryHandler?.Invoke();
 }

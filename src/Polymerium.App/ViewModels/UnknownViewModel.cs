@@ -6,7 +6,6 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
-using Polymerium.App.Modals;
 using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels;
@@ -43,6 +42,9 @@ public partial class UnknownViewModel(
     [RelayCommand]
     private void World()
     {
+        PopToast();
+        return;
+
         void PopToast()
         {
             Button pop = new() { Content = "POP" };
@@ -66,13 +68,14 @@ public partial class UnknownViewModel(
                 }
             });
         }
-
-        PopToast();
     }
 
     [RelayCommand]
     private void Butcher()
     {
+        PopDialog();
+        return;
+
         void PopDialog()
         {
             Button pop = new() { Content = "POP" };
@@ -87,14 +90,11 @@ public partial class UnknownViewModel(
                 }
             });
         }
-
-        PopDialog();
     }
 
     [RelayCommand]
     private void Debug()
     {
-        overlayService.PopModal(new PrivilegeRequirementModal());
     }
 
     #endregion

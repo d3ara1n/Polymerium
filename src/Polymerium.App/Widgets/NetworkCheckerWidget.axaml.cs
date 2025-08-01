@@ -5,9 +5,9 @@ using Polymerium.App.Models;
 
 namespace Polymerium.App.Widgets;
 
-public partial class ConnectionTestWidget : WidgetBase
+public partial class NetworkCheckerWidget : WidgetBase
 {
-    public ConnectionTestWidget() => AvaloniaXamlLoader.Load(this);
+    public NetworkCheckerWidget() => AvaloniaXamlLoader.Load(this);
 
     #region Direct
 

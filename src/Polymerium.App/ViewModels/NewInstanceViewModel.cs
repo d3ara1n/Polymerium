@@ -100,7 +100,7 @@ public partial class NewInstanceViewModel(
     }
 
     [RelayCommand]
-    private async Task Create()
+    private async Task CreateAsync()
     {
         var display = string.IsNullOrEmpty(DisplayName) ? VersionName : DisplayName;
 
@@ -137,7 +137,9 @@ public partial class NewInstanceViewModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.NewInstanceView_IconSavingDangerNotificationTitle);
+                Dispatcher.UIThread.Post(() => notificationService.PopMessage(ex,
+                                                                              Resources
+                                                                                 .NewInstanceView_IconSavingDangerNotificationTitle));
             }
 
         profileManager.Add(key, profile);

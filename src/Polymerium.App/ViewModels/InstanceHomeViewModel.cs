@@ -175,7 +175,7 @@ public partial class InstanceHomeViewModel(
     #region Commands
 
     [RelayCommand]
-    private async Task SwitchAccount()
+    private async Task SwitchAccountAsync()
     {
         var accounts = persistenceService
                       .GetAccounts()
