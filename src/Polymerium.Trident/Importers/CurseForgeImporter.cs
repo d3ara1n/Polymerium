@@ -36,12 +36,10 @@ public class CurseForgeImporter : IProfileImporter
                                                                          manifest.Minecraft.Version,
                                                                          LoaderHelper.ToLurl(loader.Identity,
                                                                              loader.Version),
-                                                                         [.. manifest
-                                                                            .Files
-                                                                            .Select(x =>
+                                                                         [
+                                                                             .. manifest.Files.Select(x =>
                                                                                  new
-                                                                                     Profile.Rice.
-                                                                                     Entry(PackageHelper
+                                                                                     Profile.Rice.Entry(PackageHelper
                                                                                             .ToPurl(CurseForgeService
                                                                                                     .LABEL,
                                                                                                  null,
@@ -51,7 +49,8 @@ public class CurseForgeImporter : IProfileImporter
                                                                                                     .ToString()),
                                                                                          x.Required,
                                                                                          source,
-                                                                                         []))]),
+                                                                                         []))
+                                                                         ]),
                                                         new Dictionary<string, object>()),
                                             pack
                                                .FileNames

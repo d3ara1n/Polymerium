@@ -285,8 +285,8 @@ public partial class PackageContainer : UserControl
                   ['@', .. var a] => author.Contains(a, StringComparison.OrdinalIgnoreCase),
                   ['#', .. var s] => summary.Contains(s, StringComparison.OrdinalIgnoreCase),
                   ['!', .. var i] => pid.Contains(i, StringComparison.OrdinalIgnoreCase)
-                                  || version is InstancePackageVersionModel v
-                                  && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase),
+                                  || (version is InstancePackageVersionModel v
+                                   && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase)),
                   _ => name.Contains(y, StringComparison.OrdinalIgnoreCase)
               }));
 

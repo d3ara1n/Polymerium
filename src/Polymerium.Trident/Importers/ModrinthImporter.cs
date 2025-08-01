@@ -39,11 +39,13 @@ public class ModrinthImporter : IProfileImporter
                                                                          version,
                                                                          LoaderHelper.ToLurl(loader.Identity,
                                                                              loader.Version),
-                                                                         [.. index
-                                                                            .Files
-                                                                            .Where(x => x.Env?.Client is not
-                                                                                 "unsupported")
-                                                                            .Select(ToPackage)]),
+                                                                         [
+                                                                             .. index
+                                                                                .Files
+                                                                                .Where(x => x.Env?.Client is not
+                                                                                     "unsupported")
+                                                                                .Select(ToPackage)
+                                                                         ]),
                                                         new Dictionary<string, object>()),
                                             pack
                                                .FileNames

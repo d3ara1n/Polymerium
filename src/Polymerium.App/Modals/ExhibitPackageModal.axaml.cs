@@ -264,28 +264,26 @@ public partial class ExhibitPackageModal : Modal
                                                           Package.ProjectId,
                                                           IsFilterEnabled ? Filter : Filter.None)).ToArray();
                                       var project = Package;
-                                      var rv = new ExhibitVersionCollection([.. versions
-                                                                           .Select(x =>
-                                                                                new ExhibitVersionModel(project.Label,
-                                                                                    project.Namespace,
-                                                                                    project.ProjectName,
-                                                                                    project.ProjectId,
-                                                                                    x.VersionName,
-                                                                                    x.VersionId,
-                                                                                    string.Join(",",
-                                                                                        x.Requirements.AnyOfLoaders
-                                                                                           .Select(LoaderHelper
-                                                                                               .ToDisplayName)),
-                                                                                    string.Join(",",
-                                                                                        x.Requirements.AnyOfVersions),
-                                                                                    string.Empty,
-                                                                                    x.PublishedAt,
-                                                                                    x.DownloadCount,
-                                                                                    x.ReleaseType,
-                                                                                    PackageHelper.ToPurl(x.Label,
-                                                                                        x.Namespace,
-                                                                                        x.ProjectId,
-                                                                                        x.VersionId)))]);
+                                      var rv = new ExhibitVersionCollection([
+                                          .. versions.Select(x => new ExhibitVersionModel(project.Label,
+                                                                 project.Namespace,
+                                                                 project.ProjectName,
+                                                                 project.ProjectId,
+                                                                 x.VersionName,
+                                                                 x.VersionId,
+                                                                 string.Join(",",
+                                                                             x.Requirements.AnyOfLoaders
+                                                                              .Select(LoaderHelper.ToDisplayName)),
+                                                                 string.Join(",", x.Requirements.AnyOfVersions),
+                                                                 string.Empty,
+                                                                 x.PublishedAt,
+                                                                 x.DownloadCount,
+                                                                 x.ReleaseType,
+                                                                 PackageHelper.ToPurl(x.Label,
+                                                                     x.Namespace,
+                                                                     x.ProjectId,
+                                                                     x.VersionId)))
+                                      ]);
                                       return rv;
                                   },
                                   value =>

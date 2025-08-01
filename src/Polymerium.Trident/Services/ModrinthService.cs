@@ -82,15 +82,21 @@ public class ModrinthService(IModrinthClient client)
 
     public static Requirement ToRequirement(VersionInfo version) =>
         new(version.GameVersions,
-            [.. version
-               .Loaders.Select(x => MODLOADER_MAPPINGS.GetValueOrDefault(x))
-               .Where(x => !string.IsNullOrEmpty(x))
-               .Select(x => x!)]);
+        [
+            .. version
+              .Loaders.Select(x => MODLOADER_MAPPINGS.GetValueOrDefault(x))
+              .Where(x => !string.IsNullOrEmpty(x))
+              .Select(x => x!)
+        ]);
 
     public static IReadOnlyList<Dependency> ToDependencies(VersionInfo version) =>
-        [.. version
-           .Dependencies
-           .Select(x => new Dependency(LABEL, null, x.ProjectId, x.VersionId, x.DependencyType != "optional"))];
+    [
+        .. version.Dependencies.Select(x => new Dependency(LABEL,
+                                                           null,
+                                                           x.ProjectId,
+                                                           x.VersionId,
+                                                           x.DependencyType != "optional"))
+    ];
 
     public static Exhibit ToExhibit(SearchHit hit) =>
         new(LABEL,

@@ -123,15 +123,18 @@ public class CurseForgeService(ICurseForgeClient client)
     }
 
     public static IReadOnlyList<Dependency> ToDependencies(FileInfo file) =>
-        [.. file
-           .Dependencies
-           .Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
-                                      or FileInfo.FileDependency.FileRelationType.OptionalDependency)
-           .Select(x => new Dependency(LABEL,
-                                       null,
-                                       x.ModId.ToString(),
-                                       null,
-                                       x.RelationType == FileInfo.FileDependency.FileRelationType.RequiredDependency))];
+    [
+        .. file
+          .Dependencies
+          .Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
+                                     or FileInfo.FileDependency.FileRelationType.OptionalDependency)
+          .Select(x => new Dependency(LABEL,
+                                      null,
+                                      x.ModId.ToString(),
+                                      null,
+                                      x.RelationType
+                                   == FileInfo.FileDependency.FileRelationType.RequiredDependency))
+    ];
 
 
     public static Exhibit ToExhibit(ModInfo mod) =>

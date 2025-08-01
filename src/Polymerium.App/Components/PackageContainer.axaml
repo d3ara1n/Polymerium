@@ -41,7 +41,8 @@
               ColumnSpacing="12">
             <TextBox Grid.Column="0" Watermark="{x:Static lang:Resources.PackageContainer_FilterBarPlaceholder}"
                      MinWidth="168"
-                     Text="{Binding $parent[cp:PackageContainer].FilterText,Mode=OneWayToSource}" ToolTip.Tip="@Author #Summary !Id Names">
+                     Text="{Binding $parent[cp:PackageContainer].FilterText,Mode=OneWayToSource}"
+                     ToolTip.Tip="@Author #Summary !Id Names">
                 <TextBox.InnerRightContent>
                     <StackPanel Orientation="Horizontal">
                         <Button

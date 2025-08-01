@@ -563,12 +563,7 @@ public partial class InstanceSetupViewModel(
                                                        NotificationLevel.Warning);
                     }
 
-                output.Add(new ExportedEntry(entry.Purl,
-                                             entry.Enabled,
-                                             entry.Source,
-                                             [.. entry.Tags],
-                                             name,
-                                             version));
+                output.Add(new ExportedEntry(entry.Purl, entry.Enabled, entry.Source, [.. entry.Tags], name, version));
                 notification.Progress = output.Count;
                 notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
             }
