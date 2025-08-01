@@ -13,8 +13,8 @@ namespace Polymerium.App.Modals;
 
 public partial class PackageBulkUpdaterModal : Modal
 {
-    public static readonly DirectProperty<PackageBulkUpdaterModal, IList<PackageUpdaterModel>> UpdatesProperty =
-        AvaloniaProperty.RegisterDirect<PackageBulkUpdaterModal, IList<PackageUpdaterModel>>(nameof(Updates),
+    public static readonly DirectProperty<PackageBulkUpdaterModal, IReadOnlyList<PackageUpdaterModel>> UpdatesProperty =
+        AvaloniaProperty.RegisterDirect<PackageBulkUpdaterModal, IReadOnlyList<PackageUpdaterModel>>(nameof(Updates),
             o => o.Updates,
             (o, v) => o.Updates = v);
 
@@ -27,7 +27,7 @@ public partial class PackageBulkUpdaterModal : Modal
         InitializeComponent();
     }
 
-    public IList<PackageUpdaterModel> Updates
+    public IReadOnlyList<PackageUpdaterModel> Updates
     {
         get;
         set => SetAndRaise(UpdatesProperty, ref field, value);
@@ -38,7 +38,7 @@ public partial class PackageBulkUpdaterModal : Modal
     public required NotificationService NotificationService { get; init; }
     public required PersistenceService PersistenceService { get; init; }
 
-    public void SetGuard(ProfileGuard guard, IList<PackageUpdaterModel> updates)
+    public void SetGuard(ProfileGuard guard, IReadOnlyList<PackageUpdaterModel> updates)
     {
         _guard = guard;
         Updates = updates;
