@@ -66,48 +66,11 @@ public partial class MainWindowContext : ObservableObject
            .Subscribe();
         View = view;
 
-        if (!Program.Debug && Program.FirstRun && OperatingSystem.IsWindows())
-            Task.Run(CheckForPrivilegeAsync);
-    }
-
-    private async Task CheckForPrivilegeAsync()
-    {
-        // 这里的逻辑是通过 ~/.trident/.polymerium/first_run 文件判断是否完成初次启动检查
-        // 通过对上述文件创建 ~/.trident.polymerium/symlink 的文件链接判断是否已完成提权设置
-
-        var first = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "first_run");
-        var symlink = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "symlink");
-
-        if (File.Exists(first)
-         && File.Exists(symlink)
-         && File.ResolveLinkTarget(symlink, false) is { FullName: { } file }
-         && first.Equals(file, StringComparison.InvariantCultureIgnoreCase))
-            // 曾经的版本或是神秘力量完成了测试
-            return;
-
-        var dir = Path.GetDirectoryName(first);
-        if (dir != null && !Directory.Exists(dir))
-            Directory.CreateDirectory(dir);
-        if (!File.Exists(first))
-            // 这里是没有用 try catch guard 的，要是出现异常奔溃那我没话说
-            await File.WriteAllTextAsync(first, "say u say me");
-
-        if (File.Exists(symlink))
-            File.Delete(symlink);
-
-        try
+        if (OperatingSystem.IsWindows() && (Program.Debug || Program.FirstRun))
         {
-            File.CreateSymbolicLink(symlink, first);
-        }
-        catch (IOException io) when (io.HResult == 1314)
-        {
-            // TODO: 弹出 Modal 提示开启开发者模式
-            // 经过测试最新版本 Windows 11 即使不开启也可以直接创建软链接，是否与管理员账号且账号无密码有关？
-            _overlayService.PopModal(new PrivilegeRequirementModal());
-        }
-        catch (Exception ex)
-        {
-            _notificationService.PopMessage(ex, "Failed to create symlink");
+            var model = new PrivilegeRequirementModal { NotificationService = notificationService };
+            if (!model.Check())
+                _overlayService.PopModal(model);
         }
     }
 
@@ -190,7 +153,7 @@ public partial class MainWindowContext : ObservableObject
     {
         if (key != null)
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                          typeof(InstancePropertiesView)));
+                                                                             typeof(InstancePropertiesView)));
     }
 
     [RelayCommand]
@@ -198,7 +161,7 @@ public partial class MainWindowContext : ObservableObject
     {
         if (key != null)
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                          typeof(InstanceSetupView)));
+                                                                             typeof(InstanceSetupView)));
     }
 
     #endregion
@@ -346,9 +309,9 @@ public partial class MainWindowContext : ObservableObject
                                                         forceExpire: true);
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
-                                                         PersistenceService.ActionKind.Install,
-                                                         null,
-                                                         e.Source));
+                                                                PersistenceService.ActionKind.Install,
+                                                                null,
+                                                                e.Source));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -421,9 +384,9 @@ public partial class MainWindowContext : ObservableObject
                                                                                e.Key));
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
-                                                         PersistenceService.ActionKind.Update,
-                                                         e.OldSource,
-                                                         e.NewSource));
+                                                                PersistenceService.ActionKind.Update,
+                                                                e.OldSource,
+                                                                e.NewSource));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -548,9 +511,9 @@ public partial class MainWindowContext : ObservableObject
                             _notificationService.PopMessage(e.FailureReason, e.Key);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                           e.StartedAt,
-                                                           DateTimeOffset.Now,
-                                                           false));
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    false));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -562,9 +525,9 @@ public partial class MainWindowContext : ObservableObject
                                                         NotificationLevel.Success);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                           e.StartedAt,
-                                                           DateTimeOffset.Now,
-                                                           true));
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    true));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

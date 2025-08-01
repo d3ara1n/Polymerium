@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Dialogs;
 
@@ -24,19 +23,19 @@ public class OverlayService
 
     #region Toasts
 
-    public void PopToast(Toast toast) => Dispatcher.UIThread.Post(() => _toastHandler?.Invoke(toast));
+    public void PopToast(Toast toast) => _toastHandler?.Invoke(toast);
 
     #endregion
 
     #region Modals
 
-    public void PopModal(Modal modal) => Dispatcher.UIThread.Post(() => _modalHandler?.Invoke(modal));
+    public void PopModal(Modal modal) => _modalHandler?.Invoke(modal);
 
     #endregion
 
     #region Dialogs
 
-    public void PopDialog(Dialog dialog) => Dispatcher.UIThread.Post(() => _dialogHandler?.Invoke(dialog));
+    public void PopDialog(Dialog dialog) => _dialogHandler?.Invoke(dialog);
 
     public void PopMessage(string message, string title)
     {
@@ -47,7 +46,7 @@ public class OverlayService
     public async Task<bool> PopDialogAsync(Dialog dialog)
     {
         var source = dialog.CompletionSource;
-        Dispatcher.UIThread.Post(() => _dialogHandler?.Invoke(dialog));
+        _dialogHandler?.Invoke(dialog);
         return await source.Task;
     }
 

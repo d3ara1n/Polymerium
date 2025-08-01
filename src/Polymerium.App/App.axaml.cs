@@ -54,7 +54,7 @@ public class App : Application
         if (core is Exception ex
          && !critical
          && Program.AppHost?.Services.GetService<NavigationService>() is { } navigation)
-            navigation.Navigate<ExceptionView>(ex);
+            Dispatcher.UIThread.Post(() => navigation.Navigate<ExceptionView>(ex));
         else
             Dump(core);
     }
@@ -197,7 +197,7 @@ public class App : Application
         CultureInfo.CurrentUICulture = GetSafeCultureInfo(configuration.Value.ApplicationLanguage);
         Properties.Resources.Culture = CultureInfo.CurrentUICulture;
 
-        var window = new MainWindow { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
+        var window = new MainWindow();
 
         window.SetColorVariant(configuration.Value.ApplicationStyleAccent);
         window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
@@ -224,6 +224,10 @@ public class App : Application
         notification.SetHandler(window.PopNotification);
 
         #endregion
+
+
+        // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
+        window.DataContext = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.AppHost.Services);
 
         return window;
     }

@@ -294,7 +294,7 @@ public partial class InstanceSetupViewModel(
     #region Commands
 
     [RelayCommand]
-    private async Task EditLoader()
+    private async Task EditLoaderAsync()
     {
         string? loader = null;
         string? version = null;
@@ -370,10 +370,6 @@ public partial class InstanceSetupViewModel(
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var source))
             try
             {
-                var versions = await dataService.InspectVersionsAsync(source.Label,
-                                                                      source.Namespace,
-                                                                      source.Pid,
-                                                                      Filter.None with { Kind = ResourceKind.Modpack });
                 var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
@@ -549,7 +545,7 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
-    private async Task ExportList()
+    private async Task ExportListAsync()
     {
         var profile = ProfileManager.GetImmutable(Basic.Key);
         var list = new List<Profile.Rice.Entry>(profile.Setup.Packages);

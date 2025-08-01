@@ -38,7 +38,8 @@
                 <Button Grid.Column="0" Command="{Binding $parent[modals:PrivilegeRequirementModal].DismissCommand}">
                     <TextBlock Text="Ignore" />
                 </Button>
-                <Button Grid.Column="2" Classes="Primary">
+                <Button Grid.Column="2" Classes="Primary"
+                        Command="{Binding $parent[modals:PrivilegeRequirementModal].DoneCommand}">
                     <TextBlock Text="Done" />
                 </Button>
             </Grid>

@@ -69,7 +69,6 @@ public static class Startup
         // App
         services
            .AddViewFacilities()
-           .AddSingleton<MainWindowContext>()
            .AddSingleton<ConfigurationService>()
            .AddSingleton<NotificationService>()
            .AddSingleton<NavigationService>()

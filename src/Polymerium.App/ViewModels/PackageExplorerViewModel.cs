@@ -334,9 +334,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task ViewPackage(ExhibitModel? exhibit)
+    private async Task ViewPackageAsync(ExhibitModel? exhibit)
     {
-        if (exhibit is not null && _profileManager.TryGetMutable(Basic.Key, out var guard))
+        if (exhibit is not null)
             try
             {
                 var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
@@ -406,7 +406,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task CollectPending()
+    private async Task CollectPendingAsync()
     {
         if (_profileManager.TryGetMutable(Basic.Key, out var guard))
         {
