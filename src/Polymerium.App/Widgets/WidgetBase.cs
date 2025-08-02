@@ -1,5 +1,7 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls.Templates;
+using Avalonia.Markup.Xaml;
 
 namespace Polymerium.App.Widgets;
 
@@ -41,9 +43,8 @@ public abstract class WidgetBase : AvaloniaObject
         {
             if (value != Context.IsPinned)
             {
-                var old = Context.IsPinned;
                 Context.IsPinned = value;
-                RaisePropertyChanged(IsPinnedProperty, old, value);
+                RaisePropertyChanged(IsPinnedProperty, !value, value);
             }
         }
     }
@@ -55,5 +56,11 @@ public abstract class WidgetBase : AvaloniaObject
         set => SetAndRaise(SlimTemplateProperty, ref field, value);
     }
 
-    public required WidgetContext Context { get; init; }
+    public required WidgetContext Context { get; set; }
+
+
+    public void Initialize() => OnInitialize();
+    public void Deinitialize() => OnDeinitialize();
+    protected virtual void OnDeinitialize() { }
+    protected virtual void OnInitialize() { }
 }

@@ -17,7 +17,7 @@
                 <StackPanel Orientation="Horizontal">
                     <icons:PackIconLucide Margin="10,0"
                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                          Kind="Filter" Height="{StaticResource MediumFontSize}"
+                                          Kind="ListFilter" Height="{StaticResource MediumFontSize}"
                                           VerticalAlignment="Center" />
                     <husk:Divider Orientation="Vertical" />
                 </StackPanel>

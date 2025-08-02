@@ -46,7 +46,8 @@ public partial class InstanceSetupViewModel(
     OverlayService overlayService,
     NavigationService navigationService,
     PersistenceService persistenceService,
-    ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    ConfigurationService configurationService)
+    : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Other
 
@@ -322,9 +323,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = lurl;
                     if (old != lurl)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                   PersistenceService.ActionKind.EditLoader,
-                                                                   old,
-                                                                   lurl));
+                                                            PersistenceService.ActionKind.EditLoader,
+                                                            old,
+                                                            lurl));
                 }
                 else
                 {
@@ -332,9 +333,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = null;
                     if (old != null)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                   PersistenceService.ActionKind.EditLoader,
-                                                                   old,
-                                                                   null));
+                                                            PersistenceService.ActionKind.EditLoader,
+                                                            old,
+                                                            null));
                 }
 
                 await guard.DisposeAsync();

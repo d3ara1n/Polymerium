@@ -5,7 +5,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.App.Widgets;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -16,7 +18,10 @@ namespace Polymerium.App.ViewModels;
 
 public abstract partial class InstanceViewModelBase : ViewModelBase
 {
-    protected InstanceViewModelBase(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
+    protected InstanceViewModelBase(
+        ViewBag bag,
+        InstanceManager instanceManager,
+        ProfileManager profileManager)
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;

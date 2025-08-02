@@ -4,16 +4,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Huskui.Avalonia.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Services;
+using SkiaSharp;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -25,9 +29,33 @@ public partial class InstanceActivitiesViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     DataService dataService,
-    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService)
+    : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Other
+
+    private SKColor GetAccentColorFromResources()
+    {
+        try
+        {
+            // Try to get the ControlAccentInteractiveBackgroundBrush from Avalonia resources
+            if (Application.Current?.TryGetResource("ControlAccentInteractiveBackgroundBrush", null, out var resource)
+             == true
+             && resource is SolidColorBrush brush)
+            {
+                var avaloniaColor = brush.Color;
+                // Convert Avalonia Color to SkiaSharp SKColor
+                return new SKColor(avaloniaColor.R, avaloniaColor.G, avaloniaColor.B, avaloniaColor.A);
+            }
+        }
+        catch
+        {
+            // Fallback if resource is not found or any error occurs
+        }
+
+        // Fallback to a default accent color if resource is not available
+        return SKColors.DodgerBlue;
+    }
 
     private void LoadPage(DateTimeOffset since)
     {
@@ -96,7 +124,13 @@ public partial class InstanceActivitiesViewModel(
                    .Select(x => x.TotalHours)
                    .ToArray();
 
-        WeekSeries = [new ColumnSeries<double>(times) { Name = "Play Time (Hours)" }];
+        // Get accent color from Avalonia resources
+        var accentColor = GetAccentColorFromResources();
+
+        WeekSeries =
+        [
+            new ColumnSeries<double>(times) { Name = "Play Time (Hours)", Fill = new SolidColorPaint(accentColor) }
+        ];
 
         // Configure X-axis with day labels
         var dayLabels = days
@@ -143,12 +177,9 @@ public partial class InstanceActivitiesViewModel(
     #region Reactive
 
     [ObservableProperty]
-    public partial IReadOnlyList<InstanceActionModel>? PagedActionCollection { get; set; }
-
-    [ObservableProperty]
     public partial LazyObject? PagedActions { get; set; }
 
-    public string TotalPlayTime => TotalPlayTimeRaw.Humanize();
+    public string TotalPlayTime => TotalPlayTimeRaw.Humanize(maxUnit: TimeUnit.Hour);
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
