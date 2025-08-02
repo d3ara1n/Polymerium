@@ -70,7 +70,7 @@ Go back read the last section and you get it.
 
 ### 1.下载 | Download
 
-[![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/apps/9NGQHHCT2Q6Z)
+[Releases](https://github.com/d3ara1n/Polymerium/releases)
 
 ### 2.开启 Windows 开发者模式
 
@@ -99,6 +99,10 @@ Google it.
 #### Windows 11
 
 Google it.
+
+#### Windows 7/8
+
+Upgrade to Windows 10+, then Google it.
 
 ### 3.配置
 
