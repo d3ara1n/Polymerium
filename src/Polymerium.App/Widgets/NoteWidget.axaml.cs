@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Markup.Xaml;
 
 namespace Polymerium.App.Widgets;
@@ -19,13 +20,15 @@ public class NoteWidget : WidgetBase
         set => SetAndRaise(NoteTextProperty, ref field, value);
     } = string.Empty;
 
-    protected override void OnDeinitialize()
+    protected override Task OnDeinitializeAsync()
     {
         Context.SetLocalData(nameof(NoteText), NoteText);
+        return Task.CompletedTask;
     }
 
-    protected override void OnInitialize()
+    protected override Task OnInitializeAsync()
     {
         NoteText = Context.GetLocalData<string>(nameof(NoteText)) ?? string.Empty;
+        return Task.CompletedTask;
     }
 }

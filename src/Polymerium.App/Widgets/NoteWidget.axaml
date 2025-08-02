@@ -7,16 +7,15 @@
                   x:Class="Polymerium.App.Widgets.NoteWidget">
     <local:WidgetBase.FullTemplate>
         <DataTemplate x:DataType="local:NoteWidget">
-            <StackPanel Opacity="0.7" VerticalAlignment="Center" Spacing="12">
-                <TextBlock Text="This is Note Widget"
-                           HorizontalAlignment="Center" FontSize="{StaticResource LargeFontSize}" />
-                <TextBlock Text="And this is the thing!" HorizontalAlignment="Center" />
-            </StackPanel>
+            <TextBox Theme="{StaticResource FieldTextBoxTheme}" Text="{Binding NoteText,Mode=TwoWay}"
+                     AcceptsReturn="True" AcceptsTab="True" />
         </DataTemplate>
     </local:WidgetBase.FullTemplate>
     <local:WidgetBase.SlimTemplate>
         <DataTemplate x:DataType="local:NoteWidget">
-            <TextBlock Text="This is Note Widget" Opacity="0.7" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <ScrollViewer>
+                <TextBlock Text="{Binding NoteText}" TextWrapping="Wrap" />
+            </ScrollViewer>
         </DataTemplate>
     </local:WidgetBase.SlimTemplate>
 </local:WidgetBase>

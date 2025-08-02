@@ -13,7 +13,9 @@ using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.App.Widgets;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -24,7 +26,15 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ViewModelBase
 {
-    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager)
+    #region Privavte
+
+    #endregion
+
+    public InstanceViewModel(
+        ViewBag bag,
+        ProfileManager profileManager,
+        InstanceManager instanceManager,
+        WidgetHostService widgetHostService)
     {
         _profileManager = profileManager;
         _instanceManager = instanceManager;
@@ -42,52 +52,27 @@ public partial class InstanceViewModel : ViewModelBase
             _ => throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided")
         };
         if (profileManager.TryGetImmutable(key, out var profile))
+        {
             Basic = new InstanceBasicModel(key,
                                            profile.Name,
                                            profile.Setup.Version,
                                            profile.Setup.Loader,
                                            profile.Setup.Source);
+            Context = new InstanceViewModelBase.InstanceContextParameter(Basic,
+            [
+                .. widgetHostService.WidgetTypes.Select(type =>
+                {
+                    var widget = (WidgetBase)Activator.CreateInstance(type)!;
+                    widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
+                    return widget;
+                })
+            ]);
+        }
         else
+        {
             throw new PageNotReachedException(typeof(InstanceView), $"Key '{key}' is not valid instance or not found");
+        }
     }
-
-    #region Direct
-
-    public InstanceBasicModel Basic { get; }
-
-    #endregion
-
-    #region Overrides
-
-    protected override Task OnInitializedAsync(CancellationToken token)
-    {
-        _instanceManager.InstanceUpdating += OnProfileUpdating;
-        _instanceManager.InstanceDeploying += OnProfileDeploying;
-        _instanceManager.InstanceLaunching += OnProfileLaunching;
-        if (_instanceManager.IsTracking(Basic.Key, out var tracker))
-            if (tracker is UpdateTracker update)
-            {
-                // 已经处于更新状态而未收到事件
-                State = InstanceState.Updating;
-                update.StateUpdated += OnProfileUpdateStateChanged;
-            }
-            else if (tracker is DeployTracker deploy)
-            {
-                // 已经处于部署状态而未收到事件
-                State = InstanceState.Deploying;
-                deploy.StateUpdated += OnProfileDeployStateChanged;
-            }
-            else if (tracker is LaunchTracker launch)
-            {
-                // 已经处于启动状态而未收到事件
-                State = InstanceState.Running;
-                launch.StateUpdated += OnProfileLaunchingStateChanged;
-            }
-
-        return Task.CompletedTask;
-    }
-
-    #endregion
 
     #region Commands
 
@@ -106,6 +91,60 @@ public partial class InstanceViewModel : ViewModelBase
 
     #endregion
 
+    #region Direct
+
+    public InstanceBasicModel Basic { get; }
+    public InstanceViewModelBase.InstanceContextParameter Context { get; }
+
+    #endregion
+
+    #region Overrides
+
+    protected override async Task OnInitializedAsync(CancellationToken token)
+    {
+        // 终究还是得有个 InstanceStateAggregator
+        _instanceManager.InstanceUpdating += OnProfileUpdating;
+        _instanceManager.InstanceDeploying += OnProfileDeploying;
+        _instanceManager.InstanceLaunching += OnProfileLaunching;
+        _profileManager.ProfileUpdated += OnProfileUpdated;
+        if (_instanceManager.IsTracking(Basic.Key, out var tracker))
+            switch (tracker)
+            {
+                case UpdateTracker update:
+                    // 已经处于更新状态而未收到事件
+                    State = InstanceState.Updating;
+                    update.StateUpdated += OnProfileUpdateStateChanged;
+                    break;
+                case DeployTracker deploy:
+                    // 已经处于部署状态而未收到事件
+                    State = InstanceState.Deploying;
+                    deploy.StateUpdated += OnProfileDeployStateChanged;
+                    break;
+                case LaunchTracker launch:
+                    // 已经处于启动状态而未收到事件
+                    State = InstanceState.Running;
+                    launch.StateUpdated += OnProfileLaunchingStateChanged;
+                    break;
+            }
+
+        foreach (var widget in Context.Widgets)
+            await widget.InitializeAsync();
+    }
+
+    protected override async Task OnDeinitializeAsync(CancellationToken token)
+
+    {
+        _instanceManager.InstanceUpdating -= OnProfileUpdating;
+        _instanceManager.InstanceDeploying -= OnProfileDeploying;
+        _instanceManager.InstanceLaunching -= OnProfileLaunching;
+        _profileManager.ProfileUpdated -= OnProfileUpdated;
+
+        foreach (var widget in Context.Widgets)
+            await widget.DeinitializeAsync();
+    }
+
+    #endregion
+
     #region Injected
 
     private readonly InstanceManager _instanceManager;
@@ -114,16 +153,6 @@ public partial class InstanceViewModel : ViewModelBase
     #endregion
 
     #region Tracking
-
-    protected override Task OnDeinitializeAsync(CancellationToken token)
-
-    {
-        _instanceManager.InstanceUpdating -= OnProfileUpdating;
-        _instanceManager.InstanceDeploying -= OnProfileDeploying;
-        _instanceManager.InstanceLaunching -= OnProfileLaunching;
-        _profileManager.ProfileUpdated -= OnProfileUpdated;
-        return Task.CompletedTask;
-    }
 
     private void OnProfileUpdating(object? sender, UpdateTracker tracker)
     {

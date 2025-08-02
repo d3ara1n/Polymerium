@@ -101,14 +101,9 @@ public partial class InstanceHomeViewModel(
             }
         }
 
-        foreach (var type in widgetHostService.WidgetTypes)
-            if (widgetHostService.GetIsPinned(Basic.Key, type.Name))
-            {
-                var widget = (WidgetBase)Activator.CreateInstance(type)!;
-                widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
-                widget.Initialize();
-                PinnedWidgets.Add(widget);
-            }
+        foreach (var widget in Widgets.Where(x => widgetHostService.GetIsPinned(Basic.Key, x.GetType().Name)))
+            PinnedWidgets.Add(widget);
+
 
         return Task.CompletedTask;
     }
@@ -118,7 +113,7 @@ public partial class InstanceHomeViewModel(
         _subscription?.Dispose();
         _timerSubscription?.Dispose();
         foreach (var widget in PinnedWidgets)
-            widget.Deinitialize();
+            widget.DeinitializeAsync();
         PinnedWidgets.Clear();
         return base.OnDeinitializeAsync(token);
     }

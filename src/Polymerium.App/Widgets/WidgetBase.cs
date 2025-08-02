@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls.Templates;
 
 namespace Polymerium.App.Widgets;
@@ -57,8 +58,8 @@ public abstract class WidgetBase : AvaloniaObject
     public required WidgetContext Context { get; set; }
 
 
-    public void Initialize() => OnInitialize();
-    public void Deinitialize() => OnDeinitialize();
-    protected virtual void OnDeinitialize() { }
-    protected virtual void OnInitialize() { }
+    public Task InitializeAsync() => OnInitializeAsync();
+    public Task DeinitializeAsync() => OnDeinitializeAsync();
+    protected virtual Task OnDeinitializeAsync() => Task.CompletedTask;
+    protected virtual Task OnInitializeAsync() => Task.CompletedTask;
 }

@@ -7,15 +7,18 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
+using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Views;
 
 public partial class InstanceView : ScopedPage
 {
-    public static readonly DirectProperty<InstanceView, InstanceBasicModel?> BasicProperty =
-        AvaloniaProperty.RegisterDirect<InstanceView, InstanceBasicModel?>(nameof(Basic),
-                                                                           o => o.Basic,
-                                                                           (o, v) => o.Basic = v);
+    public static readonly DirectProperty<InstanceView, InstanceViewModelBase.InstanceContextParameter>
+        ContextProperty =
+            AvaloniaProperty
+               .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter>(nameof(Context),
+                    o => o.Context,
+                    (o, v) => o.Context = v);
 
 
     public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
@@ -31,10 +34,10 @@ public partial class InstanceView : ScopedPage
         NavigateCommand = new RelayCommand<Type>(Navigate);
     }
 
-    public InstanceBasicModel? Basic
+    public InstanceViewModelBase.InstanceContextParameter Context
     {
         get;
-        set => SetAndRaise(BasicProperty, ref field, value);
+        set => SetAndRaise(ContextProperty, ref field, value);
     }
 
     public ICommand? NavigateCommand
@@ -60,7 +63,7 @@ public partial class InstanceView : ScopedPage
                                                                                : DirectionFrom.Top)
                                                  : new PopUpTransition();
 
-                Frame.Navigate(selected.Page, Basic, transition);
+                Frame.Navigate(selected.Page, Context, transition);
             }
     }
 

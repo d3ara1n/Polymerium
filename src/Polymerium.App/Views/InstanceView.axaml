@@ -10,7 +10,7 @@
                      xmlns:trident="clr-namespace:Polymerium.Trident;assembly=Polymerium.Trident"
                      mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
                      Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"
-                     Basic="{Binding Basic,Mode=OneWay}"
+                     Context="{Binding Context,Mode=OneWay}"
                      x:Class="Polymerium.App.Views.InstanceView">
     <Panel>
         <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState">
