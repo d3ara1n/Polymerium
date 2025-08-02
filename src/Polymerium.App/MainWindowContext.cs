@@ -153,7 +153,7 @@ public partial class MainWindowContext : ObservableObject
     {
         if (key != null)
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstancePropertiesView)));
+                                                          typeof(InstancePropertiesView)));
     }
 
     [RelayCommand]
@@ -161,7 +161,7 @@ public partial class MainWindowContext : ObservableObject
     {
         if (key != null)
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstanceSetupView)));
+                                                          typeof(InstanceSetupView)));
     }
 
     #endregion
@@ -309,9 +309,9 @@ public partial class MainWindowContext : ObservableObject
                                                         forceExpire: true);
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
-                                                                PersistenceService.ActionKind.Install,
-                                                                null,
-                                                                e.Source));
+                                                         PersistenceService.ActionKind.Install,
+                                                         null,
+                                                         e.Source));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -384,9 +384,9 @@ public partial class MainWindowContext : ObservableObject
                                                                                e.Key));
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
-                                                                PersistenceService.ActionKind.Update,
-                                                                e.OldSource,
-                                                                e.NewSource));
+                                                         PersistenceService.ActionKind.Update,
+                                                         e.OldSource,
+                                                         e.NewSource));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -511,9 +511,9 @@ public partial class MainWindowContext : ObservableObject
                             _notificationService.PopMessage(e.FailureReason, e.Key);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                                    e.StartedAt,
-                                                                    DateTimeOffset.Now,
-                                                                    false));
+                                                           e.StartedAt,
+                                                           DateTimeOffset.Now,
+                                                           false));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -525,9 +525,9 @@ public partial class MainWindowContext : ObservableObject
                                                         NotificationLevel.Success);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                                    e.StartedAt,
-                                                                    DateTimeOffset.Now,
-                                                                    true));
+                                                           e.StartedAt,
+                                                           DateTimeOffset.Now,
+                                                           true));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

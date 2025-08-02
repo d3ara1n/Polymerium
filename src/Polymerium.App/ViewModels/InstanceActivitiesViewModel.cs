@@ -29,8 +29,7 @@ public partial class InstanceActivitiesViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     DataService dataService,
-    PersistenceService persistenceService)
-    : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Other
 

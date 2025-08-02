@@ -1,9 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using Avalonia;
-using Avalonia.Interactivity;
+﻿using Avalonia.Interactivity;
 using Polymerium.App.Controls;
 using Polymerium.App.ViewModels;
-using Polymerium.App.Widgets;
 
 namespace Polymerium.App.Views;
 

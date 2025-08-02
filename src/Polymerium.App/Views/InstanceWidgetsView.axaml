@@ -8,7 +8,6 @@
                   xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                  xmlns:v="clr-namespace:Polymerium.App.Views"
                   mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
                   x:Class="Polymerium.App.Views.InstanceWidgetsView" x:DataType="vm:InstanceWidgetsViewModel">
     <Grid>

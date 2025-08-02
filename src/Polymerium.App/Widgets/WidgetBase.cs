@@ -1,7 +1,5 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls.Templates;
-using Avalonia.Markup.Xaml;
 
 namespace Polymerium.App.Widgets;
 

@@ -51,31 +51,25 @@ public partial class InstanceBasicModel : ModelBase
     [ObservableProperty]
     public partial Bitmap Thumbnail { get; set; }
 
-    public string? Source
+    [ObservableProperty]
+    public partial string? Source { get; set; }
+
+    partial void OnSourceChanged(string? value)
     {
-        get;
-        set
-        {
-            SetProperty(ref field, value);
-            if (!string.IsNullOrEmpty(value) && PackageHelper.TryParse(value, out var result))
-                SourceLabel = result.Label;
-        }
+        if (!string.IsNullOrEmpty(value) && PackageHelper.TryParse(value, out var result))
+            SourceLabel = result.Label;
     }
 
-    public string? Loader
+    [ObservableProperty]
+    public partial string? Loader { get; set; }
+
+    partial void OnLoaderChanged(string? value)
     {
-        get;
-        set
-        {
-            SetProperty(ref field, value);
-
-
-            if (value != null && LoaderHelper.TryParse(value, out var result))
-                // TODO: 从语言文件中选取
-                LoaderLabel = LoaderHelper.ToDisplayName(result.Identity);
-            else
-                LoaderLabel = Resources.Enum_Vanilla;
-        }
+        if (value != null && LoaderHelper.TryParse(value, out var result))
+            // TODO: 从语言文件中选取
+            LoaderLabel = LoaderHelper.ToDisplayName(result.Identity);
+        else
+            LoaderLabel = Resources.Enum_Vanilla;
     }
 
     #endregion
