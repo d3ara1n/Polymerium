@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData.Binding;
 using Humanizer;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
@@ -19,6 +22,7 @@ using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
+using Polymerium.App.Widgets;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
@@ -40,8 +44,9 @@ public partial class InstanceHomeViewModel(
     ConfigurationService configurationService,
     PersistenceService persistenceService,
     ScrapService scrapService,
-    InstanceService instanceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    InstanceService instanceService, WidgetHostService widgetHostService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    // Launch Lifecycle
     private CompositeDisposable? _subscription;
     private IDisposable? _timerSubscription;
 
@@ -97,6 +102,17 @@ public partial class InstanceHomeViewModel(
             }
         }
 
+        foreach (var type in widgetHostService.WidgetTypes)
+        {
+            if (widgetHostService.GetIsPinned(Basic.Key, type.Name))
+            {
+                var widget = (WidgetBase)Activator.CreateInstance(type)!;
+                widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
+                widget.Initialize();
+                PinnedWidgets.Add(widget);
+            }
+        }
+
         return Task.CompletedTask;
     }
 
@@ -104,6 +120,9 @@ public partial class InstanceHomeViewModel(
     {
         _subscription?.Dispose();
         _timerSubscription?.Dispose();
+        foreach (var widget in PinnedWidgets)
+            widget.Deinitialize();
+        PinnedWidgets.Clear();
         return base.OnDeinitializeAsync(token);
     }
 
@@ -343,6 +362,8 @@ public partial class InstanceHomeViewModel(
 
     [ObservableProperty]
     public partial AccountModel? SelectedAccount { get; set; }
+
+    public ObservableCollection<WidgetBase> PinnedWidgets { get; } = [];
 
     #endregion
 }

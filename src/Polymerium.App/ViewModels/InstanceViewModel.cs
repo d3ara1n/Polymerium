@@ -11,21 +11,27 @@ using CommunityToolkit.Mvvm.Input;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.App.Widgets;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager)
-    : InstanceViewModelBase(bag.Parameter switch
-                            {
-                                CompositeParameter p => new ViewBag(p.Key),
-                                _ => bag
-                            },
-                            instanceManager,
-                            profileManager)
+public partial class InstanceViewModel(
+    ViewBag bag,
+    ProfileManager profileManager,
+    InstanceManager instanceManager) : InstanceViewModelBase(bag.Parameter switch
+                                                                 {
+                                                                     CompositeParameter p => new ViewBag(p.Key),
+                                                                     _ => bag
+                                                                 },
+                                                                 instanceManager,
+                                                                 profileManager)
 {
+    #region Overrides
+
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         SelectedPage = bag.Parameter switch
@@ -34,8 +40,11 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
                            _ => null
                        }
                     ?? PageEntries.FirstOrDefault();
-        return base.OnInitializedAsync(token);
+
+        return Task.CompletedTask;
     }
+
+    #endregion
 
     #region Commands
 
@@ -45,12 +54,6 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
     }
-
-    #endregion
-
-    #region Nested type: CompositeParameter
-
-    public record CompositeParameter(string Key, Type Subview);
 
     #endregion
 
@@ -75,6 +78,12 @@ public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManage
 
     [ObservableProperty]
     public partial InstanceSubpageEntryModel? SelectedPage { get; set; }
+
+    #endregion
+
+    #region Nested type: CompositeParameter
+
+    public record CompositeParameter(string Key, Type Subview);
 
     #endregion
 }

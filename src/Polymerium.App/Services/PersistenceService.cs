@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Text.Json;
 using FreeSql;
 using FreeSql.DataAnnotations;
 using Polymerium.Trident.Accounts;
@@ -8,7 +10,7 @@ using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
 
-public class PersistenceService : IDisposable
+public class PersistenceService(IFreeSql freeSql)
 {
     #region ActionKind enum
 
@@ -20,29 +22,6 @@ public class PersistenceService : IDisposable
     // Activities
 
     // Preferences 会用 Key-PreferenceId-PreferenceValue 的形式储存
-
-    private readonly Lazy<IFreeSql> _db = new(() =>
-    {
-        var dir = PathDef.Default.PrivateDirectory(Program.Brand);
-        var path = Path.Combine(dir, "persistence.sqlite.db");
-        if (!Directory.Exists(dir))
-            Directory.CreateDirectory(dir);
-        return new FreeSqlBuilder()
-              .UseConnectionString(DataType.Sqlite, $"Data Source=\"{path}\";Cache=Private")
-              .UseAutoSyncStructure(true)
-              .Build();
-    });
-
-    #region IDisposable Members
-
-    public void Dispose()
-    {
-        // TODO 在此释放托管资源
-        if (_db.IsValueCreated)
-            _db.Value.Dispose();
-    }
-
-    #endregion
 
     #region Nested type: Account
 
@@ -86,8 +65,8 @@ public class PersistenceService : IDisposable
     public class Action(string key, ActionKind kind, string? old, string? @new)
     {
         public DateTime At { get; set; } = DateTime.Now;
-
         public string Key { get; set; } = key;
+
         public ActionKind Kind { get; set; } = kind;
         public string? Old { get; set; } = old;
         public string? New { get; set; } = @new;
@@ -100,6 +79,7 @@ public class PersistenceService : IDisposable
     public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, bool dieInPeace)
     {
         public string Key { get; set; } = key;
+
         public DateTime Begin { get; set; } = begin.DateTime;
         public DateTime End { get; set; } = end.DateTime;
 
@@ -108,17 +88,36 @@ public class PersistenceService : IDisposable
 
     #endregion
 
+    #region Nested Type: WidgetLocalSection
+
+    public class WidgetLocalSection(string key, string widgetId, string indicator, string data)
+    {
+        [Column(IsPrimary = true)]
+        public string Key { get; set; } = key;
+
+        [Column(IsPrimary = true)]
+        public string WidgetId { get; set; } = widgetId;
+
+        [Column(IsPrimary = true)]
+        public string Indicator { get; set; } = indicator;
+
+        [Column(DbType = "BLOB")]
+        public string Data { get; set; } = data;
+    }
+
+    #endregion
+
     #region Actions
 
     public void AppendAction(Action action)
     {
-        _db.Value.Insert(action).ExecuteAffrows();
+        freeSql.Insert(action).ExecuteAffrows();
     }
 
     public IReadOnlyList<Action> GetLatestActions(string key, DateTimeOffset since)
     {
-        return _db
-              .Value.Select<Action>()
+        return freeSql
+              .Select<Action>()
               .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage && x.At >= since.LocalDateTime)
               .OrderByDescending(x => x.At)
               .ToList();
@@ -130,27 +129,24 @@ public class PersistenceService : IDisposable
 
     public void AppendActivity(Activity activity)
     {
-        _db.Value.Insert(activity).ExecuteAffrows();
+        freeSql.Insert(activity).ExecuteAffrows();
     }
 
     public Activity? GetLastActivity(string key)
     {
-        return _db.Value.Select<Activity>().Where(x => x.Key == key).OrderByDescending(x => x.End).First();
+        return freeSql.Select<Activity>().Where(x => x.Key == key).OrderByDescending(x => x.End).First();
     }
 
     public TimeSpan GetTotalPlayTime(string key)
     {
-        var totalSeconds = _db
-                          .Value.Select<Activity>()
-                          .Where(x => x.Key == key)
-                          .Sum(x => (x.End - x.Begin).TotalSeconds);
+        var totalSeconds = freeSql.Select<Activity>().Where(x => x.Key == key).Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
     public TimeSpan GetDayPlayTime(string key, DateTimeOffset date)
     {
-        var totalSeconds = _db
-                          .Value.Select<Activity>()
+        var totalSeconds = freeSql
+                          .Select<Activity>()
                           .Where(x => x.Key == key && x.End.Date == date.DateTime.Date)
                           .Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
@@ -158,13 +154,13 @@ public class PersistenceService : IDisposable
 
     public double GetPercentageInTotalPlayTime(string key)
     {
-        var keyTotalSeconds = _db
-                             .Value.Select<Activity>()
+        var keyTotalSeconds = freeSql
+                             .Select<Activity>()
                              .Where(x => x.Key == key)
                              .Sum(x => (x.End - x.Begin).TotalSeconds);
 
 
-        var allTotalSeconds = _db.Value.Select<Activity>().Sum(x => (x.End - x.Begin).TotalSeconds);
+        var allTotalSeconds = freeSql.Select<Activity>().Sum(x => (x.End - x.Begin).TotalSeconds);
 
 
         if (allTotalSeconds == 0)
@@ -180,48 +176,48 @@ public class PersistenceService : IDisposable
 
     public void AppendAccount(Account account)
     {
-        _db.Value.Insert(account).ExecuteAffrows();
+        freeSql.Insert(account).ExecuteAffrows();
     }
 
-    public IReadOnlyList<Account> GetAccounts() => _db.Value.Select<Account>().ToList();
+    public IReadOnlyList<Account> GetAccounts() => freeSql.Select<Account>().ToList();
 
     public Account? GetDefaultAccount()
     {
-        return _db.Value.Select<Account>().Where(x => x.IsDefault).First();
+        return freeSql.Select<Account>().Where(x => x.IsDefault).First();
     }
 
     public Account? GetAccount(string uuid)
     {
-        return _db.Value.Select<Account>().Where(x => x.Uuid == uuid).First();
+        return freeSql.Select<Account>().Where(x => x.Uuid == uuid).First();
     }
 
     public bool HasMicrosoftAccount()
     {
-        return _db.Value.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
+        return freeSql.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
     }
 
     public void MarkDefaultAccount(string uuid)
     {
-        _db.Value.Transaction(() =>
+        freeSql.Transaction(() =>
         {
-            _db.Value.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
-            _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.IsDefault, true).ExecuteAffrows();
+            freeSql.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
+            freeSql.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.IsDefault, true).ExecuteAffrows();
         });
     }
 
     public void RemoveAccount(string uuid)
     {
-        _db.Value.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
+        freeSql.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
     }
 
     public void UseAccount(string uuid)
     {
-        _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.LastUsedAt, DateTime.Now).ExecuteAffrows();
+        freeSql.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.LastUsedAt, DateTime.Now).ExecuteAffrows();
     }
 
     public void UpdateAccount(string uuid, string data)
     {
-        _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.Data, data).ExecuteAffrows();
+        freeSql.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.Data, data).ExecuteAffrows();
     }
 
     #endregion
@@ -230,28 +226,45 @@ public class PersistenceService : IDisposable
 
     public AccountSelector? GetAccountSelector(string key)
     {
-        return _db.Value.Select<AccountSelector>().Where(x => x.Key == key).First();
+        return freeSql.Select<AccountSelector>().Where(x => x.Key == key).First();
     }
 
     public void SetAccountSelector(string key, string uuid)
     {
-        _db.Value.Transaction(() =>
+        freeSql.Transaction(() =>
         {
-            var found = _db.Value.Select<AccountSelector>().Where(x => x.Key == key).First();
+            var found = freeSql.Select<AccountSelector>().Where(x => x.Key == key).First();
             if (found != null)
             {
                 if (found.Uuid != uuid)
-                    _db
-                       .Value.Update<AccountSelector>()
-                       .Where(x => x.Key == key)
-                       .Set(x => x.Uuid, uuid)
-                       .ExecuteAffrows();
+                    freeSql.Update<AccountSelector>().Where(x => x.Key == key).Set(x => x.Uuid, uuid).ExecuteAffrows();
             }
             else
             {
-                _db.Value.Insert(new AccountSelector(key, uuid)).ExecuteAffrows();
+                freeSql.Insert(new AccountSelector(key, uuid)).ExecuteAffrows();
             }
         });
+    }
+
+    #endregion
+
+    #region Widgets
+
+    public T? GetWidgetLocalData<T>(string key, string widgetId, string indicator)
+    {
+        var data = freeSql
+                  .Select<WidgetLocalSection>()
+                  .Where(x => x.Key == key && x.WidgetId == widgetId && x.Indicator == indicator)
+                  .First();
+        return data == null ? default(T?) : JsonSerializer.Deserialize<T>(data.Data);
+    }
+
+    public void SetWidgetLocalData<T>(string key, string widgetId, string indicator, T data)
+    {
+        var serializedData = JsonSerializer.Serialize(data);
+        var widgetSection = new WidgetLocalSection(key, widgetId, indicator, serializedData);
+
+        freeSql.InsertOrUpdate<WidgetLocalSection>().SetSource(widgetSection).ExecuteAffrows();
     }
 
     #endregion

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http.Headers;
+using FreeSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Services;
+using Polymerium.App.Widgets;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
@@ -69,6 +71,7 @@ public static class Startup
         // App
         services
            .AddViewFacilities()
+           .AddFreeSql()
            .AddSingleton<ConfigurationService>()
            .AddSingleton<NotificationService>()
            .AddSingleton<NavigationService>()

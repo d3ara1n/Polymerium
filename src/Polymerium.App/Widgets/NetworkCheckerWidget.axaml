@@ -10,7 +10,7 @@
     <local:WidgetBase.FullTemplate>
         <DataTemplate DataType="local:NetworkCheckerWidget">
             <StackPanel Spacing="12">
-                <Button Classes="Primary" HorizontalAlignment="Center">
+                <Button Classes="Primary" HorizontalAlignment="Center" Command="{Binding PerformCommand}">
                     <TextBlock Text="Perform" />
                 </Button>
                 <!-- 下面是一个测试结果条目的样式，进度条的颜色会随着百分比分阶段使用Success/Warning(50%)/Danger(100%) -->

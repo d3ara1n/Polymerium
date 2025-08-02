@@ -16,6 +16,7 @@
     xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
     d:DesignHeight="566"
     d:DesignWidth="780"
     x:DataType="vm:InstanceHomeViewModel"
@@ -258,55 +259,45 @@
                     </StackPanel>
                 </Button>
             </Grid>
-            <ScrollViewer
-                Grid.Row="2"
-                Margin="0,0,0,-12"
-                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <StackPanel
-                    Margin="0,0,0,12"
-                    Orientation="Horizontal"
-                    Spacing="12">
-                    <husk:Card Width="198">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                FontSize="{StaticResource ExtraLargeFontSize}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="Working" />
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="Never" />
-                        </StackPanel>
-                    </husk:Card>
-                    <husk:Card Width="198">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                FontSize="{StaticResource ExtraLargeFontSize}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="In" />
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="Be" />
-                        </StackPanel>
-                    </husk:Card>
-                    <husk:Card Width="198">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                FontSize="{StaticResource ExtraLargeFontSize}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="Progress" />
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="Finished" />
-                        </StackPanel>
-                    </husk:Card>
+            <Panel
+                Grid.Row="2">
+                <StackPanel VerticalAlignment="Center"
+                            Spacing="8"
+                            IsVisible="{Binding PinnedWidgets.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                    <icons:PackIconLucide Kind="Microchip" Height="{StaticResource ExtraLargeFontSize}"
+                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                          Width="{StaticResource ExtraLargeFontSize}"
+                                          HorizontalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                               FontSize="{StaticResource LargeFontSize}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               HorizontalAlignment="Center" />
                 </StackPanel>
-            </ScrollViewer>
+                <ScrollViewer
+                    Margin="0,0,0,-12"
+                    HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl
+                        ItemsSource="{Binding PinnedWidgets,Mode=OneTime}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="widgets:WidgetBase">
+                                <husk:Card>
+                                    <ContentControl Content="{Binding}" ContentTemplate="{Binding SlimTemplate}" />
+                                </husk:Card>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerTheme>
+                            <ControlTheme TargetType="ContentPresenter">
+                                <Setter Property="Width" Value="198" />
+                            </ControlTheme>
+                        </ItemsControl.ItemContainerTheme>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Panel>
         </Grid>
         <Grid
             Grid.Row="2"
