@@ -17,7 +17,7 @@ public partial class InstanceBasicModel : ModelBase
         Version = version;
         Loader = loader;
         Source = source;
-        Thumbnail = null!;
+        Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
 
         UpdateIcon();
     }

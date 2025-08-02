@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Widgets;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -20,11 +21,33 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
         InstanceManager = instanceManager;
         ProfileManager = profileManager;
 
-        if (bag.Parameter is InstanceBasicModel basic)
-            Basic = basic;
+        if (bag.Parameter is InstanceContextParameter context)
+        {
+            Basic = context.Basic;
+            Widgets = context.Widgets;
+        }
         else
+        {
             throw new PageNotReachedException(GetType(), "Basic to the instance is not provided");
+        }
     }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial InstanceState State { get; set; } = InstanceState.Idle;
+
+    #endregion
+
+    #region Nested type: InstanceContextParameter
+
+    #region NestedType: InstanceContextParameter
+
+    public record InstanceContextParameter(InstanceBasicModel Basic, WidgetBase[] Widgets);
+
+    #endregion
+
+    #endregion
 
     #region Protected
 
@@ -57,26 +80,26 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
         InstanceManager.InstanceLaunching += OnProfileLaunching;
         ProfileManager.ProfileUpdated += OnProfileUpdated;
         if (InstanceManager.IsTracking(Basic.Key, out var tracker))
-            if (tracker is UpdateTracker update)
+            switch (tracker)
             {
-                // 已经处于更新状态而未收到事件
-                State = InstanceState.Updating;
-                update.StateUpdated += OnProfileUpdateStateChanged;
-                OnInstanceUpdating(update);
-            }
-            else if (tracker is DeployTracker deploy)
-            {
-                // 已经处于部署状态而未收到事件
-                State = InstanceState.Deploying;
-                deploy.StateUpdated += OnProfileDeployStateChanged;
-                OnInstanceDeploying(deploy);
-            }
-            else if (tracker is LaunchTracker launch)
-            {
-                // 已经处于启动状态而未收到事件
-                State = InstanceState.Running;
-                launch.StateUpdated += OnProfileLaunchingStateChanged;
-                OnInstanceLaunching(launch);
+                case UpdateTracker update:
+                    // 已经处于更新状态而未收到事件
+                    State = InstanceState.Updating;
+                    update.StateUpdated += OnProfileUpdateStateChanged;
+                    OnInstanceUpdating(update);
+                    break;
+                case DeployTracker deploy:
+                    // 已经处于部署状态而未收到事件
+                    State = InstanceState.Deploying;
+                    deploy.StateUpdated += OnProfileDeployStateChanged;
+                    OnInstanceDeploying(deploy);
+                    break;
+                case LaunchTracker launch:
+                    // 已经处于启动状态而未收到事件
+                    State = InstanceState.Running;
+                    launch.StateUpdated += OnProfileLaunchingStateChanged;
+                    OnInstanceLaunching(launch);
+                    break;
             }
 
         OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
@@ -175,13 +198,11 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     #endregion
 
-    #region Reactive
+    #region Direct
 
-    [ObservableProperty]
-    public partial InstanceBasicModel Basic { get; set; }
+    public InstanceBasicModel Basic { get; }
 
-    [ObservableProperty]
-    public partial InstanceState State { get; set; } = InstanceState.Idle;
+    public WidgetBase[] Widgets { get; }
 
     #endregion
 }

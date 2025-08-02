@@ -203,13 +203,11 @@
                                            Value="{Binding PercentageInTotalPlayTime,FallbackValue=0.37}"
                                            Maximum="1"
                                            TrackStrokeWidth="2" TrackPadding="2" StrokeWidth="6" />
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock TextAlignment="Center">
-                                <Run Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />
-                                <LineBreak />
-                                <Run FontSize="{StaticResource ExtraLargeFontSize}"
-                                     Text="{Binding TotalPlayTime,StringFormat={}{0:0.0},FallbackValue=12.4}" />
-                            </TextBlock>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />
+                            <TextBlock HorizontalAlignment="Center" FontSize="{StaticResource ExtraLargeFontSize}"
+                                       Text="{Binding TotalPlayTime,StringFormat={}{0:0.0},FallbackValue=12.4}" />
                         </StackPanel>
                     </Panel>
                     <StackPanel Grid.Row="2" Spacing="8">
@@ -274,7 +272,6 @@
                                HorizontalAlignment="Center" />
                 </StackPanel>
                 <ScrollViewer
-                    Margin="0,0,0,-12"
                     HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                     <ItemsControl
                         ItemsSource="{Binding PinnedWidgets,Mode=OneTime}">
