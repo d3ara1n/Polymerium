@@ -14,25 +14,6 @@ public partial class PrivilegeRequirementModal : Modal
         InitializeComponent();
     }
 
-    #region Commands
-
-    [RelayCommand]
-    private void Dismiss()
-    {
-        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-    }
-
-    [RelayCommand]
-    private void Done()
-    {
-        if (Check())
-            RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-        else
-            NotificationService.PopMessage("Negative. Try again or just [ignore].");
-    }
-
-    #endregion
-
     #region Services
 
     public required NotificationService NotificationService { get; init; }
@@ -80,6 +61,25 @@ public partial class PrivilegeRequirementModal : Modal
         }
 
         return true;
+    }
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void Dismiss()
+    {
+        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+    }
+
+    [RelayCommand]
+    private void Done()
+    {
+        if (Check())
+            RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+        else
+            NotificationService.PopMessage("Negative. Try again or just [ignore].");
     }
 
     #endregion

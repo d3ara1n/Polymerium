@@ -93,9 +93,7 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Debug()
-    {
-    }
+    private void Debug() { }
 
     #endregion
 }

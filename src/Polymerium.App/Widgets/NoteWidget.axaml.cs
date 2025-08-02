@@ -10,14 +10,14 @@ public class NoteWidget : WidgetBase
                                                             o => o.NoteText,
                                                             (o, v) => o.NoteText = v);
 
+
+    public NoteWidget() => AvaloniaXamlLoader.Load(this);
+
     public string NoteText
     {
         get;
         set => SetAndRaise(NoteTextProperty, ref field, value);
     } = string.Empty;
-
-
-    public NoteWidget() => AvaloniaXamlLoader.Load(this);
 
     protected override void OnDeinitialize()
     {

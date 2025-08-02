@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Text.Json;
-using FreeSql;
 using FreeSql.DataAnnotations;
 using Polymerium.Trident.Accounts;
-using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
 
@@ -17,11 +13,6 @@ public class PersistenceService(IFreeSql freeSql)
     public enum ActionKind { Install, Update, Unlock, Reset, Rename, EditPackage, EditLoader }
 
     #endregion
-
-    // Preferences
-    // Activities
-
-    // Preferences 会用 Key-PreferenceId-PreferenceValue 的形式储存
 
     #region Nested type: Account
 
@@ -88,6 +79,8 @@ public class PersistenceService(IFreeSql freeSql)
 
     #endregion
 
+    #region Nested type: WidgetLocalSection
+
     #region Nested Type: WidgetLocalSection
 
     public class WidgetLocalSection(string key, string widgetId, string indicator, string data)
@@ -106,6 +99,13 @@ public class PersistenceService(IFreeSql freeSql)
     }
 
     #endregion
+
+    #endregion
+
+    // Preferences
+    // Activities
+
+    // Preferences 会用 Key-PreferenceId-PreferenceValue 的形式储存
 
     #region Actions
 

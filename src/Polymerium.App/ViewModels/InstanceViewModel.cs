@@ -6,40 +6,83 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IconPacks.Avalonia.Lucide;
+using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
-using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.App.Widgets;
+using Polymerium.Trident;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions;
+using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceViewModel(
-    ViewBag bag,
-    ProfileManager profileManager,
-    InstanceManager instanceManager) : InstanceViewModelBase(bag.Parameter switch
-                                                                 {
-                                                                     CompositeParameter p => new ViewBag(p.Key),
-                                                                     _ => bag
-                                                                 },
-                                                                 instanceManager,
-                                                                 profileManager)
+public partial class InstanceViewModel : ViewModelBase
 {
+    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager)
+    {
+        _profileManager = profileManager;
+        _instanceManager = instanceManager;
+        SelectedPage = bag.Parameter switch
+                       {
+                           CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
+                           _ => null
+                       }
+                    ?? PageEntries.FirstOrDefault();
+
+        var key = bag.Parameter switch
+        {
+            CompositeParameter p => p.Key,
+            string s => s,
+            _ => throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided")
+        };
+        if (profileManager.TryGetImmutable(key, out var profile))
+            Basic = new InstanceBasicModel(key,
+                                           profile.Name,
+                                           profile.Setup.Version,
+                                           profile.Setup.Loader,
+                                           profile.Setup.Source);
+        else
+            throw new PageNotReachedException(typeof(InstanceView), $"Key '{key}' is not valid instance or not found");
+    }
+
+    #region Direct
+
+    public InstanceBasicModel Basic { get; }
+
+    #endregion
+
     #region Overrides
 
     protected override Task OnInitializedAsync(CancellationToken token)
     {
-        SelectedPage = bag.Parameter switch
-                       {
-                           CompositeParameter p => PageEntries.FirstOrDefault(x => x.Page == p.Subview),
-                           _ => null
-                       }
-                    ?? PageEntries.FirstOrDefault();
+        _instanceManager.InstanceUpdating += OnProfileUpdating;
+        _instanceManager.InstanceDeploying += OnProfileDeploying;
+        _instanceManager.InstanceLaunching += OnProfileLaunching;
+        if (_instanceManager.IsTracking(Basic.Key, out var tracker))
+            if (tracker is UpdateTracker update)
+            {
+                // 已经处于更新状态而未收到事件
+                State = InstanceState.Updating;
+                update.StateUpdated += OnProfileUpdateStateChanged;
+            }
+            else if (tracker is DeployTracker deploy)
+            {
+                // 已经处于部署状态而未收到事件
+                State = InstanceState.Deploying;
+                deploy.StateUpdated += OnProfileDeployStateChanged;
+            }
+            else if (tracker is LaunchTracker launch)
+            {
+                // 已经处于启动状态而未收到事件
+                State = InstanceState.Running;
+                launch.StateUpdated += OnProfileLaunchingStateChanged;
+            }
 
         return Task.CompletedTask;
     }
@@ -53,6 +96,112 @@ public partial class InstanceViewModel(
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
+    }
+
+    #endregion
+
+    #region Nested type: CompositeParameter
+
+    public record CompositeParameter(string Key, Type Subview);
+
+    #endregion
+
+    #region Injected
+
+    private readonly InstanceManager _instanceManager;
+    private readonly ProfileManager _profileManager;
+
+    #endregion
+
+    #region Tracking
+
+    protected override Task OnDeinitializeAsync(CancellationToken token)
+
+    {
+        _instanceManager.InstanceUpdating -= OnProfileUpdating;
+        _instanceManager.InstanceDeploying -= OnProfileDeploying;
+        _instanceManager.InstanceLaunching -= OnProfileLaunching;
+        _profileManager.ProfileUpdated -= OnProfileUpdated;
+        return Task.CompletedTask;
+    }
+
+    private void OnProfileUpdating(object? sender, UpdateTracker tracker)
+    {
+        if (tracker.Key != Basic.Key)
+            return;
+
+        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
+
+        tracker.StateUpdated += OnProfileUpdateStateChanged;
+        // 更新的事情交给 ProfileManager.ProfileUpdated
+    }
+
+    private void OnProfileDeploying(object? sender, DeployTracker tracker)
+    {
+        if (tracker.Key != Basic.Key)
+            return;
+
+        Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
+
+        tracker.StateUpdated += OnProfileDeployStateChanged;
+    }
+
+    private void OnProfileLaunching(object? sender, LaunchTracker tracker)
+    {
+        if (tracker.Key != Basic.Key)
+            return;
+
+        Dispatcher.UIThread.Post(() => State = InstanceState.Running);
+
+        tracker.StateUpdated += OnProfileLaunchingStateChanged;
+    }
+
+    private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
+    {
+        if (state is TrackerState.Faulted or TrackerState.Finished)
+        {
+            sender.StateUpdated -= OnProfileUpdateStateChanged;
+            Dispatcher.UIThread.Post(() =>
+            {
+                State = InstanceState.Idle;
+            });
+        }
+    }
+
+    private void OnProfileDeployStateChanged(TrackerBase sender, TrackerState state)
+    {
+        if (state is TrackerState.Faulted or TrackerState.Finished)
+        {
+            sender.StateUpdated -= OnProfileDeployStateChanged;
+            Dispatcher.UIThread.Post(() =>
+            {
+                State = InstanceState.Idle;
+            });
+        }
+    }
+
+    private void OnProfileLaunchingStateChanged(TrackerBase sender, TrackerState state)
+    {
+        if (state is TrackerState.Faulted or TrackerState.Finished)
+        {
+            sender.StateUpdated -= OnProfileLaunchingStateChanged;
+            Dispatcher.UIThread.Post(() =>
+            {
+                State = InstanceState.Idle;
+            });
+        }
+    }
+
+    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
+    {
+        if (e.Key != Basic.Key)
+            return;
+
+        Basic.Name = e.Value.Name;
+        Basic.Version = e.Value.Setup.Version;
+        Basic.Loader = e.Value.Setup.Loader;
+        Basic.Source = e.Value.Setup.Source;
+        Basic.UpdateIcon();
     }
 
     #endregion
@@ -79,11 +228,8 @@ public partial class InstanceViewModel(
     [ObservableProperty]
     public partial InstanceSubpageEntryModel? SelectedPage { get; set; }
 
-    #endregion
-
-    #region Nested type: CompositeParameter
-
-    public record CompositeParameter(string Key, Type Subview);
+    [ObservableProperty]
+    public partial InstanceState State { get; set; } = InstanceState.Idle;
 
     #endregion
 }

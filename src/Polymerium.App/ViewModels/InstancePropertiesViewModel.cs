@@ -102,9 +102,9 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
     #region Overrides
 
-    protected override void OnUpdateModel(string key, Profile profile)
+    protected override void OnModelUpdated(string key, Profile profile)
     {
-        base.OnUpdateModel(key, profile);
+        base.OnModelUpdated(key, profile);
 
         NameOverwrite = profile.Name;
         ThumbnailOverwrite = Basic.Thumbnail;

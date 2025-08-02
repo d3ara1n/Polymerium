@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Widgets;
@@ -11,12 +9,18 @@ using Polymerium.Trident.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceWidgetsViewModel(
+public class InstanceWidgetsViewModel(
     ViewBag bag,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     WidgetHostService widgetHostService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    #region Reactive
+
+    public ObservableCollection<WidgetBase> Widgets { get; } = [];
+
+    #endregion
+
     #region Overrides
 
     protected override Task OnInitializedAsync(CancellationToken token)
@@ -39,12 +43,6 @@ public partial class InstanceWidgetsViewModel(
         Widgets.Clear();
         return Task.CompletedTask;
     }
-
-    #endregion
-
-    #region Reactive
-
-    public ObservableCollection<WidgetBase> Widgets { get; } = [];
 
     #endregion
 }

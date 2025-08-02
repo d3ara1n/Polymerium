@@ -5,9 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
-using Polymerium.App.Services;
-using Polymerium.App.Views;
-using Polymerium.App.Widgets;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -18,36 +15,20 @@ namespace Polymerium.App.ViewModels;
 
 public abstract partial class InstanceViewModelBase : ViewModelBase
 {
-    protected InstanceViewModelBase(
-        ViewBag bag,
-        InstanceManager instanceManager,
-        ProfileManager profileManager)
+    protected InstanceViewModelBase(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;
 
-        if (bag.Parameter is string key)
-        {
-            if (profileManager.TryGetImmutable(key, out var profile))
-            {
-                UpdateBasic(key, profile);
-                OnUpdateModel(key, profile);
-            }
-            else
-            {
-                throw new PageNotReachedException(typeof(InstanceView),
-                                                  $"Key '{key}' is not valid instance or not found");
-            }
-        }
+        if (bag.Parameter is InstanceBasicModel basic)
+            Basic = basic;
         else
-        {
-            throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided");
-        }
+            throw new PageNotReachedException(GetType(), "Basic to the instance is not provided");
     }
 
     #region Protected
 
-    protected virtual void OnUpdateModel(string key, Profile profile) { }
+    protected virtual void OnModelUpdated(string key, Profile profile) { }
 
     protected virtual void OnInstanceUpdating(UpdateTracker tracker) { }
 
@@ -97,6 +78,8 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
                 launch.StateUpdated += OnProfileLaunchingStateChanged;
                 OnInstanceLaunching(launch);
             }
+
+        OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
 
         return Task.CompletedTask;
     }
@@ -187,19 +170,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
     {
         if (e.Key != Basic.Key)
             return;
-
-        UpdateBasic(e.Key, e.Value);
-        OnUpdateModel(e.Key, e.Value);
-    }
-
-
-    private void UpdateBasic(string key, Profile profile)
-    {
-        Basic = new InstanceBasicModel(key,
-                                       profile.Name,
-                                       profile.Setup.Version,
-                                       profile.Setup.Loader,
-                                       profile.Setup.Source);
+        OnModelUpdated(e.Key, e.Value);
     }
 
     #endregion

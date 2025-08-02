@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DynamicData.Binding;
 using Humanizer;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
@@ -44,7 +42,8 @@ public partial class InstanceHomeViewModel(
     ConfigurationService configurationService,
     PersistenceService persistenceService,
     ScrapService scrapService,
-    InstanceService instanceService, WidgetHostService widgetHostService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    InstanceService instanceService,
+    WidgetHostService widgetHostService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     // Launch Lifecycle
     private CompositeDisposable? _subscription;
@@ -103,7 +102,6 @@ public partial class InstanceHomeViewModel(
         }
 
         foreach (var type in widgetHostService.WidgetTypes)
-        {
             if (widgetHostService.GetIsPinned(Basic.Key, type.Name))
             {
                 var widget = (WidgetBase)Activator.CreateInstance(type)!;
@@ -111,7 +109,6 @@ public partial class InstanceHomeViewModel(
                 widget.Initialize();
                 PinnedWidgets.Add(widget);
             }
-        }
 
         return Task.CompletedTask;
     }
@@ -127,9 +124,9 @@ public partial class InstanceHomeViewModel(
     }
 
 
-    protected override void OnUpdateModel(string key, Profile profile)
+    protected override void OnModelUpdated(string key, Profile profile)
     {
-        base.OnUpdateModel(key, profile);
+        base.OnModelUpdated(key, profile);
         var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
         Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
         PackageCount = profile.Setup.Packages.Count;

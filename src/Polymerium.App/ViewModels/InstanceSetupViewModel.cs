@@ -46,8 +46,7 @@ public partial class InstanceSetupViewModel(
     OverlayService overlayService,
     NavigationService navigationService,
     PersistenceService persistenceService,
-    ConfigurationService configurationService)
-    : InstanceViewModelBase(bag, instanceManager, profileManager)
+    ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Other
 
@@ -207,9 +206,9 @@ public partial class InstanceSetupViewModel(
 
     #region Overrides
 
-    protected override void OnUpdateModel(string key, Profile profile)
+    protected override void OnModelUpdated(string key, Profile profile)
     {
-        base.OnUpdateModel(key, profile);
+        base.OnModelUpdated(key, profile);
         if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var result))
             LoaderLabel = LoaderHelper.ToDisplayLabel(result.Identity, result.Version);
         else
