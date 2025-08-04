@@ -9,7 +9,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
 {
     #region IPageModel Members
 
-    public Task InitializeAsync(CancellationToken token) => OnInitializedAsync(token);
+    public Task InitializeAsync(CancellationToken token) => OnInitializeAsync(token);
 
     public Task DeinitializeAsync(CancellationToken token) => OnDeinitializeAsync(token);
 
@@ -20,7 +20,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    protected virtual Task OnInitializedAsync(CancellationToken token) =>
+    protected virtual Task OnInitializeAsync(CancellationToken token) =>
         // Virtual function does nothing
         Task.CompletedTask;
 

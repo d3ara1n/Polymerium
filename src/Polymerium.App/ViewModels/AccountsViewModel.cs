@@ -59,7 +59,7 @@ public partial class AccountsViewModel(
 
     #region Lifecycle
 
-    protected override Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         var defaultAccount = persistenceService.GetDefaultAccount();
         foreach (var account in persistenceService.GetAccounts())
@@ -74,7 +74,7 @@ public partial class AccountsViewModel(
         }
 
 
-        return base.OnInitializedAsync(token);
+        return base.OnInitializeAsync(token);
     }
 
     #endregion

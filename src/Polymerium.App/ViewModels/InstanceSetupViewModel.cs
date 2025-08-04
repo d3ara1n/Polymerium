@@ -219,14 +219,14 @@ public partial class InstanceSetupViewModel(
         UpdatingProgress = 0;
     }
 
-    protected override async Task OnInitializedAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
         if (!InstanceManager.IsTracking(Basic.Key, out var tracker)
          || tracker is not UpdateTracker and not DeployTracker)
             TriggerRefresh(_pageCancellationTokenSource.Token);
 
-        await base.OnInitializedAsync(token);
+        await base.OnInitializeAsync(token);
     }
 
     protected override Task OnDeinitializeAsync(CancellationToken token)
@@ -322,9 +322,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = lurl;
                     if (old != lurl)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                            PersistenceService.ActionKind.EditLoader,
-                                                            old,
-                                                            lurl));
+                                                                   PersistenceService.ActionKind.EditLoader,
+                                                                   old,
+                                                                   lurl));
                 }
                 else
                 {
@@ -332,9 +332,9 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = null;
                     if (old != null)
                         persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                            PersistenceService.ActionKind.EditLoader,
-                                                            old,
-                                                            null));
+                                                                   PersistenceService.ActionKind.EditLoader,
+                                                                   old,
+                                                                   null));
                 }
 
                 await guard.DisposeAsync();

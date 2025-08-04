@@ -9,11 +9,11 @@ public class LandingViewModel(NavigationService navigationService) : ViewModelBa
 {
     #region Lifecycle
 
-    protected override Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         // This page is always the root page
         navigationService.ClearHistory();
-        return base.OnInitializedAsync(token);
+        return base.OnInitializeAsync(token);
     }
 
     #endregion

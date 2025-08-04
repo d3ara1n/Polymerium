@@ -110,7 +110,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         ThumbnailOverwrite = Basic.Thumbnail;
     }
 
-    protected override Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
             _owned = guard;
@@ -132,7 +132,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
         #endregion
 
-        return base.OnInitializedAsync(token);
+        return base.OnInitializeAsync(token);
     }
 
     protected override async Task OnDeinitializeAsync(CancellationToken token)
