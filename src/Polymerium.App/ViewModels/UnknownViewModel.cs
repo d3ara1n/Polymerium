@@ -20,7 +20,7 @@ public partial class UnknownViewModel(
 
     #region Overrides
 
-    protected override async Task OnInitializedAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         await Task.Delay(TimeSpan.FromSeconds(7), token);
 

@@ -100,7 +100,7 @@ public partial class InstanceViewModel : ViewModelBase
 
     #region Overrides
 
-    protected override async Task OnInitializedAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         // 终究还是得有个 InstanceStateAggregator
         _instanceManager.InstanceUpdating += OnProfileUpdating;

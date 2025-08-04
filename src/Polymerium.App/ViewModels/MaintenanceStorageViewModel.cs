@@ -29,11 +29,11 @@ public partial class MaintenanceStorageViewModel(
 
     #endregion
 
-    protected override async Task OnInitializedAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         await Task.Run(Calculate, token);
 
-        await base.OnInitializedAsync(token);
+        await base.OnInitializeAsync(token);
     }
 
     #region Other
@@ -109,7 +109,7 @@ public partial class MaintenanceStorageViewModel(
     {
         if (model != null)
             navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
-                                                         typeof(InstanceStorageView)));
+                                                                            typeof(InstanceStorageView)));
     }
 
     #endregion

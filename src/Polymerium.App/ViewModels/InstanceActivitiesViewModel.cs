@@ -112,7 +112,7 @@ public partial class InstanceActivitiesViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
         SinceDayIndex = 0;

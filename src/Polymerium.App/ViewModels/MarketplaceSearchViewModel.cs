@@ -65,7 +65,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
     #region Overrides
 
-    protected override async Task OnInitializedAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
             return;

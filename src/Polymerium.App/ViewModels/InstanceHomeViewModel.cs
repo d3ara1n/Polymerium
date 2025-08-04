@@ -82,9 +82,9 @@ public partial class InstanceHomeViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
-        base.OnInitializedAsync(token);
+        base.OnInitializeAsync(token);
 
         var selector = persistenceService.GetAccountSelector(Basic.Key);
         if (selector != null)

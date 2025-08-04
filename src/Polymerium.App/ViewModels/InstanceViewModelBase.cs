@@ -73,7 +73,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     #region Tracking
 
-    protected override Task OnInitializedAsync(CancellationToken token)
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         InstanceManager.InstanceUpdating += OnProfileUpdating;
         InstanceManager.InstanceDeploying += OnProfileDeploying;
