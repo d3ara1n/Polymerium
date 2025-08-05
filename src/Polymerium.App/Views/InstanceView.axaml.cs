@@ -13,12 +13,12 @@ namespace Polymerium.App.Views;
 
 public partial class InstanceView : ScopedPage
 {
-    public static readonly DirectProperty<InstanceView, InstanceViewModelBase.InstanceContextParameter>
+    public static readonly DirectProperty<InstanceView, InstanceViewModelBase.InstanceContextParameter?>
         ContextProperty =
             AvaloniaProperty
-               .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter>(nameof(Context),
-                    o => o.Context,
-                    (o, v) => o.Context = v);
+               .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter?>(nameof(Context),
+                                                                        o => o.Context,
+                                                                        (o, v) => o.Context = v);
 
 
     public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
@@ -34,7 +34,7 @@ public partial class InstanceView : ScopedPage
         NavigateCommand = new RelayCommand<Type>(Navigate);
     }
 
-    public InstanceViewModelBase.InstanceContextParameter Context
+    public InstanceViewModelBase.InstanceContextParameter? Context
     {
         get;
         set => SetAndRaise(ContextProperty, ref field, value);
