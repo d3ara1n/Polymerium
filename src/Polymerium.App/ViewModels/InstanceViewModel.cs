@@ -26,10 +26,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ViewModelBase
 {
-    #region Privavte
-
-    #endregion
-
     public InstanceViewModel(
         ViewBag bag,
         ProfileManager profileManager,
