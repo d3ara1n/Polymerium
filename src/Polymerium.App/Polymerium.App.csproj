@@ -8,10 +8,6 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
         <LangVersion>preview</LangVersion>
-
-        <!-- GitVersion properties -->
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-        <UseGitVersionTask>true</UseGitVersionTask>
     </PropertyGroup>
 
     <ItemGroup>
