@@ -7,5 +7,4 @@ namespace Polymerium.App.ViewModels;
 public class InstanceWidgetsViewModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager,
-    WidgetHostService widgetHostService) : InstanceViewModelBase(bag, instanceManager, profileManager) { }
+    ProfileManager profileManager) : InstanceViewModelBase(bag, instanceManager, profileManager) { }
