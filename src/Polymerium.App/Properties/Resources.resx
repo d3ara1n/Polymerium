@@ -145,7 +145,7 @@
         <value>Game Overrides</value>
     </data>
     <data name="InstancePropertiesView_OverridesSubtitle" xml:space="preserve">
-        <value>Configuration specified to the instance; left blank to refer to the global settings</value>
+        <value>Configuration specified to the instance; leaving blank to refer to the global settings</value>
     </data>
     <data name="InstancePropertiesView_NavigateToGlobalButtonTitle" xml:space="preserve">
         <value>Navigate to the global settings page</value>

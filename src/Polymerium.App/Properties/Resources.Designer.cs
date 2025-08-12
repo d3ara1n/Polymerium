@@ -1599,7 +1599,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuration specified to the instance; left blank to refer to the global settings.
+        ///   Looks up a localized string similar to Configuration specified to the instance; leaving blank to refer to the global settings.
         /// </summary>
         public static string InstancePropertiesView_OverridesSubtitle {
             get {
