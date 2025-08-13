@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.MicrosoftApi;
 
-public record DeviceCodeResponse(
+public readonly record struct DeviceCodeResponse(
     string? Message,
     string DeviceCode,
     string UserCode,

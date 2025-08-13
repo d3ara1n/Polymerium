@@ -1,3 +1,3 @@
 ﻿namespace Polymerium.Trident.Models.ModrinthApi;
 
-public record GameVersion(string Version, string VersionType, DateTimeOffset Date, bool Major);
+public readonly record struct GameVersion(string Version, string VersionType, DateTimeOffset Date, bool Major);

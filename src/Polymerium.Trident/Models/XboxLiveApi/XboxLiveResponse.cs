@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.XboxLiveApi;
 
-public record XboxLiveResponse(
+public readonly record struct XboxLiveResponse(
     long? XErr,
     string? Message,
     DateTimeOffset IssueInstant,
@@ -10,11 +10,11 @@ public record XboxLiveResponse(
 {
     #region Nested type: Claims
 
-    public record Claims(Claims.XuiEntry[] Xui)
+    public readonly record struct Claims(Claims.XuiEntry[] Xui)
     {
         #region Nested type: XuiEntry
 
-        public record XuiEntry(string Uhs);
+        public readonly record struct XuiEntry(string Uhs);
 
         #endregion
     }

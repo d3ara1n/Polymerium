@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record GameVersion(
+public readonly record struct GameVersion(
     uint Id,
     uint GameId,
     string VersionString,

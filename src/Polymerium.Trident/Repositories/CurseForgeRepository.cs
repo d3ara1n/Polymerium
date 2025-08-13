@@ -5,6 +5,7 @@ using ReverseMarkdown;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Repositories;
@@ -103,8 +104,12 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                 {
                     if (uint.TryParse(vid, out var fileId))
                     {
-                        var found = mod.LatestFiles.FirstOrDefault(x => x.Id == fileId);
-                        var file = found ?? await service.GetModFileAsync(modId, fileId).ConfigureAwait(false);
+                        var file = mod.LatestFiles.FirstOrDefault(x => x.Id == fileId);
+                        if (file == default(FileInfo))
+                        {
+                            file = await service.GetModFileAsync(modId, fileId).ConfigureAwait(false);
+                        }
+
                         return CurseForgeService.ToPackage(mod, file);
                     }
 
@@ -130,7 +135,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                            : null,
                                                        pageSize: 1)
                                      .ConfigureAwait(false)).Data.FirstOrDefault();
-                    if (file is not null)
+                    if (file != default(FileInfo))
                         return CurseForgeService.ToPackage(mod, file);
 
                     throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");

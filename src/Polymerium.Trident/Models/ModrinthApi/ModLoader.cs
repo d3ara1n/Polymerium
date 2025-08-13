@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.ModrinthApi;
 
-public record ModLoader(
+public readonly record struct ModLoader(
     string Icon,
     string Name,
     IReadOnlyList<string> SupportedProjectTypes,
@@ -10,7 +10,7 @@ public record ModLoader(
 {
     #region Nested type: LoaderMetadata
 
-    public record LoaderMetadata(bool? Platform);
+    public readonly record struct LoaderMetadata(bool? Platform);
 
     #endregion
 }

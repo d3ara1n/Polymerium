@@ -1,3 +1,3 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record ArrayResponse<T>(IReadOnlyList<T> Data, Pagination Pagination) where T : class;
+public readonly record struct ArrayResponse<T>(IReadOnlyList<T> Data, Pagination Pagination);

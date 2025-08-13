@@ -112,14 +112,13 @@ public class PrismLauncherService(IPrismLauncherClient client)
             if (lib.Url != null)
                 // old fashion
                 builder.AddLibraryPrismFlavor(lib.Name, lib.Url);
-            else if (lib.Downloads?.Artifact != null)
-                builder.AddLibrary(lib.Name, lib.Downloads.Artifact.Url, lib.Downloads.Artifact.Sha1);
+            else if (lib.Downloads is { Artifact: { } artifact })
+                builder.AddLibrary(lib.Name, artifact.Url, artifact.Sha1);
 
-            if (lib is { Natives.Windows: not null, Downloads: not null })
+            if (lib is { Natives.Windows: { } windows, Downloads: { } downloads })
             {
-                var classifier = lib.Natives.Windows.Replace("${arch}",
-                                                             Environment.Is64BitOperatingSystem ? "64" : "32");
-                if (lib.Downloads.Classifiers.TryGetValue(classifier, out var download))
+                var classifier = windows.Replace("${arch}", Environment.Is64BitOperatingSystem ? "64" : "32");
+                if (downloads.Classifiers.TryGetValue(classifier, out var download))
                     // NOTE: 假设 native 库本身没有 platform 字段，这是个大胆的假设！
                     builder.AddLibrary($"{lib.Name}:{classifier}", download.Url, download.Sha1, true, false);
             }

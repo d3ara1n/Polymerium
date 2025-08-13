@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.ModrinthApi;
 
-public record MemberInfo(
+public readonly record struct MemberInfo(
     string TeamId,
     UserInfo User,
     string Role,

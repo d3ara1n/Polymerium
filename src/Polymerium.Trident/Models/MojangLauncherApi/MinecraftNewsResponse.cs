@@ -1,10 +1,10 @@
 ﻿namespace Polymerium.Trident.Models.MojangLauncherApi;
 
-public record MinecraftNewsResponse(int Version, IReadOnlyList<MinecraftNewsResponse.Entry> Entries)
+public readonly record struct MinecraftNewsResponse(int Version, IReadOnlyList<MinecraftNewsResponse.Entry> Entries)
 {
     #region Nested type: Entry
 
-    public record Entry(
+    public readonly record struct Entry(
         string Title,
         string Category,
         DateTimeOffset Date,
@@ -18,7 +18,7 @@ public record MinecraftNewsResponse(int Version, IReadOnlyList<MinecraftNewsResp
     {
         #region Nested type: EntryImage
 
-        public record EntryImage(string Title, Uri Url, EntryImage.ImageSize? Dimension)
+        public readonly record struct EntryImage(string Title, Uri Url, EntryImage.ImageSize? Dimension)
         {
             #region Nested type: ImageSize
 

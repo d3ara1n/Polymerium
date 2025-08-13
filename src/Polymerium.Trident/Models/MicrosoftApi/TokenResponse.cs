@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.MicrosoftApi;
 
-public record TokenResponse(
+public readonly record struct TokenResponse(
     string? Error,
     string? ErrorDescription,
     string TokenType,

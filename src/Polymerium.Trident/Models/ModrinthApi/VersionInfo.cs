@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.ModrinthApi;
 
-public record VersionInfo(
+public readonly record struct VersionInfo(
     string Id,
     string ProjectId,
     string AuthorId,
@@ -28,7 +28,11 @@ public record VersionInfo(
 {
     #region Nested type: VersionDependency
 
-    public record VersionDependency(string ProjectId, string VersionId, string? FileName, string DependencyType);
+    public readonly record struct VersionDependency(
+        string ProjectId,
+        string VersionId,
+        string? FileName,
+        string DependencyType);
 
     #endregion
 
