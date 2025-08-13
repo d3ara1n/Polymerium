@@ -49,7 +49,7 @@ namespace Polymerium.App.ViewModels
             {
                 var dir = PathDef.Default.DirectoryOfHome(key);
                 var (size, _) = CalculateDirectorySize(dir);
-                Instances.Add(new StorageInstanceModel(key, profile.Name, size));
+                Instances.Add(new(key, profile.Name, size));
                 InstanceSize += size;
             }
 

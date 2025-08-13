@@ -1950,6 +1950,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key &apos;{0}&apos; to the instance is not found or prepared.
+        /// </summary>
+        public static string InstanceView_KeyNotFoundExceptionMessage {
+            get {
+                return ResourceManager.GetString("InstanceView_KeyNotFoundExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         public static string JavaHomeContainer_BrowseButtonText {

@@ -128,7 +128,7 @@ namespace Polymerium.App
                 var path = Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key), "logs", "latest.log");
                 if (File.Exists(path))
                 {
-                    TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new FileInfo(path));
+                    TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new(path));
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Polymerium.App
             if (key != null)
             {
                 var dir = PathDef.Default.DirectoryOfHome(key);
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
             }
         }
 
@@ -217,11 +217,7 @@ namespace Polymerium.App
             else
             {
                 // Install
-                exist = new InstanceEntryModel(e.Key,
-                                               e.Value.Name,
-                                               e.Value.Setup.Version,
-                                               e.Value.Setup.Loader,
-                                               e.Value.Setup.Source);
+                exist = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
                 _entries.AddOrUpdate(exist);
             }
 
@@ -327,7 +323,7 @@ namespace Polymerium.App
                                                                 e.Key),
                                                             forceExpire: true);
                         });
-                        _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
+                        _persistenceService.AppendAction(new(e.Key,
                                                              PersistenceService.ActionKind.Install,
                                                              null,
                                                              e.Source));
@@ -405,7 +401,7 @@ namespace Polymerium.App
                                                                 ViewInstanceCommand,
                                                                 e.Key));
                         });
-                        _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
+                        _persistenceService.AppendAction(new(e.Key,
                                                              PersistenceService.ActionKind.Update,
                                                              e.OldSource,
                                                              e.NewSource));
@@ -530,7 +526,7 @@ namespace Polymerium.App
                                                                 e.Key,
                                                                 actions:
                                                                 [
-                                                                    new NotificationAction(Resources
+                                                                    new(Resources
                                                                            .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
                                                                         ViewLogCommand,
                                                                         e)
@@ -541,10 +537,7 @@ namespace Polymerium.App
                                 _notificationService.PopMessage(e.FailureReason, e.Key);
                             }
                         });
-                        _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                               e.StartedAt,
-                                                               DateTimeOffset.Now,
-                                                               false));
+                        _persistenceService.AppendActivity(new(e.Key, e.StartedAt, DateTimeOffset.Now, false));
                         e.StateUpdated -= OnStateChanged;
                         break;
                     case TrackerState.Finished:
@@ -556,10 +549,7 @@ namespace Polymerium.App
                                                             e.Key,
                                                             NotificationLevel.Success);
                         });
-                        _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                               e.StartedAt,
-                                                               DateTimeOffset.Now,
-                                                               true));
+                        _persistenceService.AppendActivity(new(e.Key, e.StartedAt, DateTimeOffset.Now, true));
                         e.StateUpdated -= OnStateChanged;
                         break;
                     case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

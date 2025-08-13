@@ -14,9 +14,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             var artifact = Context.Artifact!;
 
             var indexPath = PathDef.Default.FileOfAssetIndex(artifact.AssetIndex.Id);
-            manifest.PresentFiles.Add(new EntityManifest.PresentFile(indexPath,
-                                                                     artifact.AssetIndex.Url,
-                                                                     artifact.AssetIndex.Sha1));
+            manifest.PresentFiles.Add(new(indexPath, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1));
             var index = await GetAssetIndexAsync(indexPath, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1)
                            .ConfigureAwait(false)
                      ?? throw new
@@ -24,27 +22,22 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             foreach (var obj in index.Objects)
             {
                 var path = PathDef.Default.FileOfAssetObject(obj.Value.Hash);
-                manifest.PresentFiles.Add(new EntityManifest.PresentFile(path,
-                                                                         new
-                                                                             Uri($"https://resources.download.minecraft.net/{obj.Value.Hash[..2]}/{obj.Value.Hash}",
-                                                                                 UriKind.Absolute),
-                                                                         obj.Value.Hash));
+                manifest.PresentFiles.Add(new(path,
+                                              new($"https://resources.download.minecraft.net/{obj.Value.Hash[..2]}/{obj.Value.Hash}",
+                                                  UriKind.Absolute),
+                                              obj.Value.Hash));
             }
 
             foreach (var parcel in artifact.Parcels)
             {
-                manifest.FragileFiles.Add(new
-                                              EntityManifest.FragileFile(PathDef.Default
-                                                                            .FileOfPackageObject(parcel.Label,
-                                                                                 parcel.Namespace,
-                                                                                 parcel.Pid,
-                                                                                 parcel.Vid,
-                                                                                 Path.GetExtension(parcel.Path)),
-                                                                         Path.Combine(PathDef.Default
-                                                                                .DirectoryOfHome(Context.Key),
-                                                                             parcel.Path),
-                                                                         parcel.Download,
-                                                                         parcel.Sha1));
+                manifest.FragileFiles.Add(new(PathDef.Default.FileOfPackageObject(parcel.Label,
+                                                  parcel.Namespace,
+                                                  parcel.Pid,
+                                                  parcel.Vid,
+                                                  Path.GetExtension(parcel.Path)),
+                                              Path.Combine(PathDef.Default.DirectoryOfHome(Context.Key), parcel.Path),
+                                              parcel.Download,
+                                              parcel.Sha1));
             }
 
             var nativesDir = PathDef.Default.DirectoryOfNatives(Context.Key);
@@ -55,10 +48,10 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                                                          lib.Id.Version,
                                                          lib.Id.Platform,
                                                          lib.Id.Extension);
-                manifest.PresentFiles.Add(new EntityManifest.PresentFile(path, lib.Url, lib.Sha1));
+                manifest.PresentFiles.Add(new(path, lib.Url, lib.Sha1));
                 if (lib.IsNative)
                 {
-                    manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, nativesDir));
+                    manifest.ExplosiveFiles.Add(new(path, nativesDir));
                 }
             }
 
@@ -66,8 +59,8 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             {
                 var path = PathDef.Default.FileOfRuntimeBundle(Context.Runtime.Major);
                 var dir = PathDef.Default.DirectoryOfRuntime(Context.Runtime.Major);
-                manifest.PresentFiles.Add(new EntityManifest.PresentFile(path, Context.Runtime.Url, null));
-                manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, dir, true));
+                manifest.PresentFiles.Add(new(path, Context.Runtime.Url, null));
+                manifest.ExplosiveFiles.Add(new(path, dir, true));
             }
 
             var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
@@ -94,10 +87,9 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 {
                     foreach (var file in Directory.GetFiles(sub))
                     {
-                        collection.Add(new EntityManifest.PersistentFile(file,
-                                                                         Path.Combine(targetDir,
-                                                                             Path.GetRelativePath(baseDir, file)),
-                                                                         phantom));
+                        collection.Add(new(file,
+                                           Path.Combine(targetDir, Path.GetRelativePath(baseDir, file)),
+                                           phantom));
                     }
 
                     foreach (var dir in Directory.GetDirectories(sub))

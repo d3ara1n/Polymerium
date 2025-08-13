@@ -222,7 +222,7 @@ namespace Polymerium.App
         {
             if (Program.AppHost is null)
             {
-                return new Window();
+                return new();
             }
 
             var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();

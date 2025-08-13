@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Polymerium.Trident.Models.ModrinthApi;
 using Polymerium.Trident.Services;
 using Refit;
 using Trident.Abstractions.Repositories;
@@ -33,7 +32,7 @@ namespace Polymerium.Trident.Repositories
                                 .Where(x => x != null)
                                 .Select(x => x!.Value)
                                 .ToList();
-            return new RepositoryStatus(supportedLoaders, versions, supportedKinds);
+            return new(supportedLoaders, versions, supportedKinds);
         }
 
         public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
@@ -98,7 +97,7 @@ namespace Polymerium.Trident.Repositories
                     var (version, members) = (await versionTask, await membersTask);
                     var found = version.FirstOrDefault(x => filter.Version is null
                                                          || x.GameVersions.Contains(filter.Version));
-                    if (found == default(VersionInfo))
+                    if (found == default)
                     {
                         throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");
                     }

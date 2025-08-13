@@ -25,7 +25,7 @@ namespace Polymerium.Trident.Services
         public ProfileManager(ILogger<ProfileManager> logger)
         {
             _logger = logger;
-            _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true };
+            _serializerOptions = new(JsonSerializerDefaults.Web) { WriteIndented = true };
             _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
             _serializerOptions.Converters.Add(new SystemObjectNewtonsoftCompatibleConverter());
 
@@ -70,7 +70,7 @@ namespace Polymerium.Trident.Services
             var handle = _profiles.FirstOrDefault(x => x.Key == key);
             if (handle is not null)
             {
-                profile = new ProfileGuard(this, handle);
+                profile = new(this, handle);
                 return true;
             }
 
@@ -194,7 +194,7 @@ namespace Polymerium.Trident.Services
 
             foreach (var add in changeSet.Values)
             {
-                handle.Value.Setup.Packages.Add(new Profile.Rice.Entry(add, true, source, null));
+                handle.Value.Setup.Packages.Add(new(add, true, source, null));
             }
 
             foreach (var (k, v) in overrides)
@@ -263,14 +263,11 @@ namespace Polymerium.Trident.Services
 
         public event EventHandler<ProfileChangedEventArgs>? ProfileAdded;
 
-        internal void OnProfileUpdated(string key, Profile profile) =>
-            ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+        internal void OnProfileUpdated(string key, Profile profile) => ProfileUpdated?.Invoke(this, new(key, profile));
 
-        internal void OnProfileRemoved(string key, Profile profile) =>
-            ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+        internal void OnProfileRemoved(string key, Profile profile) => ProfileRemoved?.Invoke(this, new(key, profile));
 
-        internal void OnProfileAdded(string key, Profile profile) =>
-            ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+        internal void OnProfileAdded(string key, Profile profile) => ProfileAdded?.Invoke(this, new(key, profile));
 
         #endregion
 

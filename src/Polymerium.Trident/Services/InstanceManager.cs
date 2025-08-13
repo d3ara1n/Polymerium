@@ -197,7 +197,7 @@ namespace Polymerium.Trident.Services
             var engine = new DeployEngine(tracker.Key,
                                           profile.Setup,
                                           provider,
-                                          new DeployEngineOptions
+                                          new()
                                           {
                                               FastMode = options.FastMode,
                                               ResolveDependency = options.ResolveDependency,

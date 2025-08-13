@@ -24,19 +24,19 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                     }
                     else
                     {
-                        Context.ArtifactBuilder = new DataLockBuilder();
+                        Context.ArtifactBuilder = new();
                         logger.LogInformation("Bad artifact");
                     }
                 }
                 catch (Exception e)
                 {
-                    Context.ArtifactBuilder = new DataLockBuilder();
+                    Context.ArtifactBuilder = new();
                     logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
                 }
             }
             else
             {
-                Context.ArtifactBuilder = new DataLockBuilder();
+                Context.ArtifactBuilder = new();
                 logger.LogInformation("Create empty artifact");
             }
         }

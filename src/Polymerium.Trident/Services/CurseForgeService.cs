@@ -125,7 +125,7 @@ namespace Polymerium.Trident.Services
                 }
             }
 
-            return new Requirement(gameReq, loaderReq);
+            return new(gameReq, loaderReq);
         }
 
         public static IReadOnlyList<Dependency> ToDependencies(FileInfo file) =>

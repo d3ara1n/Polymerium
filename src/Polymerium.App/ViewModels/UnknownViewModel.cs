@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
@@ -49,7 +48,7 @@ namespace Polymerium.App.ViewModels
             {
                 Button pop = new() { Content = "POP" };
                 pop.Click += (_, __) => PopToast();
-                overlayService.PopToast(new Toast
+                overlayService.PopToast(new()
                 {
                     Header = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
                     Content = new StackPanel
@@ -80,7 +79,7 @@ namespace Polymerium.App.ViewModels
             {
                 Button pop = new() { Content = "POP" };
                 pop.Click += (_, __) => PopDialog();
-                overlayService.PopDialog(new Dialog
+                overlayService.PopDialog(new()
                 {
                     Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
                     Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",

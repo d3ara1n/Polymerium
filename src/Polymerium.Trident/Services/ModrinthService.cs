@@ -109,7 +109,7 @@ namespace Polymerium.Trident.Services
                 ProjectTypeToKind(hit.ProjectType) ?? ResourceKind.Unknown,
                 hit.Downloads,
                 hit.Categories,
-                new Uri(PROJECT_URL.Replace("{0}", hit.ProjectType).Replace("{1}", hit.Slug)),
+                new(PROJECT_URL.Replace("{0}", hit.ProjectType).Replace("{1}", hit.Slug)),
                 hit.DateCreated,
                 hit.DateModified);
 
@@ -129,20 +129,20 @@ namespace Polymerium.Trident.Services
         {
             var extracted = project.ProjectTypes.FirstOrDefault();
             var kind = ProjectTypeToKind(extracted) ?? ResourceKind.Unknown;
-            return new Project(LABEL,
-                               null,
-                               project.Id,
-                               project.Name,
-                               project.IconUrl,
-                               member?.User.Name ?? member?.User.Username ?? project.TeamId,
-                               project.Summary,
-                               new Uri(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
-                               kind,
-                               project.Categories,
-                               project.Published,
-                               project.Updated,
-                               project.Downloads,
-                               [.. project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url))]);
+            return new(LABEL,
+                       null,
+                       project.Id,
+                       project.Name,
+                       project.IconUrl,
+                       member?.User.Name ?? member?.User.Username ?? project.TeamId,
+                       project.Summary,
+                       new(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                       kind,
+                       project.Categories,
+                       project.Published,
+                       project.Updated,
+                       project.Downloads,
+                       [.. project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url))]);
         }
 
         public static Package ToPackage(ProjectInfo project, VersionInfo version, MemberInfo? member)
@@ -152,25 +152,25 @@ namespace Polymerium.Trident.Services
             var file = version.Files.FirstOrDefault(x => x.Primary)
                     ?? version.Files.FirstOrDefault()
                     ?? throw new ResourceNotFoundException($"{project.Id}/{version.Id} has no file available");
-            return new Package(LABEL,
-                               null,
-                               project.Id,
-                               version.Id,
-                               project.Name,
-                               version.VersionNumber,
-                               project.IconUrl,
-                               member?.User.Name ?? member?.User.Username ?? project.TeamId,
-                               project.Summary,
-                               new Uri(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
-                               kind,
-                               VersionTypeToReleaseType(version.VersionType),
-                               version.DatePublished,
-                               file.Url,
-                               file.Size,
-                               file.Filename,
-                               file.Hashes.Sha1,
-                               ToRequirement(version),
-                               ToDependencies(version));
+            return new(LABEL,
+                       null,
+                       project.Id,
+                       version.Id,
+                       project.Name,
+                       version.VersionNumber,
+                       project.IconUrl,
+                       member?.User.Name ?? member?.User.Username ?? project.TeamId,
+                       project.Summary,
+                       new(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                       kind,
+                       VersionTypeToReleaseType(version.VersionType),
+                       version.DatePublished,
+                       file.Url,
+                       file.Size,
+                       file.Filename,
+                       file.Hashes.Sha1,
+                       ToRequirement(version),
+                       ToDependencies(version));
         }
 
         public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
@@ -198,17 +198,17 @@ namespace Polymerium.Trident.Services
             var facets = new List<KeyValuePair<string, string>>();
             if (gameVersion != null)
             {
-                facets.Add(new KeyValuePair<string, string>("versions", gameVersion));
+                facets.Add(new("versions", gameVersion));
             }
 
             if (modLoader != null)
             {
-                facets.Add(new KeyValuePair<string, string>("categories", modLoader));
+                facets.Add(new("categories", modLoader));
             }
 
             if (projectType != null)
             {
-                facets.Add(new KeyValuePair<string, string>("project_type", projectType));
+                facets.Add(new("project_type", projectType));
             }
 
             return client.SearchAsync(query,

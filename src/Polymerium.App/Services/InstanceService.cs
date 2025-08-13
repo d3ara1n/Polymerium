@@ -106,7 +106,7 @@ namespace Polymerium.App.Services
             resolveDependency ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false);
             fullCheckMode ??= false;
             var locator = JavaHelper.MakeLocator(profile, configurationService.Value);
-            instanceManager.Deploy(key, new DeployOptions(fastMode, resolveDependency, fullCheckMode), locator);
+            instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
         }
     }
 }

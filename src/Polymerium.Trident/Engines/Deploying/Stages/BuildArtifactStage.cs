@@ -10,17 +10,13 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
         {
             var builder = Context.ArtifactBuilder!;
 
-            builder.SetViability(new DataLock.ViabilityData(DataLock.FORMAT,
-                                                            Context.VerificationWatermark,
-                                                            PathDef.Default.Home,
-                                                            Context.Key,
-                                                            Context.Setup.Version,
-                                                            Context.Setup.Loader,
-                                                            [
-                                                                .. Context
-                                                                  .Setup.Packages.Where(x => x.Enabled)
-                                                                  .Select(x => x.Purl)
-                                                            ]));
+            builder.SetViability(new(DataLock.FORMAT,
+                                     Context.VerificationWatermark,
+                                     PathDef.Default.Home,
+                                     Context.Key,
+                                     Context.Setup.Version,
+                                     Context.Setup.Loader,
+                                     [.. Context.Setup.Packages.Where(x => x.Enabled).Select(x => x.Purl)]));
             var artifact = builder.Build();
 
             var path = PathDef.Default.FileOfLockData(Context.Key);

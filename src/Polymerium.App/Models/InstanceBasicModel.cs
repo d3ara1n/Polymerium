@@ -31,7 +31,7 @@ namespace Polymerium.App.Models
         public void UpdateIcon()
         {
             var iconPath = ProfileHelper.PickIcon(Key);
-            Thumbnail = iconPath is not null ? new Bitmap(iconPath) : AssetUriIndex.DIRT_IMAGE_BITMAP;
+            Thumbnail = iconPath is not null ? new(iconPath) : AssetUriIndex.DIRT_IMAGE_BITMAP;
         }
 
         #region Reactive
