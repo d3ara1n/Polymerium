@@ -405,7 +405,7 @@
                                 Margin="8"
                                 Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                 BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
-                                Foreground="{StaticResource ControlDarkForegroundBrush}"
+                                Foreground="{StaticResource ControlBlackForegroundBrush}"
                                 Command="{Binding PlayCommand}"
                                 IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Theme="{StaticResource LaunchButtonTheme}">

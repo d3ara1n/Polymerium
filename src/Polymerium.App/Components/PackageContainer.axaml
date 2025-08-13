@@ -248,7 +248,7 @@
                     </TabStrip.ItemTemplate>
                 </TabStrip>
                 <SplitButton Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
-                             Foreground="{StaticResource ControlDarkForegroundBrush}"
+                             Foreground="{StaticResource ControlBlackForegroundBrush}"
                              Command="{Binding $parent[cp:PackageContainer].GotoExplorerCommand}">
                     <SplitButton.Flyout>
                         <MenuFlyout>

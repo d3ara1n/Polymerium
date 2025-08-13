@@ -5,70 +5,119 @@
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+                  xmlns:m="clr-namespace:Polymerium.App.Models"
+                  xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Views.InstanceAssetsView" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                  x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <TabControl>
         <TabItem Header="Screenshots">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <ItemsControl>
+                <ItemsControl ItemsSource="{Binding Groups}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="12" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <Border Background="{StaticResource CardBackgroundBrush}" BoxShadow="0 0 4 0 #3F000000" Margin="2"
-                            Padding="12" CornerRadius="{StaticResource MediumCornerRadius}" Width="256"
-                            VerticalAlignment="Top">
-                        <DockPanel VerticalSpacing="12">
-                            <TextBlock Text="2025/7/3" DockPanel.Dock="Top"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <ScrollViewer>
-                                <ItemsControl>
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Spacing="8" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <Border Padding="8"
-                                            Height="178"
-                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                            BorderThickness="1"
-                                            BorderBrush="{StaticResource ControlBorderBrush}"
-                                            CornerRadius="{StaticResource MediumCornerRadius}">
-                                        <Grid RowDefinitions="*,Auto" RowSpacing="8">
-                                            <Border Grid.Row="0" CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush Source="/Assets/Images/Wallpaper.png"
-                                                                Stretch="UniformToFill" />
-                                                </Border.Background>
-                                            </Border>
-                                            <DockPanel Grid.Row="1">
-                                                <husk:ButtonGroup DockPanel.Dock="Right">
-                                                    <Button>
-                                                        <icons:PackIconLucide Kind="View"
-                                                                              Height="{StaticResource SmallFontSize}"
-                                                                              Width="{StaticResource SmallFontSize}" />
-                                                    </Button>
-                                                    <Button>
-                                                        <icons:PackIconLucide Kind="Share"
-                                                                              Height="{StaticResource SmallFontSize}"
-                                                                              Width="{StaticResource SmallFontSize}" />
-                                                    </Button>
-                                                    <Button>
-                                                        <icons:PackIconLucide Kind="Trash2"
-                                                                              Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                              Height="{StaticResource SmallFontSize}"
-                                                                              Width="{StaticResource SmallFontSize}" />
-                                                    </Button>
-                                                </husk:ButtonGroup>
-                                                <husk:Tag Content="17:30" />
-                                            </DockPanel>
-                                        </Grid>
-                                    </Border>
-                                </ItemsControl>
-                            </ScrollViewer>
-                        </DockPanel>
-                    </Border>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="m:ScreenshotGroupModel">
+                            <Border Background="{StaticResource CardBackgroundBrush}" BoxShadow="0 0 4 0 #3F000000"
+                                    Margin="2" CornerRadius="{StaticResource MediumCornerRadius}" Width="256"
+                                    VerticalAlignment="Top">
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Date}" DockPanel.Dock="Top"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               Margin="12,12,12,0" />
+                                    <ScrollViewer Padding="12">
+                                        <ItemsControl ItemsSource="{Binding Screenshots}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Spacing="8" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="m:ScreenshotModel">
+                                                    <Border Padding="8"
+                                                            Height="178"
+                                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                            BorderThickness="1"
+                                                            BorderBrush="{StaticResource ControlBorderBrush}"
+                                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                                        <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                                                            <Button Grid.Row="0">
+                                                                <Button.Theme>
+                                                                    <ControlTheme TargetType="Button">
+                                                                        <Setter Property="Cursor" Value="Hand" />
+                                                                        <Setter Property="CornerRadius"
+                                                                            Value="{StaticResource SmallCornerRadius}" />
+                                                                        <Setter Property="Template">
+                                                                            <ControlTemplate>
+                                                                                <Panel>
+                                                                                    <Border
+                                                                                        CornerRadius="{TemplateBinding CornerRadius}"
+                                                                                        Background="{TemplateBinding Background}" />
+                                                                                    <Border Name="Mask" Opacity="0"
+                                                                                        Background="{StaticResource OverlaySmokeBackgroundBrush}"
+                                                                                        CornerRadius="{TemplateBinding CornerRadius}">
+                                                                                        <Border.Transitions>
+                                                                                            <Transitions>
+                                                                                                <DoubleTransition
+                                                                                                    Property="Opacity"
+                                                                                                    Easing="SineEaseOut"
+                                                                                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                                                            </Transitions>
+                                                                                        </Border.Transitions>
+                                                                                        <icons:PackIconLucide
+                                                                                            Kind="Image"
+                                                                                            HorizontalAlignment="Center"
+                                                                                            VerticalAlignment="Center"
+                                                                                            Height="48"
+                                                                                            Width="48"
+                                                                                            Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                                                                                    </Border>
+                                                                                </Panel>
+                                                                            </ControlTemplate>
+                                                                        </Setter>
+
+                                                                        <Style
+                                                                            Selector="^:pointerover /template/ Border#Mask">
+                                                                            <Setter Property="Opacity" Value="0.88" />
+                                                                        </Style>
+                                                                    </ControlTheme>
+                                                                </Button.Theme>
+                                                                <Button.Background>
+                                                                    <ImageBrush
+                                                                        async:ImageBrushLoader.Source="{Binding Image}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Button.Background>
+                                                            </Button>
+                                                            <DockPanel Grid.Row="1">
+                                                                <husk:ButtonGroup DockPanel.Dock="Right">
+                                                                    <Button>
+                                                                        <icons:PackIconLucide Kind="Share"
+                                                                            Height="{StaticResource SmallFontSize}"
+                                                                            Width="{StaticResource SmallFontSize}" />
+                                                                    </Button>
+                                                                    <Button>
+                                                                        <icons:PackIconLucide Kind="Trash2"
+                                                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                                            Height="{StaticResource SmallFontSize}"
+                                                                            Width="{StaticResource SmallFontSize}" />
+                                                                    </Button>
+                                                                </husk:ButtonGroup>
+                                                                <husk:Tag Content="{Binding Time}" />
+                                                            </DockPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
         </TabItem>
