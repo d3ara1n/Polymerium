@@ -1,94 +1,95 @@
-﻿namespace Polymerium.Trident.Models.CurseForgeApi;
-
-public readonly record struct FileInfo(
-    uint Id,
-    uint GameId,
-    uint ModId,
-    bool IsAvailable,
-    string DisplayName,
-    string FileName,
-    FileInfo.FileReleaseType ReleaseType,
-    FileInfo.FileStatusStatus FileStatus,
-    IReadOnlyList<FileInfo.FileHash> Hashes,
-    DateTimeOffset FileDate,
-    ulong FileLength,
-    ulong DownloadCount,
-    ulong? FileSizeOnDisk,
-    Uri? DownloadUrl,
-    IReadOnlyList<string> GameVersions,
-    IReadOnlyList<SortableGameVersionModel> SortableGameVersions,
-    IReadOnlyList<FileInfo.FileDependency> Dependencies,
-    bool? ExposeAsAlternative,
-    uint? ParentProjectFileId,
-    uint? AlternativeFileId,
-    bool? IsServerPack,
-    uint? ServerPackFileId,
-    bool? IsEarlyAccessContent,
-    DateTimeOffset? EarlyAccessEndDate,
-    ulong FileFingerprint,
-    IReadOnlyList<FileInfo.FileModule> Modules)
+﻿namespace Polymerium.Trident.Models.CurseForgeApi
 {
-    #region FileReleaseType enum
-
-    public enum FileReleaseType { Release = 1, Beta, Alpha }
-
-    #endregion
-
-    #region FileStatusStatus enum
-
-    public enum FileStatusStatus
+    public readonly record struct FileInfo(
+        uint Id,
+        uint GameId,
+        uint ModId,
+        bool IsAvailable,
+        string DisplayName,
+        string FileName,
+        FileInfo.FileReleaseType ReleaseType,
+        FileInfo.FileStatusStatus FileStatus,
+        IReadOnlyList<FileInfo.FileHash> Hashes,
+        DateTimeOffset FileDate,
+        ulong FileLength,
+        ulong DownloadCount,
+        ulong? FileSizeOnDisk,
+        Uri? DownloadUrl,
+        IReadOnlyList<string> GameVersions,
+        IReadOnlyList<SortableGameVersionModel> SortableGameVersions,
+        IReadOnlyList<FileInfo.FileDependency> Dependencies,
+        bool? ExposeAsAlternative,
+        uint? ParentProjectFileId,
+        uint? AlternativeFileId,
+        bool? IsServerPack,
+        uint? ServerPackFileId,
+        bool? IsEarlyAccessContent,
+        DateTimeOffset? EarlyAccessEndDate,
+        ulong FileFingerprint,
+        IReadOnlyList<FileInfo.FileModule> Modules)
     {
-        Processing = 1,
-        ChangesRequired,
-        UnderReview,
-        Approved,
-        Rejected,
-        MalwareDetected,
-        Deleted,
-        Archived,
-        Testing,
-        Released,
-        ReadyForReview,
-        Deprecated,
-        Baking,
-        AwaitingPublishing,
-        FailedPublishing
-    }
+        #region FileReleaseType enum
 
-    #endregion
+        public enum FileReleaseType { Release = 1, Beta, Alpha }
 
-    #region Nested type: FileDependency
+        #endregion
 
-    public readonly record struct FileDependency(uint ModId, FileDependency.FileRelationType RelationType)
-    {
-        #region FileRelationType enum
+        #region FileStatusStatus enum
 
-        public enum FileRelationType
+        public enum FileStatusStatus
         {
-            EmbeddedLibrary = 1, OptionalDependency, RequiredDependency, Tool, Incompatible, Include
+            Processing = 1,
+            ChangesRequired,
+            UnderReview,
+            Approved,
+            Rejected,
+            MalwareDetected,
+            Deleted,
+            Archived,
+            Testing,
+            Released,
+            ReadyForReview,
+            Deprecated,
+            Baking,
+            AwaitingPublishing,
+            FailedPublishing
         }
 
         #endregion
-    }
 
-    #endregion
+        #region Nested type: FileDependency
 
-    #region Nested type: FileHash
+        public readonly record struct FileDependency(uint ModId, FileDependency.FileRelationType RelationType)
+        {
+            #region FileRelationType enum
 
-    public readonly record struct FileHash(string Value, FileHash.HashAlgo Algo)
-    {
-        #region HashAlgo enum
+            public enum FileRelationType
+            {
+                EmbeddedLibrary = 1, OptionalDependency, RequiredDependency, Tool, Incompatible, Include
+            }
 
-        public enum HashAlgo { Sha1 = 1, Md5 }
+            #endregion
+        }
+
+        #endregion
+
+        #region Nested type: FileHash
+
+        public readonly record struct FileHash(string Value, FileHash.HashAlgo Algo)
+        {
+            #region HashAlgo enum
+
+            public enum HashAlgo { Sha1 = 1, Md5 }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Nested type: FileModule
+
+        public readonly record struct FileModule(string Name, ulong Fingerprint);
 
         #endregion
     }
-
-    #endregion
-
-    #region Nested type: FileModule
-
-    public readonly record struct FileModule(string Name, ulong Fingerprint);
-
-    #endregion
 }

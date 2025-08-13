@@ -1,6 +1,7 @@
-﻿namespace Polymerium.Trident.Exceptions;
-
-public class ProcessFaultedException(int exitCode, string message) : Exception(message)
+﻿namespace Polymerium.Trident.Exceptions
 {
-    public int ExitCode => exitCode;
+    public class ProcessFaultedException(int exitCode, string message) : Exception(message)
+    {
+        public int ExitCode => exitCode;
+    }
 }

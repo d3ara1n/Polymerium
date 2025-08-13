@@ -6,36 +6,39 @@ using Huskui.Avalonia.Controls;
 using Polymerium.App.Controls;
 using Polymerium.Trident.Utilities;
 
-namespace Polymerium.App.Views;
-
-public partial class NewInstanceView : ScopedPage
+namespace Polymerium.App.Views
 {
-    public NewInstanceView() => InitializeComponent();
-
-    private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
+    public partial class NewInstanceView : ScopedPage
     {
-        if (e.Data.Contains(DataFormats.Files) && e.Data.Contains("FileContents"))
-            e.Accepted = true;
-    }
+        public NewInstanceView() => InitializeComponent();
 
-    private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
-    {
-        if (e.Data.Contains(DataFormats.Files) && e.Data.Contains("FileContents"))
+        private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
         {
-            var first = e.Data.GetFiles()?.FirstOrDefault();
-            if (first != null)
+            if (e.Data.Contains(DataFormats.Files) && e.Data.Contains("FileContents"))
             {
-                try
+                e.Accepted = true;
+            }
+        }
+
+        private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
+        {
+            if (e.Data.Contains(DataFormats.Files) && e.Data.Contains("FileContents"))
+            {
+                var first = e.Data.GetFiles()?.FirstOrDefault();
+                if (first != null)
                 {
-                    var path = first.TryGetLocalPath();
-                    if (path != null && FileHelper.IsBitmapFile(path))
+                    try
                     {
-                        e.Model = new Bitmap(path);
+                        var path = first.TryGetLocalPath();
+                        if (path != null && FileHelper.IsBitmapFile(path))
+                        {
+                            e.Model = new Bitmap(path);
+                        }
                     }
-                }
-                catch
-                {
-                    // TODO: do nothing
+                    catch
+                    {
+                        // TODO: do nothing
+                    }
                 }
             }
         }

@@ -3,43 +3,39 @@ using Avalonia;
 using Polymerium.App.Controls;
 using Polymerium.Trident.Services;
 
-namespace Polymerium.App.Components;
-
-public partial class AccountCreationPortal : AccountCreationStep
+namespace Polymerium.App.Components
 {
-    public static readonly DirectProperty<AccountCreationPortal, bool> IsOfflineAvailableProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationPortal, bool>(nameof(IsOfflineAvailable),
-                                                                     o => o.IsOfflineAvailable,
-                                                                     (o, v) => o.IsOfflineAvailable = v);
-
-    public AccountCreationPortal()
+    public partial class AccountCreationPortal : AccountCreationStep
     {
-        InitializeComponent();
-    }
+        public static readonly DirectProperty<AccountCreationPortal, bool> IsOfflineAvailableProperty =
+            AvaloniaProperty.RegisterDirect<AccountCreationPortal, bool>(nameof(IsOfflineAvailable),
+                                                                         o => o.IsOfflineAvailable,
+                                                                         (o, v) => o.IsOfflineAvailable = v);
 
-    public required MicrosoftService MicrosoftService { get; init; }
-    public required XboxLiveService XboxLiveService { get; init; }
-    public required MinecraftService MinecraftService { get; init; }
+        public AccountCreationPortal() => InitializeComponent();
 
-    public bool IsOfflineAvailable
-    {
-        get;
-        set => SetAndRaise(IsOfflineAvailableProperty, ref field, value);
-    }
+        public required MicrosoftService MicrosoftService { get; init; }
+        public required XboxLiveService XboxLiveService { get; init; }
+        public required MinecraftService MinecraftService { get; init; }
 
-    public override object NextStep()
-    {
-        return AccountTypeSelectBox.SelectedIndex switch
+        public bool IsOfflineAvailable
         {
-            0 => new AccountCreationMicrosoft
+            get;
+            set => SetAndRaise(IsOfflineAvailableProperty, ref field, value);
+        }
+
+        public override object NextStep() =>
+            AccountTypeSelectBox.SelectedIndex switch
             {
-                MicrosoftService = MicrosoftService,
-                XboxLiveService = XboxLiveService,
-                MinecraftService = MinecraftService
-            },
-            1 => new AccountCreationTrial(),
-            2 => new AccountCreationOffline(),
-            _ => throw new ArgumentOutOfRangeException()
-        };
+                0 => new AccountCreationMicrosoft
+                {
+                    MicrosoftService = MicrosoftService,
+                    XboxLiveService = XboxLiveService,
+                    MinecraftService = MinecraftService
+                },
+                1 => new AccountCreationTrial(),
+                2 => new AccountCreationOffline(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
     }
 }

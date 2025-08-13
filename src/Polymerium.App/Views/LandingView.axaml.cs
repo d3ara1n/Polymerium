@@ -1,11 +1,9 @@
 ﻿using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class LandingView : Page
+namespace Polymerium.App.Views
 {
-    public LandingView()
+    public partial class LandingView : Page
     {
-        InitializeComponent();
+        public LandingView() => InitializeComponent();
     }
 }

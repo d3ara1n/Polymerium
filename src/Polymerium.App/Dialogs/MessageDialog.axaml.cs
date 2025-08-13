@@ -1,13 +1,11 @@
 ﻿using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Dialogs;
-
-public partial class MessageDialog : Dialog
+namespace Polymerium.App.Dialogs
 {
-    public MessageDialog()
+    public partial class MessageDialog : Dialog
     {
-        InitializeComponent();
-    }
+        public MessageDialog() => InitializeComponent();
 
-    protected override bool ValidateResult(object? result) => true;
+        protected override bool ValidateResult(object? result) => true;
+    }
 }

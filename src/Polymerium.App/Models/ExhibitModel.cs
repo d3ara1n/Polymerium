@@ -5,69 +5,70 @@ using Humanizer;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.FileModels;
 
-namespace Polymerium.App.Models;
-
-public partial class ExhibitModel(
-    string label,
-    string? ns,
-    string projectId,
-    string projectName,
-    string summary,
-    Uri thumbnail,
-    string author,
-    IReadOnlyList<string> tags,
-    DateTimeOffset updatedAt,
-    ulong downloads,
-    Uri reference) : ModelBase
+namespace Polymerium.App.Models
 {
-    #region Direct
+    public partial class ExhibitModel(
+        string label,
+        string? ns,
+        string projectId,
+        string projectName,
+        string summary,
+        Uri thumbnail,
+        string author,
+        IReadOnlyList<string> tags,
+        DateTimeOffset updatedAt,
+        ulong downloads,
+        Uri reference) : ModelBase
+    {
+        #region Direct
 
-    public string Label => label;
+        public string Label => label;
 
-    public string? Ns => ns;
+        public string? Ns => ns;
 
-    public string ProjectId => projectId;
+        public string ProjectId => projectId;
 
-    public string ProjectName => projectName;
+        public string ProjectName => projectName;
 
-    public string Summary => summary;
+        public string Summary => summary;
 
-    public Uri Thumbnail => thumbnail;
+        public Uri Thumbnail => thumbnail;
 
-    public string Author => author;
+        public string Author => author;
 
-    public IReadOnlyList<string> Tags => tags;
+        public IReadOnlyList<string> Tags => tags;
 
-    public DateTimeOffset UpdatedAtRaw => updatedAt;
+        public DateTimeOffset UpdatedAtRaw => updatedAt;
 
-    public string UpdatedAt => updatedAt.Humanize();
-    public ulong DownloadsRaw => downloads;
+        public string UpdatedAt => updatedAt.Humanize();
+        public ulong DownloadsRaw => downloads;
 
-    public string Downloads => ((double)downloads).ToMetric(decimals: 2);
+        public string Downloads => ((double)downloads).ToMetric(decimals: 2);
 
-    public Uri Reference => reference;
+        public Uri Reference => reference;
 
-    #endregion
+        #endregion
 
-    #region Reactive
+        #region Reactive
 
-    [ObservableProperty]
-    public partial ExhibitState? State { get; set; }
+        [ObservableProperty]
+        public partial ExhibitState? State { get; set; }
 
-    [ObservableProperty]
-    public partial Profile.Rice.Entry? Installed { get; set; }
+        [ObservableProperty]
+        public partial Profile.Rice.Entry? Installed { get; set; }
 
-    [ObservableProperty]
-    public partial string? InstalledVersionName { get; set; }
+        [ObservableProperty]
+        public partial string? InstalledVersionName { get; set; }
 
-    [ObservableProperty]
-    public partial string? InstalledVersionId { get; set; }
+        [ObservableProperty]
+        public partial string? InstalledVersionId { get; set; }
 
-    [ObservableProperty]
-    public partial string? PendingVersionName { get; set; }
+        [ObservableProperty]
+        public partial string? PendingVersionName { get; set; }
 
-    [ObservableProperty]
-    public partial string? PendingVersionId { get; set; }
+        [ObservableProperty]
+        public partial string? PendingVersionId { get; set; }
 
-    #endregion
+        #endregion
+    }
 }

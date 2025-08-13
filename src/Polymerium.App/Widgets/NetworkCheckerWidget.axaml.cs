@@ -3,22 +3,23 @@ using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Widgets;
-
-public partial class NetworkCheckerWidget : WidgetBase
+namespace Polymerium.App.Widgets
 {
-    public NetworkCheckerWidget() => AvaloniaXamlLoader.Load(this);
+    public partial class NetworkCheckerWidget : WidgetBase
+    {
+        public NetworkCheckerWidget() => AvaloniaXamlLoader.Load(this);
 
-    #region Direct
+        #region Direct
 
-    public ObservableCollection<ConnectionTestSiteModel> Sites { get; } = new();
+        public ObservableCollection<ConnectionTestSiteModel> Sites { get; } = new();
 
-    #endregion
+        #endregion
 
-    #region Commands
+        #region Commands
 
-    [RelayCommand]
-    private void Perform() { }
+        [RelayCommand]
+        private void Perform() { }
 
-    #endregion
+        #endregion
+    }
 }

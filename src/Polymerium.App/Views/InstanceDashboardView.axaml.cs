@@ -1,11 +1,9 @@
 ﻿using Avalonia.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class InstanceDashboardView : UserControl
+namespace Polymerium.App.Views
 {
-    public InstanceDashboardView()
+    public partial class InstanceDashboardView : UserControl
     {
-        InitializeComponent();
+        public InstanceDashboardView() => InitializeComponent();
     }
 }

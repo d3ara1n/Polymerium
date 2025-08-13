@@ -8,92 +8,93 @@ using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
-namespace Polymerium.App.ViewModels;
-
-public partial class UnknownViewModel(
-    ViewBag bag,
-    NotificationService notificationService,
-    OverlayService overlayService) : ViewModelBase
+namespace Polymerium.App.ViewModels
 {
-    public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
-
-
-    #region Overrides
-
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    public partial class UnknownViewModel(
+        ViewBag bag,
+        NotificationService notificationService,
+        OverlayService overlayService) : ViewModelBase
     {
-        await Task.Delay(TimeSpan.FromSeconds(7), token);
+        public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
-        if (Application.Current is { PlatformSettings: not null })
+
+        #region Overrides
+
+        protected override async Task OnInitializeAsync(CancellationToken token)
         {
-            var accent1 = Application.Current.PlatformSettings.GetColorValues().AccentColor1;
-            var accent2 = Application.Current.PlatformSettings.GetColorValues().AccentColor2;
-            var accent3 = Application.Current.PlatformSettings.GetColorValues().AccentColor3;
-        }
-    }
+            await Task.Delay(TimeSpan.FromSeconds(7), token);
 
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    private void Hello() => notificationService.PopMessage("Hello", "Hi there!");
-
-    [RelayCommand]
-    private void World()
-    {
-        PopToast();
-        return;
-
-        void PopToast()
-        {
-            Button pop = new() { Content = "POP" };
-            pop.Click += (_, __) => PopToast();
-            overlayService.PopToast(new Toast
+            if (Application.Current is { PlatformSettings: not null })
             {
-                Header = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
-                Content = new StackPanel
+                var accent1 = Application.Current.PlatformSettings.GetColorValues().AccentColor1;
+                var accent2 = Application.Current.PlatformSettings.GetColorValues().AccentColor2;
+                var accent3 = Application.Current.PlatformSettings.GetColorValues().AccentColor3;
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        [RelayCommand]
+        private void Hello() => notificationService.PopMessage("Hello", "Hi there!");
+
+        [RelayCommand]
+        private void World()
+        {
+            PopToast();
+            return;
+
+            void PopToast()
+            {
+                Button pop = new() { Content = "POP" };
+                pop.Click += (_, __) => PopToast();
+                overlayService.PopToast(new Toast
                 {
-                    Spacing = 8d,
-                    Children =
+                    Header = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
+                    Content = new StackPanel
                     {
-                        new TextBlock
+                        Spacing = 8d,
+                        Children =
                         {
-                            Text =
-                                "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM"
-                        },
-                        new TextBox(),
-                        pop
+                            new TextBlock
+                            {
+                                Text =
+                                    "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM"
+                            },
+                            new TextBox(),
+                            pop
+                        }
                     }
-                }
-            });
+                });
+            }
         }
-    }
 
-    [RelayCommand]
-    private void Butcher()
-    {
-        PopDialog();
-        return;
-
-        void PopDialog()
+        [RelayCommand]
+        private void Butcher()
         {
-            Button pop = new() { Content = "POP" };
-            pop.Click += (_, __) => PopDialog();
-            overlayService.PopDialog(new Dialog
+            PopDialog();
+            return;
+
+            void PopDialog()
             {
-                Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
-                Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
-                Content = new StackPanel
+                Button pop = new() { Content = "POP" };
+                pop.Click += (_, __) => PopDialog();
+                overlayService.PopDialog(new Dialog
                 {
-                    Spacing = 8d, Children = { new TextBox(), pop }
-                }
-            });
+                    Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
+                    Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
+                    Content = new StackPanel
+                    {
+                        Spacing = 8d, Children = { new TextBox(), pop }
+                    }
+                });
+            }
         }
+
+        [RelayCommand]
+        private void Debug() { }
+
+        #endregion
     }
-
-    [RelayCommand]
-    private void Debug() { }
-
-    #endregion
 }

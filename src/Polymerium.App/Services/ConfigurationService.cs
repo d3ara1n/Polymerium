@@ -3,23 +3,49 @@ using System.IO;
 using System.Text.Json;
 using Trident.Abstractions;
 
-namespace Polymerium.App.Services;
-
-public sealed class ConfigurationService : IDisposable
+namespace Polymerium.App.Services
 {
-    private readonly string _filePath = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "settings.json");
-
-    private readonly JsonSerializerOptions _serializerOptions =
-        new(JsonSerializerDefaults.General) { WriteIndented = true };
-
-    public ConfigurationService()
+    public sealed class ConfigurationService : IDisposable
     {
-        Configuration? read = null;
-        if (File.Exists(_filePath))
+        private readonly string _filePath = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand),
+                                                         "settings.json");
+
+        private readonly JsonSerializerOptions _serializerOptions =
+            new(JsonSerializerDefaults.General) { WriteIndented = true };
+
+        public ConfigurationService()
+        {
+            Configuration? read = null;
+            if (File.Exists(_filePath))
+            {
+                try
+                {
+                    read = JsonSerializer.Deserialize<Configuration>(File.ReadAllText(_filePath), _serializerOptions);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+
+            Value = read ?? new Configuration();
+        }
+
+        public Configuration Value { get; }
+
+        #region IDisposable Members
+
+        public void Dispose()
         {
             try
             {
-                read = JsonSerializer.Deserialize<Configuration>(File.ReadAllText(_filePath), _serializerOptions);
+                var dir = Path.GetDirectoryName(_filePath);
+                if (dir != null && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                File.WriteAllText(_filePath, JsonSerializer.Serialize(Value, _serializerOptions));
             }
             catch
             {
@@ -27,27 +53,6 @@ public sealed class ConfigurationService : IDisposable
             }
         }
 
-        Value = read ?? new Configuration();
+        #endregion
     }
-
-    public Configuration Value { get; }
-
-    #region IDisposable Members
-
-    public void Dispose()
-    {
-        try
-        {
-            var dir = Path.GetDirectoryName(_filePath);
-            if (dir != null && !Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-            File.WriteAllText(_filePath, JsonSerializer.Serialize(Value, _serializerOptions));
-        }
-        catch
-        {
-            // ignored
-        }
-    }
-
-    #endregion
 }

@@ -1,11 +1,9 @@
 ﻿using Polymerium.App.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class InstanceStorageView : Subpage
+namespace Polymerium.App.Views
 {
-    public InstanceStorageView()
+    public partial class InstanceStorageView : Subpage
     {
-        InitializeComponent();
+        public InstanceStorageView() => InitializeComponent();
     }
 }

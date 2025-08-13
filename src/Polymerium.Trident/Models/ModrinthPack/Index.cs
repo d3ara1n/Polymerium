@@ -1,35 +1,36 @@
-﻿namespace Polymerium.Trident.Models.ModrinthPack;
-
-public record Index(
-    int FormatVersion,
-    string Game,
-    string VersionId,
-    string Name,
-    string? Summary,
-    IReadOnlyList<Index.IndexFile> Files,
-    IDictionary<string, string> Dependencies)
+﻿namespace Polymerium.Trident.Models.ModrinthPack
 {
-    #region Nested type: IndexFile
-
-    public record IndexFile(
-        string Path,
-        IndexFile.FileHashes Hashes,
-        IndexFile.FileEnv? Env,
-        IReadOnlyList<Uri> Downloads,
-        ulong FileSize)
+    public record Index(
+        int FormatVersion,
+        string Game,
+        string VersionId,
+        string Name,
+        string? Summary,
+        IReadOnlyList<Index.IndexFile> Files,
+        IDictionary<string, string> Dependencies)
     {
-        #region Nested type: FileEnv
+        #region Nested type: IndexFile
 
-        public record FileEnv(string Client, string Server);
+        public record IndexFile(
+            string Path,
+            IndexFile.FileHashes Hashes,
+            IndexFile.FileEnv? Env,
+            IReadOnlyList<Uri> Downloads,
+            ulong FileSize)
+        {
+            #region Nested type: FileEnv
 
-        #endregion
+            public record FileEnv(string Client, string Server);
 
-        #region Nested type: FileHashes
+            #endregion
 
-        public record FileHashes(string Sha1, string Sha512);
+            #region Nested type: FileHashes
+
+            public record FileHashes(string Sha1, string Sha512);
+
+            #endregion
+        }
 
         #endregion
     }
-
-    #endregion
 }

@@ -1,18 +1,19 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 
-namespace Polymerium.App.Components;
-
-public partial class PageHeaderBar : UserControl
+namespace Polymerium.App.Components
 {
-    public static readonly StyledProperty<string> TitleProperty =
-        AvaloniaProperty.Register<PageHeaderBar, string>(nameof(Title), string.Empty);
-
-    public PageHeaderBar() => InitializeComponent();
-
-    public string Title
+    public partial class PageHeaderBar : UserControl
     {
-        get => GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
+        public static readonly StyledProperty<string> TitleProperty =
+            AvaloniaProperty.Register<PageHeaderBar, string>(nameof(Title), string.Empty);
+
+        public PageHeaderBar() => InitializeComponent();
+
+        public string Title
+        {
+            get => GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
     }
 }

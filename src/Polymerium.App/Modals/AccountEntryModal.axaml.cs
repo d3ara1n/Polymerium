@@ -1,22 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Modals;
-
-public partial class AccountEntryModal : Modal
+namespace Polymerium.App.Modals
 {
-    public AccountEntryModal()
+    public partial class AccountEntryModal : Modal
     {
-        InitializeComponent();
+        public AccountEntryModal() => InitializeComponent();
+
+        #region Commands
+
+        [RelayCommand]
+        private void Dismiss() => RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+
+        #endregion
     }
-
-    #region Commands
-
-    [RelayCommand]
-    private void Dismiss()
-    {
-        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-    }
-
-    #endregion
 }

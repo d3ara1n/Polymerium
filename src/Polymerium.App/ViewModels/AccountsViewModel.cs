@@ -14,115 +14,118 @@ using Polymerium.App.Utilities;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.Accounts;
 
-namespace Polymerium.App.ViewModels;
-
-public partial class AccountsViewModel(
-    OverlayService overlayService,
-    NotificationService notificationService,
-    PersistenceService persistenceService,
-    ConfigurationService configurationService,
-    MicrosoftService microsoftService,
-    XboxLiveService xboxLiveService,
-    MinecraftService minecraftService) : ViewModelBase
+namespace Polymerium.App.ViewModels
 {
-    #region Direct
-
-    public ObservableCollection<AccountModel> Accounts { get; } = [];
-
-    #endregion
-
-
-    #region Other
-
-    private bool Finish(IAccount account)
+    public partial class AccountsViewModel(
+        OverlayService overlayService,
+        NotificationService notificationService,
+        PersistenceService persistenceService,
+        ConfigurationService configurationService,
+        MicrosoftService microsoftService,
+        XboxLiveService xboxLiveService,
+        MinecraftService minecraftService) : ViewModelBase
     {
-        var found = persistenceService.GetAccount(account.Uuid);
-        if (found != null)
+        #region Direct
+
+        public ObservableCollection<AccountModel> Accounts { get; } = [];
+
+        #endregion
+
+
+        #region Other
+
+        private bool Finish(IAccount account)
         {
-            notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationPrompt,
-                                           Resources.AccountsView_AccountAddingDangerNotificationTitle,
-                                           NotificationLevel.Danger);
-            return false;
+            var found = persistenceService.GetAccount(account.Uuid);
+            if (found != null)
+            {
+                notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationPrompt,
+                                               Resources.AccountsView_AccountAddingDangerNotificationTitle,
+                                               NotificationLevel.Danger);
+                return false;
+            }
+
+            var isDefault = !Accounts.Any(x => x.IsDefault);
+            var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, isDefault);
+            persistenceService.AppendAccount(raw);
+            Accounts.Add(new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
+            {
+                IsDefault = isDefault
+            });
+            return true;
         }
 
-        var isDefault = !Accounts.Any(x => x.IsDefault);
-        var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, isDefault);
-        persistenceService.AppendAccount(raw);
-        Accounts.Add(new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
+        #endregion
+
+        #region Lifecycle
+
+        protected override Task OnInitializeAsync(CancellationToken token)
         {
-            IsDefault = isDefault
-        });
-        return true;
-    }
+            var defaultAccount = persistenceService.GetDefaultAccount();
+            foreach (var account in persistenceService.GetAccounts())
+            {
+                var cooked = AccountHelper.ToCooked(account);
+                var model = new AccountModel(cooked.GetType(),
+                                             cooked.Uuid,
+                                             cooked.Username,
+                                             account.EnrolledAt,
+                                             account.LastUsedAt) { IsDefault = account.Uuid == defaultAccount?.Uuid };
+                Accounts.Add(model);
+            }
 
-    #endregion
 
-    #region Lifecycle
-
-    protected override Task OnInitializeAsync(CancellationToken token)
-    {
-        var defaultAccount = persistenceService.GetDefaultAccount();
-        foreach (var account in persistenceService.GetAccounts())
-        {
-            var cooked = AccountHelper.ToCooked(account);
-            var model = new AccountModel(cooked.GetType(),
-                                         cooked.Uuid,
-                                         cooked.Username,
-                                         account.EnrolledAt,
-                                         account.LastUsedAt) { IsDefault = account.Uuid == defaultAccount?.Uuid };
-            Accounts.Add(model);
+            return base.OnInitializeAsync(token);
         }
 
+        #endregion
 
-        return base.OnInitializeAsync(token);
-    }
+        #region Commands
 
-    #endregion
+        [RelayCommand]
+        private void CreateAccount() =>
+            overlayService.PopModal(new AccountCreationModal
+            {
+                FinishCallback = Finish,
+                IsOfflineAvailable =
+                    configurationService.Value.ApplicationSuperPowerActivated
+                 || persistenceService.HasMicrosoftAccount(),
+                MicrosoftService = microsoftService,
+                XboxLiveService = xboxLiveService,
+                MinecraftService = minecraftService
+            });
 
-    #region Commands
-
-    [RelayCommand]
-    private void CreateAccount()
-    {
-        overlayService.PopModal(new AccountCreationModal
+        [RelayCommand]
+        private void ViewAccount(AccountModel? model)
         {
-            FinishCallback = Finish,
-            IsOfflineAvailable =
-                configurationService.Value.ApplicationSuperPowerActivated
-             || persistenceService.HasMicrosoftAccount(),
-            MicrosoftService = microsoftService,
-            XboxLiveService = xboxLiveService,
-            MinecraftService = minecraftService
-        });
-    }
-
-    [RelayCommand]
-    private void ViewAccount(AccountModel? model)
-    {
-        if (model != null)
-            overlayService.PopModal(new AccountEntryModal { DataContext = model });
-    }
-
-    [RelayCommand]
-    private void MarkAsDefaultAccount(AccountModel? model)
-    {
-        if (model != null)
-        {
-            persistenceService.MarkDefaultAccount(model.Uuid);
-            foreach (var account in Accounts)
-                account.IsDefault = account.Uuid == model.Uuid;
+            if (model != null)
+            {
+                overlayService.PopModal(new AccountEntryModal { DataContext = model });
+            }
         }
-    }
 
-    [RelayCommand]
-    private void RemoveAccount(AccountModel? model)
-    {
-        if (model != null)
+        [RelayCommand]
+        private void MarkAsDefaultAccount(AccountModel? model)
         {
-            persistenceService.RemoveAccount(model.Uuid);
-            Accounts.Remove(model);
+            if (model != null)
+            {
+                persistenceService.MarkDefaultAccount(model.Uuid);
+                foreach (var account in Accounts)
+                {
+                    account.IsDefault = account.Uuid == model.Uuid;
+                }
+            }
         }
-    }
 
-    #endregion
+        [RelayCommand]
+        private void RemoveAccount(AccountModel? model)
+        {
+            if (model != null)
+            {
+                persistenceService.RemoveAccount(model.Uuid);
+                Accounts.Remove(model);
+            }
+        }
+
+        #endregion
+    }
 }
