@@ -80,14 +80,14 @@ namespace Polymerium.App.Components
             ErrorMessage = null;
             Model = null;
             await _cts.CancelAsync();
-            _cts = new CancellationTokenSource();
+            _cts = new();
 
             try
             {
                 var model = await MicrosoftService.AcquireUserCodeAsync();
-                Model = new MicrosoftUserCodeModel(model.DeviceCode,
-                                                   model.UserCode,
-                                                   model.VerificationUri ?? new Uri("https://aka.ms/devicelogin"));
+                Model = new(model.DeviceCode,
+                            model.UserCode,
+                            model.VerificationUri ?? new Uri("https://aka.ms/devicelogin"));
 
 
                 var microsoft = await MicrosoftService.AuthenticateAsync(model.DeviceCode, model.Interval, _cts.Token);

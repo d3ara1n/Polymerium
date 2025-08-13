@@ -5,7 +5,6 @@ using ReverseMarkdown;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
-using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Repositories
@@ -14,10 +13,7 @@ namespace Polymerium.Trident.Repositories
     {
         private const uint PAGE_SIZE = 20;
 
-        private static readonly Converter CONVERTER = new(new Config
-        {
-            GithubFlavored = false, SmartHrefHandling = true
-        });
+        private static readonly Converter CONVERTER = new(new() { GithubFlavored = false, SmartHrefHandling = true });
 
         #region IRepository Members
 
@@ -26,21 +22,21 @@ namespace Polymerium.Trident.Repositories
         public async Task<RepositoryStatus> CheckStatusAsync()
         {
             var versions = await service.GetGameVersionsAsync().ConfigureAwait(false);
-            return new RepositoryStatus([
-                                            LoaderHelper.LOADERID_NEOFORGE,
-                                            LoaderHelper.LOADERID_FORGE,
-                                            LoaderHelper.LOADERID_FABRIC,
-                                            LoaderHelper.LOADERID_QUILT
-                                        ],
-                                        versions,
-                                        [
-                                            ResourceKind.Modpack,
-                                            ResourceKind.Mod,
-                                            ResourceKind.ResourcePack,
-                                            ResourceKind.ShaderPack,
-                                            ResourceKind.World,
-                                            ResourceKind.DataPack
-                                        ]);
+            return new([
+                           LoaderHelper.LOADERID_NEOFORGE,
+                           LoaderHelper.LOADERID_FORGE,
+                           LoaderHelper.LOADERID_FABRIC,
+                           LoaderHelper.LOADERID_QUILT
+                       ],
+                       versions,
+                       [
+                           ResourceKind.Modpack,
+                           ResourceKind.Mod,
+                           ResourceKind.ResourcePack,
+                           ResourceKind.ShaderPack,
+                           ResourceKind.World,
+                           ResourceKind.DataPack
+                       ]);
         }
 
         public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
@@ -118,7 +114,7 @@ namespace Polymerium.Trident.Repositories
                         if (uint.TryParse(vid, out var fileId))
                         {
                             var file = mod.LatestFiles.FirstOrDefault(x => x.Id == fileId);
-                            if (file == default(FileInfo))
+                            if (file == default)
                             {
                                 file = await service.GetModFileAsync(modId, fileId).ConfigureAwait(false);
                             }
@@ -148,7 +144,7 @@ namespace Polymerium.Trident.Repositories
                                                                : null,
                                                            pageSize: 1)
                                          .ConfigureAwait(false)).Data.FirstOrDefault();
-                        if (file != default(FileInfo))
+                        if (file != default)
                         {
                             return CurseForgeService.ToPackage(mod, file);
                         }

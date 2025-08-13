@@ -63,7 +63,7 @@ namespace Polymerium.App.Toasts
         }
 
         private void LoadVersions() =>
-            LazyVersions = new LazyObject(async _ =>
+            LazyVersions = new(async _ =>
             {
                 var project = Modpack;
                 var versions = await DataService.InspectVersionsAsync(project.Label,
@@ -94,7 +94,7 @@ namespace Polymerium.App.Toasts
             });
 
         private void LoadDescription() =>
-            LazyDescription = new LazyObject(async _ =>
+            LazyDescription = new(async _ =>
             {
                 var description =
                     await DataService.ReadDescriptionAsync(Modpack.Label, Modpack.Namespace, Modpack.ProjectId);
@@ -111,7 +111,7 @@ namespace Polymerium.App.Toasts
                 var rev = new Uri(url, UriKind.RelativeOrAbsolute);
                 TopLevel
                    .GetTopLevel(this)
-                  ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new Uri(Modpack.Reference, rev));
+                  ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev));
             }
         }
 

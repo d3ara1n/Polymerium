@@ -40,7 +40,7 @@ namespace Polymerium.App.Components
             if (change.Property == AccountProperty)
             {
                 var account = change.GetNewValue<IAccount>();
-                Model = new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null);
+                Model = new(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null);
             }
         }
 

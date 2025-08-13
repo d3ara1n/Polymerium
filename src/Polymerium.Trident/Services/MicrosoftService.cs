@@ -11,7 +11,7 @@ namespace Polymerium.Trident.Services
         public const string SCOPE = "XboxLive.signin offline_access";
 
         public async Task<DeviceCodeResponse> AcquireUserCodeAsync() =>
-            await client.AcquireUserCodeAsync(new AcquireUserCodeRequest()).ConfigureAwait(false);
+            await client.AcquireUserCodeAsync(new()).ConfigureAwait(false);
 
         public async Task<TokenResponse> AuthenticateAsync(
             string deviceCode,
@@ -21,9 +21,7 @@ namespace Polymerium.Trident.Services
             while (true)
             {
                 token.ThrowIfCancellationRequested();
-                var response = await client
-                                    .AuthenticateAsync(new AuthenticateRequest(deviceCode))
-                                    .ConfigureAwait(false);
+                var response = await client.AuthenticateAsync(new(deviceCode)).ConfigureAwait(false);
                 if (!string.IsNullOrEmpty(response.Error))
                 {
                     if (response.Error == "authorization_pending")
@@ -40,6 +38,6 @@ namespace Polymerium.Trident.Services
         }
 
         public async Task<TokenResponse> RefreshUserAsync(string refreshToken) =>
-            await client.RefreshUserAsync(new RefreshUserRequest(refreshToken)).ConfigureAwait(false);
+            await client.RefreshUserAsync(new(refreshToken)).ConfigureAwait(false);
     }
 }

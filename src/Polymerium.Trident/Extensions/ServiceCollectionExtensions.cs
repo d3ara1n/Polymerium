@@ -21,15 +21,10 @@ namespace Polymerium.Trident.Extensions
         {
             services
                .AddRefitClient<
-                    ICurseForgeClient>(_ =>
-                                           new
-                                               RefitSettings(new
-                                                                 SystemTextJsonContentSerializer(new
-                                                                     JsonSerializerOptions(JsonSerializerDefaults
-                                                                        .Web))))
+                    ICurseForgeClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web))))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(CurseForgeService.ENDPOINT);
+                    client.BaseAddress = new(CurseForgeService.ENDPOINT);
                     client.DefaultRequestHeaders.Add("x-api-key", CurseForgeService.API_KEY);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
@@ -47,19 +42,15 @@ namespace Polymerium.Trident.Extensions
         public static IServiceCollection AddModrinth(this IServiceCollection services)
         {
             services
-               .AddRefitClient<
-                    IModrinthClient>(_ =>
-                                         new RefitSettings(new
-                                                               SystemTextJsonContentSerializer(new
-                                                                   JsonSerializerOptions(JsonSerializerDefaults
-                                                                      .Web)
-                                                                   {
-                                                                       PropertyNamingPolicy = JsonNamingPolicy
-                                                                          .SnakeCaseLower
-                                                                   })))
+               .AddRefitClient<IModrinthClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults
+                                                            .Web)
+                                                         {
+                                                             PropertyNamingPolicy = JsonNamingPolicy
+                                                                .SnakeCaseLower
+                                                         })))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(ModrinthService.ENDPOINT);
+                    client.BaseAddress = new(ModrinthService.ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })
@@ -78,14 +69,10 @@ namespace Polymerium.Trident.Extensions
             services
                .AddRefitClient<
                     IPrismLauncherClient>(_ =>
-                                              new
-                                                  RefitSettings(new
-                                                                    SystemTextJsonContentSerializer(new
-                                                                        JsonSerializerOptions(JsonSerializerDefaults
-                                                                           .Web))))
+                                              new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web))))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(PrismLauncherService.ENDPOINT);
+                    client.BaseAddress = new(PrismLauncherService.ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })
@@ -101,14 +88,11 @@ namespace Polymerium.Trident.Extensions
             services
                .AddRefitClient<
                     IMojangLauncherClient>(_ =>
-                                               new
-                                                   RefitSettings(new
-                                                                     SystemTextJsonContentSerializer(new
-                                                                         JsonSerializerOptions(JsonSerializerDefaults
-                                                                            .Web))))
+                                               new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults
+                                                      .Web))))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(MojangLauncherService.ENDPOINT);
+                    client.BaseAddress = new(MojangLauncherService.ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })
@@ -123,33 +107,29 @@ namespace Polymerium.Trident.Extensions
         {
             services
                .AddRefitClient<
-                    IMicrosoftClient>(_ =>
-                                          new
-                                              RefitSettings(new
-                                                                SystemTextJsonContentSerializer(new
-                                                                    JsonSerializerOptions(JsonSerializerDefaults
-                                                                       .Web)
-                                                                    {
-                                                                        PropertyNamingPolicy = JsonNamingPolicy
-                                                                           .SnakeCaseLower
-                                                                    }))
-                                              {
-                                                  ExceptionFactory = async message => message switch
-                                                  {
-                                                      { IsSuccessStatusCode: true } => null,
-                                                      { StatusCode: HttpStatusCode.BadRequest } => null,
-                                                      { RequestMessage: not null } => await ApiException
-                                                         .Create(message.RequestMessage,
-                                                                 message.RequestMessage.Method,
-                                                                 message,
-                                                                 dummy)
-                                                         .ConfigureAwait(false),
-                                                      _ => new NotImplementedException()
-                                                  }
-                                              })
+                    IMicrosoftClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web)
+                                      {
+                                          PropertyNamingPolicy =
+                                              JsonNamingPolicy
+                                                 .SnakeCaseLower
+                                      }))
+                                      {
+                                          ExceptionFactory = async message => message switch
+                                          {
+                                              { IsSuccessStatusCode: true } => null,
+                                              { StatusCode: HttpStatusCode.BadRequest } => null,
+                                              { RequestMessage: not null } => await ApiException
+                                                                                 .Create(message.RequestMessage,
+                                                                                      message.RequestMessage.Method,
+                                                                                      message,
+                                                                                      dummy)
+                                                                                 .ConfigureAwait(false),
+                                              _ => new NotImplementedException()
+                                          }
+                                      })
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(MicrosoftService.ENDPOINT);
+                    client.BaseAddress = new(MicrosoftService.ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 });
@@ -161,34 +141,25 @@ namespace Polymerium.Trident.Extensions
         {
             services
                .AddRefitClient<
-                    IXboxLiveClient>(_ =>
-                                         new RefitSettings(new
-                                                               SystemTextJsonContentSerializer(new
-                                                                   JsonSerializerOptions(JsonSerializerDefaults
-                                                                      .General)
-                                                                   {
-                                                                       PropertyNameCaseInsensitive = true
-                                                                   })))
+                    IXboxLiveClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.General)
+                {
+                    PropertyNameCaseInsensitive = true
+                })))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(XboxLiveService.XBOX_ENDPOINT);
+                    client.BaseAddress = new(XboxLiveService.XBOX_ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 });
             services
                .AddRefitClient<
-                    IXboxServiceClient>(_ =>
-                                            new
-                                                RefitSettings(new
-                                                                  SystemTextJsonContentSerializer(new
-                                                                      JsonSerializerOptions(JsonSerializerDefaults
-                                                                         .General)
-                                                                      {
-                                                                          PropertyNameCaseInsensitive = true
-                                                                      })))
+                    IXboxServiceClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.General)
+                {
+                    PropertyNameCaseInsensitive = true
+                })))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(XboxLiveService.XSTS_ENDPOINT);
+                    client.BaseAddress = new(XboxLiveService.XSTS_ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 });
@@ -200,18 +171,15 @@ namespace Polymerium.Trident.Extensions
         {
             services
                .AddRefitClient<
-                    IMinecraftClient>(_ =>
-                                          new RefitSettings(new
-                                                                SystemTextJsonContentSerializer(new
-                                                                    JsonSerializerOptions(JsonSerializerDefaults
-                                                                       .Web)
-                                                                    {
-                                                                        PropertyNamingPolicy = JsonNamingPolicy
-                                                                           .SnakeCaseLower
-                                                                    })))
+                    IMinecraftClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web)
+                {
+                    PropertyNamingPolicy =
+                        JsonNamingPolicy
+                           .SnakeCaseLower
+                })))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri(MinecraftService.ENDPOINT);
+                    client.BaseAddress = new(MinecraftService.ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 });

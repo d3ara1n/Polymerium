@@ -49,7 +49,7 @@ namespace Polymerium.App.Dialogs
                 var storage = top.StorageProvider;
                 if (storage.CanOpen)
                 {
-                    var file = await storage.SaveFilePickerAsync(new FilePickerSaveOptions
+                    var file = await storage.SaveFilePickerAsync(new()
                     {
                         SuggestedStartLocation =
                             await storage

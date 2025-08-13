@@ -33,12 +33,12 @@ namespace Polymerium.App.Services
 
             if (OperatingSystem.IsWindows())
             {
-                _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
+                _thread = new(Serve) { Name = "Avalonia Lifetime" };
                 _thread.SetApartmentState(ApartmentState.STA);
             }
             else if (OperatingSystem.IsLinux())
             {
-                _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
+                _thread = new(Serve) { Name = "Avalonia Lifetime" };
             }
             else
             {

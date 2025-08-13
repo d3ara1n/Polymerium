@@ -29,12 +29,7 @@ namespace Polymerium.Trident.Engines
         #region IEnumerable<StageBase> Members
 
         public IEnumerator<StageBase> GetEnumerator() =>
-            new DeployEngineEnumerator(new DeployContext(key,
-                                                         setup,
-                                                         provider,
-                                                         options,
-                                                         verificationWatermark,
-                                                         javaHomeLocator));
+            new DeployEngineEnumerator(new(key, setup, provider, options, verificationWatermark, javaHomeLocator));
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

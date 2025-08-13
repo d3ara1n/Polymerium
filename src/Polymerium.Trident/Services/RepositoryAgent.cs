@@ -140,9 +140,7 @@ namespace Polymerium.Trident.Services
             try
             {
                 var result = await factory().ConfigureAwait(false);
-                await _cache
-                     .SetAsync(key, result, new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN })
-                     .ConfigureAwait(false);
+                await _cache.SetAsync(key, result, new() { SlidingExpiration = EXPIRED_IN }).ConfigureAwait(false);
                 _logger.LogDebug("Cache bytes missed but recorded: {}", key);
 
 

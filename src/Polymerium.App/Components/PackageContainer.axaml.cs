@@ -192,7 +192,7 @@ namespace Polymerium.App.Components
                 {
                     _subscriptions.Dispose();
                     _subscriptions.Clear();
-                    _subscriptions = new CompositeDisposable();
+                    _subscriptions = new();
                     if (value is not null)
                     {
                         value

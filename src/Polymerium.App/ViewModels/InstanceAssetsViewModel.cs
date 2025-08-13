@@ -43,8 +43,7 @@ namespace Polymerium.App.ViewModels
                 var group = new ScreenshotGroupModel(files.Key);
                 foreach (var file in files)
                 {
-                    group.Screenshots.Add(new ScreenshotModel(new Uri(file.FullName, UriKind.Absolute),
-                                                              file.CreationTimeUtc));
+                    group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc));
                 }
 
                 Groups.Add(group);

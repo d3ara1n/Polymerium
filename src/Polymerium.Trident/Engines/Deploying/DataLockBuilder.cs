@@ -28,14 +28,14 @@ namespace Polymerium.Trident.Engines.Deploying
             ArgumentNullException.ThrowIfNull(_gameArguments);
             ArgumentNullException.ThrowIfNull(_javaArguments);
 
-            return new DataLock(_viability,
-                                _mainClass,
-                                _javaMajorVersion.Value,
-                                _gameArguments,
-                                _javaArguments,
-                                _libraries,
-                                _parcels,
-                                _assetIndex);
+            return new(_viability,
+                       _mainClass,
+                       _javaMajorVersion.Value,
+                       _gameArguments,
+                       _javaArguments,
+                       _libraries,
+                       _parcels,
+                       _assetIndex);
         }
 
         #endregion

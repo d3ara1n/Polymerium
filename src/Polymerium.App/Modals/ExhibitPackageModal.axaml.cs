@@ -418,7 +418,7 @@ namespace Polymerium.App.Modals
                 var rev = new Uri(url, UriKind.RelativeOrAbsolute);
                 TopLevel
                    .GetTopLevel(this)
-                  ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new Uri(Package.Reference, rev));
+                  ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Package.Reference, rev));
             }
         }
 

@@ -217,10 +217,7 @@ namespace Polymerium.App.ViewModels
                         File.Delete(file);
                     }
 
-                    _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                         PersistenceService.ActionKind.Reset,
-                                                         null,
-                                                         null));
+                    _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Reset, null, null));
                     _notificationService.PopMessage("Instance reset", Basic.Key, NotificationLevel.Success);
                 }
                 catch (Exception ex)
@@ -263,10 +260,7 @@ namespace Polymerium.App.ViewModels
 
             var oldSource = Basic.Source;
             Basic.Source = null;
-            _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                           PersistenceService.ActionKind.Unlock,
-                                                                           oldSource,
-                                                                           null));
+            _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Unlock, oldSource, null));
             _notificationService.PopMessage(Resources.InstancePropertiesView_UnlockingSuccessNotificationPrompt,
                                             Basic.Key,
                                             NotificationLevel.Success);
@@ -288,7 +282,7 @@ namespace Polymerium.App.ViewModels
             {
                 if (FileHelper.IsBitmapFile(path))
                 {
-                    ThumbnailOverwrite = new Bitmap(path);
+                    ThumbnailOverwrite = new(path);
                     await WriteIconAsync();
                 }
                 else
@@ -313,10 +307,7 @@ namespace Polymerium.App.ViewModels
                 var oldName = NameOverwrite;
                 NameOverwrite = name;
                 _owned.Value.Name = name;
-                _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                               PersistenceService.ActionKind.Rename,
-                                                                               oldName,
-                                                                               name));
+                _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Rename, oldName, name));
             }
         }
 
