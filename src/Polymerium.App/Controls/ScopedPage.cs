@@ -2,18 +2,19 @@
 using Avalonia;
 using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Controls;
-
-public class ScopedPage : Page
+namespace Polymerium.App.Controls
 {
-    public static readonly DirectProperty<ScopedPage, bool> IsMaximizedProperty =
-        AppWindow.IsMaximizedProperty.AddOwner<ScopedPage>(o => o.IsMaximized, (o, v) => o.IsMaximized = v);
-
-    public bool IsMaximized
+    public class ScopedPage : Page
     {
-        get;
-        set => SetAndRaise(IsMaximizedProperty, ref field, value);
-    }
+        public static readonly DirectProperty<ScopedPage, bool> IsMaximizedProperty =
+            AppWindow.IsMaximizedProperty.AddOwner<ScopedPage>(o => o.IsMaximized, (o, v) => o.IsMaximized = v);
 
-    protected override Type StyleKeyOverride => typeof(ScopedPage);
+        public bool IsMaximized
+        {
+            get;
+            set => SetAndRaise(IsMaximizedProperty, ref field, value);
+        }
+
+        protected override Type StyleKeyOverride => typeof(ScopedPage);
+    }
 }

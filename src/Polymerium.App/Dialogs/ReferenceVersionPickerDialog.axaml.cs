@@ -3,23 +3,25 @@ using Avalonia;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Dialogs;
-
-public partial class ReferenceVersionPickerDialog : Dialog
+namespace Polymerium.App.Dialogs
 {
-    public static readonly DirectProperty<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
-        VersionsProperty = AvaloniaProperty
-           .RegisterDirect<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>
-                ?>(nameof(Versions), o => o.Versions, (o, v) => o.Versions = v);
-
-    public ReferenceVersionPickerDialog() => InitializeComponent();
-
-    public IReadOnlyList<InstanceReferenceVersionModel>? Versions
+    public partial class ReferenceVersionPickerDialog : Dialog
     {
-        get;
-        set => SetAndRaise(VersionsProperty, ref field, value);
+        public static readonly
+            DirectProperty<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
+            VersionsProperty = AvaloniaProperty
+               .RegisterDirect<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>
+                    ?>(nameof(Versions), o => o.Versions, (o, v) => o.Versions = v);
+
+        public ReferenceVersionPickerDialog() => InitializeComponent();
+
+        public IReadOnlyList<InstanceReferenceVersionModel>? Versions
+        {
+            get;
+            set => SetAndRaise(VersionsProperty, ref field, value);
+        }
+
+
+        protected override bool ValidateResult(object? result) => result is InstanceReferenceVersionModel;
     }
-
-
-    protected override bool ValidateResult(object? result) => result is InstanceReferenceVersionModel;
 }

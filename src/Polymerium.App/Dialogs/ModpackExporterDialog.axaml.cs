@@ -1,11 +1,9 @@
 ﻿using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Dialogs;
-
-public partial class ModpackExporterDialog : Dialog
+namespace Polymerium.App.Dialogs
 {
-    public ModpackExporterDialog()
+    public partial class ModpackExporterDialog : Dialog
     {
-        InitializeComponent();
+        public ModpackExporterDialog() => InitializeComponent();
     }
 }

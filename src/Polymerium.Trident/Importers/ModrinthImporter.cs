@@ -6,115 +6,125 @@ using Trident.Abstractions.Importers;
 using Trident.Abstractions.Utilities;
 using Index = Polymerium.Trident.Models.ModrinthPack.Index;
 
-namespace Polymerium.Trident.Importers;
-
-public class ModrinthImporter : IProfileImporter
+namespace Polymerium.Trident.Importers
 {
-    private static readonly Dictionary<string, string> LOADER_MAPPINGS = new()
+    public class ModrinthImporter : IProfileImporter
     {
-        ["forge"] = LoaderHelper.LOADERID_FORGE,
-        ["neoforge"] = LoaderHelper.LOADERID_NEOFORGE,
-        ["fabric-loader"] = LoaderHelper.LOADERID_FABRIC,
-        ["quilt-loader"] = LoaderHelper.LOADERID_QUILT
-    };
+        private static readonly Dictionary<string, string> LOADER_MAPPINGS = new()
+        {
+            ["forge"] = LoaderHelper.LOADERID_FORGE,
+            ["neoforge"] = LoaderHelper.LOADERID_NEOFORGE,
+            ["fabric-loader"] = LoaderHelper.LOADERID_FABRIC,
+            ["quilt-loader"] = LoaderHelper.LOADERID_QUILT
+        };
 
-    #region IProfileImporter Members
+        #region IProfileImporter Members
 
-    public string IndexFileName => "modrinth.index.json";
+        public string IndexFileName => "modrinth.index.json";
 
-    public async Task<ImportedProfileContainer> ExtractAsync(CompressedProfilePack pack)
-    {
-        await using var manifestStream = pack.Open(IndexFileName);
-        var index = await JsonSerializer
-                         .DeserializeAsync<Index>(manifestStream, JsonSerializerOptions.Web)
-                         .ConfigureAwait(false);
-        if (index is null
-         || !TryExtractLoader(index.Dependencies, out var loader)
-         || !TryExtractVersion(index.Dependencies, out var version))
-            throw new FormatException($"{IndexFileName} is not a valid manifest");
-
-        var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
-        return new ImportedProfileContainer(new Profile(index.Name,
-                                                        new Profile.Rice(source,
-                                                                         version,
-                                                                         LoaderHelper.ToLurl(loader.Identity,
-                                                                             loader.Version),
-                                                                         [
-                                                                             .. index
-                                                                                .Files
-                                                                                .Where(x => x.Env?.Client is not
-                                                                                     "unsupported")
-                                                                                .Select(ToPackage)
-                                                                         ]),
-                                                        new Dictionary<string, object>()),
-                                            pack
-                                               .FileNames
-                                               .Where(x => x.StartsWith("overrides")
-                                                        && x != "overrides"
-                                                        && x.Length > "overrides".Length + 1)
-                                               .Select(x => (x, x[("overrides".Length + 1)..]))
-                                               .Where(x => !x.Item2.EndsWith('/')
-                                                        && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
-                                               .Concat(pack
-                                                      .FileNames
-                                                      .Where(x => x.StartsWith("client-overrides")
-                                                               && x != "client-overrides"
-                                                               && x.Length > "client-overrides".Length + 1)
-                                                      .Select(x => (x, x[("client-overrides".Length + 1)..]))
-                                                      .Where(x => !x.Item2.EndsWith('/')
-                                                               && !ImporterAgent.INVALID_NAMES.Contains(x.Item2)))
-                                               .ToList(),
-                                            pack.Reference?.Thumbnail);
-    }
-
-    #endregion
-
-    private bool TryExtractLoader(
-        IDictionary<string, string> dependencies,
-        out (string Identity, string Version) loader)
-    {
-        foreach (var (k, v) in dependencies)
-            if (LOADER_MAPPINGS.TryGetValue(k, out var mapping))
+        public async Task<ImportedProfileContainer> ExtractAsync(CompressedProfilePack pack)
+        {
+            await using var manifestStream = pack.Open(IndexFileName);
+            var index = await JsonSerializer
+                             .DeserializeAsync<Index>(manifestStream, JsonSerializerOptions.Web)
+                             .ConfigureAwait(false);
+            if (index is null
+             || !TryExtractLoader(index.Dependencies, out var loader)
+             || !TryExtractVersion(index.Dependencies, out var version))
             {
-                loader = (mapping, v);
+                throw new FormatException($"{IndexFileName} is not a valid manifest");
+            }
+
+            var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
+            return new ImportedProfileContainer(new Profile(index.Name,
+                                                            new Profile.Rice(source,
+                                                                             version,
+                                                                             LoaderHelper.ToLurl(loader.Identity,
+                                                                                 loader.Version),
+                                                                             [
+                                                                                 .. index
+                                                                                    .Files
+                                                                                    .Where(x => x.Env?.Client is not
+                                                                                         "unsupported")
+                                                                                    .Select(ToPackage)
+                                                                             ]),
+                                                            new Dictionary<string, object>()),
+                                                pack
+                                                   .FileNames
+                                                   .Where(x => x.StartsWith("overrides")
+                                                            && x != "overrides"
+                                                            && x.Length > "overrides".Length + 1)
+                                                   .Select(x => (x, x[("overrides".Length + 1)..]))
+                                                   .Where(x => !x.Item2.EndsWith('/')
+                                                            && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
+                                                   .Concat(pack
+                                                          .FileNames
+                                                          .Where(x => x.StartsWith("client-overrides")
+                                                                   && x != "client-overrides"
+                                                                   && x.Length > "client-overrides".Length + 1)
+                                                          .Select(x => (x, x[("client-overrides".Length + 1)..]))
+                                                          .Where(x => !x.Item2.EndsWith('/')
+                                                                   && !ImporterAgent.INVALID_NAMES.Contains(x.Item2)))
+                                                   .ToList(),
+                                                pack.Reference?.Thumbnail);
+        }
+
+        #endregion
+
+        private bool TryExtractLoader(
+            IDictionary<string, string> dependencies,
+            out (string Identity, string Version) loader)
+        {
+            foreach (var (k, v) in dependencies)
+            {
+                if (LOADER_MAPPINGS.TryGetValue(k, out var mapping))
+                {
+                    loader = (mapping, v);
+                    return true;
+                }
+            }
+
+            loader = default((string, string));
+            return false;
+        }
+
+        private bool TryExtractVersion(
+            IDictionary<string, string> dependencies,
+            [MaybeNullWhen(false)] out string version)
+        {
+            if (dependencies.TryGetValue("minecraft", out var v))
+            {
+                version = v;
                 return true;
             }
 
-        loader = default((string, string));
-        return false;
-    }
-
-    private bool TryExtractVersion(IDictionary<string, string> dependencies, [MaybeNullWhen(false)] out string version)
-    {
-        if (dependencies.TryGetValue("minecraft", out var v))
-        {
-            version = v;
-            return true;
+            version = null;
+            return false;
         }
 
-        version = null;
-        return false;
-    }
-
-    private Profile.Rice.Entry ToPackage(Index.IndexFile file)
-    {
-        var download = file.Downloads.FirstOrDefault(x => x.Host == "cdn.modrinth.com");
-        // https://cdn.modrinth.com/data/88888888/versions/88888888/filename.jar
-        if (download != null)
+        private Profile.Rice.Entry ToPackage(Index.IndexFile file)
         {
-            var path = download.AbsolutePath;
-            if (path.Length > 32)
+            var download = file.Downloads.FirstOrDefault(x => x.Host == "cdn.modrinth.com");
+            // https://cdn.modrinth.com/data/88888888/versions/88888888/filename.jar
+            if (download != null)
             {
-                var projectId = path[6..14];
-                var versionId = path[24..32];
-                return new Profile.Rice.Entry(PackageHelper.ToPurl(ModrinthService.LABEL, null, projectId, versionId),
-                                              true,
-                                              null,
-                                              []);
+                var path = download.AbsolutePath;
+                if (path.Length > 32)
+                {
+                    var projectId = path[6..14];
+                    var versionId = path[24..32];
+                    return new Profile.Rice.Entry(PackageHelper.ToPurl(ModrinthService.LABEL,
+                                                                       null,
+                                                                       projectId,
+                                                                       versionId),
+                                                  true,
+                                                  null,
+                                                  []);
+                }
             }
-        }
 
-        // or dead end
-        throw new NotSupportedException($"{file.Path} can not be recognized as an attachment");
+            // or dead end
+            throw new NotSupportedException($"{file.Path} can not be recognized as an attachment");
+        }
     }
 }

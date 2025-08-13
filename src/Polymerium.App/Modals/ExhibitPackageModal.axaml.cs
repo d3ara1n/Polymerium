@@ -16,388 +16,412 @@ using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
-namespace Polymerium.App.Modals;
-
-public partial class ExhibitPackageModal : Modal
+namespace Polymerium.App.Modals
 {
-    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyVersions),
-                                                                          o => o.LazyVersions,
-                                                                          (o, v) => o.LazyVersions = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, bool> IsFilterEnabledProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(nameof(IsFilterEnabled),
-                                                                   o => o.IsFilterEnabled,
-                                                                   (o, v) => o.IsFilterEnabled = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, ExhibitVersionModel?> SelectedVersionProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitVersionModel?>(nameof(SelectedVersion),
-            o => o.SelectedVersion,
-            (o, v) => o.SelectedVersion = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, int> SelectedVersionModeProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, int>(nameof(SelectedVersionMode),
-                                                                  o => o.SelectedVersionMode,
-                                                                  (o, v) => o.SelectedVersionMode = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, bool> IsDetailPanelVisibleProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(nameof(IsDetailPanelVisible),
-                                                                   o => o.IsDetailPanelVisible,
-                                                                   (o, v) => o.IsDetailPanelVisible = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
-                                                                           o => o.Exhibit,
-                                                                           (o, v) => o.Exhibit = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyDescriptionProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDescription),
-                                                                          o => o.LazyDescription,
-                                                                          (o, v) => o.LazyDescription = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyDependenciesProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDependencies),
-                                                                          o => o.LazyDependencies,
-                                                                          (o, v) => o.LazyDependencies = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, ICommand?> ViewPackageCommandProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ICommand?>(nameof(ViewPackageCommand),
-                                                                        o => o.ViewPackageCommand,
-                                                                        (o, v) => o.ViewPackageCommand = v);
-
-    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyChangelogProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyChangelog),
-                                                                          o => o.LazyChangelog,
-                                                                          (o, v) => o.LazyChangelog = v);
-
-
-    private static bool isDetailPanelVisible;
-
-
-    public ExhibitPackageModal() => InitializeComponent();
-
-    public LazyObject? LazyChangelog
+    public partial class ExhibitPackageModal : Modal
     {
-        get;
-        set => SetAndRaise(LazyChangelogProperty, ref field, value);
-    }
+        public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyVersionsProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyVersions),
+                                                                              o => o.LazyVersions,
+                                                                              (o, v) => o.LazyVersions = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, bool> IsFilterEnabledProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(nameof(IsFilterEnabled),
+                                                                       o => o.IsFilterEnabled,
+                                                                       (o, v) => o.IsFilterEnabled = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, ExhibitVersionModel?> SelectedVersionProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitVersionModel?>(nameof(SelectedVersion),
+                o => o.SelectedVersion,
+                (o, v) => o.SelectedVersion = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, int> SelectedVersionModeProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, int>(nameof(SelectedVersionMode),
+                                                                      o => o.SelectedVersionMode,
+                                                                      (o, v) => o.SelectedVersionMode = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, bool> IsDetailPanelVisibleProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(nameof(IsDetailPanelVisible),
+                                                                       o => o.IsDetailPanelVisible,
+                                                                       (o, v) => o.IsDetailPanelVisible = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
+                                                                               o => o.Exhibit,
+                                                                               (o, v) => o.Exhibit = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyDescriptionProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDescription),
+                                                                              o => o.LazyDescription,
+                                                                              (o, v) => o.LazyDescription = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyDependenciesProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDependencies),
+                                                                              o => o.LazyDependencies,
+                                                                              (o, v) => o.LazyDependencies = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, ICommand?> ViewPackageCommandProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ICommand?>(nameof(ViewPackageCommand),
+                                                                            o => o.ViewPackageCommand,
+                                                                            (o, v) => o.ViewPackageCommand = v);
+
+        public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyChangelogProperty =
+            AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyChangelog),
+                                                                              o => o.LazyChangelog,
+                                                                              (o, v) => o.LazyChangelog = v);
 
 
-    public ICommand? ViewPackageCommand
-    {
-        get;
-        set => SetAndRaise(ViewPackageCommandProperty, ref field, value);
-    }
+        private static bool isDetailPanelVisible;
 
 
-    public LazyObject? LazyDependencies
-    {
-        get;
-        set => SetAndRaise(LazyDependenciesProperty, ref field, value);
-    }
+        public ExhibitPackageModal() => InitializeComponent();
 
-
-    public LazyObject? LazyDescription
-    {
-        get;
-        set => SetAndRaise(LazyDescriptionProperty, ref field, value);
-    }
-
-    public bool IsDetailPanelVisible
-    {
-        get;
-        set => SetAndRaise(IsDetailPanelVisibleProperty, ref field, value);
-    } = isDetailPanelVisible;
-
-    public required ExhibitModel Exhibit
-    {
-        get;
-        set => SetAndRaise(ExhibitProperty, ref field, value);
-    }
-
-
-    public int SelectedVersionMode
-    {
-        get;
-        set => SetAndRaise(SelectedVersionModeProperty, ref field, value);
-    }
-
-
-    private ExhibitPackageModel Package => (DataContext as ExhibitPackageModel)!;
-
-    public LazyObject? LazyVersions
-    {
-        get;
-        set => SetAndRaise(LazyVersionsProperty, ref field, value);
-    }
-
-    public bool IsFilterEnabled
-    {
-        get;
-        set => SetAndRaise(IsFilterEnabledProperty, ref field, value);
-    }
-
-    public ExhibitVersionModel? SelectedVersion
-    {
-        get;
-        set => SetAndRaise(SelectedVersionProperty, ref field, value);
-    }
-
-    public required DataService DataService { get; init; }
-    public required Filter Filter { get; init; }
-
-    public required Action<ExhibitModel> ModifyPendingCallback { get; init; }
-    public required Func<Project, ExhibitModel> LinkExhibitCallback { get; init; }
-
-
-    protected override void OnLoaded(RoutedEventArgs e)
-    {
-        base.OnLoaded(e);
-
-        // Trigger ConstructVersions
-        IsFilterEnabled = true;
-
-        // Initialize
-        LazyDescription = ConstructDescription();
-        LazyChangelog = ConstructChangelog();
-        LazyDependencies = ConstructDependencies();
-    }
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == IsFilterEnabledProperty)
+        public LazyObject? LazyChangelog
         {
-            LazyVersions = ConstructVersions();
-            LazyDependencies = ConstructDependencies();
+            get;
+            set => SetAndRaise(LazyChangelogProperty, ref field, value);
         }
 
-        if (change.Property == SelectedVersionProperty || change.Property == SelectedVersionModeProperty)
+
+        public ICommand? ViewPackageCommand
         {
-            LazyDependencies = ConstructDependencies();
-            ApplyCommand.NotifyCanExecuteChanged();
+            get;
+            set => SetAndRaise(ViewPackageCommandProperty, ref field, value);
         }
 
-        if (change.Property == SelectedVersionProperty)
+
+        public LazyObject? LazyDependencies
+        {
+            get;
+            set => SetAndRaise(LazyDependenciesProperty, ref field, value);
+        }
+
+
+        public LazyObject? LazyDescription
+        {
+            get;
+            set => SetAndRaise(LazyDescriptionProperty, ref field, value);
+        }
+
+        public bool IsDetailPanelVisible
+        {
+            get;
+            set => SetAndRaise(IsDetailPanelVisibleProperty, ref field, value);
+        } = isDetailPanelVisible;
+
+        public required ExhibitModel Exhibit
+        {
+            get;
+            set => SetAndRaise(ExhibitProperty, ref field, value);
+        }
+
+
+        public int SelectedVersionMode
+        {
+            get;
+            set => SetAndRaise(SelectedVersionModeProperty, ref field, value);
+        }
+
+
+        private ExhibitPackageModel Package => (DataContext as ExhibitPackageModel)!;
+
+        public LazyObject? LazyVersions
+        {
+            get;
+            set => SetAndRaise(LazyVersionsProperty, ref field, value);
+        }
+
+        public bool IsFilterEnabled
+        {
+            get;
+            set => SetAndRaise(IsFilterEnabledProperty, ref field, value);
+        }
+
+        public ExhibitVersionModel? SelectedVersion
+        {
+            get;
+            set => SetAndRaise(SelectedVersionProperty, ref field, value);
+        }
+
+        public required DataService DataService { get; init; }
+        public required Filter Filter { get; init; }
+
+        public required Action<ExhibitModel> ModifyPendingCallback { get; init; }
+        public required Func<Project, ExhibitModel> LinkExhibitCallback { get; init; }
+
+
+        protected override void OnLoaded(RoutedEventArgs e)
+        {
+            base.OnLoaded(e);
+
+            // Trigger ConstructVersions
+            IsFilterEnabled = true;
+
+            // Initialize
+            LazyDescription = ConstructDescription();
             LazyChangelog = ConstructChangelog();
-        if (change.Property == IsDetailPanelVisibleProperty)
-            isDetailPanelVisible = change.GetNewValue<bool>();
-    }
+            LazyDependencies = ConstructDependencies();
+        }
 
-    private LazyObject ConstructDescription()
-    {
-        var lazy = new LazyObject(async t =>
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
         {
-            if (t.IsCancellationRequested)
-                return null;
-            var description = await DataService.ReadDescriptionAsync(Package.Label,
-                                                                     Package.Namespace,
-                                                                     Package.ProjectId);
-            return description;
-        });
-        return lazy;
-    }
+            base.OnPropertyChanged(change);
 
-    private LazyObject ConstructChangelog()
-    {
-        var lazy = new LazyObject(async t =>
-        {
-            if (t.IsCancellationRequested)
-                return null;
-            var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
-            if (vid is null)
-                return null;
-
-            var description =
-                await DataService.ReadChangelogAsync(Package.Label, Package.Namespace, Package.ProjectId, vid);
-            return description;
-        });
-        return lazy;
-    }
-
-    private LazyObject ConstructDependencies()
-    {
-        var lazy = new LazyObject(async t =>
-        {
-            if (t.IsCancellationRequested)
-                return null;
-            var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
-            var package = await DataService.ResolvePackageAsync(Package.Label,
-                                                                Package.Namespace,
-                                                                Package.ProjectId,
-                                                                vid,
-                                                                Filter);
-            var tasks = package
-                       .Dependencies.Select(async x =>
-                        {
-                            var dependency = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
-                            return new ExhibitDependencyModel(LinkExhibitCallback(dependency),
-                                                              x.Label,
-                                                              x.Namespace,
-                                                              x.Pid,
-                                                              x.Vid,
-                                                              dependency.ProjectName,
-                                                              dependency.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
-                                                              dependency.Author,
-                                                              dependency.Kind,
-                                                              x.IsRequired);
-                        })
-                       .ToArray();
-            await Task.WhenAll(tasks);
-            var rv = new ExhibitDependencyCollection(package.VersionName,
-                                                     package.VersionId,
-                                                     [.. tasks.Select(x => x.Result)]);
-            return rv;
-        });
-        return lazy;
-    }
-
-    private LazyObject ConstructVersions()
-    {
-        var lazy = new LazyObject(async t =>
-                                  {
-                                      if (t.IsCancellationRequested)
-                                          return null;
-                                      var versions = (await DataService.InspectVersionsAsync(Package.Label,
-                                                          Package.Namespace,
-                                                          Package.ProjectId,
-                                                          IsFilterEnabled ? Filter : Filter.None)).ToArray();
-                                      var project = Package;
-                                      var rv = new ExhibitVersionCollection([
-                                          .. versions.Select(x => new ExhibitVersionModel(project.Label,
-                                                                 project.Namespace,
-                                                                 project.ProjectName,
-                                                                 project.ProjectId,
-                                                                 x.VersionName,
-                                                                 x.VersionId,
-                                                                 string.Join(",",
-                                                                             x.Requirements.AnyOfLoaders
-                                                                              .Select(LoaderHelper.ToDisplayName)),
-                                                                 string.Join(",", x.Requirements.AnyOfVersions),
-                                                                 string.Empty,
-                                                                 x.PublishedAt,
-                                                                 x.DownloadCount,
-                                                                 x.ReleaseType,
-                                                                 PackageHelper.ToPurl(x.Label,
-                                                                     x.Namespace,
-                                                                     x.ProjectId,
-                                                                     x.VersionId)))
-                                      ]);
-                                      return rv;
-                                  },
-                                  value =>
-                                  {
-                                      var versionId = Exhibit.State switch
-                                      {
-                                          null or ExhibitState.Editable or ExhibitState.Removing => Exhibit
-                                             .InstalledVersionId,
-                                          _ => Exhibit.PendingVersionId
-                                      };
-
-
-                                      if (value is ExhibitVersionCollection versions)
-                                      {
-                                          if (versionId != null)
-                                          {
-                                              var installed = versions.FirstOrDefault(x => x.VersionId == versionId);
-                                              if (installed != null)
-                                                  Dispatcher.UIThread.Post(() =>
-                                                  {
-                                                      SelectedVersion = installed;
-                                                      SelectedVersionMode = 0;
-                                                  });
-                                          }
-                                          else
-                                          {
-                                              Dispatcher.UIThread.Post(() =>
-                                              {
-                                                  SelectedVersion = versions.FirstOrDefault();
-                                                  SelectedVersionMode = 0;
-                                              });
-                                          }
-                                      }
-                                  });
-
-        return lazy;
-    }
-
-    #region Commands
-
-    [RelayCommand]
-    private void Dismiss()
-    {
-        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-    }
-
-    private bool CanApply() => SelectedVersionMode == 1 || (SelectedVersionMode == 0 && SelectedVersion != null);
-
-    [RelayCommand(CanExecute = nameof(CanApply))]
-    private void Apply()
-    {
-        if (Exhibit.State is null)
-            Exhibit.State = ExhibitState.Adding;
-
-        if (Exhibit.State is ExhibitState.Editable)
-        {
-            if (Exhibit.InstalledVersionId == SelectedVersion?.VersionId)
+            if (change.Property == IsFilterEnabledProperty)
             {
-                // 未作出更改，Abort
-                Dismiss();
-                return;
+                LazyVersions = ConstructVersions();
+                LazyDependencies = ConstructDependencies();
             }
 
-            Exhibit.State = ExhibitState.Modifying;
+            if (change.Property == SelectedVersionProperty || change.Property == SelectedVersionModeProperty)
+            {
+                LazyDependencies = ConstructDependencies();
+                ApplyCommand.NotifyCanExecuteChanged();
+            }
+
+            if (change.Property == SelectedVersionProperty)
+            {
+                LazyChangelog = ConstructChangelog();
+            }
+
+            if (change.Property == IsDetailPanelVisibleProperty)
+            {
+                isDetailPanelVisible = change.GetNewValue<bool>();
+            }
         }
 
-        if (SelectedVersionMode == 0 && SelectedVersion != null)
+        private LazyObject ConstructDescription()
         {
-            // 指定了版本
-            Exhibit.PendingVersionId = SelectedVersion?.VersionId;
-            Exhibit.PendingVersionName = SelectedVersion?.VersionName;
+            var lazy = new LazyObject(async t =>
+            {
+                if (t.IsCancellationRequested)
+                {
+                    return null;
+                }
+
+                var description = await DataService.ReadDescriptionAsync(Package.Label,
+                                                                         Package.Namespace,
+                                                                         Package.ProjectId);
+                return description;
+            });
+            return lazy;
         }
-        else
+
+        private LazyObject ConstructChangelog()
         {
-            // 未指定版本
+            var lazy = new LazyObject(async t =>
+            {
+                if (t.IsCancellationRequested)
+                {
+                    return null;
+                }
+
+                var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
+                if (vid is null)
+                {
+                    return null;
+                }
+
+                var description =
+                    await DataService.ReadChangelogAsync(Package.Label, Package.Namespace, Package.ProjectId, vid);
+                return description;
+            });
+            return lazy;
+        }
+
+        private LazyObject ConstructDependencies()
+        {
+            var lazy = new LazyObject(async t =>
+            {
+                if (t.IsCancellationRequested)
+                {
+                    return null;
+                }
+
+                var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
+                var package = await DataService.ResolvePackageAsync(Package.Label,
+                                                                    Package.Namespace,
+                                                                    Package.ProjectId,
+                                                                    vid,
+                                                                    Filter);
+                var tasks = package
+                           .Dependencies.Select(async x =>
+                            {
+                                var dependency = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
+                                return new ExhibitDependencyModel(LinkExhibitCallback(dependency),
+                                                                  x.Label,
+                                                                  x.Namespace,
+                                                                  x.Pid,
+                                                                  x.Vid,
+                                                                  dependency.ProjectName,
+                                                                  dependency.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                                  dependency.Author,
+                                                                  dependency.Kind,
+                                                                  x.IsRequired);
+                            })
+                           .ToArray();
+                await Task.WhenAll(tasks);
+                var rv = new ExhibitDependencyCollection(package.VersionName,
+                                                         package.VersionId,
+                                                         [.. tasks.Select(x => x.Result)]);
+                return rv;
+            });
+            return lazy;
+        }
+
+        private LazyObject ConstructVersions()
+        {
+            var lazy = new LazyObject(async t =>
+                                      {
+                                          if (t.IsCancellationRequested)
+                                          {
+                                              return null;
+                                          }
+
+                                          var versions = (await DataService.InspectVersionsAsync(Package.Label,
+                                                              Package.Namespace,
+                                                              Package.ProjectId,
+                                                              IsFilterEnabled ? Filter : Filter.None))
+                                             .ToArray();
+                                          var project = Package;
+                                          var rv = new ExhibitVersionCollection([
+                                              .. versions.Select(x => new ExhibitVersionModel(project.Label,
+                                                                     project.Namespace,
+                                                                     project.ProjectName,
+                                                                     project.ProjectId,
+                                                                     x.VersionName,
+                                                                     x.VersionId,
+                                                                     string.Join(",",
+                                                                         x.Requirements.AnyOfLoaders
+                                                                          .Select(LoaderHelper
+                                                                              .ToDisplayName)),
+                                                                     string.Join(",", x.Requirements.AnyOfVersions),
+                                                                     string.Empty,
+                                                                     x.PublishedAt,
+                                                                     x.DownloadCount,
+                                                                     x.ReleaseType,
+                                                                     PackageHelper.ToPurl(x.Label,
+                                                                         x.Namespace,
+                                                                         x.ProjectId,
+                                                                         x.VersionId)))
+                                          ]);
+                                          return rv;
+                                      },
+                                      value =>
+                                      {
+                                          var versionId = Exhibit.State switch
+                                          {
+                                              null or ExhibitState.Editable or ExhibitState.Removing => Exhibit
+                                                 .InstalledVersionId,
+                                              _ => Exhibit.PendingVersionId
+                                          };
+
+
+                                          if (value is ExhibitVersionCollection versions)
+                                          {
+                                              if (versionId != null)
+                                              {
+                                                  var installed =
+                                                      versions.FirstOrDefault(x => x.VersionId == versionId);
+                                                  if (installed != null)
+                                                  {
+                                                      Dispatcher.UIThread.Post(() =>
+                                                      {
+                                                          SelectedVersion = installed;
+                                                          SelectedVersionMode = 0;
+                                                      });
+                                                  }
+                                              }
+                                              else
+                                              {
+                                                  Dispatcher.UIThread.Post(() =>
+                                                  {
+                                                      SelectedVersion = versions.FirstOrDefault();
+                                                      SelectedVersionMode = 0;
+                                                  });
+                                              }
+                                          }
+                                      });
+
+            return lazy;
+        }
+
+        #region Commands
+
+        [RelayCommand]
+        private void Dismiss() => RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+
+        private bool CanApply() => SelectedVersionMode == 1 || (SelectedVersionMode == 0 && SelectedVersion != null);
+
+        [RelayCommand(CanExecute = nameof(CanApply))]
+        private void Apply()
+        {
+            if (Exhibit.State is null)
+            {
+                Exhibit.State = ExhibitState.Adding;
+            }
+
+            if (Exhibit.State is ExhibitState.Editable)
+            {
+                if (Exhibit.InstalledVersionId == SelectedVersion?.VersionId)
+                {
+                    // 未作出更改，Abort
+                    Dismiss();
+                    return;
+                }
+
+                Exhibit.State = ExhibitState.Modifying;
+            }
+
+            if (SelectedVersionMode == 0 && SelectedVersion != null)
+            {
+                // 指定了版本
+                Exhibit.PendingVersionId = SelectedVersion?.VersionId;
+                Exhibit.PendingVersionName = SelectedVersion?.VersionName;
+            }
+            else
+            {
+                // 未指定版本
+                Exhibit.PendingVersionId = null;
+                Exhibit.PendingVersionName = null;
+            }
+
+            ModifyPendingCallback(Exhibit);
+            Dismiss();
+        }
+
+        [RelayCommand]
+        private void Delete()
+        {
+            Exhibit.State = ExhibitState.Removing;
             Exhibit.PendingVersionId = null;
             Exhibit.PendingVersionName = null;
+            ModifyPendingCallback(Exhibit);
+            Dismiss();
         }
 
-        ModifyPendingCallback(Exhibit);
-        Dismiss();
-    }
-
-    [RelayCommand]
-    private void Delete()
-    {
-        Exhibit.State = ExhibitState.Removing;
-        Exhibit.PendingVersionId = null;
-        Exhibit.PendingVersionName = null;
-        ModifyPendingCallback(Exhibit);
-        Dismiss();
-    }
-
-    [RelayCommand]
-    private void Undo()
-    {
-        Exhibit.State = Exhibit.Installed == null ? null : ExhibitState.Editable;
-        Exhibit.PendingVersionId = null;
-        Exhibit.PendingVersionName = null;
-        ModifyPendingCallback(Exhibit);
-        Dismiss();
-    }
-
-    [RelayCommand]
-    private void NavigateUri(string? url)
-    {
-        if (url is not null && Package.Reference is not null)
+        [RelayCommand]
+        private void Undo()
         {
-            var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            TopLevel
-               .GetTopLevel(this)
-              ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new Uri(Package.Reference, rev));
+            Exhibit.State = Exhibit.Installed == null ? null : ExhibitState.Editable;
+            Exhibit.PendingVersionId = null;
+            Exhibit.PendingVersionName = null;
+            ModifyPendingCallback(Exhibit);
+            Dismiss();
         }
-    }
 
-    #endregion
+        [RelayCommand]
+        private void NavigateUri(string? url)
+        {
+            if (url is not null && Package.Reference is not null)
+            {
+                var rev = new Uri(url, UriKind.RelativeOrAbsolute);
+                TopLevel
+                   .GetTopLevel(this)
+                  ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new Uri(Package.Reference, rev));
+            }
+        }
+
+        #endregion
+    }
 }

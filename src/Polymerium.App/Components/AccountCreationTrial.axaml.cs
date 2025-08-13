@@ -2,28 +2,24 @@
 using Polymerium.App.Controls;
 using Polymerium.Trident.Accounts;
 
-namespace Polymerium.App.Components;
-
-public partial class AccountCreationTrial : AccountCreationStep
+namespace Polymerium.App.Components
 {
-    public AccountCreationTrial()
+    public partial class AccountCreationTrial : AccountCreationStep
     {
-        InitializeComponent();
-    }
+        public AccountCreationTrial() => InitializeComponent();
 
-    public override object NextStep()
-    {
-        return new AccountCreationPreview
-        {
-            Account = RoleSelectBox.SelectedIndex switch
+        public override object NextStep() =>
+            new AccountCreationPreview
             {
-                0 => TrialAccount.CreateStewie(),
-                1 => TrialAccount.CreateBrian(),
-                2 => TrialAccount.CreateChris(),
-                3 => TrialAccount.CreatePeter(),
-                4 => TrialAccount.CreateLois(),
-                _ => throw new ArgumentOutOfRangeException()
-            }
-        };
+                Account = RoleSelectBox.SelectedIndex switch
+                {
+                    0 => TrialAccount.CreateStewie(),
+                    1 => TrialAccount.CreateBrian(),
+                    2 => TrialAccount.CreateChris(),
+                    3 => TrialAccount.CreatePeter(),
+                    4 => TrialAccount.CreateLois(),
+                    _ => throw new ArgumentOutOfRangeException()
+                }
+            };
     }
 }

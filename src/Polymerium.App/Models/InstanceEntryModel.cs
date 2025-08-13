@@ -3,31 +3,32 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models;
-
-public partial class InstanceEntryModel : ModelBase
+namespace Polymerium.App.Models
 {
-    public InstanceEntryModel(string key, string name, string version, string? loader, string? source) =>
-        Basic = new InstanceBasicModel(key, name, version, loader, source);
+    public partial class InstanceEntryModel : ModelBase
+    {
+        public InstanceEntryModel(string key, string name, string version, string? loader, string? source) =>
+            Basic = new InstanceBasicModel(key, name, version, loader, source);
 
-    public InstanceBasicModel Basic { get; }
+        public InstanceBasicModel Basic { get; }
 
-    #region Reactive
+        #region Reactive
 
-    [ObservableProperty]
-    public partial InstanceEntryState State { get; set; }
+        [ObservableProperty]
+        public partial InstanceEntryState State { get; set; }
 
-    [ObservableProperty]
-    public partial double Progress { get; set; }
+        [ObservableProperty]
+        public partial double Progress { get; set; }
 
-    [ObservableProperty]
-    public partial bool IsPending { get; set; }
+        [ObservableProperty]
+        public partial bool IsPending { get; set; }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(LastPlayedAt))]
-    public partial DateTimeOffset? LastPlayedAtRaw { get; set; }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(LastPlayedAt))]
+        public partial DateTimeOffset? LastPlayedAtRaw { get; set; }
 
-    public string LastPlayedAt => LastPlayedAtRaw.Humanize();
+        public string LastPlayedAt => LastPlayedAtRaw.Humanize();
 
-    #endregion
+        #endregion
+    }
 }

@@ -2,22 +2,23 @@
 using Avalonia;
 using Avalonia.Controls.Primitives;
 
-namespace Polymerium.App.Controls;
-
-public abstract class AccountCreationStep : HeaderedContentControl
+namespace Polymerium.App.Controls
 {
-    public static readonly DirectProperty<AccountCreationStep, bool> IsNextAvailableProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationStep, bool>(nameof(IsNextAvailable),
-                                                                   o => o.IsNextAvailable,
-                                                                   (o, v) => o.IsNextAvailable = v);
-
-    protected override Type StyleKeyOverride => typeof(AccountCreationStep);
-
-    public bool IsNextAvailable
+    public abstract class AccountCreationStep : HeaderedContentControl
     {
-        get;
-        set => SetAndRaise(IsNextAvailableProperty, ref field, value);
-    }
+        public static readonly DirectProperty<AccountCreationStep, bool> IsNextAvailableProperty =
+            AvaloniaProperty.RegisterDirect<AccountCreationStep, bool>(nameof(IsNextAvailable),
+                                                                       o => o.IsNextAvailable,
+                                                                       (o, v) => o.IsNextAvailable = v);
 
-    public abstract object NextStep();
+        protected override Type StyleKeyOverride => typeof(AccountCreationStep);
+
+        public bool IsNextAvailable
+        {
+            get;
+            set => SetAndRaise(IsNextAvailableProperty, ref field, value);
+        }
+
+        public abstract object NextStep();
+    }
 }

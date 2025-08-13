@@ -5,64 +5,65 @@ using Avalonia;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Polymerium.App.Services;
-
-public class AvaloniaLifetime : IHostedService
+namespace Polymerium.App.Services
 {
-    private readonly IHostApplicationLifetime _lifetime;
-    private readonly Thread _thread;
-
-    public AvaloniaLifetime(
-        IHostApplicationLifetime lifetime,
-        ILogger<AvaloniaLifetime> logger,
-        IHostEnvironment environment)
+    public class AvaloniaLifetime : IHostedService
     {
-        _lifetime = lifetime;
+        private readonly IHostApplicationLifetime _lifetime;
+        private readonly Thread _thread;
 
-        logger.LogInformation("""
-                              {}({}):{}
-                              Polymerium/{}
-                              Avalonia({})/{}
-                              """,
-                              environment.ApplicationName,
-                              environment.EnvironmentName,
-                              environment.ContentRootPath,
-                              typeof(AvaloniaLifetime).Assembly.GetName().Version,
-                              Program.Debug ? "Debug" : "Prod",
-                              typeof(AvaloniaObject).Assembly.GetName().Version);
-
-        if (OperatingSystem.IsWindows())
+        public AvaloniaLifetime(
+            IHostApplicationLifetime lifetime,
+            ILogger<AvaloniaLifetime> logger,
+            IHostEnvironment environment)
         {
-            _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
-            _thread.SetApartmentState(ApartmentState.STA);
+            _lifetime = lifetime;
+
+            logger.LogInformation("""
+                                  {}({}):{}
+                                  Polymerium/{}
+                                  Avalonia({})/{}
+                                  """,
+                                  environment.ApplicationName,
+                                  environment.EnvironmentName,
+                                  environment.ContentRootPath,
+                                  typeof(AvaloniaLifetime).Assembly.GetName().Version,
+                                  Program.Debug ? "Debug" : "Prod",
+                                  typeof(AvaloniaObject).Assembly.GetName().Version);
+
+            if (OperatingSystem.IsWindows())
+            {
+                _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
+                _thread.SetApartmentState(ApartmentState.STA);
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
+            }
+            else
+            {
+                throw new NotSupportedException("Unsupported platform");
+            }
         }
-        else if (OperatingSystem.IsLinux())
+
+        #region IHostedService Members
+
+        public Task StartAsync(CancellationToken cancellationToken)
         {
-            _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
+            _thread.Start();
+            return Task.CompletedTask;
         }
-        else
+
+        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+        #endregion
+
+        private void Serve()
         {
-            throw new NotSupportedException("Unsupported platform");
+            Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
+            _lifetime.StopApplication();
         }
+
+        private void Deserve() { }
     }
-
-    #region IHostedService Members
-
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        _thread.Start();
-        return Task.CompletedTask;
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    #endregion
-
-    private void Serve()
-    {
-        Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
-        _lifetime.StopApplication();
-    }
-
-    private void Deserve() { }
 }
