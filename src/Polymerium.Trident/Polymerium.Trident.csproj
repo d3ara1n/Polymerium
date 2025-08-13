@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\submodules\Trident\src\Trident.Abstractions\Trident.Abstractions.csproj"/>
-        <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -26,10 +25,6 @@
         <PackageReference Include="Semver" Version="3.0.0"/>
         <PackageReference Include="System.Net.Http.Json" Version="10.0.0-preview.5.25277.114"/>
         <PackageReference Include="System.Text.Json" Version="10.0.0-preview.5.25277.114"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Compile Remove="Models\XboxLive\XboxLiveRequest.cs"/>
     </ItemGroup>
 
 </Project>
