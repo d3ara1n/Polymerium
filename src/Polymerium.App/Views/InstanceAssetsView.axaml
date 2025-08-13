@@ -1,0 +1,78 @@
+﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                  xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                  x:Class="Polymerium.App.Views.InstanceAssetsView" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <TabControl>
+        <TabItem Header="Screenshots">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ItemsControl>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="12" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <Border Background="{StaticResource CardBackgroundBrush}" BoxShadow="0 0 4 0 #3F000000" Margin="2"
+                            Padding="12" CornerRadius="{StaticResource MediumCornerRadius}" Width="256"
+                            VerticalAlignment="Top">
+                        <DockPanel VerticalSpacing="12">
+                            <TextBlock Text="2025/7/3" DockPanel.Dock="Top"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <ScrollViewer>
+                                <ItemsControl>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Spacing="8" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <Border Padding="8"
+                                            Height="178"
+                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                            BorderThickness="1"
+                                            BorderBrush="{StaticResource ControlBorderBrush}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                                            <Border Grid.Row="0" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Border.Background>
+                                                    <ImageBrush Source="/Assets/Images/Wallpaper.png"
+                                                                Stretch="UniformToFill" />
+                                                </Border.Background>
+                                            </Border>
+                                            <DockPanel Grid.Row="1">
+                                                <husk:ButtonGroup DockPanel.Dock="Right">
+                                                    <Button>
+                                                        <icons:PackIconLucide Kind="View"
+                                                                              Height="{StaticResource SmallFontSize}"
+                                                                              Width="{StaticResource SmallFontSize}" />
+                                                    </Button>
+                                                    <Button>
+                                                        <icons:PackIconLucide Kind="Share"
+                                                                              Height="{StaticResource SmallFontSize}"
+                                                                              Width="{StaticResource SmallFontSize}" />
+                                                    </Button>
+                                                    <Button>
+                                                        <icons:PackIconLucide Kind="Trash2"
+                                                                              Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                                              Height="{StaticResource SmallFontSize}"
+                                                                              Width="{StaticResource SmallFontSize}" />
+                                                    </Button>
+                                                </husk:ButtonGroup>
+                                                <husk:Tag Content="17:30" />
+                                            </DockPanel>
+                                        </Grid>
+                                    </Border>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </Border>
+                </ItemsControl>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Saves" />
+        <TabItem Header="Servers" />
+    </TabControl>
+</controls:Subpage>

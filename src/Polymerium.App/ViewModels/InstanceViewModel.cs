@@ -255,6 +255,8 @@ namespace Polymerium.App.ViewModels
             new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
             // Setup
             new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
+            // Assets
+            new(typeof(InstanceAssetsView), PackIconLucideKind.CassetteTape),
             // Widgets
             new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
             // Statistics
