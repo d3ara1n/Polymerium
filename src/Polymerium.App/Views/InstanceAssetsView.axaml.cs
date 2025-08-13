@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views
 {
-    public class InstanceAssetsView : Subpage
+    public partial class InstanceAssetsView : Subpage
     {
         public InstanceAssetsView() => InitializeComponent();
     }
