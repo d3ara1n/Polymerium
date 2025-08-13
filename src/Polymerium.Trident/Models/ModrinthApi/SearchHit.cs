@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.ModrinthApi;
 
-public record SearchHit(
+public readonly record struct SearchHit(
     string ProjectId,
     string ProjectType,
     string Slug,

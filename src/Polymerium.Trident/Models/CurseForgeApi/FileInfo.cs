@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record FileInfo(
+public readonly record struct FileInfo(
     uint Id,
     uint GameId,
     uint ModId,
@@ -59,7 +59,7 @@ public record FileInfo(
 
     #region Nested type: FileDependency
 
-    public record FileDependency(uint ModId, FileDependency.FileRelationType RelationType)
+    public readonly record struct FileDependency(uint ModId, FileDependency.FileRelationType RelationType)
     {
         #region FileRelationType enum
 
@@ -75,7 +75,7 @@ public record FileInfo(
 
     #region Nested type: FileHash
 
-    public record FileHash(string Value, FileHash.HashAlgo Algo)
+    public readonly record struct FileHash(string Value, FileHash.HashAlgo Algo)
     {
         #region HashAlgo enum
 
@@ -88,7 +88,7 @@ public record FileInfo(
 
     #region Nested type: FileModule
 
-    public record FileModule(string Name, ulong Fingerprint);
+    public readonly record struct FileModule(string Name, ulong Fingerprint);
 
     #endregion
 }

@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record ModInfo(
+public readonly record struct ModInfo(
     uint Id,
     uint GameId,
     string Name,
@@ -47,19 +47,25 @@ public record ModInfo(
 
     #region Nested type: ModAsset
 
-    public record ModAsset(uint Id, uint ModId, string Title, string Description, Uri? ThumbnailUrl, Uri Url);
+    public readonly record struct ModAsset(
+        uint Id,
+        uint ModId,
+        string Title,
+        string Description,
+        Uri? ThumbnailUrl,
+        Uri Url);
 
     #endregion
 
     #region Nested type: ModAuthor
 
-    public record ModAuthor(uint Id, string Name, Uri Url);
+    public readonly record struct ModAuthor(uint Id, string Name, Uri Url);
 
     #endregion
 
     #region Nested type: ModLinks
 
-    public record ModLinks(Uri? WebsiteUrl, Uri? WikiUrl, Uri? IssuesUrl, Uri? SourceUrl);
+    public readonly record struct ModLinks(Uri? WebsiteUrl, Uri? WikiUrl, Uri? IssuesUrl, Uri? SourceUrl);
 
     #endregion
 }

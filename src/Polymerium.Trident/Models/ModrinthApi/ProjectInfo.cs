@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.ModrinthApi;
 
-public record ProjectInfo(
+public readonly record struct ProjectInfo(
     string Id,
     string Slug,
     IReadOnlyList<string> ProjectTypes,
@@ -16,7 +16,7 @@ public record ProjectInfo(
     DateTimeOffset? Queued,
     string Status,
     string? RequestedStatus,
-    string? ModeratorMesssage,
+    string? ModeratorMessage,
     ProjectInfo.ProjectLicense License,
     ulong Downloads,
     uint Followers,
@@ -38,13 +38,13 @@ public record ProjectInfo(
 {
     #region Nested type: ProjectLicense
 
-    public record ProjectLicense(string Id, string Name, Uri? Url);
+    public readonly record struct ProjectLicense(string Id, string Name, Uri? Url);
 
     #endregion
 
     #region Nested type: ProjectLinks
 
-    public record ProjectLinks(
+    public readonly record struct ProjectLinks(
         ProjectLinks.Links? Other,
         ProjectLinks.Links? Discord,
         ProjectLinks.Links? Matrix,
@@ -55,7 +55,7 @@ public record ProjectInfo(
     {
         #region Nested type: Links
 
-        public record Links(string Platform, bool Donation, Uri Url);
+        public readonly record struct Links(string Platform, bool Donation, Uri Url);
 
         #endregion
     }
@@ -64,7 +64,7 @@ public record ProjectInfo(
 
     #region Nested type: ProjectScreenshot
 
-    public record ProjectScreenshot(
+    public readonly record struct ProjectScreenshot(
         Uri Url,
         Uri RawUrl,
         bool Featured,

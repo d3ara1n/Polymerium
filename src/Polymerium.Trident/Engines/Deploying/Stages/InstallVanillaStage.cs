@@ -23,14 +23,15 @@ public class InstallVanillaStage(
         logger.LogInformation("Libraries added, refer to artifact file for details");
 
         // Main Jar as a Library as well
-        if (version.MainJar is { Downloads.Artifact: not null })
-            builder.AddLibrary(version.MainJar.Name,
-                               version.MainJar.Downloads.Artifact.Url,
-                               version.MainJar.Downloads.Artifact.Sha1);
+        if (version.MainJar is { Name: { } name, Downloads.Artifact: { } artifact })
+        {
+            builder.AddLibrary(name, artifact.Url, artifact.Sha1);
+            logger.LogInformation("Client jar appended: {name}", name);
+        }
         else
+        {
             throw new FormatException("{minecraft_version}/mainJar.downloads.artifact");
-
-        logger.LogInformation("Client jar appended: {name}", version.MainJar.Name);
+        }
 
         // Game Arguments
         var arguments = version.MinecraftArguments?.Split(' ') ?? Enumerable.Empty<string>();
@@ -72,12 +73,16 @@ public class InstallVanillaStage(
         logger.LogInformation("Set java major version compatibility to {major}", firstJreVersion);
 
         // AssetIndex
-        if (version.AssetIndex != null)
-            builder.SetAssetIndex(version.AssetIndex.Id, version.AssetIndex.Url, version.AssetIndex.Sha1);
+        if (version.AssetIndex is { } index)
+        {
+            builder.SetAssetIndex(index.Id, index.Url, index.Sha1);
+            logger.LogInformation("Set asset index to {index}", index.Id);
+        }
         else
+        {
             throw new FormatException("{minecraft_version}/assetIndex");
+        }
 
-        logger.LogInformation("Set asset index to {index}", version.AssetIndex.Id);
 
         // Main Class Path
         var real = version.MainClass ?? "net.minecraft.client.main.Main";

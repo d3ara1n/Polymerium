@@ -2,7 +2,7 @@
 
 namespace Polymerium.Trident.Models.PrismLauncherApi;
 
-public record ComponentIndex(
+public readonly record struct ComponentIndex(
     int FormatVersion,
     string Name,
     string Uid,
@@ -10,7 +10,7 @@ public record ComponentIndex(
 {
     #region Nested type: ComponentVersion
 
-    public record ComponentVersion(
+    public readonly record struct ComponentVersion(
         bool Recommended,
         DateTimeOffset ReleaseTime,
         IReadOnlyList<ComponentVersion.VersionRequirement> Requires,
@@ -20,7 +20,7 @@ public record ComponentIndex(
     {
         #region Nested type: VersionRequirement
 
-        public record VersionRequirement(
+        public readonly record struct VersionRequirement(
             [property: JsonPropertyName("suggests")]
             string? Suggest,
             [property: JsonPropertyName("equals")] string? Equal,

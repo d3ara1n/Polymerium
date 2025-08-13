@@ -2,6 +2,6 @@
 
 namespace Polymerium.Trident.Models.MinecraftApi;
 
-public record AcquireAccessTokenByXboxServiceTokenRequest(
+public readonly record struct AcquireAccessTokenByXboxServiceTokenRequest(
     [property: JsonPropertyName("identityToken")]
     string IdentityToken);

@@ -54,8 +54,10 @@ public class ProcessLoaderStage(
                                                              index.Libraries ?? Enumerable.Empty<Component.Library>());
 
         foreach (var file in index.MavenFiles ?? Enumerable.Empty<Component.Library>())
-            if (file.Downloads?.Artifact != null)
-                builder.AddLibrary(file.Name, file.Downloads.Artifact.Url, file.Downloads.Artifact.Sha1, false, false);
+            if (file.Downloads is { Artifact: { } artifact })
+            {
+                builder.AddLibrary(file.Name, artifact.Url, artifact.Sha1, false, false);
+            }
 
         if (index.MinecraftArguments != null && index.MinecraftArguments.Any())
             builder.ClearGameArguments();

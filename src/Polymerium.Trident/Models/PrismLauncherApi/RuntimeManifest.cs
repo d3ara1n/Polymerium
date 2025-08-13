@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.PrismLauncherApi;
 
-public record RuntimeManifest(
+public readonly record struct RuntimeManifest(
     int FormatVersion,
     string Name,
     DateTimeOffset ReleaseTime,
@@ -8,7 +8,7 @@ public record RuntimeManifest(
 {
     #region Nested type: Runtime
 
-    public record Runtime(
+    public readonly record struct Runtime(
         Runtime.ChecksumData Checksum,
         string DownloadType,
         string Name,
@@ -21,13 +21,13 @@ public record RuntimeManifest(
     {
         #region Nested type: ChecksumData
 
-        public record ChecksumData(string Hash, string Type);
+        public readonly record struct ChecksumData(string Hash, string Type);
 
         #endregion
 
         #region Nested type: VersionData
 
-        public record VersionData(uint Major, uint Minor, uint Security);
+        public readonly record struct VersionData(uint Major, uint Minor, uint Security);
 
         #endregion
     }

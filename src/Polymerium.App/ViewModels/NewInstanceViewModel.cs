@@ -14,6 +14,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions;
@@ -42,7 +43,8 @@ public partial class NewInstanceViewModel(
         var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
 
         Versions = versions;
-        VersionName = game.Versions.FirstOrDefault(x => x.Recommended)?.Version ?? string.Empty;
+        var first = game.Versions.FirstOrDefault(x => x.Recommended);
+        VersionName = first != default(ComponentIndex.ComponentVersion) ? first.Version : string.Empty;
         IsVersionLoaded = true;
     }
 

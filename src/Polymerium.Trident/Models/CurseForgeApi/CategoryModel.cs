@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record CategoryModel(
+public readonly record struct CategoryModel(
     uint Id,
     uint GameId,
     string Name,

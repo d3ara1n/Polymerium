@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Polymerium.Trident.Models.ModrinthApi;
 using Polymerium.Trident.Services;
 using Refit;
 using Trident.Abstractions.Repositories;
@@ -93,12 +94,14 @@ public class ModrinthRepository(ModrinthService service) : IRepository
                     (service.GetProjectVersionsAsync(pid, null, ModrinthService.LoaderIdToName(filter.Loader)).ConfigureAwait(false),
                      service.GetTeamMembersAsync(project.TeamId).ConfigureAwait(false));
                 var (version, members) = (await versionTask, await membersTask);
-                return ModrinthService.ToPackage(project,
-                                                 version.FirstOrDefault(x => filter.Version is null
-                                                                          || x.GameVersions.Contains(filter.Version))
-                                              ?? throw new
-                                                     ResourceNotFoundException($"{pid}/{vid ?? "*"} has no version found"),
-                                                 members.FirstOrDefault());
+                var found = version.FirstOrDefault(x => filter.Version is null
+                                                     || x.GameVersions.Contains(filter.Version));
+                if (found == default(VersionInfo))
+                {
+                    throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");
+                }
+
+                return ModrinthService.ToPackage(project, found, members.FirstOrDefault());
             }
         }
         catch (ApiException ex)
