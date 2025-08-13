@@ -1,4 +1,5 @@
 ﻿using Polymerium.Trident.Exceptions;
+using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
 
@@ -28,7 +29,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 var runtime = manifest
                              .Runtimes.OrderBy(x => x.ReleaseTime)
                              .FirstOrDefault(x => x.RuntimeOS == osString);
-                if (runtime != null)
+                if (runtime != default(RuntimeManifest.Runtime))
                 {
                     Context.Runtime = new BundledRuntime(major, runtime.Vendor, runtime.Url, true);
                 }
