@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\submodules\Trident\src\Trident.Abstractions\Trident.Abstractions.csproj"/>
         <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj"/>
     </ItemGroup>
 
