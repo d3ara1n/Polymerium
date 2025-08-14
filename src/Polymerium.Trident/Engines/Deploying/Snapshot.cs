@@ -13,7 +13,7 @@ namespace Polymerium.Trident.Engines.Deploying
 
             var snapshot = new Snapshot();
             var subs = new Queue<DirectoryInfo>();
-            subs.Enqueue(new DirectoryInfo(directory));
+            subs.Enqueue(new(directory));
             while (subs.TryDequeue(out var dir))
             {
                 var dirs = dir.GetDirectories();
@@ -27,7 +27,7 @@ namespace Polymerium.Trident.Engines.Deploying
                 {
                     if (file.LinkTarget != null)
                     {
-                        snapshot.Add(new Entity(file.FullName, file.LinkTarget));
+                        snapshot.Add(new(file.FullName, file.LinkTarget));
                     }
                 }
             }

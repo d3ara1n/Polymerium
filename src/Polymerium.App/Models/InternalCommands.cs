@@ -21,7 +21,7 @@ namespace Polymerium.App.Models
         {
             if (path != null && Directory.Exists(path))
             {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(path));
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(path));
             }
         });
     }

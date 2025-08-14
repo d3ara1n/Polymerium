@@ -16,14 +16,14 @@ namespace Polymerium.App.Services
             FillMode = FillMode.Forward,
             Children =
             {
-                new KeyFrame
+                new()
                 {
-                    Cue = new Cue(0),
+                    Cue = new(0),
                     Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 100d } }
                 },
-                new KeyFrame
+                new()
                 {
-                    Cue = new Cue(1),
+                    Cue = new(1),
                     Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 0d } }
                 }
             }

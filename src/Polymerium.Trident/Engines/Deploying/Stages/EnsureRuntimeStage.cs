@@ -28,9 +28,9 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 var runtime = manifest
                              .Runtimes.OrderBy(x => x.ReleaseTime)
                              .FirstOrDefault(x => x.RuntimeOS == osString);
-                if (runtime != null)
+                if (runtime != default)
                 {
-                    Context.Runtime = new BundledRuntime(major, runtime.Vendor, runtime.Url, true);
+                    Context.Runtime = new(major, runtime.Vendor, runtime.Url, true);
                 }
 
                 // 如果获取不到也什么都不做，悄咪咪把错误留给 Launch Flow 再爆出来

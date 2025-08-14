@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +12,7 @@ using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.App.Widgets;
@@ -49,12 +49,8 @@ namespace Polymerium.App.ViewModels
             };
             if (profileManager.TryGetImmutable(key, out var profile))
             {
-                Basic = new InstanceBasicModel(key,
-                                               profile.Name,
-                                               profile.Setup.Version,
-                                               profile.Setup.Loader,
-                                               profile.Setup.Source);
-                Context = new InstanceViewModelBase.InstanceContextParameter(Basic,
+                Basic = new(key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source);
+                Context = new(Basic,
                 [
                     .. widgetHostService.WidgetTypes.Select(type =>
                     {
@@ -67,7 +63,8 @@ namespace Polymerium.App.ViewModels
             else
             {
                 throw new PageNotReachedException(typeof(InstanceView),
-                                                  $"Key '{key}' is not valid instance or not found");
+                                                  Resources.InstanceView_KeyNotFoundExceptionMessage
+                                                           .Replace("{0}", key));
             }
         }
 
@@ -77,7 +74,7 @@ namespace Polymerium.App.ViewModels
         private void OpenFolder()
         {
             var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
         }
 
         #endregion

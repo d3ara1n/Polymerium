@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,9 +30,7 @@ namespace Polymerium.App
                                                       .RemoveAllLoggers()
                                                       .ConfigureHttpClient(client => client.DefaultRequestHeaders
                                                                               .UserAgent
-                                                                              .Add(new ProductInfoHeaderValue(Program
-                                                                                      .Brand,
-                                                                                   Program.Version)))
+                                                                              .Add(new(Program.Brand, Program.Version)))
                                                       .AddTransientHttpErrorPolicy(configure => configure.RetryAsync()))
                .AddLogging(logging => logging
                                      .AddConsole()
@@ -85,10 +82,9 @@ namespace Polymerium.App
                .AddSingleton<ScrapService>()
                .AddSingleton<InstanceService>()
                .AddSingleton<WidgetHostService>()
-               .AddSingleton<
-                    UpdateManager>(_ => new UpdateManager(new GithubSource("https://github.com/d3ara1n/Polymerium",
-                                                                           null,
-                                                                           true)));
+               .AddSingleton<UpdateManager>(_ => new(new GithubSource("https://github.com/d3ara1n/Polymerium",
+                                                                      null,
+                                                                      true)));
         }
     }
 }

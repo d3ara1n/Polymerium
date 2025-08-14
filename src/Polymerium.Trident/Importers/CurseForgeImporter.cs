@@ -33,38 +33,31 @@ namespace Polymerium.Trident.Importers
             }
 
             var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
-            return new ImportedProfileContainer(new Profile(manifest.Name,
-                                                            new Profile.Rice(source,
-                                                                             manifest.Minecraft.Version,
-                                                                             LoaderHelper.ToLurl(loader.Identity,
-                                                                                 loader.Version),
-                                                                             [
-                                                                                 .. manifest.Files.Select(x =>
-                                                                                     new
-                                                                                         Profile.Rice.
-                                                                                         Entry(PackageHelper
-                                                                                                .ToPurl(CurseForgeService
-                                                                                                        .LABEL,
-                                                                                                     null,
-                                                                                                     x.ProjectId
-                                                                                                        .ToString(),
-                                                                                                     x.FileId
-                                                                                                        .ToString()),
-                                                                                             x.Required,
-                                                                                             source,
-                                                                                             []))
-                                                                             ]),
-                                                            new Dictionary<string, object>()),
-                                                pack
-                                                   .FileNames
-                                                   .Where(x => x.StartsWith(manifest.Overrides)
-                                                            && x != manifest.Overrides
-                                                            && x.Length > manifest.Overrides.Length + 1)
-                                                   .Select(x => (x, x[(manifest.Overrides.Length + 1)..]))
-                                                   .Where(x => !x.Item2.EndsWith('/')
-                                                            && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
-                                                   .ToList(),
-                                                pack.Reference?.Thumbnail);
+            return new(new(manifest.Name,
+                           new(source,
+                               manifest.Minecraft.Version,
+                               LoaderHelper.ToLurl(loader.Identity, loader.Version),
+                               [
+                                   .. manifest.Files.Select(x =>
+                                                                new Profile.Rice.Entry(PackageHelper
+                                                                       .ToPurl(CurseForgeService.LABEL,
+                                                                               null,
+                                                                               x.ProjectId.ToString(),
+                                                                               x.FileId.ToString()),
+                                                                    x.Required,
+                                                                    source,
+                                                                    []))
+                               ]),
+                           new Dictionary<string, object>()),
+                       pack
+                          .FileNames
+                          .Where(x => x.StartsWith(manifest.Overrides)
+                                   && x != manifest.Overrides
+                                   && x.Length > manifest.Overrides.Length + 1)
+                          .Select(x => (x, x[(manifest.Overrides.Length + 1)..]))
+                          .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
+                          .ToList(),
+                       pack.Reference?.Thumbnail);
         }
 
         #endregion
@@ -74,7 +67,7 @@ namespace Polymerium.Trident.Importers
             out (string Identity, string Version) loader)
         {
             var primary = loaders.FirstOrDefault(x => x.Primary);
-            loader = default((string Identity, string Version));
+            loader = default;
             if (primary is null || !primary.Id.Contains('-'))
             {
                 return false;

@@ -36,37 +36,28 @@ namespace Polymerium.Trident.Importers
             }
 
             var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
-            return new ImportedProfileContainer(new Profile(index.Name,
-                                                            new Profile.Rice(source,
-                                                                             version,
-                                                                             LoaderHelper.ToLurl(loader.Identity,
-                                                                                 loader.Version),
-                                                                             [
-                                                                                 .. index
-                                                                                    .Files
-                                                                                    .Where(x => x.Env?.Client is not
-                                                                                         "unsupported")
-                                                                                    .Select(ToPackage)
-                                                                             ]),
-                                                            new Dictionary<string, object>()),
-                                                pack
-                                                   .FileNames
-                                                   .Where(x => x.StartsWith("overrides")
-                                                            && x != "overrides"
-                                                            && x.Length > "overrides".Length + 1)
-                                                   .Select(x => (x, x[("overrides".Length + 1)..]))
-                                                   .Where(x => !x.Item2.EndsWith('/')
-                                                            && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
-                                                   .Concat(pack
-                                                          .FileNames
-                                                          .Where(x => x.StartsWith("client-overrides")
-                                                                   && x != "client-overrides"
-                                                                   && x.Length > "client-overrides".Length + 1)
-                                                          .Select(x => (x, x[("client-overrides".Length + 1)..]))
-                                                          .Where(x => !x.Item2.EndsWith('/')
-                                                                   && !ImporterAgent.INVALID_NAMES.Contains(x.Item2)))
-                                                   .ToList(),
-                                                pack.Reference?.Thumbnail);
+            return new(new(index.Name,
+                           new(source,
+                               version,
+                               LoaderHelper.ToLurl(loader.Identity, loader.Version),
+                               [.. index.Files.Where(x => x.Env?.Client is not "unsupported").Select(ToPackage)]),
+                           new Dictionary<string, object>()),
+                       pack
+                          .FileNames
+                          .Where(x => x.StartsWith("overrides")
+                                   && x != "overrides"
+                                   && x.Length > "overrides".Length + 1)
+                          .Select(x => (x, x[("overrides".Length + 1)..]))
+                          .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
+                          .Concat(pack
+                                 .FileNames
+                                 .Where(x => x.StartsWith("client-overrides")
+                                          && x != "client-overrides"
+                                          && x.Length > "client-overrides".Length + 1)
+                                 .Select(x => (x, x[("client-overrides".Length + 1)..]))
+                                 .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2)))
+                          .ToList(),
+                       pack.Reference?.Thumbnail);
         }
 
         #endregion
@@ -113,13 +104,7 @@ namespace Polymerium.Trident.Importers
                 {
                     var projectId = path[6..14];
                     var versionId = path[24..32];
-                    return new Profile.Rice.Entry(PackageHelper.ToPurl(ModrinthService.LABEL,
-                                                                       null,
-                                                                       projectId,
-                                                                       versionId),
-                                                  true,
-                                                  null,
-                                                  []);
+                    return new(PackageHelper.ToPurl(ModrinthService.LABEL, null, projectId, versionId), true, null, []);
                 }
             }
 

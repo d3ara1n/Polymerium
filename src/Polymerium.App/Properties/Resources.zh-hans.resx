@@ -1092,4 +1092,7 @@
     <data name="SettingsView_CornerStyleLabelText" xml:space="preserve">
         <value>圆角</value>
     </data>
+    <data name="InstanceView_KeyNotFoundExceptionMessage" xml:space="preserve">
+        <value>'{0}' 指向的实例不存在或未准备完</value>
+    </data>
 </root>

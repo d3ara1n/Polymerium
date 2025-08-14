@@ -15,6 +15,7 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
@@ -55,16 +56,13 @@ namespace Polymerium.App.ViewModels
             {
                 if (profileManager.TryGetImmutable(key, out var profile))
                 {
-                    Basic = new InstanceBasicModel(key,
-                                                   profile.Name,
-                                                   profile.Setup.Version,
-                                                   profile.Setup.Loader,
-                                                   profile.Setup.Source);
+                    Basic = new(key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source);
                 }
                 else
                 {
                     throw new PageNotReachedException(typeof(InstanceView),
-                                                      $"Key '{key}' is not valid instance or not found");
+                                                      Resources.InstanceView_KeyNotFoundExceptionMessage
+                                                               .Replace("{0}", key));
                 }
             }
             else
@@ -411,13 +409,12 @@ namespace Polymerium.App.ViewModels
                         DataContext = model,
                         Exhibit = exhibit,
                         DataService = _dataService,
-                        Filter = new Filter(Basic.Version,
-                                            Basic.Loader != null
-                                         && LoaderHelper.TryParse(Basic.Loader,
-                                                                  out var loader)
-                                                ? loader.Identity
-                                                : null,
-                                            project.Kind),
+                        Filter = new(Basic.Version,
+                                     Basic.Loader != null
+                                  && LoaderHelper.TryParse(Basic.Loader, out var loader)
+                                         ? loader.Identity
+                                         : null,
+                                     project.Kind),
                         ViewPackageCommand = ViewPackageCommand,
                         ModifyPendingCallback = ModifyPending,
                         LinkExhibitCallback = LinkExhibit
@@ -460,7 +457,7 @@ namespace Polymerium.App.ViewModels
                                                            true,
                                                            null,
                                                            []);
-                        _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                        _persistenceService.AppendAction(new(Basic.Key,
                                                              PersistenceService.ActionKind.EditPackage,
                                                              null,
                                                              entry.Purl));
@@ -478,7 +475,7 @@ namespace Polymerium.App.ViewModels
                             guard.Value.Setup.Packages.Remove(exist);
                         }
 
-                        _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                        _persistenceService.AppendAction(new(Basic.Key,
                                                              PersistenceService.ActionKind.EditPackage,
                                                              model.Installed.Purl,
                                                              null));
@@ -494,7 +491,7 @@ namespace Polymerium.App.ViewModels
                                                                     model.Ns,
                                                                     model.ProjectId,
                                                                     model.PendingVersionId);
-                        _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                        _persistenceService.AppendAction(new(Basic.Key,
                                                              PersistenceService.ActionKind.EditPackage,
                                                              old,
                                                              model.Installed.Purl));

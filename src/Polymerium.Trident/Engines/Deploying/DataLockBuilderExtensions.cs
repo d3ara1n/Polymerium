@@ -13,12 +13,12 @@ namespace Polymerium.Trident.Engines.Deploying
             string target,
             Uri url,
             string? sha1) =>
-            self.AddParcel(new DataLock.Parcel(label, @namespace, pid, vid, target, url, sha1));
+            self.AddParcel(new(label, @namespace, pid, vid, target, url, sha1));
 
         // PATCH: 为了适配奇葩 PrismLauncher Meta 的多态数据
         public static DataLockBuilder AddLibraryPrismFlavor(this DataLockBuilder self, string fullname, Uri url)
         {
-            var exactUrl = url.AbsoluteUri.EndsWith('/') ? url : new Uri(url.AbsoluteUri + '/');
+            var exactUrl = url.AbsoluteUri.EndsWith('/') ? url : new(url.AbsoluteUri + '/');
             // 当迁移到 TridentCore/launcher-meta 的之后移除该函数
             var extension = "jar";
             var index = fullname.IndexOf('@');
@@ -31,14 +31,14 @@ namespace Polymerium.Trident.Engines.Deploying
             var split = fullname.Split(':');
             var id = split.Length switch
             {
-                4 => new DataLock.Library.Identity(split[0], split[1], split[2], split[3], extension),
+                4 => new(split[0], split[1], split[2], split[3], extension),
                 3 => new DataLock.Library.Identity(split[0], split[1], split[2], null, extension),
                 _ => throw new NotSupportedException($"Not recognized package name format: {fullname}")
             };
 
             var fullUrl = new Uri(exactUrl,
                                   $"{id.Namespace.Replace('.', '/')}/{id.Name}/{id.Version}/{id.Name}-{id.Version}.{extension}");
-            return self.AddLibrary(new DataLock.Library(id, fullUrl, null));
+            return self.AddLibrary(new(id, fullUrl, null));
         }
 
 
@@ -62,21 +62,21 @@ namespace Polymerium.Trident.Engines.Deploying
             var split = fullname.Split(':');
             if (split.Length == 4)
             {
-                id = new DataLock.Library.Identity(split[0], split[1], split[2], split[3], extension);
+                id = new(split[0], split[1], split[2], split[3], extension);
             }
             else if (split.Length == 3)
             {
-                id = new DataLock.Library.Identity(split[0], split[1], split[2], null, extension);
+                id = new(split[0], split[1], split[2], null, extension);
             }
             else
             {
                 throw new NotSupportedException($"Not recognized package name format: {fullname}");
             }
 
-            return self.AddLibrary(new DataLock.Library(id, url, sha1, native, present));
+            return self.AddLibrary(new(id, url, sha1, native, present));
         }
 
         public static DataLockBuilder SetAssetIndex(this DataLockBuilder self, string id, Uri url, string sha1) =>
-            self.SetAssetIndex(new DataLock.AssetData(id, url, sha1));
+            self.SetAssetIndex(new(id, url, sha1));
     }
 }

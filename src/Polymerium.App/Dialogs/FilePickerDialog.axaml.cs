@@ -42,7 +42,7 @@ namespace Polymerium.App.Dialogs
                 var storage = top.StorageProvider;
                 if (storage.CanOpen)
                 {
-                    var files = await storage.OpenFilePickerAsync(new FilePickerOpenOptions());
+                    var files = await storage.OpenFilePickerAsync(new());
                     var file = files.FirstOrDefault();
                     if (file != null)
                     {

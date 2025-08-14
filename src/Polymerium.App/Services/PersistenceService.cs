@@ -233,7 +233,7 @@ namespace Polymerium.App.Services
                       .Select<WidgetLocalSection>()
                       .Where(x => x.Key == key && x.WidgetId == widgetId && x.Indicator == indicator)
                       .First();
-            return data == null ? default(T?) : JsonSerializer.Deserialize<T>(data.Data);
+            return data == null ? default : JsonSerializer.Deserialize<T>(data.Data);
         }
 
         public void SetWidgetLocalData<T>(string key, string widgetId, string indicator, T data)

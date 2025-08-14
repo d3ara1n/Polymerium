@@ -117,14 +117,14 @@ namespace Polymerium.App.Modals
                                                                                && y.ProjectId == x.Pid);
                                 if (found is not null)
                                 {
-                                    return new InstancePackageDependencyModel(x.Label,
-                                                                              x.Namespace,
-                                                                              x.Pid,
-                                                                              x.Vid,
-                                                                              found.ProjectName,
-                                                                              found.Thumbnail,
-                                                                              count,
-                                                                              x.IsRequired) { Installed = found };
+                                    return new(x.Label,
+                                               x.Namespace,
+                                               x.Pid,
+                                               x.Vid,
+                                               found.ProjectName,
+                                               found.Thumbnail,
+                                               count,
+                                               x.IsRequired) { Installed = found };
                                 }
 
                                 var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
@@ -168,15 +168,15 @@ namespace Polymerium.App.Modals
                                                   Model is { Version: InstancePackageVersionModel v }
                                                && v.Id == x.VersionId
                                                       ? v
-                                                      : new InstancePackageVersionModel(x.VersionId,
-                                                          x.VersionName,
-                                                          string.Join(",",
-                                                                      x.Requirements.AnyOfLoaders
-                                                                       .Select(LoaderHelper.ToDisplayName)),
-                                                          string.Join(",", x.Requirements.AnyOfVersions),
-                                                          x.PublishedAt,
-                                                          x.ReleaseType,
-                                                          x.Dependencies))
+                                                      : new(x.VersionId,
+                                                            x.VersionName,
+                                                            string.Join(",",
+                                                                        x.Requirements.AnyOfLoaders.Select(LoaderHelper
+                                                                           .ToDisplayName)),
+                                                            string.Join(",", x.Requirements.AnyOfVersions),
+                                                            x.PublishedAt,
+                                                            x.ReleaseType,
+                                                            x.Dependencies))
                                           ]);
                                       },
                                       _ =>
@@ -203,10 +203,10 @@ namespace Polymerium.App.Modals
             base.OnUnloaded(e);
             if (Model.Entry.Purl != _old)
             {
-                PersistenceService.AppendAction(new PersistenceService.Action(Guard.Key,
-                                                                              PersistenceService.ActionKind.EditPackage,
-                                                                              _old,
-                                                                              Model.Entry.Purl));
+                PersistenceService.AppendAction(new(Guard.Key,
+                                                    PersistenceService.ActionKind.EditPackage,
+                                                    _old,
+                                                    Model.Entry.Purl));
             }
 
             await Guard.DisposeAsync();
