@@ -9,7 +9,6 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
-using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -113,7 +112,7 @@ namespace Polymerium.App.ViewModels
                 var result = await _updateManager.CheckForUpdatesAsync();
                 if (result != null)
                 {
-                    UpdateTarget = new AppUpdateModel(result);
+                    UpdateTarget = new(result);
                     UpdateState = AppUpdateState.Found;
                 }
                 else
@@ -146,10 +145,7 @@ namespace Polymerium.App.ViewModels
                 await _updateManager.DownloadUpdatesAsync(model.Update, Report);
                 _notificationService.PopMessage("Restart required to take effect",
                                                 "Apply the update",
-                                                actions:
-                                                [
-                                                    new NotificationAction("Restart", RestartAndUpdateCommand, model)
-                                                ]);
+                                                actions: [new("Restart", RestartAndUpdateCommand, model)]);
             }
             catch (Exception ex)
             {

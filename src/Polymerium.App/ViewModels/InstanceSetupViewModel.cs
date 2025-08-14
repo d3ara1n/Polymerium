@@ -86,12 +86,7 @@ namespace Polymerium.App.ViewModels
 
             if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
             {
-                Reference = new LazyObject(t => LoadReferenceAsync(Basic.Source,
-                                                                   r.Label,
-                                                                   r.Namespace,
-                                                                   r.Pid,
-                                                                   r.Vid,
-                                                                   t));
+                Reference = new(t => LoadReferenceAsync(Basic.Source, r.Label, r.Namespace, r.Pid, r.Vid, t));
             }
 
             return;
@@ -114,18 +109,18 @@ namespace Polymerium.App.ViewModels
                                         ? await dataService.GetBitmapAsync(p.Thumbnail).ConfigureAwait(false)
                                         : AssetUriIndex.DIRT_IMAGE_BITMAP;
                             Dispatcher.UIThread.Post(() => RefreshingCount++);
-                            return new InstancePackageModel(entry,
-                                                            entry.Source is not null && entry.Source == Basic.Source,
-                                                            p.Label,
-                                                            p.Namespace,
-                                                            p.ProjectId,
-                                                            p.ProjectName,
-                                                            InstancePackageUnspecifiedVersionModel.Instance,
-                                                            p.Author,
-                                                            p.Summary,
-                                                            p.Reference,
-                                                            t,
-                                                            p.Kind);
+                            return new(entry,
+                                       entry.Source is not null && entry.Source == Basic.Source,
+                                       p.Label,
+                                       p.Namespace,
+                                       p.ProjectId,
+                                       p.ProjectName,
+                                       InstancePackageUnspecifiedVersionModel.Instance,
+                                       p.Author,
+                                       p.Summary,
+                                       p.Reference,
+                                       t,
+                                       p.Kind);
                         }
                         else
                         {
@@ -137,26 +132,26 @@ namespace Polymerium.App.ViewModels
                                         ? await dataService.GetBitmapAsync(p.Thumbnail).ConfigureAwait(false)
                                         : AssetUriIndex.DIRT_IMAGE_BITMAP;
                             Dispatcher.UIThread.Post(() => RefreshingCount++);
-                            return new InstancePackageModel(entry,
-                                                            entry.Source is not null && entry.Source == Basic.Source,
-                                                            p.Label,
-                                                            p.Namespace,
-                                                            p.ProjectId,
-                                                            p.ProjectName,
-                                                            new InstancePackageVersionModel(p.VersionId,
-                                                                p.VersionName,
-                                                                string.Join(",",
-                                                                            p.Requirements.AnyOfLoaders
-                                                                             .Select(LoaderHelper.ToDisplayName)),
-                                                                string.Join(",", p.Requirements.AnyOfVersions),
-                                                                p.PublishedAt,
-                                                                p.ReleaseType,
-                                                                p.Dependencies) { IsCurrent = true },
-                                                            p.Author,
-                                                            p.Summary,
-                                                            p.Reference,
-                                                            t,
-                                                            p.Kind);
+                            return new(entry,
+                                       entry.Source is not null && entry.Source == Basic.Source,
+                                       p.Label,
+                                       p.Namespace,
+                                       p.ProjectId,
+                                       p.ProjectName,
+                                       new InstancePackageVersionModel(p.VersionId,
+                                                                       p.VersionName,
+                                                                       string.Join(",",
+                                                                           p.Requirements.AnyOfLoaders
+                                                                            .Select(LoaderHelper.ToDisplayName)),
+                                                                       string.Join(",", p.Requirements.AnyOfVersions),
+                                                                       p.PublishedAt,
+                                                                       p.ReleaseType,
+                                                                       p.Dependencies) { IsCurrent = true },
+                                       p.Author,
+                                       p.Summary,
+                                       p.Reference,
+                                       t,
+                                       p.Kind);
                         }
                     }
                     catch (OperationCanceledException) { }
@@ -346,7 +341,7 @@ namespace Polymerium.App.ViewModels
                         guard.Value.Setup.Loader = lurl;
                         if (old != lurl)
                         {
-                            persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                            persistenceService.AppendAction(new(Basic.Key,
                                                                 PersistenceService.ActionKind.EditLoader,
                                                                 old,
                                                                 lurl));
@@ -358,7 +353,7 @@ namespace Polymerium.App.ViewModels
                         guard.Value.Setup.Loader = null;
                         if (old != null)
                         {
-                            persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                            persistenceService.AppendAction(new(Basic.Key,
                                                                 PersistenceService.ActionKind.EditLoader,
                                                                 old,
                                                                 null));
@@ -383,14 +378,14 @@ namespace Polymerium.App.ViewModels
                     OverlayService = overlayService,
                     PersistenceService = persistenceService,
                     OriginalCollection = Stage.Items,
-                    Filter = new Filter(Kind: model.Kind,
-                                        Version: Basic.Version,
-                                        Loader: Basic.Loader is not null
-                                                    ? LoaderHelper.TryParse(Basic.Loader,
-                                                                            out var result)
-                                                          ? result.Identity
-                                                          : null
-                                                    : null)
+                    Filter = new(Kind: model.Kind,
+                                 Version: Basic.Version,
+                                 Loader: Basic.Loader is not null
+                                             ? LoaderHelper.TryParse(Basic.Loader,
+                                                                     out var result)
+                                                   ? result.Identity
+                                                   : null
+                                             : null)
                 });
             }
         }
@@ -449,9 +444,9 @@ namespace Polymerium.App.ViewModels
                     IsProgressBarVisible = true,
                     IsCloseButtonVisible = false
                 };
-                notification.Actions.Add(new NotificationAction(Resources
-                                                                   .InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
-                                                                new RelayCommand(Cancel)));
+                notification.Actions.Add(new(Resources
+                                                .InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
+                                             new RelayCommand(Cancel)));
 
                 notificationService.Pop(notification);
 
@@ -491,9 +486,9 @@ namespace Polymerium.App.ViewModels
                              .InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt
                              .Replace("{0}", updates.Count.ToString())
                 };
-                reviewNotification.Actions.Add(new NotificationAction(Resources
-                                                                         .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
-                                                                      new RelayCommand(Review, CanReview)));
+                reviewNotification.Actions.Add(new(Resources
+                                                      .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
+                                                   new RelayCommand(Review, CanReview)));
                 notificationService.Pop(reviewNotification);
 
                 async Task UpdateAsync(InstancePackageModel entry, SemaphoreSlim semaphore, CancellationToken token)
@@ -624,12 +619,7 @@ namespace Polymerium.App.ViewModels
                         }
                     }
 
-                    output.Add(new ExportedEntry(entry.Purl,
-                                                 entry.Enabled,
-                                                 entry.Source,
-                                                 [.. entry.Tags],
-                                                 name,
-                                                 version));
+                    output.Add(new(entry.Purl, entry.Enabled, entry.Source, [.. entry.Tags], name, version));
                     notification.Progress = output.Count;
                     notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
                 }
@@ -758,10 +748,10 @@ namespace Polymerium.App.ViewModels
                 Stage.Remove(model);
                 StageCount--;
                 await guard.DisposeAsync();
-                persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
-                                                                              PersistenceService.ActionKind.EditPackage,
-                                                                              model.Entry.Purl,
-                                                                              null));
+                persistenceService.AppendAction(new(Basic.Key,
+                                                    PersistenceService.ActionKind.EditPackage,
+                                                    model.Entry.Purl,
+                                                    null));
             }
         }
 

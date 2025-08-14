@@ -11,8 +11,7 @@ namespace Polymerium.Trident.Services
         public async Task<MinecraftLoginResponse> AuthenticateByXboxLiveServiceTokenAsync(string token, string uhs)
         {
             var response = await client
-                                .AcquireAccessTokenByXboxServiceTokenAsync(new
-                                                                               AcquireAccessTokenByXboxServiceTokenRequest($"XBL3.0 x={uhs};{token}"))
+                                .AcquireAccessTokenByXboxServiceTokenAsync(new($"XBL3.0 x={uhs};{token}"))
                                 .ConfigureAwait(false);
             if (!string.IsNullOrEmpty(response.Error))
             {

@@ -90,11 +90,11 @@ namespace Polymerium.App.ViewModels
                 if (account != null)
                 {
                     var cooked = AccountHelper.ToCooked(account);
-                    SelectedAccount = new AccountModel(cooked.GetType(),
-                                                       cooked.Uuid,
-                                                       cooked.Username,
-                                                       account.EnrolledAt,
-                                                       account.LastUsedAt);
+                    SelectedAccount = new(cooked.GetType(),
+                                          cooked.Uuid,
+                                          cooked.Username,
+                                          account.EnrolledAt,
+                                          account.LastUsedAt);
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Polymerium.App.ViewModels
         {
             base.OnModelUpdated(key, profile);
             var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-            Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
+            Screenshot = screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
             PackageCount = profile.Setup.Packages.Count;
             UpdateTime(key);
         }
@@ -138,7 +138,7 @@ namespace Polymerium.App.ViewModels
         {
             base.OnInstanceDeploying(tracker);
             _subscription?.Dispose();
-            _subscription = new CompositeDisposable();
+            _subscription = new();
             DeployingMessage = GetStageTitle(tracker.CurrentStage);
             tracker
                .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
@@ -197,11 +197,11 @@ namespace Polymerium.App.ViewModels
                                var cooked = AccountHelper.ToCooked(x);
                                return SelectedAccount?.Uuid == cooked.Uuid
                                           ? SelectedAccount
-                                          : new AccountModel(cooked.GetType(),
-                                                             cooked.Uuid,
-                                                             cooked.Username,
-                                                             x.EnrolledAt,
-                                                             x.LastUsedAt);
+                                          : new(cooked.GetType(),
+                                                cooked.Uuid,
+                                                cooked.Username,
+                                                x.EnrolledAt,
+                                                x.LastUsedAt);
                            })
                           .ToList();
             var dialog = new AccountPickerDialog
@@ -231,9 +231,9 @@ namespace Polymerium.App.ViewModels
                                                NotificationLevel.Danger,
                                                actions:
                                                [
-                                                   new NotificationAction(Resources
-                                                                             .InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText,
-                                                                          SwitchAccountCommand)
+                                                   new(Resources
+                                                          .InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText,
+                                                       SwitchAccountCommand)
                                                ]);
             }
             catch (AccountInvalidException ex)

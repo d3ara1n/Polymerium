@@ -82,7 +82,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                                             await writer.FlushAsync(cancel.Token).ConfigureAwait(false);
                                         }
 
-                                        entities.Add(new Snapshot.Entity(fragile.TargetPath, fragile.SourcePath));
+                                        entities.Add(new(fragile.TargetPath, fragile.SourcePath));
 
                                         break;
                                     }
@@ -133,8 +133,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                                                 logger.LogDebug("Linking persistent file from {} to {}",
                                                                 persistent.SourcePath,
                                                                 persistent.TargetPath);
-                                                entities.Add(new Snapshot.Entity(persistent.TargetPath,
-                                                                 persistent.SourcePath));
+                                                entities.Add(new(persistent.TargetPath, persistent.SourcePath));
                                             }
                                         }
                                         else if (!File.Exists(persistent.TargetPath))

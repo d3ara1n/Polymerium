@@ -29,7 +29,7 @@ namespace Polymerium.App.Services
                 return context;
             }
 
-            context = new WidgetContext(widgetId, this) { Key = key };
+            context = new(widgetId, this) { Key = key };
             _cachedContexts.Add(widgetId, context);
             return context;
         }

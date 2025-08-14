@@ -120,20 +120,20 @@ namespace Polymerium.Trident.Engines
                  && match.Groups.TryGetValue("message", out var message))
                 {
                     match.Groups.TryGetValue("source", out var sender);
-                    return new Scrap(message.Value,
-                                     level.Value.ToUpper() switch
-                                     {
-                                         "INFO" => ScrapLevel.Information,
-                                         "WARN" => ScrapLevel.Warning,
-                                         "ERROR" => ScrapLevel.Error,
-                                         _ => ScrapLevel.Information
-                                     },
-                                     DateTimeOffset.Now,
-                                     thread.Value,
-                                     sender?.Value);
+                    return new(message.Value,
+                               level.Value.ToUpper() switch
+                               {
+                                   "INFO" => ScrapLevel.Information,
+                                   "WARN" => ScrapLevel.Warning,
+                                   "ERROR" => ScrapLevel.Error,
+                                   _ => ScrapLevel.Information
+                               },
+                               DateTimeOffset.Now,
+                               thread.Value,
+                               sender?.Value);
                 }
 
-                return new Scrap(data);
+                return new(data);
             }
 
             [GeneratedRegex(@"\[(.*)\] \[(?<thread>[a-zA-Z0-9\ \-#@]+)/(?<level>[a-zA-Z]+)\](\ \[(?<source>[a-zA-Z0-9\ \\./\-]+)\])?: (?<message>.*)")]

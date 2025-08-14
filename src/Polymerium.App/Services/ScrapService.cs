@@ -37,7 +37,7 @@ namespace Polymerium.App.Services
         {
             if (!_buffers.TryGetValue(e.Key, out var buffer))
             {
-                buffer = new ObservableFixedSizeRingBuffer<ScrapModel>(9527);
+                buffer = new(9527);
                 _buffers.Add(e.Key, buffer);
             }
 
@@ -52,7 +52,7 @@ namespace Polymerium.App.Services
                                                   Sender: { } sender
                                               })
                                           {
-                                              buffer.AddLast(new ScrapModel(x.Message, level, time, thread, sender));
+                                              buffer.AddLast(new(x.Message, level, time, thread, sender));
                                           }
                                           else
                                           {
@@ -62,11 +62,11 @@ namespace Polymerium.App.Services
                                               }
                                               else
                                               {
-                                                  buffer.AddLast(new ScrapModel(x.Message,
-                                                                                    ScrapLevel.Information,
-                                                                                    DateTimeOffset.Now,
-                                                                                    "Unknown",
-                                                                                    "Unknown"));
+                                                  buffer.AddLast(new(x.Message,
+                                                                     ScrapLevel.Information,
+                                                                     DateTimeOffset.Now,
+                                                                     "Unknown",
+                                                                     "Unknown"));
                                               }
                                           }
                                       },

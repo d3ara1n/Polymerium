@@ -14,7 +14,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions;
@@ -46,7 +45,7 @@ namespace Polymerium.App.ViewModels
 
             Versions = versions;
             var first = game.Versions.FirstOrDefault(x => x.Recommended);
-            VersionName = first != default(ComponentIndex.ComponentVersion) ? first.Version : string.Empty;
+            VersionName = first != default ? first.Version : string.Empty;
             IsVersionLoaded = true;
         }
 
@@ -84,7 +83,7 @@ namespace Polymerium.App.ViewModels
                     ms.Position = 0;
                     var pack = new CompressedProfilePack(ms);
                     var container = await importerAgent.ImportAsync(pack);
-                    ImportedPack = new FloatingImportedPackModel(path, pack, container);
+                    ImportedPack = new(path, pack, container);
                     VersionName = container.Profile.Setup.Version;
                     DisplayName = container.Profile.Name;
                 }
@@ -116,9 +115,7 @@ namespace Polymerium.App.ViewModels
             }
             else
             {
-                profile = new Profile(display,
-                                      new Profile.Rice(null, VersionName, null, []),
-                                      new Dictionary<string, object>());
+                profile = new(display, new(null, VersionName, null, []), new Dictionary<string, object>());
             }
 
             if (Thumbnail != null)
@@ -150,10 +147,10 @@ namespace Polymerium.App.ViewModels
 
             profileManager.Add(key, profile);
 
-            persistenceService.AppendAction(new PersistenceService.Action(key.Key,
-                                                                          PersistenceService.ActionKind.Install,
-                                                                          null,
-                                                                          ImportedPack?.Path));
+            persistenceService.AppendAction(new(key.Key,
+                                                PersistenceService.ActionKind.Install,
+                                                null,
+                                                ImportedPack?.Path));
 
             navigationService.Navigate<InstanceView>(key.Key);
         }

@@ -11,22 +11,14 @@ namespace Polymerium.Trident.Services
 
         public async Task<XboxLiveResponse> AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(string microsoftToken) =>
             EnsureResponseStatus(await liveClient
-                                      .AcquireXboxLiveTokenAsync(new
-                                                                     XboxLiveRequest<
-                                                                         XboxLiveTokenProperties>(new
-                                                                             XboxLiveTokenProperties($"d={microsoftToken}"),
-                                                                         "http://auth.xboxlive.com"))
+                                      .AcquireXboxLiveTokenAsync(new(new($"d={microsoftToken}"),
+                                                                     "http://auth.xboxlive.com"))
                                       .ConfigureAwait(false));
 
         public async Task<XboxLiveResponse> AuthorizeForServiceTokenByXboxLiveTokenAsync(string xboxLiveToken) =>
             EnsureResponseStatus(await serviceClient
-                                      .AcquireMinecraftTokenAsync(new
-                                                                      XboxLiveRequest<
-                                                                          MinecraftTokenProperties>(new
-                                                                              MinecraftTokenProperties([
-                                                                                  xboxLiveToken
-                                                                              ]),
-                                                                          "rp://api.minecraftservices.com/"))
+                                      .AcquireMinecraftTokenAsync(new(new([xboxLiveToken]),
+                                                                      "rp://api.minecraftservices.com/"))
                                       .ConfigureAwait(false));
 
         private static XboxLiveResponse EnsureResponseStatus(XboxLiveResponse response)

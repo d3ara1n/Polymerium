@@ -37,7 +37,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                                                   {
                                                       if (PackageHelper.TryParse(x.Purl, out var parsed))
                                                       {
-                                                          return new Purl(new Identity(parsed.Label,
+                                                          return new Purl(new(parsed.Label,
                                                                               parsed.Namespace,
                                                                               parsed.Pid),
                                                                           parsed.Vid,
@@ -128,9 +128,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                             {
                                 foreach (var dep in resolved.Dependencies.Where(x => x.IsRequired))
                                 {
-                                    purls.Push(new Purl(new Identity(dep.Label, dep.Namespace, dep.Pid),
-                                                        dep.Vid,
-                                                        true));
+                                    purls.Push(new(new(dep.Label, dep.Namespace, dep.Pid), dep.Vid, true));
                                 }
                             }
                         }

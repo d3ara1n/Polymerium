@@ -31,7 +31,6 @@ namespace Polymerium.App.ViewModels
 
         #endregion
 
-
         #region Other
 
         private bool Finish(IAccount account)
@@ -48,7 +47,7 @@ namespace Polymerium.App.ViewModels
             var isDefault = !Accounts.Any(x => x.IsDefault);
             var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, isDefault);
             persistenceService.AppendAccount(raw);
-            Accounts.Add(new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
+            Accounts.Add(new(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
             {
                 IsDefault = isDefault
             });
@@ -57,7 +56,7 @@ namespace Polymerium.App.ViewModels
 
         #endregion
 
-        #region Lifecycle
+        #region Overrides
 
         protected override Task OnInitializeAsync(CancellationToken token)
         {

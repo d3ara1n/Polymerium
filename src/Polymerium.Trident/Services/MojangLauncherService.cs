@@ -10,6 +10,6 @@ namespace Polymerium.Trident.Services
         public async Task<MinecraftNewsResponse> GetMinecraftNewsAsync() =>
             await client.GetNewsAsync().ConfigureAwait(false);
 
-        public Uri GetAbsoluteImageUrl(Uri imageUrl) => new(new Uri(ENDPOINT, UriKind.Absolute), imageUrl);
+        public Uri GetAbsoluteImageUrl(Uri imageUrl) => new(new(ENDPOINT, UriKind.Absolute), imageUrl);
     }
 }

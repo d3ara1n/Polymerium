@@ -18,7 +18,6 @@ using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
-using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
@@ -98,7 +97,7 @@ namespace Polymerium.App.ViewModels
                                                                                SemVersionStyles.OptionalPatch,
                                                                                out var sem)
                                                                                ? sem
-                                                                               : new SemVersion(0, 0, 0),
+                                                                               : new(0, 0, 0),
                                                                       SemVersion.SortOrderComparer)
                     ];
                 }
@@ -179,9 +178,9 @@ namespace Polymerium.App.ViewModels
             {
                 var handle = await _agent.SearchAsync(SelectedRepository.Label,
                                                       QueryText,
-                                                      new Filter(FilteredVersion,
-                                                                 FilteredLoader?.LoaderId,
-                                                                 ResourceKind.Modpack));
+                                                      new(FilteredVersion,
+                                                          FilteredLoader?.LoaderId,
+                                                          ResourceKind.Modpack));
                 var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
                 {
                     handle.PageIndex = (uint)(i < 0 ? 0 : i);

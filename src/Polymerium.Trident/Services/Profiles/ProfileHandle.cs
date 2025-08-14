@@ -36,7 +36,7 @@ namespace Polymerium.Trident.Services.Profiles
             if (File.Exists(path))
             {
                 var profile = JsonSerializer.Deserialize<Profile>(File.ReadAllText(path), options)!;
-                return new ProfileHandle(key, profile, path, options);
+                return new(key, profile, path, options);
             }
 
             throw new FileNotFoundException("Profile not found");

@@ -46,7 +46,7 @@ namespace Polymerium.App.ViewModels
                 {
                     var avaloniaColor = brush.Color;
                     // Convert Avalonia Color to SkiaSharp SKColor
-                    return new SKColor(avaloniaColor.R, avaloniaColor.G, avaloniaColor.B, avaloniaColor.A);
+                    return new(avaloniaColor.R, avaloniaColor.G, avaloniaColor.B, avaloniaColor.A);
                 }
             }
             catch
@@ -154,10 +154,10 @@ namespace Polymerium.App.ViewModels
                                 _ => throw new ArgumentOutOfRangeException(nameof(x), x, null)
                             })
                            .ToArray();
-            XAxes = [new Axis { Labels = dayLabels, ForceStepToMin = true, MinStep = 1 }];
+            XAxes = [new() { Labels = dayLabels, ForceStepToMin = true, MinStep = 1 }];
 
             // Configure Y-axis for hours
-            YAxes = [new Axis { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
+            YAxes = [new() { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
             return Task.CompletedTask;
         }
 
