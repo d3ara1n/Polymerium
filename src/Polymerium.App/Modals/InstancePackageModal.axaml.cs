@@ -196,6 +196,15 @@ namespace Polymerium.App.Modals
             _old = Model.Entry.Purl;
             IsFilterEnabled = true;
             LazyDependencies = ConstructDependencies();
+            AddHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
+        }
+
+        private void DismissRequestedHandler(object? sender, OverlayItem.DismissRequestedEventArgs e)
+        {
+            if (Model.Version is InstancePackageVersionModel v)
+            {
+                v.IsCurrent = true;
+            }
         }
 
         protected override async void OnUnloaded(RoutedEventArgs e)
@@ -209,6 +218,7 @@ namespace Polymerium.App.Modals
                                                     Model.Entry.Purl));
             }
 
+            RemoveHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
             await Guard.DisposeAsync();
         }
 
@@ -231,16 +241,6 @@ namespace Polymerium.App.Modals
 
 
         #region Commands
-
-        [RelayCommand]
-        private void Dismiss()
-        {
-            RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-            if (Model.Version is InstancePackageVersionModel v)
-            {
-                v.IsCurrent = true;
-            }
-        }
 
         [RelayCommand]
         private void RemoveVersion()

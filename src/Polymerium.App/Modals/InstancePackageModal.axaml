@@ -364,7 +364,7 @@
                               OffContent="{x:Static lang:Resources.Enum_Disabled}" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
                     <Button Content="{x:Static lang:Resources.Dialog_DismissButtonText}" IsCancel="True"
-                            Command="{Binding $parent[modals:InstancePackageModal].DismissCommand}" />
+                            Command="{Binding $parent[modals:InstancePackageModal].Dismiss}" />
                 </StackPanel>
             </Grid>
         </Grid>

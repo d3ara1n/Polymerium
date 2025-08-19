@@ -20,7 +20,7 @@
                     <Panel>
                         <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}"
                                 HorizontalAlignment="Right" Classes="Small" IsCancel="True"
-                                Command="{Binding $parent[modals:AccountEntryModal].DismissCommand}">
+                                Command="{Binding $parent[modals:AccountEntryModal].Dismiss}">
                             <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center" />

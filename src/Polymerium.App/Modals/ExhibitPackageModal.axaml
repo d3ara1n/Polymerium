@@ -152,7 +152,7 @@
                             </ToggleButton>
                             <Button Grid.Column="2" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
                                     Background="Transparent" IsCancel="True"
-                                    Command="{Binding $parent[modals:ExhibitPackageModal].DismissCommand}">
+                                    Command="{Binding $parent[modals:ExhibitPackageModal].Dismiss}">
                                 <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
                             </Button>
                         </Grid>

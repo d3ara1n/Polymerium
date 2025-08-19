@@ -46,9 +46,6 @@ namespace Polymerium.App.Modals
         #region Commands
 
         [RelayCommand]
-        private void Dismiss() => RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-
-        [RelayCommand]
         private void Update()
         {
             foreach (var model in Updates.Where(x => x.IsChecked))
