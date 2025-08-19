@@ -8,10 +8,11 @@
                   xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                   xmlns:m="clr-namespace:Polymerium.App.Models"
                   xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                  xmlns:views="clr-namespace:Polymerium.App.Views"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
-    <TabControl>
+    <TabControl Padding="0">
         <TabItem Header="Screenshots">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                 <ItemsControl ItemsSource="{Binding Groups}">
@@ -29,8 +30,8 @@
                                     <TextBlock Text="{Binding Date}" DockPanel.Dock="Top"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                Margin="12,12,12,0" />
-                                    <ScrollViewer Padding="12">
-                                        <ItemsControl ItemsSource="{Binding Screenshots}">
+                                    <ScrollViewer>
+                                        <ItemsControl Margin="12" ItemsSource="{Binding Screenshots}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel Spacing="8" />
@@ -45,12 +46,14 @@
                                                             BorderBrush="{StaticResource ControlBorderBrush}"
                                                             CornerRadius="{StaticResource MediumCornerRadius}">
                                                         <Grid RowDefinitions="*,Auto" RowSpacing="8">
-                                                            <Button Grid.Row="0">
+                                                            <Button Grid.Row="0"
+                                                                    Command="{Binding $parent[views:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ViewImageCommand,FallbackValue={x:Null}}"
+                                                                    CommandParameter="{Binding}">
                                                                 <Button.Theme>
                                                                     <ControlTheme TargetType="Button">
                                                                         <Setter Property="Cursor" Value="Hand" />
                                                                         <Setter Property="CornerRadius"
-                                                                            Value="{StaticResource SmallCornerRadius}" />
+                                                                                Value="{StaticResource SmallCornerRadius}" />
                                                                         <Setter Property="Template">
                                                                             <ControlTemplate>
                                                                                 <Panel>
@@ -96,14 +99,14 @@
                                                                 <husk:ButtonGroup DockPanel.Dock="Right">
                                                                     <Button>
                                                                         <icons:PackIconLucide Kind="Share"
-                                                                            Height="{StaticResource SmallFontSize}"
-                                                                            Width="{StaticResource SmallFontSize}" />
+                                                                                Height="{StaticResource SmallFontSize}"
+                                                                                Width="{StaticResource SmallFontSize}" />
                                                                     </Button>
                                                                     <Button>
                                                                         <icons:PackIconLucide Kind="Trash2"
-                                                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                            Height="{StaticResource SmallFontSize}"
-                                                                            Width="{StaticResource SmallFontSize}" />
+                                                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                                                Height="{StaticResource SmallFontSize}"
+                                                                                Width="{StaticResource SmallFontSize}" />
                                                                     </Button>
                                                                 </husk:ButtonGroup>
                                                                 <husk:Tag Content="{Binding Time}" />
