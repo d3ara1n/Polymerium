@@ -50,7 +50,7 @@ Instead of copying and storing thousands of mod files for each instance, Polymer
 - **Version Control Ready**: Use Git to collaborate on modpack development
 - **True Portability**: Share your exact game experience with a simple file transfer
 
-### � **Eff-ortless Maintenance**
+### 🔧 **Effortless Maintenance**
 - **Integrity Guaranteed**: Every deployment validates file completeness and correctness
 - **Dependency Resolution**: Automatically handles mod dependencies and conflicts
 - **One-Click Updates**: Upgrade individual mods or entire modpacks seamlessly
