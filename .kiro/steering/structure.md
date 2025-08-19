@@ -4,9 +4,9 @@
 
 ```
 Polymerium/
-├── src/                    # Source code
-├── submodules/            # Git submodules for dependencies
-├── docs/                  # Documentation
+├── src/                  # Source code
+├── submodules/           # Git submodules for dependencies
+├── docs/                 # Documentation
 ├── changelogs/           # Version changelogs
 ├── assets/               # Project assets (screenshots, etc.)
 ├── Releases/             # Build outputs and release artifacts
