@@ -4,19 +4,36 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels
 {
-    public class InstanceAssetsViewModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
-        : InstanceViewModelBase(bag, instanceManager, profileManager)
+    public partial class InstanceAssetsViewModel(
+        ViewBag bag,
+        InstanceManager instanceManager,
+        ProfileManager profileManager,
+        OverlayService overlayService) : InstanceViewModelBase(bag, instanceManager, profileManager)
     {
         #region Reactive
 
         public ObservableCollection<ScreenshotGroupModel> Groups { get; } = [];
+
+        #endregion
+
+        #region Commands
+
+        [RelayCommand]
+        private void ViewImage(ScreenshotModel? model)
+        {
+            if (model != null)
+                overlayService.PopToast(new ImageViewerToast() { ImageSource = model.Image });
+        }
 
         #endregion
 

@@ -196,10 +196,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Icon="Wrench" Title="Maintenance (WIP)" Summary="Check for updates, clear cache, etc.">
-            <controls:SettingsEntryItem Header="Database Management">
-                <Button Content="Manage" HorizontalAlignment="Left" Classes="Small" />
-            </controls:SettingsEntryItem>
+        <controls:SettingsEntry Icon="Wrench" Title="Maintenance" Summary="Check for updates, clear cache, etc.">
             <controls:SettingsEntryItem Header="Storage Management">
                 <Button Content="Manage" HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type v:MaintenanceStorageView}" Classes="Small" />
