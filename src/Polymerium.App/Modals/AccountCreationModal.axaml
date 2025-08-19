@@ -25,7 +25,7 @@
                     IsVisible="{Binding $parent[modals:AccountCreationModal].IsLast,FallbackValue=True}">
                 <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_FinishButtonText}" />
             </Button>
-            <Button IsCancel="True" Command="{Binding $parent[modals:AccountCreationModal].DismissCommand}">
+            <Button IsCancel="True" Command="{Binding $parent[modals:AccountCreationModal].Dismiss}">
                 <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_DismissButtonText}" />
             </Button>
         </StackPanel>

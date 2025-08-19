@@ -35,7 +35,7 @@
                 <Run Text="It's required only for creating symlinks." />
             </TextBlock>
             <Grid Grid.Row="3" ColumnDefinitions="Auto,*,Auto">
-                <Button Grid.Column="0" Command="{Binding $parent[modals:PrivilegeRequirementModal].DismissCommand}">
+                <Button Grid.Column="0" Command="{Binding $parent[modals:PrivilegeRequirementModal].Dismiss}">
                     <TextBlock Text="Ignore" />
                 </Button>
                 <Button Grid.Column="2" Classes="Primary"

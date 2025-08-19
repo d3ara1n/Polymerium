@@ -79,7 +79,7 @@
                 <husk:IconLabel Icon="BoxMultiple"
                                 Text="{x:Static lang:Resources.PackageBulkUpdaterModal_UpdateButtonText}" Spacing="8" />
             </Button>
-            <Button Command="{Binding $parent[modals:PackageBulkUpdaterModal].DismissCommand}">
+            <Button Command="{Binding $parent[modals:PackageBulkUpdaterModal].Dismiss}">
                 <TextBlock Text="{x:Static lang:Resources.Dialog_DismissButtonText}" />
             </Button>
         </StackPanel>

@@ -348,9 +348,6 @@ namespace Polymerium.App.Modals
 
         #region Commands
 
-        [RelayCommand]
-        private void Dismiss() => RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-
         private bool CanApply() => SelectedVersionMode == 1 || (SelectedVersionMode == 0 && SelectedVersion != null);
 
         [RelayCommand(CanExecute = nameof(CanApply))]
