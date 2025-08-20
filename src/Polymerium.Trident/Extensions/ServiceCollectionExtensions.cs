@@ -39,7 +39,7 @@ namespace Polymerium.Trident.Extensions
             return services;
         }
 
-        public static IServiceCollection AddModrinth(this IServiceCollection services)
+        public static IServiceCollection AddModrinthOfficial(this IServiceCollection services)
         {
             services
                .AddRefitClient<IModrinthClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults
@@ -50,7 +50,7 @@ namespace Polymerium.Trident.Extensions
                                                          })))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new(ModrinthService.ENDPOINT);
+                    client.BaseAddress = new(ModrinthService.OFFICIAL_ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })

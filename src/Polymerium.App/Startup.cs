@@ -57,7 +57,7 @@ namespace Polymerium.App
             // Trident
             services
                .AddCurseForge()
-               .AddModrinth()
+               .AddModrinthOfficial()
                .AddPrismLauncher()
                .AddMojangLauncher()
                .AddMicrosoft()
