@@ -11,8 +11,9 @@ namespace Polymerium.Trident.Services
     {
         public const string LABEL = "modrinth";
 
-        public const string ENDPOINT = "https://api.modrinth.com";
-        private const string PROJECT_URL = "https://modrinth.com/{0}/{1}";
+        public const string OFFICIAL_ENDPOINT = "https://api.modrinth.com";
+        public const string FAKE_ENDPOINT = "https://api.bbsmc.net";
+        private const string OFFICIAL_PROJECT_URL = "https://modrinth.com/{0}/{1}";
 
         public const string RESOURCENAME_MODPACK = "modpack";
         public const string RESOURCENAME_MOD = "mod";
@@ -109,7 +110,7 @@ namespace Polymerium.Trident.Services
                 ProjectTypeToKind(hit.ProjectType) ?? ResourceKind.Unknown,
                 hit.Downloads,
                 hit.Categories,
-                new(PROJECT_URL.Replace("{0}", hit.ProjectType).Replace("{1}", hit.Slug)),
+                new(OFFICIAL_PROJECT_URL.Replace("{0}", hit.ProjectType).Replace("{1}", hit.Slug)),
                 hit.DateCreated,
                 hit.DateModified);
 
@@ -136,7 +137,7 @@ namespace Polymerium.Trident.Services
                        project.IconUrl,
                        member?.User.Name ?? member?.User.Username ?? project.TeamId,
                        project.Summary,
-                       new(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                       new(OFFICIAL_PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
                        kind,
                        project.Categories,
                        project.Published,
@@ -161,7 +162,7 @@ namespace Polymerium.Trident.Services
                        project.IconUrl,
                        member?.User.Name ?? member?.User.Username ?? project.TeamId,
                        project.Summary,
-                       new(PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                       new(OFFICIAL_PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
                        kind,
                        VersionTypeToReleaseType(version.VersionType),
                        version.DatePublished,
