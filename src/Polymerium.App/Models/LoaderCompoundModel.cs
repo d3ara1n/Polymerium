@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class LoaderCompoundModel(
+    string loaderId,
+    string displayName,
+    IReadOnlyList<string> versions,
+    string? recommendedVersion) : ModelBase
 {
-    public class LoaderCompoundModel(
-        string loaderId,
-        string displayName,
-        IReadOnlyList<string> versions,
-        string? recommendedVersion) : ModelBase
-    {
-        #region Direct
+    #region Direct
 
-        public string LoaderId => loaderId;
-        public string DisplayName => displayName;
-        public IReadOnlyList<string> Versions => versions;
+    public string LoaderId => loaderId;
+    public string DisplayName => displayName;
+    public IReadOnlyList<string> Versions => versions;
 
-        public string? RecommendedVersion => recommendedVersion;
+    public string? RecommendedVersion => recommendedVersion;
 
-        #endregion
-    }
+    #endregion
 }

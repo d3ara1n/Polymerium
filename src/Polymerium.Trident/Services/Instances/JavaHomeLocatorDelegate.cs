@@ -1,4 +1,3 @@
-﻿namespace Polymerium.Trident.Services.Instances
-{
-    public delegate string JavaHomeLocatorDelegate(uint major);
-}
+﻿namespace Polymerium.Trident.Services.Instances;
+
+public delegate string JavaHomeLocatorDelegate(uint major);

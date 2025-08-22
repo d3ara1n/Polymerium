@@ -34,28 +34,32 @@
 
 ## 🌟 What Makes Polymerium Different
 
-
-
 > **Traditional Minecraft launchers manage files. Polymerium manages experiences.**
 
-Instead of copying and storing thousands of mod files for each instance, Polymerium describes your game setup as lightweight metadata and builds the actual game files on-demand. This revolutionary approach brings several game-changing benefits:
+Instead of copying and storing thousands of mod files for each instance, Polymerium describes your game setup as
+lightweight metadata and builds the actual game files on-demand. This revolutionary approach brings several
+game-changing benefits:
 
 ### 🎯 **Smart Resource Management**
+
 - **Zero Duplication**: Multiple instances sharing the same mods? Only one copy exists on disk
-- **Symlink Magic**: Files are intelligently linked, not copied, saving gigabytes of storage  
+- **Symlink Magic**: Files are intelligently linked, not copied, saving gigabytes of storage
 - **Instant Switching**: Change between completely different modpacks in seconds
 
 ### 📦 **Portable Game Experiences**
+
 - **Metadata-Driven**: Your entire game setup fits in a tiny configuration file
 - **Version Control Ready**: Use Git to collaborate on modpack development
 - **True Portability**: Share your exact game experience with a simple file transfer
 
 ### 🔧 **Effortless Maintenance**
+
 - **Integrity Guaranteed**: Every deployment validates file completeness and correctness
 - **Dependency Resolution**: Automatically handles mod dependencies and conflicts
 - **One-Click Updates**: Upgrade individual mods or entire modpacks seamlessly
 
 ### 🎮 **Player-Focused Design**
+
 - **No Java Hunting**: Configure Java once, works everywhere
 - **Account Flexibility**: Multiple accounts, each linked to specific instances
 - **Clean Uninstall**: Remove Polymerium completely by deleting two folders
@@ -68,7 +72,7 @@ Instead of copying and storing thousands of mod files for each instance, Polymer
 <summary><strong>🏗️ Modern Architecture</strong></summary>
 
 - 🎨 **Avalonia UI**: Beautiful, responsive interface that works across platforms
-- 📋 **Metadata Engine**: Lightweight instance descriptions that rebuild perfectly every time  
+- 📋 **Metadata Engine**: Lightweight instance descriptions that rebuild perfectly every time
 - 🚀 **Deployment System**: Intelligent file management with integrity checking
 - 🔗 **Resource Pooling**: Shared file storage with symlink distribution
 
@@ -100,23 +104,27 @@ Instead of copying and storing thousands of mod files for each instance, Polymer
 
 > [!IMPORTANT]
 > **Windows Developer Mode Required**
-> 
-> Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable Developer Mode to allow symlink creation without administrator privileges.
+>
+> Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable
+> Developer Mode to allow symlink creation without administrator privileges.
 
 <details>
 <summary><strong>📋 How to Enable Developer Mode</strong></summary>
 
 #### Windows 11
+
 ```
 Settings → System → For developers → Developer Mode
 ```
 
-#### Windows 10  
+#### Windows 10
+
 ```
 Settings → Update & Security → For developers → Developer Mode
 ```
 
 #### Windows 7/8
+
 ```
 Upgrade to Windows 10+ first 😉
 ```
@@ -131,7 +139,7 @@ Upgrade to Windows 10+ first 😉
 **📥 Download** → **📂 Extract** → **🚀 Run** → **⚙️ Setup**
 
 1. **Download** the latest release from [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases)
-2. **Extract** and run `Polymerium.App.exe`  
+2. **Extract** and run `Polymerium.App.exe`
 3. **Follow** the setup wizard to configure your first instance
 
 ### 🚀 Quick Start
@@ -139,7 +147,7 @@ Upgrade to Windows 10+ first 😉
 **🎮 Create** → **📦 Add Content** → **🔧 Deploy** → **▶️ Play**
 
 1. **Create Instance**: Define your Minecraft version and mod loader
-2. **Add Content**: Browse and install mods from CurseForge or Modrinth  
+2. **Add Content**: Browse and install mods from CurseForge or Modrinth
 3. **Deploy**: Let Polymerium build your game files
 4. **Play**: Launch directly or export as a modpack
 
@@ -147,8 +155,8 @@ Upgrade to Windows 10+ first 😉
 
 ## 🏗️ Architecture Overview
 
-| 🛠️ Technology | 📋 Purpose | 🔗 Integration |
-| - | - | - |
+| 🛠️ Technology           | 📋 Purpose                              | 🔗 Integration       |
+|--------------------------|-----------------------------------------|----------------------|
 | **.NET 9.0**             | Latest runtime with C# preview features | Core platform        |
 | **Avalonia 11**          | Cross-platform XAML UI framework        | Presentation layer   |
 | **MVVM Pattern**         | Clean separation of concerns            | Architecture pattern |
@@ -161,7 +169,7 @@ Upgrade to Windows 10+ first 😉
 ```
 Polymerium/
 ├── 🎨 src/Polymerium.App/     # UI application layer
-├── ⚙️ src/Polymerium.Trident/ # Core business engine  
+├── ⚙️ src/Polymerium.Trident/ # Core business engine
 ├── 🔗 submodules/             # Shared components
 ├── 📚 docs/                   # Documentation
 ├── 🛠️ .kiro/steering/         # Development guidelines
@@ -195,7 +203,7 @@ dotnet build
 # Development mode
 ./Development.ps1
 
-# Production mode  
+# Production mode
 ./Production.ps1
 
 # Build and publish
@@ -214,12 +222,12 @@ git cliff
 
 We welcome contributions! Please ensure your code follows the established patterns:
 
-| Aspect | Requirement |
-| - | - |
-| 🏗️ **Architecture**         | MVVM pattern with clear separation of concerns |
+| Aspect                      | Requirement                                    |
+|-----------------------------|------------------------------------------------|
+| 🏗️ **Architecture**        | MVVM pattern with clear separation of concerns |
 | 💉 **Dependency Injection** | Use constructor injection throughout           |
 | 🔥 **Modern C#**            | Leverage latest language features and patterns |
-| ✨ **Code Style**           | Follow the .editorconfig guidelines            |
+| ✨ **Code Style**            | Follow the .editorconfig guidelines            |
 
 > [!TIP]
 > Check out our [steering documents](.kiro/steering/) for detailed project guidelines and architecture patterns.
@@ -228,9 +236,9 @@ We welcome contributions! Please ensure your code follows the established patter
 
 ## 🖥️ Platform Support
 
-| Platform | Status | Notes |
-| - | - | - |
-| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **Stable**      | Primary platform with full feature support |
+| Platform                                                                                                   | Status             | Notes                                      |
+|------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------|
+| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **Stable**       | Primary platform with full feature support |
 | ![Linux](https://img.shields.io/badge/Linux-WIP-FCC624?style=flat-square&logo=linux&logoColor=black)       | 🚧 **In Progress** | Core functionality working                 |
 | ![macOS](https://img.shields.io/badge/macOS-Planned-000000?style=flat-square&logo=apple&logoColor=white)   | 📋 **Planned**     | Future release target                      |
 
@@ -239,6 +247,7 @@ We welcome contributions! Please ensure your code follows the established patter
 ## Privacy & Security
 
 Polymerium respects your privacy:
+
 - **No Telemetry**: Zero data collection or tracking
 - **Local Storage**: All data stays on your machine
 - **Minimal Footprint**: Clean uninstall leaves no traces
@@ -267,8 +276,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <details>
 <summary><strong>🔗 Technical References</strong></summary>
 
-- [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - Game launch process and Fabric/Quilt deployment
-- [Tutorial: Writing a Launcher](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8) - Game launch process guide
+- [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - Game launch process and
+  Fabric/Quilt deployment
+- [Tutorial: Writing a Launcher](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8) -
+  Game launch process guide
 - [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper) - Forge integration reference
 - [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme) - Authentication implementation
 
@@ -277,7 +288,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### 🙏 Special Thanks
 
 - **Minecraft Community** - For the incredible modding ecosystem
-- **Avalonia Team** - For the excellent cross-platform UI framework  
+- **Avalonia Team** - For the excellent cross-platform UI framework
 - **API Providers** - CurseForge and Modrinth for their public APIs
 - **Contributors** - Everyone who helps make Polymerium better
 

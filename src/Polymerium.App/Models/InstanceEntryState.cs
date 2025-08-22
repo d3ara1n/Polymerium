@@ -1,4 +1,10 @@
-﻿namespace Polymerium.App.Models
+﻿namespace Polymerium.App.Models;
+
+public enum InstanceEntryState
 {
-    public enum InstanceEntryState { Idle, Installing, Updating, Preparing, Running }
+    Idle,
+    Installing,
+    Updating,
+    Preparing,
+    Running
 }

@@ -1,11 +1,10 @@
 ﻿using Polymerium.Trident.Models.XboxLiveApi;
 using Refit;
 
-namespace Polymerium.Trident.Clients
+namespace Polymerium.Trident.Clients;
+
+public interface IXboxLiveClient
 {
-    public interface IXboxLiveClient
-    {
-        [Post("/user/authenticate")]
-        Task<XboxLiveResponse> AcquireXboxLiveTokenAsync([Body] XboxLiveRequest<XboxLiveTokenProperties> request);
-    }
+    [Post("/user/authenticate")]
+    Task<XboxLiveResponse> AcquireXboxLiveTokenAsync([Body] XboxLiveRequest<XboxLiveTokenProperties> request);
 }

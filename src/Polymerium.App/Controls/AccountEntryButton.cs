@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 
-namespace Polymerium.App.Controls
+namespace Polymerium.App.Controls;
+
+public class AccountEntryButton : Button
 {
-    public class AccountEntryButton : Button { }
 }

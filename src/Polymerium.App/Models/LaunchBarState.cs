@@ -1,4 +1,8 @@
-﻿namespace Polymerium.App.Models
+﻿namespace Polymerium.App.Models;
+
+public enum LaunchBarState
 {
-    public enum LaunchBarState { Idle, Building, Running }
+    Idle,
+    Building,
+    Running
 }

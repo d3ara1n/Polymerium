@@ -1,4 +1,10 @@
-﻿namespace Polymerium.App.Models
+﻿namespace Polymerium.App.Models;
+
+public enum ExhibitState
 {
-    public enum ExhibitState { Editable, Locked, Adding, Modifying, Removing }
+    Editable,
+    Locked,
+    Adding,
+    Modifying,
+    Removing
 }
