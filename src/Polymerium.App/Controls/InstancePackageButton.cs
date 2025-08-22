@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 
-namespace Polymerium.App.Controls
-{
-    public class InstancePackageButton : Button;
-}
+namespace Polymerium.App.Controls;
+
+public class InstancePackageButton : Button;

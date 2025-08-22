@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls.Primitives;
 
-namespace Polymerium.App.Controls
+namespace Polymerium.App.Controls;
+
+public class Plaque : HeaderedContentControl
 {
-    public class Plaque : HeaderedContentControl { }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Polymerium.App.Exceptions
+namespace Polymerium.App.Exceptions;
+
+public class NavigationFailedException(Type page, string message) : Exception(message)
 {
-    public class NavigationFailedException(Type page, string message) : Exception(message)
-    {
-        public Type Page => page;
-    }
+    public Type Page => page;
 }

@@ -1,15 +1,14 @@
 ﻿using System.Globalization;
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class LanguageModel(CultureInfo info) : ModelBase
 {
-    public class LanguageModel(CultureInfo info) : ModelBase
-    {
-        #region Direct
+    #region Direct
 
-        public string Id => info.Name;
-        public string Display => info.DisplayName;
+    public string Id => info.Name;
+    public string Display => info.DisplayName;
 
-        #endregion
-    }
+    #endregion
 }

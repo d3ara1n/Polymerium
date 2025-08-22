@@ -241,16 +241,16 @@
                                                                 <Grid ColumnDefinitions="Auto,Auto,Auto,*"
                                                                       ColumnSpacing="4">
                                                                     <fi:SymbolIcon Grid.Column="0" Symbol="Flag"
-                                                                        FontSize="{StaticResource SmallFontSize}"
-                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                            FontSize="{StaticResource SmallFontSize}"
+                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                                     <TextBlock Grid.Column="1"
                                                                                Text="{Binding CompatibleLoaders}"
                                                                                FontSize="{StaticResource SmallFontSize}"
                                                                                TextTrimming="CharacterEllipsis"
                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                                     <fi:SymbolIcon Grid.Column="2" Symbol="Branch"
-                                                                        FontSize="{StaticResource SmallFontSize}"
-                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                            FontSize="{StaticResource SmallFontSize}"
+                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                                     <TextBlock Grid.Column="3"
                                                                                Text="{Binding CompatibleVersions}"
                                                                                FontSize="{StaticResource SmallFontSize}"
@@ -259,7 +259,7 @@
                                                                 </Grid>
                                                                 <DockPanel>
                                                                     <StackPanel Orientation="Horizontal"
-                                                                        DockPanel.Dock="Right">
+                                                                            DockPanel.Dock="Right">
                                                                         <TextBlock Text="{Binding PublishedAt}" />
                                                                     </StackPanel>
                                                                     <husk:SwitchPresenter
@@ -267,21 +267,21 @@
                                                                         Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
                                                                         <husk:SwitchCase Value="Release">
                                                                             <husk:Tag Classes="Success"
-                                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                                                 <TextBlock
                                                                                     Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Beta">
                                                                             <husk:Tag Classes="Warning"
-                                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                                                 <TextBlock
                                                                                     Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Alpha">
                                                                             <husk:Tag Classes="Danger"
-                                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                                                 <TextBlock
                                                                                     Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                                             </husk:Tag>

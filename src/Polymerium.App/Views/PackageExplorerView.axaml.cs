@@ -1,9 +1,8 @@
 ﻿using Polymerium.App.Controls;
 
-namespace Polymerium.App.Views
+namespace Polymerium.App.Views;
+
+public partial class PackageExplorerView : ScopedPage
 {
-    public partial class PackageExplorerView : ScopedPage
-    {
-        public PackageExplorerView() => InitializeComponent();
-    }
+    public PackageExplorerView() => InitializeComponent();
 }

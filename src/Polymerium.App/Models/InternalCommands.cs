@@ -5,24 +5,18 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Polymerium.App.Models
-{
-    public static class InternalCommands
-    {
-        public static ICommand OpenUriCommand { get; } = new RelayCommand<Uri>(uri =>
-        {
-            if (uri != null && uri.IsAbsoluteUri)
-            {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(uri);
-            }
-        });
+namespace Polymerium.App.Models;
 
-        public static ICommand OpenFolderCommand { get; } = new RelayCommand<string>(path =>
-        {
-            if (path != null && Directory.Exists(path))
-            {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(path));
-            }
-        });
-    }
+public static class InternalCommands
+{
+    public static ICommand OpenUriCommand { get; } = new RelayCommand<Uri>(uri =>
+    {
+        if (uri != null && uri.IsAbsoluteUri) TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(uri);
+    });
+
+    public static ICommand OpenFolderCommand { get; } = new RelayCommand<string>(path =>
+    {
+        if (path != null && Directory.Exists(path))
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(path));
+    });
 }

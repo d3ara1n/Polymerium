@@ -1,6 +1,7 @@
 ﻿using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public abstract class InstancePackageVersionModelBase : ModelBase
 {
-    public abstract class InstancePackageVersionModelBase : ModelBase { }
 }

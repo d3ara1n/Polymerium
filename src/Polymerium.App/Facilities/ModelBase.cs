@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Polymerium.App.Facilities
+namespace Polymerium.App.Facilities;
+
+public abstract class ModelBase : ObservableObject
 {
-    public abstract class ModelBase : ObservableObject { }
 }

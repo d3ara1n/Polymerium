@@ -573,17 +573,17 @@
                                                                     <MultiBinding
                                                                         Converter="{x:Static BoolConverters.Or}">
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
-                                                                            ConverterParameter="Editable" />
+                                                                                Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                                ConverterParameter="Editable" />
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
-                                                                            ConverterParameter="Locked" />
+                                                                                Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                                ConverterParameter="Locked" />
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
-                                                                            ConverterParameter="Adding" />
+                                                                                Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                                ConverterParameter="Adding" />
                                                                         <Binding Path="Exhibit.State"
-                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
-                                                                            ConverterParameter="Modifying" />
+                                                                                Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                                ConverterParameter="Modifying" />
                                                                     </MultiBinding>
                                                                 </controls:ExhibitDependencyButton.IsChecked>
                                                             </controls:ExhibitDependencyButton>
