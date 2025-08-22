@@ -6,7 +6,7 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-        <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
+        <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
