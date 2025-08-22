@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Utilities;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Utilities;
@@ -104,7 +105,7 @@ namespace Polymerium.Trident.Importers
                 {
                     var projectId = path[6..14];
                     var versionId = path[24..32];
-                    return new(PackageHelper.ToPurl(ModrinthService.LABEL, null, projectId, versionId), true, null, []);
+                    return new(PackageHelper.ToPurl(ModrinthHelper.LABEL, null, projectId, versionId), true, null, []);
                 }
             }
 

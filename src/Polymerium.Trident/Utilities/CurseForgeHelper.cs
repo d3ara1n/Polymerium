@@ -1,13 +1,12 @@
-﻿using Polymerium.Trident.Clients;
-using Polymerium.Trident.Models.CurseForgeApi;
+﻿using Polymerium.Trident.Models.CurseForgeApi;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
-namespace Polymerium.Trident.Services
+namespace Polymerium.Trident.Utilities
 {
-    public class CurseForgeService(ICurseForgeClient client)
+    public static class CurseForgeHelper
     {
         public const string LABEL = "curseforge";
 
@@ -22,6 +21,7 @@ namespace Polymerium.Trident.Services
         public const uint CLASSID_DATAPACK = 4546;
         public const uint CLASSID_SHADERPACK = 6552;
         public const uint CLASSID_RESOURCEPACK = 12;
+
 
         public static readonly IReadOnlyDictionary<string, string> LOADER_MAPPINGS = new Dictionary<string, string>
         {
@@ -213,52 +213,5 @@ namespace Polymerium.Trident.Services
                 info.DateModified,
                 info.DownloadCount,
                 [.. info.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url))]);
-
-        public async Task<string> GetModDescriptionAsync(uint modId) =>
-            (await client.GetModDescriptionAsync(modId).ConfigureAwait(false)).Data;
-
-        public async Task<string> GetModFileChangelogAsync(uint modId, uint fileId) =>
-            (await client.GetModFileChangelogAsync(modId, fileId).ConfigureAwait(false)).Data;
-
-        public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
-        {
-            var versions = await client.GetMinecraftVersionsAsync().ConfigureAwait(false);
-            return [.. versions.Data.Select(x => x.VersionString)];
-        }
-
-        public Task<SearchResponse<ModInfo>> SearchAsync(
-            string searchFilter,
-            uint? classId,
-            string? gameVersion,
-            ModLoaderTypeModel? modLoader,
-            uint index = 0,
-            uint pageSize = 50) =>
-            client.SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize);
-
-        public async Task<ModInfo> GetModAsync(uint modId)
-        {
-            var rv = await client.GetModAsync(modId).ConfigureAwait(false);
-            return rv.Data;
-        }
-
-
-        public async Task<FileInfo> GetModFileAsync(uint modId, uint fileId)
-        {
-            var rv = await client.GetModFileAsync(modId, fileId).ConfigureAwait(false);
-            return rv.Data;
-        }
-
-        public async Task<ArrayResponse<FileInfo>> GetModFilesAsync(
-            uint modId,
-            string? gameVersion,
-            ModLoaderTypeModel? modLoader,
-            uint index = 0,
-            uint pageSize = 50)
-        {
-            var rv = await client
-                          .GetModFilesAsync(modId, gameVersion, modLoader, index, pageSize)
-                          .ConfigureAwait(false);
-            return rv;
-        }
     }
 }

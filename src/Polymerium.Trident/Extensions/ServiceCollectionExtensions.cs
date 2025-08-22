@@ -7,6 +7,7 @@ using Polymerium.Trident.Clients;
 using Polymerium.Trident.Importers;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Utilities;
 using Refit;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
@@ -24,15 +25,14 @@ namespace Polymerium.Trident.Extensions
                     ICurseForgeClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web))))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new(CurseForgeService.ENDPOINT);
-                    client.DefaultRequestHeaders.Add("x-api-key", CurseForgeService.API_KEY);
+                    client.BaseAddress = new(CurseForgeHelper.ENDPOINT);
+                    client.DefaultRequestHeaders.Add("x-api-key", CurseForgeHelper.API_KEY);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })
                .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
 
             services
-               .AddSingleton<CurseForgeService>()
                .AddTransient<IRepository, CurseForgeRepository>()
                .AddTransient<IProfileImporter, CurseForgeImporter>();
 
@@ -50,14 +50,13 @@ namespace Polymerium.Trident.Extensions
                                                          })))
                .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new(ModrinthService.OFFICIAL_ENDPOINT);
+                    client.BaseAddress = new(ModrinthHelper.OFFICIAL_ENDPOINT);
                     client.DefaultRequestHeaders.Add("User-Agent",
                                                      $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })
                .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
 
             services
-               .AddSingleton<ModrinthService>()
                .AddTransient<IRepository, ModrinthRepository>()
                .AddTransient<IProfileImporter, ModrinthImporter>();
 

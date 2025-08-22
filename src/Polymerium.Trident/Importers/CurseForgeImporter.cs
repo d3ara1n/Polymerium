@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Polymerium.Trident.Models.CurseForgePack;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Utilities;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Utilities;
@@ -40,7 +41,7 @@ namespace Polymerium.Trident.Importers
                                [
                                    .. manifest.Files.Select(x =>
                                                                 new Profile.Rice.Entry(PackageHelper
-                                                                       .ToPurl(CurseForgeService.LABEL,
+                                                                       .ToPurl(CurseForgeHelper.LABEL,
                                                                                null,
                                                                                x.ProjectId.ToString(),
                                                                                x.FileId.ToString()),
