@@ -1,13 +1,12 @@
-﻿using Polymerium.Trident.Clients;
-using Polymerium.Trident.Models.ModrinthApi;
+﻿using Polymerium.Trident.Models.ModrinthApi;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
-namespace Polymerium.Trident.Services
+namespace Polymerium.Trident.Utilities
 {
-    public class ModrinthService(IModrinthClient client)
+    public static class ModrinthHelper
     {
         public const string LABEL = "modrinth";
 
@@ -174,27 +173,17 @@ namespace Polymerium.Trident.Services
                        ToDependencies(version));
         }
 
-        public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
-        {
-            var versions = await client.GetGameVersionsAsync().ConfigureAwait(false);
-            return [.. versions.Where(x => x.VersionType == "release").Select(x => x.Version)];
-        }
+        public static IReadOnlyList<string> ToLoaderNames(IEnumerable<ModLoader> loaders) =>
+        [
+            .. loaders.Select(x => x.Name)
+        ];
 
-        public async Task<IReadOnlyList<string>> GetLoadersAsync()
-        {
-            var loaders = await client.GetLoadersAsync().ConfigureAwait(false);
-            return [.. loaders.Select(x => x.Name)];
-        }
+        public static IReadOnlyList<string> ToVersionNames(IEnumerable<GameVersion> versions) =>
+        [
+            .. versions.Where(x => x.VersionType == "release").Select(x => x.Version)
+        ];
 
-        public Task<IReadOnlyList<string>> GetProjectTypesAsync() => client.GetProjectTypesAsync();
-
-        public Task<SearchResponse<SearchHit>> SearchAsync(
-            string query,
-            string? projectType,
-            string? gameVersion = null,
-            string? modLoader = null,
-            uint offset = 0,
-            uint limit = 10)
+        public static string BuildFacets(string? projectType, string? gameVersion, string? modLoader)
         {
             var facets = new List<KeyValuePair<string, string>>();
             if (gameVersion != null)
@@ -212,22 +201,7 @@ namespace Polymerium.Trident.Services
                 facets.Add(new("project_type", projectType));
             }
 
-            return client.SearchAsync(query,
-                                      "[" + string.Join(",", facets.Select(x => $"[\"{x.Key}:{x.Value}\"]")) + "]",
-                                      offset: offset,
-                                      limit: limit);
+            return "[" + string.Join(",", facets.Select(x => $"[\"{x.Key}:{x.Value}\"]")) + "]";
         }
-
-        public Task<ProjectInfo> GetProjectAsync(string projectId) => client.GetProjectAsync(projectId);
-
-        public Task<VersionInfo> GetVersionAsync(string versionId) => client.GetVersionAsync(versionId);
-
-        public Task<IReadOnlyList<MemberInfo>> GetTeamMembersAsync(string teamId) => client.GetTeamMembersAsync(teamId);
-
-        public Task<IReadOnlyList<VersionInfo>> GetProjectVersionsAsync(
-            string projectId,
-            string? versionType,
-            string? modLoader) =>
-            client.GetProjectVersionsAsync(projectId, versionType, modLoader is not null ? $"[\"{modLoader}\"]" : null);
     }
 }

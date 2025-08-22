@@ -1,5 +1,6 @@
 ﻿using Polymerium.Trident.Models.CurseForgeApi;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Utilities;
 using Refit;
 using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;
 
@@ -19,7 +20,7 @@ namespace Polymerium.Trident.Clients
             string sortOrder = "desc",
             uint index = 0,
             uint pageSize = 50,
-            uint gameId = CurseForgeService.GAME_ID);
+            uint gameId = CurseForgeHelper.GAME_ID);
 
         [Get("/v1/mods/{modId}")]
         Task<ObjectResponse<ModInfo>> GetModAsync(uint modId);
