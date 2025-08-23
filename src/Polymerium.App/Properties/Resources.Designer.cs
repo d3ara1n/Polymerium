@@ -1779,6 +1779,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string InstancePropertiesView_ThumbnailTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ThumbnailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to How this instance identify itself.
         /// </summary>
         public static string InstancePropertiesView_TitleSubtitle {

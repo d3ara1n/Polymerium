@@ -27,36 +27,34 @@ public class ModrinthImporter : IProfileImporter
     {
         await using var manifestStream = pack.Open(IndexFileName);
         var index = await JsonSerializer
-            .DeserializeAsync<Index>(manifestStream, JsonSerializerOptions.Web)
-            .ConfigureAwait(false);
+                         .DeserializeAsync<Index>(manifestStream, JsonSerializerOptions.Web)
+                         .ConfigureAwait(false);
         if (index is null
-            || !TryExtractLoader(index.Dependencies, out var loader)
-            || !TryExtractVersion(index.Dependencies, out var version))
+         || !TryExtractLoader(index.Dependencies, out var loader)
+         || !TryExtractVersion(index.Dependencies, out var version))
             throw new FormatException($"{IndexFileName} is not a valid manifest");
 
         var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
         return new(new(index.Name,
-                new(source,
-                    version,
-                    LoaderHelper.ToLurl(loader.Identity, loader.Version),
-                    [.. index.Files.Where(x => x.Env?.Client is not "unsupported").Select(ToPackage)]),
-                new Dictionary<string, object>()),
-            pack
-                .FileNames
-                .Where(x => x.StartsWith("overrides")
-                            && x != "overrides"
-                            && x.Length > "overrides".Length + 1)
-                .Select(x => (x, x[("overrides".Length + 1)..]))
-                .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
-                .Concat(pack
-                    .FileNames
-                    .Where(x => x.StartsWith("client-overrides")
-                                && x != "client-overrides"
-                                && x.Length > "client-overrides".Length + 1)
-                    .Select(x => (x, x[("client-overrides".Length + 1)..]))
-                    .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2)))
-                .ToList(),
-            pack.Reference?.Thumbnail);
+                       new(source,
+                           version,
+                           LoaderHelper.ToLurl(loader.Identity, loader.Version),
+                           [.. index.Files.Where(x => x.Env?.Client is not "unsupported").Select(ToPackage)]),
+                       new Dictionary<string, object>()),
+                   pack
+                      .FileNames
+                      .Where(x => x.StartsWith("overrides") && x != "overrides" && x.Length > "overrides".Length + 1)
+                      .Select(x => (x, x[("overrides".Length + 1)..]))
+                      .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
+                      .Concat(pack
+                             .FileNames
+                             .Where(x => x.StartsWith("client-overrides")
+                                      && x != "client-overrides"
+                                      && x.Length > "client-overrides".Length + 1)
+                             .Select(x => (x, x[("client-overrides".Length + 1)..]))
+                             .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2)))
+                      .ToList(),
+                   pack.Reference?.Thumbnail);
     }
 
     #endregion
@@ -76,9 +74,7 @@ public class ModrinthImporter : IProfileImporter
         return false;
     }
 
-    private bool TryExtractVersion(
-        IDictionary<string, string> dependencies,
-        [MaybeNullWhen(false)] out string version)
+    private bool TryExtractVersion(IDictionary<string, string> dependencies, [MaybeNullWhen(false)] out string version)
     {
         if (dependencies.TryGetValue("minecraft", out var v))
         {
@@ -92,6 +88,10 @@ public class ModrinthImporter : IProfileImporter
 
     private Profile.Rice.Entry ToPackage(Index.IndexFile file)
     {
+        // FIX: 需要兼容 bbsmc
+        //  bbsmc 用的第三方包，其中部分使用 mrpack，而 mrpack 使用多个源，其中就有 forgecdn
+        //  也就是 mrpack 可以包含多个托管站
+        // FIX: 有些 %版本% 写的是文件名
         var download = file.Downloads.FirstOrDefault(x => x.Host == "cdn.modrinth.com");
         // https://cdn.modrinth.com/data/88888888/versions/88888888/filename.jar
         if (download != null)
@@ -101,7 +101,7 @@ public class ModrinthImporter : IProfileImporter
             {
                 var projectId = path[6..14];
                 var versionId = path[24..32];
-                return new(PackageHelper.ToPurl(ModrinthHelper.LABEL, null, projectId, versionId), true, null, []);
+                return new(PackageHelper.ToPurl("modrinth", null, projectId, versionId), true, null, []);
             }
         }
 

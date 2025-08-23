@@ -30,7 +30,7 @@
                     </StackPanel>
                 </Border>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Thumbnail">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_ThumbnailLabelText}">
                 <Grid ColumnDefinitions="Auto,12,*">
                     <Border Grid.Column="0" Padding="8"
                             Width="72"

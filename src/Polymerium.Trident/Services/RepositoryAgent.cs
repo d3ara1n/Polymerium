@@ -42,26 +42,27 @@ public class RepositoryAgent
             {
                 case IRepositoryProviderAccessor.ProviderProfile.DriverType.Modrinth:
                 {
-                    var modrinth = new ModrinthRepository(RestService.For<IModrinthClient>(BuildClient(profile),
-                        new RefitSettings(new
-                            SystemTextJsonContentSerializer(new(JsonSerializerDefaults
-                                .Web)
-                            {
-                                PropertyNamingPolicy =
-                                    JsonNamingPolicy
-                                        .SnakeCaseLower
-                            }))));
+                    var modrinth = new ModrinthRepository(profile.Label,
+                                                          RestService.For<IModrinthClient>(BuildClient(profile),
+                                                              new RefitSettings(new
+                                                                                    SystemTextJsonContentSerializer(new(JsonSerializerDefaults
+                                                                                       .Web)
+                                                                                    {
+                                                                                        PropertyNamingPolicy =
+                                                                                            JsonNamingPolicy
+                                                                                               .SnakeCaseLower
+                                                                                    }))));
 
                     built.Add(profile.Label, modrinth);
                     break;
                 }
                 case IRepositoryProviderAccessor.ProviderProfile.DriverType.CurseForge:
                 {
-                    var curseforge =
-                        new CurseForgeRepository(RestService.For<ICurseForgeClient>(BuildClient(profile),
-                            new RefitSettings(new
-                                SystemTextJsonContentSerializer(new(JsonSerializerDefaults
-                                    .Web)))));
+                    var curseforge = new CurseForgeRepository(profile.Label,
+                                                              RestService.For<ICurseForgeClient>(BuildClient(profile),
+                                                                  new RefitSettings(new
+                                                                      SystemTextJsonContentSerializer(new(JsonSerializerDefaults
+                                                                         .Web)))));
                     built.Add(profile.Label, curseforge);
                     break;
                 }
@@ -74,7 +75,8 @@ public class RepositoryAgent
     {
         var client = _clientFactory.CreateClient();
         client.BaseAddress = new(profile.Endpoint);
-        if (profile.UserAgent is not null) client.DefaultRequestHeaders.UserAgent.Add(new(USER_AGENT));
+        if (profile.UserAgent is not null)
+            client.DefaultRequestHeaders.UserAgent.Add(new(USER_AGENT));
 
         if (profile.AuthorizationHeader is { Key: { } key, Value: { } value })
             client.DefaultRequestHeaders.Add(key, value);
@@ -84,7 +86,8 @@ public class RepositoryAgent
 
     private IRepository Redirect(string label)
     {
-        if (_repositories.TryGetValue(label, out var repository)) return repository;
+        if (_repositories.TryGetValue(label, out var repository))
+            return repository;
 
         throw new KeyNotFoundException($"{label} is not a listed repository label or not found");
     }
@@ -103,35 +106,35 @@ public class RepositoryAgent
         Filter filter,
         bool cacheEnabled = true) =>
         RetrieveCachedAsync($"package:{PackageHelper.Identify(label, ns, pid, vid, filter)}",
-            () => Redirect(label).ResolveAsync(ns, pid, vid, filter),
-            cacheEnabled);
+                            () => Redirect(label).ResolveAsync(ns, pid, vid, filter),
+                            cacheEnabled);
 
 
     public Task<Project> QueryAsync(string label, string? ns, string pid) =>
         RetrieveCachedAsync($"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
-            () => Redirect(label).QueryAsync(ns, pid));
+                            () => Redirect(label).QueryAsync(ns, pid));
 
     public Task<Project> QueryBatchAsync(IEnumerable<(string, string?, string)> batch) =>
         throw new NotImplementedException();
 
     public Task<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
         RetrieveCachedAsync($"description:{PackageHelper.Identify(label, ns, pid, null, null)}",
-            () => Redirect(label).ReadDescriptionAsync(ns, pid));
+                            () => Redirect(label).ReadDescriptionAsync(ns, pid));
 
     public Task<string> ReadChangelogAsync(string label, string? ns, string pid, string vid) =>
         RetrieveCachedAsync($"Changelog:{PackageHelper.Identify(label, ns, pid, vid, null)}",
-            () => Redirect(label).ReadChangelogAsync(ns, pid, vid));
+                            () => Redirect(label).ReadChangelogAsync(ns, pid, vid));
 
     public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter) =>
         Redirect(label).InspectAsync(ns, pid, filter);
 
     public Task<byte[]> SeeAsync(Uri url) =>
         RetrieveCachedAsync($"thumbnail:{url}",
-            async () =>
-            {
-                using var client = _clientFactory.CreateClient();
-                return await client.GetByteArrayAsync(url).ConfigureAwait(false);
-            });
+                            async () =>
+                            {
+                                using var client = _clientFactory.CreateClient();
+                                return await client.GetByteArrayAsync(url).ConfigureAwait(false);
+                            });
 
     private async Task<T> RetrieveCachedAsync<T>(string key, Func<Task<T>> factory, bool cacheEnabled = true)
     {
@@ -160,10 +163,10 @@ public class RepositoryAgent
         {
             var result = await factory().ConfigureAwait(false);
             await _cache
-                .SetStringAsync(key,
-                    JsonSerializer.Serialize(result),
-                    new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN })
-                .ConfigureAwait(false);
+                 .SetStringAsync(key,
+                                 JsonSerializer.Serialize(result),
+                                 new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN })
+                 .ConfigureAwait(false);
             _logger.LogDebug("Cache missed but recorded: {}", key);
 
 

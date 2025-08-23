@@ -10,13 +10,11 @@ using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Repositories;
 
-public class CurseForgeRepository(ICurseForgeClient client) : IRepository
+public class CurseForgeRepository(string label, ICurseForgeClient client) : IRepository
 {
     private const uint PAGE_SIZE = 20;
 
     private static readonly Converter CONVERTER = new(new() { GithubFlavored = false, SmartHrefHandling = true });
-
-    public string Label => CurseForgeHelper.LABEL;
 
     #region IRepository Members
 
@@ -25,53 +23,54 @@ public class CurseForgeRepository(ICurseForgeClient client) : IRepository
         var raw = await client.GetMinecraftVersionsAsync().ConfigureAwait(false);
         var versions = raw.Data.Select(x => x.VersionString).ToList();
         return new([
-                LoaderHelper.LOADERID_NEOFORGE,
-                LoaderHelper.LOADERID_FORGE,
-                LoaderHelper.LOADERID_FABRIC,
-                LoaderHelper.LOADERID_QUILT
-            ],
-            versions,
-            [
-                ResourceKind.Modpack,
-                ResourceKind.Mod,
-                ResourceKind.ResourcePack,
-                ResourceKind.ShaderPack,
-                ResourceKind.World,
-                ResourceKind.DataPack
-            ]);
+                       LoaderHelper.LOADERID_NEOFORGE,
+                       LoaderHelper.LOADERID_FORGE,
+                       LoaderHelper.LOADERID_FABRIC,
+                       LoaderHelper.LOADERID_QUILT
+                   ],
+                   versions,
+                   [
+                       ResourceKind.Modpack,
+                       ResourceKind.Mod,
+                       ResourceKind.ResourcePack,
+                       ResourceKind.ShaderPack,
+                       ResourceKind.World,
+                       ResourceKind.DataPack
+                   ]);
     }
 
     public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
     {
         var loader = filter.Kind is ResourceKind.Mod ? CurseForgeHelper.LoaderIdToType(filter.Loader) : null;
         var first = await client
-            .SearchModsAsync(query,
-                CurseForgeHelper.ResourceKindToClassId(filter.Kind),
-                filter.Version,
-                loader,
-                pageSize: PAGE_SIZE)
-            .ConfigureAwait(false);
-        var initial = first.Data.Select(CurseForgeHelper.ToExhibit);
+                         .SearchModsAsync(query,
+                                          CurseForgeHelper.ResourceKindToClassId(filter.Kind),
+                                          filter.Version,
+                                          loader,
+                                          pageSize: PAGE_SIZE)
+                         .ConfigureAwait(false);
+        var initial = first.Data.Select(x => CurseForgeHelper.ToExhibit(label, x));
         return new PaginationHandle<Exhibit>(initial,
-            first.Pagination.PageSize,
-            first.Pagination.TotalCount,
-            async (pageIndex, _) =>
-            {
-                var rv = await client
-                    .SearchModsAsync(query,
-                        CurseForgeHelper
-                            .ResourceKindToClassId(filter.Kind),
-                        filter.Version,
-                        loader,
-                        index: pageIndex
-                               * first.Pagination.PageSize,
-                        pageSize: first.Pagination.PageSize)
-                    .ConfigureAwait(false);
-                var exhibits = rv
-                    .Data.Select(CurseForgeHelper.ToExhibit)
-                    .ToList();
-                return exhibits;
-            });
+                                             first.Pagination.PageSize,
+                                             first.Pagination.TotalCount,
+                                             async (pageIndex, _) =>
+                                             {
+                                                 var rv = await client
+                                                               .SearchModsAsync(query,
+                                                                                    CurseForgeHelper
+                                                                                       .ResourceKindToClassId(filter
+                                                                                           .Kind),
+                                                                                    filter.Version,
+                                                                                    loader,
+                                                                                    index: pageIndex
+                                                                                      * first.Pagination.PageSize,
+                                                                                    pageSize: first.Pagination.PageSize)
+                                                               .ConfigureAwait(false);
+                                                 var exhibits = rv
+                                                               .Data.Select(x => CurseForgeHelper.ToExhibit(label, x))
+                                                               .ToList();
+                                                 return exhibits;
+                                             });
     }
 
     public async Task<Project> QueryAsync(string? _, string pid)
@@ -80,7 +79,7 @@ public class CurseForgeRepository(ICurseForgeClient client) : IRepository
             try
             {
                 var mod = await client.GetModAsync(modId).ConfigureAwait(false);
-                return CurseForgeHelper.ToProject(mod.Data);
+                return CurseForgeHelper.ToProject(label, mod.Data);
             }
             catch (ApiException ex)
             {
@@ -113,7 +112,7 @@ public class CurseForgeRepository(ICurseForgeClient client) : IRepository
                         if (file == default)
                             file = (await client.GetModFileAsync(modId, fileId).ConfigureAwait(false)).Data;
 
-                        return CurseForgeHelper.ToPackage(mod, file);
+                        return CurseForgeHelper.ToPackage(label, mod, file);
                     }
 
                     throw new FormatException("Vid is not well formatted into fileId");
@@ -131,15 +130,16 @@ public class CurseForgeRepository(ICurseForgeClient client) : IRepository
                     //                                                   || x.SortableGameVersions.Any(y => y.GameVersionName
                     //                                                                == loaderNick)));
                     var file = (await client
-                        .GetModFilesAsync(modId,
-                            filter.Version,
-                            mod.ClassId == CurseForgeHelper.CLASSID_MOD
-                                ? CurseForgeHelper.LoaderIdToType(filter.Loader)
-                                : null,
-                            0,
-                            1)
-                        .ConfigureAwait(false)).Data.FirstOrDefault();
-                    if (file != default) return CurseForgeHelper.ToPackage(mod, file);
+                                     .GetModFilesAsync(modId,
+                                                       filter.Version,
+                                                       mod.ClassId == CurseForgeHelper.CLASSID_MOD
+                                                           ? CurseForgeHelper.LoaderIdToType(filter.Loader)
+                                                           : null,
+                                                       0,
+                                                       1)
+                                     .ConfigureAwait(false)).Data.FirstOrDefault();
+                    if (file != default)
+                        return CurseForgeHelper.ToPackage(label, mod, file);
 
                     throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");
                 }
@@ -199,26 +199,26 @@ public class CurseForgeRepository(ICurseForgeClient client) : IRepository
         {
             var mod = (await client.GetModAsync(modId).ConfigureAwait(false)).Data;
             var loader = mod.ClassId == CurseForgeHelper.CLASSID_MOD
-                ? CurseForgeHelper.LoaderIdToType(filter.Loader)
-                : null;
+                             ? CurseForgeHelper.LoaderIdToType(filter.Loader)
+                             : null;
             var first = await client
-                .GetModFilesAsync(modId, filter.Version, loader, 0, PAGE_SIZE)
-                .ConfigureAwait(false);
-            var initial = first.Data.Select(CurseForgeHelper.ToVersion);
+                             .GetModFilesAsync(modId, filter.Version, loader, 0, PAGE_SIZE)
+                             .ConfigureAwait(false);
+            var initial = first.Data.Select(x => CurseForgeHelper.ToVersion(label, x));
             return new PaginationHandle<Version>(initial,
-                first.Pagination.PageSize,
-                first.Pagination.TotalCount,
-                async (pageIndex, _) =>
-                {
-                    var rv = await client
-                        .GetModFilesAsync(modId,
-                            filter.Version,
-                            loader,
-                            pageIndex * first.Pagination.PageSize,
-                            first.Pagination.PageSize)
-                        .ConfigureAwait(false);
-                    return rv.Data.Select(CurseForgeHelper.ToVersion);
-                });
+                                                 first.Pagination.PageSize,
+                                                 first.Pagination.TotalCount,
+                                                 async (pageIndex, _) =>
+                                                 {
+                                                     var rv = await client
+                                                                   .GetModFilesAsync(modId,
+                                                                        filter.Version,
+                                                                        loader,
+                                                                        pageIndex * first.Pagination.PageSize,
+                                                                        first.Pagination.PageSize)
+                                                                   .ConfigureAwait(false);
+                                                     return rv.Data.Select(x => CurseForgeHelper.ToVersion(label, x));
+                                                 });
         }
 
         throw new FormatException("Pid is not well formatted into modId");

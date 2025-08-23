@@ -26,37 +26,35 @@ public class CurseForgeImporter : IProfileImporter
     {
         await using var manifestStream = pack.Open(IndexFileName);
         var manifest = await JsonSerializer
-            .DeserializeAsync<Manifest>(manifestStream, JsonSerializerOptions.Web)
-            .ConfigureAwait(false);
+                            .DeserializeAsync<Manifest>(manifestStream, JsonSerializerOptions.Web)
+                            .ConfigureAwait(false);
         if (manifest is null || !TryExtractLoader(manifest.Minecraft.ModLoaders, out var loader))
             throw new FormatException($"{IndexFileName} is not a valid manifest");
 
         var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
         return new(new(manifest.Name,
-                new(source,
-                    manifest.Minecraft.Version,
-                    LoaderHelper.ToLurl(loader.Identity, loader.Version),
-                    [
-                        .. manifest.Files.Select(x =>
-                            new Profile.Rice.Entry(PackageHelper
-                                    .ToPurl(CurseForgeHelper.LABEL,
-                                        null,
-                                        x.ProjectId.ToString(),
-                                        x.FileId.ToString()),
-                                x.Required,
-                                source,
-                                []))
-                    ]),
-                new Dictionary<string, object>()),
-            pack
-                .FileNames
-                .Where(x => x.StartsWith(manifest.Overrides)
-                            && x != manifest.Overrides
-                            && x.Length > manifest.Overrides.Length + 1)
-                .Select(x => (x, x[(manifest.Overrides.Length + 1)..]))
-                .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
-                .ToList(),
-            pack.Reference?.Thumbnail);
+                       new(source,
+                           manifest.Minecraft.Version,
+                           LoaderHelper.ToLurl(loader.Identity, loader.Version),
+                           [
+                               .. manifest.Files.Select(x => new Profile.Rice.Entry(PackageHelper.ToPurl("curseforge",
+                                                                null,
+                                                                x.ProjectId.ToString(),
+                                                                x.FileId.ToString()),
+                                                            x.Required,
+                                                            source,
+                                                            []))
+                           ]),
+                       new Dictionary<string, object>()),
+                   pack
+                      .FileNames
+                      .Where(x => x.StartsWith(manifest.Overrides)
+                               && x != manifest.Overrides
+                               && x.Length > manifest.Overrides.Length + 1)
+                      .Select(x => (x, x[(manifest.Overrides.Length + 1)..]))
+                      .Where(x => !x.Item2.EndsWith('/') && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
+                      .ToList(),
+                   pack.Reference?.Thumbnail);
     }
 
     #endregion
@@ -67,11 +65,13 @@ public class CurseForgeImporter : IProfileImporter
     {
         var primary = loaders.FirstOrDefault(x => x.Primary);
         loader = default;
-        if (primary is null || !primary.Id.Contains('-')) return false;
+        if (primary is null || !primary.Id.Contains('-'))
+            return false;
 
         var name = primary.Id[..primary.Id.IndexOf('-')];
         var ver = primary.Id[(primary.Id.IndexOf('-') + 1)..];
-        if (LOADER_MAPPINGS.TryGetValue(name, out var mapping)) name = mapping;
+        if (LOADER_MAPPINGS.TryGetValue(name, out var mapping))
+            name = mapping;
 
         loader = (name, ver);
         return true;

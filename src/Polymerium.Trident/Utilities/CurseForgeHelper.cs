@@ -8,8 +8,6 @@ namespace Polymerium.Trident.Utilities;
 
 public static class CurseForgeHelper
 {
-    public const string LABEL = "curseforge";
-
     public const string API_KEY = "$2a$10$cjd5uExXA6oMi3lSnylNC.xsFJiujI8uQ/pV1eGltFe/hlDO2mjzm";
     public const string ENDPOINT = "https://api.curseforge.com";
     public const string PROJECT_URL = "https://www.curseforge.com/minecraft/{0}/{1}";
@@ -101,9 +99,8 @@ public static class CurseForgeHelper
 
     public static Uri ToDownloadUrl(FileInfo file) =>
         file.DownloadUrl
-        ?? new
-            Uri(
-                $"https://edge.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{Uri.EscapeDataString(file.FileName)}");
+     ?? new
+            Uri($"https://edge.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{Uri.EscapeDataString(file.FileName)}");
 
     public static string? ToSha1(FileInfo file) =>
         file.Hashes.Any(x => x.Algo == FileInfo.FileHash.HashAlgo.Sha1)
@@ -123,23 +120,23 @@ public static class CurseForgeHelper
         return new(gameReq, loaderReq);
     }
 
-    public static IReadOnlyList<Dependency> ToDependencies(FileInfo file) =>
+    public static IReadOnlyList<Dependency> ToDependencies(string label, FileInfo file) =>
     [
         .. file
-            .Dependencies
-            .Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
-                or FileInfo.FileDependency.FileRelationType.OptionalDependency)
-            .Select(x => new Dependency(LABEL,
-                null,
-                x.ModId.ToString(),
-                null,
-                x.RelationType
-                == FileInfo.FileDependency.FileRelationType.RequiredDependency))
+          .Dependencies
+          .Where(x => x.RelationType is FileInfo.FileDependency.FileRelationType.RequiredDependency
+                                     or FileInfo.FileDependency.FileRelationType.OptionalDependency)
+          .Select(x => new Dependency(label,
+                                      null,
+                                      x.ModId.ToString(),
+                                      null,
+                                      x.RelationType
+                                   == FileInfo.FileDependency.FileRelationType.RequiredDependency))
     ];
 
 
-    public static Exhibit ToExhibit(ModInfo mod) =>
-        new(LABEL,
+    public static Exhibit ToExhibit(string label, ModInfo mod) =>
+        new(label,
             null,
             mod.Id.ToString(),
             mod.Name,
@@ -150,13 +147,13 @@ public static class CurseForgeHelper
             mod.DownloadCount,
             [.. mod.Categories.Select(x => x.Name)],
             mod.Links.WebsiteUrl
-            ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
+         ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
             mod.DateCreated,
             mod.DateModified);
 
 
-    public static Package ToPackage(ModInfo mod, FileInfo file) =>
-        new(LABEL,
+    public static Package ToPackage(string label, ModInfo mod, FileInfo file) =>
+        new(label,
             null,
             mod.Id.ToString(),
             file.Id.ToString(),
@@ -166,7 +163,7 @@ public static class CurseForgeHelper
             mod.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
             mod.Summary,
             mod.Links.WebsiteUrl
-            ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
+         ?? new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
             ClassIdToResourceKind(mod.ClassId) ?? ResourceKind.Unknown,
             ToReleaseType(file.ReleaseType),
             file.FileDate,
@@ -175,10 +172,10 @@ public static class CurseForgeHelper
             file.FileName,
             ToSha1(file),
             ToRequirement(file),
-            ToDependencies(file));
+            ToDependencies(label, file));
 
-    public static Version ToVersion(FileInfo file) =>
-        new(LABEL,
+    public static Version ToVersion(string label, FileInfo file) =>
+        new(label,
             null,
             file.ModId.ToString(),
             file.Id.ToString(),
@@ -187,11 +184,11 @@ public static class CurseForgeHelper
             file.FileDate,
             file.DownloadCount,
             ToRequirement(file),
-            ToDependencies(file));
+            ToDependencies(label, file));
 
 
-    public static Project ToProject(ModInfo info) =>
-        new(LABEL,
+    public static Project ToProject(string label, ModInfo info) =>
+        new(label,
             null,
             info.Id.ToString(),
             info.Name,
@@ -199,9 +196,9 @@ public static class CurseForgeHelper
             info.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
             info.Summary,
             info.Links.WebsiteUrl
-            ?? new Uri(PROJECT_URL
-                .Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(info.ClassId)))
-                .Replace("{1}", info.Slug)),
+         ?? new Uri(PROJECT_URL
+                   .Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(info.ClassId)))
+                   .Replace("{1}", info.Slug)),
             ClassIdToResourceKind(info.ClassId) ?? ResourceKind.Unknown,
             [.. info.Categories.Select(x => x.Name)],
             info.DateCreated,
