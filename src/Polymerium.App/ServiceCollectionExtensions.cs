@@ -5,35 +5,39 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Trident.Abstractions;
 
-namespace Polymerium.App;
-
-public static class ServiceCollectionExtensions
+namespace Polymerium.App
 {
-    public static IServiceCollection AddAvalonia(this IServiceCollection services)
+    public static class ServiceCollectionExtensions
     {
-        services.AddHostedService<AvaloniaLifetime>();
-        return services;
-    }
-
-    public static IServiceCollection AddViewFacilities(this IServiceCollection services)
-    {
-        services.AddScoped<ViewBagFactory>().AddScoped<ViewBag>();
-        return services;
-    }
-
-    public static IServiceCollection AddFreeSql(this IServiceCollection services)
-    {
-        services.AddSingleton<IFreeSql>(_ =>
+        public static IServiceCollection AddAvalonia(this IServiceCollection services)
         {
-            var dir = PathDef.Default.PrivateDirectory(Program.Brand);
-            var path = Path.Combine(dir, "persistence.sqlite.db");
-            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            services.AddHostedService<AvaloniaLifetime>();
+            return services;
+        }
 
-            return new FreeSqlBuilder()
-                .UseConnectionString(DataType.Sqlite, $"Data Source=\"{path}\";Cache=Private")
-                .UseAutoSyncStructure(true)
-                .Build();
-        });
-        return services;
+        public static IServiceCollection AddViewFacilities(this IServiceCollection services)
+        {
+            services.AddScoped<ViewBagFactory>().AddScoped<ViewBag>();
+            return services;
+        }
+
+        public static IServiceCollection AddFreeSql(this IServiceCollection services)
+        {
+            services.AddSingleton<IFreeSql>(_ =>
+            {
+                var dir = PathDef.Default.PrivateDirectory(Program.Brand);
+                var path = Path.Combine(dir, "persistence.sqlite.db");
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                return new FreeSqlBuilder()
+                      .UseConnectionString(DataType.Sqlite, $"Data Source=\"{path}\";Cache=Private")
+                      .UseAutoSyncStructure(true)
+                      .Build();
+            });
+            return services;
+        }
     }
 }

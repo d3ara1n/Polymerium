@@ -3,27 +3,29 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Polymerium.Trident.Engines.Launching;
 
-namespace Polymerium.App.Models;
-
-public partial class ScrapModel(
-    string message,
-    ScrapLevel level,
-    DateTimeOffset time,
-    string thread,
-    string sender) : ModelBase
+namespace Polymerium.App.Models
 {
-    #region Reactive
+    public partial class ScrapModel(
+        string message,
+        ScrapLevel level,
+        DateTimeOffset time,
+        string thread,
+        string sender) : ModelBase
+    {
+        #region Reactive
 
-    [ObservableProperty] public partial string Message { get; set; } = message;
+        [ObservableProperty]
+        public partial string Message { get; set; } = message;
 
-    #endregion
+        #endregion
 
-    #region Direct
+        #region Direct
 
-    public ScrapLevel Level => level;
-    public DateTimeOffset Time => time;
-    public string Thread => thread;
-    public string Sender => sender;
+        public ScrapLevel Level => level;
+        public DateTimeOffset Time => time;
+        public string Thread => thread;
+        public string Sender => sender;
 
-    #endregion
+        #endregion
+    }
 }

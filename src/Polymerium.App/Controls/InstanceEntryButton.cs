@@ -2,17 +2,18 @@
 using Avalonia.Controls;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Controls;
-
-public class InstanceEntryButton : Button
+namespace Polymerium.App.Controls
 {
-    public static readonly StyledProperty<InstanceEntryState> StateProperty =
-        AvaloniaProperty.Register<InstanceEntryButton, InstanceEntryState>(nameof(State));
-
-
-    public InstanceEntryState State
+    public class InstanceEntryButton : Button
     {
-        get => GetValue(StateProperty);
-        set => SetValue(StateProperty, value);
+        public static readonly StyledProperty<InstanceEntryState> StateProperty =
+            AvaloniaProperty.Register<InstanceEntryButton, InstanceEntryState>(nameof(State));
+
+
+        public InstanceEntryState State
+        {
+            get => GetValue(StateProperty);
+            set => SetValue(StateProperty, value);
+        }
     }
 }

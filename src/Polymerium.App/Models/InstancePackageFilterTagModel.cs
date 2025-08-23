@@ -1,21 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models;
-
-public partial class InstancePackageFilterTagModel(string content) : ModelBase
+namespace Polymerium.App.Models
 {
-    #region Reactive
+    public partial class InstancePackageFilterTagModel(string content) : ModelBase
+    {
+        #region Reactive
 
-    [ObservableProperty] public partial bool IsSelected { get; set; }
+        [ObservableProperty]
+        public partial bool IsSelected { get; set; }
 
-    #endregion
+        #endregion
 
-    #region Direct
+        #region Direct
 
-    internal int RefCount { get; set; }
+        internal int RefCount { get; set; }
 
-    public string Content => content;
+        public string Content => content;
 
-    #endregion
+        #endregion
+    }
 }

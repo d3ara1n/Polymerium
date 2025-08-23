@@ -1,10 +1,11 @@
 ﻿using Polymerium.Trident.Models.MojangLauncherApi;
 using Refit;
 
-namespace Polymerium.Trident.Clients;
-
-public interface IMojangLauncherClient
+namespace Polymerium.Trident.Clients
 {
-    [Get("/news.json")]
-    Task<MinecraftNewsResponse> GetNewsAsync();
+    public interface IMojangLauncherClient
+    {
+        [Get("/news.json")]
+        Task<MinecraftNewsResponse> GetNewsAsync();
+    }
 }

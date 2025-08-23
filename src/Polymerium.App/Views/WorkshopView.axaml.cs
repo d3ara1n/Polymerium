@@ -1,8 +1,9 @@
 ﻿using Avalonia.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class WorkshopView : UserControl
+namespace Polymerium.App.Views
 {
-    public WorkshopView() => InitializeComponent();
+    public partial class WorkshopView : UserControl
+    {
+        public WorkshopView() => InitializeComponent();
+    }
 }

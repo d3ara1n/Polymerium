@@ -4,40 +4,41 @@ using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 
-namespace Polymerium.Trident.Engines.Deploying.Stages;
-
-public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
+namespace Polymerium.Trident.Engines.Deploying.Stages
 {
-    protected override async Task OnProcessAsync(CancellationToken token)
+    public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
     {
-        var artifactPath = PathDef.Default.FileOfLockData(Context.Key);
-        if (!Context.Options.FullCheckMode && File.Exists(artifactPath))
+        protected override async Task OnProcessAsync(CancellationToken token)
         {
-            try
+            var artifactPath = PathDef.Default.FileOfLockData(Context.Key);
+            if (!Context.Options.FullCheckMode && File.Exists(artifactPath))
             {
-                var content = await File.ReadAllTextAsync(artifactPath, token).ConfigureAwait(false);
-                var artifact = JsonSerializer.Deserialize<DataLock>(content, JsonSerializerOptions.Web);
-                if (artifact != null && artifact.Verify(Context.Key, Context.Setup, Context.VerificationWatermark))
+                try
                 {
-                    Context.Artifact = artifact;
-                    logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
+                    var content = await File.ReadAllTextAsync(artifactPath, token).ConfigureAwait(false);
+                    var artifact = JsonSerializer.Deserialize<DataLock>(content, JsonSerializerOptions.Web);
+                    if (artifact != null && artifact.Verify(Context.Key, Context.Setup, Context.VerificationWatermark))
+                    {
+                        Context.Artifact = artifact;
+                        logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
+                    }
+                    else
+                    {
+                        Context.ArtifactBuilder = new();
+                        logger.LogInformation("Bad artifact");
+                    }
                 }
-                else
+                catch (Exception e)
                 {
                     Context.ArtifactBuilder = new();
-                    logger.LogInformation("Bad artifact");
+                    logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
                 }
             }
-            catch (Exception e)
+            else
             {
                 Context.ArtifactBuilder = new();
-                logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
+                logger.LogInformation("Create empty artifact");
             }
-        }
-        else
-        {
-            Context.ArtifactBuilder = new();
-            logger.LogInformation("Create empty artifact");
         }
     }
 }

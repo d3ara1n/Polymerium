@@ -1,12 +1,4 @@
-﻿namespace Polymerium.Trident.Models.CurseForgeApi;
-
-public enum ModLoaderTypeModel
+﻿namespace Polymerium.Trident.Models.CurseForgeApi
 {
-    Any = 0,
-    Forge,
-    Cauldron,
-    LiteLoader,
-    Fabric,
-    Quilt,
-    NeoForge
+    public enum ModLoaderTypeModel { Any = 0, Forge, Cauldron, LiteLoader, Fabric, Quilt, NeoForge }
 }

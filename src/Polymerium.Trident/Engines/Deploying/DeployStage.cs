@@ -1,13 +1,14 @@
-﻿namespace Polymerium.Trident.Engines.Deploying;
-
-public enum DeployStage
+﻿namespace Polymerium.Trident.Engines.Deploying
 {
-    CheckArtifact,
-    InstallVanilla,
-    ProcessLoader,
-    ResolvePackage,
-    BuildArtifact,
-    EnsureRuntime,
-    GenerateManifest,
-    SolidifyManifest
+    public enum DeployStage
+    {
+        CheckArtifact,
+        InstallVanilla,
+        ProcessLoader,
+        ResolvePackage,
+        BuildArtifact,
+        EnsureRuntime,
+        GenerateManifest,
+        SolidifyManifest
+    }
 }
