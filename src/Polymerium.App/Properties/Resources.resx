@@ -1105,6 +1105,6 @@
         <value>Key '{0}' to the instance is not found or prepared</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailTitle" xml:space="preserve">
-        <value />
+        <value/>
     </data>
 </root>

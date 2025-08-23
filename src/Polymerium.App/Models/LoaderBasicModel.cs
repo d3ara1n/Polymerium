@@ -1,7 +1,8 @@
-﻿namespace Polymerium.App.Models;
-
-public class LoaderBasicModel(string loaderId, string displayName)
+﻿namespace Polymerium.App.Models
 {
-    public string LoaderId { get; } = loaderId;
-    public string DisplayName { get; } = displayName;
+    public class LoaderBasicModel(string loaderId, string displayName)
+    {
+        public string LoaderId { get; } = loaderId;
+        public string DisplayName { get; } = displayName;
+    }
 }

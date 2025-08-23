@@ -1,8 +1,9 @@
 ﻿using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class MaintenanceStorageView : Page
+namespace Polymerium.App.Views
 {
-    public MaintenanceStorageView() => InitializeComponent();
+    public partial class MaintenanceStorageView : Page
+    {
+        public MaintenanceStorageView() => InitializeComponent();
+    }
 }

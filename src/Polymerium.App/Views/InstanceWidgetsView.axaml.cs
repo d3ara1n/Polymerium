@@ -1,8 +1,9 @@
 ﻿using Polymerium.App.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class InstanceWidgetsView : Subpage
+namespace Polymerium.App.Views
 {
-    public InstanceWidgetsView() => InitializeComponent();
+    public partial class InstanceWidgetsView : Subpage
+    {
+        public InstanceWidgetsView() => InitializeComponent();
+    }
 }

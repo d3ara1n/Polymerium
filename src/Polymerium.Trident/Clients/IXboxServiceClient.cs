@@ -1,10 +1,11 @@
 ﻿using Polymerium.Trident.Models.XboxLiveApi;
 using Refit;
 
-namespace Polymerium.Trident.Clients;
-
-public interface IXboxServiceClient
+namespace Polymerium.Trident.Clients
 {
-    [Post("/xsts/authorize")]
-    Task<XboxLiveResponse> AcquireMinecraftTokenAsync([Body] XboxLiveRequest<MinecraftTokenProperties> request);
+    public interface IXboxServiceClient
+    {
+        [Post("/xsts/authorize")]
+        Task<XboxLiveResponse> AcquireMinecraftTokenAsync([Body] XboxLiveRequest<MinecraftTokenProperties> request);
+    }
 }
