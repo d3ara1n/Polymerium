@@ -10,18 +10,28 @@ public class BuiltinRepositoryProviderAccessor : IRepositoryProviderAccessor
 
     public IReadOnlyList<IRepositoryProviderAccessor.ProviderProfile> Build()
     {
-        var curseforge = new IRepositoryProviderAccessor.ProviderProfile(CurseForgeHelper.LABEL,
-            IRepositoryProviderAccessor.ProviderProfile.DriverType.CurseForge,
-            CurseForgeHelper.ENDPOINT,
-            ("x-api-key", CurseForgeHelper.API_KEY),
-            null);
+        var curseforge = new IRepositoryProviderAccessor.ProviderProfile("curseforge",
+                                                                         IRepositoryProviderAccessor.ProviderProfile
+                                                                            .DriverType.CurseForge,
+                                                                         CurseForgeHelper.ENDPOINT,
+                                                                         ("x-api-key", CurseForgeHelper.API_KEY),
+                                                                         null);
 
-        var modrinth = new IRepositoryProviderAccessor.ProviderProfile(ModrinthHelper.LABEL,
-            IRepositoryProviderAccessor.ProviderProfile.DriverType.Modrinth,
-            ModrinthHelper.OFFICIAL_ENDPOINT,
-            null,
-            null);
-        return [curseforge, modrinth];
+        var officialModrinth = new IRepositoryProviderAccessor.ProviderProfile("modrinth",
+                                                                               IRepositoryProviderAccessor
+                                                                                  .ProviderProfile.DriverType.Modrinth,
+                                                                               ModrinthHelper.OFFICIAL_ENDPOINT,
+                                                                               null,
+                                                                               null);
+
+        var fakeModrinth = new IRepositoryProviderAccessor.ProviderProfile("bbsmc",
+                                                                           IRepositoryProviderAccessor.ProviderProfile
+                                                                              .DriverType.Modrinth,
+                                                                           ModrinthHelper.FAKE_ENDPOINT,
+                                                                           null,
+                                                                           null);
+
+        return [curseforge, officialModrinth, fakeModrinth];
     }
 
     #endregion

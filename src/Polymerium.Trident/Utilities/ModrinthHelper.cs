@@ -8,8 +8,6 @@ namespace Polymerium.Trident.Utilities;
 
 public static class ModrinthHelper
 {
-    public const string LABEL = "modrinth";
-
     public const string OFFICIAL_ENDPOINT = "https://api.modrinth.com";
     public const string FAKE_ENDPOINT = "https://api.bbsmc.net";
     private const string OFFICIAL_PROJECT_URL = "https://modrinth.com/{0}/{1}";
@@ -84,22 +82,22 @@ public static class ModrinthHelper
         new(version.GameVersions,
         [
             .. version
-                .Loaders.Select(x => MODLOADER_MAPPINGS.GetValueOrDefault(x))
-                .Where(x => !string.IsNullOrEmpty(x))
-                .Select(x => x!)
+              .Loaders.Select(x => MODLOADER_MAPPINGS.GetValueOrDefault(x))
+              .Where(x => !string.IsNullOrEmpty(x))
+              .Select(x => x!)
         ]);
 
-    public static IReadOnlyList<Dependency> ToDependencies(VersionInfo version) =>
+    public static IReadOnlyList<Dependency> ToDependencies(string label, VersionInfo version) =>
     [
-        .. version.Dependencies.Select(x => new Dependency(LABEL,
-            null,
-            x.ProjectId,
-            x.VersionId,
-            x.DependencyType != "optional"))
+        .. version.Dependencies.Select(x => new Dependency(label,
+                                                           null,
+                                                           x.ProjectId,
+                                                           x.VersionId,
+                                                           x.DependencyType != "optional"))
     ];
 
-    public static Exhibit ToExhibit(SearchHit hit) =>
-        new(LABEL,
+    public static Exhibit ToExhibit(string label, SearchHit hit) =>
+        new(label,
             null,
             hit.ProjectId,
             hit.Title,
@@ -113,8 +111,8 @@ public static class ModrinthHelper
             hit.DateCreated,
             hit.DateModified);
 
-    public static Version ToVersion(VersionInfo version) =>
-        new(LABEL,
+    public static Version ToVersion(string label, VersionInfo version) =>
+        new(label,
             null,
             version.ProjectId,
             version.Id,
@@ -123,54 +121,54 @@ public static class ModrinthHelper
             version.DatePublished,
             version.Downloads,
             ToRequirement(version),
-            ToDependencies(version));
+            ToDependencies(label, version));
 
-    public static Project ToProject(ProjectInfo project, MemberInfo? member)
+    public static Project ToProject(string label, ProjectInfo project, MemberInfo? member)
     {
         var extracted = project.ProjectTypes.FirstOrDefault();
         var kind = ProjectTypeToKind(extracted) ?? ResourceKind.Unknown;
-        return new(LABEL,
-            null,
-            project.Id,
-            project.Name,
-            project.IconUrl,
-            member?.User.Name ?? member?.User.Username ?? project.TeamId,
-            project.Summary,
-            new(OFFICIAL_PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
-            kind,
-            project.Categories,
-            project.Published,
-            project.Updated,
-            project.Downloads,
-            [.. project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url))]);
+        return new(label,
+                   null,
+                   project.Id,
+                   project.Name,
+                   project.IconUrl,
+                   member?.User.Name ?? member?.User.Username ?? project.TeamId,
+                   project.Summary,
+                   new(OFFICIAL_PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                   kind,
+                   project.Categories,
+                   project.Published,
+                   project.Updated,
+                   project.Downloads,
+                   [.. project.Gallery.Select(x => new Project.Screenshot(x.Name, x.Url))]);
     }
 
-    public static Package ToPackage(ProjectInfo project, VersionInfo version, MemberInfo? member)
+    public static Package ToPackage(string label, ProjectInfo project, VersionInfo version, MemberInfo? member)
     {
         var extracted = project.ProjectTypes.FirstOrDefault();
         var kind = ProjectTypeToKind(extracted) ?? ResourceKind.Unknown;
         var file = version.Files.FirstOrDefault(x => x.Primary)
-                   ?? version.Files.FirstOrDefault()
-                   ?? throw new ResourceNotFoundException($"{project.Id}/{version.Id} has no file available");
-        return new(LABEL,
-            null,
-            project.Id,
-            version.Id,
-            project.Name,
-            version.VersionNumber,
-            project.IconUrl,
-            member?.User.Name ?? member?.User.Username ?? project.TeamId,
-            project.Summary,
-            new(OFFICIAL_PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
-            kind,
-            VersionTypeToReleaseType(version.VersionType),
-            version.DatePublished,
-            file.Url,
-            file.Size,
-            file.Filename,
-            file.Hashes.Sha1,
-            ToRequirement(version),
-            ToDependencies(version));
+                ?? version.Files.FirstOrDefault()
+                ?? throw new ResourceNotFoundException($"{project.Id}/{version.Id} has no file available");
+        return new(label,
+                   null,
+                   project.Id,
+                   version.Id,
+                   project.Name,
+                   version.VersionNumber,
+                   project.IconUrl,
+                   member?.User.Name ?? member?.User.Username ?? project.TeamId,
+                   project.Summary,
+                   new(OFFICIAL_PROJECT_URL.Replace("{0}", extracted ?? "unknown").Replace("{1}", project.Slug)),
+                   kind,
+                   VersionTypeToReleaseType(version.VersionType),
+                   version.DatePublished,
+                   file.Url,
+                   file.Size,
+                   file.Filename,
+                   file.Hashes.Sha1,
+                   ToRequirement(version),
+                   ToDependencies(label, version));
     }
 
     public static IReadOnlyList<string> ToLoaderNames(IEnumerable<ModLoader> loaders) =>
@@ -186,11 +184,14 @@ public static class ModrinthHelper
     public static string BuildFacets(string? projectType, string? gameVersion, string? modLoader)
     {
         var facets = new List<KeyValuePair<string, string>>();
-        if (gameVersion != null) facets.Add(new("versions", gameVersion));
+        if (gameVersion != null)
+            facets.Add(new("versions", gameVersion));
 
-        if (modLoader != null) facets.Add(new("categories", modLoader));
+        if (modLoader != null)
+            facets.Add(new("categories", modLoader));
 
-        if (projectType != null) facets.Add(new("project_type", projectType));
+        if (projectType != null)
+            facets.Add(new("project_type", projectType));
 
         return "[" + string.Join(",", facets.Select(x => $"[\"{x.Key}:{x.Value}\"]")) + "]";
     }
