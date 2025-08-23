@@ -1,4 +1,4 @@
-﻿using Trident.Abstractions.Accounts;
+using Trident.Abstractions.Accounts;
 
 namespace Polymerium.Trident.Accounts
 {

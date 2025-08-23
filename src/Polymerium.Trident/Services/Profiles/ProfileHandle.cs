@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services.Profiles

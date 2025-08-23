@@ -1,4 +1,4 @@
-﻿namespace Polymerium.App.Widgets
+namespace Polymerium.App.Widgets
 {
     public class DummyWidget : WidgetBase { }
 }

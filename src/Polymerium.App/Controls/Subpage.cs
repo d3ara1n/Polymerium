@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Controls

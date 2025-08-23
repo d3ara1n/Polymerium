@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;

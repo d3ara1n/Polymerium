@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Channels;
 using Polymerium.Trident.Engines.Launching;

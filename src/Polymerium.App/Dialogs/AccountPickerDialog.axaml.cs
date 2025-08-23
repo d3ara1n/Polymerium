@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Avalonia;
 using Huskui.Avalonia.Controls;

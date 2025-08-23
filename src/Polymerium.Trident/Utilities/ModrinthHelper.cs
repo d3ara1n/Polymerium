@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.ModrinthApi;
+using Polymerium.Trident.Models.ModrinthApi;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;

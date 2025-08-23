@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Polymerium.App.Models

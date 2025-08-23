@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.ModrinthPack
+namespace Polymerium.Trident.Models.ModrinthPack
 {
     public record Index(
         int FormatVersion,

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models

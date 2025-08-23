@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Primitives;
 
 namespace Polymerium.App.Controls
 {

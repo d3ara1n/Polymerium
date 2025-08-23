@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Igniters;
+using Polymerium.Trident.Igniters;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.Trident.Services.Instances

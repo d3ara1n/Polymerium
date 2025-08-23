@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia.Media.Imaging;
 using Humanizer;
 using Polymerium.App.Facilities;

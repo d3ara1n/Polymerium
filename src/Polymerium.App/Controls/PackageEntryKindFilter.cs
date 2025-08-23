@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Controls
