@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Services
+namespace Polymerium.Trident.Services
 {
     public interface IRepositoryProviderAccessor
     {

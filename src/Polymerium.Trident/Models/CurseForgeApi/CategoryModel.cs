@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.CurseForgeApi
+namespace Polymerium.Trident.Models.CurseForgeApi
 {
     public readonly record struct CategoryModel(
         uint Id,

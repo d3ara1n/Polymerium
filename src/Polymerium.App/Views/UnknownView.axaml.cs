@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Interactivity;
 using Avalonia.Styling;

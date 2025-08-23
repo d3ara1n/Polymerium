@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Services.Instances
+namespace Polymerium.Trident.Services.Instances
 {
     public class DeployOptions(bool? fastMode, bool? resolveDependency, bool? fullCheckMode)
     {

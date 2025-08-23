@@ -1,4 +1,4 @@
-﻿using MimeDetective;
+using MimeDetective;
 using MimeDetective.Definitions;
 using Trident.Abstractions.Repositories.Resources;
 using FileStream = System.IO.FileStream;

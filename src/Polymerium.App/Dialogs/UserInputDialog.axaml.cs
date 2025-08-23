@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Dialogs

@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Polymerium.Trident.Models.CurseForgePack;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.FileModels;

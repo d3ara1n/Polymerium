@@ -1,4 +1,4 @@
-﻿using System.Reactive.Subjects;
+using System.Reactive.Subjects;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.Trident.Services.Instances

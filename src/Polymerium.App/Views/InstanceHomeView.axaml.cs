@@ -1,4 +1,4 @@
-﻿using Avalonia.Interactivity;
+using Avalonia.Interactivity;
 using Polymerium.App.Controls;
 using Polymerium.App.ViewModels;
 

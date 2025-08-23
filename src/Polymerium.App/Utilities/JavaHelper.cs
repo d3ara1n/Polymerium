@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Services.Instances;

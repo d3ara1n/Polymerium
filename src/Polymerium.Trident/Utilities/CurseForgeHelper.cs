@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.CurseForgeApi;
+using Polymerium.Trident.Models.CurseForgeApi;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;

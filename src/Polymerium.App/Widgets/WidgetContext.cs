@@ -1,4 +1,4 @@
-﻿using Polymerium.App.Services;
+using Polymerium.App.Services;
 
 namespace Polymerium.App.Widgets
 {

@@ -1,4 +1,4 @@
-﻿namespace Polymerium.App.Facilities
+namespace Polymerium.App.Facilities
 {
     public class ViewBagFactory
     {

@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Services.Profiles
+namespace Polymerium.Trident.Services.Profiles
 {
     public class ReservedKey : IDisposable
     {

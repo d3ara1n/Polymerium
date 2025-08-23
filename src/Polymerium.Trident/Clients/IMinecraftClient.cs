@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.MinecraftApi;
+using Polymerium.Trident.Models.MinecraftApi;
 using Refit;
 
 namespace Polymerium.Trident.Clients

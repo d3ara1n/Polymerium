@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.CurseForgePack
+namespace Polymerium.Trident.Models.CurseForgePack
 {
     public record Manifest(
         Manifest.MinecraftModel Minecraft,

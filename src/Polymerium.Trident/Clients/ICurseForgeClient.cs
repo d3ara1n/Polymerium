@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.CurseForgeApi;
+using Polymerium.Trident.Models.CurseForgeApi;
 using Polymerium.Trident.Utilities;
 using Refit;
 using FileInfo = Polymerium.Trident.Models.CurseForgeApi.FileInfo;

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Avalonia;
 using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;

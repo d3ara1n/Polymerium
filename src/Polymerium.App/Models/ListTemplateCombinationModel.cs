@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;

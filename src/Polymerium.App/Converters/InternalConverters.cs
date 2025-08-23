@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Properties;
