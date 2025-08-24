@@ -23,8 +23,8 @@
         <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0"/>
         <PackageReference Include="ReverseMarkdown" Version="4.7.0"/>
         <PackageReference Include="Semver" Version="3.0.0"/>
-        <PackageReference Include="System.Net.Http.Json" Version="10.0.0-preview.5.25277.114"/>
-        <PackageReference Include="System.Text.Json" Version="10.0.0-preview.5.25277.114"/>
+        <PackageReference Include="System.Net.Http.Json" Version="9.0.8" />
+        <PackageReference Include="System.Text.Json" Version="9.0.8" />
     </ItemGroup>
 
 </Project>
