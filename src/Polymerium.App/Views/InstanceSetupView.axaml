@@ -62,7 +62,7 @@
                                 Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}">
                             <StackPanel Margin="12,6">
                                 <TextBlock
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
                                     Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
                                 <TextBlock FontSize="{StaticResource LargeFontSize}"
                                            Text="{Binding Basic.Version, FallbackValue=Version}" />

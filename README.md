@@ -139,7 +139,7 @@ Upgrade to Windows 10+ first 😉
 **📥 Download** → **📂 Extract** → **🚀 Run** → **⚙️ Setup**
 
 1. **Download** the latest release from [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases)
-2. **Extract** and run `Polymerium.App.exe`
+2. **Run** installer `Polymerium-[arch]-Setup.exe`
 3. **Follow** the setup wizard to configure your first instance
 
 ### 🚀 Quick Start

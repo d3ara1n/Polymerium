@@ -41,7 +41,7 @@
 				"type": "process",
 				"args": [
 					"build",
-					"${workspaceFolder}/Polymerium.sln",
+					"${workspaceFolder}/Polymerium.slnx",
 					"/property:GenerateFullPaths=true",
 					"/consoleloggerparameters:NoSummary;ForceNoAlign"
 				],
