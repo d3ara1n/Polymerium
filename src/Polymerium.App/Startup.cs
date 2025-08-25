@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,7 +32,7 @@ namespace Polymerium.App
                                                       .RemoveAllLoggers()
                                                       .ConfigureHttpClient(client => client.DefaultRequestHeaders
                                                                               .UserAgent
-                                                                              .Add(new(Program.Brand, Program.Version)))
+                                                                              .Add(new(Program.BRAND, Program.VERSION)))
                                                       .AddTransientHttpErrorPolicy(configure => configure.RetryAsync()))
                .AddLogging(logging => logging
                                      .AddConsole()
@@ -45,7 +45,7 @@ namespace Polymerium.App
                .AddSqliteCache(setup =>
                 {
                     setup.MemoryOnly = false;
-                    var dir = PathDef.Default.PrivateDirectory(Program.Brand);
+                    var dir = PathDef.Default.PrivateDirectory(Program.BRAND);
                     var path = Path.Combine(dir, "cache.sqlite.db");
                     if (!Directory.Exists(dir))
                     {

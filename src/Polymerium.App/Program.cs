@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Reflection;
 using Avalonia;
@@ -9,9 +9,9 @@ namespace Polymerium.App
 {
     internal static class Program
     {
-        public static readonly string Brand = "Polymerium";
+        public static readonly string BRAND = "Polymerium";
 
-        public static readonly string Version = typeof(Program).Assembly
+        public static readonly string VERSION = typeof(Program).Assembly
                                                                .GetCustomAttribute<
                                                                     AssemblyInformationalVersionAttribute>()
                                                               ?.InformationalVersion
@@ -34,10 +34,7 @@ namespace Polymerium.App
 
         public static void Main(string[] args)
         {
-            if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
-            {
-                VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
-            }
+            VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
 
             var builder = Host.CreateApplicationBuilder(args);
             Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);

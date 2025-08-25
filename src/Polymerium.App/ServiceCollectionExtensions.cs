@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Facilities;
@@ -25,7 +25,7 @@ namespace Polymerium.App
         {
             services.AddSingleton<IFreeSql>(_ =>
             {
-                var dir = PathDef.Default.PrivateDirectory(Program.Brand);
+                var dir = PathDef.Default.PrivateDirectory(Program.BRAND);
                 var path = Path.Combine(dir, "persistence.sqlite.db");
                 if (!Directory.Exists(dir))
                 {
