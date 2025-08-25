@@ -69,7 +69,7 @@ jobs:
                 run: |
                     dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
 
-            -   name: Determine release type
+            -   name: Determine Release Type
                 id: get_version
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
@@ -93,9 +93,19 @@ jobs:
                     echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
                 shell: bash
 
+            -   name: Decide Executable Name
+                id: exe_name
+                run: |
+                    if [ "${{ matrix.runtime }}" = "win-x64" ]; then
+                        echo "exe_name=Polymerium.App.exe" >> $GITHUB_OUTPUT
+                    else
+                        echo "exe_name=Polymerium.App" >> $GITHUB_OUTPUT
+                    fi
+                shell: bash
+
             -   name: Pack with Velopack
                 run: |
-                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe Polymerium.App.exe
+                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe ${{ steps.exe_name.outputs.exe_name }}
 
 
             -   name: Upload to GitHub Releases
