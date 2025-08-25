@@ -30,7 +30,7 @@ jobs:
             -   name: Extract .NET version from csproj
                 id: dotnet
                 run: |
-                    dotnet_version=$(grep -oP '<TargetFramework>\K[^<]+' src/Polymerium.App/Polymerium.App.csproj | sed 's/net//')
+                    dotnet_version=$(grep '<TargetFramework>' src/Polymerium.App/Polymerium.App.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
                     echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
                     echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
                 shell: bash
