@@ -1,9 +1,4 @@
-﻿namespace Polymerium.App.Models;
-
-public enum InstanceActionKind
+﻿namespace Polymerium.App.Models
 {
-    Unknown,
-    Add,
-    Remove,
-    Update
+    public enum InstanceActionKind { Unknown, Add, Remove, Update }
 }

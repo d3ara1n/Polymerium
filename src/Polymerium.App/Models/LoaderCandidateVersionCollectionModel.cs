@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models;
-
-public class LoaderCandidateVersionCollectionModel(IReadOnlyList<LoaderCandidateVersionModel> versions) : ModelBase
+namespace Polymerium.App.Models
 {
-    #region Direct
+    public class LoaderCandidateVersionCollectionModel(IReadOnlyList<LoaderCandidateVersionModel> versions) : ModelBase
+    {
+        #region Direct
 
-    public IReadOnlyList<LoaderCandidateVersionModel> Versions => versions;
+        public IReadOnlyList<LoaderCandidateVersionModel> Versions => versions;
 
-    #endregion
+        #endregion
+    }
 }

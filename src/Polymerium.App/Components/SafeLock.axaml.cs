@@ -2,59 +2,60 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 
-namespace Polymerium.App.Components;
-
-[PseudoClasses(":locked", ":unlocked")]
-public partial class SafeLock : UserControl
+namespace Polymerium.App.Components
 {
-    public static readonly StyledProperty<string> UserInputProperty =
-        AvaloniaProperty.Register<SafeLock, string>(nameof(UserInput));
-
-    public static readonly StyledProperty<string> SafeCodeProperty =
-        AvaloniaProperty.Register<SafeLock, string>(nameof(SafeCode));
-
-    public static readonly DirectProperty<SafeLock, bool> IsUnlockedProperty =
-        AvaloniaProperty.RegisterDirect<SafeLock, bool>(nameof(IsUnlocked), o => o.IsUnlocked);
-
-
-    public SafeLock()
+    [PseudoClasses(":locked", ":unlocked")]
+    public partial class SafeLock : UserControl
     {
-        InitializeComponent();
-        PseudoClasses.Set(":locked", true);
-    }
+        public static readonly StyledProperty<string> UserInputProperty =
+            AvaloniaProperty.Register<SafeLock, string>(nameof(UserInput));
 
-    public string UserInput
-    {
-        get => GetValue(UserInputProperty);
-        set => SetValue(UserInputProperty, value);
-    }
+        public static readonly StyledProperty<string> SafeCodeProperty =
+            AvaloniaProperty.Register<SafeLock, string>(nameof(SafeCode));
 
-    public string SafeCode
-    {
-        get => GetValue(SafeCodeProperty);
-        set => SetValue(SafeCodeProperty, value);
-    }
+        public static readonly DirectProperty<SafeLock, bool> IsUnlockedProperty =
+            AvaloniaProperty.RegisterDirect<SafeLock, bool>(nameof(IsUnlocked), o => o.IsUnlocked);
 
-    public bool IsUnlocked
-    {
-        get => field;
-        private set => SetAndRaise(IsUnlockedProperty, ref field, value);
-    }
 
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == IsUnlockedProperty)
+        public SafeLock()
         {
-            PseudoClasses.Set(":unlocked", change.GetNewValue<bool>());
-            PseudoClasses.Set(":locked", !change.GetNewValue<bool>());
+            InitializeComponent();
+            PseudoClasses.Set(":locked", true);
         }
 
-        if (change.Property == UserInputProperty)
+        public string UserInput
         {
-            var input = change.GetNewValue<string>();
-            IsUnlocked = input == SafeCode;
+            get => GetValue(UserInputProperty);
+            set => SetValue(UserInputProperty, value);
+        }
+
+        public string SafeCode
+        {
+            get => GetValue(SafeCodeProperty);
+            set => SetValue(SafeCodeProperty, value);
+        }
+
+        public bool IsUnlocked
+        {
+            get => field;
+            private set => SetAndRaise(IsUnlockedProperty, ref field, value);
+        }
+
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+        {
+            base.OnPropertyChanged(change);
+
+            if (change.Property == IsUnlockedProperty)
+            {
+                PseudoClasses.Set(":unlocked", change.GetNewValue<bool>());
+                PseudoClasses.Set(":locked", !change.GetNewValue<bool>());
+            }
+
+            if (change.Property == UserInputProperty)
+            {
+                var input = change.GetNewValue<string>();
+                IsUnlocked = input == SafeCode;
+            }
         }
     }
 }

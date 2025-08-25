@@ -1,8 +1,9 @@
 ﻿using Polymerium.App.Controls;
 
-namespace Polymerium.App.Views;
-
-public partial class PageNotReachedView : ScopedPage
+namespace Polymerium.App.Views
 {
-    public PageNotReachedView() => InitializeComponent();
+    public partial class PageNotReachedView : ScopedPage
+    {
+        public PageNotReachedView() => InitializeComponent();
+    }
 }

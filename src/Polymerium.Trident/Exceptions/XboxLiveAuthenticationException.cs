@@ -1,18 +1,14 @@
-﻿namespace Polymerium.Trident.Exceptions;
-
-public class XboxLiveAuthenticationException(XboxLiveAuthenticationException.ErrorKind kind, string message)
-    : AccountAuthenticationException(message)
+﻿namespace Polymerium.Trident.Exceptions
 {
-    #region ErrorKind enum
-
-    public enum ErrorKind
+    public class XboxLiveAuthenticationException(XboxLiveAuthenticationException.ErrorKind kind, string message)
+        : AccountAuthenticationException(message)
     {
-        Unknown,
-        ParentControl,
-        UnsupportedRegion
+        #region ErrorKind enum
+
+        public enum ErrorKind { Unknown, ParentControl, UnsupportedRegion }
+
+        #endregion
+
+        public ErrorKind Kind { get; } = kind;
     }
-
-    #endregion
-
-    public ErrorKind Kind { get; } = kind;
 }

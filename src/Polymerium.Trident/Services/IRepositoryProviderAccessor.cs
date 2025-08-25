@@ -1,24 +1,25 @@
-﻿namespace Polymerium.Trident.Services;
-
-public interface IRepositoryProviderAccessor
+﻿namespace Polymerium.Trident.Services
 {
-    IReadOnlyList<ProviderProfile> Build();
-
-    #region Nested type: ProviderProfile
-
-    record struct ProviderProfile(
-        string Label,
-        ProviderProfile.DriverType Driver,
-        string Endpoint,
-        (string Key, string Value)? AuthorizationHeader,
-        string? UserAgent)
+    public interface IRepositoryProviderAccessor
     {
-        #region DriverType enum
+        IReadOnlyList<ProviderProfile> Build();
 
-        public enum DriverType { CurseForge, Modrinth, GitHub }
+        #region Nested type: ProviderProfile
+
+        record struct ProviderProfile(
+            string Label,
+            ProviderProfile.DriverType Driver,
+            string Endpoint,
+            (string Key, string Value)? AuthorizationHeader,
+            string? UserAgent)
+        {
+            #region DriverType enum
+
+            public enum DriverType { CurseForge, Modrinth, GitHub }
+
+            #endregion
+        }
 
         #endregion
     }
-
-    #endregion
 }

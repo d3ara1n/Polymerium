@@ -1,10 +1,4 @@
-﻿namespace Polymerium.Trident;
-
-public enum InstanceState
+﻿namespace Polymerium.Trident
 {
-    Idle,
-    Installing,
-    Updating,
-    Deploying,
-    Running
+    public enum InstanceState { Idle, Installing, Updating, Deploying, Running }
 }

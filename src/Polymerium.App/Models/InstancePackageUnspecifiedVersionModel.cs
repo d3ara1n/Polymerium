@@ -1,10 +1,9 @@
-﻿namespace Polymerium.App.Models;
-
-public class InstancePackageUnspecifiedVersionModel : InstancePackageVersionModelBase
+﻿namespace Polymerium.App.Models
 {
-    public static readonly InstancePackageUnspecifiedVersionModel Instance = new();
-
-    private InstancePackageUnspecifiedVersionModel()
+    public class InstancePackageUnspecifiedVersionModel : InstancePackageVersionModelBase
     {
+        public static readonly InstancePackageUnspecifiedVersionModel Instance = new();
+
+        private InstancePackageUnspecifiedVersionModel() { }
     }
 }

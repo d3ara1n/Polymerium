@@ -16,8 +16,8 @@ jobs:
                 include:
                     -   os: windows-latest
                         runtime: win-x64
-                    # - os: ubuntu-latest
-                    #   runtime: linux-x64
+                    -   os: ubuntu-latest
+                        runtime: linux-x64
         runs-on: ${{ matrix.os }}
 
         steps:
@@ -27,10 +27,17 @@ jobs:
                     submodules: recursive
                     fetch-depth: 0
 
+            -   name: Extract .NET version from csproj
+                id: dotnet
+                run: |
+                    dotnet_version=$(grep -oP '<TargetFramework>\K[^<]+' src/Polymerium.App/Polymerium.App.csproj | sed 's/net//')
+                    echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
+                    echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
+
             -   name: Setup .NET SDK
                 uses: actions/setup-dotnet@v4
                 with:
-                    dotnet-version: 9.0.x
+                    dotnet-version: ${{ steps.dotnet.outputs.dotnet_version }}
 
             -   name: Install GitVersion
                 uses: gittools/actions/gitversion/setup@v3.2.1
@@ -49,6 +56,14 @@ jobs:
             -   name: Install git-cliff
                 run: |
                     cargo install git-cliff
+
+            -   name: Fix Humanizer Bug
+                if: matrix.runtime != 'win-x64'
+                run: |
+                    if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
+                        mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
+                           "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
+                    fi
 
             -   name: Publish Application
                 run: |
@@ -80,7 +95,7 @@ jobs:
 
             -   name: Pack with Velopack
                 run: |
-                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe Polymerium.App.exe
+                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe Polymerium.App.exe
 
 
             -   name: Upload to GitHub Releases
@@ -109,7 +124,7 @@ jobs:
 #                    prerelease: ${{ steps.get_version.outputs.is_prerelease }}
 #                env:
 #                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#    
+#
 #            -   name: Upload Velopack Artifacts
 #                uses: actions/upload-release-asset@v1
 #                with:
