@@ -61,9 +61,11 @@ jobs:
             -   name: Fix Humanizer Bug
                 run: |
                     if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
+                        echo "Renamed zh-hans folder to zh-Hans"
                         mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
                            "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
                     else
+                        echo "Created zh-Hans folder"
                         mkdir "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
                     fi
                 shell: bash
