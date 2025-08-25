@@ -33,6 +33,7 @@ jobs:
                     dotnet_version=$(grep -oP '<TargetFramework>\K[^<]+' src/Polymerium.App/Polymerium.App.csproj | sed 's/net//')
                     echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
                     echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
+                shell: bash
 
             -   name: Setup .NET SDK
                 uses: actions/setup-dotnet@v4
@@ -64,6 +65,7 @@ jobs:
                         mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
                            "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
                     fi
+                shell: bash
 
             -   name: Publish Application
                 run: |
