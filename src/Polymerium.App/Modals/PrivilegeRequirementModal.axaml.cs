@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -24,8 +24,8 @@ namespace Polymerium.App.Modals
             // 这里的逻辑是通过 ~/.trident/.polymerium/first_run 文件判断是否完成初次启动检查
             // 通过对上述文件创建 ~/.trident.polymerium/symlink 的文件链接判断是否已完成提权设置
 
-            var first = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "first_run");
-            var symlink = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "symlink");
+            var first = Path.Combine(PathDef.Default.PrivateDirectory(Program.BRAND), "first_run");
+            var symlink = Path.Combine(PathDef.Default.PrivateDirectory(Program.BRAND), "symlink");
 
             if (File.Exists(first)
              && File.Exists(symlink)

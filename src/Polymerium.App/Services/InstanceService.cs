@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Polymerium.App.Exceptions;
@@ -86,7 +86,7 @@ namespace Polymerium.App.Services
                                                                        .GameWindowInitialHeight)),
                                                    launchMode: mode,
                                                    account: cooked,
-                                                   brand: Program.Brand);
+                                                   brand: Program.BRAND);
                     instanceManager.DeployAndLaunch(key, deploy, launch, locator);
                 }
             }
