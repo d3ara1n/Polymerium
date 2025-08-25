@@ -2,19 +2,26 @@
 using Polymerium.App.Controls;
 using Polymerium.App.ViewModels;
 
-namespace Polymerium.App.Views;
-
-public partial class InstanceHomeView : Subpage
+namespace Polymerium.App.Views
 {
-    public InstanceHomeView() => InitializeComponent();
-
-    private void Timer_OnLoaded(object? sender, RoutedEventArgs e)
+    public partial class InstanceHomeView : Subpage
     {
-        if (DataContext is InstanceHomeViewModel model) model.ViewForTimerLaunch();
-    }
+        public InstanceHomeView() => InitializeComponent();
 
-    private void Timer_OnUnloaded(object? sender, RoutedEventArgs e)
-    {
-        if (DataContext is InstanceHomeViewModel model) model.ViewForTimerDestruct();
+        private void Timer_OnLoaded(object? sender, RoutedEventArgs e)
+        {
+            if (DataContext is InstanceHomeViewModel model)
+            {
+                model.ViewForTimerLaunch();
+            }
+        }
+
+        private void Timer_OnUnloaded(object? sender, RoutedEventArgs e)
+        {
+            if (DataContext is InstanceHomeViewModel model)
+            {
+                model.ViewForTimerDestruct();
+            }
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Modals;
-
-public partial class AccountEntryModal : Modal
+namespace Polymerium.App.Modals
 {
-    public AccountEntryModal() => InitializeComponent();
+    public partial class AccountEntryModal : Modal
+    {
+        public AccountEntryModal() => InitializeComponent();
+    }
 }

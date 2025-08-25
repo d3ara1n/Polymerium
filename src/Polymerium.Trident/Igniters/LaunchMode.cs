@@ -1,8 +1,4 @@
-﻿namespace Polymerium.Trident.Igniters;
-
-public enum LaunchMode
+﻿namespace Polymerium.Trident.Igniters
 {
-    Managed,
-    FireAndForget,
-    Debug
+    public enum LaunchMode { Managed, FireAndForget, Debug }
 }

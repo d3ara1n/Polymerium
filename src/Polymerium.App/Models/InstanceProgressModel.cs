@@ -2,31 +2,32 @@
 using Polymerium.App.Facilities;
 using Trident.Abstractions.Tasks;
 
-namespace Polymerium.App.Models;
-
-public partial class InstanceProgressModel : ModelBase
+namespace Polymerium.App.Models
 {
-    #region Reactive Properties
-
-    [ObservableProperty] private double? _progress;
-
-    #endregion
-
-    private TrackerBase? _tracker;
-
-    public void UpdateSource(TrackerBase tracker)
+    public partial class InstanceProgressModel : ModelBase
     {
-        if (_tracker is not null) Unsubscribe(_tracker);
+        #region Reactive Properties
 
-        _tracker = tracker;
-        Subscribe(tracker);
-    }
+        [ObservableProperty]
+        private double? _progress;
 
-    private void Unsubscribe(TrackerBase tracker)
-    {
-    }
+        #endregion
 
-    private void Subscribe(TrackerBase tracker)
-    {
+        private TrackerBase? _tracker;
+
+        public void UpdateSource(TrackerBase tracker)
+        {
+            if (_tracker is not null)
+            {
+                Unsubscribe(_tracker);
+            }
+
+            _tracker = tracker;
+            Subscribe(tracker);
+        }
+
+        private void Unsubscribe(TrackerBase tracker) { }
+
+        private void Subscribe(TrackerBase tracker) { }
     }
 }

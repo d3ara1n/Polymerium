@@ -2,34 +2,35 @@
 using Avalonia.Controls;
 using FluentIcons.Common;
 
-namespace Polymerium.App.Controls;
-
-public class SettingsEntry : ItemsControl
+namespace Polymerium.App.Controls
 {
-    public static readonly StyledProperty<Symbol> IconProperty =
-        AvaloniaProperty.Register<SettingsEntry, Symbol>(nameof(Icon));
-
-    public static readonly StyledProperty<string> TitleProperty =
-        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Title));
-
-    public static readonly StyledProperty<string> SummaryProperty =
-        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Summary));
-
-    public Symbol Icon
+    public class SettingsEntry : ItemsControl
     {
-        get => GetValue(IconProperty);
-        set => SetValue(IconProperty, value);
-    }
+        public static readonly StyledProperty<Symbol> IconProperty =
+            AvaloniaProperty.Register<SettingsEntry, Symbol>(nameof(Icon));
 
-    public string Title
-    {
-        get => GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
-    }
+        public static readonly StyledProperty<string> TitleProperty =
+            AvaloniaProperty.Register<SettingsEntry, string>(nameof(Title));
 
-    public string Summary
-    {
-        get => GetValue(SummaryProperty);
-        set => SetValue(SummaryProperty, value);
+        public static readonly StyledProperty<string> SummaryProperty =
+            AvaloniaProperty.Register<SettingsEntry, string>(nameof(Summary));
+
+        public Symbol Icon
+        {
+            get => GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        public string Title
+        {
+            get => GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
+
+        public string Summary
+        {
+            get => GetValue(SummaryProperty);
+            set => SetValue(SummaryProperty, value);
+        }
     }
 }
