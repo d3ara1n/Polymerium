@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -83,7 +83,8 @@ namespace Polymerium.App.Components
         {
             var account = new OfflineAccount
             {
-                Username = UserName, Uuid = !string.IsNullOrEmpty(UuidOverwrite) ? UuidOverwrite : Uuid
+                Username = UserName,
+                Uuid = !string.IsNullOrEmpty(UuidOverwrite) ? UuidOverwrite : Uuid
             };
 
             return new AccountCreationPreview { Account = account };

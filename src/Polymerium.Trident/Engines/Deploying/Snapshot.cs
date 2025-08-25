@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 
 namespace Polymerium.Trident.Engines.Deploying
 {
@@ -72,8 +72,8 @@ namespace Polymerium.Trident.Engines.Deploying
                 }
 
                 if (!File.Exists(remain.Path))
-                    // 有些包会内嵌文件的同时引用该附件导致文件重复
-                    // 这里的原则为以现有文件为准
+                // 有些包会内嵌文件的同时引用该附件导致文件重复
+                // 这里的原则为以现有文件为准
                 {
                     File.CreateSymbolicLink(remain.Path, remain.Target);
                 }

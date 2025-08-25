@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia.Animation;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;

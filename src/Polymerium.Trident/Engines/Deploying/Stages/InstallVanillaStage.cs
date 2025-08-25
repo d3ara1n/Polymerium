@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages

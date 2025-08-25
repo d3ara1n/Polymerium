@@ -1,4 +1,4 @@
-﻿using Trident.Abstractions;
+using Trident.Abstractions;
 using Trident.Abstractions.Importers;
 
 namespace Polymerium.Trident.Services

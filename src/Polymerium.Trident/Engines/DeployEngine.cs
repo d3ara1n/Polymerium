@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Engines.Deploying.Stages;
@@ -92,7 +92,7 @@ namespace Polymerium.Trident.Engines
                 if (context.Artifact != null)
                 {
                     if (context.Options.FastMode)
-                        // Fast-Forward
+                    // Fast-Forward
                     {
                         return null;
                     }

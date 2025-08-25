@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -85,7 +85,8 @@ namespace Polymerium.App.ViewModels
                     Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
                     Content = new StackPanel
                     {
-                        Spacing = 8d, Children = { new TextBox(), pop }
+                        Spacing = 8d,
+                        Children = { new TextBox(), pop }
                     }
                 });
             }

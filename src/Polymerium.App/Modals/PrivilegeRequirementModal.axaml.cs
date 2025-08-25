@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -31,7 +31,7 @@ namespace Polymerium.App.Modals
              && File.Exists(symlink)
              && File.ResolveLinkTarget(symlink, false) is { FullName: { } file }
              && first.Equals(file, StringComparison.InvariantCultureIgnoreCase))
-                // 曾经的版本或是神秘力量完成了测试
+            // 曾经的版本或是神秘力量完成了测试
             {
                 return true;
             }
@@ -43,7 +43,7 @@ namespace Polymerium.App.Modals
             }
 
             if (!File.Exists(first))
-                // 这里是没有用 try catch guard 的，要是出现异常奔溃那我没话说
+            // 这里是没有用 try catch guard 的，要是出现异常奔溃那我没话说
             {
                 File.WriteAllText(first, "say u say me");
             }

@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,25 +57,25 @@ namespace Polymerium.Trident.Extensions
             services
                .AddRefitClient<
                     IMicrosoftClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web)
-                                      {
-                                          PropertyNamingPolicy =
+                    {
+                        PropertyNamingPolicy =
                                               JsonNamingPolicy
                                                  .SnakeCaseLower
-                                      }))
-                                      {
-                                          ExceptionFactory = async message => message switch
-                                          {
-                                              { IsSuccessStatusCode: true } => null,
-                                              { StatusCode: HttpStatusCode.BadRequest } => null,
-                                              { RequestMessage: not null } => await ApiException
-                                                                                 .Create(message.RequestMessage,
-                                                                                      message.RequestMessage.Method,
-                                                                                      message,
-                                                                                      Dummy)
-                                                                                 .ConfigureAwait(false),
-                                              _ => new NotImplementedException()
-                                          }
-                                      })
+                    }))
+                    {
+                        ExceptionFactory = async message => message switch
+                        {
+                            { IsSuccessStatusCode: true } => null,
+                            { StatusCode: HttpStatusCode.BadRequest } => null,
+                            { RequestMessage: not null } => await ApiException
+                                                               .Create(message.RequestMessage,
+                                                                    message.RequestMessage.Method,
+                                                                    message,
+                                                                    Dummy)
+                                                               .ConfigureAwait(false),
+                            _ => new NotImplementedException()
+                        }
+                    })
                .ConfigureHttpClient(client =>
                 {
                     client.BaseAddress = new(MicrosoftService.ENDPOINT);
@@ -91,9 +91,9 @@ namespace Polymerium.Trident.Extensions
             services
                .AddRefitClient<
                     IXboxLiveClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.General)
-                {
-                    PropertyNameCaseInsensitive = true
-                })))
+                    {
+                        PropertyNameCaseInsensitive = true
+                    })))
                .ConfigureHttpClient(client =>
                 {
                     client.BaseAddress = new(XboxLiveService.XBOX_ENDPOINT);
@@ -103,9 +103,9 @@ namespace Polymerium.Trident.Extensions
             services
                .AddRefitClient<
                     IXboxServiceClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.General)
-                {
-                    PropertyNameCaseInsensitive = true
-                })))
+                    {
+                        PropertyNameCaseInsensitive = true
+                    })))
                .ConfigureHttpClient(client =>
                 {
                     client.BaseAddress = new(XboxLiveService.XSTS_ENDPOINT);
@@ -121,11 +121,11 @@ namespace Polymerium.Trident.Extensions
             services
                .AddRefitClient<
                     IMinecraftClient>(_ => new(new SystemTextJsonContentSerializer(new(JsonSerializerDefaults.Web)
-                {
-                    PropertyNamingPolicy =
+                    {
+                        PropertyNamingPolicy =
                         JsonNamingPolicy
                            .SnakeCaseLower
-                })))
+                    })))
                .ConfigureHttpClient(client =>
                 {
                     client.BaseAddress = new(MinecraftService.ENDPOINT);

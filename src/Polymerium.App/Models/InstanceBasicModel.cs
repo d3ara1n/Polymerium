@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
@@ -68,7 +68,7 @@ namespace Polymerium.App.Models
         partial void OnLoaderChanged(string? value)
         {
             if (value != null && LoaderHelper.TryParse(value, out var result))
-                // TODO: 从语言文件中选取
+            // TODO: 从语言文件中选取
             {
                 LoaderLabel = LoaderHelper.ToDisplayName(result.Identity);
             }

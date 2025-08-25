@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Engines.Deploying
+namespace Polymerium.Trident.Engines.Deploying
 {
     public enum DeployStage
     {

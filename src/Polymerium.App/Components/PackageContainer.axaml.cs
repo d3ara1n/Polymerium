@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -270,13 +270,13 @@ namespace Polymerium.App.Components
         private static Func<InstancePackageModel, bool> BuildTextFilter(string filter) =>
             x => string.IsNullOrEmpty(filter)
               || (x is
-                  {
-                      ProjectId: { } pid,
-                      ProjectName: { } name,
-                      Author: { } author,
-                      Summary: { } summary,
-                      Version: { } version
-                  }
+              {
+                  ProjectId: { } pid,
+                  ProjectName: { } name,
+                  Author: { } author,
+                  Summary: { } summary,
+                  Version: { } version
+              }
                && filter
                  .Split(' ')
                  .All(y => y switch

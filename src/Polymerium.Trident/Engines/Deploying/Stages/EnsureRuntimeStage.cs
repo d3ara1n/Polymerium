@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Exceptions;
+using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
 

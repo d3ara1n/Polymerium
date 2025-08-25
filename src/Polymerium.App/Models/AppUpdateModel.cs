@@ -1,4 +1,4 @@
-﻿using Polymerium.App.Facilities;
+using Polymerium.App.Facilities;
 using Velopack;
 
 namespace Polymerium.App.Models

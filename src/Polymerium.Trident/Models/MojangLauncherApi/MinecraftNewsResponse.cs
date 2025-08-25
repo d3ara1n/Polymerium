@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.MojangLauncherApi
+namespace Polymerium.Trident.Models.MojangLauncherApi
 {
     public readonly record struct MinecraftNewsResponse(int Version, IReadOnlyList<MinecraftNewsResponse.Entry> Entries)
     {

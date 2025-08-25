@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Humanizer;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.Repositories.Resources;

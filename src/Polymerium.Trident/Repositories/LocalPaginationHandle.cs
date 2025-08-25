@@ -1,4 +1,4 @@
-﻿using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories;
 
 namespace Polymerium.Trident.Repositories
 {

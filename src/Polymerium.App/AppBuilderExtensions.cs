@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Fonts;
 
@@ -17,10 +17,10 @@ namespace Polymerium.App
                                                                              new("avares://Polymerium.App/Assets/Fonts/YSHaoShenTi")));
                 })
                .With(new FontManagerOptions
-                {
-                    DefaultFamilyName = "fonts:Manrope#Manrope",
-                    FontFallbacks = [new() { FontFamily = new("fonts:YSHaoShenTi#YOUSHEhaoshenti") }]
-                });
+               {
+                   DefaultFamilyName = "fonts:Manrope#Manrope",
+                   FontFallbacks = [new() { FontFamily = new("fonts:YSHaoShenTi#YOUSHEhaoshenti") }]
+               });
             return appBuilder;
         }
     }

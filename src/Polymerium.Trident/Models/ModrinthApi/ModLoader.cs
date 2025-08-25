@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.ModrinthApi
+namespace Polymerium.Trident.Models.ModrinthApi
 {
     public readonly record struct ModLoader(
         string Icon,

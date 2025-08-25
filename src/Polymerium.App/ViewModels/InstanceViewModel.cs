@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -35,10 +35,10 @@ namespace Polymerium.App.ViewModels
             _profileManager = profileManager;
             _instanceManager = instanceManager;
             SelectedPage = bag.Parameter switch
-                           {
-                               CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
-                               _ => null
-                           }
+            {
+                CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
+                _ => null
+            }
                         ?? PageEntries.FirstOrDefault();
 
             var key = bag.Parameter switch

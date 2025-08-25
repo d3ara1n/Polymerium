@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.MicrosoftApi;
+using Polymerium.Trident.Models.MicrosoftApi;
 using Refit;
 
 namespace Polymerium.Trident.Clients

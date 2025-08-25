@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models
