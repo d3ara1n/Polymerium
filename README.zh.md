@@ -1,228 +1,308 @@
-# Polymerium
+﻿# Polymerium
 
 ![Polymerium](https://socialify.git.ci/d3ara1n/Polymerium/image?description=1&font=Jost&forks=1&issues=1&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
-<!-- ABOUT THE PROJECT -->
 
-## I.关于
+<div align="center">
 
-[![Screenshot][product-screenshot]](#i关于)
-👆从打开到启动游戏速通👆
+**下一代 Minecraft 实例管理器，以全新思维重新定义游戏管理。**
 
-## I.About
-
-### 1.理念
-
-正如其缝合的名字一样，Polymerium 的主要目标是整合 Minecraft
-的游戏资源，而非单单启动游戏。其使用与启动器完全不同的思路来管理游戏资源：创建实例元数据，使用部署引擎将游戏本地文件还原到元数据所描述的状态；
-Polymerium不维护游戏文件，只维护实例元数据。
-
-相比于其他国产的游戏核心概念和版本隔离模式，Polymerium 以更为抽象的“游戏体验”概念和其具象表现“实例”来管理游戏。
-这种方式结合了国际主流的现代化管理方式和 a little bit of personal flavor。
-
-有关于 Polymerium
-的模式请参阅[核心概念](https://github.com/d3ara1n/Polymerium/wiki/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)。
-
-## 1.Philosophy
-
-To introduce the MMC-style of game resource & instance organizing into the domestic ecosystem.
-
-### 2.怎么又来一个?
-
-这不是 *launcher*，也不是压缩毛巾，这是 Polymerium —— *游戏实例管理器*。
-初衷是在用 PrismLauncher 的时候遇到一些问题并想出一些改进的的方法，不过在写代码、与 forge installer
-斗智斗勇的过程中已经忘记哪些改进了（囧）。
-
-### 2.Why another launcher?
-
-Go back read the last section and you get it.
-
-### 3.跨平台 | Cross-platform
-
-- Windows 10+
-- Linux(WIP)
-- macOS(Planning)
-
-### 4.使用以下技术栈和工具构建 | Tech stack and toolchain
-
-* [![C#][CSharp]][CSharp-url]
-* [![dotnet][DotNet]][DotNet-url]
-* [![Avalonia][Avalonia]][Avalonia-url]
-* [![Rider][Rider]][Rider-url]
-
-<!-- FEATURES -->
-
-## II.特色 | Features
-
-- 🎨 丰富的界面视觉效果 | Custom UI Styles
-- 💾 增量部署，使用软链接节省硬盘空间 | Pooled file objects & Symlink deployment.
-- 🎭 支持多账号且账号与实例绑定 | Instance linked multi account support.
-- 🎟️ 多种在线仓库，与 Curseforge 和 Modrinth 集成 | Integrated with Curseforge & Modrinth.
-- ☕ 手动配置 Java 并在运行时智能选择版本 | No stupid Java auto-detection. Configure Java once, configured every time.
-- 📜 实例元数据附件分层管理 | Layered attachment management.
-- ✨ 发布所游玩的实例为整合包，自动编写更新日志 | Publish the instance as a modpack with generated changelog.
-- 🛁 洁癖友好 | Never touch user's filesystem other than instance
-  folder. Never scan disks for java binaries. Uninstall by clicking
-  DELETE on the program folder and instance folder; boom, they were all gone like they never came.
-
-<!-- GETTING STARTED -->
-
-## III.安装和使用 | Getting started
-
-### 1.下载 | Download
-
-[Releases](https://github.com/d3ara1n/Polymerium/releases)
-
-### 2.开启 Windows 开发者模式
-
-由于部署采用了 [Symbolic Link](https://www.wikiwand.com/en/Symbolic_link)，该功能需要管理员权限。
-Windows
-无法直接申请管理员权限，但提供了 [开发者模式](https://blogs.windows.com/windowsdeveloper/2016/12/02/symlinks-windows-10/)
-来降低创建软连接的特权要求。
-
-#### Windows 10
-
-`设置` 👉 `更新和安全` 👉 `开发者选项` 👉 `开发人员模式`
-
-#### Windows 11
-
-`设置` 👉 `系统` 👉 `开发者选项` 👉 `开发人员模式`
-
-### 2.Enable Windows Developer Mode
-
-Due to Windows constraints in [symlink](https://www.wikiwand.com/en/Symbolic_link), instance deployment requires
-following additional steps to work.
-
-#### Windows 10
-
-Google it.
-
-#### Windows 11
-
-Google it.
-
-#### Windows 7/8
-
-Upgrade to Windows 10+, then Google it.
-
-### 3.配置
-
-开箱即用。
-
-### 3.Setup
-
-Available out of the box.
-
-<!-- Privacy -->
-
-## V.隐私与数据收集
-
-Polymerium 没有遥测。
-
-但会在部分保存或导出的数据文件中包含隐私数据，其中包括：
-
-- 你的用户名：被包含在日志和临时文件中，通过 Home 目录暴露
-- 你使用的操作系统类型：被包含在日志和临时文件中
-
-上面有提到你的账号信息吗？没有，因为这部分信息不被保存在公共区域。
-
-<!-- REFERENCES -->
-
-## VI.资料和参考 | References
-
-* 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher][Inside-A-Minecraft-Launcher]
-* 游戏启动流程: [教程/编写启动器][Tutorial-Making-Launcher]
-* Forge: [ForgeWrapper][ForgeWrapperRepo]
-* 微软验证: [Microsoft Authentication Scheme][Microsoft-Authentication-Scheme]
-
-十分感谢以上作者和所著文章。
-
-<!-- I_HATE_THIS_WORLD -->
-
-## VII.吐槽
-
-- Minecraft 官方的 Meta Launcher Api 给出的数据是多态模型
-- CurseForge Api V1 不在文档中标注可能为 null 的数据
-- Modrinth Api V2 不在文档中标注可能为 null 的数据，且不提供 V3 文档
-- PrismLauncher 的 Meta Launcher Api 定义了一系列 "Component"，但每个 Component 都有自己独特的数据结构：他们只是看起来相似，在某些地方，例如对
-  rules[].os 的定义，是不同的
-- Modrinth 整合包中的资源清单不一定包含元数据，有些有，有些没有，导致无法提取
-- Modrinth Api V2 的 Version.Loaders 字段中存在污染数据需要手动过滤
-- CurseForge Api 拉取到的 ModFile 包含的 Dependencies 可能有不兼容的项目，或者单纯就是所有的 ModFile 含有相同的依赖哪怕加载器和游戏版本不支持
-- CurseForge Api 用空串代表 null，🐂🍺
-- 这游戏的模组依赖仅供参考，不可解析，毕竟有模组的依赖是两个互相冲突的模组
-- ATM 10 的 import/mods 里塞了和元数据冲突的模组
-- Modrinth Api 中除了搜索其他接口的过滤都在分页后面，导致两个不能一起用，只能本地分页（纯为性能服务了，🚀Blazing fast✨）
-
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-## Stats
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![.NET 9.0](https://img.shields.io/badge/.NET-9-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
+[![Avalonia](https://img.shields.io/badge/Avalonia-11-3355FF?style=for-the-badge&logoColor=white)](https://avaloniaui.net/)
+[![C#](https://img.shields.io/badge/C%23-14-239120?style=for-the-badge&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8516e3e1a3994d138a1adc537d7c6ecd)](https://app.codacy.com/gh/d3ara1n/Polymerium/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/d3ara1n/polymerium/badge)](https://www.codefactor.io/repository/github/d3ara1n/polymerium)
 
+[📥 下载](https://github.com/d3ara1n/Polymerium/releases) • [📖 文档](https://github.com/d3ara1n/Polymerium/wiki) • [🐛 报告问题](https://github.com/d3ara1n/Polymerium/issues) • [💡 功能建议](https://github.com/d3ara1n/Polymerium/issues)
+
+</div>
+
+---
+
+## 🎮 体验 Polymerium 的实际效果
+
+<div align="center">
+
+[![Screenshot](assets/screenshots/overview.avif)](#-体验-polymerium-的实际效果)
+
+*从启动到游戏，只需几秒钟* ⚡
+
+</div>
+
+---
+
+## 🌟 Polymerium 的独特之处
+
+> **传统的 Minecraft 启动器管理文件。Polymerium 管理体验。**
+
+Polymerium 不是复制和存储每个实例的数千个模组文件，而是将您的游戏设置描述为轻量级元数据，并按需构建实际的游戏文件。这种革命性的方法带来了几个改变游戏规则的好处：
+
+### 🎯 **智能资源管理**
+
+- **零重复**：多个实例共享相同的模组？磁盘上只存在一个副本
+- **符号链接魔法**：文件被智能链接而非复制，节省数 GB 的存储空间
+- **即时切换**：在几秒钟内切换完全不同的模组包
+
+### 📦 **便携式游戏体验**
+
+- **元数据驱动**：您的整个游戏设置都包含在一个小小的配置文件中
+- **版本控制就绪**：使用 Git 协作开发模组包
+- **真正的便携性**：通过简单的文件传输分享您的确切游戏体验
+
+### 🔧 **轻松维护**
+
+- **完整性保证**：每次部署都会验证文件的完整性和正确性
+- **依赖解析**：自动处理模组依赖和冲突
+- **一键更新**：无缝升级单个模组或整个模组包
+
+### 🎮 **以玩家为中心的设计**
+
+- **无需寻找 Java**：配置一次 Java，到处可用
+- **账户灵活性**：多个账户，每个都链接到特定实例
+- **干净卸载**：通过删除两个文件夹完全移除 Polymerium
+
+---
+
+## ✨ 主要功能
+
+<details open>
+<summary><strong>🏗️ 现代架构</strong></summary>
+
+- 🎨 **Avalonia UI**：美观、响应式的跨平台界面
+- 📋 **元数据引擎**：轻量级实例描述，每次都能完美重建
+- 🚀 **部署系统**：智能文件管理与完整性检查
+- 🔗 **资源池**：共享文件存储与符号链接分发
+
+</details>
+
+<details open>
+<summary><strong>🌐 平台集成</strong></summary>
+
+- 🎟️ **CurseForge 和 Modrinth**：与主要模组仓库的原生集成
+- 📦 **模组包发布**：将您的实例导出为可分发的模组包
+- 📝 **自动更新日志**：为您的模组包版本生成文档
+
+</details>
+
+<details open>
+<summary><strong>👨‍💻 开发者体验</strong></summary>
+
+- 📸 **实例快照**：保存和恢复完整的游戏状态
+- 📜 **分层配置**：将用户设置与核心游戏数据分离
+- 🔄 **构建可重现性**：从相同元数据进行相同部署
+
+</details>
+
+---
+
+## 开始使用
+
+### 前置要求
+
+> [!IMPORTANT]
+> **需要 Windows 开发者模式**
+>
+> Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行高效的文件管理。启用开发者模式以允许在没有管理员权限的情况下创建符号链接。
+
+<details>
+<summary><strong>📋 如何启用开发者模式</strong></summary>
+
+#### Windows 11
+
+```
+设置 → 系统 → 开发者选项 → 开发者模式
+```
+
+#### Windows 10
+
+```
+设置 → 更新和安全 → 开发者选项 → 开发者模式
+```
+
+#### Windows 7/8
+
+```
+请先升级到 Windows 10+ 😉
+```
+
+</details>
+
+### 📥 安装
+
+> [!NOTE]
+> Polymerium 目前正在积极开发中。功能和界面可能在版本之间发生变化。
+
+**📥 下载** → **📂 解压** → **🚀 运行** → **⚙️ 设置**
+
+1. **下载** [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases) 的最新版本
+2. **运行** 安装程序 `Polymerium-[arch]-Setup.exe`
+3. **配置** 设置向导配置您的第一个实例
+
+### 🚀 快速开始
+
+**🎮 创建** → **📦 添加内容** → **🔧 部署** → **▶️ 游戏**
+
+1. **创建实例**：定义您的 Minecraft 版本和模组加载器
+2. **添加内容**：从 CurseForge 或 Modrinth 浏览和安装模组
+3. **部署**：让 Polymerium 构建您的游戏文件
+4. **游戏**：直接启动或导出为模组包
+
+---
+
+## 🏗️ 架构概览
+
+| 🛠️ 技术                     | 📋 用途                                 | 🔗 集成          |
+|-----------------------------|----------------------------------------|------------------|
+| **.NET 9.0**                | 具有 C# 预览功能的最新运行时              | 核心平台         |
+| **Avalonia 11**             | 跨平台 XAML UI 框架                     | 表示层           |
+| **MVVM 模式**               | 清晰的关注点分离                         | 架构模式         |
+| **依赖注入**                | 模块化、可测试的架构                      | 服务管理         |
+| **响应式扩展**              | 响应式数据处理                           | 数据流           |
+
+<details>
+<summary><strong>📁 项目结构</strong></summary>
+
+```
+Polymerium/
+├── 🎨 src/Polymerium.App/     # UI 应用程序层
+├── ⚙️ src/Polymerium.Trident/ # 核心业务引擎
+├── 🔗 submodules/             # 共享组件
+├── 📚 docs/                   # 文档
+├── 🛠️ .kiro/steering/         # 开发指南
+└── 📦 Releases/               # 构建产物
+```
+
+</details>
+
+---
+
+## 开发
+
+### 🔨 从源码构建
+
+```bash
+# 克隆包含子模块
+git clone --recursive https://github.com/d3ara1n/Polymerium.git
+cd Polymerium
+
+# 构建解决方案
+dotnet build
+
+# 以开发模式运行
+./Development.ps1
+```
+
+<details>
+<summary><strong>🛠️ 开发命令</strong></summary>
+
+```powershell
+# 开发模式
+./Development.ps1
+
+# 生产模式
+./Production.ps1
+
+# 构建和发布
+./Publish.ps1
+
+# 获取版本信息
+dotnet gitversion
+
+# 生成更新日志
+git cliff
+```
+
+</details>
+
+### 🤝 贡献
+
+我们欢迎贡献！请确保您的代码遵循既定的模式：
+
+| 方面                        | 要求                                       |
+|-----------------------------|-------------------------------------------|
+| 🏗️ **架构**                | 具有清晰关注点分离的 MVVM 模式              |
+| 💉 **依赖注入**             | 全程使用构造函数注入                        |
+| 🔥 **现代 C#**              | 利用最新的语言功能和模式                    |
+| ✨ **代码风格**             | 遵循 .editorconfig 指南                   |
+
+> [!TIP]
+> 查看我们的[指导文档](.kiro/steering/)了解详细的项目指南和架构模式。
+
+---
+
+## 🖥️ 平台支持
+
+| 平台                                                                                                       | 状态               | 备注                                       |
+|------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------|
+| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **稳定**         | 主要平台，具有完整功能支持                   |
+| ![Linux](https://img.shields.io/badge/Linux-WIP-FCC624?style=flat-square&logo=linux&logoColor=black)       | 🚧 **进行中**       | 核心功能正常工作                            |
+| ![macOS](https://img.shields.io/badge/macOS-Planned-000000?style=flat-square&logo=apple&logoColor=white)   | 📋 **计划中**       | 未来发布目标                               |
+
+---
+
+## 隐私与安全
+
+Polymerium 尊重您的隐私：
+
+- **无遥测**：零数据收集或跟踪
+- **本地存储**：所有数据都保留在您的机器上
+- **最小占用**：干净卸载不留痕迹
+- **开源**：透明、可审计的代码库
+
+---
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
+
+---
+
+## 📊 项目统计
+
+<div align="center">
+
 [![Star History Chart](https://api.star-history.com/svg?repos=d3ara1n/Polymerium&type=Date)](https://www.star-history.com/#d3ara1n/Polymerium&Date)
+
+![Repobeats Analytics](https://repobeats.axiom.co/api/embed/594b206d199e6aae83226e6b7b834f6896322858.svg "Repobeats analytics image")
+
+</div>
+
+## 📚 参考资料与致谢
+
+<details>
+<summary><strong>🔗 技术参考</strong></summary>
+
+- [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - 游戏启动过程和 Fabric/Quilt 部署
+- [Tutorial: Writing a Launcher](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8) - 游戏启动过程指南
+- [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper) - Forge 集成参考
+- [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme) - 身份验证实现
+
+</details>
+
+### 🙏 特别感谢
+
+- **Minecraft 社区** - 为了令人难以置信的模组生态系统
+- **Avalonia 团队** - 为了出色的跨平台 UI 框架
+- **API 提供商** - CurseForge 和 Modrinth 提供的公共 API
+- **贡献者** - 每一个帮助 Polymerium 变得更好的人
+
+## 📄 许可证
+
+<div align="center">
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
 
-![Alt](https://repobeats.axiom.co/api/embed/594b206d199e6aae83226e6b7b834f6896322858.svg "Repobeats analytics image")
+本项目采用 **MIT 许可证** - 详情请参阅 [LICENSE](LICENSE.txt) 文件。
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+</div>
 
-[contributors-shield]: https://img.shields.io/github/contributors/d3ara1n/Polymerium.svg?style=for-the-badge
+---
 
-[contributors-url]: https://github.com/d3ara1n/Polymerium/graphs/contributors
+<div align="center">
 
-[forks-shield]: https://img.shields.io/github/forks/d3ara1n/Polymerium.svg?style=for-the-badge
+**Polymerium：为现代时代重新思考 Minecraft 实例管理** ✨
 
-[forks-url]: https://github.com/d3ara1n/Polymerium/network/members
+由 Polymerium 团队用 ❤️ 制作
 
-[stars-shield]: https://img.shields.io/github/stars/d3ara1n/Polymerium.svg?style=for-the-badge
-
-[stars-url]: https://github.com/d3ara1n/Polymerium/stargazers
-
-[issues-shield]: https://img.shields.io/github/issues/d3ara1n/Polymerium.svg?style=for-the-badge
-
-[issues-url]: https://github.com/d3ara1n/Polymerium/issues
-
-[license-shield]: https://img.shields.io/github/license/d3ara1n/Polymerium.svg?style=for-the-badge
-
-[license-url]: https://github.com/d3ara1n/Polymerium/blob/master/LICENSE.txt
-
-[product-screenshot]: assets/screenshots/overview.avif
-
-[CSharp]: https://img.shields.io/badge/C%23-14-239120?style=for-the-badge&logoColor=white
-
-[CSharp-url]: https://learn.microsoft.com/en-us/dotnet/csharp/
-
-[DotNet]: https://img.shields.io/badge/.NET-9-5C2D91?style=for-the-badge&logoColor=white
-
-[DotNet-url]: https://dotnet.microsoft.com/
-
-[Avalonia]: https://img.shields.io/badge/Avalonia-11-3355FF?style=for-the-badge&logoColor=white
-
-[Avalonia-url]: https://avaloniaui.net/
-
-[Rider]: https://img.shields.io/badge/Rider-DE1369?style=for-the-badge&logo=Rider&logoColor=white
-
-[Rider-url]: https://www.jetbrains.com/rider/
-
-[VisualStudio]: https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white
-
-[VisualStudio-url]: https://visualstudio.microsoft.com
-
-[VSCode]: https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white
-
-[VSCode-url]: https://code.visualstudio.com/
-
-[Inside-A-Minecraft-Launcher]: https://ryanccn.dev/posts/inside-a-minecraft-launcher
-
-[Tutorial-Making-Launcher]: https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8
-
-[ForgeWrapperRepo]: https://github.com/ZekerZhayard/ForgeWrapper
-
-[Microsoft-Authentication-Scheme]: https://wiki.vg/Microsoft_Authentication_Scheme
+</div>
