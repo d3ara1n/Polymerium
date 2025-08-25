@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -124,7 +124,8 @@ namespace Polymerium.App.Modals
                                                found.ProjectName,
                                                found.Thumbnail,
                                                count,
-                                               x.IsRequired) { Installed = found };
+                                               x.IsRequired)
+                                    { Installed = found };
                                 }
 
                                 var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);

@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.XboxLiveApi
+namespace Polymerium.Trident.Models.XboxLiveApi
 {
     public readonly record struct XboxLiveTokenProperties(
         string RpsTicket,

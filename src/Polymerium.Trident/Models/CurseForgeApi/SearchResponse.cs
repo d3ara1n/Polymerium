@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.CurseForgeApi
+namespace Polymerium.Trident.Models.CurseForgeApi
 {
     public readonly record struct SearchResponse<T>(IReadOnlyList<T> Data, SearchResponse<T>.Page Pagination)
     {

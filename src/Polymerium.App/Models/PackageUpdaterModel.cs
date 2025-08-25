@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;

@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Services.Instances;
+using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines.Deploying

@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Clients;
+using Polymerium.Trident.Clients;
 using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Models.MinecraftApi;
 

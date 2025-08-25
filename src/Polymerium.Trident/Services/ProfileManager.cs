@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
@@ -233,12 +233,12 @@ namespace Polymerium.Trident.Services
                     case JsonTokenType.String:
                         return reader.GetString();
                     default:
-                    {
-                        // Use JsonElement as fallback.
-                        // Newtonsoft uses JArray or JObject.
-                        using var document = JsonDocument.ParseValue(ref reader);
-                        return document.RootElement.Clone();
-                    }
+                        {
+                            // Use JsonElement as fallback.
+                            // Newtonsoft uses JArray or JObject.
+                            using var document = JsonDocument.ParseValue(ref reader);
+                            return document.RootElement.Clone();
+                        }
                 }
             }
 

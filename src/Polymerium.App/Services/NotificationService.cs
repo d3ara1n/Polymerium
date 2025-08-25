@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Avalonia.Animation;
 using Avalonia.Styling;
@@ -76,7 +76,10 @@ namespace Polymerium.App.Services
             {
                 var item = new NotificationItem
                 {
-                    Content = message, Title = title, Level = level, IsProgressBarVisible = true
+                    Content = message,
+                    Title = title,
+                    Level = level,
+                    IsProgressBarVisible = true
                 };
                 Pop(item);
 

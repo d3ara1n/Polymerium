@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -68,7 +68,8 @@ namespace Polymerium.App.ViewModels
                                              cooked.Uuid,
                                              cooked.Username,
                                              account.EnrolledAt,
-                                             account.LastUsedAt) { IsDefault = account.Uuid == defaultAccount?.Uuid };
+                                             account.LastUsedAt)
+                { IsDefault = account.Uuid == defaultAccount?.Uuid };
                 Accounts.Add(model);
             }
 

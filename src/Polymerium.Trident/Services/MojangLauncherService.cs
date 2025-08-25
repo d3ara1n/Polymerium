@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Clients;
+using Polymerium.Trident.Clients;
 using Polymerium.Trident.Models.MojangLauncherApi;
 
 namespace Polymerium.Trident.Services

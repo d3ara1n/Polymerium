@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.PrismLauncherApi;
+using Polymerium.Trident.Models.PrismLauncherApi;
 using Refit;
 
 namespace Polymerium.Trident.Clients

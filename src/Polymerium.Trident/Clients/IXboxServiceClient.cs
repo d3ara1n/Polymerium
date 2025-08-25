@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.XboxLiveApi;
+using Polymerium.Trident.Models.XboxLiveApi;
 using Refit;
 
 namespace Polymerium.Trident.Clients

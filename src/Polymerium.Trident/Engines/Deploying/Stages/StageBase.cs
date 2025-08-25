@@ -1,4 +1,4 @@
-﻿using System.Reactive.Disposables;
+using System.Reactive.Disposables;
 using Trident.Abstractions.Reactive;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages

@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Exceptions
+namespace Polymerium.Trident.Exceptions
 {
     public class ArtifactUnavailableException(string key, string artifactPath, bool exist)
         : Exception($"Artifact of {key} is not available, maybe not built or outdated")

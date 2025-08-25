@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncherApi
+namespace Polymerium.Trident.Models.PrismLauncherApi
 {
     public readonly record struct RuntimeManifest(
         int FormatVersion,

@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Models;

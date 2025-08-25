@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia;
 using Polymerium.App.Controls;
 using Polymerium.Trident.Services;

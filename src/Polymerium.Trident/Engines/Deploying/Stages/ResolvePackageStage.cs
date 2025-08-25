@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Reactive.Subjects;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services;
@@ -90,7 +90,8 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                                                           parsed.Vid,
                                                           Filter.None with
                                                           {
-                                                              Loader = loader, Version = Context.Setup.Version
+                                                              Loader = loader,
+                                                              Version = Context.Setup.Version
                                                           })
                                             .ConfigureAwait(false);
                         logger.LogDebug("Resolved {} package {}({}/{}) with {}",

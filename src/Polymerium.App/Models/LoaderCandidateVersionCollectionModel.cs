@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models

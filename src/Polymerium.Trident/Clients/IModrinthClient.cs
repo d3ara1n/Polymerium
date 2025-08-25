@@ -1,4 +1,4 @@
-﻿using Polymerium.Trident.Models.ModrinthApi;
+using Polymerium.Trident.Models.ModrinthApi;
 using Refit;
 
 namespace Polymerium.Trident.Clients

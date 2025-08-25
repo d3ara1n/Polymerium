@@ -1,4 +1,4 @@
-﻿using Polymerium.App.Controls;
+using Polymerium.App.Controls;
 
 namespace Polymerium.App.Views
 {

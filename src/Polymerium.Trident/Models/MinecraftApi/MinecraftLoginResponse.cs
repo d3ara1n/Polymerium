@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Models.MinecraftApi
+namespace Polymerium.Trident.Models.MinecraftApi
 {
     public readonly record struct MinecraftLoginResponse(
         string? Error,

@@ -1,4 +1,4 @@
-﻿using System.Reactive.Subjects;
+using System.Reactive.Subjects;
 using Polymerium.Trident.Engines.Launching;
 using Trident.Abstractions.Tasks;
 
