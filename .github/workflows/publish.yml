@@ -59,11 +59,12 @@ jobs:
                     cargo install git-cliff
 
             -   name: Fix Humanizer Bug
-                if: matrix.runtime != 'win-x64'
                 run: |
                     if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
                         mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
                            "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
+                    else
+                        mkdir "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
                     fi
                 shell: bash
 
