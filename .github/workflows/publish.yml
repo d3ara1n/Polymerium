@@ -54,6 +54,10 @@ jobs:
                 with:
                     useConfigFile: true
 
+            -   name: Install git-cliff
+                run: |
+                    cargo install git-cliff
+
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
 
@@ -72,7 +76,6 @@ jobs:
             -   name: Publish Application
                 run: |
                     dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
-
 
             -   name: Determine Release Type
                 id: get_version
@@ -96,14 +99,12 @@ jobs:
                     fi
                 shell: bash
 
-            -   name: Generate a changelog
-                uses: orhun/git-cliff-action@v3
-                with:
-                    config: cliff.toml
-                    args: --latest
-                env:
-                    OUTPUT: changelog.md
-                    GITHUB_REPO: ${{ github.repository }}
+            -   name: Generate Changelog
+                id: changelog
+                run: |
+                    version="${{ steps.gitversion.outputs.semVer }}"
+                    git cliff --latest -o changelog.md
+                shell: bash
 
             -   name: Decide Executable Name
                 id: exe_name
