@@ -66,33 +66,24 @@ Polymerium 不是复制和存储每个实例的数千个模组文件，而是将
 
 ## ✨ 主要功能
 
-<details open>
-<summary><strong>🏗️ 现代架构</strong></summary>
+### 🏗️ 现代架构
 
 - 🎨 **Avalonia UI**：美观、响应式的跨平台界面
 - 📋 **元数据引擎**：轻量级实例描述，每次都能完美重建
 - 🚀 **部署系统**：智能文件管理与完整性检查
 - 🔗 **资源池**：共享文件存储与符号链接分发
 
-</details>
-
-<details open>
-<summary><strong>🌐 平台集成</strong></summary>
+### 🌐 平台集成
 
 - 🎟️ **CurseForge 和 Modrinth**：与主要模组仓库的原生集成
 - 📦 **模组包发布**：将您的实例导出为可分发的模组包
 - 📝 **自动更新日志**：为您的模组包版本生成文档
 
-</details>
-
-<details open>
-<summary><strong>👨‍💻 开发者体验</strong></summary>
+### 👨‍💻 开发者体验
 
 - 📸 **实例快照**：保存和恢复完整的游戏状态
 - 📜 **分层配置**：将用户设置与核心游戏数据分离
 - 🔄 **构建可重现性**：从相同元数据进行相同部署
-
-</details>
 
 ---
 
@@ -105,28 +96,25 @@ Polymerium 不是复制和存储每个实例的数千个模组文件，而是将
 >
 > Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行高效的文件管理。启用开发者模式以允许在没有管理员权限的情况下创建符号链接。
 
-<details>
-<summary><strong>📋 如何启用开发者模式</strong></summary>
+#### 📋 如何启用开发者模式
 
-#### Windows 11
+##### Windows 11
 
 ```
 设置 → 系统 → 开发者选项 → 开发者模式
 ```
 
-#### Windows 10
+##### Windows 10
 
 ```
 设置 → 更新和安全 → 开发者选项 → 开发者模式
 ```
 
-#### Windows 7/8
+##### Windows 7/8
 
 ```
 请先升级到 Windows 10+ 😉
 ```
-
-</details>
 
 ### 📥 安装
 
@@ -160,8 +148,7 @@ Polymerium 不是复制和存储每个实例的数千个模组文件，而是将
 | **依赖注入**                | 模块化、可测试的架构                      | 服务管理         |
 | **响应式扩展**              | 响应式数据处理                           | 数据流           |
 
-<details>
-<summary><strong>📁 项目结构</strong></summary>
+### 📁 项目结构
 
 ```
 Polymerium/
@@ -172,8 +159,6 @@ Polymerium/
 ├── 🛠️ .kiro/steering/         # 开发指南
 └── 📦 Releases/               # 构建产物
 ```
-
-</details>
 
 ---
 
@@ -193,8 +178,7 @@ dotnet build
 ./Development.ps1
 ```
 
-<details>
-<summary><strong>🛠️ 开发命令</strong></summary>
+### 🛠️ 开发命令
 
 ```powershell
 # 开发模式
@@ -212,8 +196,6 @@ dotnet gitversion
 # 生成更新日志
 git cliff
 ```
-
-</details>
 
 ### 🤝 贡献
 
@@ -260,25 +242,18 @@ Polymerium 尊重您的隐私：
 
 ## 📊 项目统计
 
-<div align="center">
-
 [![Star History Chart](https://api.star-history.com/svg?repos=d3ara1n/Polymerium&type=Date)](https://www.star-history.com/#d3ara1n/Polymerium&Date)
 
 ![Repobeats Analytics](https://repobeats.axiom.co/api/embed/594b206d199e6aae83226e6b7b834f6896322858.svg "Repobeats analytics image")
 
-</div>
-
 ## 📚 参考资料与致谢
 
-<details>
-<summary><strong>🔗 技术参考</strong></summary>
+### 🔗 技术参考
 
 - [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - 游戏启动过程和 Fabric/Quilt 部署
 - [Tutorial: Writing a Launcher](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8) - 游戏启动过程指南
 - [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper) - Forge 集成参考
 - [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme) - 身份验证实现
-
-</details>
 
 ### 🙏 特别感谢
 
@@ -289,13 +264,9 @@ Polymerium 尊重您的隐私：
 
 ## 📄 许可证
 
-<div align="center">
-
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
 
 本项目采用 **MIT 许可证** - 详情请参阅 [LICENSE](LICENSE.txt) 文件。
-
-</div>
 
 ---
 

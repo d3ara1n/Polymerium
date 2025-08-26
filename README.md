@@ -68,33 +68,24 @@ game-changing benefits:
 
 ## ✨ Key Features
 
-<details open>
-<summary><strong>🏗️ Modern Architecture</strong></summary>
+### 🏗️ Modern Architecture
 
 - 🎨 **Avalonia UI**: Beautiful, responsive interface that works across platforms
 - 📋 **Metadata Engine**: Lightweight instance descriptions that rebuild perfectly every time
 - 🚀 **Deployment System**: Intelligent file management with integrity checking
 - 🔗 **Resource Pooling**: Shared file storage with symlink distribution
 
-</details>
-
-<details open>
-<summary><strong>🌐 Platform Integration</strong></summary>
+### 🌐 Platform Integration
 
 - 🎟️ **CurseForge & Modrinth**: Native integration with major mod repositories
 - 📦 **Modpack Publishing**: Export your instances as distributable modpacks
 - 📝 **Automatic Changelogs**: Generated documentation for your modpack versions
 
-</details>
-
-<details open>
-<summary><strong>👨‍💻 Developer Experience</strong></summary>
+### 👨‍💻 Developer Experience
 
 - 📸 **Instance Snapshots**: Save and restore complete game states
 - 📜 **Layered Configuration**: Separate user settings from core game data
 - 🔄 **Build Reproducibility**: Identical deployments from the same metadata
-
-</details>
 
 ---
 
@@ -108,28 +99,25 @@ game-changing benefits:
 > Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable
 > Developer Mode to allow symlink creation without administrator privileges.
 
-<details>
-<summary><strong>📋 How to Enable Developer Mode</strong></summary>
+#### 📋 How to Enable Developer Mode
 
-#### Windows 11
+##### Windows 11
 
 ```
 Settings → System → For developers → Developer Mode
 ```
 
-#### Windows 10
+##### Windows 10
 
 ```
 Settings → Update & Security → For developers → Developer Mode
 ```
 
-#### Windows 7/8
+##### Windows 7/8
 
 ```
 Upgrade to Windows 10+ first 😉
 ```
-
-</details>
 
 ### 📥 Installation
 
@@ -163,8 +151,7 @@ Upgrade to Windows 10+ first 😉
 | **Dependency Injection** | Modular, testable architecture          | Service management   |
 | **Reactive Extensions**  | Responsive data handling                | Data flow            |
 
-<details>
-<summary><strong>📁 Project Structure</strong></summary>
+### 📁 Project Structure
 
 ```
 Polymerium/
@@ -175,8 +162,6 @@ Polymerium/
 ├── 🛠️ .kiro/steering/         # Development guidelines
 └── 📦 Releases/               # Build artifacts
 ```
-
-</details>
 
 ---
 
@@ -196,8 +181,7 @@ dotnet build
 ./Development.ps1
 ```
 
-<details>
-<summary><strong>🛠️ Development Commands</strong></summary>
+### 🛠️ Development Commands
 
 ```powershell
 # Development mode
@@ -215,8 +199,6 @@ dotnet gitversion
 # Generate changelog
 git cliff
 ```
-
-</details>
 
 ### 🤝 Contributing
 
@@ -263,18 +245,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Statistics
 
-<div align="center">
-
 [![Star History Chart](https://api.star-history.com/svg?repos=d3ara1n/Polymerium&type=Date)](https://www.star-history.com/#d3ara1n/Polymerium&Date)
 
 ![Repobeats Analytics](https://repobeats.axiom.co/api/embed/594b206d199e6aae83226e6b7b834f6896322858.svg "Repobeats analytics image")
 
-</div>
-
 ## 📚 References & Acknowledgments
 
-<details>
-<summary><strong>🔗 Technical References</strong></summary>
+### 🔗 Technical References
 
 - [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - Game launch process and
   Fabric/Quilt deployment
@@ -282,8 +259,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   Game launch process guide
 - [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper) - Forge integration reference
 - [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme) - Authentication implementation
-
-</details>
 
 ### 🙏 Special Thanks
 
@@ -294,13 +269,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📄 License
 
-<div align="center">
-
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE.txt) file for details.
-
-</div>
 
 ---
 
