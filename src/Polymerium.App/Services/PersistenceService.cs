@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using FreeSql.DataAnnotations;
-using Polymerium.Trident.Accounts;
+using Trident.Core.Accounts;
 
 namespace Polymerium.App.Services
 {

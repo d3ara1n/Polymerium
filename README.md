@@ -169,7 +169,7 @@ Upgrade to Windows 10+ first 😉
 ```
 Polymerium/
 ├── 🎨 src/Polymerium.App/     # UI application layer
-├── ⚙️ src/Polymerium.Trident/ # Core business engine
+├── ⚙️ src/Trident.Core/ # Core business engine
 ├── 🔗 submodules/             # Shared components
 ├── 📚 docs/                   # Documentation
 ├── 🛠️ .kiro/steering/         # Development guidelines

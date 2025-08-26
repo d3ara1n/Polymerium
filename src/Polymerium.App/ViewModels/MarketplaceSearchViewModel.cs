@@ -15,7 +15,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
-using Polymerium.Trident.Services;
+using Trident.Core.Services;
 using Refit;
 using Semver;
 using Trident.Abstractions.Repositories.Resources;

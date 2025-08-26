@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 using Polymerium.App.Services;
-using Polymerium.Trident.Accounts;
+using Trident.Core.Accounts;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.Utilities

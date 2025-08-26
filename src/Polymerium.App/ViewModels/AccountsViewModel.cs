@@ -11,7 +11,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Polymerium.Trident.Services;
+using Trident.Core.Services;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.ViewModels

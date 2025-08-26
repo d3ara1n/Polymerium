@@ -6,9 +6,9 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Widgets;
-using Polymerium.Trident;
-using Polymerium.Trident.Services;
-using Polymerium.Trident.Services.Instances;
+using Trident.Core;
+using Trident.Core.Services;
+using Trident.Core.Services.Instances;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Tasks;
 

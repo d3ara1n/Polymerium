@@ -1,7 +1,7 @@
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
-using Polymerium.Trident;
+using Trident.Core;
 
 namespace Polymerium.App.Controls
 {

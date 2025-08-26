@@ -12,7 +12,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident.Services;
+using Trident.Core.Services;
 using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels

@@ -12,9 +12,9 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident.Services;
-using Polymerium.Trident.Services.Profiles;
-using Polymerium.Trident.Utilities;
+using Trident.Core.Services;
+using Trident.Core.Services.Profiles;
+using Trident.Core.Utilities;
 using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 

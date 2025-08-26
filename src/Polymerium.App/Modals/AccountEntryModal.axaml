@@ -8,7 +8,7 @@
             xmlns:m="clr-namespace:Polymerium.App.Models"
             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
             xmlns:assets="clr-namespace:Polymerium.App.Assets"
-            xmlns:accounts="clr-namespace:Polymerium.Trident.Accounts;assembly=Polymerium.Trident"
+            xmlns:accounts="clr-namespace:Trident.Core.Accounts;assembly=Trident.Core"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             mc:Ignorable="d" Background="Transparent" Width="280"
             x:Class="Polymerium.App.Modals.AccountEntryModal" x:DataType="m:AccountModel">

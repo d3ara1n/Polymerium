@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using ObservableCollections;
 using Polymerium.App.Models;
-using Polymerium.Trident.Engines.Launching;
-using Polymerium.Trident.Services;
-using Polymerium.Trident.Services.Instances;
+using Trident.Core.Engines.Launching;
+using Trident.Core.Services;
+using Trident.Core.Services.Instances;
 using Trident.Abstractions.Extensions;
 
 namespace Polymerium.App.Services

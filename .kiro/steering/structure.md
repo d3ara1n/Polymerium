@@ -46,9 +46,9 @@ Polymerium.App/
 └── appsettings.json      # Application configuration
 ```
 
-### Polymerium.Trident (Core Library)
+### Trident.Core (Core Library)
 ```
-Polymerium.Trident/
+Trident.Core/
 ├── Accounts/             # Account management
 ├── Clients/              # API clients (CurseForge, Modrinth)
 ├── Engines/              # Deployment and build engines
@@ -123,7 +123,7 @@ Polymerium.Trident/
 ## Development Workflow
 
 1. Main development in `src/Polymerium.App/` for UI features
-2. Core logic and services in `src/Polymerium.Trident/`
+2. Core logic and services in `src/Trident.Core/`
 3. Shared utilities in submodules
 4. Use PowerShell scripts for common development tasks
 5. Follow GitVersion for semantic versioning

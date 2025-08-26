@@ -3,7 +3,7 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
-using Polymerium.Trident.Accounts;
+using Trident.Core.Accounts;
 
 namespace Polymerium.App.Models
 {
