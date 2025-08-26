@@ -9,8 +9,8 @@ permissions:
     contents: write
 
 jobs:
-    build-and-publish:
-        name: Build and Publish with Velopack for ${{ matrix.os }}-${{ matrix.runtime }}
+    build:
+        name: Build Application for ${{ matrix.os }}-${{ matrix.runtime }}
         strategy:
             matrix:
                 include:
@@ -33,6 +33,9 @@ jobs:
                     dotnet_version=$(grep '<TargetFramework>' src/Polymerium.App/Polymerium.App.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
                     echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
                     echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
+                    if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
+                      echo "dotnet_version=$dotnet_version" > release.properties
+                    fi
                 shell: bash
 
             -   name: Setup .NET SDK
@@ -58,7 +61,7 @@ jobs:
                 run: |
                     cargo install git-cliff
 
-            -   name: Fix Humanizer Bug
+            -   name: Fix for dotnet publish
                 run: |
                     if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
                         echo "Renamed zh-hans folder to zh-Hans"
@@ -74,6 +77,7 @@ jobs:
                 run: |
                     dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
 
+
             -   name: Determine Release Type
                 id: get_version
                 run: |
@@ -82,11 +86,17 @@ jobs:
 
                     # Check if version contains prerelease tag or metadata
                     if [ "${{ steps.gitversion.outputs.preReleaseTag }}" != "" ] || [[ "$version" == *+* ]]; then
-                        echo "is_prerelease=true" >> $GITHUB_OUTPUT
-                        echo "release_name=v$version (Preview)" >> $GITHUB_OUTPUT
+                        is_prerelease=true
+                        release_name="v$version (Preview)"
                     else
-                        echo "is_prerelease=false" >> $GITHUB_OUTPUT
-                        echo "release_name=v$version" >> $GITHUB_OUTPUT
+                        is_prerelease=false
+                        release_name="v$version"
+                    fi
+                    echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
+                    echo "release_name=$release_name" >> $GITHUB_OUTPUT
+                    if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
+                      echo "is_prerelease=$is_prerelease" >> release.properties
+                      echo "release_name=\"$release_name\"" >> release.properties
                     fi
                 shell: bash
 
@@ -110,42 +120,68 @@ jobs:
 
             -   name: Pack with Velopack
                 run: |
+                    vpk download github --repoUrl https://github.com/${{ github.repository }}
                     vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe ${{ steps.exe_name.outputs.exe_name }}
 
+            -   name: Upload Build Artifact
+                uses: actions/upload-artifact@v4
+                with:
+                    name: release-assets-${{ matrix.runtime }}
+                    path: Releases
 
-            -   name: Upload to GitHub Releases
+            -   name: Upload Release Metadata
+                if: matrix.runtime == 'linux-x64'
+                uses: actions/upload-artifact@v4
+                with:
+                    name: release-metadata
+                    path: |
+                        release.properties
+                        changelog.md
+
+    publish:
+        name: Publish Release
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Download artifacts
+                uses: actions/download-artifact@v4
+                with:
+                    path: ./artifacts
+
+            -   name: Load release metadata
+                id: metadata
+                run: |
+                    source ./artifacts/release-metadata/release.properties
+                    echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
+                    echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
+                    echo "release_name=$release_name" >> $GITHUB_OUTPUT
+
+            -   name: Setup .NET SDK
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: ${{ steps.metadata.outputs.dotnet_version }}
+
+            -   name: Install Velopack CLI
+                run: dotnet tool install -g vpk
+
+            -   name: Prepare release assets
+                run: |
+                    mkdir Releases
+                    cp -r ./artifacts/release-assets-*/* ./Releases/
+                    echo "Combined release assets:"
+                    ls -R Releases
+
+            -   name: Publish to GitHub Releases
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
                     pre_flag=""
-                    if [ "${{ steps.get_version.outputs.is_prerelease }}" = "true" ]; then
+                    if [ "${{ steps.metadata.outputs.is_prerelease }}" = "true" ]; then
                         pre_flag="--pre"
                     fi
-
                     vpk upload github --repoUrl https://github.com/${{ github.repository }} $pre_flag \
-                      --releaseName "${{ steps.get_version.outputs.release_name }}" \
+                      --releaseName "${{ steps.metadata.outputs.release_name }}" \
                       --tag "${{ github.ref_name }}" \
-                      --token ${{ secrets.GITHUB_TOKEN }}
+                      --token ${{ secrets.GITHUB_TOKEN }} \
+                      --releaseNotesFile ./artifacts/release-metadata/changelog.md
                 shell: bash
-
-#            -   name: Create GitHub Release
-#                id: create_release
-#                uses: actions/create-release@v1
-#                with:
-#                    tag_name: "${{ github.ref_name }}"
-#                    release_name: ${{ steps.get_version.outputs.release_name }}
-#                    body_path: changelog.md
-#                    draft: true
-#                    prerelease: ${{ steps.get_version.outputs.is_prerelease }}
-#                env:
-#                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#
-#            -   name: Upload Velopack Artifacts
-#                uses: actions/upload-release-asset@v1
-#                with:
-#                    upload_url: ${{ steps.create_release.outputs.upload_url }}
-#                    asset_path: src/Polymerium.App/bin/Release/net9.0/${{ matrix.runtime }}/publish
-#                    asset_name: Polymerium-${{ matrix.runtime }}.zip
-#                    asset_content_type: application/zip
-#                env:
-#                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
