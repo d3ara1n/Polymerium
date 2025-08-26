@@ -1,7 +1,7 @@
 using System;
 using System.IO;
-using Polymerium.Trident.Exceptions;
-using Polymerium.Trident.Services.Instances;
+using Trident.Core.Exceptions;
+using Trident.Core.Services.Instances;
 using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;

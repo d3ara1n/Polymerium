@@ -1,7 +1,7 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using Polymerium.Trident.Engines.Launching;
+using Trident.Core.Engines.Launching;
 
 namespace Polymerium.App.Models
 {

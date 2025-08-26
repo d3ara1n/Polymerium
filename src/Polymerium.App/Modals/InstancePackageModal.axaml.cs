@@ -9,7 +9,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.Trident.Services.Profiles;
+using Trident.Core.Services.Profiles;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;

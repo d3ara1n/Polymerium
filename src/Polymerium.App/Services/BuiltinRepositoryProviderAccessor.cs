@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Polymerium.Trident.Services;
-using Polymerium.Trident.Utilities;
+using Trident.Core.Services;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.Services
 {

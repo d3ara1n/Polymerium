@@ -4,7 +4,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Controls;
-using Polymerium.Trident.Utilities;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.Views
 {

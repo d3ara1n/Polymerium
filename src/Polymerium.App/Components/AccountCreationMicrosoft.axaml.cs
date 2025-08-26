@@ -8,8 +8,8 @@ using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
-using Polymerium.Trident.Accounts;
-using Polymerium.Trident.Services;
+using Trident.Core.Accounts;
+using Trident.Core.Services;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.Components

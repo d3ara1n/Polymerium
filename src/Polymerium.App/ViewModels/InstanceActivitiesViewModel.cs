@@ -16,7 +16,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.Trident.Services;
+using Trident.Core.Services;
 using SkiaSharp;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;

@@ -16,9 +16,9 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.App.Widgets;
-using Polymerium.Trident;
-using Polymerium.Trident.Services;
-using Polymerium.Trident.Services.Instances;
+using Trident.Core;
+using Trident.Core.Services;
+using Trident.Core.Services.Instances;
 using Trident.Abstractions;
 using Trident.Abstractions.Tasks;
 

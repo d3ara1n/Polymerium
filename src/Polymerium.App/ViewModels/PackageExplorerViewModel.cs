@@ -18,7 +18,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident.Services;
+using Trident.Core.Services;
 using Refit;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;

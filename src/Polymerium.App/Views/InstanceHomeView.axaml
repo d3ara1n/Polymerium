@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:Polymerium.App.Views"
     xmlns:vm="using:Polymerium.App.ViewModels"
-    xmlns:trident="using:Polymerium.Trident"
+    xmlns:trident="using:Trident.Core"
     xmlns:assets="clr-namespace:Polymerium.App.Assets"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:m="clr-namespace:Polymerium.App.Models"

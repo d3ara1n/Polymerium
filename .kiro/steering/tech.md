@@ -93,8 +93,8 @@ git cliff
 ## Project Dependencies
 
 - **Polymerium.App**: Main application (WinExe)
-  - References: Polymerium.Trident, Huskui.Avalonia
-- **Polymerium.Trident**: Core business logic library
+  - References: Trident.Core, Huskui.Avalonia
+- **Trident.Core**: Core business logic library
   - References: Trident.Abstractions
 - **Submodules**: 
   - Huskui.Avalonia: Custom UI components
