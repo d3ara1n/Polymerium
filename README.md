@@ -103,19 +103,19 @@ game-changing benefits:
 
 ##### Windows 11
 
-```
+```sh
 Settings → System → For developers → Developer Mode
 ```
 
 ##### Windows 10
 
-```
+```sh
 Settings → Update & Security → For developers → Developer Mode
 ```
 
 ##### Windows 7/8
 
-```
+```sh
 Upgrade to Windows 10+ first 😉
 ```
 
@@ -153,13 +153,12 @@ Upgrade to Windows 10+ first 😉
 
 ### 📁 Project Structure
 
-```
+```sh
 Polymerium/
-├── 🎨 src/Polymerium.App/     # UI application layer
-├── ⚙️ src/Trident.Core/ # Core business engine
-├── 🔗 submodules/             # Shared components
-├── 📚 docs/                   # Documentation
 ├── 🛠️ .kiro/steering/         # Development guidelines
+├── 📚 docs/                   # Documentation
+├── 🎨 src/Polymerium.App/     # UI application layer
+├── 🔗 submodules/             # Shared components
 └── 📦 Releases/               # Build artifacts
 ```
 

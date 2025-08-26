@@ -100,19 +100,19 @@ Polymerium 不是复制和存储每个实例的数千个模组文件，而是将
 
 ##### Windows 11
 
-```
+```sh
 设置 → 系统 → 开发者选项 → 开发者模式
 ```
 
 ##### Windows 10
 
-```
+```sh
 设置 → 更新和安全 → 开发者选项 → 开发者模式
 ```
 
 ##### Windows 7/8
 
-```
+```sh
 请先升级到 Windows 10+ 😉
 ```
 
@@ -150,13 +150,12 @@ Polymerium 不是复制和存储每个实例的数千个模组文件，而是将
 
 ### 📁 项目结构
 
-```
+```sh
 Polymerium/
-├── 🎨 src/Polymerium.App/     # UI 应用程序层
-├── ⚙️ src/Trident.Core/ # 核心业务引擎
-├── 🔗 submodules/             # 共享组件
-├── 📚 docs/                   # 文档
 ├── 🛠️ .kiro/steering/         # 开发指南
+├── 📚 docs/                   # 文档
+├── 🎨 src/Polymerium.App/     # UI 应用程序层
+├── 🔗 submodules/             # 共享组件
 └── 📦 Releases/               # 构建产物
 ```
 
