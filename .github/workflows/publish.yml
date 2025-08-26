@@ -57,10 +57,6 @@ jobs:
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
 
-            -   name: Install git-cliff
-                run: |
-                    cargo install git-cliff
-
             -   name: Fix for dotnet publish
                 run: |
                     if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
@@ -100,13 +96,14 @@ jobs:
                     fi
                 shell: bash
 
-            -   name: Generate Changelog
-                id: changelog
-                run: |
-                    version="${{ steps.gitversion.outputs.semVer }}"
-                    git cliff --latest -o changelog.md
-                    echo "changelog_file=changelog.md" >> $GITHUB_OUTPUT
-                shell: bash
+            -   name: Generate a changelog
+                uses: orhun/git-cliff-action@v3
+                with:
+                    config: cliff.toml
+                    args: --latest
+                env:
+                    OUTPUT: changelog.md
+                    GITHUB_REPO: ${{ github.repository }}
 
             -   name: Decide Executable Name
                 id: exe_name
@@ -179,9 +176,9 @@ jobs:
                     if [ "${{ steps.metadata.outputs.is_prerelease }}" = "true" ]; then
                         pre_flag="--pre"
                     fi
+                    cp ./artifacts/release-metadata/changelog.md ./changelog.md
                     vpk upload github --repoUrl https://github.com/${{ github.repository }} $pre_flag \
                       --releaseName "${{ steps.metadata.outputs.release_name }}" \
                       --tag "${{ github.ref_name }}" \
-                      --token ${{ secrets.GITHUB_TOKEN }} \
-                      --releaseNotesFile ./artifacts/release-metadata/changelog.md
+                      --token ${{ secrets.GITHUB_TOKEN }}
                 shell: bash
