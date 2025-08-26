@@ -168,3 +168,4 @@ jobs:
                     name: ${{ steps.metadata.outputs.release_name }}
                     prerelease: ${{ steps.metadata.outputs.is_prerelease }}
                     tag_name: ${{ github.ref_name }}
+                    draft: true
