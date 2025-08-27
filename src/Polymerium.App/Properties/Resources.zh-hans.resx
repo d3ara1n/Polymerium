@@ -91,7 +91,7 @@
         <value>未选择账号</value>
     </data>
     <data name="InstanceHomeView_LaunchButtonText" xml:space="preserve">
-        <value>开始逆行</value>
+        <value>开始游玩</value>
     </data>
     <data name="InstanceHomeView_AccountButtonTitle" xml:space="preserve">
         <value>账号</value>
@@ -949,7 +949,7 @@
         <value>调试</value>
     </data>
     <data name="LaunchMode_FireAndForget" xml:space="preserve">
-        <value>薄情</value>
+        <value>抛弃</value>
     </data>
     <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>标题栏可见性</value>
