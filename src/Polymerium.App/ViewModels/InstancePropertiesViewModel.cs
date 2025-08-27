@@ -203,13 +203,19 @@ namespace Polymerium.App.ViewModels
         {
             if (!InstanceManager.IsInUse(Basic.Key))
             {
-                var dir = PathDef.Default.DirectoryOfBuild(Basic.Key);
+                var build = PathDef.Default.DirectoryOfBuild(Basic.Key);
+                var live = PathDef.Default.DirectoryOfLive(Basic.Key);
                 var file = PathDef.Default.FileOfLockData(Basic.Key);
                 try
                 {
-                    if (Directory.Exists(dir))
+                    if (Directory.Exists(build))
                     {
-                        Directory.Delete(dir, true);
+                        Directory.Delete(build, true);
+                    }
+
+                    if (Directory.Exists(live))
+                    {
+                        Directory.Delete(live, true);
                     }
 
                     if (File.Exists(file))

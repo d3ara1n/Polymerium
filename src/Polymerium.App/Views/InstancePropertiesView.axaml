@@ -154,21 +154,21 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Icon="Camera" Title="Snapshots (WIP)" Summary="Backup, yes, it's called backup">
-            <controls:SettingsEntryItem Header="Taken Automatically When">
-                <ComboBox SelectedIndex="0">
-                    <ComboBoxItem Content="Never" />
-                    <ComboBoxItem Content="Built" />
-                </ComboBox>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Folders">
-                <TextBox Watermark="Replace this with a TokenTextBox!!!" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Files">
-                <TextBox Watermark="Replace this with a TokenTextBox!!!" />
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
-        <husk:Divider />
+        <!-- <controls:SettingsEntry Icon="Camera" Title="Snapshots (WIP)" Summary="Backup, yes, it's called backup"> -->
+        <!--     <controls:SettingsEntryItem Header="Taken Automatically When"> -->
+        <!--         <ComboBox SelectedIndex="0"> -->
+        <!--             <ComboBoxItem Content="Never" /> -->
+        <!--             <ComboBoxItem Content="Built" /> -->
+        <!--         </ComboBox> -->
+        <!--     </controls:SettingsEntryItem> -->
+        <!--     <controls:SettingsEntryItem Header="Folders"> -->
+        <!--         <TextBox Watermark="Replace this with a TokenTextBox!!!" /> -->
+        <!--     </controls:SettingsEntryItem> -->
+        <!--     <controls:SettingsEntryItem Header="Files"> -->
+        <!--         <TextBox Watermark="Replace this with a TokenTextBox!!!" /> -->
+        <!--     </controls:SettingsEntryItem> -->
+        <!-- </controls:SettingsEntry> -->
+        <!-- <husk:Divider /> -->
         <controls:SettingsEntry Icon="Handshake"
                                 Title="{x:Static lang:Resources.InstancePropertiesView_BehaviorsTitle}"
                                 Summary="{x:Static lang:Resources.InstancePropertiesView_BehaviorsSubtitle}">
