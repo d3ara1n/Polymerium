@@ -11,11 +11,11 @@ namespace Polymerium.App
     {
         public static readonly string BRAND = "Polymerium";
 
-        public static readonly string VERSION = typeof(Program).Assembly
-                                                               .GetCustomAttribute<
-                                                                    AssemblyInformationalVersionAttribute>()
-                                                              ?.InformationalVersion
-                                             ?? typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
+        public static readonly string VERSION =
+            typeof(Program)
+               .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+              ?.InformationalVersion.Split('+')[0]
+         ?? typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
 
         // // Initialization code. Don't use any Avalonia, third-party APIs or any
         // // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
