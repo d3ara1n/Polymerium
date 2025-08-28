@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,7 +34,13 @@ namespace Polymerium.App
                                                       .ConfigureHttpClient(client => client.DefaultRequestHeaders
                                                                               .UserAgent
                                                                               .Add(new(Program.BRAND, Program.VERSION)))
-                                                      .AddTransientHttpErrorPolicy(configure => configure.RetryAsync()))
+                                                      .AddTransientHttpErrorPolicy(configure =>
+                                                           configure.WaitAndRetryAsync(3,
+                                                               retryAttempt =>
+                                                                   TimeSpan
+                                                                      .FromSeconds(Math
+                                                                          .Pow(2,
+                                                                               retryAttempt)))))
                .AddLogging(logging => logging
                                      .AddConsole()
                                      .AddDebug()
