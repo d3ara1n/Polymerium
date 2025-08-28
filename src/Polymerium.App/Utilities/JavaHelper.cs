@@ -23,8 +23,7 @@ namespace Polymerium.App.Utilities
                                          {
                                              8 => secondary.RuntimeJavaHome8,
                                              11 => secondary.RuntimeJavaHome11,
-                                             16 => secondary.RuntimeJavaHome17,
-                                             17 => secondary.RuntimeJavaHome17,
+                                             16 or 17 => secondary.RuntimeJavaHome17,
                                              21 => secondary.RuntimeJavaHome21,
                                              _ => throw new ArgumentOutOfRangeException(nameof(major),
                                                       major,

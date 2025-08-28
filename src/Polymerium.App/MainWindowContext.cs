@@ -520,7 +520,8 @@ namespace Polymerium.App
                         Dispatcher.UIThread.Post(() =>
                         {
                             model.State = InstanceEntryState.Idle;
-                            if (e.FailureReason is ProcessFaultedException)
+                            if (e.FailureReason is AggregateException { InnerException: ProcessFaultedException }
+                                                or ProcessFaultedException)
                             {
                                 _notificationService.PopMessage(e.FailureReason,
                                                                 e.Key,
