@@ -41,6 +41,30 @@ namespace Polymerium.App.Services
                         () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled),
                         cachedEnabled);
 
+        public async ValueTask<IReadOnlyList<Package>> ResolveBatchAsync(
+            IEnumerable<(string label, string? ns, string pid, string? vid)> batch,
+            Filter filter)
+        {
+            var cachedTasks = batch
+                             .Select(x => (Meta: x,
+                                           Task:
+                                           Get<Package>($"package:{PackageHelper.Identify(x.label, x.ns, x.pid, x.vid, filter)}")))
+                             .Where(x => x.Task.HasValue)
+                             .Select(async x => (Meta: x.Meta, Package: await x.Task!.Value)).ToList();
+
+            await Task.WhenAll(cachedTasks).ConfigureAwait(false);
+            var cached = cachedTasks.ConvertAll(x => x.Result);
+            var toResolve = batch.Except(cached.Select(x => x.Meta));
+            var resolved = await agent.ResolveBatchAsync(toResolve, filter);
+            foreach (var package in resolved)
+            {
+                Set($"package:{PackageHelper.Identify(package.Label, package.Namespace, package.ProjectId, package.VersionId, filter)}",
+                    package);
+            }
+
+            return cached.Select(x => x.Package).Concat(resolved).ToList();
+        }
+
         public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
             GetOrCreate($"bitmap:{url.AbsoluteUri}:{widthDesired}",
                         async () =>
@@ -109,6 +133,10 @@ namespace Polymerium.App.Services
         public ValueTask<RepositoryStatus> CheckStatusAsync(string label) =>
             GetOrCreate($"repository:{label}:status", () => agent.CheckStatusAsync(label));
 
+        private ValueTask<T>? Get<T>(string key) =>
+            cache.TryGetValue(key, out var cached) && cached is ValueTask<T> res ? res : null;
+
+        private void Set<T>(string key, T value) => cache.Set(key, new ValueTask<T>(value), EXPIRED_IN);
 
         private ValueTask<T> GetOrCreate<T>(string key, Func<Task<T>> factory, bool cachedEnabled = true)
         {

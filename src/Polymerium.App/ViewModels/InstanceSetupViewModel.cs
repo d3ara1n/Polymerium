@@ -66,6 +66,7 @@ namespace Polymerium.App.ViewModels
                     IsRefreshing = true;
                     Task.Run(() =>
                              {
+                                 // TODO: 有 vid 的走 ResolveBatchAsync 没有的走 QueryProjectAsync
                                  var tasks = profile.Setup.Packages.Select(LoadAsync).ToList();
                                  Task.WaitAll(tasks, inner);
                                  var stages = tasks.Where(x => x.Result is not null).Select(x => x.Result!).ToList();
