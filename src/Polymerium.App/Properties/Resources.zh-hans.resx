@@ -931,7 +931,7 @@
         <value>实例正常退出</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
-        <value>查看输出</value>
+        <value>查看日志</value>
     </data>
     <data name="LaunchMode_Managed" xml:space="preserve">
         <value>托管</value>
