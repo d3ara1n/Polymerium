@@ -1698,33 +1698,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [Experimental] Resolve Package Dependencies.
-        /// </summary>
-        public static string InstancePropertiesView_ResolvePackageDependenciesLabelText {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to I know what I&apos;m doing.
-        /// </summary>
-        public static string InstancePropertiesView_ResolvePackageDependenciesOnText {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesOnText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This always leads to unexpected package conflicts due to poor management of package distribution sites. .
-        /// </summary>
-        public static string InstancePropertiesView_ResolvePackageDependenciesPrompt {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesPrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Scrifice.
         /// </summary>
         public static string InstancePropertiesView_SacrificeLabelText {
@@ -1775,15 +1748,6 @@ namespace Polymerium.App.Properties {
         public static string InstancePropertiesView_ThumbnailSettingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string InstancePropertiesView_ThumbnailTitle {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_ThumbnailTitle", resourceCulture);
             }
         }
         
@@ -3066,6 +3030,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for updates, clear cache, etc..
+        /// </summary>
+        public static string SettingsView_MaintenanceSubtitle {
+            get {
+                return ResourceManager.GetString("SettingsView_MaintenanceSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintenance.
+        /// </summary>
+        public static string SettingsView_MaintenanceTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_MaintenanceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sidebar Placement.
         /// </summary>
         public static string SettingsView_SidebarPlacementLabelText {
@@ -3089,6 +3071,24 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_SidebarPlacementRightText {
             get {
                 return ResourceManager.GetString("SettingsView_SidebarPlacementRightText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string SettingsView_StorageManagementButtonText {
+            get {
+                return ResourceManager.GetString("SettingsView_StorageManagementButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storage Management.
+        /// </summary>
+        public static string SettingsView_StorageManagementLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_StorageManagementLabelText", resourceCulture);
             }
         }
         
@@ -3170,6 +3170,60 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_TitleBarVisibilityLabelText {
             get {
                 return ResourceManager.GetString("SettingsView_TitleBarVisibilityLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply update.
+        /// </summary>
+        public static string SettingsView_UpdatesApplyButtonText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesApplyButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        public static string SettingsView_UpdatesCheckButtonText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesCheckButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available.
+        /// </summary>
+        public static string SettingsView_UpdatesFoundLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesFoundLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        public static string SettingsView_UpdatesLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up to date.
+        /// </summary>
+        public static string SettingsView_UpdatesNotFoundLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesNotFoundLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update unavailable.
+        /// </summary>
+        public static string SettingsView_UpdatesUnavailableLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesUnavailableLabelText", resourceCulture);
             }
         }
         

@@ -171,12 +171,6 @@
     <data name="InstancePropertiesView_BehaviorsSubtitle" xml:space="preserve">
         <value>程序会根据这些设置选择对应策略</value>
     </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesLabelText" xml:space="preserve">
-        <value>[实验] 解析包依赖</value>
-    </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesPrompt" xml:space="preserve">
-        <value>由于包托管与分发库在数据上的不完善，开启该选项必定会使包冲突。</value>
-    </data>
     <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
         <value>快速启动</value>
     </data>
@@ -903,9 +897,6 @@
     <data name="InstancePropertiesView_FastLaunchOnText" xml:space="preserve">
         <value>我很急啊</value>
     </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesOnText" xml:space="preserve">
-        <value>我知道我在做什么</value>
-    </data>
     <data name="Enum_Vanilla" xml:space="preserve">
         <value>原版</value>
     </data>
@@ -1094,5 +1085,35 @@
     </data>
     <data name="InstanceView_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>'{0}' 指向的实例不存在或未准备完</value>
+    </data>
+    <data name="SettingsView_MaintenanceTitle" xml:space="preserve">
+        <value>维护</value>
+    </data>
+    <data name="SettingsView_MaintenanceSubtitle" xml:space="preserve">
+        <value>检查更新、清理缓存之类的杂七杂八</value>
+    </data>
+    <data name="SettingsView_StorageManagementButtonText" xml:space="preserve">
+        <value>管理</value>
+    </data>
+    <data name="SettingsView_StorageManagementLabelText" xml:space="preserve">
+        <value>储存管理</value>
+    </data>
+    <data name="SettingsView_UpdatesLabelText" xml:space="preserve">
+        <value>更新</value>
+    </data>
+    <data name="SettingsView_UpdatesApplyButtonText" xml:space="preserve">
+        <value>应用更新</value>
+    </data>
+    <data name="SettingsView_UpdatesCheckButtonText" xml:space="preserve">
+        <value>检查更新</value>
+    </data>
+    <data name="SettingsView_UpdatesUnavailableLabelText" xml:space="preserve">
+        <value>更新不可用</value>
+    </data>
+    <data name="SettingsView_UpdatesNotFoundLabelText" xml:space="preserve">
+        <value>已是最新版</value>
+    </data>
+    <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
+        <value>存在新版本</value>
     </data>
 </root>

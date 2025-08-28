@@ -172,11 +172,6 @@ namespace Polymerium.App.ViewModels
 
         #region Updates
 
-        public string VersionString { get; } = typeof(Program)
-                                              .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                                             ?.InformationalVersion.Split("+")[0]
-                                            ?? "Unknown";
-
         [ObservableProperty]
         public partial AppUpdateState UpdateState { get; set; } =
             Program.Debug ? AppUpdateState.Unavailable : AppUpdateState.Idle;

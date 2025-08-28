@@ -180,12 +180,6 @@
     <data name="InstancePropertiesView_BehaviorsSubtitle" xml:space="preserve">
         <value>How the application acts and chooses strategies</value>
     </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesLabelText" xml:space="preserve">
-        <value>[Experimental] Resolve Package Dependencies</value>
-    </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesPrompt" xml:space="preserve">
-        <value>This always leads to unexpected package conflicts due to poor management of package distribution sites. </value>
-    </data>
     <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
         <value>Fast Launch</value>
     </data>
@@ -912,9 +906,6 @@
     <data name="InstancePropertiesView_FastLaunchOnText" xml:space="preserve">
         <value>I'm in a hurry</value>
     </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesOnText" xml:space="preserve">
-        <value>I know what I'm doing</value>
-    </data>
     <data name="Enum_Vanilla" xml:space="preserve">
         <value>Vanilla</value>
     </data>
@@ -1104,7 +1095,34 @@
     <data name="InstanceView_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>Key '{0}' to the instance is not found or prepared</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailTitle" xml:space="preserve">
-        <value/>
+    <data name="SettingsView_MaintenanceTitle" xml:space="preserve">
+        <value>Maintenance</value>
+    </data>
+    <data name="SettingsView_MaintenanceSubtitle" xml:space="preserve">
+        <value>Check for updates, clear cache, etc.</value>
+    </data>
+    <data name="SettingsView_StorageManagementLabelText" xml:space="preserve">
+        <value>Storage Management</value>
+    </data>
+    <data name="SettingsView_StorageManagementButtonText" xml:space="preserve">
+        <value>Manage</value>
+    </data>
+    <data name="SettingsView_UpdatesLabelText" xml:space="preserve">
+        <value>Updates</value>
+    </data>
+    <data name="SettingsView_UpdatesApplyButtonText" xml:space="preserve">
+        <value>Apply update</value>
+    </data>
+    <data name="SettingsView_UpdatesCheckButtonText" xml:space="preserve">
+        <value>Check for updates</value>
+    </data>
+    <data name="SettingsView_UpdatesUnavailableLabelText" xml:space="preserve">
+        <value>Update unavailable</value>
+    </data>
+    <data name="SettingsView_UpdatesNotFoundLabelText" xml:space="preserve">
+        <value>Up to date</value>
+    </data>
+    <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
+        <value>Update available</value>
     </data>
 </root>
