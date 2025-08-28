@@ -172,25 +172,13 @@
         <controls:SettingsEntry Icon="Handshake"
                                 Title="{x:Static lang:Resources.InstancePropertiesView_BehaviorsTitle}"
                                 Summary="{x:Static lang:Resources.InstancePropertiesView_BehaviorsSubtitle}">
-            <controls:SettingsEntryItem
-                Header="{x:Static lang:Resources.InstancePropertiesView_ResolvePackageDependenciesLabelText}">
-                <StackPanel Spacing="8">
-                    <husk:InfoBar
-                        Content="{x:Static lang:Resources.InstancePropertiesView_ResolvePackageDependenciesPrompt}"
-                        Classes="Warning" />
-                    <ToggleSwitch
-                        OnContent="{x:Static lang:Resources.InstancePropertiesView_ResolvePackageDependenciesOnText}"
-                        OffContent="{x:Static lang:Resources.Enum_Off}"
-                        IsChecked="{Binding BehaviorResolveDependency,Mode=TwoWay}" />
-                </StackPanel>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="[Experimental] Deployment Method">
-                <StackPanel Spacing="8">
-                    <ComboBox SelectedIndex="0" IsEnabled="False">
-                        <ComboBoxItem Content="Auto" />
-                    </ComboBox>
-                </StackPanel>
-            </controls:SettingsEntryItem>
+            <!-- <controls:SettingsEntryItem Header="[Experimental] Deployment Method"> -->
+            <!--     <StackPanel Spacing="8"> -->
+            <!--         <ComboBox SelectedIndex="0" IsEnabled="False"> -->
+            <!--             <ComboBoxItem Content="Auto" /> -->
+            <!--         </ComboBox> -->
+            <!--     </StackPanel> -->
+            <!-- </controls:SettingsEntryItem> -->
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_FastLaunchLabelText}">
                 <StackPanel Spacing="8">
                     <husk:InfoBar

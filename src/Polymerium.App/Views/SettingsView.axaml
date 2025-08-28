@@ -196,15 +196,16 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Icon="Wrench" Title="Maintenance" Summary="Check for updates, clear cache, etc.">
-            <controls:SettingsEntryItem Header="Storage Management">
-                <Button Content="Manage" HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
+        <controls:SettingsEntry Icon="Wrench" Title="{x:Static lang:Resources.SettingsView_MaintenanceTitle}"
+                                Summary="{x:Static lang:Resources.SettingsView_MaintenanceSubtitle}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
+                <Button Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}"
+                        HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type v:MaintenanceStorageView}" Classes="Small" />
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Updates">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdatesLabelText}">
                 <controls:Plaque>
                     <controls:Plaque.Header>
-                        <!-- 切换依据是 AvailableUpdate 是否不为空 -->
                         <husk:SwitchPresenter
                             Value="{Binding UpdateTarget,Converter={x:Static ObjectConverters.IsNotNull}}"
                             TargetType="x:Boolean">
@@ -218,23 +219,25 @@
                                     </Button>
                                     <Button Classes="Small Primary" Command="{Binding ApplyUpdateCommand}"
                                             CommandParameter="{Binding UpdateTarget}">
-                                        <TextBlock Text="Apply update" />
+                                        <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesApplyButtonText}" />
                                     </Button>
                                 </DockPanel>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="{x:False}">
                                 <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
                                         Command="{Binding CheckUpdatesCommand}">
-                                    <TextBlock Text="Check for updates" />
+                                    <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesCheckButtonText}" />
                                 </Button>
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>
                     </controls:Plaque.Header>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
                         <StackPanel Grid.Column="0" Spacing="4">
-                            <TextBlock Text="Polymerium" FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="{Binding VersionString,StringFormat={}v{0},FallbackValue=v0.1.0}"
-                                       FontSize="{StaticResource LargeFontSize}" />
+                            <TextBlock Text="{x:Static app:Program.BRAND}"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <TextBlock
+                                Text="{Binding Source={x:Static app:Program.VERSION},StringFormat={}v{0},FallbackValue=v0.1.0}"
+                                FontSize="{StaticResource LargeFontSize}" />
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <husk:SwitchPresenter Value="{x:Static app:Program.Debug}" TargetType="x:Boolean">
                                     <husk:SwitchCase Value="{x:True}">
@@ -261,19 +264,19 @@
                                 <husk:SwitchCase Value="Unavailable">
                                     <husk:Tag Classes="Small" VerticalAlignment="Top"
                                               HorizontalAlignment="Center">
-                                        <husk:IconLabel Icon="DismissCircle" Variant="Filled" Text="Update unavailable" />
+                                        <husk:IconLabel Icon="DismissCircle" Variant="Filled" Text="{x:Static lang:Resources.SettingsView_UpdatesUnavailableLabelText}" />
                                     </husk:Tag>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Latest">
                                     <husk:Tag Classes="Small Success" VerticalAlignment="Top"
                                               HorizontalAlignment="Center">
-                                        <husk:IconLabel Icon="CheckmarkCircle" Variant="Filled" Text="Up to date" />
+                                        <husk:IconLabel Icon="CheckmarkCircle" Variant="Filled" Text="{x:Static lang:Resources.SettingsView_UpdatesNotFoundLabelText}" />
                                     </husk:Tag>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Found">
                                     <husk:Tag Classes="Small Primary" VerticalAlignment="Top"
                                               HorizontalAlignment="Center">
-                                        <husk:IconLabel Icon="SparkleCircle" Variant="Filled" Text="Update available" />
+                                        <husk:IconLabel Icon="SparkleCircle" Variant="Filled" Text="{x:Static lang:Resources.SettingsView_UpdatesFoundLabelText}" />
                                     </husk:Tag>
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
@@ -300,7 +303,7 @@
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
                                                 <husk:Divider Orientation="Vertical" Margin="2" />
-                                                <TextBlock Text="Unknown"
+                                                <TextBlock Text="Unknown Date"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                            FontSize="{StaticResource SmallFontSize}" />
                                             </StackPanel>
