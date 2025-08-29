@@ -60,21 +60,23 @@
                 </Grid>
             </husk:SwitchCase>
             <husk:SwitchCase Value="{x:False}">
-                <StackPanel Spacing="8" Margin="12,8" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel Spacing="8" Margin="12" HorizontalAlignment="Center" Orientation="Horizontal">
                     <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                          Width="{StaticResource LargeFontSize}" />
+                                          Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
                     <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_Prompt}"
-                               FontSize="{StaticResource LargeFontSize}"
+                               FontSize="{StaticResource MediumFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" VerticalAlignment="Center" />
-                    <Button Classes="Small" IsVisible="False">
+                    <Button Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Classes="Small"
+                            Command="{Binding $parent[cp:JavaHomeContainer].DetectHomeCommand}"
+                            IsEnabled="False">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <icons:PackIconLucide Kind="FolderSearch" Height="{StaticResource MediumFontSize}"
                                                   Width="{StaticResource MediumFontSize}" />
                             <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_DetectButtonText}" />
                         </StackPanel>
                     </Button>
-                    <Button Classes="Small" Command="{Binding $parent[cp:JavaHomeContainer].PickFileCommand}">
+                    <Button Classes="Small" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Command="{Binding $parent[cp:JavaHomeContainer].PickFileCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <icons:PackIconLucide Kind="FileScan" Height="{StaticResource MediumFontSize}"
                                                   Width="{StaticResource MediumFontSize}" />

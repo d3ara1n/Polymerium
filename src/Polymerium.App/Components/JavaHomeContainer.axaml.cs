@@ -155,6 +155,12 @@ namespace Polymerium.App.Components
             }
         }
 
+        [RelayCommand]
+        private async Task DetectHome()
+        {
+
+        }
+
         #endregion
     }
 }
