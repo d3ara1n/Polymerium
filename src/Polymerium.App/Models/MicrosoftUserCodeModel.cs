@@ -1,16 +1,15 @@
 using System;
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class MicrosoftUserCodeModel(string deviceCode, string userCode, Uri verificationUri) : ModelBase
 {
-    public class MicrosoftUserCodeModel(string deviceCode, string userCode, Uri verificationUri) : ModelBase
-    {
-        #region Direct
+    #region Direct
 
-        public string DeviceCode => deviceCode;
-        public string UserCode => userCode;
-        public Uri VerificationUri => verificationUri;
+    public string DeviceCode => deviceCode;
+    public string UserCode => userCode;
+    public Uri VerificationUri => verificationUri;
 
-        #endregion
-    }
+    #endregion
 }

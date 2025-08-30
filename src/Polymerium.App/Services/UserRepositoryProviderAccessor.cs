@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Trident.Core.Services;
 
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+public class UserRepositoryProviderAccessor : IRepositoryProviderAccessor
 {
-    public class UserRepositoryProviderAccessor : IRepositoryProviderAccessor
-    {
-        #region IRepositoryProviderAccessor Members
+    #region IRepositoryProviderAccessor Members
 
-        public IReadOnlyList<IRepositoryProviderAccessor.ProviderProfile> Build() => [];
+    public IReadOnlyList<IRepositoryProviderAccessor.ProviderProfile> Build() => [];
 
-        #endregion
-    }
+    #endregion
 }

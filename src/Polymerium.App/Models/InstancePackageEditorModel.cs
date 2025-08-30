@@ -1,13 +1,12 @@
 using Polymerium.App.Facilities;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class InstancePackageEditorModel(InstancePackageModel entry) : ModelBase
 {
-    public class InstancePackageEditorModel(InstancePackageModel entry) : ModelBase
-    {
-        #region Direct
+    #region Direct
 
-        public InstancePackageModel Entry => entry;
+    public InstancePackageModel Entry => entry;
 
-        #endregion
-    }
+    #endregion
 }

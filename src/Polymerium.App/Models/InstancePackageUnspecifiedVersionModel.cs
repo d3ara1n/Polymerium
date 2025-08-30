@@ -1,9 +1,8 @@
-namespace Polymerium.App.Models
-{
-    public class InstancePackageUnspecifiedVersionModel : InstancePackageVersionModelBase
-    {
-        public static readonly InstancePackageUnspecifiedVersionModel Instance = new();
+namespace Polymerium.App.Models;
 
-        private InstancePackageUnspecifiedVersionModel() { }
-    }
+public class InstancePackageUnspecifiedVersionModel : InstancePackageVersionModelBase
+{
+    public static readonly InstancePackageUnspecifiedVersionModel Instance = new();
+
+    private InstancePackageUnspecifiedVersionModel() { }
 }

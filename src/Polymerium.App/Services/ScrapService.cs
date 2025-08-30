@@ -8,78 +8,77 @@ using Trident.Core.Services;
 using Trident.Core.Services.Instances;
 using Trident.Abstractions.Extensions;
 
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+public class ScrapService : IDisposable
 {
-    public class ScrapService : IDisposable
+    private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = new();
+
+    #region Injected
+
+    private readonly InstanceManager _instanceManager;
+
+    #endregion
+
+    public ScrapService(InstanceManager instanceManager)
     {
-        private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = new();
+        _instanceManager = instanceManager;
 
-        #region Injected
+        instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
+    }
 
-        private readonly InstanceManager _instanceManager;
+    #region IDisposable Members
 
-        #endregion
+    public void Dispose() => _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
 
-        public ScrapService(InstanceManager instanceManager)
+    #endregion
+
+    private void InstanceManagerOnInstanceLaunching(object? _, LaunchTracker e)
+    {
+        if (!_buffers.TryGetValue(e.Key, out var buffer))
         {
-            _instanceManager = instanceManager;
-
-            instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
+            buffer = new(9527);
+            _buffers.Add(e.Key, buffer);
         }
 
-        #region IDisposable Members
-
-        public void Dispose() => _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
-
-        #endregion
-
-        private void InstanceManagerOnInstanceLaunching(object? _, LaunchTracker e)
-        {
-            if (!_buffers.TryGetValue(e.Key, out var buffer))
-            {
-                buffer = new(9527);
-                _buffers.Add(e.Key, buffer);
-            }
-
-            e
-               .ScrapStream.Subscribe(x =>
-                                      {
-                                          if (x is
-                                              {
-                                                  Level: { } level,
-                                                  Time: { } time,
-                                                  Thread: { } thread,
-                                                  Sender: { } sender
-                                              })
+        e
+           .ScrapStream.Subscribe(x =>
+                                  {
+                                      if (x is
                                           {
-                                              buffer.AddLast(new(x.Message, level, time, thread, sender));
+                                              Level: { } level,
+                                              Time: { } time,
+                                              Thread: { } thread,
+                                              Sender: { } sender
+                                          })
+                                      {
+                                          buffer.AddLast(new(x.Message, level, time, thread, sender));
+                                      }
+                                      else
+                                      {
+                                          if (buffer.Count > 0)
+                                          {
+                                              buffer[^1].Message += "\n" + x.Message;
                                           }
                                           else
                                           {
-                                              if (buffer.Count > 0)
-                                              {
-                                                  buffer[^1].Message += "\n" + x.Message;
-                                              }
-                                              else
-                                              {
-                                                  buffer.AddLast(new(x.Message,
-                                                                     ScrapLevel.Information,
-                                                                     DateTimeOffset.Now,
-                                                                     "Unknown",
-                                                                     "Unknown"));
-                                              }
+                                              buffer.AddLast(new(x.Message,
+                                                                 ScrapLevel.Information,
+                                                                 DateTimeOffset.Now,
+                                                                 "Unknown",
+                                                                 "Unknown"));
                                           }
-                                      },
-                                      () =>
-                                      {
-                                          _buffers.Remove(e.Key);
-                                      })
-               .DisposeWith(e);
-        }
-
-        public bool TryGetBuffer(
-            string key,
-            [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
-            _buffers.TryGetValue(key, out buffer);
+                                      }
+                                  },
+                                  () =>
+                                  {
+                                      _buffers.Remove(e.Key);
+                                  })
+           .DisposeWith(e);
     }
+
+    public bool TryGetBuffer(
+        string key,
+        [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
+        _buffers.TryGetValue(key, out buffer);
 }

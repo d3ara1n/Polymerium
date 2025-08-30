@@ -1,6 +1,5 @@
 using System;
 
-namespace Polymerium.App.Models
-{
-    public class ProgressReporter : Progress<double> { }
-}
+namespace Polymerium.App.Models;
+
+public class ProgressReporter : Progress<double> { }
