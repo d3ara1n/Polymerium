@@ -1,9 +1,8 @@
 using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Views
+namespace Polymerium.App.Views;
+
+public partial class MarketplaceSearchView : Page
 {
-    public partial class MarketplaceSearchView : Page
-    {
-        public MarketplaceSearchView() => InitializeComponent();
-    }
+    public MarketplaceSearchView() => InitializeComponent();
 }

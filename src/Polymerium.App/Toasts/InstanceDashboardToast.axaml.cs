@@ -7,125 +7,124 @@ using Huskui.Avalonia.Controls;
 using ObservableCollections;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Toasts
+namespace Polymerium.App.Toasts;
+
+public partial class InstanceDashboardToast : Toast
 {
-    public partial class InstanceDashboardToast : Toast
+    public static readonly
+        DirectProperty<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>?>
+        BindableProperty =
+            AvaloniaProperty
+               .RegisterDirect<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>
+                    ?>(nameof(Bindable), o => o.Bindable, (o, v) => o.Bindable = v);
+
+    public static readonly DirectProperty<InstanceDashboardToast, string> FilterTextProperty =
+        AvaloniaProperty.RegisterDirect<InstanceDashboardToast, string>(nameof(FilterText),
+                                                                        o => o.FilterText,
+                                                                        (o, v) => o.FilterText = v);
+
+    public static readonly DirectProperty<InstanceDashboardToast, bool> IsAutoScrollProperty =
+        AvaloniaProperty.RegisterDirect<InstanceDashboardToast, bool>(nameof(IsAutoScroll),
+                                                                      o => o.IsAutoScroll,
+                                                                      (o, v) => o.IsAutoScroll = v,
+                                                                      true);
+
+    private int _debounce;
+
+
+    private ISynchronizedView<ScrapModel, ScrapModel>? _view;
+
+    public InstanceDashboardToast()
     {
-        public static readonly
-            DirectProperty<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>?>
-            BindableProperty =
-                AvaloniaProperty
-                   .RegisterDirect<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>
-                        ?>(nameof(Bindable), o => o.Bindable, (o, v) => o.Bindable = v);
+        InitializeComponent();
+        AddHandler(ScrollViewer.ScrollChangedEvent, ViewerOnScrollChanged);
+    }
 
-        public static readonly DirectProperty<InstanceDashboardToast, string> FilterTextProperty =
-            AvaloniaProperty.RegisterDirect<InstanceDashboardToast, string>(nameof(FilterText),
-                                                                            o => o.FilterText,
-                                                                            (o, v) => o.FilterText = v);
+    public NotifyCollectionChangedSynchronizedViewList<ScrapModel>? Bindable
+    {
+        get;
+        set => SetAndRaise(BindableProperty, ref field, value);
+    }
 
-        public static readonly DirectProperty<InstanceDashboardToast, bool> IsAutoScrollProperty =
-            AvaloniaProperty.RegisterDirect<InstanceDashboardToast, bool>(nameof(IsAutoScroll),
-                                                                          o => o.IsAutoScroll,
-                                                                          (o, v) => o.IsAutoScroll = v,
-                                                                          true);
-
-        private int _debounce;
+    public bool IsAutoScroll
+    {
+        get;
+        set => SetAndRaise(IsAutoScrollProperty, ref field, value);
+    } = true;
 
 
-        private ISynchronizedView<ScrapModel, ScrapModel>? _view;
+    public string FilterText
+    {
+        get;
+        set => SetAndRaise(FilterTextProperty, ref field, value);
+    } = string.Empty;
 
-        public InstanceDashboardToast()
+    private void ViewerOnScrollChanged(object? sender, ScrollChangedEventArgs e)
+    {
+        e.Handled = true;
+        if (e.OffsetDelta.Y < 0)
         {
-            InitializeComponent();
-            AddHandler(ScrollViewer.ScrollChangedEvent, ViewerOnScrollChanged);
-        }
-
-        public NotifyCollectionChangedSynchronizedViewList<ScrapModel>? Bindable
-        {
-            get;
-            set => SetAndRaise(BindableProperty, ref field, value);
-        }
-
-        public bool IsAutoScroll
-        {
-            get;
-            set => SetAndRaise(IsAutoScrollProperty, ref field, value);
-        } = true;
-
-
-        public string FilterText
-        {
-            get;
-            set => SetAndRaise(FilterTextProperty, ref field, value);
-        } = string.Empty;
-
-        private void ViewerOnScrollChanged(object? sender, ScrollChangedEventArgs e)
-        {
-            e.Handled = true;
-            if (e.OffsetDelta.Y < 0)
+            _debounce++;
+            if (_debounce > 3)
             {
-                _debounce++;
-                if (_debounce > 3)
-                {
-                    IsAutoScroll = false;
-                    _debounce = 0;
-                }
-            }
-            else
-            {
+                IsAutoScroll = false;
                 _debounce = 0;
             }
         }
-
-        public void SetItems(ObservableFixedSizeRingBuffer<ScrapModel> source)
+        else
         {
-            _view = source.CreateView(x => x);
-            Bindable = _view.ToNotifyCollectionChanged();
-            Bindable.CollectionChanged += BindableOnCollectionChanged;
+            _debounce = 0;
         }
+    }
 
-        private void BindableOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    public void SetItems(ObservableFixedSizeRingBuffer<ScrapModel> source)
+    {
+        _view = source.CreateView(x => x);
+        Bindable = _view.ToNotifyCollectionChanged();
+        Bindable.CollectionChanged += BindableOnCollectionChanged;
+    }
+
+    private void BindableOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            Dispatcher.UIThread.Post(() =>
             {
-                Dispatcher.UIThread.Post(() =>
+                if (IsAutoScroll)
                 {
-                    if (IsAutoScroll)
-                    {
-                        Viewer.ScrollToEnd();
-                    }
-                });
-            }
+                    Viewer.ScrollToEnd();
+                }
+            });
+        }
+    }
+
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        if (Bindable != null)
+        {
+            Bindable.CollectionChanged -= BindableOnCollectionChanged;
         }
 
-        protected override void OnUnloaded(RoutedEventArgs e)
+        Bindable?.Dispose();
+        _view?.Dispose();
+        RemoveHandler(ScrollViewer.ScrollChangedEvent, ViewerOnScrollChanged);
+
+        base.OnUnloaded(e);
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == FilterTextProperty)
         {
-            if (Bindable != null)
-            {
-                Bindable.CollectionChanged -= BindableOnCollectionChanged;
-            }
-
-            Bindable?.Dispose();
-            _view?.Dispose();
-            RemoveHandler(ScrollViewer.ScrollChangedEvent, ViewerOnScrollChanged);
-
-            base.OnUnloaded(e);
+            var filter = change.GetNewValue<string>();
+            _view?.AttachFilter(x => string.IsNullOrEmpty(filter) || x.Message.Contains(filter));
         }
 
-        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+        if (change.Property == IsAutoScrollProperty && change.NewValue is true)
         {
-            base.OnPropertyChanged(change);
-
-            if (change.Property == FilterTextProperty)
-            {
-                var filter = change.GetNewValue<string>();
-                _view?.AttachFilter(x => string.IsNullOrEmpty(filter) || x.Message.Contains(filter));
-            }
-
-            if (change.Property == IsAutoScrollProperty && change.NewValue is true)
-            {
-                Dispatcher.UIThread.Post(() => Viewer.ScrollToEnd());
-            }
+            Dispatcher.UIThread.Post(() => Viewer.ScrollToEnd());
         }
     }
 }

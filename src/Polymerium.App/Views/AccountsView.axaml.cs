@@ -1,9 +1,8 @@
 using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Views
+namespace Polymerium.App.Views;
+
+public partial class AccountsView : Page
 {
-    public partial class AccountsView : Page
-    {
-        public AccountsView() => InitializeComponent();
-    }
+    public AccountsView() => InitializeComponent();
 }

@@ -1,10 +1,9 @@
 using System;
 using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Controls
+namespace Polymerium.App.Controls;
+
+public class Subpage : Page
 {
-    public class Subpage : Page
-    {
-        protected override Type StyleKeyOverride { get; } = typeof(Subpage);
-    }
+    protected override Type StyleKeyOverride { get; } = typeof(Subpage);
 }

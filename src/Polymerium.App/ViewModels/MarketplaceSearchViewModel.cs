@@ -21,278 +21,277 @@ using Semver;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public partial class MarketplaceSearchViewModel : ViewModelBase
 {
-    public partial class MarketplaceSearchViewModel : ViewModelBase
+    public MarketplaceSearchViewModel(
+        ViewBag bag,
+        RepositoryAgent agent,
+        InstanceManager instanceManager,
+        NotificationService notificationService,
+        OverlayService overlayService,
+        DataService dataService,
+        ConfigurationService configurationService)
     {
-        public MarketplaceSearchViewModel(
-            ViewBag bag,
-            RepositoryAgent agent,
-            InstanceManager instanceManager,
-            NotificationService notificationService,
-            OverlayService overlayService,
-            DataService dataService,
-            ConfigurationService configurationService)
+        _agent = agent;
+        _instanceManager = instanceManager;
+        _notificationService = notificationService;
+        _overlayService = overlayService;
+        _dataService = dataService;
+        _configurationService = configurationService;
+
+        LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
+
+        var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
+        Repositories = r;
+        if (bag.Parameter is SearchArguments arguments)
         {
-            _agent = agent;
-            _instanceManager = instanceManager;
-            _notificationService = notificationService;
-            _overlayService = overlayService;
-            _dataService = dataService;
-            _configurationService = configurationService;
+            QueryText = arguments.Query ?? string.Empty;
+            SelectedRepository = r.FirstOrDefault(x => x.Label == arguments.Label) ?? r.First();
+        }
+        else
+        {
+            SelectedRepository = r.First();
+        }
+    }
 
-            LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
+    #region Properties
 
-            var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
-            Repositories = r;
-            if (bag.Parameter is SearchArguments arguments)
-            {
-                QueryText = arguments.Query ?? string.Empty;
-                SelectedRepository = r.FirstOrDefault(x => x.Label == arguments.Label) ?? r.First();
-            }
-            else
-            {
-                SelectedRepository = r.First();
-            }
+    public IEnumerable<RepositoryBasicModel> Repositories { get; }
+
+    #endregion
+
+    #region Overrides
+
+    protected override async Task OnInitializeAsync(CancellationToken token)
+    {
+        if (token.IsCancellationRequested)
+        {
+            return;
         }
 
-        #region Properties
+        _ = SearchAsync();
 
-        public IEnumerable<RepositoryBasicModel> Repositories { get; }
-
-        #endregion
-
-        #region Overrides
-
-        protected override async Task OnInitializeAsync(CancellationToken token)
+        foreach (var repository in Repositories)
         {
-            if (token.IsCancellationRequested)
+            if (repository.Loaders == null || repository.Versions == null)
             {
-                return;
+                var status = await _dataService.CheckStatusAsync(repository.Label);
+                repository.Loaders =
+                [
+                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x,
+                                                                                    x switch
+                                                                                    {
+                                                                                        LoaderHelper.LOADERID_FORGE => "Forge",
+                                                                                        LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+                                                                                        LoaderHelper.LOADERID_FABRIC => "Fabric",
+                                                                                        LoaderHelper.LOADERID_QUILT => "QUILT",
+                                                                                        LoaderHelper.LOADERID_FLINT => "Flint Loader",
+                                                                                        _ => x
+                                                                                    }))
+                ];
+                repository.Versions =
+                [
+                    .. status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x,
+                                                                           SemVersionStyles.OptionalPatch,
+                                                                           out var sem)
+                                                                           ? sem
+                                                                           : new(0, 0, 0),
+                                                                  SemVersion.SortOrderComparer)
+                ];
             }
+        }
+    }
 
-            _ = SearchAsync();
+    #endregion
 
-            foreach (var repository in Repositories)
+    #region Nested type: SearchArguments
+
+    public record SearchArguments(string? Query, string? Label);
+
+    #endregion
+
+    #region Injected
+
+    private readonly RepositoryAgent _agent;
+    private readonly InstanceManager _instanceManager;
+    private readonly NotificationService _notificationService;
+    private readonly OverlayService _overlayService;
+    private readonly DataService _dataService;
+    private readonly ConfigurationService _configurationService;
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial int LayoutIndex { get; set; }
+
+    partial void OnLayoutIndexChanged(int value) => _configurationService.Value.InterfaceMarketplaceLayout = value;
+
+    [ObservableProperty]
+    public partial RepositoryBasicModel SelectedRepository { get; set; }
+
+    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
+    {
+        var cur = SelectedRepository;
+        HeaderImage = cur.Label switch
+        {
+            "curseforge" => AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE_BITMAP,
+            "modrinth" => AssetUriIndex.REPOSITORY_HEADER_MODRINTH_BITMAP,
+            "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
+            _ => HeaderImage
+        };
+    }
+
+    [ObservableProperty]
+    public partial string? FilteredVersion { get; set; }
+
+    [ObservableProperty]
+    public partial LoaderBasicModel? FilteredLoader { get; set; }
+
+    [ObservableProperty]
+    public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
+
+    [ObservableProperty]
+    public partial Bitmap? HeaderImage { get; set; }
+
+    [ObservableProperty]
+    public partial string QueryText { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void ClearFilters()
+    {
+        FilteredLoader = null;
+        FilteredVersion = null;
+    }
+
+    [RelayCommand]
+    private async Task SearchAsync()
+    {
+        try
+        {
+            var handle = await _agent.SearchAsync(SelectedRepository.Label,
+                                                  QueryText,
+                                                  new(FilteredVersion,
+                                                      FilteredLoader?.LoaderId,
+                                                      ResourceKind.Modpack));
+            var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
             {
-                if (repository.Loaders == null || repository.Versions == null)
+                handle.PageIndex = (uint)(i < 0 ? 0 : i);
+                try
                 {
-                    var status = await _dataService.CheckStatusAsync(repository.Label);
-                    repository.Loaders =
-                    [
-                        .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x,
-                                                              x switch
-                                                              {
-                                                                  LoaderHelper.LOADERID_FORGE => "Forge",
-                                                                  LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                                                                  LoaderHelper.LOADERID_FABRIC => "Fabric",
-                                                                  LoaderHelper.LOADERID_QUILT => "QUILT",
-                                                                  LoaderHelper.LOADERID_FLINT => "Flint Loader",
-                                                                  _ => x
-                                                              }))
-                    ];
-                    repository.Versions =
-                    [
-                        .. status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x,
-                                                                               SemVersionStyles.OptionalPatch,
-                                                                               out var sem)
-                                                                               ? sem
-                                                                               : new(0, 0, 0),
-                                                                      SemVersion.SortOrderComparer)
-                    ];
+                    var rv = await handle.FetchAsync(token);
+                    var tasks = rv
+                               .Select(x => new ExhibitModel(x.Label,
+                                                             x.Namespace,
+                                                             x.Pid,
+                                                             x.Name,
+                                                             x.Summary,
+                                                             x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                             x.Author,
+                                                             x.Tags,
+                                                             x.UpdatedAt,
+                                                             x.DownloadCount,
+                                                             x.Reference))
+                               .ToArray();
+                    return tasks;
                 }
-            }
+                catch (ApiException ex)
+                {
+                    _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
+                    Debug.WriteLine(ex);
+                }
+
+                return [];
+            });
+            Exhibits = source;
         }
-
-        #endregion
-
-        #region Nested type: SearchArguments
-
-        public record SearchArguments(string? Query, string? Label);
-
-        #endregion
-
-        #region Injected
-
-        private readonly RepositoryAgent _agent;
-        private readonly InstanceManager _instanceManager;
-        private readonly NotificationService _notificationService;
-        private readonly OverlayService _overlayService;
-        private readonly DataService _dataService;
-        private readonly ConfigurationService _configurationService;
-
-        #endregion
-
-        #region Reactive
-
-        [ObservableProperty]
-        public partial int LayoutIndex { get; set; }
-
-        partial void OnLayoutIndexChanged(int value) => _configurationService.Value.InterfaceMarketplaceLayout = value;
-
-        [ObservableProperty]
-        public partial RepositoryBasicModel SelectedRepository { get; set; }
-
-        partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
+        catch (ApiException ex)
         {
-            var cur = SelectedRepository;
-            HeaderImage = cur.Label switch
-            {
-                "curseforge" => AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE_BITMAP,
-                "modrinth" => AssetUriIndex.REPOSITORY_HEADER_MODRINTH_BITMAP,
-                "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
-                _ => HeaderImage
-            };
+            _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
+            Debug.WriteLine(ex);
         }
+    }
 
-        [ObservableProperty]
-        public partial string? FilteredVersion { get; set; }
-
-        [ObservableProperty]
-        public partial LoaderBasicModel? FilteredLoader { get; set; }
-
-        [ObservableProperty]
-        public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
-
-        [ObservableProperty]
-        public partial Bitmap? HeaderImage { get; set; }
-
-        [ObservableProperty]
-        public partial string QueryText { get; set; } = string.Empty;
-
-        #endregion
-
-        #region Commands
-
-        [RelayCommand]
-        private void ClearFilters()
+    [RelayCommand]
+    private void InstallLatest(ExhibitModel? exhibit)
+    {
+        if (exhibit is not null)
         {
-            FilteredLoader = null;
-            FilteredVersion = null;
+            _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
+            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
+                                                     .Replace("{0}", exhibit.ProjectName),
+                                            exhibit.ProjectName);
         }
+    }
 
-        [RelayCommand]
-        private async Task SearchAsync()
+    [RelayCommand]
+    private async Task ViewModpack(ExhibitModel? exhibit)
+    {
+        if (exhibit is not null)
         {
             try
             {
-                var handle = await _agent.SearchAsync(SelectedRepository.Label,
-                                                      QueryText,
-                                                      new(FilteredVersion,
-                                                          FilteredLoader?.LoaderId,
-                                                          ResourceKind.Modpack));
-                var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
+                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
+                                                    project.Author,
+                                                    project.Reference,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.UpdatedAt,
+                                                    [.. project.Gallery.Select(x => x.Url)]);
+                _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    handle.PageIndex = (uint)(i < 0 ? 0 : i);
-                    try
-                    {
-                        var rv = await handle.FetchAsync(token);
-                        var tasks = rv
-                                   .Select(x => new ExhibitModel(x.Label,
-                                                                 x.Namespace,
-                                                                 x.Pid,
-                                                                 x.Name,
-                                                                 x.Summary,
-                                                                 x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
-                                                                 x.Author,
-                                                                 x.Tags,
-                                                                 x.UpdatedAt,
-                                                                 x.DownloadCount,
-                                                                 x.Reference))
-                                   .ToArray();
-                        return tasks;
-                    }
-                    catch (ApiException ex)
-                    {
-                        _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
-                        Debug.WriteLine(ex);
-                    }
-
-                    return [];
+                    DataService = _dataService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand
                 });
-                Exhibits = source;
             }
-            catch (ApiException ex)
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
-                Debug.WriteLine(ex);
+                _notificationService.PopMessage(ex,
+                                                Resources
+                                                   .MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
+                                                NotificationLevel.Warning);
             }
         }
-
-        [RelayCommand]
-        private void InstallLatest(ExhibitModel? exhibit)
-        {
-            if (exhibit is not null)
-            {
-                _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
-                _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
-                                                         .Replace("{0}", exhibit.ProjectName),
-                                                exhibit.ProjectName);
-            }
-        }
-
-        [RelayCommand]
-        private async Task ViewModpack(ExhibitModel? exhibit)
-        {
-            if (exhibit is not null)
-            {
-                try
-                {
-                    var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
-                    var model = new ExhibitModpackModel(project.Label,
-                                                        project.Namespace,
-                                                        project.ProjectId,
-                                                        project.ProjectName,
-                                                        project.Author,
-                                                        project.Reference,
-                                                        project.Tags,
-                                                        project.DownloadCount,
-                                                        project.Summary,
-                                                        project.UpdatedAt,
-                                                        [.. project.Gallery.Select(x => x.Url)]);
-                    _overlayService.PopToast(new ExhibitModpackToast
-                    {
-                        DataService = _dataService,
-                        DataContext = model,
-                        InstallCommand = InstallVersionCommand
-                    });
-                }
-                catch (OperationCanceledException) { }
-                catch (Exception ex)
-                {
-                    _notificationService.PopMessage(ex,
-                                                    Resources
-                                                       .MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
-                                                    NotificationLevel.Warning);
-                }
-            }
-        }
-
-        [RelayCommand]
-        private void OpenWebsite(ExhibitModel? exhibit)
-        {
-            if (exhibit is not null)
-            {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(exhibit.Reference);
-            }
-        }
-
-        [RelayCommand]
-        private void InstallVersion(ExhibitVersionModel? version)
-        {
-            if (version is not null)
-            {
-                _instanceManager.Install(version.ProjectName,
-                                         version.Label,
-                                         version.Namespace,
-                                         version.ProjectId,
-                                         version.VersionId);
-                _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
-                                                         .Replace("{0}", version.VersionName),
-                                                version.ProjectName);
-            }
-        }
-
-        #endregion
     }
+
+    [RelayCommand]
+    private void OpenWebsite(ExhibitModel? exhibit)
+    {
+        if (exhibit is not null)
+        {
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(exhibit.Reference);
+        }
+    }
+
+    [RelayCommand]
+    private void InstallVersion(ExhibitVersionModel? version)
+    {
+        if (version is not null)
+        {
+            _instanceManager.Install(version.ProjectName,
+                                     version.Label,
+                                     version.Namespace,
+                                     version.ProjectId,
+                                     version.VersionId);
+            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
+                                                     .Replace("{0}", version.VersionName),
+                                            version.ProjectName);
+        }
+    }
+
+    #endregion
 }
