@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
@@ -85,15 +86,17 @@ public partial class UnknownViewModel(
                 Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
                 Content = new StackPanel
                 {
-                    Spacing = 8d,
-                    Children = { new TextBox(), pop }
+                    Spacing = 8d, Children = { new TextBox(), pop }
                 }
             });
         }
     }
 
     [RelayCommand]
-    private void Debug() { }
+    private void Debug()
+    {
+        overlayService.PopDialog(new ModpackExporterDialog());
+    }
 
     #endregion
 }

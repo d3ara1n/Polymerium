@@ -3,26 +3,119 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog">
-    <StackPanel>
-        <TabStrip>
-            <TabStripItem>
-                <StackPanel>
-                    <TextBlock Text="Tripack" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock
-                        Text="Full power infused modpack format with maximized compatibility in TridentCore™ ecosystem."
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                </StackPanel>
-            </TabStripItem>
-            <TabStripItem>
-                <StackPanel>
-                    <TextBlock Text="Packwiz" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock
-                        Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                </StackPanel>
-            </TabStripItem>
-        </TabStrip>
-    </StackPanel>
+             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d" Width="450" d:DesignHeight="600"
+             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog" Title="Packing cherry_picks">
+    <!-- 当确认键被按下时根据选中的格式决定默认文件名，然后提示用户SaveFileDialog -->
+    <!-- 选择文件之后开始 Notification 读条，保存完成之后显示成功消息并附带 Open Folder 操作 -->
+    <ScrollViewer>
+        <StackPanel Spacing="24">
+            <TabStrip>
+                <TabStrip.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" ColumnSpacing="8" RowSpacing="8" />
+                    </ItemsPanelTemplate>
+                </TabStrip.ItemsPanel>
+                <TabStripItem Grid.Row="0" Grid.Column="0">
+                    <StackPanel>
+                        <TextBlock Text="Tripack" FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock
+                            Text="Full power infused modpack format with maximized compatibility in TridentCore™ ecosystem."
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </TabStripItem>
+                <TabStripItem Grid.Row="0" Grid.Column="1">
+                    <StackPanel>
+                        <TextBlock Text="Packwiz" FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock
+                            Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </TabStripItem>
+                <TabStripItem Grid.Row="1" Grid.Column="0">
+                    <StackPanel>
+                        <TextBlock Text="CurseForge" FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock
+                            Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </TabStripItem>
+                <TabStripItem Grid.Row="1" Grid.Column="1">
+                    <StackPanel>
+                        <TextBlock Text="Modrinth" FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock
+                            Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </TabStripItem>
+            </TabStrip>
+            <StackPanel Spacing="8">
+                <TextBlock Text="Name" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBox Text="Cherry Picks" Watermark="Cherry Picks">
+                    <TextBox.InnerLeftContent>
+                        <StackPanel Orientation="Horizontal">
+                            <icons:PackIconLucide
+                                Height="{StaticResource MediumFontSize}"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="Tag" Margin="12,0" />
+                            <husk:Divider Orientation="Vertical" />
+                        </StackPanel>
+                    </TextBox.InnerLeftContent>
+                </TextBox>
+                <TextBlock Text="Author" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <!-- 取自默认 Account -->
+                <TextBox Text="Dearain" Watermark="Dearain">
+                    <TextBox.InnerLeftContent>
+                        <StackPanel Orientation="Horizontal">
+                            <icons:PackIconLucide
+                                Height="{StaticResource MediumFontSize}"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="User" Margin="12,0" />
+                            <husk:Divider Orientation="Vertical" />
+                        </StackPanel>
+                    </TextBox.InnerLeftContent>
+                </TextBox>
+                <TextBlock Text="Attachments" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="*,Auto" ColumnSpacing="8" RowSpacing="8">
+                            <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock
+                                        Text="Packages"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <TextBlock Text="114"
+                                               FontSize="{StaticResource LargeFontSize}" />
+                                </StackPanel>
+                            </Grid>
+                            <husk:Divider Grid.Row="0" Grid.Column="1" Orientation="Vertical" />
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Files"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Text="514"
+                                           FontSize="{StaticResource LargeFontSize}" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
+                                        Spacing="6">
+                                <fi:SymbolIcon Symbol="Info" FontSize="{StaticResource MediumFontSize}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <Run Text="Override file is located at" />
+                                    <HyperlinkButton>
+                                        <TextBlock Text="./import" />
+                                    </HyperlinkButton>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </husk:Dialog>
