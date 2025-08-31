@@ -29,7 +29,7 @@ public class BuiltinRepositoryProviderAccessor : IRepositoryProviderAccessor
                                                                     ModrinthHelper.FAKE_ENDPOINT,
                                                                     null,
                                                                     null);
-        return [curseforge, modrinth];
+        return [curseforge, modrinth, bbsmc];
     }
 
     #endregion
