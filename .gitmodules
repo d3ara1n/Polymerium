@@ -1,6 +1,6 @@
 [submodule "submodules/Huskui.Avalonia"]
 	path = submodules/Huskui.Avalonia
 	url = git@github.com:d3ara1n/Huskui.Avalonia
-[submodule "Trident.Net"]
-	path = Trident.Net
+[submodule "submodules/Trident.Net"]
+	path = submodules/Trident.Net
 	url = git@github.com:TridentCore/Trident.Net.git

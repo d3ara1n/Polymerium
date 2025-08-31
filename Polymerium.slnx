@@ -12,7 +12,7 @@
     </Folder>
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" Type="Classic C#"/>
     <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Trident\src\Trident.Core\Trident.Core.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Trident\src\Trident.Abstractions\Trident.Abstractions.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Trident\src\Trident.Purl\Trident.Purl.csproj" Type="Classic C#"/>
+    <Project Path="submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" Type="Classic C#"/>
+    <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" Type="Classic C#"/>
+    <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" Type="Classic C#"/>
 </Solution>
