@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -56,151 +58,189 @@ public partial class InstanceSetupViewModel(
         _refreshingCancellationTokenSource?.Dispose();
         _refreshingCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
         var inner = _refreshingCancellationTokenSource.Token;
-        try
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
-            {
-                Stage.Clear();
-                StageCount = profile.Setup.Packages.Count;
-                RefreshingCount = 0;
-                IsRefreshing = true;
-                Task.Run(() =>
+            Stage.Clear();
+            StageCount = profile.Setup.Packages.Count;
+            IsRefreshing = true;
+            Task.Run(async () =>
+                     {
+                         // TODO: 有 vid 的走 ResolvePackagesAsync 没有的走 QueryProjectAsync
+                         // var tasks = profile.Setup.Packages.Select(LoadAsync).ToList();
+                         // Task.WaitAll(tasks, inner);
+                         // var stages = tasks.Where(x => x.Result is not null).Select(x => x.Result!).ToList();
+                         // Dispatcher.UIThread.Post(() =>
+                         // {
+                         //     StageCount = stages.Count;
+                         //     Stage.AddOrUpdate(stages);
+                         //     IsRefreshing = false;
+                         // });
+
+                         try
                          {
-                             // TODO: 有 vid 的走 ResolveBatchAsync 没有的走 QueryProjectAsync
-                             var tasks = profile.Setup.Packages.Select(LoadAsync).ToList();
-                             Task.WaitAll(tasks, inner);
-                             var stages = tasks.Where(x => x.Result is not null).Select(x => x.Result!).ToList();
+                             var purls = profile
+                                        .Setup.Packages
+                                        .Select(x => PackageHelper.TryParse(x.Purl, out var purl)
+                                                         ? (Entry: x, Purl: purl)
+                                                         : throw new FormatException($"Failed to parse purl: {x.Purl}"))
+                                        .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Entry));
+                             var knownVids = purls.Where(x => x.Key.Vid is not null).ToList();
+                             var unknownVids = purls.Where(x => x.Key.Vid is null).ToList();
+
+                             if (inner.IsCancellationRequested)
+                                 return;
+                             // 固定 Vid 的不需要 Filter
+                             var knownPackages = await dataService
+                                                      .ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None)
+                                                      .ConfigureAwait(false);
+                             if (inner.IsCancellationRequested)
+                                 return;
+                             var unknownProjects = await dataService
+                                                        .QueryProjectsAsync(unknownVids.Select(x => (x.Key.Label,
+                                                                                            x.Key.Namespace,
+                                                                                            x.Key.Pid)))
+                                                        .ConfigureAwait(false);
+                             if (inner.IsCancellationRequested)
+                                 return;
+                             var thumbnailsTasks = knownPackages
+                                                  .Select(async x =>
+                                                              (Purl: (x.Label, x.Namespace, x.ProjectId,
+                                                                      (string?)x.VersionId),
+                                                               Thumbnail: x.Thumbnail is not null
+                                                                              ? await dataService
+                                                                                 .GetBitmapAsync(x.Thumbnail)
+                                                                                 .ConfigureAwait(false)
+                                                                              : AssetUriIndex.DIRT_IMAGE_BITMAP))
+                                                  .Concat(unknownProjects.Select(async x =>
+                                                              (Purl: (x.Label, x.Namespace, x.ProjectId,
+                                                                      (string?)null),
+                                                               Thumbnail: x.Thumbnail is not null
+                                                                              ? await dataService
+                                                                                 .GetBitmapAsync(x.Thumbnail)
+                                                                                 .ConfigureAwait(false)
+                                                                              : AssetUriIndex
+                                                                                 .DIRT_IMAGE_BITMAP)))
+                                                  .ToList();
+                             await Task.WhenAll(thumbnailsTasks).ConfigureAwait(false);
+                             if (inner.IsCancellationRequested)
+                                 return;
+                             foreach (var package in knownPackages)
+                             {
+                                 purls[(package.Label, package.Namespace, package.ProjectId, package.VersionId)]
+                                        .Package =
+                                     package;
+                             }
+
+                             foreach (var project in unknownProjects)
+                             {
+                                 purls[(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
+                             }
+
+                             foreach (var thumbnailsTask in thumbnailsTasks)
+                             {
+                                 purls[thumbnailsTask.Result.Purl].Thumbnail = thumbnailsTask.Result.Thumbnail;
+                             }
+
+                             var stages = purls
+                                         .Select(x => x.Value switch
+                                          {
+                                              { Package: not null, Thumbnail: not null } => new(x.Value.Entry,
+                                                       x.Value.Entry.Source is not null
+                                                    && x.Value.Entry.Source == Basic.Source,
+                                                       x.Value.Package.Label,
+                                                       x.Value.Package.Namespace,
+                                                       x.Value.Package.ProjectId,
+                                                       x.Value.Package.ProjectName,
+                                                       new InstancePackageVersionModel(x.Value.Package.VersionId,
+                                                                x.Value.Package.VersionName,
+                                                                string.Join(",",
+                                                                            x.Value.Package.Requirements
+                                                                             .AnyOfLoaders
+                                                                             .Select(LoaderHelper
+                                                                                          .ToDisplayName)),
+                                                                string.Join(",",
+                                                                            x.Value.Package.Requirements
+                                                                             .AnyOfVersions),
+                                                                x.Value.Package.PublishedAt,
+                                                                x.Value.Package.ReleaseType,
+                                                                x.Value.Package.Dependencies) { IsCurrent = true },
+                                                       x.Value.Package.Author,
+                                                       x.Value.Package.Summary,
+                                                       x.Value.Package.Reference,
+                                                       x.Value.Thumbnail,
+                                                       x.Value.Package.Kind),
+                                              { Project: not null, Thumbnail: not null } => new
+                                                  InstancePackageModel(x.Value.Entry,
+                                                                       x.Value.Entry.Source is not null
+                                                                    && x.Value.Entry.Source == Basic.Source,
+                                                                       x.Value.Project.Label,
+                                                                       x.Value.Project.Namespace,
+                                                                       x.Value.Project.ProjectId,
+                                                                       x.Value.Project.ProjectName,
+                                                                       InstancePackageUnspecifiedVersionModel
+                                                                          .Instance,
+                                                                       x.Value.Project.Author,
+                                                                       x.Value.Project.Summary,
+                                                                       x.Value.Project.Reference,
+                                                                       x.Value.Thumbnail,
+                                                                       x.Value.Project.Kind),
+                                              _ => throw new UnreachableException()
+                                          })
+                                         .ToList();
+
                              Dispatcher.UIThread.Post(() =>
                              {
                                  StageCount = stages.Count;
                                  Stage.AddOrUpdate(stages);
                                  IsRefreshing = false;
                              });
-                         },
-                         inner);
-            }
-        }
-        catch (Exception ex)
-        {
-            notificationService.PopMessage(ex, "Loading package list failed", NotificationLevel.Warning);
+                         }
+                         catch (OperationCanceledException) { }
+                         catch (Exception ex)
+                         {
+                             Dispatcher.UIThread.Post(() =>
+                             {
+                                 notificationService.PopMessage(ex.Message,
+                                                                "Failed to parse purl",
+                                                                NotificationLevel.Danger);
+                             });
+                         }
+                     },
+                     inner);
         }
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
         {
-            Reference = new(t => LoadReferenceAsync(Basic.Source, r.Label, r.Namespace, r.Pid, r.Vid, t));
-        }
-
-        return;
-
-        async Task<InstancePackageModel?> LoadAsync(Profile.Rice.Entry entry)
-        {
-            if (PackageHelper.TryParse(entry.Purl, out var v))
+            //Reference = new(t => LoadReferenceAsync(Basic.Source, r.Label, r.Namespace, r.Pid, r.Vid, t));
+            Reference = new(async t =>
             {
                 try
                 {
-                    if (inner.IsCancellationRequested)
-                    {
-                        return null;
-                    }
+                    var package = await dataService
+                                       .ResolvePackageAsync(r.Label,
+                                                            r.Namespace,
+                                                            r.Pid,
+                                                            r.Vid,
+                                                            Filter.None with { Kind = ResourceKind.Modpack })
+                                       .ConfigureAwait(false);
 
-                    if (v.Vid is null)
-                    {
-                        var p = await dataService.QueryProjectAsync(v.Label, v.Namespace, v.Pid);
-                        var t = p.Thumbnail is not null
-                                    ? await dataService.GetBitmapAsync(p.Thumbnail).ConfigureAwait(false)
-                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
-                        Dispatcher.UIThread.Post(() => RefreshingCount++);
-                        return new(entry,
-                                   entry.Source is not null && entry.Source == Basic.Source,
-                                   p.Label,
-                                   p.Namespace,
-                                   p.ProjectId,
-                                   p.ProjectName,
-                                   InstancePackageUnspecifiedVersionModel.Instance,
-                                   p.Author,
-                                   p.Summary,
-                                   p.Reference,
-                                   t,
-                                   p.Kind);
-                    }
-                    else
-                    {
-                        var p = await dataService
-                                     .ResolvePackageAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.None)
-                                     .ConfigureAwait(false);
-
-                        var t = p.Thumbnail is not null
-                                    ? await dataService.GetBitmapAsync(p.Thumbnail).ConfigureAwait(false)
-                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
-                        Dispatcher.UIThread.Post(() => RefreshingCount++);
-                        return new(entry,
-                                   entry.Source is not null && entry.Source == Basic.Source,
-                                   p.Label,
-                                   p.Namespace,
-                                   p.ProjectId,
-                                   p.ProjectName,
-                                   new InstancePackageVersionModel(p.VersionId,
-                                                                   p.VersionName,
-                                                                   string.Join(",",
-                                                                               p.Requirements.AnyOfLoaders
-                                                                                  .Select(LoaderHelper.ToDisplayName)),
-                                                                   string.Join(",", p.Requirements.AnyOfVersions),
-                                                                   p.PublishedAt,
-                                                                   p.ReleaseType,
-                                                                   p.Dependencies)
-                                       { IsCurrent = true },
-                                   p.Author,
-                                   p.Summary,
-                                   p.Reference,
-                                   t,
-                                   p.Kind);
-                    }
+                    return new InstanceReferenceModel(Basic.Source,
+                                                      r.Label,
+                                                      package.ProjectName,
+                                                      package.VersionId,
+                                                      package.VersionName,
+                                                      package.Thumbnail,
+                                                      package.Reference);
                 }
-                catch (OperationCanceledException) { }
                 catch (Exception ex)
                 {
-                    notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
-                                                   "Failed to parse purl",
+                    // TODO: 换成 BadContent 来展示
+                    notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
+                                                   "Fetching modpack information failed",
                                                    NotificationLevel.Warning);
+                    throw;
                 }
-            }
-
-            return null;
-        }
-
-        async Task<object?> LoadReferenceAsync(
-            string purl,
-            string label,
-            string? @namespace,
-            string pid,
-            string? vid,
-            CancellationToken _)
-        {
-            try
-            {
-                var package = await dataService
-                                   .ResolvePackageAsync(label,
-                                                        @namespace,
-                                                        pid,
-                                                        vid,
-                                                        Filter.None with { Kind = ResourceKind.Modpack })
-                                   .ConfigureAwait(false);
-
-                return new InstanceReferenceModel(purl,
-                                                  label,
-                                                  package.ProjectName,
-                                                  package.VersionId,
-                                                  package.VersionName,
-                                                  package.Thumbnail,
-                                                  package.Reference);
-            }
-            catch (Exception ex)
-            {
-                notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
-                                               "Fetching modpack information failed",
-                                               NotificationLevel.Warning);
-                throw;
-            }
+            });
         }
     }
 
@@ -590,8 +630,7 @@ public partial class InstanceSetupViewModel(
         {
             var notification = new NotificationItem
             {
-                Title = "Export package list to file",
-                IsProgressBarVisible = true
+                Title = "Export package list to file", IsProgressBarVisible = true
             };
             var output = new List<ExportedEntry>();
             notification.ProgressMaximum = list.Count;
@@ -688,7 +727,9 @@ public partial class InstanceSetupViewModel(
                                                                              x.VersionName,
                                                                              x.ReleaseType,
                                                                              x.PublishedAt)
-                                          { IsCurrent = x.VersionId == reference.VersionId })
+                               {
+                                   IsCurrent = x.VersionId == reference.VersionId
+                               })
                               .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (await overlayService.PopDialogAsync(dialog)
@@ -738,8 +779,7 @@ public partial class InstanceSetupViewModel(
                                     version.Namespace,
                                     version.ProjectId,
                                     version.VersionId);
-            notificationService
-               .PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+            notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
     }
 
@@ -789,8 +829,17 @@ public partial class InstanceSetupViewModel(
     [ObservableProperty]
     public partial bool IsRefreshing { get; set; } = false;
 
-    [ObservableProperty]
-    public partial int RefreshingCount { get; set; }
+    #endregion
+
+    #region Nested Type: RefreshIntermediateData
+
+    private class RefreshIntermediateData(Profile.Rice.Entry entry)
+    {
+        public Profile.Rice.Entry Entry => entry;
+        public Bitmap? Thumbnail { get; set; }
+        public Project? Project { get; set; }
+        public Package? Package { get; set; }
+    }
 
     #endregion
 }

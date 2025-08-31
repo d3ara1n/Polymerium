@@ -33,29 +33,28 @@ public class NotificationService
 
     internal void SetHandler(Action<NotificationItem> handler) => _handler = handler;
 
-    public void Pop(NotificationItem item) => Dispatcher.UIThread.Post(() => _handler?.Invoke(item));
+    public void Pop(NotificationItem item) => _handler?.Invoke(item);
 
     public void PopMessage(
         string message,
         string title = "Notification",
         NotificationLevel level = NotificationLevel.Information,
         bool forceExpire = false,
-        params NotificationAction[] actions) =>
-        Dispatcher.UIThread.Post(() =>
+        params NotificationAction[] actions)
+    {
+        var item = new NotificationItem { Content = message, Title = title, Level = level };
+        item.Actions.AddRange(actions);
+        Pop(item);
+        if ((level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
+          && actions is { Length: 0 } or null)
+         || forceExpire)
         {
-            var item = new NotificationItem { Content = message, Title = title, Level = level };
-            item.Actions.AddRange(actions);
-            Pop(item);
-            if ((level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
-              && actions is { Length: 0 } or null)
-             || forceExpire)
-            {
-                item.IsProgressBarVisible = true;
-                COUNTDOWN
-                   .RunAsync(item, item.Token)
-                   .ContinueWith(_ => item.Close(), TaskScheduler.FromCurrentSynchronizationContext());
-            }
-        });
+            item.IsProgressBarVisible = true;
+            COUNTDOWN
+               .RunAsync(item, item.Token)
+               .ContinueWith(_ => item.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+        }
+    }
 
     public void PopMessage(
         Exception? ex,
@@ -76,10 +75,7 @@ public class NotificationService
         {
             var item = new NotificationItem
             {
-                Content = message,
-                Title = title,
-                Level = level,
-                IsProgressBarVisible = true
+                Content = message, Title = title, Level = level, IsProgressBarVisible = true
             };
             Pop(item);
 

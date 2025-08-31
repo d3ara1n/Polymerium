@@ -254,7 +254,7 @@ public partial class PackageContainer : UserControl
 
     protected override void OnUnloaded(RoutedEventArgs e)
     {
-        _subscriptions?.Dispose();
+        _subscriptions.Dispose();
         base.OnUnloaded(e);
     }
 

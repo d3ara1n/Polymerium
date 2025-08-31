@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
+using MimeDetective.Storage;
 using Trident.Core.Models.MojangLauncherApi;
 using Trident.Core.Models.PrismLauncherApi;
 using Trident.Core.Services;
@@ -40,21 +41,23 @@ public class DataService(
                     () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled),
                     cachedEnabled);
 
-    public async ValueTask<IReadOnlyList<Package>> ResolveBatchAsync(
+    public async ValueTask<IReadOnlyList<Package>> ResolvePackagesAsync(
         IEnumerable<(string label, string? ns, string pid, string? vid)> batch,
         Filter filter)
     {
-        var cachedTasks = batch
+        var batchArray = batch.ToArray();
+        var cachedTasks = batchArray
                          .Select(x => (Meta: x,
                                        Task:
                                        Get<Package>($"package:{PackageHelper.Identify(x.label, x.ns, x.pid, x.vid, filter)}")))
                          .Where(x => x.Task.HasValue)
-                         .Select(async x => (Meta: x.Meta, Package: await x.Task!.Value)).ToList();
+                         .Select(async x => (x.Meta, Package: await x.Task!.Value))
+                         .ToList();
 
         await Task.WhenAll(cachedTasks).ConfigureAwait(false);
         var cached = cachedTasks.ConvertAll(x => x.Result);
-        var toResolve = batch.Except(cached.Select(x => x.Meta));
-        var resolved = await agent.ResolveBatchAsync(toResolve, filter);
+        var toResolve = batchArray.Except(cached.Select(x => x.Meta));
+        var resolved = await agent.ResolveBatchAsync(toResolve, filter).ConfigureAwait(false);
         foreach (var package in resolved)
         {
             Set($"package:{PackageHelper.Identify(package.Label, package.Namespace, package.ProjectId, package.VersionId, filter)}",
@@ -76,6 +79,30 @@ public class DataService(
         GetOrCreate($"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
                     () => agent.QueryAsync(label, ns, pid));
 
+    public async ValueTask<IReadOnlyList<Project>> QueryProjectsAsync(
+        IEnumerable<(string label, string? ns, string pid)> batch)
+    {
+        var batchArray = batch.ToArray();
+        var cachedTasks = batchArray
+                         .Select(x => (Meta: x,
+                                       Task:
+                                       Get<Project>($"project:{PackageHelper.Identify(x.label, x.ns, x.pid, null, null)}")))
+                         .Where(x => x.Task.HasValue)
+                         .Select(async x => (x.Meta, Project: await x.Task!.Value))
+                         .ToList();
+        await Task.WhenAll(cachedTasks).ConfigureAwait(false);
+        var cached = cachedTasks.ConvertAll(x => x.Result);
+        var toQuery = batchArray.Except(cached.Select(x => x.Meta));
+        var queried = await agent.QueryBatchAsync(toQuery).ConfigureAwait(false);
+        foreach (var project in queried)
+        {
+            Set($"project:{PackageHelper.Identify(project.Label, project.Namespace, project.ProjectId, null, null)}",
+                project);
+        }
+
+        return cached.Select(x => x.Project).Concat(queried).ToList();
+    }
+
     public ValueTask<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
         GetOrCreate($"description:{PackageHelper.Identify(label, ns, pid, null, null)}",
                     () => agent.ReadDescriptionAsync(label, ns, pid));
@@ -84,8 +111,7 @@ public class DataService(
         GetOrCreate($"changelog:{PackageHelper.Identify(label, ns, pid, vid, null)}",
                     () => agent.ReadChangelogAsync(label, ns, pid, vid));
 
-    public ValueTask<IEnumerable<Version>>
-        InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
+    public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () =>
                     {
@@ -122,8 +148,7 @@ public class DataService(
                         CancellationToken.None));
 
     public ValueTask<ComponentIndex> GetMinecraftVersionsAsync() =>
-        GetOrCreate("minecraft:versions",
-                    () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));
+        GetOrCreate("minecraft:versions", () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));
 
     public ValueTask<MinecraftNewsResponse> GetMinecraftNewsAsync() =>
         GetOrCreate("minecraft:news", mojangLauncherService.GetMinecraftNewsAsync);

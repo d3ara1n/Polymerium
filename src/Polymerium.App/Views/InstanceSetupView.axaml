@@ -188,12 +188,12 @@
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="True">
                     <StackPanel VerticalAlignment="Center" Spacing="8">
-                        <husk:ProgressRing Width="56" Height="56" Value="{Binding RefreshingCount,Mode=OneWay}"
+                        <husk:ProgressRing Width="56" Height="56" IsIndeterminate="{Binding IsRefreshing}"
                                            Maximum="{Binding StageCount}" />
                         <TextBlock HorizontalAlignment="Center">
                             <Run Text="{x:Static lang:Resources.InstanceSetupView_LoadingPackageLabelText}" />
                             <Run Text="(" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <Run Text="{Binding RefreshingCount,FallbackValue=0}" />
+                            <Run Text="*" />
                             <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding StageCount,FallbackValue=514}" />
                             <Run Text=")" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
