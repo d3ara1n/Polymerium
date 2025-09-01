@@ -86,7 +86,7 @@ public class InstanceService(
                                                                                        .GameWindowInitialHeight)),
                                                launchMode: mode,
                                                account: cooked,
-                                               brand: Program.BRAND);
+                                               brand: Program.Brand);
                 instanceManager.DeployAndLaunch(key, deploy, launch, locator);
             }
         }

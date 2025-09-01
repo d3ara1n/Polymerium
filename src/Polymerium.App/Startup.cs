@@ -33,7 +33,7 @@ public static class Startup
                                                   .RemoveAllLoggers()
                                                   .ConfigureHttpClient(client => client.DefaultRequestHeaders
                                                                           .UserAgent
-                                                                          .Add(new(Program.BRAND, Program.VERSION)))
+                                                                          .Add(new(Program.Brand, Program.Version)))
                                                   .AddTransientHttpErrorPolicy(configure =>
                                                                                    configure.WaitAndRetryAsync(3,
                                                                                        retryAttempt =>
@@ -52,7 +52,7 @@ public static class Startup
            .AddSqliteCache(setup =>
             {
                 setup.MemoryOnly = false;
-                var dir = PathDef.Default.PrivateDirectory(Program.BRAND);
+                var dir = PathDef.Default.PrivateDirectory(Program.Brand);
                 var path = Path.Combine(dir, "cache.sqlite.db");
                 if (!Directory.Exists(dir))
                 {

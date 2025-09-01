@@ -7,7 +7,7 @@ namespace Polymerium.App.Services;
 
 public sealed class ConfigurationService : IDisposable
 {
-    private readonly string _filePath = Path.Combine(PathDef.Default.PrivateDirectory(Program.BRAND),
+    private readonly string _filePath = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand),
                                                      "settings.json");
 
     private readonly JsonSerializerOptions _serializerOptions =
