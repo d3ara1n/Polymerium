@@ -233,10 +233,10 @@
                     </controls:Plaque.Header>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
                         <StackPanel Grid.Column="0" Spacing="4">
-                            <TextBlock Text="{x:Static app:Program.BRAND}"
+                            <TextBlock Text="{x:Static app:Program.Brand}"
                                        FontWeight="{StaticResource ControlStrongFontWeight}" />
                             <TextBlock
-                                Text="{Binding Source={x:Static app:Program.VERSION},StringFormat={}v{0},FallbackValue=v0.1.0}"
+                                Text="{Binding Source={x:Static app:Program.Version},StringFormat={}v{0},FallbackValue=v0.1.0}"
                                 FontSize="{StaticResource LargeFontSize}" />
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <husk:SwitchPresenter Value="{x:Static app:Program.Debug}" TargetType="x:Boolean">

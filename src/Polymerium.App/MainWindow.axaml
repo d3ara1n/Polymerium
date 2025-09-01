@@ -14,7 +14,7 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     ExtendClientAreaChromeHints="NoChrome"
     ExtendClientAreaToDecorationsHint="True"
-    Title="{x:Static local:Program.BRAND}"
+    Title="{x:Static local:Program.Brand}"
     Width="1111"
     Height="666"
     MinWidth="600"

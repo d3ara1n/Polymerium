@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IFreeSql>(_ =>
         {
-            var dir = PathDef.Default.PrivateDirectory(Program.BRAND);
+            var dir = PathDef.Default.PrivateDirectory(Program.Brand);
             var path = Path.Combine(dir, "persistence.sqlite.db");
             if (!Directory.Exists(dir))
             {

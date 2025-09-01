@@ -9,9 +9,9 @@ namespace Polymerium.App;
 
 internal static class Program
 {
-    public static readonly string BRAND = "Polymerium";
+    public static readonly string Brand = "Polymerium";
 
-    public static readonly string VERSION =
+    public static readonly string Version =
         typeof(Program)
            .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
           ?.InformationalVersion.Split('+')[0]
