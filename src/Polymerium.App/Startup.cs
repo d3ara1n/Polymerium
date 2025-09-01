@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,26 +22,27 @@ namespace Polymerium.App;
 
 public static class Startup
 {
-    public static void ConfigureServices(
-        IServiceCollection services,
-        IConfiguration _,
-        IHostEnvironment environment)
+    public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
         services
            .AddAvalonia()
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder
                                                   .RemoveAllLoggers()
-                                                  .ConfigureHttpClient(client => client.DefaultRequestHeaders
-                                                                          .UserAgent
-                                                                          .Add(new(Program.Brand, Program.Version)))
+                                                  .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                                                   {
+                                                       // TODO: Add User Interface to configure
+                                                       UseProxy = true, UseDefaultCredentials = true
+                                                   })
+                                                  .ConfigureHttpClient(client =>
+                                                                           client.DefaultRequestHeaders.UserAgent
+                                                                              .Add(new(Program.Brand, Program.Version)))
                                                   .AddTransientHttpErrorPolicy(configure =>
                                                                                    configure.WaitAndRetryAsync(3,
                                                                                        retryAttempt =>
                                                                                            TimeSpan
-                                                                                              .FromSeconds(Math
-                                                                                                  .Pow(2,
-                                                                                                       retryAttempt)))))
+                                                                                              .FromSeconds(Math.Pow(2,
+                                                                                                   retryAttempt)))))
            .AddLogging(logging => logging
                                  .AddConsole()
                                  .AddDebug()
