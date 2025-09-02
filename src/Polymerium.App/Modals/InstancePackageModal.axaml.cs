@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -9,6 +10,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Trident.Abstractions.FileModels;
 using Trident.Core.Services.Profiles;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -43,7 +45,12 @@ public partial class InstancePackageModal : Modal
     private string? _old;
 
 
-    public InstancePackageModal() => InitializeComponent();
+    public InstancePackageModal()
+    {
+        // if (Design.IsDesignMode)
+        //     DataContext = InstancePackageModel.DesignModel;
+        InitializeComponent();
+    }
 
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
@@ -59,7 +66,7 @@ public partial class InstancePackageModal : Modal
     }
 
 
-    private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
+    private InstancePackageModel Model => (InstancePackageModel)DataContext!;
 
     public LazyObject? LazyVersions
     {
@@ -98,12 +105,11 @@ public partial class InstancePackageModal : Modal
                                                             && version.Dependencies.Any(z => z.Label == Model.Label
                                                                 && z.Namespace == Model.Namespace
                                                                 && z.Pid == Model.ProjectId));
-            var strongRefCount =
-                (uint)OriginalCollection.Count(x => x.Version is InstancePackageVersionModel version
-                                                 && version.Dependencies.Any(z => z.IsRequired
-                                                                              && z.Label == Model.Label
-                                                                              && z.Namespace == Model.Namespace
-                                                                              && z.Pid == Model.ProjectId));
+            var strongRefCount = (uint)OriginalCollection.Count(x => x.Version is InstancePackageVersionModel version
+                                                                  && version.Dependencies.Any(z => z.IsRequired
+                                                                      && z.Label == Model.Label
+                                                                      && z.Namespace == Model.Namespace
+                                                                      && z.Pid == Model.ProjectId));
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
@@ -124,8 +130,7 @@ public partial class InstancePackageModal : Modal
                                            found.ProjectName,
                                            found.Thumbnail,
                                            count,
-                                           x.IsRequired)
-                                    { Installed = found };
+                                           x.IsRequired) { Installed = found };
                             }
 
                             var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
@@ -166,15 +171,23 @@ public partial class InstancePackageModal : Modal
                                                          IsFilterEnabled ? Filter : Filter.None);
                                       return new InstancePackageVersionCollection([
                                           .. versions.Select<Version, InstancePackageVersionModelBase>(x =>
-                                              Model is { Version: InstancePackageVersionModel v }
+                                              Model is
+                                              {
+                                                  Version:
+                                                  InstancePackageVersionModel v
+                                              }
                                            && v.Id == x.VersionId
                                                   ? v
                                                   : new(x.VersionId,
                                                         x.VersionName,
                                                         string.Join(",",
-                                                                    x.Requirements.AnyOfLoaders.Select(LoaderHelper
-                                                                       .ToDisplayName)),
-                                                        string.Join(",", x.Requirements.AnyOfVersions),
+                                                                    x.Requirements
+                                                                     .AnyOfLoaders
+                                                                     .Select(LoaderHelper
+                                                                                .ToDisplayName)),
+                                                        string.Join(",",
+                                                                    x.Requirements
+                                                                     .AnyOfVersions),
                                                         x.PublishedAt,
                                                         x.ReleaseType,
                                                         x.Dependencies))
@@ -277,7 +290,13 @@ public partial class InstancePackageModal : Modal
         }
     }
 
-    private void ViewDependency(InstancePackageDependencyModel? model) { }
+    private void ViewDependency(InstancePackageDependencyModel? model)
+    {
+        if (model != null)
+        {
+
+        }
+    }
 
     #endregion
 }

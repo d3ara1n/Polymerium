@@ -27,7 +27,7 @@
                         </Border.Background>
                     </Border>
                     <TextBlock Grid.Row="0" Grid.Column="1"
-                               Text="{Binding ProjectName}" FontWeight="{StaticResource ControlStrongFontWeight}"
+                               Text="{Binding ProjectName,FallbackValue=Project}" FontWeight="{StaticResource ControlStrongFontWeight}"
                                FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                                 VerticalAlignment="Center">
@@ -63,7 +63,7 @@
                     </Style>
                 </TabControl.Styles>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_BasicsTabText}">
-                    <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding Summary,FallbackValue=Summary}" TextWrapping="Wrap" />
                 </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_TagsTabText}">
                     <Border
