@@ -23,23 +23,6 @@ public partial class InstancePackageModel(
     Bitmap thumbnail,
     ResourceKind kind) : ModelBase
 {
-    #region Design
-
-    internal static readonly InstancePackageModel DesignModel = new(new("github:user/example@version", true, null, []),
-                                                                    false,
-                                                                    "Example",
-                                                                    "user",
-                                                                    "example",
-                                                                    "Example In Design",
-                                                                    InstancePackageUnspecifiedVersionModel.Instance,
-                                                                    "User",
-                                                                    "Example package in design mode",
-                                                                    null,
-                                                                    AssetUriIndex.DIRT_IMAGE_BITMAP,
-                                                                    ResourceKind.DataPack);
-
-    #endregion
-
     #region Direct
 
     public Profile.Rice.Entry Entry => entry;

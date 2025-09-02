@@ -125,7 +125,7 @@ public partial class InstanceHomeViewModel(
     {
         base.OnModelUpdated(key, profile);
         var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-        Screenshot = screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
+        Screenshot = screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
         PackageCount = profile.Setup.Packages.Count;
         UpdateTime(key);
     }

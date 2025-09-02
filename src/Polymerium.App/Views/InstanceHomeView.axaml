@@ -469,7 +469,7 @@
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
                                                         <Border.Background>
                                                             <ImageBrush
-                                                                async:ImageBrushLoader.Source="{Binding FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.STEVE_FACE_IMAGE}}" />
+                                                                async:ImageBrushLoader.Source="{Binding FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
                                                         </Border.Background>
                                                     </Border>
                                                     <TextBlock

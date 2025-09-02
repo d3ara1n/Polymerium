@@ -28,7 +28,7 @@ public class ExhibitPackageModel(
     public string ProjectName => projectName;
     public string AuthorName => authorName;
     public Uri? Reference => reference;
-    public Uri Thumbnail => thumbnail ?? AssetUriIndex.DIRT_IMAGE;
+    public Uri Thumbnail => thumbnail ?? AssetUriIndex.DirtImage;
     public IReadOnlyList<string> Tags => tags;
     public string Summary => summary;
     public ulong DownloadCountRaw => downloadCount;

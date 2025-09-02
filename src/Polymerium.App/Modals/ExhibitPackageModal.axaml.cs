@@ -254,7 +254,7 @@ public partial class ExhibitPackageModal : Modal
                                                               x.Pid,
                                                               x.Vid,
                                                               dependency.ProjectName,
-                                                              dependency.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                              dependency.Thumbnail ?? AssetUriIndex.DirtImage,
                                                               dependency.Author,
                                                               dependency.Kind,
                                                               x.IsRequired);
