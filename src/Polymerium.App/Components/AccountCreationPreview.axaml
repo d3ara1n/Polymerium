@@ -21,7 +21,7 @@
                         CornerRadius="{StaticResource SmallCornerRadius}">
                     <Border.Background>
                         <ImageBrush
-                            async:ImageBrushLoader.Source="{Binding $parent[local:AccountCreationPreview].Model.FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.STEVE_FACE_IMAGE}}" />
+                            async:ImageBrushLoader.Source="{Binding $parent[local:AccountCreationPreview].Model.FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
                     </Border.Background>
                 </Border>
                 <StackPanel>

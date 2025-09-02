@@ -17,7 +17,7 @@ public partial class InstanceBasicModel : ModelBase
         Version = version;
         Loader = loader;
         Source = source;
-        Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
+        Thumbnail = AssetUriIndex.DirtImageBitmap;
 
         UpdateIcon();
     }
@@ -31,7 +31,7 @@ public partial class InstanceBasicModel : ModelBase
     public void UpdateIcon()
     {
         var iconPath = ProfileHelper.PickIcon(Key);
-        Thumbnail = iconPath is not null ? new(iconPath) : AssetUriIndex.DIRT_IMAGE_BITMAP;
+        Thumbnail = iconPath is not null ? new(iconPath) : AssetUriIndex.DirtImageBitmap;
     }
 
     #region Reactive

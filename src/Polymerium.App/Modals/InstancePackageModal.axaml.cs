@@ -136,7 +136,7 @@ public partial class InstancePackageModal : Modal
                             var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
                             var thumbnail = project.Thumbnail is not null
                                                 ? await DataService.GetBitmapAsync(project.Thumbnail)
-                                                : AssetUriIndex.DIRT_IMAGE_BITMAP;
+                                                : AssetUriIndex.DirtImageBitmap;
                             return new InstancePackageDependencyModel(x.Label,
                                                                       x.Namespace,
                                                                       x.Pid,

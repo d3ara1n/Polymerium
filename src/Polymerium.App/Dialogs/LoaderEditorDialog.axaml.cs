@@ -14,10 +14,10 @@ public partial class LoaderEditorDialog : Dialog
 {
     private static readonly LoaderCandidateModel[] Candidates =
     [
-        new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LOADER_NEOFORGE_BITMAP),
-        new(LoaderHelper.LOADERID_FORGE, "Forge", AssetUriIndex.LOADER_FORGE_BITMAP),
-        new(LoaderHelper.LOADERID_FABRIC, "Fabric", AssetUriIndex.LOADER_FABRIC_BITMAP),
-        new(LoaderHelper.LOADERID_QUILT, "Quilt", AssetUriIndex.LOADER_QUILT_BITMAP)
+        new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LoaderNeoforgeBitmap),
+        new(LoaderHelper.LOADERID_FORGE, "Forge", AssetUriIndex.LoaderForgeBitmap),
+        new(LoaderHelper.LOADERID_FABRIC, "Fabric", AssetUriIndex.LoaderFabricBitmap),
+        new(LoaderHelper.LOADERID_QUILT, "Quilt", AssetUriIndex.LoaderQuiltBitmap)
     ];
 
     public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedLoaderProperty =

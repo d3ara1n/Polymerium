@@ -138,9 +138,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         var cur = SelectedRepository;
         HeaderImage = cur.Label switch
         {
-            "curseforge" => AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE_BITMAP,
-            "modrinth" => AssetUriIndex.REPOSITORY_HEADER_MODRINTH_BITMAP,
-            "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
+            "curseforge" => AssetUriIndex.RepositoryHeaderCurseforgeBitmap,
+            "modrinth" => AssetUriIndex.RepositoryHeaderModrinthBitmap,
+            "favorite" => AssetUriIndex.RepositoryHeaderFavoriteBitmap,
             _ => HeaderImage
         };
     }
@@ -193,7 +193,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                              x.Pid,
                                                              x.Name,
                                                              x.Summary,
-                                                             x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                             x.Thumbnail ?? AssetUriIndex.DirtImage,
                                                              x.Author,
                                                              x.Tags,
                                                              x.UpdatedAt,

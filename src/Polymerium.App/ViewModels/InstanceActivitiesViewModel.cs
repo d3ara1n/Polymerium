@@ -91,7 +91,7 @@ public partial class InstanceActivitiesViewModel(
                                                 ? await dataService.GetBitmapAsync(newPackage?.Thumbnail
                                                    ?? oldPackage?.Thumbnail
                                                    ?? throw new NotImplementedException())
-                                                : AssetUriIndex.DIRT_IMAGE_BITMAP;
+                                                : AssetUriIndex.DirtImageBitmap;
 
                             return new InstanceActionModel(newPackage?.ProjectId
                                                         ?? oldPackage?.ProjectId ?? string.Empty,

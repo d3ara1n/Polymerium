@@ -275,7 +275,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private async Task RemoveThumbnailAsync()
     {
-        ThumbnailOverwrite = AssetUriIndex.DIRT_IMAGE_BITMAP;
+        ThumbnailOverwrite = AssetUriIndex.DirtImageBitmap;
         await WriteIconAsync();
     }
 

@@ -110,7 +110,7 @@ public partial class InstanceSetupViewModel(
                                                                               ? await dataService
                                                                                  .GetBitmapAsync(x.Thumbnail)
                                                                                  .ConfigureAwait(false)
-                                                                              : AssetUriIndex.DIRT_IMAGE_BITMAP))
+                                                                              : AssetUriIndex.DirtImageBitmap))
                                                   .Concat(unknownProjects.Select(async x =>
                                                               (Purl: (x.Label, x.Namespace, x.ProjectId,
                                                                       (string?)null),
@@ -119,7 +119,7 @@ public partial class InstanceSetupViewModel(
                                                                                  .GetBitmapAsync(x.Thumbnail)
                                                                                  .ConfigureAwait(false)
                                                                               : AssetUriIndex
-                                                                                 .DIRT_IMAGE_BITMAP)))
+                                                                                 .DirtImageBitmap)))
                                                   .ToList();
                              await Task.WhenAll(thumbnailsTasks).ConfigureAwait(false);
                              if (inner.IsCancellationRequested)
@@ -566,7 +566,7 @@ public partial class InstanceSetupViewModel(
                                                    .ConfigureAwait(false);
                                 var model = new PackageUpdaterModel(entry,
                                                                     package,
-                                                                    package.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                                    package.Thumbnail ?? AssetUriIndex.DirtImage,
                                                                     package.VersionId,
                                                                     package.VersionName,
                                                                     package.PublishedAt,

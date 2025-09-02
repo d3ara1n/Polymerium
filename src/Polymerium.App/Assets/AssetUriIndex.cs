@@ -6,51 +6,51 @@ namespace Polymerium.App.Assets;
 
 public static class AssetUriIndex
 {
-    public static readonly Uri REPOSITORY_HEADER_CURSEFORGE =
+    public static readonly Uri RepositoryHeaderCurseforge =
         new("avares://Polymerium.App/Assets/Images/Repositories/Header_CurseForge.png", UriKind.Absolute);
 
-    public static readonly Uri REPOSITORY_HEADER_MODRINTH =
+    public static readonly Uri RepositoryHeaderModrinth =
         new("avares://Polymerium.App/Assets/Images/Repositories/Header_Modrinth.png", UriKind.Absolute);
 
-    public static readonly Uri REPOSITORY_HEADER_FAVORITE =
+    public static readonly Uri RepositoryHeaderFavorite =
         new("avares://Polymerium.App/Assets/Images/Repositories/Header_Favorite.png", UriKind.Absolute);
 
-    public static readonly Uri DIRT_IMAGE = new("avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png",
+    public static readonly Uri DirtImage = new("avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png",
                                                 UriKind.Absolute);
 
-    public static readonly Uri STEVE_FACE_IMAGE =
+    public static readonly Uri SteveFaceImage =
         new("avares://Polymerium.App/Assets/Images/Placeholders/Steve_Face.png", UriKind.Absolute);
 
-    private static readonly Uri WALLPAPER_IMAGE = new("avares://Polymerium.App/Assets/Images/Wallpaper.png",
+    public static readonly Uri WallpaperImage = new("avares://Polymerium.App/Assets/Images/Wallpaper.png",
                                                       UriKind.Absolute);
 
-    private static readonly Uri LOADER_NEOFORGE = new("avares://Polymerium.App/Assets/Loaders/net.neoforged.png",
-                                                      UriKind.Absolute);
+    public static readonly Uri LoaderNeoforge = new("avares://Polymerium.App/Assets/Loaders/net.neoforged.png",
+                                                     UriKind.Absolute);
 
-    private static readonly Uri LOADER_FORGE = new("avares://Polymerium.App/Assets/Loaders/net.minecraftforge.png",
+    public static readonly Uri LoaderForge = new("avares://Polymerium.App/Assets/Loaders/net.minecraftforge.png",
+                                                  UriKind.Absolute);
+
+    public static readonly Uri LoaderFabric = new("avares://Polymerium.App/Assets/Loaders/net.fabricmc.png",
                                                    UriKind.Absolute);
 
-    private static readonly Uri LOADER_FABRIC = new("avares://Polymerium.App/Assets/Loaders/net.fabricmc.png",
-                                                    UriKind.Absolute);
+    public static readonly Uri LoaderQuilt = new("avares://Polymerium.App/Assets/Loaders/org.quiltmc.png",
+                                                  UriKind.Absolute);
 
-    private static readonly Uri LOADER_QUILT = new("avares://Polymerium.App/Assets/Loaders/org.quiltmc.png",
-                                                   UriKind.Absolute);
+    public static readonly Bitmap RepositoryHeaderCurseforgeBitmap =
+        new(AssetLoader.Open(RepositoryHeaderCurseforge));
 
-    public static readonly Bitmap REPOSITORY_HEADER_CURSEFORGE_BITMAP =
-        new(AssetLoader.Open(REPOSITORY_HEADER_CURSEFORGE));
+    public static readonly Bitmap RepositoryHeaderModrinthBitmap =
+        new(AssetLoader.Open(RepositoryHeaderModrinth));
 
-    public static readonly Bitmap REPOSITORY_HEADER_MODRINTH_BITMAP =
-        new(AssetLoader.Open(REPOSITORY_HEADER_MODRINTH));
+    public static readonly Bitmap RepositoryHeaderFavoriteBitmap =
+        new(AssetLoader.Open(RepositoryHeaderFavorite));
 
-    public static readonly Bitmap REPOSITORY_HEADER_FAVORITE_BITMAP =
-        new(AssetLoader.Open(REPOSITORY_HEADER_FAVORITE));
+    public static readonly Bitmap DirtImageBitmap = new(AssetLoader.Open(DirtImage));
 
-    public static readonly Bitmap DIRT_IMAGE_BITMAP = new(AssetLoader.Open(DIRT_IMAGE));
+    public static readonly Bitmap WallpaperImageBitmap = new(AssetLoader.Open(WallpaperImage));
 
-    public static readonly Bitmap WALLPAPER_IMAGE_BITMAP = new(AssetLoader.Open(WALLPAPER_IMAGE));
-
-    public static readonly Bitmap LOADER_NEOFORGE_BITMAP = new(AssetLoader.Open(LOADER_NEOFORGE));
-    public static readonly Bitmap LOADER_FORGE_BITMAP = new(AssetLoader.Open(LOADER_FORGE));
-    public static readonly Bitmap LOADER_FABRIC_BITMAP = new(AssetLoader.Open(LOADER_FABRIC));
-    public static readonly Bitmap LOADER_QUILT_BITMAP = new(AssetLoader.Open(LOADER_QUILT));
+    public static readonly Bitmap LoaderNeoforgeBitmap = new(AssetLoader.Open(LoaderNeoforge));
+    public static readonly Bitmap LoaderForgeBitmap = new(AssetLoader.Open(LoaderForge));
+    public static readonly Bitmap LoaderFabricBitmap = new(AssetLoader.Open(LoaderFabric));
+    public static readonly Bitmap LoaderQuiltBitmap = new(AssetLoader.Open(LoaderQuilt));
 }
