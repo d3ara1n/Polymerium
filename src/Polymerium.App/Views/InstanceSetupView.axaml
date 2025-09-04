@@ -97,7 +97,7 @@
                     <husk:LazyContainer.BadContent>
                         <husk:Card BorderThickness="2"
                                    BorderBrush="{StaticResource ControlBorderBrush}">
-                            <StackPanel>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock
                                     Text="{x:Static lang:Resources.InstanceSetupView_ReferenceUnavailableLabelText}" />
                                 <Button Content="Retry" IsVisible="False" />
