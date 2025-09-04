@@ -9,7 +9,7 @@ namespace Polymerium.App.Models;
 
 public partial class ExhibitModel(
     string label,
-    string? ns,
+    string? @namespace,
     string projectId,
     string projectName,
     string summary,
@@ -24,7 +24,7 @@ public partial class ExhibitModel(
 
     public string Label => label;
 
-    public string? Ns => ns;
+    public string? Namespace => @namespace;
 
     public string ProjectId => projectId;
 
