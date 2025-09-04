@@ -65,17 +65,7 @@ public partial class InstanceSetupViewModel(
             IsRefreshing = true;
             Task.Run(async () =>
                      {
-                         // TODO: 有 vid 的走 ResolvePackagesAsync 没有的走 QueryProjectAsync
-                         // var tasks = profile.Setup.Packages.Select(LoadAsync).ToList();
-                         // Task.WaitAll(tasks, inner);
-                         // var stages = tasks.Where(x => x.Result is not null).Select(x => x.Result!).ToList();
-                         // Dispatcher.UIThread.Post(() =>
-                         // {
-                         //     StageCount = stages.Count;
-                         //     Stage.AddOrUpdate(stages);
-                         //     IsRefreshing = false;
-                         // });
-
+                         // 有 vid 的走 ResolvePackagesAsync 没有的走 QueryProjectAsync
                          try
                          {
                              var purls = profile
@@ -118,8 +108,7 @@ public partial class InstanceSetupViewModel(
                                                                               ? await dataService
                                                                                  .GetBitmapAsync(x.Thumbnail)
                                                                                  .ConfigureAwait(false)
-                                                                              : AssetUriIndex
-                                                                                 .DirtImageBitmap)))
+                                                                              : AssetUriIndex.DirtImageBitmap)))
                                                   .ToList();
                              await Task.WhenAll(thumbnailsTasks).ConfigureAwait(false);
                              if (inner.IsCancellationRequested)
@@ -145,30 +134,37 @@ public partial class InstanceSetupViewModel(
                                          .Select(x => x.Value switch
                                           {
                                               { Package: not null, Thumbnail: not null } => new(x.Value.Entry,
-                                                       x.Value.Entry.Source is not null
-                                                    && x.Value.Entry.Source == Basic.Source,
-                                                       x.Value.Package.Label,
-                                                       x.Value.Package.Namespace,
-                                                       x.Value.Package.ProjectId,
-                                                       x.Value.Package.ProjectName,
-                                                       new InstancePackageVersionModel(x.Value.Package.VersionId,
-                                                                x.Value.Package.VersionName,
-                                                                string.Join(",",
-                                                                            x.Value.Package.Requirements
-                                                                             .AnyOfLoaders
-                                                                             .Select(LoaderHelper
-                                                                                          .ToDisplayName)),
-                                                                string.Join(",",
-                                                                            x.Value.Package.Requirements
-                                                                             .AnyOfVersions),
-                                                                x.Value.Package.PublishedAt,
-                                                                x.Value.Package.ReleaseType,
-                                                                x.Value.Package.Dependencies) { IsCurrent = true },
-                                                       x.Value.Package.Author,
-                                                       x.Value.Package.Summary,
-                                                       x.Value.Package.Reference,
-                                                       x.Value.Thumbnail,
-                                                       x.Value.Package.Kind),
+                                                  x.Value.Entry.Source is not null
+                                               && x.Value.Entry.Source == Basic.Source,
+                                                  x.Value.Package.Label,
+                                                  x.Value.Package.Namespace,
+                                                  x.Value.Package.ProjectId,
+                                                  x.Value.Package.ProjectName,
+                                                  new
+                                                      InstancePackageVersionModel(x.Value
+                                                             .Package.VersionId,
+                                                          x.Value.Package.VersionName,
+                                                          string.Join(",",
+                                                                      x.Value.Package
+                                                                       .Requirements
+                                                                       .AnyOfLoaders
+                                                                       .Select(LoaderHelper
+                                                                                  .ToDisplayName)),
+                                                          string.Join(",",
+                                                                      x.Value.Package
+                                                                       .Requirements
+                                                                       .AnyOfVersions),
+                                                          x.Value.Package.PublishedAt,
+                                                          x.Value.Package.ReleaseType,
+                                                          x.Value.Package.Dependencies)
+                                                      {
+                                                          IsCurrent = true
+                                                      },
+                                                  x.Value.Package.Author,
+                                                  x.Value.Package.Summary,
+                                                  x.Value.Package.Reference,
+                                                  x.Value.Thumbnail,
+                                                  x.Value.Package.Kind),
                                               { Project: not null, Thumbnail: not null } => new
                                                   InstancePackageModel(x.Value.Entry,
                                                                        x.Value.Entry.Source is not null
@@ -177,8 +173,7 @@ public partial class InstanceSetupViewModel(
                                                                        x.Value.Project.Namespace,
                                                                        x.Value.Project.ProjectId,
                                                                        x.Value.Project.ProjectName,
-                                                                       InstancePackageUnspecifiedVersionModel
-                                                                          .Instance,
+                                                                       InstancePackageUnspecifiedVersionModel.Instance,
                                                                        x.Value.Project.Author,
                                                                        x.Value.Project.Summary,
                                                                        x.Value.Project.Reference,
@@ -211,35 +206,23 @@ public partial class InstanceSetupViewModel(
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
         {
-            //Reference = new(t => LoadReferenceAsync(Basic.Source, r.Label, r.Namespace, r.Pid, r.Vid, t));
             Reference = new(async t =>
             {
-                try
-                {
-                    var package = await dataService
-                                       .ResolvePackageAsync(r.Label,
-                                                            r.Namespace,
-                                                            r.Pid,
-                                                            r.Vid,
-                                                            Filter.None with { Kind = ResourceKind.Modpack })
-                                       .ConfigureAwait(false);
+                var package = await dataService
+                                   .ResolvePackageAsync(r.Label,
+                                                        r.Namespace,
+                                                        r.Pid,
+                                                        r.Vid,
+                                                        Filter.None with { Kind = ResourceKind.Modpack })
+                                   .ConfigureAwait(false);
 
-                    return new InstanceReferenceModel(Basic.Source,
-                                                      r.Label,
-                                                      package.ProjectName,
-                                                      package.VersionId,
-                                                      package.VersionName,
-                                                      package.Thumbnail,
-                                                      package.Reference);
-                }
-                catch (Exception ex)
-                {
-                    // TODO: 换成 BadContent 来展示
-                    notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
-                                                   "Fetching modpack information failed",
-                                                   NotificationLevel.Warning);
-                    throw;
-                }
+                return new InstanceReferenceModel(Basic.Source,
+                                                  r.Label,
+                                                  package.ProjectName,
+                                                  package.VersionId,
+                                                  package.VersionName,
+                                                  package.Thumbnail,
+                                                  package.Reference);
             });
         }
     }

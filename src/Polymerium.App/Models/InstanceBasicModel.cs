@@ -68,7 +68,6 @@ public partial class InstanceBasicModel : ModelBase
     partial void OnLoaderChanged(string? value)
     {
         if (value != null && LoaderHelper.TryParse(value, out var result))
-            // TODO: 从语言文件中选取
         {
             LoaderLabel = LoaderHelper.ToDisplayName(result.Identity);
         }
