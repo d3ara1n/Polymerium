@@ -142,7 +142,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
     private ExhibitModel LinkExhibit(Project project)
     {
         var foundInPending = PendingPackagesSource.Items.FirstOrDefault(x => x.Label == project.Label
-                                                                          && x.Ns == project.Namespace
+                                                                          && x.Namespace == project.Namespace
                                                                           && x.ProjectId == project.ProjectId);
         if (foundInPending != null)
         {
@@ -150,7 +150,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         }
 
         var foundInResult = Exhibits?.FirstOrDefault(x => x.Label == project.Label
-                                                       && x.Ns == project.Namespace
+                                                       && x.Namespace == project.Namespace
                                                        && x.ProjectId == project.ProjectId);
         if (foundInResult != null)
         {
@@ -201,19 +201,19 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 try
                 {
                     var profile = _profileManager.GetImmutable(Basic.Key);
-                    // TODO: 具有三种状态
-                    //  锁定（存在于构建中但锁定而无法操作）
-                    //  已安装（存在于构建中且可以操作）
-                    //  待添加（不存在，但位于待定区）
-                    //  待移除（存在于构建，并位于待定区具有移除标记）
-                    //  待修改（存在于构建，并位于待定区具有不同版本选择）
+                    // 具有三种状态
+                    // 锁定（存在于构建中但锁定而无法操作）
+                    // 已安装（存在于构建中且可以操作）
+                    // 待添加（不存在，但位于待定区）
+                    // 待移除（存在于构建，并位于待定区具有移除标记）
+                    // 待修改（存在于构建，并位于待定区具有不同版本选择）
 
                     var rv = await handle.FetchAsync(token);
                     var tasks = rv
                                .Select(x =>
                                 {
                                     var found = PendingPackagesSource.Items.FirstOrDefault(y => x.Label == y.Label
-                                     && x.Namespace == y.Ns
+                                     && x.Namespace == y.Namespace
                                      && x.Pid == y.ProjectId);
                                     if (found != null)
                                     {
@@ -367,27 +367,17 @@ public partial class PackageExplorerViewModel : ViewModelBase
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
+                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
 
                 // 非 Unspecific
                 if (exhibit.InstalledVersionId != null)
                 {
-                    try
-                    {
-                        var package = await _dataService.ResolvePackageAsync(exhibit.Label,
-                                                                             exhibit.Ns,
-                                                                             exhibit.ProjectId,
-                                                                             exhibit.InstalledVersionId,
-                                                                             Filter.None);
-                        exhibit.InstalledVersionName = package.VersionName;
-                    }
-                    catch
-                    {
-                        // 获取失败，可能是网络问题，也可能是 Purl 本身写的就有问题
-                        // 这里给 VersionName 一个坏值
-                        exhibit.InstalledVersionName = exhibit.InstalledVersionId;
-                        // 这里可以打一下日志，但是懒得加了
-                    }
+                    var package = await _dataService.ResolvePackageAsync(exhibit.Label,
+                                                                         exhibit.Namespace,
+                                                                         exhibit.ProjectId,
+                                                                         exhibit.InstalledVersionId,
+                                                                         Filter.None);
+                    exhibit.InstalledVersionName = package.VersionName;
                 }
 
 
@@ -423,9 +413,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex,
-                                                "Failed to load project information",
-                                                NotificationLevel.Warning);
+                _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
         }
     }
@@ -448,56 +436,62 @@ public partial class PackageExplorerViewModel : ViewModelBase
         {
             foreach (var model in PendingPackagesSource.Items)
             {
-                if (model.State is ExhibitState.Adding)
+                switch (model)
                 {
-                    var entry = new Profile.Rice.Entry(PackageHelper.ToPurl(model.Label,
-                                                                            model.Ns,
-                                                                            model.ProjectId,
-                                                                            model.PendingVersionId),
-                                                       true,
-                                                       null,
-                                                       []);
-                    _persistenceService.AppendAction(new(Basic.Key,
-                                                         PersistenceService.ActionKind.EditPackage,
-                                                         null,
-                                                         entry.Purl));
-                    guard.Value.Setup.Packages.Add(entry);
-                    model.State = ExhibitState.Editable;
-                    model.Installed = entry;
-                    model.InstalledVersionName = model.PendingVersionName;
-                    model.InstalledVersionId = model.PendingVersionId;
-                }
-                else if (model is { State: ExhibitState.Removing, Installed: not null })
-                {
-                    var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
-                    if (exist != null)
+                    case { State: ExhibitState.Adding }:
                     {
-                        guard.Value.Setup.Packages.Remove(exist);
+                        var entry = new Profile.Rice.Entry(PackageHelper.ToPurl(model.Label,
+                                                                                    model.Namespace,
+                                                                                    model.ProjectId,
+                                                                                    model.PendingVersionId),
+                                                           true,
+                                                           null,
+                                                           []);
+                        _persistenceService.AppendAction(new(Basic.Key,
+                                                             PersistenceService.ActionKind.EditPackage,
+                                                             null,
+                                                             entry.Purl));
+                        guard.Value.Setup.Packages.Add(entry);
+                        model.State = ExhibitState.Editable;
+                        model.Installed = entry;
+                        model.InstalledVersionName = model.PendingVersionName;
+                        model.InstalledVersionId = model.PendingVersionId;
+                        break;
                     }
+                    case { State: ExhibitState.Removing, Installed: not null }:
+                    {
+                        var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
+                        if (exist != null)
+                        {
+                            guard.Value.Setup.Packages.Remove(exist);
+                        }
 
-                    _persistenceService.AppendAction(new(Basic.Key,
-                                                         PersistenceService.ActionKind.EditPackage,
-                                                         model.Installed.Purl,
-                                                         null));
-                    model.State = null;
-                    model.Installed = null;
-                    model.InstalledVersionName = null;
-                    model.InstalledVersionId = null;
-                }
-                else if (model is { State: ExhibitState.Modifying, Installed: not null })
-                {
-                    var old = model.Installed.Purl;
-                    model.Installed.Purl = PackageHelper.ToPurl(model.Label,
-                                                                model.Ns,
-                                                                model.ProjectId,
-                                                                model.PendingVersionId);
-                    _persistenceService.AppendAction(new(Basic.Key,
-                                                         PersistenceService.ActionKind.EditPackage,
-                                                         old,
-                                                         model.Installed.Purl));
-                    model.State = ExhibitState.Editable;
-                    model.InstalledVersionName = model.PendingVersionName;
-                    model.InstalledVersionId = model.PendingVersionId;
+                        _persistenceService.AppendAction(new(Basic.Key,
+                                                             PersistenceService.ActionKind.EditPackage,
+                                                             model.Installed.Purl,
+                                                             null));
+                        model.State = null;
+                        model.Installed = null;
+                        model.InstalledVersionName = null;
+                        model.InstalledVersionId = null;
+                        break;
+                    }
+                    case { State: ExhibitState.Modifying, Installed: not null }:
+                    {
+                        var old = model.Installed.Purl;
+                        model.Installed.Purl = PackageHelper.ToPurl(model.Label,
+                                                                    model.Namespace,
+                                                                    model.ProjectId,
+                                                                    model.PendingVersionId);
+                        _persistenceService.AppendAction(new(Basic.Key,
+                                                             PersistenceService.ActionKind.EditPackage,
+                                                             old,
+                                                             model.Installed.Purl));
+                        model.State = ExhibitState.Editable;
+                        model.InstalledVersionName = model.PendingVersionName;
+                        model.InstalledVersionId = model.PendingVersionId;
+                        break;
+                    }
                 }
             }
 

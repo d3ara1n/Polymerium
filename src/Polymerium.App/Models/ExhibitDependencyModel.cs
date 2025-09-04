@@ -7,7 +7,7 @@ namespace Polymerium.App.Models;
 public class ExhibitDependencyModel(
     ExhibitModel exhibit,
     string label,
-    string? @namespace,
+    string? ns,
     string pid,
     string? vid,
     string projectName,
@@ -22,7 +22,7 @@ public class ExhibitDependencyModel(
 
     public ExhibitModel Exhibit => exhibit;
     public string Label => label;
-    public string? Namespace => @namespace;
+    public string? Ns => ns;
     public string Pid => pid;
     public string? Vid => vid;
     public string ProjectName => projectName;

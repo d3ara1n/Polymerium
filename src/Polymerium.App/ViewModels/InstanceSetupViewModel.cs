@@ -419,7 +419,7 @@ public partial class InstanceSetupViewModel(
                 DataService = dataService,
                 OverlayService = overlayService,
                 PersistenceService = persistenceService,
-                OriginalCollection = Stage.Items,
+                StageCollection = Stage,
                 Filter = new(Kind: model.Kind,
                              Version: Basic.Version,
                              Loader: Basic.Loader is not null

@@ -224,7 +224,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         if (exhibit is not null)
         {
-            _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
+            _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Namespace, exhibit.ProjectId, null);
             _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationPrompt
                                                      .Replace("{0}", exhibit.ProjectName),
                                             exhibit.ProjectName);
@@ -238,7 +238,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
+                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
                                                     project.ProjectId,

@@ -10,7 +10,7 @@
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             xmlns:controls="clr-namespace:Polymerium.App.Controls"
-            mc:Ignorable="d" MinWidth="360" Margin="64"
+            mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="360" MinWidth="360" Margin="64"
             x:Class="Polymerium.App.Modals.InstancePackageModal" x:DataType="m:InstancePackageModel">
     <husk:ConstrainedBox AspectRatio="0.8">
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
@@ -27,7 +27,8 @@
                         </Border.Background>
                     </Border>
                     <TextBlock Grid.Row="0" Grid.Column="1"
-                               Text="{Binding ProjectName,FallbackValue=Project}" FontWeight="{StaticResource ControlStrongFontWeight}"
+                               Text="{Binding ProjectName,FallbackValue=Project}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
                                FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                                 VerticalAlignment="Center">
@@ -345,6 +346,8 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
                                                         <controls:InstancePackageDependencyButton
+                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewDependencyCommand,Mode=OneWay}"
+                                                            CommandParameter="{Binding}"
                                                             IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>

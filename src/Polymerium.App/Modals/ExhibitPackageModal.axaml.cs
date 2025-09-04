@@ -247,12 +247,12 @@ public partial class ExhibitPackageModal : Modal
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
-                            var dependency = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
+                            var dependency = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.ProjectId);
                             return new ExhibitDependencyModel(LinkExhibitCallback(dependency),
                                                               x.Label,
                                                               x.Namespace,
-                                                              x.Pid,
-                                                              x.Vid,
+                                                              x.ProjectId,
+                                                              x.VersionId,
                                                               dependency.ProjectName,
                                                               dependency.Thumbnail ?? AssetUriIndex.DirtImage,
                                                               dependency.Author,
