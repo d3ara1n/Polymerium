@@ -69,9 +69,7 @@ public class App : Application
 
     private static void Dump(object core)
     {
-        var path = Path.Combine(AppContext.BaseDirectory,
-                                "dumps",
-                                $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
+        var path = Path.Combine(AppContext.BaseDirectory, "dumps", $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
         var sb = new StringBuilder($"""
                                     // {DateTimeOffset.Now.ToString()}
                                     // {Assembly.GetEntryAssembly()?.GetName().Version}
@@ -141,9 +139,7 @@ public class App : Application
         {
             if (!view.IsAssignableTo(typeof(Page)))
             {
-                throw new ArgumentOutOfRangeException(nameof(view),
-                                                      view,
-                                                      "Parameter view must be derived from Page");
+                throw new ArgumentOutOfRangeException(nameof(view), view, "Parameter view must be derived from Page");
             }
 
             var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
@@ -251,7 +247,7 @@ public class App : Application
         #region Overlay & Notificiation
 
         var overlay = Program.AppHost.Services.GetRequiredService<OverlayService>();
-        overlay.SetHandler(window.PopToast, window.PopModal, window.PopDialog);
+        overlay.SetHandler(window.PopToast, window.PopDrawer, window.PopModal, window.PopDialog);
         var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
         notification.SetHandler(window.PopNotification);
 

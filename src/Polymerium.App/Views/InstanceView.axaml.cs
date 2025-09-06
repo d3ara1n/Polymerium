@@ -61,9 +61,12 @@ public partial class InstanceView : ScopedPage
             {
                 var newIndex = EntryBox.Items.IndexOf(selected);
                 IPageTransition transition = oldIndex != -1
-                                                 ? new PageSlideTransition(newIndex - oldIndex > 0
-                                                                               ? DirectionFrom.Bottom
-                                                                               : DirectionFrom.Top)
+                                                 ? new PageSlideTransition()
+                                                 {
+                                                     Direction = newIndex - oldIndex > 0
+                                                                     ? DirectionFrom.Bottom
+                                                                     : DirectionFrom.Top
+                                                 }
                                                  : new PopUpTransition();
 
                 Frame.Navigate(selected.Page, Context, transition);

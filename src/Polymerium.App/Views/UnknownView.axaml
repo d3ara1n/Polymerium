@@ -101,12 +101,14 @@
                     CornerRadius="{StaticResource MediumCornerRadius}">
             <TabItem Header="Foo">
                 <StackPanel Spacing="8">
-                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello"
-                            Command="{Binding HelloCommand}" />
-                    <Button Classes="Primary" Content="World" Command="{Binding WorldCommand}" />
-                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Butcher"
-                            Command="{Binding ButcherCommand}" />
-                    <HyperlinkButton Content="THIS A LINK!" />
+                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Dialog"
+                            Command="{Binding ShowDialogCommand}" />
+                    <Button Classes="Primary" Content="Modal" Command="{Binding ShowModalCommand}" />
+                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Drawer"
+                            Command="{Binding ShowDrawerCommand}" />
+                    <Button Theme="{StaticResource GhostButtonTheme}" Content="Toast"
+                            Command="{Binding ShowToastCommand}" />
+                    <HyperlinkButton Content="Notification" Command="{Binding ShowNotificationCommand}" />
 
                     <husk:NotificationItem x:Name="Notification" Actions="{Binding $parent[v:UnknownView].Actions}"
                                            Title="Downloading file..." Progress="54"

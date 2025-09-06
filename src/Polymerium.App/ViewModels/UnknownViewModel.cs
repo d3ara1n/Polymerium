@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
@@ -37,17 +38,17 @@ public partial class UnknownViewModel(
     #region Commands
 
     [RelayCommand]
-    private void Hello() => notificationService.PopMessage("Hello", "Hi there!");
+    private void ShowNotification() => notificationService.PopMessage("Hello", "Hi there!");
 
     [RelayCommand]
-    private void World()
+    private void ShowToast()
     {
         PopToast();
         return;
 
         void PopToast()
         {
-            Button pop = new() { Content = "POP" };
+            var pop = new Button { Content = "POP" };
             pop.Click += (_, __) => PopToast();
             overlayService.PopToast(new()
             {
@@ -71,14 +72,58 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Butcher()
+    private void ShowDrawer()
+    {
+        PopDrawer();
+        return;
+
+        void PopDrawer()
+        {
+            var drawer = new Drawer();
+            var pop = new Button() { Content = "POP" };
+            var dismiss = new Button() { Content = "DISMISS" };
+            pop.Click += (_, __) => PopDrawer();
+            dismiss.Click += (_, __) => drawer.Dismiss();
+            drawer.Content = new StackPanel
+            {
+                Spacing = 8d,
+                Children = { new TextBox() { Text = $"DRAWER {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
+            };
+            overlayService.PopDrawer(drawer);
+        }
+    }
+
+    [RelayCommand]
+    private void ShowModal()
+    {
+        PopModal();
+        return;
+
+        void PopModal()
+        {
+            var modal = new Modal();
+            var pop = new Button() { Content = "POP" };
+            var dismiss = new Button() { Content = "DISMISS" };
+            pop.Click += (_, __) => PopModal();
+            dismiss.Click += (_, __) => modal.Dismiss();
+            modal.Content = new StackPanel
+            {
+                Spacing = 8d,
+                Children = { new TextBox() { Text = $"MODAL {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
+            };
+            overlayService.PopModal(modal);
+        }
+    }
+
+    [RelayCommand]
+    private void ShowDialog()
     {
         PopDialog();
         return;
 
         void PopDialog()
         {
-            Button pop = new() { Content = "POP" };
+            var pop = new Button { Content = "POP" };
             pop.Click += (_, __) => PopDialog();
             overlayService.PopDialog(new()
             {
