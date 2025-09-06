@@ -486,6 +486,7 @@ public partial class InstanceSetupViewModel(
             {
                 // 值设置太大会触发 API 限制
                 var semaphore = new SemaphoreSlim(2);
+                // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
                 var tasks = packages.Items.Select(x => UpdateAsync(x, semaphore, cts.Token));
                 await Task.WhenAll(tasks);
                 semaphore.Dispose();
