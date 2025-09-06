@@ -37,7 +37,7 @@ public partial class NewInstanceView : ScopedPage
                 }
                 catch
                 {
-                    // TODO: do nothing
+                    // do nothing
                 }
             }
         }
