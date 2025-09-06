@@ -10,13 +10,17 @@ public class OverlayService
 {
     private Action<Dialog>? _dialogHandler;
     private Action<Modal>? _modalHandler;
-
+    private Action<Drawer>? _drawerHandler;
     private Action<Toast>? _toastHandler;
-    // private Action<Drawer>? _drawerHandler;
 
-    internal void SetHandler(Action<Toast> toastHandler, Action<Modal> modalHandler, Action<Dialog> dialogHandler)
+    internal void SetHandler(
+        Action<Toast> toastHandler,
+        Action<Drawer> drawerHandler,
+        Action<Modal> modalHandler,
+        Action<Dialog> dialogHandler)
     {
         _toastHandler = toastHandler;
+        _drawerHandler = drawerHandler;
         _modalHandler = modalHandler;
         _dialogHandler = dialogHandler;
     }
@@ -24,6 +28,12 @@ public class OverlayService
     #region Toasts
 
     public void PopToast(Toast toast) => _toastHandler?.Invoke(toast);
+
+    #endregion
+
+    #region Drawers
+
+    public void PopDrawer(Drawer drawer) => _drawerHandler?.Invoke(drawer);
 
     #endregion
 
@@ -50,10 +60,7 @@ public class OverlayService
         return await source.Task;
     }
 
-    public async Task<string?> RequestInputAsync(
-        string? message = null,
-        string? title = null,
-        string? watermark = null)
+    public async Task<string?> RequestInputAsync(string? message = null, string? title = null, string? watermark = null)
     {
         var dialog = new UserInputDialog();
         if (title != null)

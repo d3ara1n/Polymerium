@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
 
@@ -20,16 +21,18 @@ public class AvaloniaLifetime : IHostedService
         _lifetime = lifetime;
 
         logger.LogInformation("""
-                              {}({}):{}
-                              Polymerium/{}
-                              Avalonia({})/{}
+                              {app}({env}):{root}
+                              Polymerium/{app_version}
+                              Avalonia({debug})/{ava_version}
+                              Home: {home}
                               """,
                               environment.ApplicationName,
                               environment.EnvironmentName,
                               environment.ContentRootPath,
                               typeof(AvaloniaLifetime).Assembly.GetName().Version,
                               Program.Debug ? "Debug" : "Prod",
-                              typeof(AvaloniaObject).Assembly.GetName().Version);
+                              typeof(AvaloniaObject).Assembly.GetName().Version,
+                              PathDef.Default.Home);
 
         if (OperatingSystem.IsWindows())
         {

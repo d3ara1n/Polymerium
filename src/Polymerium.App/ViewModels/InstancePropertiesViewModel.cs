@@ -259,10 +259,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private void UnlockInstance()
     {
-        if (_owned != null)
-        {
-            _owned.Value.Setup.Source = null;
-        }
+        _owned?.Value.Setup.Source = null;
 
         var oldSource = Basic.Source;
         Basic.Source = null;

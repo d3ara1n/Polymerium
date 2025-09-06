@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using Avalonia;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polymerium.App.Services;
+using Trident.Abstractions;
 using Velopack;
 
 namespace Polymerium.App;
@@ -17,16 +22,6 @@ internal static class Program
           ?.InformationalVersion.Split('+')[0]
      ?? typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
 
-    // // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-    // // yet and stuff might break.
-    //[STAThread]
-    //public static void Main(string[] args)
-    //{
-    //    BuildAvaloniaApp()
-    //        .StartWithClassicDesktopLifetime(args);
-    //}
-
     internal static IHost? AppHost { get; private set; }
 
     public static bool Debug { get; private set; } = Debugger.IsAttached;
@@ -35,6 +30,21 @@ internal static class Program
     public static void Main(string[] args)
     {
         VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
+
+        #region Before lifetime configuration
+
+        var overrideFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                                        ".trident.home");
+        if (File.Exists(overrideFile))
+        {
+            var firstLine = File.ReadLines(overrideFile).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(firstLine) && Path.IsPathRooted(firstLine) && !File.Exists(firstLine))
+            {
+                PathDef.Default = new(firstLine);
+            }
+        }
+
+        #endregion
 
         var builder = Host.CreateApplicationBuilder(args);
         Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);

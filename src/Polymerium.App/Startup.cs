@@ -40,8 +40,8 @@ public static class Startup
                                                   .AddTransientHttpErrorPolicy(configure =>
                                                                                    configure.WaitAndRetryAsync(3,
                                                                                        retryAttempt =>
-                                                                                           TimeSpan
-                                                                                              .FromSeconds(Math.Pow(2,
+                                                                                           TimeSpan.FromSeconds(Math
+                                                                                              .Pow(2,
                                                                                                    retryAttempt)))))
            .AddLogging(logging => logging
                                  .AddConsole()

@@ -23,37 +23,25 @@ public partial class UnknownView : Page
             new("Information",
                 new RelayCommand<NotificationItem>(x =>
                 {
-                    if (x is not null)
-                    {
-                        x.Level = NotificationLevel.Information;
-                    }
+                    x?.Level = NotificationLevel.Information;
                 }),
                 Notification),
             new("Success",
                 new RelayCommand<NotificationItem>(x =>
                 {
-                    if (x is not null)
-                    {
-                        x.Level = NotificationLevel.Success;
-                    }
+                    x?.Level = NotificationLevel.Success;
                 }),
                 Notification),
             new("Warning",
                 new RelayCommand<NotificationItem>(x =>
                 {
-                    if (x is not null)
-                    {
-                        x.Level = NotificationLevel.Warning;
-                    }
+                    x?.Level = NotificationLevel.Warning;
                 }),
                 Notification),
             new("Danger",
                 new RelayCommand<NotificationItem>(x =>
                 {
-                    if (x is not null)
-                    {
-                        x.Level = NotificationLevel.Danger;
-                    }
+                    x?.Level = NotificationLevel.Danger;
                 }),
                 Notification)
         ];
