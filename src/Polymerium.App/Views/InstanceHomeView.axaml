@@ -278,7 +278,12 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="widgets:WidgetBase">
                                 <husk:Card>
-                                    <ContentControl Content="{Binding}" ContentTemplate="{Binding SlimTemplate}" />
+                                    <Grid RowDefinitions="Auto,*" RowSpacing="8">
+                                        <husk:IconLabel Grid.Row="0" Icon="{Binding Icon}"
+                                                        Text="{Binding Title}" Spacing="8" />
+                                        <ContentControl Grid.Row="1" Content="{Binding}"
+                                                        ContentTemplate="{Binding SlimTemplate}" />
+                                    </Grid>
                                 </husk:Card>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

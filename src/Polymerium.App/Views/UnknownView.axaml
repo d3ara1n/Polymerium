@@ -104,13 +104,13 @@
                     <Button Theme="{StaticResource OutlineButtonTheme}" Content="Dialog"
                             Command="{Binding ShowDialogCommand}" />
                     <Button Classes="Primary" Content="Modal" Command="{Binding ShowModalCommand}" />
-                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Drawer"
+                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Sidebar"
                             Command="{Binding ShowDrawerCommand}" />
                     <Button Theme="{StaticResource GhostButtonTheme}" Content="Toast"
                             Command="{Binding ShowToastCommand}" />
                     <HyperlinkButton Content="Notification" Command="{Binding ShowNotificationCommand}" />
 
-                    <husk:NotificationItem x:Name="Notification" Actions="{Binding $parent[v:UnknownView].Actions}"
+                    <husk:GrowlItem x:Name="Notification" Actions="{Binding $parent[v:UnknownView].Actions}"
                                            Title="Downloading file..." Progress="54"
                                            IsProgressBarVisible="True">
                         <StackPanel Spacing="4">
@@ -124,7 +124,7 @@
                                 <Run Text="S: 5.4 MiB" />
                             </TextBlock>
                         </StackPanel>
-                    </husk:NotificationItem>
+                    </husk:GrowlItem>
                     <Slider Value="50" />
                     <DockPanel>
                         <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">

@@ -224,7 +224,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                 }
 
                 _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Reset, null, null));
-                _notificationService.PopMessage("Instance reset", Basic.Key, NotificationLevel.Success);
+                _notificationService.PopMessage("Instance reset", Basic.Key, GrowlLevel.Success);
             }
             catch (Exception ex)
             {
@@ -266,7 +266,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Unlock, oldSource, null));
         _notificationService.PopMessage(Resources.InstancePropertiesView_UnlockingSuccessNotificationPrompt,
                                         Basic.Key,
-                                        NotificationLevel.Success);
+                                        GrowlLevel.Success);
     }
 
     [RelayCommand]
@@ -294,7 +294,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                                                    .InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt,
                                                 Resources
                                                    .InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
-                                                NotificationLevel.Warning);
+                                                GrowlLevel.Warning);
             }
         }
     }

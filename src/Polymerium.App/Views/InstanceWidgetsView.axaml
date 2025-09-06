@@ -29,8 +29,8 @@
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    FontSize="{StaticResource MediumFontSize}" />
                                 </Border>
-                                <TextBlock Grid.Column="1" Text="{Binding Title}"
-                                           VerticalAlignment="Center" />
+                                <husk:IconLabel Grid.Column="1" Icon="{Binding Icon}" Text="{Binding Title}"
+                                                VerticalAlignment="Center" Spacing="8" />
                                 <ToggleButton Grid.Column="2" Theme="{StaticResource GhostToggleButtonTheme}"
                                               IsEnabled="{Binding SlimTemplate,Converter={x:Static ObjectConverters.IsNotNull}}"
                                               IsChecked="{Binding IsPinned}" Classes="Small" Margin="4">

@@ -391,7 +391,7 @@ public partial class InstancePackageModal : Modal
             catch (Exception ex)
             {
                 // TODO: pop message
-                // NotificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+                // NotificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
             }
         }
     }

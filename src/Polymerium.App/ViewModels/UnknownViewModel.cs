@@ -79,7 +79,7 @@ public partial class UnknownViewModel(
 
         void PopDrawer()
         {
-            var drawer = new Drawer();
+            var drawer = new Sidebar();
             var pop = new Button() { Content = "POP" };
             var dismiss = new Button() { Content = "DISMISS" };
             pop.Click += (_, __) => PopDrawer();

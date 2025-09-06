@@ -195,9 +195,7 @@ public partial class InstanceSetupViewModel(
                          {
                              Dispatcher.UIThread.Post(() =>
                              {
-                                 notificationService.PopMessage(ex.Message,
-                                                                "Failed to parse purl",
-                                                                NotificationLevel.Danger);
+                                 notificationService.PopMessage(ex.Message, "Failed to parse purl", GrowlLevel.Danger);
                              });
                          }
                      },
@@ -444,7 +442,7 @@ public partial class InstanceSetupViewModel(
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+                notificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
             }
         }
     }
@@ -460,7 +458,7 @@ public partial class InstanceSetupViewModel(
         if (packages != null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
             var total = packages.Items.Count;
-            var notification = new NotificationItem
+            var notification = new GrowlItem
             {
                 Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
                 Content = Resources
@@ -495,7 +493,7 @@ public partial class InstanceSetupViewModel(
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+                notificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
             }
 
             if (cts.IsCancellationRequested)
@@ -503,8 +501,8 @@ public partial class InstanceSetupViewModel(
                 return;
             }
 
-            notification.Close();
-            var reviewNotification = new NotificationItem
+            notification.Dismiss();
+            var reviewNotification = new GrowlItem
             {
                 Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
                 Content = Resources
@@ -561,7 +559,7 @@ public partial class InstanceSetupViewModel(
                         }
                         catch (Exception ex)
                         {
-                            notificationService.PopMessage(ex, entry.Entry.Purl, NotificationLevel.Warning);
+                            notificationService.PopMessage(ex, entry.Entry.Purl, GrowlLevel.Warning);
                         }
                     }
                 }
@@ -583,7 +581,7 @@ public partial class InstanceSetupViewModel(
             void Cancel()
             {
                 cts.Cancel();
-                notification.Close();
+                notification.Dismiss();
             }
 
             bool CanReview() => !updates.IsEmpty;
@@ -598,7 +596,7 @@ public partial class InstanceSetupViewModel(
                 };
                 modal.SetGuard(guard, updates.ToList());
                 overlayService.PopModal(modal);
-                reviewNotification.Close();
+                reviewNotification.Dismiss();
             }
         }
     }
@@ -611,10 +609,7 @@ public partial class InstanceSetupViewModel(
         var dialog = new PackageListExporterDialog { PackageCount = list.Count };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
-            var notification = new NotificationItem
-            {
-                Title = "Export package list to file", IsProgressBarVisible = true
-            };
+            var notification = new GrowlItem { Title = "Export package list to file", IsProgressBarVisible = true };
             var output = new List<ExportedEntry>();
             notification.ProgressMaximum = list.Count;
             notificationService.Pop(notification);
@@ -640,7 +635,7 @@ public partial class InstanceSetupViewModel(
                         logger.LogError(ex, "Failed to exporting: {}", entry.Purl);
                         notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
                                                        "Failed to fetching information",
-                                                       NotificationLevel.Warning);
+                                                       GrowlLevel.Warning);
                     }
                 }
 
@@ -649,7 +644,7 @@ public partial class InstanceSetupViewModel(
                 notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
             }
 
-            notification.Close();
+            notification.Dismiss();
 
             try
             {
@@ -667,13 +662,13 @@ public partial class InstanceSetupViewModel(
 
                 notificationService.PopMessage($"Exported package list to file {path}",
                                                "Export package list to file",
-                                               NotificationLevel.Success);
+                                               GrowlLevel.Success);
             }
             catch (Exception ex)
             {
                 notificationService.PopMessage($"Writing data to file ({path}) failed: {ex.Message}",
                                                "Export package list to file",
-                                               NotificationLevel.Danger);
+                                               GrowlLevel.Danger);
             }
         }
     }

@@ -204,7 +204,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
+                    _notificationService.PopMessage(ex, "Network unreachable", GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -214,7 +214,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
+            _notificationService.PopMessage(ex, "Network unreachable", GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }
@@ -263,7 +263,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                 _notificationService.PopMessage(ex,
                                                 Resources
                                                    .MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
-                                                NotificationLevel.Warning);
+                                                GrowlLevel.Warning);
             }
         }
     }

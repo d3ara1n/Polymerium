@@ -156,9 +156,9 @@ public partial class JavaHomeContainer : UserControl
     }
 
     [RelayCommand]
-    private async Task DetectHome()
+    private void DetectHome()
     {
-
+        // 未来也不会支持，单纯按钮放在这布局好看
     }
 
     #endregion
