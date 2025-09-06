@@ -228,7 +228,7 @@ public partial class InstanceHomeViewModel(
         {
             notificationService.PopMessage(Resources.InstanceHomeView_AccountNotFoundDangerNotificationPrompt,
                                            Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
-                                           NotificationLevel.Danger,
+                                           GrowlLevel.Danger,
                                            actions:
                                            [
                                                new(Resources

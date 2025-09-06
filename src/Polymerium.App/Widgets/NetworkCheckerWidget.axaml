@@ -6,7 +6,7 @@
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:m="clr-namespace:Polymerium.App.Models"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Widgets.NetworkCheckerWidget" Title="Network Checker">
+                  x:Class="Polymerium.App.Widgets.NetworkCheckerWidget" Title="Network Checker" Icon="NetworkCheck">
     <local:WidgetBase.FullTemplate>
         <DataTemplate DataType="local:NetworkCheckerWidget">
             <StackPanel Spacing="12">

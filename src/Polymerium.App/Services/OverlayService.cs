@@ -10,12 +10,12 @@ public class OverlayService
 {
     private Action<Dialog>? _dialogHandler;
     private Action<Modal>? _modalHandler;
-    private Action<Drawer>? _drawerHandler;
+    private Action<Sidebar>? _drawerHandler;
     private Action<Toast>? _toastHandler;
 
     internal void SetHandler(
         Action<Toast> toastHandler,
-        Action<Drawer> drawerHandler,
+        Action<Sidebar> drawerHandler,
         Action<Modal> modalHandler,
         Action<Dialog> dialogHandler)
     {
@@ -33,7 +33,7 @@ public class OverlayService
 
     #region Drawers
 
-    public void PopDrawer(Drawer drawer) => _drawerHandler?.Invoke(drawer);
+    public void PopDrawer(Sidebar sidebar) => _drawerHandler?.Invoke(sidebar);
 
     #endregion
 

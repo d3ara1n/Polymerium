@@ -10,8 +10,8 @@ namespace Polymerium.App.Views;
 
 public partial class UnknownView : Page
 {
-    public static readonly DirectProperty<UnknownView, AvaloniaList<NotificationAction>> ActionsProperty =
-        AvaloniaProperty.RegisterDirect<UnknownView, AvaloniaList<NotificationAction>>(nameof(Actions),
+    public static readonly DirectProperty<UnknownView, AvaloniaList<GrowlAction>> ActionsProperty =
+        AvaloniaProperty.RegisterDirect<UnknownView, AvaloniaList<GrowlAction>>(nameof(Actions),
             o => o.Actions,
             (o, v) => o.Actions = v);
 
@@ -21,33 +21,33 @@ public partial class UnknownView : Page
         Actions =
         [
             new("Information",
-                new RelayCommand<NotificationItem>(x =>
+                new RelayCommand<GrowlItem>(x =>
                 {
-                    x?.Level = NotificationLevel.Information;
+                    x?.Level = GrowlLevel.Information;
                 }),
                 Notification),
             new("Success",
-                new RelayCommand<NotificationItem>(x =>
+                new RelayCommand<GrowlItem>(x =>
                 {
-                    x?.Level = NotificationLevel.Success;
+                    x?.Level = GrowlLevel.Success;
                 }),
                 Notification),
             new("Warning",
-                new RelayCommand<NotificationItem>(x =>
+                new RelayCommand<GrowlItem>(x =>
                 {
-                    x?.Level = NotificationLevel.Warning;
+                    x?.Level = GrowlLevel.Warning;
                 }),
                 Notification),
             new("Danger",
-                new RelayCommand<NotificationItem>(x =>
+                new RelayCommand<GrowlItem>(x =>
                 {
-                    x?.Level = NotificationLevel.Danger;
+                    x?.Level = GrowlLevel.Danger;
                 }),
                 Notification)
         ];
     }
 
-    public AvaloniaList<NotificationAction> Actions
+    public AvaloniaList<GrowlAction> Actions
     {
         get;
         set => SetAndRaise(ActionsProperty, ref field, value);

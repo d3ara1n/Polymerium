@@ -134,7 +134,7 @@ public partial class MainWindowContext : ObservableObject
             {
                 _notificationService.PopMessage("Log file not found",
                                                 "Failed to open log file",
-                                                NotificationLevel.Warning);
+                                                GrowlLevel.Warning);
             }
         }
     }
@@ -316,8 +316,8 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceInstallingSuccessNotificationPrompt,
                                                         e.Key,
-                                                        NotificationLevel.Success,
-                                                        actions: new NotificationAction(Resources
+                                                        GrowlLevel.Success,
+                                                        actions: new GrowlAction(Resources
                                                                .MainWindow_InstanceInstallingSuccessNotificationOpenText,
                                                             ViewInstanceCommand,
                                                             e.Key),
@@ -394,9 +394,9 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceUpdatingSuccessNotificationPrompt,
                                                         e.Key,
-                                                        NotificationLevel.Success,
+                                                        GrowlLevel.Success,
                                                         true,
-                                                        new NotificationAction(Resources
+                                                        new GrowlAction(Resources
                                                                                   .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
                                                                                ViewInstanceCommand,
                                                                                e.Key));
@@ -474,7 +474,7 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceDeployingSuccessNotificationPrompt,
                                                         e.Key,
-                                                        NotificationLevel.Success);
+                                                        GrowlLevel.Success);
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -548,7 +548,7 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceLaunchingSuccessNotificationPrompt,
                                                         e.Key,
-                                                        NotificationLevel.Success);
+                                                        GrowlLevel.Success);
                     });
                     _persistenceService.AppendActivity(new(e.Key, e.StartedAt, DateTimeOffset.Now, true));
                     e.StateUpdated -= OnStateChanged;

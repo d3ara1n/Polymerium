@@ -40,7 +40,7 @@ public partial class AccountsViewModel(
         {
             notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationPrompt,
                                            Resources.AccountsView_AccountAddingDangerNotificationTitle,
-                                           NotificationLevel.Danger);
+                                           GrowlLevel.Danger);
             return false;
         }
 

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.Templates;
+using FluentIcons.Common;
 
 namespace Polymerium.App.Widgets;
 
@@ -21,9 +22,16 @@ public abstract class WidgetBase : AvaloniaObject
                                                                     (o, v) => o.SlimTemplate = v);
 
     public static readonly DirectProperty<WidgetBase, bool> IsPinnedProperty =
-        AvaloniaProperty.RegisterDirect<WidgetBase, bool>(nameof(IsPinned),
-                                                          o => o.IsPinned,
-                                                          (o, v) => o.IsPinned = v);
+        AvaloniaProperty.RegisterDirect<WidgetBase, bool>(nameof(IsPinned), o => o.IsPinned, (o, v) => o.IsPinned = v);
+
+    public static readonly StyledProperty<Symbol> IconProperty =
+        AvaloniaProperty.Register<WidgetBase, Symbol>(nameof(Icon));
+
+    public Symbol Icon
+    {
+        get => GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
 
     public string Title
     {

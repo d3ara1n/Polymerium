@@ -249,7 +249,7 @@ public class App : Application
         var overlay = Program.AppHost.Services.GetRequiredService<OverlayService>();
         overlay.SetHandler(window.PopToast, window.PopDrawer, window.PopModal, window.PopDialog);
         var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
-        notification.SetHandler(window.PopNotification);
+        notification.SetHandler(window.PopGrowl);
 
         #endregion
 

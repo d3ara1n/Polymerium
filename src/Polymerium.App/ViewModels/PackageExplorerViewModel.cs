@@ -256,7 +256,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
+                    _notificationService.PopMessage(ex, "Network unreachable", GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -266,7 +266,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage("Network unreachable", level: NotificationLevel.Warning);
+            _notificationService.PopMessage("Network unreachable", level: GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }
@@ -413,7 +413,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+                _notificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
             }
         }
     }
