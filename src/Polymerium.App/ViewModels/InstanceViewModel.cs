@@ -63,8 +63,7 @@ public partial class InstanceViewModel : ViewModelBase
         else
         {
             throw new PageNotReachedException(typeof(InstanceView),
-                                              Resources.InstanceView_KeyNotFoundExceptionMessage
-                                                       .Replace("{0}", key));
+                                              Resources.InstanceView_KeyNotFoundExceptionMessage.Replace("{0}", key));
         }
     }
 
@@ -245,21 +244,26 @@ public partial class InstanceViewModel : ViewModelBase
 
     #region Reactive
 
-    [ObservableProperty]
-    public partial ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; set; } =
+    public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
         // Home
         new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
         // Setup
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Assets
+        #if !DEBUG
         new(typeof(InstanceAssetsView), PackIconLucideKind.CassetteTape),
+        #endif
         // Widgets
         new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
         // Statistics
+        #if !DEBUG
         new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
+        #endif
         // Storage
+        #if !DEBUG
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
+        #endif
         // Properties
         new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench)
     ];
