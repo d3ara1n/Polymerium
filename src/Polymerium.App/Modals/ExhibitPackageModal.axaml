@@ -557,8 +557,8 @@
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                HorizontalAlignment="Center" />
                                 </StackPanel>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
-                                    <husk:LazyContainer MinHeight="72"
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <husk:LazyContainer MinHeight="72" Margin="12"
                                                         Source="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies,Mode=OneWay}">
                                         <husk:LazyContainer.SourceTemplate>
                                             <DataTemplate x:DataType="m:ExhibitDependencyCollection">

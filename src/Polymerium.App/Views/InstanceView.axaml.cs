@@ -91,7 +91,7 @@ public partial class InstanceView : ScopedPage
             }
             else
             {
-                throw new NotImplementedException();
+                // do nothing
             }
         }
     }

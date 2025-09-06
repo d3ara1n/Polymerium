@@ -71,6 +71,12 @@
                        IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
                 <StackPanel DockPanel.Dock="Right">
                     <husk:ButtonGroup BorderThickness="0">
+                        <Button x:Name="NotificationButton" Padding="10">
+                            <icons:PackIconLucide
+                                Width="10"
+                                Height="10"
+                                Kind="Bell" />
+                        </Button>
                         <Button
                             x:Name="MinimizeButton"
                             Padding="10"
