@@ -12,41 +12,24 @@
     <ScrollViewer>
         <StackPanel Spacing="24">
             <TabStrip>
-                <TabStrip.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" ColumnSpacing="8" RowSpacing="8" />
-                    </ItemsPanelTemplate>
-                </TabStrip.ItemsPanel>
-                <TabStripItem Grid.Row="0" Grid.Column="0">
+                <TabStripItem IsEnabled="False">
                     <StackPanel>
                         <TextBlock Text="Tripack" FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock
-                            Text="Full power infused modpack format with maximized compatibility in TridentCore™ ecosystem."
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                     </StackPanel>
                 </TabStripItem>
-                <TabStripItem Grid.Row="0" Grid.Column="1">
+                <TabStripItem>
                     <StackPanel>
                         <TextBlock Text="Packwiz" FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock
-                            Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                     </StackPanel>
                 </TabStripItem>
-                <TabStripItem Grid.Row="1" Grid.Column="0">
+                <TabStripItem>
                     <StackPanel>
                         <TextBlock Text="CurseForge" FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock
-                            Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                     </StackPanel>
                 </TabStripItem>
-                <TabStripItem Grid.Row="1" Grid.Column="1">
+                <TabStripItem>
                     <StackPanel>
                         <TextBlock Text="Modrinth" FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock
-                            Text="Intermediate modpack format with the ability to be converted into other formats on its official website."
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                     </StackPanel>
                 </TabStripItem>
             </TabStrip>
@@ -96,9 +79,9 @@
                             </Grid>
                             <husk:Divider Grid.Row="0" Grid.Column="1" Orientation="Vertical" />
                             <StackPanel Grid.Row="0" Grid.Column="2">
-                                <TextBlock Text="Files"
+                                <TextBlock Text="Mod Loader"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Text="514"
+                                <TextBlock Text="None"
                                            FontSize="{StaticResource LargeFontSize}" />
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
