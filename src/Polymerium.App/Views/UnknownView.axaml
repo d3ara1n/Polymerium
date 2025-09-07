@@ -163,7 +163,7 @@
                                 Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
                             <husk:HighlightBlock Text="Ctrl+V" Classes="Shortcut" />
                             <Run Text="Then" />
-                            <husk:HighlightBlock Text="✨ git push -f" />
+                            <husk:HighlightBlock Text="✨ git push -f" Classes="Primary"/>
                             <Run Text="If ruined," />
                             <HyperlinkButton Content="Undo" />
                             <HyperlinkButton Content="Redo" IsEnabled="False" />
