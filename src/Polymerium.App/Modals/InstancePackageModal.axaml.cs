@@ -108,15 +108,6 @@ public partial class InstancePackageModal : Modal
                                                                 Model.ProjectId,
                                                                 vid,
                                                                 Filter);
-            // var refCount = (uint)StageCollection.Items.Count(x => x.Version is InstancePackageVersionModel version
-            //                                                    && version.Dependencies.Any(z => z.Label == Model.Label
-            //                                                        && z.Namespace == Model.Namespace
-            //                                                        && z.ProjectId == Model.ProjectId));
-            // var strongRefCount = (uint)StageCollection.Items.Count(x => x.Version is InstancePackageVersionModel version
-            //                                                          && version.Dependencies.Any(z => z.IsRequired
-            //                                                              && z.Label == Model.Label
-            //                                                              && z.Namespace == Model.Namespace
-            //                                                              && z.ProjectId == Model.ProjectId));
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
@@ -191,10 +182,9 @@ public partial class InstancePackageModal : Modal
                         {
                             var count =
                                 (uint)StageCollection.Items.Count(y => y.Version is InstancePackageVersionModel version
-                                                                    && version.Dependencies.Any(z =>
-                                                                           z.Label == Model.Label
-                                                                        && z.Namespace == Model.Namespace
-                                                                        && z.ProjectId == Model.ProjectId));
+                                                                    && version.Dependencies.Any(z => z.Label == x.Label
+                                                                        && z.Namespace == x.Namespace
+                                                                        && z.ProjectId == x.ProjectId));
                             var found = StageCollection.Items.FirstOrDefault(y => y.Label == x.Label
                                                                               && y.Namespace == x.Namespace
                                                                               && y.ProjectId == x.ProjectId);
@@ -363,8 +353,11 @@ public partial class InstancePackageModal : Modal
         }
     }
 
-    [RelayCommand]
-    private void ViewDependant(InstancePackageDependencyModel? model)
+    private bool CanViewPackage(InstancePackageDependencyModel? model) => model is { Installed: not null };
+
+
+    [RelayCommand(CanExecute = nameof(CanViewPackage))]
+    private void ViewPackage(InstancePackageDependencyModel? model)
     {
         if (model is { Installed: { } installed })
         {
@@ -378,251 +371,6 @@ public partial class InstancePackageModal : Modal
                 StageCollection = StageCollection,
                 Filter = Filter
             });
-        }
-    }
-
-    [RelayCommand]
-    private async Task ViewDependencyAsync(InstancePackageDependencyModel? model)
-    {
-        // TODO: 该功能问题太多
-        //  - [x] 需要未来整改整个 PackageContainer 的刷新机制便于在 InstancePackageModal.ModifyPending 中修改 Stages 集合中的项
-        //  - [ ] 以及修改 InstancePackageDependencyModel 中的 Installed 状态。
-        //  （后者可以通过独立的 InstancePackageDependencyModal 查看实现
-        //  可以单独重构 DependencyCollection 这一块用 ExhibitDependencyModel 那一套，毕竟意义是一样的，都是对一个项目的依赖列表进行在线查询
-        if (model != null)
-        {
-            try
-            {
-                var dependency = await DataService.QueryProjectAsync(model.Label, model.Namespace, model.ProjectId);
-                var installed = StageCollection.Items.FirstOrDefault(x => x.Label == model.Label
-                                                                       && x.Namespace == model.Namespace
-                                                                       && x.ProjectId == model.ProjectId);
-                var exhibit = new ExhibitModel(dependency.Label,
-                                               dependency.Namespace,
-                                               dependency.ProjectId,
-                                               dependency.ProjectName,
-                                               dependency.Summary,
-                                               dependency.Thumbnail ?? AssetUriIndex.DirtImage,
-                                               dependency.Author,
-                                               dependency.Tags,
-                                               dependency.UpdatedAt,
-                                               dependency.DownloadCount,
-                                               dependency.Reference)
-                {
-                    Installed = installed?.Entry,
-                    InstalledVersionId = (installed?.Version as InstancePackageVersionModel)?.Id,
-                    InstalledVersionName = (installed?.Version as InstancePackageVersionModel)?.Name,
-                    PendingVersionId = null,
-                    PendingVersionName = null,
-                    State = installed?.IsLocked switch
-                    {
-                        true => ExhibitState.Locked,
-                        false => ExhibitState.Editable,
-                        _ => null
-                    }
-                };
-                await ViewPackageAsync(exhibit);
-            }
-            catch (OperationCanceledException) { }
-            catch (Exception ex)
-            {
-                // TODO: 甩出报错
-            }
-        }
-    }
-
-    [RelayCommand]
-    private async Task ViewPackageAsync(ExhibitModel? exhibit)
-    {
-        if (exhibit != null)
-        {
-            try
-            {
-                // 非 Unspecific
-                if (exhibit.InstalledVersionId != null)
-                {
-                    var package = await DataService.ResolvePackageAsync(exhibit.Label,
-                                                                        exhibit.Namespace,
-                                                                        exhibit.ProjectId,
-                                                                        exhibit.InstalledVersionId,
-                                                                        Filter.None);
-                    exhibit.InstalledVersionName = package.VersionName;
-                }
-
-
-                var project = await DataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
-                var model = new ExhibitPackageModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Thumbnail,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-
-                OverlayService.PopModal(new ExhibitPackageModal
-                {
-                    DataContext = model,
-                    Exhibit = exhibit,
-                    DataService = DataService,
-                    Filter = Filter,
-                    ViewPackageCommand = ViewPackageCommand,
-                    ModifyPendingCallback = ModifyPending,
-                    LinkExhibitCallback = LinkExhibit
-                });
-            }
-            catch (OperationCanceledException) { }
-            catch (Exception ex)
-            {
-                // TODO: pop message
-                // NotificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
-            }
-        }
-    }
-
-    #endregion
-
-    #region ViewDependency related methods
-
-    private ExhibitModel LinkExhibit(Project project)
-    {
-        var found = StageCollection.Items.FirstOrDefault(x => x.Label == project.Label
-                                                           && x.Namespace == project.Namespace
-                                                           && x.ProjectId == project.ProjectId);
-        if (found != null)
-        {
-            var installed = found.Version as InstancePackageVersionModel;
-            return new(project.Label,
-                       project.Namespace,
-                       project.ProjectId,
-                       project.ProjectName,
-                       project.Summary,
-                       project.Thumbnail ?? AssetUriIndex.DirtImage,
-                       project.Author,
-                       project.Tags,
-                       project.UpdatedAt,
-                       project.DownloadCount,
-                       project.Reference)
-            {
-                Installed = found.Entry,
-                InstalledVersionId = installed?.Id,
-                InstalledVersionName = installed?.Name,
-                PendingVersionId = null,
-                PendingVersionName = null,
-                State = found.IsLocked ? ExhibitState.Locked : ExhibitState.Editable
-            };
-        }
-
-        return new(project.Label,
-                   project.Namespace,
-                   project.ProjectId,
-                   project.ProjectName,
-                   project.Summary,
-                   project.Thumbnail ?? AssetUriIndex.DirtImage,
-                   project.Author,
-                   project.Tags,
-                   project.UpdatedAt,
-                   project.DownloadCount,
-                   project.Reference);
-    }
-
-    private void ModifyPending(ExhibitModel exhibit)
-    {
-        switch (exhibit)
-        {
-            case { State: ExhibitState.Adding }:
-            {
-                var entry = new Profile.Rice.Entry(PackageHelper.ToPurl(exhibit.Label,
-                                                                        exhibit.Namespace,
-                                                                        exhibit.ProjectId,
-                                                                        exhibit.PendingVersionId),
-                                                   true,
-                                                   null,
-                                                   []);
-                PersistenceService.AppendAction(new(Guard.Key,
-                                                    PersistenceService.ActionKind.EditPackage,
-                                                    null,
-                                                    entry.Purl));
-                Guard.Value.Setup.Packages.Add(entry);
-                exhibit.State = ExhibitState.Editable;
-                exhibit.Installed = entry;
-                exhibit.InstalledVersionName = exhibit.PendingVersionName;
-                exhibit.InstalledVersionId = exhibit.PendingVersionId;
-
-                // var model = new InstancePackageModel(entry,
-                //                                      false,
-                //                                      exhibit.Label,
-                //                                      exhibit.Namespace,
-                //                                      exhibit.ProjectId,
-                //                                      exhibit.ProjectName,
-                //                                      exhibit.PendingVersionId is not null
-                //                                          ? new
-                //                                              InstancePackageVersionModel(exhibit
-                //                                                 .PendingVersionId, exhibit.PendingVersionName
-                //                                               ?? exhibit.PendingVersionId, string.Join(",",
-                //                                                  exhibit.Requirements.AnyOfLoaders
-                //                                                         .Select(LoaderHelper
-                //                                                                    .ToDisplayName)), string
-                //                                                 .Join(",",
-                //                                                       exhibit.Requirements.AnyOfVersions,
-                //                                                       DateTimeOffset.MinValue,
-                //                                                       ReleaseType.Release,
-                //                                                       [])
-                //                                          : InstancePackageUnspecifiedVersionModel.Instance,
-                //                                      exhibit.Author,
-                //                                      exhibit.Summary,
-                //                                      exhibit.Reference,
-                //                                      exhibit.Thumbnail,
-                //                                      exhibit.Kind);
-                // if (LazyDependencies is { Value: InstancePackageDependencyCollection deps })
-                // {
-                //     var dep = deps.FirstOrDefault(x => x.Label == exhibit.Label
-                //                                     && x.Namespace == exhibit.Namespace
-                //                                     && x.ProjectId == exhibit.ProjectId);
-                //     dep.Installed = entry;
-                // }
-
-                break;
-            }
-            case { State: ExhibitState.Removing, Installed: not null }:
-            {
-                var exist = Guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == exhibit.Installed.Purl);
-                if (exist != null)
-                {
-                    Guard.Value.Setup.Packages.Remove(exist);
-                    StageCollection.Remove(exist);
-                }
-
-                PersistenceService.AppendAction(new(Guard.Key,
-                                                    PersistenceService.ActionKind.EditPackage,
-                                                    exhibit.Installed.Purl,
-                                                    null));
-                exhibit.State = null;
-                exhibit.Installed = null;
-                exhibit.InstalledVersionName = null;
-                exhibit.InstalledVersionId = null;
-                break;
-            }
-            case { State: ExhibitState.Modifying, Installed: not null }:
-            {
-                var old = exhibit.Installed.Purl;
-                exhibit.Installed.Purl = PackageHelper.ToPurl(exhibit.Label,
-                                                              exhibit.Namespace,
-                                                              exhibit.ProjectId,
-                                                              exhibit.PendingVersionId);
-                PersistenceService.AppendAction(new(Guard.Key,
-                                                    PersistenceService.ActionKind.EditPackage,
-                                                    old,
-                                                    exhibit.Installed.Purl));
-                exhibit.State = ExhibitState.Editable;
-                exhibit.InstalledVersionName = exhibit.PendingVersionName;
-                exhibit.InstalledVersionId = exhibit.PendingVersionId;
-                break;
-            }
         }
     }
 
