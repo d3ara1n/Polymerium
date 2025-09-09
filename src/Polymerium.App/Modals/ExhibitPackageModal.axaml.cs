@@ -281,8 +281,7 @@ public partial class ExhibitPackageModal : Modal
                                       var versions = (await DataService.InspectVersionsAsync(Package.Label,
                                                           Package.Namespace,
                                                           Package.ProjectId,
-                                                          IsFilterEnabled ? Filter : Filter.None))
-                                         .ToArray();
+                                                          IsFilterEnabled ? Filter : Filter.None)).ToArray();
                                       var project = Package;
                                       var rv = new ExhibitVersionCollection([
                                           .. versions.Select(x => new ExhibitVersionModel(project.Label,
@@ -293,8 +292,7 @@ public partial class ExhibitPackageModal : Modal
                                                                  x.VersionId,
                                                                  string.Join(",",
                                                                              x.Requirements.AnyOfLoaders
-                                                                              .Select(LoaderHelper
-                                                                                  .ToDisplayName)),
+                                                                              .Select(LoaderHelper.ToDisplayName)),
                                                                  string.Join(",", x.Requirements.AnyOfVersions),
                                                                  string.Empty,
                                                                  x.PublishedAt,
@@ -321,8 +319,7 @@ public partial class ExhibitPackageModal : Modal
                                       {
                                           if (versionId != null)
                                           {
-                                              var installed =
-                                                  versions.FirstOrDefault(x => x.VersionId == versionId);
+                                              var installed = versions.FirstOrDefault(x => x.VersionId == versionId);
                                               if (installed != null)
                                               {
                                                   Dispatcher.UIThread.Post(() =>
@@ -413,9 +410,7 @@ public partial class ExhibitPackageModal : Modal
         if (url is not null && Package.Reference is not null)
         {
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            TopLevel
-               .GetTopLevel(this)
-              ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Package.Reference, rev));
+            TopLevel.GetTopLevel(this)?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Package.Reference, rev));
         }
     }
 

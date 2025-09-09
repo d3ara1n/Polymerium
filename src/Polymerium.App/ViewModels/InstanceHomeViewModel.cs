@@ -21,13 +21,13 @@ using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.App.Widgets;
+using Trident.Abstractions.Extensions;
+using Trident.Abstractions.FileModels;
 using Trident.Core.Engines.Deploying;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
 using Trident.Core.Utilities;
-using Trident.Abstractions.Extensions;
-using Trident.Abstractions.FileModels;
 using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.ViewModels;
@@ -197,18 +197,12 @@ public partial class InstanceHomeViewModel(
                            var cooked = AccountHelper.ToCooked(x);
                            return SelectedAccount?.Uuid == cooked.Uuid
                                       ? SelectedAccount
-                                      : new(cooked.GetType(),
-                                            cooked.Uuid,
-                                            cooked.Username,
-                                            x.EnrolledAt,
-                                            x.LastUsedAt);
+                                      : new(cooked.GetType(), cooked.Uuid, cooked.Username, x.EnrolledAt, x.LastUsedAt);
                        })
                       .ToList();
         var dialog = new AccountPickerDialog
         {
-            GotoManagerViewCommand = OpenAccountsViewCommand,
-            AccountsSource = accounts,
-            Result = SelectedAccount
+            GotoManagerViewCommand = OpenAccountsViewCommand, AccountsSource = accounts, Result = SelectedAccount
         };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
         {
@@ -238,8 +232,7 @@ public partial class InstanceHomeViewModel(
         }
         catch (AccountInvalidException ex)
         {
-            notificationService.PopMessage(ex,
-                                           Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle);
+            notificationService.PopMessage(ex, Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle);
         }
         catch (Exception ex)
         {

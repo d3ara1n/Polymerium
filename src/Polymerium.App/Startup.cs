@@ -10,11 +10,11 @@ using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Services;
+using Trident.Abstractions;
+using Trident.Abstractions.Importers;
 using Trident.Core.Extensions;
 using Trident.Core.Importers;
 using Trident.Core.Services;
-using Trident.Abstractions;
-using Trident.Abstractions.Importers;
 using Velopack;
 using Velopack.Sources;
 

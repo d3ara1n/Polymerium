@@ -6,13 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
-using MimeDetective.Storage;
-using Trident.Core.Models.MojangLauncherApi;
-using Trident.Core.Models.PrismLauncherApi;
-using Trident.Core.Services;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Models.MojangLauncherApi;
+using Trident.Core.Models.PrismLauncherApi;
+using Trident.Core.Services;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Services;

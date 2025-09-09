@@ -83,8 +83,7 @@ public partial class AccountCreationOffline : AccountCreationStep
     {
         var account = new OfflineAccount
         {
-            Username = UserName,
-            Uuid = !string.IsNullOrEmpty(UuidOverwrite) ? UuidOverwrite : Uuid
+            Username = UserName, Uuid = !string.IsNullOrEmpty(UuidOverwrite) ? UuidOverwrite : Uuid
         };
 
         return new AccountCreationPreview { Account = account };

@@ -7,8 +7,7 @@ namespace Polymerium.App.Dialogs;
 
 public partial class ReferenceVersionPickerDialog : Dialog
 {
-    public static readonly
-        DirectProperty<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
+    public static readonly DirectProperty<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
         VersionsProperty = AvaloniaProperty
            .RegisterDirect<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>
                 ?>(nameof(Versions), o => o.Versions, (o, v) => o.Versions = v);

@@ -18,13 +18,13 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Trident.Core.Services;
 using Refit;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Services;
 
 namespace Polymerium.App.ViewModels;
 

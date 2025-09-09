@@ -16,11 +16,11 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.App.Widgets;
+using Trident.Abstractions;
+using Trident.Abstractions.Tasks;
 using Trident.Core;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
-using Trident.Abstractions;
-using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.ViewModels;
 

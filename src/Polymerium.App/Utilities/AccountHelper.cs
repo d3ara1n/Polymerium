@@ -1,8 +1,8 @@
 using System;
 using System.Text.Json;
 using Polymerium.App.Services;
-using Trident.Core.Accounts;
 using Trident.Abstractions.Accounts;
+using Trident.Core.Accounts;
 
 namespace Polymerium.App.Utilities;
 

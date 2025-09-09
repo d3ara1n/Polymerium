@@ -264,19 +264,22 @@
                                 <husk:SwitchCase Value="Unavailable">
                                     <husk:Tag Classes="Small" VerticalAlignment="Top"
                                               HorizontalAlignment="Center">
-                                        <husk:IconLabel Icon="DismissCircle" Variant="Filled" Text="{x:Static lang:Resources.SettingsView_UpdatesUnavailableLabelText}" />
+                                        <husk:IconLabel Icon="DismissCircle" Variant="Filled"
+                                                        Text="{x:Static lang:Resources.SettingsView_UpdatesUnavailableLabelText}" />
                                     </husk:Tag>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Latest">
                                     <husk:Tag Classes="Small Success" VerticalAlignment="Top"
                                               HorizontalAlignment="Center">
-                                        <husk:IconLabel Icon="CheckmarkCircle" Variant="Filled" Text="{x:Static lang:Resources.SettingsView_UpdatesNotFoundLabelText}" />
+                                        <husk:IconLabel Icon="CheckmarkCircle" Variant="Filled"
+                                                        Text="{x:Static lang:Resources.SettingsView_UpdatesNotFoundLabelText}" />
                                     </husk:Tag>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Found">
                                     <husk:Tag Classes="Small Primary" VerticalAlignment="Top"
                                               HorizontalAlignment="Center">
-                                        <husk:IconLabel Icon="SparkleCircle" Variant="Filled" Text="{x:Static lang:Resources.SettingsView_UpdatesFoundLabelText}" />
+                                        <husk:IconLabel Icon="SparkleCircle" Variant="Filled"
+                                                        Text="{x:Static lang:Resources.SettingsView_UpdatesFoundLabelText}" />
                                     </husk:Tag>
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>

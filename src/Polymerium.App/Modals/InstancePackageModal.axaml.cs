@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -13,10 +12,10 @@ using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
-using Trident.Core.Services.Profiles;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Services.Profiles;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Modals;
@@ -45,13 +44,15 @@ public partial class InstancePackageModal : Modal
                     o => o.SelectedVersionProxy,
                     (o, v) => o.SelectedVersionProxy = v);
 
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyDependantsProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyDependants),
+                                                                           o => o.LazyDependants,
+                                                                           (o, v) => o.LazyDependants = v);
+
     private string? _old;
 
 
-    public InstancePackageModal()
-    {
-        InitializeComponent();
-    }
+    public InstancePackageModal() => InitializeComponent();
 
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
@@ -66,6 +67,11 @@ public partial class InstancePackageModal : Modal
         set => SetAndRaise(LazyDependenciesProperty, ref field, value);
     }
 
+    public LazyObject? LazyDependants
+    {
+        get;
+        set => SetAndRaise(LazyDependantsProperty, ref field, value);
+    }
 
     private InstancePackageModel Model => (InstancePackageModel)DataContext!;
 
@@ -102,15 +108,15 @@ public partial class InstancePackageModal : Modal
                                                                 Model.ProjectId,
                                                                 vid,
                                                                 Filter);
-            var refCount = (uint)StageCollection.Items.Count(x => x.Version is InstancePackageVersionModel version
-                                                               && version.Dependencies.Any(z => z.Label == Model.Label
-                                                                   && z.Namespace == Model.Namespace
-                                                                   && z.ProjectId == Model.ProjectId));
-            var strongRefCount = (uint)StageCollection.Items.Count(x => x.Version is InstancePackageVersionModel version
-                                                                     && version.Dependencies.Any(z => z.IsRequired
-                                                                         && z.Label == Model.Label
-                                                                         && z.Namespace == Model.Namespace
-                                                                         && z.ProjectId == Model.ProjectId));
+            // var refCount = (uint)StageCollection.Items.Count(x => x.Version is InstancePackageVersionModel version
+            //                                                    && version.Dependencies.Any(z => z.Label == Model.Label
+            //                                                        && z.Namespace == Model.Namespace
+            //                                                        && z.ProjectId == Model.ProjectId));
+            // var strongRefCount = (uint)StageCollection.Items.Count(x => x.Version is InstancePackageVersionModel version
+            //                                                          && version.Dependencies.Any(z => z.IsRequired
+            //                                                              && z.Label == Model.Label
+            //                                                              && z.Namespace == Model.Namespace
+            //                                                              && z.ProjectId == Model.ProjectId));
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
@@ -149,11 +155,71 @@ public partial class InstancePackageModal : Modal
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
-            var rv = new InstancePackageDependencyCollection(refCount,
-                                                             strongRefCount,
-                                                             [.. tasks.Select(x => x.Result)]);
+            var rv = new InstancePackageDependencyCollection([.. tasks.Select(x => x.Result)]);
             return rv;
         });
+        return lazy;
+    }
+
+    private LazyObject ConstructDependants()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            var dependants = await DataService.ResolvePackagesAsync(StageCollection
+                                                                   .Items
+                                                                   .Where(x =>
+                                                                              x.Version is InstancePackageVersionModel
+                                                                                  version
+                                                                           && version.Dependencies.Any(y => y.Label
+                                                                               == Model.Label
+                                                                               && y.Namespace
+                                                                               == Model.Namespace
+                                                                               && y.ProjectId
+                                                                               == Model.ProjectId))
+                                                                   .Select(x => (x.Label, x.Namespace, x.ProjectId,
+                                                                                           (string?)
+                                                                                           ((InstancePackageVersionModel)
+                                                                                               x.Version).Id)),
+                                                                    Filter.None);
+            var tasks = dependants
+                       .Select(async x =>
+                        {
+                            var count =
+                                (uint)StageCollection.Items.Count(y => y.Version is InstancePackageVersionModel version
+                                                                    && version.Dependencies.Any(z =>
+                                                                           z.Label == Model.Label
+                                                                        && z.Namespace == Model.Namespace
+                                                                        && z.ProjectId == Model.ProjectId));
+                            var found = StageCollection.Items.FirstOrDefault(y => y.Label == x.Label
+                                                                              && y.Namespace == x.Namespace
+                                                                              && y.ProjectId == x.ProjectId);
+                            var thumbnail = x.Thumbnail is not null
+                                                ? await DataService.GetBitmapAsync(x.Thumbnail)
+                                                : AssetUriIndex.DirtImageBitmap;
+                            return new InstancePackageDependencyModel(x.Label,
+                                                                      x.Namespace,
+                                                                      x.ProjectId,
+                                                                      x.VersionId,
+                                                                      x.ProjectName,
+                                                                      thumbnail,
+                                                                      count,
+                                                                      x.Dependencies
+                                                                       .FirstOrDefault(y => y.Label == Model.Label
+                                                                         && y.Namespace == Model.Namespace
+                                                                         && y.ProjectId == Model.ProjectId)
+                                                                      ?.IsRequired
+                                                                   ?? false) { Installed = found };
+                        })
+                       .ToArray();
+            await Task.WhenAll(tasks);
+            return new InstancePackageDependencyCollection([.. tasks.Select(x => x.Result)]);
+        });
+
         return lazy;
     }
 
@@ -209,10 +275,14 @@ public partial class InstancePackageModal : Modal
     {
         base.OnLoaded(e);
         if (Design.IsDesignMode)
+        {
             return;
+        }
+
         _old = Model.Entry.Purl;
         IsFilterEnabled = true;
         LazyDependencies = ConstructDependencies();
+        LazyDependants = ConstructDependants();
         AddHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
     }
 
@@ -290,6 +360,24 @@ public partial class InstancePackageModal : Modal
         if (index >= 0)
         {
             Model.Tags.RemoveAt(index);
+        }
+    }
+
+    [RelayCommand]
+    private void ViewDependant(InstancePackageDependencyModel? model)
+    {
+        if (model is { Installed: { } installed })
+        {
+            OverlayService.PopModal(new InstancePackageModal
+            {
+                DataContext = installed,
+                Guard = Guard,
+                DataService = DataService,
+                OverlayService = OverlayService,
+                PersistenceService = PersistenceService,
+                StageCollection = StageCollection,
+                Filter = Filter
+            });
         }
     }
 

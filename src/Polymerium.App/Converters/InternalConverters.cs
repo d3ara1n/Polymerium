@@ -2,8 +2,8 @@ using System;
 using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Properties;
-using Trident.Core.Igniters;
 using Trident.Abstractions.Repositories.Resources;
+using Trident.Core.Igniters;
 
 namespace Polymerium.App.Converters;
 

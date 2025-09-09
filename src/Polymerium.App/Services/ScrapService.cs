@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using ObservableCollections;
 using Polymerium.App.Models;
+using Trident.Abstractions.Extensions;
 using Trident.Core.Engines.Launching;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
-using Trident.Abstractions.Extensions;
 
 namespace Polymerium.App.Services;
 
@@ -46,10 +46,7 @@ public class ScrapService : IDisposable
                                   {
                                       if (x is
                                           {
-                                              Level: { } level,
-                                              Time: { } time,
-                                              Thread: { } thread,
-                                              Sender: { } sender
+                                              Level: { } level, Time: { } time, Thread: { } thread, Sender: { } sender
                                           })
                                       {
                                           buffer.AddLast(new(x.Message, level, time, thread, sender));
@@ -77,8 +74,6 @@ public class ScrapService : IDisposable
            .DisposeWith(e);
     }
 
-    public bool TryGetBuffer(
-        string key,
-        [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
+    public bool TryGetBuffer(string key, [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
         _buffers.TryGetValue(key, out buffer);
 }

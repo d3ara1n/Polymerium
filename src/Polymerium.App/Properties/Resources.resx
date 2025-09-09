@@ -1125,4 +1125,10 @@
     <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
         <value>Update available</value>
     </data>
+    <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
+        <value>Dependants</value>
+    </data>
+    <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
+        <value>Overview</value>
+    </data>
 </root>

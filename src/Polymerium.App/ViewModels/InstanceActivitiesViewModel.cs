@@ -16,11 +16,11 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Core.Services;
 using SkiaSharp;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Services;
 
 namespace Polymerium.App.ViewModels;
 
@@ -38,9 +38,7 @@ public partial class InstanceActivitiesViewModel(
         try
         {
             // Try to get the ControlAccentInteractiveBackgroundBrush from Avalonia resources
-            if (Application.Current?.TryGetResource("ControlAccentInteractiveBackgroundBrush",
-                                                    null,
-                                                    out var resource)
+            if (Application.Current?.TryGetResource("ControlAccentInteractiveBackgroundBrush", null, out var resource)
              == true
              && resource is SolidColorBrush brush)
             {
@@ -134,10 +132,7 @@ public partial class InstanceActivitiesViewModel(
 
         WeekSeries =
         [
-            new ColumnSeries<double>(times)
-            {
-                Name = "Play Time (Hours)", Fill = new SolidColorPaint(accentColor)
-            }
+            new ColumnSeries<double>(times) { Name = "Play Time (Hours)", Fill = new SolidColorPaint(accentColor) }
         ];
 
         // Configure X-axis with day labels

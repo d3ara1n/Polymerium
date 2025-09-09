@@ -80,14 +80,14 @@ public partial class UnknownViewModel(
         void PopDrawer()
         {
             var drawer = new Sidebar();
-            var pop = new Button() { Content = "POP" };
-            var dismiss = new Button() { Content = "DISMISS" };
+            var pop = new Button { Content = "POP" };
+            var dismiss = new Button { Content = "DISMISS" };
             pop.Click += (_, __) => PopDrawer();
             dismiss.Click += (_, __) => drawer.Dismiss();
             drawer.Content = new StackPanel
             {
                 Spacing = 8d,
-                Children = { new TextBox() { Text = $"DRAWER {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
+                Children = { new TextBox { Text = $"DRAWER {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
             };
             overlayService.PopDrawer(drawer);
         }
@@ -102,14 +102,14 @@ public partial class UnknownViewModel(
         void PopModal()
         {
             var modal = new Modal();
-            var pop = new Button() { Content = "POP" };
-            var dismiss = new Button() { Content = "DISMISS" };
+            var pop = new Button { Content = "POP" };
+            var dismiss = new Button { Content = "DISMISS" };
             pop.Click += (_, __) => PopModal();
             dismiss.Click += (_, __) => modal.Dismiss();
             modal.Content = new StackPanel
             {
                 Spacing = 8d,
-                Children = { new TextBox() { Text = $"MODAL {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
+                Children = { new TextBox { Text = $"MODAL {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
             };
             overlayService.PopModal(modal);
         }
@@ -138,10 +138,7 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Debug()
-    {
-        overlayService.PopDialog(new ModpackExporterDialog());
-    }
+    private void Debug() => overlayService.PopDialog(new ModpackExporterDialog());
 
     #endregion
 }

@@ -3,13 +3,13 @@ using System.Net;
 using System.Threading.Tasks;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Utilities;
+using Refit;
+using Trident.Abstractions.Extensions;
+using Trident.Abstractions.FileModels;
 using Trident.Core.Accounts;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
-using Refit;
-using Trident.Abstractions.Extensions;
-using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.Services;
 
@@ -46,8 +46,7 @@ public class InstanceService(
                             var xbox =
                                 await xboxLiveService
                                    .AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
-                            var xsts =
-                                await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
+                            var xsts = await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
                             var minecraft =
                                 await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(xsts.Token,
                                     xsts.DisplayClaims.Xui.First().Uhs);
@@ -68,16 +67,16 @@ public class InstanceService(
                 // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
                 // Full Check Mode 只有在检查文件完整性时为 true，不随用户决定
                 var locator = JavaHelper.MakeLocator(profile, configurationService.Value);
-                var deploy =
-                    new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
-                                      profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
-                                      false);
+                var deploy = new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
+                                               profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
+                                               false);
                 var launch = new LaunchOptions(additionalArguments:
                                                profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
                                                                    configurationService.Value
                                                                       .GameJavaAdditionalArguments),
                                                maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                                              configurationService.Value.GameJavaMaxMemory),
+                                                                              configurationService.Value
+                                                                                 .GameJavaMaxMemory),
                                                windowSize: (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH,
                                                                                     configurationService.Value
                                                                                        .GameWindowInitialWidth),
@@ -96,11 +95,7 @@ public class InstanceService(
         }
     }
 
-    public void Deploy(
-        string key,
-        bool? fastMode = null,
-        bool? resolveDependency = null,
-        bool? fullCheckMode = null)
+    public void Deploy(string key, bool? fastMode = null, bool? resolveDependency = null, bool? fullCheckMode = null)
     {
         var profile = profileManager.GetImmutable(key);
         fastMode ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false);

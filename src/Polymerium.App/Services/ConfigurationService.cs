@@ -10,6 +10,12 @@ public sealed class ConfigurationService : IDisposable
 {
     private readonly string _filePath = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "settings.json");
 
+    #region Injected
+
+    private readonly ILogger _logger;
+
+    #endregion
+
     private readonly JsonSerializerOptions _serializerOptions =
         new(JsonSerializerDefaults.General) { WriteIndented = true };
 
@@ -34,12 +40,6 @@ public sealed class ConfigurationService : IDisposable
     }
 
     public Configuration Value { get; }
-
-    #region Injected
-
-    private readonly ILogger _logger;
-
-    #endregion
 
     #region IDisposable Members
 

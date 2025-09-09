@@ -13,9 +13,7 @@ namespace Polymerium.App.Components;
 public partial class JavaHomeContainer : UserControl
 {
     public static readonly DirectProperty<JavaHomeContainer, string?> HomeProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Home),
-                                                                    o => o.Home,
-                                                                    (o, v) => o.Home = v);
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Home), o => o.Home, (o, v) => o.Home = v);
 
     public static readonly DirectProperty<JavaHomeContainer, OverlayService?> OverlayServiceProperty =
         AvaloniaProperty.RegisterDirect<JavaHomeContainer, OverlayService?>(nameof(OverlayService),
@@ -34,9 +32,7 @@ public partial class JavaHomeContainer : UserControl
                                                                     (o, v) => o.Version = v);
 
     public static readonly DirectProperty<JavaHomeContainer, int?> MajorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(nameof(Major),
-                                                                 o => o.Major,
-                                                                 (o, v) => o.Major = v);
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(nameof(Major), o => o.Major, (o, v) => o.Major = v);
 
     public JavaHomeContainer() => InitializeComponent();
 
@@ -141,9 +137,8 @@ public partial class JavaHomeContainer : UserControl
     {
         if (OverlayService != null)
         {
-            var path =
-                await OverlayService.RequestFileAsync(Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
-                                                      Properties.Resources.JavaHomeContainer_ReqeustJavaTitle);
+            var path = await OverlayService.RequestFileAsync(Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
+                                                             Properties.Resources.JavaHomeContainer_ReqeustJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));

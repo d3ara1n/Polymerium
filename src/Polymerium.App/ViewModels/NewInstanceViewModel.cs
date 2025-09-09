@@ -14,11 +14,11 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Trident.Core.Services;
-using Trident.Core.Utilities;
 using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Importers;
+using Trident.Core.Services;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
@@ -141,16 +141,14 @@ public partial class NewInstanceViewModel(
             catch (Exception ex)
             {
                 Dispatcher.UIThread.Post(() => notificationService.PopMessage(ex,
-                                                                              Resources.NewInstanceView_IconSavingDangerNotificationTitle));
+                                                                              Resources
+                                                                                 .NewInstanceView_IconSavingDangerNotificationTitle));
             }
         }
 
         profileManager.Add(key, profile);
 
-        persistenceService.AppendAction(new(key.Key,
-                                            PersistenceService.ActionKind.Install,
-                                            null,
-                                            ImportedPack?.Path));
+        persistenceService.AppendAction(new(key.Key, PersistenceService.ActionKind.Install, null, ImportedPack?.Path));
 
         navigationService.Navigate<InstanceView>(key.Key);
     }

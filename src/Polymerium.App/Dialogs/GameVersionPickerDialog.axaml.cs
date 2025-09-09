@@ -17,8 +17,9 @@ public partial class GameVersionPickerDialog : Dialog
     public static readonly DirectProperty<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>
         ViewProperty =
             AvaloniaProperty
-               .RegisterDirect<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>
-                    ?>(nameof(View), o => o.View, (o, v) => o.View = v);
+               .RegisterDirect<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>(nameof(View),
+                    o => o.View,
+                    (o, v) => o.View = v);
 
     public static readonly DirectProperty<GameVersionPickerDialog, string> FilterTextProperty =
         AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(FilterText),

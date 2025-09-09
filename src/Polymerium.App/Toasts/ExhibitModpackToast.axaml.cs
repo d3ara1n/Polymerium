@@ -79,8 +79,7 @@ public partial class ExhibitModpackToast : Toast
                                                                 x.VersionId,
                                                                 string.Join(",",
                                                                             x.Requirements.AnyOfLoaders
-                                                                             .Select(LoaderHelper
-                                                                                 .ToDisplayName)),
+                                                                             .Select(LoaderHelper.ToDisplayName)),
                                                                 string.Join(",", x.Requirements.AnyOfVersions),
                                                                 string.Empty,
                                                                 x.PublishedAt,
@@ -109,9 +108,7 @@ public partial class ExhibitModpackToast : Toast
         if (url is not null)
         {
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            TopLevel
-               .GetTopLevel(this)
-              ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev));
+            TopLevel.GetTopLevel(this)?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev));
         }
     }
 
