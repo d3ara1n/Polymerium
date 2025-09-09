@@ -129,10 +129,7 @@ public class PersistenceService(IFreeSql freeSql)
 
     public TimeSpan GetTotalPlayTime(string key)
     {
-        var totalSeconds = freeSql
-                          .Select<Activity>()
-                          .Where(x => x.Key == key)
-                          .Sum(x => (x.End - x.Begin).TotalSeconds);
+        var totalSeconds = freeSql.Select<Activity>().Where(x => x.Key == key).Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
@@ -177,8 +174,7 @@ public class PersistenceService(IFreeSql freeSql)
 
     public Account? GetAccount(string uuid) => freeSql.Select<Account>().Where(x => x.Uuid == uuid).First();
 
-    public bool HasMicrosoftAccount() =>
-        freeSql.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
+    public bool HasMicrosoftAccount() => freeSql.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
 
     public void MarkDefaultAccount(string uuid) =>
         freeSql.Transaction(() =>
@@ -210,11 +206,7 @@ public class PersistenceService(IFreeSql freeSql)
             {
                 if (found.Uuid != uuid)
                 {
-                    freeSql
-                       .Update<AccountSelector>()
-                       .Where(x => x.Key == key)
-                       .Set(x => x.Uuid, uuid)
-                       .ExecuteAffrows();
+                    freeSql.Update<AccountSelector>().Where(x => x.Key == key).Set(x => x.Uuid, uuid).ExecuteAffrows();
                 }
             }
             else

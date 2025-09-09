@@ -20,13 +20,13 @@ using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
+using Trident.Abstractions;
+using Trident.Abstractions.Extensions;
+using Trident.Abstractions.Tasks;
 using Trident.Core.Exceptions;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
-using Trident.Abstractions;
-using Trident.Abstractions.Extensions;
-using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App;
 
@@ -132,16 +132,13 @@ public partial class MainWindowContext : ObservableObject
             }
             else
             {
-                _notificationService.PopMessage("Log file not found",
-                                                "Failed to open log file",
-                                                GrowlLevel.Warning);
+                _notificationService.PopMessage("Log file not found", "Failed to open log file", GrowlLevel.Warning);
             }
         }
     }
 
     [RelayCommand]
-    private async Task PlayAsync(string key) =>
-        await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+    private async Task PlayAsync(string key) => await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
 
     [RelayCommand]
     private void Deploy(string key) => _instanceService.Deploy(key);
@@ -189,11 +186,7 @@ public partial class MainWindowContext : ObservableObject
         var list = new List<InstanceEntryModel>();
         foreach (var (key, item) in manager.Profiles)
         {
-            InstanceEntryModel model = new(key,
-                                           item.Name,
-                                           item.Setup.Version,
-                                           item.Setup.Loader,
-                                           item.Setup.Source);
+            InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
             model.LastPlayedAtRaw = _persistenceService.GetLastActivity(key)?.End;
             list.Add(model);
         }
@@ -303,9 +296,8 @@ public partial class MainWindowContext : ObservableObject
                         model.State = InstanceEntryState.Idle;
                         _entries.Remove(model);
                         _notificationService.PopMessage(e.FailureReason,
-                                                        Resources
-                                                           .MainWindow_InstanceInstallingDangerNotificationTitle
-                                                           .Replace("{0}", e.Key));
+                                                        Resources.MainWindow_InstanceInstallingDangerNotificationTitle
+                                                                 .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -323,10 +315,7 @@ public partial class MainWindowContext : ObservableObject
                                                             e.Key),
                                                         forceExpire: true);
                     });
-                    _persistenceService.AppendAction(new(e.Key,
-                                                         PersistenceService.ActionKind.Install,
-                                                         null,
-                                                         e.Source));
+                    _persistenceService.AppendAction(new(e.Key, PersistenceService.ActionKind.Install, null, e.Source));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -391,15 +380,14 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceUpdatingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success,
                                                         true,
                                                         new GrowlAction(Resources
-                                                                                  .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
-                                                                               ViewInstanceCommand,
-                                                                               e.Key));
+                                                                           .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
+                                                                        ViewInstanceCommand,
+                                                                        e.Key));
                     });
                     _persistenceService.AppendAction(new(e.Key,
                                                          PersistenceService.ActionKind.Update,
@@ -471,8 +459,7 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceDeployingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceDeployingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });
@@ -545,8 +532,7 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceLaunchingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceLaunchingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });

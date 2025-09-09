@@ -48,8 +48,7 @@ public class Configuration
         { GAME_WINDOW_HEIGHT, 720u }
     };
 
-    public bool ApplicationSuperPowerActivated { get; set; } =
-        AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
+    public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
 
     public bool ApplicationTitleBarVisibility { get; set; } = AccessDefault<bool>(APPLICATION_TITLEBAR_VISIBILITY);
     public bool ApplicationLeftPanelMode { get; set; } = AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);

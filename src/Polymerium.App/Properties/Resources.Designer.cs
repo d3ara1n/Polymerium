@@ -1329,6 +1329,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dependants.
+        /// </summary>
+        public static string InstancePackageModal_DependantsTabText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_DependantsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dependencies.
         /// </summary>
         public static string InstancePackageModal_DependenciesTabText {
@@ -1352,6 +1361,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePackageModal_LockedVersionLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_LockedVersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        public static string InstancePackageModal_OverviewLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_OverviewLabelText", resourceCulture);
             }
         }
         

@@ -12,11 +12,11 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Trident.Abstractions;
+using Trident.Abstractions.FileModels;
 using Trident.Core.Services;
 using Trident.Core.Services.Profiles;
 using Trident.Core.Utilities;
-using Trident.Abstractions;
-using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
 
@@ -108,8 +108,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex,
-                                            Resources
-                                               .InstancePropertiesView_ThumbnailSavingDangerNotificationTitle);
+                                            Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle);
         }
     }
 

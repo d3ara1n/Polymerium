@@ -9,8 +9,8 @@ namespace Polymerium.App.Services;
 public class OverlayService
 {
     private Action<Dialog>? _dialogHandler;
-    private Action<Modal>? _modalHandler;
     private Action<Sidebar>? _drawerHandler;
+    private Action<Modal>? _modalHandler;
     private Action<Toast>? _toastHandler;
 
     internal void SetHandler(

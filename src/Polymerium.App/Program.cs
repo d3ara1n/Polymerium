@@ -4,9 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Polymerium.App.Services;
 using Trident.Abstractions;
 using Velopack;
 

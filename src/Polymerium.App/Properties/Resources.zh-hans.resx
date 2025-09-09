@@ -1116,4 +1116,10 @@
     <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
         <value>存在新版本</value>
     </data>
+    <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
+        <value>附属</value>
+    </data>
+    <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
+        <value>共计</value>
+    </data>
 </root>

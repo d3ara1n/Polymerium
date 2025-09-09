@@ -8,9 +8,9 @@ using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
+using Trident.Abstractions.Accounts;
 using Trident.Core.Accounts;
 using Trident.Core.Services;
-using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.Components;
 
@@ -91,8 +91,7 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
 
 
             var microsoft = await MicrosoftService.AuthenticateAsync(model.DeviceCode, model.Interval, _cts.Token);
-            var xbox =
-                await XboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
+            var xbox = await XboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
             var xsts = await XboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
             var minecraft = await MinecraftService.AuthenticateByXboxLiveServiceTokenAsync(xsts.Token,
                                 xsts.DisplayClaims.Xui.First().Uhs);

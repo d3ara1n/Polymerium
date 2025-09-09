@@ -81,8 +81,7 @@ public partial class MarketplacePortalViewModel(
             }
         }
 
-        navigationService.Navigate<MarketplaceSearchView>(new MarketplaceSearchViewModel.SearchArguments(query,
-                                                              null));
+        navigationService.Navigate<MarketplaceSearchView>(new MarketplaceSearchViewModel.SearchArguments(query, null));
     }
 
     #endregion

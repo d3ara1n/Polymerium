@@ -6,19 +6,17 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Core.Services.Profiles;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Services.Profiles;
 
 namespace Polymerium.App.Modals;
 
 public partial class PackageBulkUpdaterModal : Modal
 {
-    public static readonly DirectProperty<PackageBulkUpdaterModal, IReadOnlyList<PackageUpdaterModel>>
-        UpdatesProperty =
-            AvaloniaProperty
-               .RegisterDirect<PackageBulkUpdaterModal, IReadOnlyList<PackageUpdaterModel>>(nameof(Updates),
-                    o => o.Updates,
-                    (o, v) => o.Updates = v);
+    public static readonly DirectProperty<PackageBulkUpdaterModal, IReadOnlyList<PackageUpdaterModel>> UpdatesProperty =
+        AvaloniaProperty.RegisterDirect<PackageBulkUpdaterModal, IReadOnlyList<PackageUpdaterModel>>(nameof(Updates),
+            o => o.Updates,
+            (o, v) => o.Updates = v);
 
     private readonly CancellationTokenSource _cts = new();
 
@@ -57,8 +55,7 @@ public partial class PackageBulkUpdaterModal : Modal
                                                                               model.Package.Requirements.AnyOfLoaders
                                                                                  .Select(LoaderHelper.ToDisplayName)),
                                                                   string.Join(",",
-                                                                              model.Package.Requirements
-                                                                                 .AnyOfVersions),
+                                                                              model.Package.Requirements.AnyOfVersions),
                                                                   model.NewVersionTimeRaw,
                                                                   model.Package.ReleaseType,
                                                                   model.Package.Dependencies);

@@ -61,7 +61,7 @@ public partial class InstanceView : ScopedPage
             {
                 var newIndex = EntryBox.Items.IndexOf(selected);
                 IPageTransition transition = oldIndex != -1
-                                                 ? new PageSlideTransition()
+                                                 ? new PageSlideTransition
                                                  {
                                                      Direction = newIndex - oldIndex > 0
                                                                      ? DirectionFrom.Bottom
@@ -92,10 +92,7 @@ public partial class InstanceView : ScopedPage
             {
                 EntryBox.SelectedIndex = found;
             }
-            else
-            {
-                // do nothing
-            }
+            // do nothing
         }
     }
 }

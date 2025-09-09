@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
@@ -286,8 +285,7 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial LanguageModel Language { get; set; }
 
-    partial void OnLanguageChanged(LanguageModel value) =>
-        _configurationService.Value.ApplicationLanguage = value.Id;
+    partial void OnLanguageChanged(LanguageModel value) => _configurationService.Value.ApplicationLanguage = value.Id;
 
     #endregion
 
@@ -343,8 +341,7 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial uint WindowInitialWidth { get; set; }
 
-    partial void OnWindowInitialWidthChanged(uint value) =>
-        _configurationService.Value.GameWindowInitialWidth = value;
+    partial void OnWindowInitialWidthChanged(uint value) => _configurationService.Value.GameWindowInitialWidth = value;
 
     #endregion
 

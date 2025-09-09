@@ -1,7 +1,6 @@
 using System;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories.Resources;
@@ -35,7 +34,6 @@ public partial class InstancePackageModel(
     public string Summary => summary;
     public Bitmap Thumbnail => thumbnail;
     public ResourceKind Kind => kind;
-
     public MappingCollection<string, string> Tags { get; } = new(entry.Tags, x => x, x => x);
 
     #endregion

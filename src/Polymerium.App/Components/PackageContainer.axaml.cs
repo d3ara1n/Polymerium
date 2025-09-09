@@ -50,8 +50,9 @@ public partial class PackageContainer : UserControl
     public static readonly DirectProperty<PackageContainer, SourceCache<InstancePackageModel, Profile.Rice.Entry>?>
         ItemsProperty =
             AvaloniaProperty
-               .RegisterDirect<PackageContainer, SourceCache<InstancePackageModel, Profile.Rice.Entry>
-                    ?>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+               .RegisterDirect<PackageContainer, SourceCache<InstancePackageModel, Profile.Rice.Entry>?>(nameof(Items),
+                    o => o.Items,
+                    (o, v) => o.Items = v);
 
     public static readonly DirectProperty<PackageContainer, int> TotalCountProperty =
         AvaloniaProperty.RegisterDirect<PackageContainer, int>(nameof(TotalCount),

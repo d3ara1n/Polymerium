@@ -6,11 +6,11 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Widgets;
+using Trident.Abstractions.FileModels;
+using Trident.Abstractions.Tasks;
 using Trident.Core;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.ViewModels;
 

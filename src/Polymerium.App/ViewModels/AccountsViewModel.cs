@@ -11,8 +11,8 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Trident.Core.Services;
 using Trident.Abstractions.Accounts;
+using Trident.Core.Services;
 
 namespace Polymerium.App.ViewModels;
 
@@ -68,8 +68,7 @@ public partial class AccountsViewModel(
                                          cooked.Uuid,
                                          cooked.Username,
                                          account.EnrolledAt,
-                                         account.LastUsedAt)
-                { IsDefault = account.Uuid == defaultAccount?.Uuid };
+                                         account.LastUsedAt) { IsDefault = account.Uuid == defaultAccount?.Uuid };
             Accounts.Add(model);
         }
 

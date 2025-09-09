@@ -12,8 +12,8 @@ public partial class UnknownView : Page
 {
     public static readonly DirectProperty<UnknownView, AvaloniaList<GrowlAction>> ActionsProperty =
         AvaloniaProperty.RegisterDirect<UnknownView, AvaloniaList<GrowlAction>>(nameof(Actions),
-            o => o.Actions,
-            (o, v) => o.Actions = v);
+                                                                                    o => o.Actions,
+                                                                                    (o, v) => o.Actions = v);
 
     public UnknownView()
     {

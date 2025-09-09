@@ -9,8 +9,8 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
-using Trident.Core.Services;
 using Trident.Abstractions;
+using Trident.Core.Services;
 
 namespace Polymerium.App.ViewModels;
 
@@ -55,9 +55,7 @@ public partial class InstanceAssetsViewModel(
             return Task.CompletedTask;
         }
 
-        foreach (var files in dir
-                             .GetFiles("*.png", SearchOption.TopDirectoryOnly)
-                             .GroupBy(x => x.CreationTimeUtc.Date))
+        foreach (var files in dir.GetFiles("*.png", SearchOption.TopDirectoryOnly).GroupBy(x => x.CreationTimeUtc.Date))
         {
             var group = new ScreenshotGroupModel(files.Key);
             foreach (var file in files)

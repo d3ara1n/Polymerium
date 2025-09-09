@@ -8,9 +8,7 @@ namespace Polymerium.App.Controls;
 public class LaunchBar : TemplatedControl
 {
     public static readonly DirectProperty<LaunchBar, InstanceState> StateProperty =
-        AvaloniaProperty.RegisterDirect<LaunchBar, InstanceState>(nameof(State),
-                                                                  o => o.State,
-                                                                  (o, v) => o.State = v);
+        AvaloniaProperty.RegisterDirect<LaunchBar, InstanceState>(nameof(State), o => o.State, (o, v) => o.State = v);
 
     public static readonly DirectProperty<LaunchBar, ICommand?> PlayCommandProperty =
         AvaloniaProperty.RegisterDirect<LaunchBar, ICommand?>(nameof(PlayCommand),

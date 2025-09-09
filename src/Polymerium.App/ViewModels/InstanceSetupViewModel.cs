@@ -26,14 +26,14 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Views;
-using Trident.Core.Services;
-using Trident.Core.Services.Instances;
 using Refit;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Services;
+using Trident.Core.Services.Instances;
 using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace Polymerium.App.ViewModels;
@@ -78,20 +78,29 @@ public partial class InstanceSetupViewModel(
                              var unknownVids = purls.Where(x => x.Key.Vid is null).ToList();
 
                              if (inner.IsCancellationRequested)
+                             {
                                  return;
+                             }
+
                              // 固定 Vid 的不需要 Filter
                              var knownPackages = await dataService
                                                       .ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None)
                                                       .ConfigureAwait(false);
                              if (inner.IsCancellationRequested)
+                             {
                                  return;
+                             }
+
                              var unknownProjects = await dataService
                                                         .QueryProjectsAsync(unknownVids.Select(x => (x.Key.Label,
                                                                                             x.Key.Namespace,
                                                                                             x.Key.Pid)))
                                                         .ConfigureAwait(false);
                              if (inner.IsCancellationRequested)
+                             {
                                  return;
+                             }
+
                              var thumbnailsTasks = knownPackages
                                                   .Select(async x =>
                                                               (Purl: (x.Label, x.Namespace, x.ProjectId,
@@ -112,7 +121,10 @@ public partial class InstanceSetupViewModel(
                                                   .ToList();
                              await Task.WhenAll(thumbnailsTasks).ConfigureAwait(false);
                              if (inner.IsCancellationRequested)
+                             {
                                  return;
+                             }
+
                              foreach (var package in knownPackages)
                              {
                                  purls[(package.Label, package.Namespace, package.ProjectId, package.VersionId)]
@@ -224,6 +236,22 @@ public partial class InstanceSetupViewModel(
             });
         }
     }
+
+    #endregion
+
+    #region Nested type: RefreshIntermediateData
+
+    #region Nested Type: RefreshIntermediateData
+
+    private class RefreshIntermediateData(Profile.Rice.Entry entry)
+    {
+        public Profile.Rice.Entry Entry => entry;
+        public Bitmap? Thumbnail { get; set; }
+        public Project? Project { get; set; }
+        public Package? Package { get; set; }
+    }
+
+    #endregion
 
     #endregion
 
@@ -807,18 +835,6 @@ public partial class InstanceSetupViewModel(
 
     [ObservableProperty]
     public partial bool IsRefreshing { get; set; } = false;
-
-    #endregion
-
-    #region Nested Type: RefreshIntermediateData
-
-    private class RefreshIntermediateData(Profile.Rice.Entry entry)
-    {
-        public Profile.Rice.Entry Entry => entry;
-        public Bitmap? Thumbnail { get; set; }
-        public Project? Project { get; set; }
-        public Package? Package { get; set; }
-    }
 
     #endregion
 }

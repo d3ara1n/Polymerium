@@ -16,34 +16,31 @@ public static class AssetUriIndex
         new("avares://Polymerium.App/Assets/Images/Repositories/Header_Favorite.png", UriKind.Absolute);
 
     public static readonly Uri DirtImage = new("avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png",
-                                                UriKind.Absolute);
+                                               UriKind.Absolute);
 
-    public static readonly Uri SteveFaceImage =
-        new("avares://Polymerium.App/Assets/Images/Placeholders/Steve_Face.png", UriKind.Absolute);
+    public static readonly Uri SteveFaceImage = new("avares://Polymerium.App/Assets/Images/Placeholders/Steve_Face.png",
+                                                    UriKind.Absolute);
 
     public static readonly Uri WallpaperImage = new("avares://Polymerium.App/Assets/Images/Wallpaper.png",
-                                                      UriKind.Absolute);
+                                                    UriKind.Absolute);
 
     public static readonly Uri LoaderNeoforge = new("avares://Polymerium.App/Assets/Loaders/net.neoforged.png",
-                                                     UriKind.Absolute);
+                                                    UriKind.Absolute);
 
     public static readonly Uri LoaderForge = new("avares://Polymerium.App/Assets/Loaders/net.minecraftforge.png",
-                                                  UriKind.Absolute);
+                                                 UriKind.Absolute);
 
     public static readonly Uri LoaderFabric = new("avares://Polymerium.App/Assets/Loaders/net.fabricmc.png",
-                                                   UriKind.Absolute);
-
-    public static readonly Uri LoaderQuilt = new("avares://Polymerium.App/Assets/Loaders/org.quiltmc.png",
                                                   UriKind.Absolute);
 
-    public static readonly Bitmap RepositoryHeaderCurseforgeBitmap =
-        new(AssetLoader.Open(RepositoryHeaderCurseforge));
+    public static readonly Uri LoaderQuilt = new("avares://Polymerium.App/Assets/Loaders/org.quiltmc.png",
+                                                 UriKind.Absolute);
 
-    public static readonly Bitmap RepositoryHeaderModrinthBitmap =
-        new(AssetLoader.Open(RepositoryHeaderModrinth));
+    public static readonly Bitmap RepositoryHeaderCurseforgeBitmap = new(AssetLoader.Open(RepositoryHeaderCurseforge));
 
-    public static readonly Bitmap RepositoryHeaderFavoriteBitmap =
-        new(AssetLoader.Open(RepositoryHeaderFavorite));
+    public static readonly Bitmap RepositoryHeaderModrinthBitmap = new(AssetLoader.Open(RepositoryHeaderModrinth));
+
+    public static readonly Bitmap RepositoryHeaderFavoriteBitmap = new(AssetLoader.Open(RepositoryHeaderFavorite));
 
     public static readonly Bitmap DirtImageBitmap = new(AssetLoader.Open(DirtImage));
 

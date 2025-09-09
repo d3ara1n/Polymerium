@@ -15,11 +15,11 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
-using Trident.Core.Services;
 using Refit;
 using Semver;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Services;
 
 namespace Polymerium.App.ViewModels;
 
@@ -83,11 +83,16 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                     .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x,
                                                                                     x switch
                                                                                     {
-                                                                                        LoaderHelper.LOADERID_FORGE => "Forge",
-                                                                                        LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                                                                                        LoaderHelper.LOADERID_FABRIC => "Fabric",
-                                                                                        LoaderHelper.LOADERID_QUILT => "QUILT",
-                                                                                        LoaderHelper.LOADERID_FLINT => "Flint Loader",
+                                                                                        LoaderHelper.LOADERID_FORGE =>
+                                                                                            "Forge",
+                                                                                        LoaderHelper.LOADERID_NEOFORGE
+                                                                                            => "NeoForge",
+                                                                                        LoaderHelper.LOADERID_FABRIC =>
+                                                                                            "Fabric",
+                                                                                        LoaderHelper.LOADERID_QUILT =>
+                                                                                            "QUILT",
+                                                                                        LoaderHelper.LOADERID_FLINT =>
+                                                                                            "Flint Loader",
                                                                                         _ => x
                                                                                     }))
                 ];
@@ -178,9 +183,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         {
             var handle = await _agent.SearchAsync(SelectedRepository.Label,
                                                   QueryText,
-                                                  new(FilteredVersion,
-                                                      FilteredLoader?.LoaderId,
-                                                      ResourceKind.Modpack));
+                                                  new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
             var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
@@ -261,8 +264,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             catch (Exception ex)
             {
                 _notificationService.PopMessage(ex,
-                                                Resources
-                                                   .MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
+                                                Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
                                                 GrowlLevel.Warning);
             }
         }
