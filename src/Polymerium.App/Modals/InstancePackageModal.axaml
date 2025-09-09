@@ -348,7 +348,7 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
                                                         <controls:InstancePackageDependencyButton
-                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewDependencyCommand,Mode=OneWay}"
+                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewPackageCommand,Mode=OneWay}"
                                                             CommandParameter="{Binding}"
                                                             IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
                                                     </DataTemplate>
@@ -408,7 +408,7 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
                                                         <controls:InstancePackageDependencyButton
-                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewDependantCommand,Mode=OneWay}"
+                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewPackageCommand,Mode=OneWay}"
                                                             CommandParameter="{Binding}"
                                                             IsChecked="{Binding Installed,Converter={x:Static ObjectConverters.IsNotNull}}" />
                                                     </DataTemplate>
