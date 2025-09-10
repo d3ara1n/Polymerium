@@ -1,18 +1,19 @@
-﻿<Solution>
+<Solution>
     <Folder Name="/Docs/">
-        <File Path="docs\TRIDENT_V2.md"/>
-        <File Path="docs\Localization.md"/>
+        <File Path="docs\TRIDENT_V2.md" />
+        <File Path="docs\Localization.md" />
     </Folder>
     <Folder Name="/Misc/">
-        <File Path="README.md"/>
-        <File Path=".gitignore"/>
-        <File Path=".editorconfig"/>
-        <File Path="cliff.toml"/>
-        <File Path="GitVersion.yml"/>
+        <File Path="README.md" />
+        <File Path=".gitignore" />
+        <File Path=".editorconfig" />
+        <File Path="cliff.toml" />
+        <File Path="GitVersion.yml" />
     </Folder>
-    <Project Path="src\Polymerium.App\Polymerium.App.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" Type="Classic C#"/>
-    <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" Type="Classic C#"/>
+    <Project Path="src\Polymerium.App\Polymerium.App.csproj" Type="C#" />
+    <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" Type="C#" />
+    <Project Path="submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" Type="C#" />
+    <Project Path="submodules\Trident.Net\src\Trident.Cli\Trident.Cli.csproj" Type="C#" />
+    <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" Type="C#" />
+    <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" Type="C#" />
 </Solution>

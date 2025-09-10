@@ -6,9 +6,16 @@
 	],
 	"settings": {
 		"cSpell.words": [
-			"Polymerium",
 			"Avalonia",
-			"avares"
+			"avares",
+			"curseforge",
+			"modpack",
+			"modrinth",
+			"neoforge",
+			"neoforged",
+			"Paru",
+			"Polymerium",
+			"tripack"
 		]
 	},
 	"launch": {
