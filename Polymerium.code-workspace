@@ -9,6 +9,8 @@
 			"Avalonia",
 			"avares",
 			"curseforge",
+			"Headered",
+			"Huskui",
 			"modpack",
 			"modrinth",
 			"neoforge",
@@ -16,24 +18,42 @@
 			"Paru",
 			"Polymerium",
 			"tripack"
-		]
+		],
+		"axaml.selectedSolution": "c:\\Users\\d3ara\\Projects\\Polymerium\\Polymerium.slnx"
 	},
 	"launch": {
 		"version": "0.2.0",
 		"configurations": [
 			{
-				// Use IntelliSense to find out which attributes exist for C# debugging
-				// Use hover for the description of the existing attributes
-				// For further information visit https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md
 				"name": "Polymerium.App",
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "build",
-				// If you have changed target frameworks, make sure to update the program path.
 				"program": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net9.0/Polymerium.App.dll",
 				"args": [],
-				"cwd": "${workspaceFolder}/src/Polymerium.App",
-				// For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+				"cwd": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net9.0",
+				"console": "internalConsole",
+				"stopAtEntry": false
+			},
+            {
+				"name": "Huskui.Gallery",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "build",
+				"program": "${workspaceFolder}/submodules/Huskui.Avalonia/src/Huskui.Gallery/bin/Debug/net9.0/Huskui.Gallery.dll",
+				"args": [],
+				"cwd": "${workspaceFolder}/submodules/Huskui.Avalonia/src/Huskui.Gallery/bin/Debug/net9.0",
+				"console": "internalConsole",
+				"stopAtEntry": false
+			},
+            {
+				"name": "Trident.Cli",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "build",
+				"program": "${workspaceFolder}/submodules/Trident.Net/src/Trident.Cli/bin/Debug/net9.0/Trident.Cli.dll",
+				"args": [],
+				"cwd": "${workspaceFolder}/submodules/Trident.Net/src/Trident.Cli/bin/Debug/net9.0",
 				"console": "internalConsole",
 				"stopAtEntry": false
 			}
@@ -60,7 +80,7 @@
 				"type": "process",
 				"args": [
 					"publish",
-					"${workspaceFolder}/Polymerium.sln",
+					"${workspaceFolder}/Polymerium.slnx",
 					"/property:GenerateFullPaths=true",
 					"/consoleloggerparameters:NoSummary;ForceNoAlign"
 				],
@@ -74,7 +94,7 @@
 					"watch",
 					"run",
 					"--project",
-					"${workspaceFolder}/Polymerium.sln"
+					"${workspaceFolder}/Polymerium.slnx"
 				],
 				"problemMatcher": "$msCompile"
 			}

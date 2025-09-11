@@ -1,4 +1,4 @@
-﻿KEY 命名格式：
+﻿# KEY 命名格式
 
 `<ControlName>_<Region>[ControlType:Tag|Bar|Tab|Menu|Label|Button][Text|Placeholder|Prompt|Title|Subtitle]`
 
