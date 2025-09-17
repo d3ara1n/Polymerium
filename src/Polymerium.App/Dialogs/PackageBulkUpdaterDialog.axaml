@@ -1,0 +1,74 @@
+﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             xmlns:models="clr-namespace:Polymerium.App.Models"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:dialogs="clr-namespace:Polymerium.App.Dialogs"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Polymerium.App.Dialogs.PackageBulkUpdaterDialog" IsPrimaryButtonVisible="True"
+             Title="{x:Static lang:Resources.PackageBulkUpdaterModal_Title}">
+    <Panel>
+        <StackPanel VerticalAlignment="Center"
+                    Spacing="8"
+                    IsVisible="{Binding $parent[dialogs:PackageBulkUpdaterDialog].Result,Converter={x:Static husk:CollectionConverters.IsEmpty},FallbackValue=True}">
+            <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                  Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                       FontSize="{StaticResource LargeFontSize}"
+                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+        <ScrollViewer Margin="-18,0" Padding="18,0">
+            <ItemsControl ItemsSource="{Binding $parent[dialogs:PackageBulkUpdaterDialog].Result}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:PackageUpdaterModel">
+                        <Border Padding="12" Margin="3" BoxShadow="0 0 4 0 #3F000000"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Background="{StaticResource OverlaySolidBackgroundBrush}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" Width="{Binding $self.Bounds.Height}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                        ToolTip.Tip="{Binding Package.ProjectName}">
+                                    <Border.Background>
+                                        <ImageBrush asyncImageLoader:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                    </Border.Background>
+                                </Border>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding NewVersionName}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding NewVersionTime}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding OldVersionName}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding OldVersionTime}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <Grid Grid.Column="2" RowDefinitions="*,*">
+                                    <CheckBox Grid.Row="0" VerticalAlignment="Center"
+                                              HorizontalAlignment="Right"
+                                              IsChecked="{Binding IsChecked,Mode=TwoWay}" />
+                                    <icons:PackIconLucide Grid.Row="1" VerticalAlignment="Center"
+                                                          Kind="CornerUpLeft"
+                                                          Height="{StaticResource MediumFontSize}"
+                                                          Width="{StaticResource MediumFontSize}" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Panel>
+</husk:Dialog>
