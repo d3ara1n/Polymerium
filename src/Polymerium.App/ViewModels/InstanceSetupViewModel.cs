@@ -540,7 +540,7 @@ public partial class InstanceSetupViewModel(
             };
             reviewNotification.Actions.Add(new(Resources
                                                   .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
-                                               new RelayCommand(Review, CanReview)));
+                                               new AsyncRelayCommand(ReviewAsync, CanReview)));
             notificationService.Pop(reviewNotification);
 
             async Task UpdateAsync(InstancePackageModel entry, SemaphoreSlim semaphore, CancellationToken token)
@@ -615,17 +615,36 @@ public partial class InstanceSetupViewModel(
 
             bool CanReview() => !updates.IsEmpty;
 
-            void Review()
+            async Task ReviewAsync()
             {
-                var modal = new PackageBulkUpdaterModal
-                {
-                    DataService = dataService,
-                    NotificationService = notificationService,
-                    PersistenceService = persistenceService
-                };
-                modal.SetGuard(guard, updates.ToList());
-                overlayService.PopModal(modal);
+                var dialog = new PackageBulkUpdaterDialog() { Result = updates.ToList() };
                 reviewNotification.Dismiss();
+                if (await overlayService.PopDialogAsync(dialog)
+                 && dialog.Result is IReadOnlyList<PackageUpdaterModel> results)
+                {
+                    foreach (var model in results.Where(x => x.IsChecked))
+                    {
+                        var old = model.Entry.Entry.Purl;
+                        model.Entry.Version = new InstancePackageVersionModel(model.NewVersionId,
+                                                                              model.NewVersionName,
+                                                                              string.Join(",",
+                                                                                  model.Package.Requirements
+                                                                                     .AnyOfLoaders
+                                                                                     .Select(LoaderHelper
+                                                                                         .ToDisplayName)),
+                                                                              string.Join(",",
+                                                                                  model.Package.Requirements
+                                                                                     .AnyOfVersions),
+                                                                              model.NewVersionTimeRaw,
+                                                                              model.Package.ReleaseType,
+                                                                              model.Package.Dependencies);
+                        // 设置 Version 会同步到 Entry.Purl
+                        persistenceService.AppendAction(new(guard!.Key,
+                                                            PersistenceService.ActionKind.EditPackage,
+                                                            old,
+                                                            model.Entry.Entry.Purl));
+                    }
+                }
             }
         }
     }
@@ -642,12 +661,21 @@ public partial class InstanceSetupViewModel(
             var output = new List<ExportedEntry>();
             notification.ProgressMaximum = list.Count;
             notificationService.Pop(notification);
+            // 这里用单个解析也没关系，能进入这个页面就说明所有数据都被缓存过了
             foreach (var entry in list)
             {
+                string? label = null;
+                string? @namespace = null;
+                string? projectId = null;
+                string? versionId = null;
                 string? name = null;
                 string? version = null;
                 if (PackageHelper.TryParse(entry.Purl, out var result))
                 {
+                    label = result.Label;
+                    @namespace = result.Namespace;
+                    projectId = result.Pid;
+                    versionId = result.Vid;
                     try
                     {
                         await Task.Delay(TimeSpan.FromMilliseconds(50));
@@ -668,7 +696,16 @@ public partial class InstanceSetupViewModel(
                     }
                 }
 
-                output.Add(new(entry.Purl, entry.Enabled, entry.Source, [.. entry.Tags], name, version));
+                output.Add(new(entry.Purl,
+                               label,
+                               @namespace,
+                               projectId,
+                               versionId,
+                               entry.Enabled,
+                               entry.Source,
+                               [.. entry.Tags],
+                               name,
+                               version));
                 notification.Progress = output.Count;
                 notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
             }
@@ -704,6 +741,10 @@ public partial class InstanceSetupViewModel(
 
     private record ExportedEntry(
         string Purl,
+        string? Label,
+        string? Namespace,
+        string? ProjectId,
+        string? VersionId,
         bool Enabled,
         string? Source,
         string[] Tags,
