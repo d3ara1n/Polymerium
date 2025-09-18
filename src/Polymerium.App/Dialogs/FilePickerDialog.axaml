@@ -10,47 +10,25 @@
              IsPrimaryButtonVisible="True" Width="300"
              x:Class="Polymerium.App.Dialogs.FilePickerDialog">
     <StackPanel Spacing="12">
-        <husk:DropZone Padding="0" Model="{Binding $parent[local:FilePickerDialog].Result,Mode=OneWayToSource}"
+        <husk:DropZone Padding="16" Model="{Binding $parent[local:FilePickerDialog].Result,Mode=OneWayToSource}"
                        DragOver="DropZone_OnDragOver" Drop="DropZone_OnDrop">
-            <Panel>
-                <Rectangle Name="DashLine" RadiusX="6" RadiusY="6"
-                           StrokeThickness="2"
-                           Stroke="{StaticResource ControlInteractiveBorderBrush}"
-                           StrokeDashArray="6,2"
-                           StrokeLineCap="Round"
-                           StrokeJoin="Round" Fill="{StaticResource ControlInteractiveBackgroundBrush}">
-                    <Rectangle.Transitions>
-                        <Transitions>
-                            <DoubleTransition Property="Opacity"
-                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
-                        </Transitions>
-                    </Rectangle.Transitions>
-                </Rectangle>
-                <StackPanel Margin="16,12" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="4">
-                        <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" IsHitTestVisible="False" />
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
-                                   Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}"
-                                   IsHitTestVisible="False" />
+            <StackPanel HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" IsHitTestVisible="False" />
+                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                        <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
                         <HyperlinkButton Name="BrowseButton"
                                          Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
                                          FontWeight="{StaticResource ControlStrongFontWeight}"
                                          Click="BrowseButton_OnClick"
                                          Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                    </StackPanel>
-                    <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
-                               HorizontalAlignment="Center" IsHitTestVisible="False"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </TextBlock>
+
                 </StackPanel>
-            </Panel>
-            <husk:DropZone.Styles>
-                <Style Selector=":not(:dragover) Rectangle#DashLine">
-                    <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
-                </Style>
-                <Style Selector=":dragover Rectangle#DashLine">
-                    <Setter Property="Opacity" Value="1" />
-                </Style>
-            </husk:DropZone.Styles>
+                <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
+                           HorizontalAlignment="Center" IsHitTestVisible="False"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            </StackPanel>
         </husk:DropZone>
         <TextBox Text="{Binding $parent[local:FilePickerDialog].Result,Mode=TwoWay}"
                  Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />

@@ -54,7 +54,6 @@
                                    Padding="8"
                                    Background="{StaticResource LayerBackgroundBrush}"
                                    BorderBrush="{x:Null}"
-                                   CornerRadius="{StaticResource MediumCornerRadius}"
                                    DragOver="DropZone_OnDragOver"
                                    Drop="DropZone_OnDrop"
                                    Model="{Binding Thumbnail, Mode=OneWayToSource}">
