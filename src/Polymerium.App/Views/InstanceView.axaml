@@ -102,7 +102,7 @@
         <Grid ColumnDefinitions="Auto,0,*">
             <Border Grid.Column="0" Background="{StaticResource OverlayBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
-                <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,0,Auto">
+                <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,12,Auto,12,Auto">
                     <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
                         <icons:PackIconLucide Kind="ArrowLeft" />
                     </Button>
@@ -179,10 +179,15 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <Button Grid.Row="6" Command="{Binding OpenFolderCommand}" Margin="12,0">
+                    <Button Grid.Row="6" ToolTip.Tip="Import asset from file" Command="{Binding ImportFromFileCommand}"
+                            Margin="12,0">
+                        <icons:PackIconLucide Kind="Import" />
+                    </Button>
+                    <Button Grid.Row="8" ToolTip.Tip="Open instance folder" Command="{Binding OpenFolderCommand}"
+                            Margin="12,0">
                         <icons:PackIconLucide Kind="Folder" />
                     </Button>
-                    <Border Grid.Row="8" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
+                    <Border Grid.Row="10" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
                             BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
                             Height="{Binding $self.Bounds.Width}"
                             BackgroundSizing="InnerBorderEdge">

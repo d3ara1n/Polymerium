@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
@@ -28,11 +29,13 @@ public partial class InstanceViewModel : ViewModelBase
 {
     public InstanceViewModel(
         ViewBag bag,
+        OverlayService overlayService,
         ProfileManager profileManager,
         InstanceManager instanceManager,
         WidgetHostService widgetHostService)
     {
         _profileManager = profileManager;
+        _overlayService = overlayService;
         _instanceManager = instanceManager;
         SelectedPage = bag.Parameter switch
                        {
@@ -74,6 +77,17 @@ public partial class InstanceViewModel : ViewModelBase
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+    }
+
+    [RelayCommand]
+    private void ImportFromFile()
+    {
+        // 这里应该是 AssetImportDialog 才对
+        // AssetIdentificationModel { AssetIdentificationPackageModel, AssetIdentificationPersistModel { IsInImportMode: bool } }
+        // Result is AssetIdentificationPackageModel package
+        //  or AssetIdentificationPersistModel { IsInImportMode: false } import
+        //  or AssetIdentificationPersistModel { IsInImportMode: true } persist
+        _overlayService.PopDialog(new AssetImporterDialog { });
     }
 
     #endregion
@@ -148,6 +162,7 @@ public partial class InstanceViewModel : ViewModelBase
 
     private readonly InstanceManager _instanceManager;
     private readonly ProfileManager _profileManager;
+    private readonly OverlayService _overlayService;
 
     #endregion
 

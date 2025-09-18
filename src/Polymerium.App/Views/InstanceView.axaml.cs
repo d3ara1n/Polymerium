@@ -30,7 +30,8 @@ public partial class InstanceView : ScopedPage
     {
         InitializeComponent();
 
-        Frame.PageActivator = MainWindow.Instance.PageActivator;
+        if (!Design.IsDesignMode)
+            Frame.PageActivator = MainWindow.Instance.PageActivator;
         NavigateCommand = new RelayCommand<Type>(Navigate);
     }
 
