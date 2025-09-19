@@ -106,7 +106,7 @@
         <value>强制退出</value>
     </data>
     <data name="InstanceHomeView_DetachButtonText" xml:space="preserve">
-        <value>弹射</value>
+        <value>分离</value>
     </data>
     <data name="InstanceHomeView_DashboardButtonTitle" xml:space="preserve">
         <value>日志</value>

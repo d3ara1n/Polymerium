@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Models;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -19,9 +21,11 @@ using Polymerium.App.Views;
 using Polymerium.App.Widgets;
 using Trident.Abstractions;
 using Trident.Abstractions.Tasks;
+using Trident.Abstractions.Utilities;
 using Trident.Core;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
@@ -32,11 +36,17 @@ public partial class InstanceViewModel : ViewModelBase
         OverlayService overlayService,
         ProfileManager profileManager,
         InstanceManager instanceManager,
-        WidgetHostService widgetHostService)
+        WidgetHostService widgetHostService,
+        NotificationService notificationService,
+        DataService dataService,
+        PersistenceService persistenceService)
     {
         _profileManager = profileManager;
         _overlayService = overlayService;
         _instanceManager = instanceManager;
+        _notificationService = notificationService;
+        _dataService = dataService;
+        _persistenceService = persistenceService;
         SelectedPage = bag.Parameter switch
                        {
                            CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
@@ -80,14 +90,81 @@ public partial class InstanceViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ImportFromFile()
+    private async Task ImportFromFile()
     {
         // 这里应该是 AssetImportDialog 才对
         // AssetIdentificationModel { AssetIdentificationPackageModel, AssetIdentificationPersistModel { IsInImportMode: bool } }
         // Result is AssetIdentificationPackageModel package
-        //  or AssetIdentificationPersistModel { IsInImportMode: false } import
-        //  or AssetIdentificationPersistModel { IsInImportMode: true } persist
-        _overlayService.PopDialog(new AssetImporterDialog { });
+        //  or AssetIdentificationPersistModel { IsInImportMode: false } persist
+        //  or AssetIdentificationPersistModel { IsInImportMode: true } import
+        var dialog = new AssetImporterDialog { DataService = _dataService, NotificationService = _notificationService };
+        if (await _overlayService.PopDialogAsync(dialog))
+        {
+            switch (dialog.Result)
+            {
+                case AssetIdentificationPackageModel package:
+                    if (_profileManager.TryGetMutable(Basic.Key, out var guard))
+                    {
+                        await using (guard)
+                        {
+                            if (!guard.Value.Setup.Packages.Any(x => PackageHelper.IsMatched(x.Purl,
+                                                                    package.Package.Label,
+                                                                    package.Package.Namespace,
+                                                                    package.Package.ProjectId)))
+                            {
+                                var purl = PackageHelper.ToPurl(package.Package.Label,
+                                                                package.Package.Namespace,
+                                                                package.Package.ProjectId,
+                                                                package.Package.VersionId);
+                                guard.Value.Setup.Packages.Add(new(purl, true, null, []));
+                                _persistenceService.AppendAction(new(Basic.Key,
+                                                                     PersistenceService.ActionKind.EditPackage,
+                                                                     null,
+                                                                     purl));
+                                _notificationService
+                                   .PopMessage($"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
+                                               guard.Key);
+                            }
+                            else
+                            {
+                                _notificationService
+                                   .PopMessage($"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
+                                               "Failed to import as package",
+                                               GrowlLevel.Danger);
+                            }
+                        }
+                    }
+
+                    break;
+                case AssetIdentificationPersistModel persist:
+                    var target =
+                        Path.Combine(persist.IsInImportMode
+                                         ? PathDef.Default.DirectoryOfImport(Basic.Key)
+                                         : PathDef.Default.DirectoryOfPersist(Basic.Key),
+                                     FileHelper.GetAssetFolderName(persist.Kind),
+                                     Path.GetFileName(persist.Path));
+                    if (!File.Exists(target))
+                    {
+                        var dir = Path.GetDirectoryName(target);
+                        if (dir != null && !Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        File.Copy(persist.Path, target, false);
+                        _notificationService.PopMessage($"File {target} has added to the instance", Basic.Key);
+                    }
+                    else
+                    {
+                        var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
+                        _notificationService.PopMessage($"File {relative} already exists",
+                                                        "Failed to import as solid file",
+                                                        GrowlLevel.Danger);
+                    }
+
+                    break;
+            }
+        }
     }
 
     #endregion
@@ -163,6 +240,9 @@ public partial class InstanceViewModel : ViewModelBase
     private readonly InstanceManager _instanceManager;
     private readonly ProfileManager _profileManager;
     private readonly OverlayService _overlayService;
+    private readonly DataService _dataService;
+    private readonly NotificationService _notificationService;
+    private readonly PersistenceService _persistenceService;
 
     #endregion
 
