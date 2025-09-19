@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -13,7 +12,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services.Profiles;
 using Version = Trident.Abstractions.Repositories.Resources.Version;

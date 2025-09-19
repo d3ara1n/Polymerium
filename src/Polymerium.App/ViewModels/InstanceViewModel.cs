@@ -80,6 +80,12 @@ public partial class InstanceViewModel : ViewModelBase
         }
     }
 
+    #region Nested type: CompositeParameter
+
+    public record CompositeParameter(string Key, Type Subview);
+
+    #endregion
+
     #region Commands
 
     [RelayCommand]
@@ -166,12 +172,6 @@ public partial class InstanceViewModel : ViewModelBase
             }
         }
     }
-
-    #endregion
-
-    #region Nested type: CompositeParameter
-
-    public record CompositeParameter(string Key, Type Subview);
 
     #endregion
 

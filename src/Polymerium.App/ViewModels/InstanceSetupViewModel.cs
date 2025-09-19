@@ -65,7 +65,7 @@ public partial class InstanceSetupViewModel(
             IsRefreshing = true;
             Task.Run(async () =>
                      {
-                         // 有 vid 的走 ResolvePackagesAsync 没有的走 QueryProjectAsync
+                         // 有 vid 的走 ResolvePackagesAsync 没有的走 QueryProjectsAsync
                          try
                          {
                              var purls = profile
@@ -617,7 +617,7 @@ public partial class InstanceSetupViewModel(
 
             async Task ReviewAsync()
             {
-                var dialog = new PackageBulkUpdaterDialog() { Result = updates.ToList() };
+                var dialog = new PackageBulkUpdaterDialog { Result = updates.ToList() };
                 reviewNotification.Dismiss();
                 if (await overlayService.PopDialogAsync(dialog)
                  && dialog.Result is IReadOnlyList<PackageUpdaterModel> results)
