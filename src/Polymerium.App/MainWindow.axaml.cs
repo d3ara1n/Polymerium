@@ -1,11 +1,15 @@
 using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
+using Polymerium.App.Views;
 
 namespace Polymerium.App;
 
@@ -163,4 +167,28 @@ public partial class MainWindow : AppWindow
     }
 
     #endregion
+
+    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            e.IsValid = true;
+        }
+    }
+
+    private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            var file = e.Data.GetFiles()?.FirstOrDefault();
+            if (file != null)
+            {
+                var path = file.TryGetLocalPath();
+                if (path != null && DataContext is MainWindowContext context)
+                {
+                    context.Navigate(typeof(NewInstanceView), path);
+                }
+            }
+        }
+    }
 }

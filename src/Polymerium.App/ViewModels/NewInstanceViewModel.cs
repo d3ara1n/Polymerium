@@ -23,6 +23,7 @@ using Trident.Core.Utilities;
 namespace Polymerium.App.ViewModels;
 
 public partial class NewInstanceViewModel(
+    ViewBag bag,
     OverlayService overlayService,
     ProfileManager profileManager,
     NavigationService navigationService,
@@ -40,6 +41,11 @@ public partial class NewInstanceViewModel(
             return;
         }
 
+        if (bag.Parameter is string path)
+        {
+            await TryImportFromFileAsync(path);
+        }
+
         var game = await dataService.GetMinecraftVersionsAsync();
         var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
 
@@ -47,6 +53,31 @@ public partial class NewInstanceViewModel(
         var first = game.Versions.FirstOrDefault(x => x.Recommended);
         VersionName = first != null ? first.Version : string.Empty;
         IsVersionLoaded = true;
+    }
+
+    #endregion
+
+    #region Other
+
+    private async Task TryImportFromFileAsync(string path)
+    {
+        try
+        {
+            var fs = new FileStream(path, FileMode.Open);
+            var ms = new MemoryStream();
+            await fs.CopyToAsync(ms);
+            fs.Close();
+            ms.Position = 0;
+            var pack = new CompressedProfilePack(ms);
+            var container = await importerAgent.ImportAsync(pack);
+            ImportedPack = new(path, pack, container);
+            VersionName = container.Profile.Setup.Version;
+            DisplayName = container.Profile.Name;
+        }
+        catch (Exception e)
+        {
+            notificationService.PopMessage(e, Resources.NewInstanceView_ImportDangerNotificationTitle);
+        }
     }
 
     #endregion
@@ -74,23 +105,7 @@ public partial class NewInstanceViewModel(
                                                          Resources.NewInstanceView_RequestFileTitle);
         if (path != null)
         {
-            try
-            {
-                var fs = new FileStream(path, FileMode.Open);
-                var ms = new MemoryStream();
-                await fs.CopyToAsync(ms);
-                fs.Close();
-                ms.Position = 0;
-                var pack = new CompressedProfilePack(ms);
-                var container = await importerAgent.ImportAsync(pack);
-                ImportedPack = new(path, pack, container);
-                VersionName = container.Profile.Setup.Version;
-                DisplayName = container.Profile.Name;
-            }
-            catch (Exception e)
-            {
-                notificationService.PopMessage(e, Resources.NewInstanceView_ImportDangerNotificationTitle);
-            }
+            await TryImportFromFileAsync(path);
         }
     }
 

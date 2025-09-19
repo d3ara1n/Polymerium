@@ -302,6 +302,19 @@
                     </husk:Card>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Drag">
+                <husk:DropContainer DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
+                    <husk:DropContainer.Overlay>
+                        <StackPanel Opacity="0.7" Margin="64,48" Spacing="12">
+                            <icons:PackIconLucide Kind="FilePlus" Height="36" Width="36" HorizontalAlignment="Center"
+                                                  Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                        </StackPanel>
+                    </husk:DropContainer.Overlay>
+                    <husk:Card Padding="64,48">
+                        <TextBlock x:Name="DragText" Text="Drag and drop text here" />
+                    </husk:Card>
+                </husk:DropContainer>
+            </TabItem>
         </TabControl>
     </StackPanel>
 </husk:Page>

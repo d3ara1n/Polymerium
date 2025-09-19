@@ -96,14 +96,17 @@ public partial class InstanceViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task ImportFromFile()
+    public async Task ImportFromFileAsync(string? initialPath)
     {
         // 这里应该是 AssetImportDialog 才对
         // AssetIdentificationModel { AssetIdentificationPackageModel, AssetIdentificationPersistModel { IsInImportMode: bool } }
         // Result is AssetIdentificationPackageModel package
         //  or AssetIdentificationPersistModel { IsInImportMode: false } persist
         //  or AssetIdentificationPersistModel { IsInImportMode: true } import
-        var dialog = new AssetImporterDialog { DataService = _dataService, NotificationService = _notificationService };
+        var dialog = new AssetImporterDialog
+        {
+            PathAccepted = initialPath, DataService = _dataService, NotificationService = _notificationService
+        };
         if (await _overlayService.PopDialogAsync(dialog))
         {
             switch (dialog.Result)

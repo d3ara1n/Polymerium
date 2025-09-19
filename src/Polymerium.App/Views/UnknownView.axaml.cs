@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Collections;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.Input;
@@ -65,6 +66,26 @@ public partial class UnknownView : Page
             else
             {
                 Application.Current.RequestedThemeVariant = ThemeVariant.Light;
+            }
+        }
+    }
+
+    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Text))
+        {
+            e.IsValid = true;
+        }
+    }
+
+    private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Text))
+        {
+            var text = e.Data.GetText();
+            if (text != null)
+            {
+                DragText.Text = text;
             }
         }
     }

@@ -190,7 +190,6 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3" />
-                <!-- <AutoCompleteBox/> -->
                 <TextBox
                     Grid.Row="3"
                     Grid.Column="0"
@@ -205,70 +204,89 @@
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </TextBox.InnerRightContent>
                 </TextBox>
-                <Panel
+                <husk:DropContainer
                     Grid.Row="4"
                     Grid.Column="0"
-                    Grid.ColumnSpan="3">
-                    <StackPanel VerticalAlignment="Center"
-                                IsVisible="{Binding View.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
-                                Spacing="8">
-                        <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
-                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                   FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
-                    </StackPanel>
-                    <ScrollViewer
-                        Margin="0,0,-8,0">
-                        <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
-                                      ClipToBounds="False">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="m:InstanceEntryModel">
-                                    <controls:InstanceEntryButton
-                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
-                                        CommandParameter="{Binding Basic.Key}"
-                                        State="{Binding State,Mode=OneWay}">
-                                        <controls:InstanceEntryButton.ContextFlyout>
-                                            <MenuFlyout>
-                                                <MenuItem Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
-                                                          Icon="{fie:SymbolIcon Symbol=Rocket,FontSize={StaticResource MediumFontSize}}"
-                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).PlayCommand,FallbackValue={x:Null}}"
-                                                          CommandParameter="{Binding Basic.Key}" />
-                                                <MenuItem Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
-                                                          Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,FontSize={StaticResource MediumFontSize}}"
-                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand,FallbackValue={x:Null}}"
-                                                          CommandParameter="{Binding Basic.Key}" />
-                                                <MenuItem Header="-" />
-                                                <MenuItem
-                                                    Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
-                                                    Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
-                                                    Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding Basic.Key}" />
-                                                <MenuItem Header="-" />
-                                                <MenuItem Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
-                                                          Icon="{fie:SymbolIcon Symbol=BoxMultiple,FontSize={StaticResource MediumFontSize}}"
-                                                          Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand,FallbackValue={x:Null}}"
-                                                          CommandParameter="{Binding Basic.Key}" />
-                                                <MenuItem
-                                                    Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
-                                                    Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,FontSize={StaticResource MediumFontSize}}"
-                                                    Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand,FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding Basic.Key}" />
-                                            </MenuFlyout>
-                                        </controls:InstanceEntryButton.ContextFlyout>
-                                    </controls:InstanceEntryButton>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Spacing="4" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Panel>
+                    Grid.ColumnSpan="3" DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
+                    <husk:DropContainer.Overlay>
+                        <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Rectangle RadiusX="6" RadiusY="6"
+                                       Fill="{StaticResource ControlInteractiveBackgroundBrush}"
+                                       Stroke="{StaticResource ControlInteractiveBorderBrush}" StrokeThickness="2"
+                                       StrokeDashArray="6,2" StrokeJoin="Round" StrokeLineCap="Round" />
+                            <StackPanel Opacity="{StaticResource Overlay1Opacity}" Margin="24,18" Spacing="12">
+                                <icons:PackIconLucide Kind="PackagePlus" Height="36" Width="36"
+                                                      HorizontalAlignment="Center"
+                                                      Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                            </StackPanel>
+                        </Panel>
+                    </husk:DropContainer.Overlay>
+                    <Panel>
+                        <StackPanel VerticalAlignment="Center"
+                                    IsVisible="{Binding View.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
+                                    Spacing="8">
+                            <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
+                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                  Width="{StaticResource ExtraLargeFontSize}"
+                                                  HorizontalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                       FontSize="{StaticResource LargeFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <ScrollViewer
+                            Margin="0,0,-8,0">
+                            <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
+                                          ClipToBounds="False">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="m:InstanceEntryModel">
+                                        <controls:InstanceEntryButton
+                                            Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            State="{Binding State,Mode=OneWay}">
+                                            <controls:InstanceEntryButton.ContextFlyout>
+                                                <MenuFlyout>
+                                                    <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=Rocket,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).PlayCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
+                                                    <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
+                                                    <MenuItem Header="-" />
+                                                    <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
+                                                    <MenuItem Header="-" />
+                                                    <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=BoxMultiple,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
+                                                    <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
+                                                </MenuFlyout>
+                                            </controls:InstanceEntryButton.ContextFlyout>
+                                        </controls:InstanceEntryButton>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Spacing="4" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Panel>
+                </husk:DropContainer>
                 <husk:Divider
                     Grid.Row="5"
                     Grid.Column="0"
