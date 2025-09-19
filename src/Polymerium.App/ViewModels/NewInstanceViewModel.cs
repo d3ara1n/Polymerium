@@ -45,7 +45,7 @@ public partial class NewInstanceViewModel(
 
         Versions = versions;
         var first = game.Versions.FirstOrDefault(x => x.Recommended);
-        VersionName = first != default ? first.Version : string.Empty;
+        VersionName = first != null ? first.Version : string.Empty;
         IsVersionLoaded = true;
     }
 

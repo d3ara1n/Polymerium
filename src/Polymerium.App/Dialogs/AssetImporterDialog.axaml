@@ -6,44 +6,56 @@
              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:local="clr-namespace:Polymerium.App.Modals"
+             xmlns:m="clr-namespace:Polymerium.App.Models"
              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+             xmlns:converters="clr-namespace:Polymerium.App.Converters"
              mc:Ignorable="d" Width="400" Title="Add asset or package from file"
              x:Class="Polymerium.App.Modals.AssetImporterDialog" IsPrimaryButtonVisible="True">
-    <husk:SwitchPresenter>
-        <husk:SwitchCase>
-            <Grid RowDefinitions="*,*,Auto" ColumnDefinitions="*,*" RowSpacing="8" ColumnSpacing="8">
-                <husk:SwitchPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                    <husk:SwitchCase>
-                        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="4"
-                                CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid RowDefinitions="Auto,*">
-                                <DockPanel Grid.Row="0" Margin="12,8">
-                                    <HyperlinkButton DockPanel.Dock="Right" Content="CURSEFORGE"
-                                                     FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                    <RadioButton>
-                                        <TextBlock Text="作为包引用" />
-                                    </RadioButton>
-                                </DockPanel>
-                                <Border Grid.Row="1" Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                        Padding="16"
-                                        CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
-                                        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="36"
-                                                Width="36"
+    <husk:PlaceholderPresenter Source="{Binding $parent[local:AssetImporterDialog].Model,Mode=OneWay}">
+        <husk:PlaceholderPresenter.SourceTemplate>
+            <DataTemplate DataType="m:AssetIdentificationModel">
+                <Grid RowDefinitions="*,*,Auto" ColumnDefinitions="*,*" RowSpacing="8" ColumnSpacing="8">
+                    <husk:PlaceholderPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                               Source="{Binding Package}">
+                        <husk:PlaceholderPresenter.SourceTemplate>
+                            <DataTemplate DataType="m:AssetIdentificationPackageModel">
+                                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="4"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Grid RowDefinitions="Auto,*">
+                                        <DockPanel Grid.Row="0" Margin="12,8">
+                                            <HyperlinkButton DockPanel.Dock="Right"
+                                                             NavigateUri="{Binding Reference}"
+                                                             Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
+                                                             FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                            <RadioButton
+                                                IsChecked="{Binding $parent[local:AssetImporterDialog].IsPackageSelected,Mode=TwoWay}">
+                                                <TextBlock Text="作为包引用" />
+                                            </RadioButton>
+                                        </DockPanel>
+                                        <Border Grid.Row="1" Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                Padding="16"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                                            </Border.Background>
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
+                                                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="36"
+                                                        Width="36"
+                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <Border.Background>
+                                                        <ImageBrush
+                                                            async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                                    </Border.Background>
+                                                </Border>
+                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ProjectName}" />
+                                                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                                           Text="{Binding VersionName}"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            </Grid>
                                         </Border>
-                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Name" />
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="Version"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     </Grid>
                                 </Border>
-                            </Grid>
-                        </Border>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase>
+                            </DataTemplate>
+                        </husk:PlaceholderPresenter.SourceTemplate>
                         <Border CornerRadius="{StaticResource MediumCornerRadius}"
                                 Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12">
                             <StackPanel>
@@ -52,60 +64,85 @@
                                 <TextBlock Text="未在资源托管站点检索到该资源" />
                             </StackPanel>
                         </Border>
-                    </husk:SwitchCase>
-                </husk:SwitchPresenter>
-                <husk:Card Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                           CornerRadius="{StaticResource MediumCornerRadius}"
-                           Padding="16">
-                    <StackPanel Spacing="8">
-                        <DockPanel>
-                            <TabStrip DockPanel.Dock="Right" Theme="{StaticResource SegmentedTabStripTheme}">
-                                <TabStripItem Content="Portable" />
-                                <TabStripItem Content="Persistent" />
-                            </TabStrip>
-                            <RadioButton>
-                                <TextBlock Text="作为实体文件" />
-                            </RadioButton>
-                        </DockPanel>
-                        <StackPanel>
-                            <TextBlock Text="抛弃 Polymerium 的文件管理机制，使用传统的 mod.jar 放入 mods 模式。" TextWrapping="Wrap" />
-                            <TextBlock
-                                Text="持久化文件保存在 persist 目录中，并在每次部署中保持不变；可移植文件是持久化文件的一种，但保存在 import 目录，且会随整合包导出一块打包。"
-                                TextWrapping="Wrap"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <HyperlinkButton Content="import 目录" />
-                                <HyperlinkButton Content="persist 目录" />
+                    </husk:PlaceholderPresenter>
+                    <husk:Card Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                               CornerRadius="{StaticResource MediumCornerRadius}"
+                               Padding="16">
+                        <StackPanel Spacing="8">
+                            <DockPanel>
+                                <CheckBox DockPanel.Dock="Right"
+                                          IsChecked="{Binding Persist.IsInImportMode,Mode=TwoWay}">
+                                    <TextBlock Text="可移植" />
+                                </CheckBox>
+                                <RadioButton
+                                    IsChecked="{Binding $parent[local:AssetImporterDialog].IsAssetSelected,Mode=TwoWay}">
+                                    <TextBlock Text="作为实体文件" />
+                                </RadioButton>
+                            </DockPanel>
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <TextBlock Text="文件类型: " VerticalAlignment="Bottom" />
+                                <TabStrip ItemsSource="{Binding Persist.Kinds}"
+                                          SelectedItem="{Binding Persist.Kind,Mode=TwoWay}">
+                                    <TabStrip.ItemTemplate>
+                                        <DataTemplate DataType="resources:ResourceKind">
+                                            <TextBlock
+                                                Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                        </DataTemplate>
+                                    </TabStrip.ItemTemplate>
+                                </TabStrip>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="抛弃 Polymerium 的文件管理机制，使用传统的 mod.jar 放入 mods 模式。" TextWrapping="Wrap" />
+                                <TextBlock
+                                    Text="持久化文件保存在 persist 目录中，并在每次部署中保持不变；可移植文件是持久化文件的一种，但保存在 import 目录，且会随整合包导出一块打包。"
+                                    TextWrapping="Wrap"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </husk:Card>
-                <husk:InfoBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                              Content="实体资源文件不会显示在包列表中, 请在 资源管理器 中查看。" />
-            </Grid>
-        </husk:SwitchCase>
-        <husk:SwitchCase>
-            <husk:ConstrainedBox AspectRatio="16:9">
-                <husk:DropZone VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-                    <StackPanel HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled"
-                                           IsHitTestVisible="False" />
-                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
-                                <HyperlinkButton Name="BrowseButton"
-                                                 Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
-                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                 Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                            </TextBlock>
-
+                    </husk:Card>
+                    <husk:InfoBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                  Content="实体资源文件不会显示在包列表中, 请在 资源管理器 中查看。" />
+                </Grid>
+            </DataTemplate>
+        </husk:PlaceholderPresenter.SourceTemplate>
+        <husk:ConstrainedBox AspectRatio="16:9">
+            <husk:DropZone VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                           Model="{Binding $parent[local:AssetImporterDialog].PathAccepted,Mode=OneWayToSource}"
+                           DragOver="DropZone_OnDragOver"
+                           Drop="DropZone_OnDrop"
+                           IsEnabled="{Binding $parent[local:AssetImporterDialog].PathAccepted,Mode=OneWay,Converter={x:Static ObjectConverters.IsNull}}">
+                <husk:SwitchPresenter
+                    Value="{Binding $parent[local:AssetImporterDialog].PathAccepted,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay}"
+                    TargetType="x:Boolean">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+                            <husk:ProgressRing IsIndeterminate="True" Height="32" Width="32"
+                                               HorizontalAlignment="Center" />
+                            <TextBlock Text="Identifying file type..." />
                         </StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
-                                   HorizontalAlignment="Center" IsHitTestVisible="False"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                    </StackPanel>
-                </husk:DropZone>
-            </husk:ConstrainedBox>
-        </husk:SwitchCase>
-    </husk:SwitchPresenter>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled"
+                                               IsHitTestVisible="False" />
+                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                    <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
+                                    <HyperlinkButton Name="BrowseButton"
+                                                     Click="BrowseButton_OnClick"
+                                                     Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                     Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                </TextBlock>
+
+                            </StackPanel>
+                            <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
+                                       HorizontalAlignment="Center" IsHitTestVisible="False"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:DropZone>
+        </husk:ConstrainedBox>
+    </husk:PlaceholderPresenter>
 </husk:Dialog>

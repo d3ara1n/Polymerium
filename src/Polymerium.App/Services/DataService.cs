@@ -29,6 +29,8 @@ public class DataService(
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
 
+    public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentityAsync(filePath);
+
     public ValueTask<Package> ResolvePackageAsync(
         string label,
         string? ns,
