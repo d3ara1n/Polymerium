@@ -51,7 +51,6 @@ public partial class MainWindowContext : ObservableObject
         _navigationService = navigationService;
         _persistenceService = persistenceService;
         _instanceService = instanceService;
-        _overlayService = overlayService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -71,7 +70,7 @@ public partial class MainWindowContext : ObservableObject
             var model = new PrivilegeRequirementModal { NotificationService = notificationService };
             if (!model.Check())
             {
-                _overlayService.PopModal(model);
+                overlayService.PopModal(model);
             }
         }
     }
@@ -86,7 +85,12 @@ public partial class MainWindowContext : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
-    private readonly OverlayService _overlayService;
+
+    #endregion
+
+    #region Other
+
+    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
 
     #endregion
 
@@ -116,7 +120,7 @@ public partial class MainWindowContext : ObservableObject
     {
         if (page != null)
         {
-            _navigationService.Navigate(page);
+            Navigate(page, null);
         }
     }
 
@@ -159,7 +163,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                          typeof(InstancePropertiesView)));
+                                                                             typeof(InstancePropertiesView)));
         }
     }
 
@@ -169,7 +173,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                          typeof(InstanceSetupView)));
+                                                                             typeof(InstanceSetupView)));
         }
     }
 

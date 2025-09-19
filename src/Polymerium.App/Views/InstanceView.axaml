@@ -99,107 +99,123 @@
                 </Rectangle>
             </husk:SwitchCase>
         </husk:SwitchPresenter>
-        <Grid ColumnDefinitions="Auto,0,*">
-            <Border Grid.Column="0" Background="{StaticResource OverlayBackgroundBrush}"
-                    CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
-                <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,12,Auto,12,Auto">
-                    <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
-                        <icons:PackIconLucide Kind="ArrowLeft" />
-                    </Button>
-                    <ListBox x:Name="EntryBox" Grid.Row="2" SelectionMode="Single" ItemsSource="{Binding PageEntries}"
-                             SelectedValue="{Binding SelectedPage}"
-                             Padding="0" SelectionChanged="EntryBox_OnSelectionChanged"
-                             ClipToBounds="False">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="m:InstanceSubpageEntryModel">
-                                <icons:PackIconLucide Kind="{Binding Icon}" Height="18" HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ItemContainerTheme>
-                            <ControlTheme TargetType="ListBoxItem">
-                                <Setter Property="Cursor" Value="Hand" />
-                                <Setter Property="ClipToBounds" Value="False" />
-                                <Setter Property="Template">
-                                    <ControlTemplate>
-                                        <Panel Background="{StaticResource TransparentBrush}">
-                                            <Border Name="Indicator" Opacity="0"
-                                                    Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
-                                                <Border.Transitions>
-                                                    <Transitions>
-                                                        <DoubleTransition Property="Opacity" Easing="CubicEaseOut"
-                                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                    </Transitions>
-                                                </Border.Transitions>
-                                            </Border>
-                                            <Border Name="Lock" Opacity="0" BorderThickness="3,0"
-                                                    BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
-                                                    RenderTransform="scaleX(1.1)">
-                                                <Border.Transitions>
-                                                    <Transitions>
-                                                        <DoubleTransition Property="Opacity"
-                                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                        <TransformOperationsTransition Property="RenderTransform"
-                                                                Easing="CubicEaseOut"
-                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                    </Transitions>
-                                                </Border.Transitions>
-                                            </Border>
-                                            <ContentPresenter Name="PART_ContentPresenter" Margin="8"
-                                                              Content="{TemplateBinding Content}"
-                                                              ContentTemplate="{TemplateBinding ContentTemplate}">
-                                                <ContentPresenter.Transitions>
-                                                    <Transitions>
-                                                        <BrushTransition Property="Foreground"
-                                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                    </Transitions>
-                                                </ContentPresenter.Transitions>
-                                            </ContentPresenter>
-                                        </Panel>
-                                    </ControlTemplate>
-                                </Setter>
-                                <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
-                                    <Setter Property="Foreground"
-                                            Value="{StaticResource ControlAccentForegroundBrush}" />
-                                </Style>
-                                <Style Selector="^:pointerover /template/ Border#Indicator">
-                                    <Setter Property="Opacity" Value="1" />
-                                </Style>
-                                <Style Selector="^:selected /template/ Border#Indicator">
-                                    <Setter Property="Opacity" Value="1" />
-                                </Style>
-                                <Style Selector="^:selected /template/ Border#Lock">
-                                    <Setter Property="Opacity" Value="1" />
-                                    <Setter Property="RenderTransform" Value="scaleX(1.0)" />
-                                </Style>
-                            </ControlTheme>
-                        </ListBox.ItemContainerTheme>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Spacing="4" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                    </ListBox>
-                    <Button Grid.Row="6" ToolTip.Tip="Import asset from file" Command="{Binding ImportFromFileCommand}"
-                            Margin="12,0">
-                        <icons:PackIconLucide Kind="Import" />
-                    </Button>
-                    <Button Grid.Row="8" ToolTip.Tip="Open instance folder" Command="{Binding OpenFolderCommand}"
-                            Margin="12,0">
-                        <icons:PackIconLucide Kind="Folder" />
-                    </Button>
-                    <Border Grid.Row="10" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
-                            BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
-                            Height="{Binding $self.Bounds.Width}"
-                            BackgroundSizing="InnerBorderEdge">
-                        <Border.Background>
-                            <ImageBrush Source="{Binding Basic.Thumbnail}" />
-                        </Border.Background>
-                    </Border>
-                </Grid>
-            </Border>
-            <Panel Grid.Column="2">
-                <husk:Frame x:Name="Frame" />
-            </Panel>
-        </Grid>
+        <husk:DropContainer DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
+            <husk:DropContainer.Overlay>
+                <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle RadiusX="6" RadiusY="6" Fill="{StaticResource ControlInteractiveBackgroundBrush}"
+                               Stroke="{StaticResource ControlInteractiveBorderBrush}" StrokeThickness="2"
+                               StrokeDashArray="6,2" StrokeJoin="Round" StrokeLineCap="Round" />
+                    <StackPanel Opacity="{StaticResource Overlay1Opacity}" Margin="48,36" Spacing="12">
+                        <icons:PackIconLucide Kind="FilePlus" Height="42" Width="42" HorizontalAlignment="Center"
+                                              Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                    </StackPanel>
+                </Panel>
+            </husk:DropContainer.Overlay>
+            <Grid ColumnDefinitions="Auto,0,*">
+                <Border Grid.Column="0" Background="{StaticResource LayerBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
+                    <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,12,Auto,12,Auto">
+                        <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
+                            <icons:PackIconLucide Kind="ArrowLeft" />
+                        </Button>
+                        <ListBox x:Name="EntryBox" Grid.Row="2" SelectionMode="Single"
+                                 ItemsSource="{Binding PageEntries}"
+                                 SelectedValue="{Binding SelectedPage}"
+                                 Padding="0" SelectionChanged="EntryBox_OnSelectionChanged"
+                                 ClipToBounds="False">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="m:InstanceSubpageEntryModel">
+                                    <icons:PackIconLucide Kind="{Binding Icon}" Height="18"
+                                                          HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemContainerTheme>
+                                <ControlTheme TargetType="ListBoxItem">
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="ClipToBounds" Value="False" />
+                                    <Setter Property="Template">
+                                        <ControlTemplate>
+                                            <Panel Background="{StaticResource TransparentBrush}">
+                                                <Border Name="Indicator" Opacity="0"
+                                                        Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
+                                                    <Border.Transitions>
+                                                        <Transitions>
+                                                            <DoubleTransition Property="Opacity" Easing="CubicEaseOut"
+                                                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                        </Transitions>
+                                                    </Border.Transitions>
+                                                </Border>
+                                                <Border Name="Lock" Opacity="0" BorderThickness="3,0"
+                                                        BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                                        RenderTransform="scaleX(1.1)">
+                                                    <Border.Transitions>
+                                                        <Transitions>
+                                                            <DoubleTransition Property="Opacity"
+                                                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                    Easing="CubicEaseOut"
+                                                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                        </Transitions>
+                                                    </Border.Transitions>
+                                                </Border>
+                                                <ContentPresenter Name="PART_ContentPresenter" Margin="8"
+                                                                  Content="{TemplateBinding Content}"
+                                                                  ContentTemplate="{TemplateBinding ContentTemplate}">
+                                                    <ContentPresenter.Transitions>
+                                                        <Transitions>
+                                                            <BrushTransition Property="Foreground"
+                                                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                        </Transitions>
+                                                    </ContentPresenter.Transitions>
+                                                </ContentPresenter>
+                                            </Panel>
+                                        </ControlTemplate>
+                                    </Setter>
+                                    <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource ControlAccentForegroundBrush}" />
+                                    </Style>
+                                    <Style Selector="^:pointerover /template/ Border#Indicator">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </Style>
+                                    <Style Selector="^:selected /template/ Border#Indicator">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </Style>
+                                    <Style Selector="^:selected /template/ Border#Lock">
+                                        <Setter Property="Opacity" Value="1" />
+                                        <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+                                    </Style>
+                                </ControlTheme>
+                            </ListBox.ItemContainerTheme>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="4" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <Button Grid.Row="6" ToolTip.Tip="Import asset from file"
+                                Command="{Binding ImportFromFileCommand}"
+                                Margin="12,0">
+                            <icons:PackIconLucide Kind="Import" />
+                        </Button>
+                        <Button Grid.Row="8" ToolTip.Tip="Open instance folder" Command="{Binding OpenFolderCommand}"
+                                Margin="12,0">
+                            <icons:PackIconLucide Kind="Folder" />
+                        </Button>
+                        <Border Grid.Row="10" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
+                                BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
+                                Height="{Binding $self.Bounds.Width}"
+                                BackgroundSizing="InnerBorderEdge">
+                            <Border.Background>
+                                <ImageBrush Source="{Binding Basic.Thumbnail}" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Panel Grid.Column="2">
+                    <husk:Frame x:Name="Frame" />
+                </Panel>
+            </Grid>
+        </husk:DropContainer>
     </Panel>
 </controls:ScopedPage>

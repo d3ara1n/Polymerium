@@ -1,9 +1,14 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
@@ -17,8 +22,8 @@ public partial class InstanceView : ScopedPage
         ContextProperty =
             AvaloniaProperty
                .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter?>(nameof(Context),
-                    o => o.Context,
-                    (o, v) => o.Context = v);
+                                                                        o => o.Context,
+                                                                        (o, v) => o.Context = v);
 
 
     public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
@@ -97,6 +102,30 @@ public partial class InstanceView : ScopedPage
                 EntryBox.SelectedIndex = found;
             }
             // do nothing
+        }
+    }
+
+    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            var path = e.Data.GetFiles()?.FirstOrDefault()?.TryGetLocalPath();
+            if (path != null && File.Exists(path))
+            {
+                e.IsValid = true;
+            }
+        }
+    }
+
+    private async void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            var path = e.Data.GetFiles()?.FirstOrDefault()?.TryGetLocalPath();
+            if (path != null && File.Exists(path) && DataContext is InstanceViewModel viewModel)
+            {
+                await viewModel.ImportFromFileAsync(path);
+            }
         }
     }
 }
