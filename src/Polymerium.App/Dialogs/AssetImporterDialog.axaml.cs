@@ -6,11 +6,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
-using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.Repositories;
@@ -19,14 +17,6 @@ namespace Polymerium.App.Modals;
 
 public partial class AssetImporterDialog : Dialog
 {
-    public AssetImporterDialog()
-    {
-        InitializeComponent();
-    }
-
-    public required DataService DataService { get; init; }
-    public required NotificationService NotificationService { get; init; }
-
     public static readonly DirectProperty<AssetImporterDialog, string?> PathAcceptedProperty =
         AvaloniaProperty.RegisterDirect<AssetImporterDialog, string?>(nameof(PathAccepted),
                                                                       o => o.PathAccepted,
@@ -36,6 +26,21 @@ public partial class AssetImporterDialog : Dialog
         AvaloniaProperty.RegisterDirect<AssetImporterDialog, bool>(nameof(IsAssetSelected),
                                                                    o => o.IsAssetSelected,
                                                                    (o, v) => o.IsAssetSelected = v);
+
+    public static readonly DirectProperty<AssetImporterDialog, bool> IsPackageSelectedProperty =
+        AvaloniaProperty.RegisterDirect<AssetImporterDialog, bool>(nameof(IsPackageSelected),
+                                                                   o => o.IsPackageSelected,
+                                                                   (o, v) => o.IsPackageSelected = v);
+
+    public static readonly DirectProperty<AssetImporterDialog, AssetIdentificationModel?> ModelProperty =
+        AvaloniaProperty.RegisterDirect<AssetImporterDialog, AssetIdentificationModel?>(nameof(Model),
+            o => o.Model,
+            (o, v) => o.Model = v);
+
+    public AssetImporterDialog() => InitializeComponent();
+
+    public required DataService DataService { get; init; }
+    public required NotificationService NotificationService { get; init; }
 
     public bool IsAssetSelected
     {
@@ -49,11 +54,6 @@ public partial class AssetImporterDialog : Dialog
             }
         }
     }
-
-    public static readonly DirectProperty<AssetImporterDialog, bool> IsPackageSelectedProperty =
-        AvaloniaProperty.RegisterDirect<AssetImporterDialog, bool>(nameof(IsPackageSelected),
-                                                                   o => o.IsPackageSelected,
-                                                                   (o, v) => o.IsPackageSelected = v);
 
     public bool IsPackageSelected
     {
@@ -79,11 +79,6 @@ public partial class AssetImporterDialog : Dialog
             }
         }
     }
-
-    public static readonly DirectProperty<AssetImporterDialog, AssetIdentificationModel?> ModelProperty =
-        AvaloniaProperty.RegisterDirect<AssetImporterDialog, AssetIdentificationModel?>(nameof(Model),
-            o => o.Model,
-            (o, v) => o.Model = v);
 
     public AssetIdentificationModel? Model
     {

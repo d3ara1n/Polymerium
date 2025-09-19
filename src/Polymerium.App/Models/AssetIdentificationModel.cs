@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.App.Facilities;
+﻿using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class AssetIdentificationModel(
+public class AssetIdentificationModel(
     AssetIdentificationPackageModel? package,
     AssetIdentificationPersistModel persist) : ModelBase
 {

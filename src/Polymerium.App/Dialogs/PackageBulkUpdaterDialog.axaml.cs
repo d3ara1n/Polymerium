@@ -1,16 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Controls;
-using Polymerium.App.Modals;
-using Polymerium.App.Models;
-using Polymerium.App.Services;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Services.Profiles;
+﻿using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Dialogs;
 
