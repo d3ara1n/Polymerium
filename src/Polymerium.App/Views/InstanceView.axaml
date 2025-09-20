@@ -196,6 +196,14 @@
                         <Button Grid.Row="6" ToolTip.Tip="Import asset from file"
                                 Command="{Binding ImportFromFileCommand}"
                                 Margin="12,0">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                    <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                             ConverterParameter="Updating" />
+                                    <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                             ConverterParameter="Deploying" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
                             <icons:PackIconLucide Kind="Import" />
                         </Button>
                         <Button Grid.Row="8" ToolTip.Tip="Open instance folder" Command="{Binding OpenFolderCommand}"

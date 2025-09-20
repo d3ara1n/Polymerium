@@ -78,9 +78,9 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     protected override Task OnInitializeAsync(CancellationToken token)
     {
-        InstanceManager.InstanceUpdating += OnProfileUpdating;
-        InstanceManager.InstanceDeploying += OnProfileDeploying;
-        InstanceManager.InstanceLaunching += OnProfileLaunching;
+        InstanceManager.InstanceUpdating += OnInstanceUpdating;
+        InstanceManager.InstanceDeploying += OnInstanceDeploying;
+        InstanceManager.InstanceLaunching += OnInstanceLaunching;
         ProfileManager.ProfileUpdated += OnProfileUpdated;
         if (InstanceManager.IsTracking(Basic.Key, out var tracker))
         {
@@ -89,19 +89,19 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
                 case UpdateTracker update:
                     // 已经处于更新状态而未收到事件
                     State = InstanceState.Updating;
-                    update.StateUpdated += OnProfileUpdateStateChanged;
+                    update.StateUpdated += OnInstanceUpdateStateChanged;
                     OnInstanceUpdating(update);
                     break;
                 case DeployTracker deploy:
                     // 已经处于部署状态而未收到事件
                     State = InstanceState.Deploying;
-                    deploy.StateUpdated += OnProfileDeployStateChanged;
+                    deploy.StateUpdated += OnInstanceDeployStateChanged;
                     OnInstanceDeploying(deploy);
                     break;
                 case LaunchTracker launch:
                     // 已经处于启动状态而未收到事件
                     State = InstanceState.Running;
-                    launch.StateUpdated += OnProfileLaunchingStateChanged;
+                    launch.StateUpdated += OnInstanceLaunchingStateChanged;
                     OnInstanceLaunching(launch);
                     break;
             }
@@ -114,14 +114,14 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     protected override Task OnDeinitializeAsync(CancellationToken token)
     {
-        InstanceManager.InstanceUpdating -= OnProfileUpdating;
-        InstanceManager.InstanceDeploying -= OnProfileDeploying;
-        InstanceManager.InstanceLaunching -= OnProfileLaunching;
+        InstanceManager.InstanceUpdating -= OnInstanceUpdating;
+        InstanceManager.InstanceDeploying -= OnInstanceDeploying;
+        InstanceManager.InstanceLaunching -= OnInstanceLaunching;
         ProfileManager.ProfileUpdated -= OnProfileUpdated;
         return Task.CompletedTask;
     }
 
-    private void OnProfileUpdating(object? sender, UpdateTracker tracker)
+    private void OnInstanceUpdating(object? sender, UpdateTracker tracker)
     {
         if (tracker.Key != Basic.Key)
         {
@@ -130,12 +130,12 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
         Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
 
-        tracker.StateUpdated += OnProfileUpdateStateChanged;
+        tracker.StateUpdated += OnInstanceUpdateStateChanged;
         OnInstanceUpdating(tracker);
         // 更新的事情交给 ProfileManager.ProfileUpdated
     }
 
-    private void OnProfileDeploying(object? sender, DeployTracker tracker)
+    private void OnInstanceDeploying(object? sender, DeployTracker tracker)
     {
         if (tracker.Key != Basic.Key)
         {
@@ -144,11 +144,11 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
         Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
 
-        tracker.StateUpdated += OnProfileDeployStateChanged;
+        tracker.StateUpdated += OnInstanceDeployStateChanged;
         OnInstanceDeploying(tracker);
     }
 
-    private void OnProfileLaunching(object? sender, LaunchTracker tracker)
+    private void OnInstanceLaunching(object? sender, LaunchTracker tracker)
     {
         if (tracker.Key != Basic.Key)
         {
@@ -157,15 +157,15 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
         Dispatcher.UIThread.Post(() => State = InstanceState.Running);
 
-        tracker.StateUpdated += OnProfileLaunchingStateChanged;
+        tracker.StateUpdated += OnInstanceLaunchingStateChanged;
         OnInstanceLaunching(tracker);
     }
 
-    private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
+    private void OnInstanceUpdateStateChanged(TrackerBase sender, TrackerState state)
     {
         if (state is TrackerState.Faulted or TrackerState.Finished)
         {
-            sender.StateUpdated -= OnProfileUpdateStateChanged;
+            sender.StateUpdated -= OnInstanceUpdateStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
                 State = InstanceState.Idle;
@@ -174,11 +174,11 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
         }
     }
 
-    private void OnProfileDeployStateChanged(TrackerBase sender, TrackerState state)
+    private void OnInstanceDeployStateChanged(TrackerBase sender, TrackerState state)
     {
         if (state is TrackerState.Faulted or TrackerState.Finished)
         {
-            sender.StateUpdated -= OnProfileDeployStateChanged;
+            sender.StateUpdated -= OnInstanceDeployStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
                 State = InstanceState.Idle;
@@ -187,11 +187,11 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
         }
     }
 
-    private void OnProfileLaunchingStateChanged(TrackerBase sender, TrackerState state)
+    private void OnInstanceLaunchingStateChanged(TrackerBase sender, TrackerState state)
     {
         if (state is TrackerState.Faulted or TrackerState.Finished)
         {
-            sender.StateUpdated -= OnProfileLaunchingStateChanged;
+            sender.StateUpdated -= OnInstanceLaunchingStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
                 State = InstanceState.Idle;
