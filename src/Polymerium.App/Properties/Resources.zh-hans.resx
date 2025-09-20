@@ -519,13 +519,13 @@
     <data name="JavaHomeContainer_Prompt" xml:space="preserve">
         <value>使用内置或</value>
     </data>
-    <data name="PackageContainer_FilterBarPlaceholder" xml:space="preserve">
+    <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
         <value>输入过滤字符串...</value>
     </data>
-    <data name="PackageContainer_ConditionLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_ConditionLabelText" xml:space="preserve">
         <value>条件</value>
     </data>
-    <data name="PackageContainer_TagLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TagLabelText" xml:space="preserve">
         <value>标签</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -555,28 +555,28 @@
     <data name="ResourceKind_ShaderPack" xml:space="preserve">
         <value>着色器包</value>
     </data>
-    <data name="PackageContainer_SourceOriginalText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceOriginalText" xml:space="preserve">
         <value>托管</value>
     </data>
-    <data name="PackageContainer_SourceLocalText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>本地</value>
     </data>
-    <data name="PackageContainer_SourceLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceLabelText" xml:space="preserve">
         <value>来源</value>
     </data>
-    <data name="PackageContainer_TypeLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TypeLabelText" xml:space="preserve">
         <value>类型</value>
     </data>
-    <data name="PackageContainer_ResultCountLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
         <value>结果</value>
     </data>
-    <data name="PackageContainer_BatchUpdateMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_BatchUpdateMenuText" xml:space="preserve">
         <value>批量升级</value>
     </data>
-    <data name="PackageContainer_GetMoreButtonText" xml:space="preserve">
+    <data name="InstanceSetupView_GetMoreButtonText" xml:space="preserve">
         <value>获取更多</value>
     </data>
-    <data name="PackageContainer_ExportListMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_ExportListMenuText" xml:space="preserve">
         <value>导出列表</value>
     </data>
     <data name="SafeLock_Title" xml:space="preserve">
@@ -609,13 +609,13 @@
     <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
         <value>运行中</value>
     </data>
-    <data name="PackageContainer_ActiveMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_ActiveMenuText" xml:space="preserve">
         <value>激活</value>
     </data>
-    <data name="PackageContainer_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
-    <data name="PackageContainer_RemoveMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
@@ -885,7 +885,7 @@
     <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
         <value>批量升级包版本</value>
     </data>
-    <data name="PackageContainer_DependencyGraphMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_DependencyGraphMenuText" xml:space="preserve">
         <value>依赖关系</value>
     </data>
     <data name="Enum_Off" xml:space="preserve">
@@ -993,7 +993,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>存档</value>
     </data>
-    <data name="PackageContainer_StatusLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_StatusLabelText" xml:space="preserve">
         <value>状态</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
@@ -1121,5 +1121,38 @@
     </data>
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>共计</value>
+    </data>
+    <data name="InstanceSetupView_UpdatingLabelText" xml:space="preserve">
+        <value>更新中...</value>
+    </data>
+    <data name="AssetImporterDialog_Title" xml:space="preserve">
+        <value>从文件添加包或资产</value>
+    </data>
+    <data name="AssetImporterDialog_PackageNotFoundLabelText" xml:space="preserve">
+        <value>未在资源托管站点检索到该资源</value>
+    </data>
+    <data name="AssetImporterDialog_PortableLabelText" xml:space="preserve">
+        <value>可移植</value>
+    </data>
+    <data name="AssetImporterDialog_AsPackageLabelText" xml:space="preserve">
+        <value>作为包引用</value>
+    </data>
+    <data name="AssetImporterDialog_AsAssetLabelText" xml:space="preserve">
+        <value>作为资产文件</value>
+    </data>
+    <data name="AssetImporterDialog_AssetTypeLabelText" xml:space="preserve">
+        <value>资产类型：</value>
+    </data>
+    <data name="AssetImporterDialog_AsAssetDescription" xml:space="preserve">
+        <value>抛弃 Polymerium 的文件管理机制，使用传统的 mod.jar 放入 mods 模式。</value>
+    </data>
+    <data name="AssetImporterDialog_AsAssetPrompt" xml:space="preserve">
+        <value>持久化文件保存在 persist 目录中，并在每次部署中保持不变；可移植文件是持久化文件的一种，但保存在 import 目录，且会随整合包导出一块打包。</value>
+    </data>
+    <data name="AssetImporterDialog_Prompt" xml:space="preserve">
+        <value>实体资源文件不会显示在包列表中, 请在 资源管理器 中查看。</value>
+    </data>
+    <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
+        <value>识别文件类型...</value>
     </data>
 </root>

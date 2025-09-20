@@ -420,6 +420,96 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Falls back to traditional mod.jar placement, losing Polymerium&apos;s file management benefits..
+        /// </summary>
+        public static string AssetImporterDialog_AsAssetDescription {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_AsAssetDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As asset file.
+        /// </summary>
+        public static string AssetImporterDialog_AsAssetLabelText {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_AsAssetLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persistent files stay in the persist directory across deployments; portable files are persistent files stored in the import directory that get bundled when exporting modpacks..
+        /// </summary>
+        public static string AssetImporterDialog_AsAssetPrompt {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_AsAssetPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As package reference.
+        /// </summary>
+        public static string AssetImporterDialog_AsPackageLabelText {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_AsPackageLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asset Type:.
+        /// </summary>
+        public static string AssetImporterDialog_AssetTypeLabelText {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_AssetTypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identifying file type....
+        /// </summary>
+        public static string AssetImporterDialog_IdentifyingLabelText {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_IdentifyingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package was not found in the hosting repositories.
+        /// </summary>
+        public static string AssetImporterDialog_PackageNotFoundLabelText {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_PackageNotFoundLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portable.
+        /// </summary>
+        public static string AssetImporterDialog_PortableLabelText {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_PortableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical asset files are not shown in the package list. View them in the File Explorer..
+        /// </summary>
+        public static string AssetImporterDialog_Prompt {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add asset or package from file.
+        /// </summary>
+        public static string AssetImporterDialog_Title {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Building artifacts....
         /// </summary>
         public static string DeployStage_BuildArtifact {
@@ -1833,6 +1923,69 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string InstanceSetupView_ActiveMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ActiveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Update.
+        /// </summary>
+        public static string InstanceSetupView_BatchUpdateMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_BatchUpdateMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string InstanceSetupView_ConditionLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ConditionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependency Graph.
+        /// </summary>
+        public static string InstanceSetupView_DependencyGraphMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_DependencyGraphMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explort List.
+        /// </summary>
+        public static string InstanceSetupView_ExportListMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ExportListMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter filter string....
+        /// </summary>
+        public static string InstanceSetupView_FilterBarPlaceholder {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_FilterBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get More.
+        /// </summary>
+        public static string InstanceSetupView_GetMoreButtonText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_GetMoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operating In Progress.
         /// </summary>
         public static string InstanceSetupView_InoperableLabelText {
@@ -1856,6 +2009,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_LoadingPackageLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_LoadingPackageLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Website.
+        /// </summary>
+        public static string InstanceSetupView_OpenWebsiteMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_OpenWebsiteMenuText", resourceCulture);
             }
         }
         
@@ -1923,11 +2085,92 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string InstanceSetupView_RemoveMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_RemoveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string InstanceSetupView_ResultCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ResultCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string InstanceSetupView_SourceLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_SourceLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local.
+        /// </summary>
+        public static string InstanceSetupView_SourceLocalText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_SourceLocalText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        public static string InstanceSetupView_SourceOriginalText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_SourceOriginalText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string InstanceSetupView_StatusLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_StatusLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Switch Version.
         /// </summary>
         public static string InstanceSetupView_SwitchVersionButtonText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_SwitchVersionButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string InstanceSetupView_TagLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_TagLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string InstanceSetupView_TypeLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_TypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating....
+        /// </summary>
+        public static string InstanceSetupView_UpdatingLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_UpdatingLabelText", resourceCulture);
             }
         }
         
@@ -2468,150 +2711,6 @@ namespace Polymerium.App.Properties {
         public static string PackageBulkUpdaterModal_UpdateButtonText {
             get {
                 return ResourceManager.GetString("PackageBulkUpdaterModal_UpdateButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string PackageContainer_ActiveMenuText {
-            get {
-                return ResourceManager.GetString("PackageContainer_ActiveMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Batch Update.
-        /// </summary>
-        public static string PackageContainer_BatchUpdateMenuText {
-            get {
-                return ResourceManager.GetString("PackageContainer_BatchUpdateMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filter.
-        /// </summary>
-        public static string PackageContainer_ConditionLabelText {
-            get {
-                return ResourceManager.GetString("PackageContainer_ConditionLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dependency Graph.
-        /// </summary>
-        public static string PackageContainer_DependencyGraphMenuText {
-            get {
-                return ResourceManager.GetString("PackageContainer_DependencyGraphMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Explort List.
-        /// </summary>
-        public static string PackageContainer_ExportListMenuText {
-            get {
-                return ResourceManager.GetString("PackageContainer_ExportListMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter filter string....
-        /// </summary>
-        public static string PackageContainer_FilterBarPlaceholder {
-            get {
-                return ResourceManager.GetString("PackageContainer_FilterBarPlaceholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Get More.
-        /// </summary>
-        public static string PackageContainer_GetMoreButtonText {
-            get {
-                return ResourceManager.GetString("PackageContainer_GetMoreButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Website.
-        /// </summary>
-        public static string PackageContainer_OpenWebsiteMenuText {
-            get {
-                return ResourceManager.GetString("PackageContainer_OpenWebsiteMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string PackageContainer_RemoveMenuText {
-            get {
-                return ResourceManager.GetString("PackageContainer_RemoveMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results.
-        /// </summary>
-        public static string PackageContainer_ResultCountLabelText {
-            get {
-                return ResourceManager.GetString("PackageContainer_ResultCountLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Source.
-        /// </summary>
-        public static string PackageContainer_SourceLabelText {
-            get {
-                return ResourceManager.GetString("PackageContainer_SourceLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Local.
-        /// </summary>
-        public static string PackageContainer_SourceLocalText {
-            get {
-                return ResourceManager.GetString("PackageContainer_SourceLocalText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Original.
-        /// </summary>
-        public static string PackageContainer_SourceOriginalText {
-            get {
-                return ResourceManager.GetString("PackageContainer_SourceOriginalText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status.
-        /// </summary>
-        public static string PackageContainer_StatusLabelText {
-            get {
-                return ResourceManager.GetString("PackageContainer_StatusLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tags.
-        /// </summary>
-        public static string PackageContainer_TagLabelText {
-            get {
-                return ResourceManager.GetString("PackageContainer_TagLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type.
-        /// </summary>
-        public static string PackageContainer_TypeLabelText {
-            get {
-                return ResourceManager.GetString("PackageContainer_TypeLabelText", resourceCulture);
             }
         }
         

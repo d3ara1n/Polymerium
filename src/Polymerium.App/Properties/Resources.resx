@@ -528,13 +528,13 @@
     <data name="JavaHomeContainer_Prompt" xml:space="preserve">
         <value>Bundled or</value>
     </data>
-    <data name="PackageContainer_FilterBarPlaceholder" xml:space="preserve">
+    <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
         <value>Enter filter string...</value>
     </data>
-    <data name="PackageContainer_ConditionLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_ConditionLabelText" xml:space="preserve">
         <value>Filter</value>
     </data>
-    <data name="PackageContainer_TagLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TagLabelText" xml:space="preserve">
         <value>Tags</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -564,28 +564,28 @@
     <data name="Enum_Disabled" xml:space="preserve">
         <value>Disabled</value>
     </data>
-    <data name="PackageContainer_SourceOriginalText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceOriginalText" xml:space="preserve">
         <value>Original</value>
     </data>
-    <data name="PackageContainer_SourceLocalText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>Local</value>
     </data>
-    <data name="PackageContainer_SourceLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceLabelText" xml:space="preserve">
         <value>Source</value>
     </data>
-    <data name="PackageContainer_TypeLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TypeLabelText" xml:space="preserve">
         <value>Type</value>
     </data>
-    <data name="PackageContainer_ResultCountLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
         <value>Results</value>
     </data>
-    <data name="PackageContainer_BatchUpdateMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_BatchUpdateMenuText" xml:space="preserve">
         <value>Batch Update</value>
     </data>
-    <data name="PackageContainer_GetMoreButtonText" xml:space="preserve">
+    <data name="InstanceSetupView_GetMoreButtonText" xml:space="preserve">
         <value>Get More</value>
     </data>
-    <data name="PackageContainer_ExportListMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_ExportListMenuText" xml:space="preserve">
         <value>Explort List</value>
     </data>
     <data name="SafeLock_Title" xml:space="preserve">
@@ -618,13 +618,13 @@
     <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
         <value>RUNNING</value>
     </data>
-    <data name="PackageContainer_ActiveMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_ActiveMenuText" xml:space="preserve">
         <value>Active</value>
     </data>
-    <data name="PackageContainer_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
-    <data name="PackageContainer_RemoveMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
@@ -894,7 +894,7 @@
     <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
-    <data name="PackageContainer_DependencyGraphMenuText" xml:space="preserve">
+    <data name="InstanceSetupView_DependencyGraphMenuText" xml:space="preserve">
         <value>Dependency Graph</value>
     </data>
     <data name="Enum_On" xml:space="preserve">
@@ -1002,7 +1002,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>World</value>
     </data>
-    <data name="PackageContainer_StatusLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_StatusLabelText" xml:space="preserve">
         <value>Status</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
@@ -1130,5 +1130,38 @@
     </data>
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>Overview</value>
+    </data>
+    <data name="InstanceSetupView_UpdatingLabelText" xml:space="preserve">
+        <value>Updating...</value>
+    </data>
+    <data name="AssetImporterDialog_Title" xml:space="preserve">
+        <value>Add asset or package from file</value>
+    </data>
+    <data name="AssetImporterDialog_PackageNotFoundLabelText" xml:space="preserve">
+        <value>Package was not found in the hosting repositories</value>
+    </data>
+    <data name="AssetImporterDialog_PortableLabelText" xml:space="preserve">
+        <value>Portable</value>
+    </data>
+    <data name="AssetImporterDialog_AsPackageLabelText" xml:space="preserve">
+        <value>As package reference</value>
+    </data>
+    <data name="AssetImporterDialog_AsAssetLabelText" xml:space="preserve">
+        <value>As asset file</value>
+    </data>
+    <data name="AssetImporterDialog_AssetTypeLabelText" xml:space="preserve">
+        <value>Asset Type:</value>
+    </data>
+    <data name="AssetImporterDialog_AsAssetDescription" xml:space="preserve">
+        <value>Falls back to traditional mod.jar placement, losing Polymerium's file management benefits.</value>
+    </data>
+    <data name="AssetImporterDialog_AsAssetPrompt" xml:space="preserve">
+        <value>Persistent files stay in the persist directory across deployments; portable files are persistent files stored in the import directory that get bundled when exporting modpacks.</value>
+    </data>
+    <data name="AssetImporterDialog_Prompt" xml:space="preserve">
+        <value>Physical asset files are not shown in the package list. View them in the File Explorer.</value>
+    </data>
+    <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
+        <value>Identifying file type...</value>
     </data>
 </root>
