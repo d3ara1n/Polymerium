@@ -19,12 +19,12 @@
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <controls:Subpage.Resources>
         <MenuFlyout x:Key="InstancePackageButtonFlyout" x:DataType="m:InstancePackageModel">
-            <MenuItem Header="{x:Static lang:Resources.PackageContainer_ActiveMenuText}"
+            <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ActiveMenuText}"
                       IsChecked="{Binding IsEnabled,Mode=TwoWay}"
                       ToggleType="CheckBox"
                       Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
-            <MenuItem Header="{x:Static lang:Resources.PackageContainer_OpenWebsiteMenuText}"
+            <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_OpenWebsiteMenuText}"
                       Command="{x:Static m:InternalCommands.OpenUriCommand}"
                       CommandParameter="{Binding Info.Reference,FallbackValue={x:Null}}"
                       Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
@@ -33,7 +33,7 @@
             <!-- <MenuItem Header="Remove from Favorite" -->
             <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
             <MenuItem Header="-" />
-            <MenuItem Header="{x:Static lang:Resources.PackageContainer_RemoveMenuText}"
+            <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
                       Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).RemovePackageCommand,FallbackValue={x:Null}}"
                       CommandParameter="{Binding }"
                       IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
@@ -205,7 +205,7 @@
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="16,8"
                       ColumnSpacing="12">
                     <TextBox Grid.Column="0"
-                             Watermark="{x:Static lang:Resources.PackageContainer_FilterBarPlaceholder}"
+                             Watermark="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}"
                              MinWidth="168"
                              Text="{Binding FilterText,Mode=OneWayToSource}"
                              ToolTip.Tip="@Author #Summary !Id Names">
@@ -223,13 +223,13 @@
                                             <StackPanel Spacing="8" MinWidth="320" MaxWidth="520" MaxHeight="360"
                                                         Margin="12">
                                                 <TextBlock
-                                                    Text="{x:Static lang:Resources.PackageContainer_ConditionLabelText}"
+                                                    Text="{x:Static lang:Resources.InstanceSetupView_ConditionLabelText}"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     VerticalAlignment="Center" />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.PackageContainer_StatusLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_StatusLabelText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column="1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
@@ -254,7 +254,7 @@
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.PackageContainer_SourceLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_SourceLabelText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column="1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
@@ -269,17 +269,17 @@
                                                             Label="{x:Static lang:Resources.Enum_All}"
                                                             Lockility="{x:Null}" />
                                                         <controls:PackageEntryLockilityFilter
-                                                            Label="{x:Static lang:Resources.PackageContainer_SourceOriginalText}"
+                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceOriginalText}"
                                                             Lockility="{x:True}" />
                                                         <controls:PackageEntryLockilityFilter
-                                                            Label="{x:Static lang:Resources.PackageContainer_SourceLocalText}"
+                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
                                                             Lockility="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.PackageContainer_TypeLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_TypeLabelText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column=" 1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
@@ -308,7 +308,7 @@
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.PackageContainer_TagLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_TagLabelText}"
                                                                VerticalAlignment="Center"
                                                                FontSize="{StaticResource SmallFontSize}"
                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -358,7 +358,7 @@
                         </TextBox.InnerRightContent>
                     </TextBox>
                     <TextBlock Grid.Column="1">
-                        <Run Text="{x:Static lang:Resources.PackageContainer_ResultCountLabelText}"
+                        <Run Text="{x:Static lang:Resources.InstanceSetupView_ResultCountLabelText}"
                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         <LineBreak />
                         <Run Text="{Binding StageView.Count,Mode=OneWay,FallbackValue=0}" />
@@ -367,8 +367,9 @@
                     </TextBlock>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12">
                         <StackPanel IsVisible="{Binding IsRefreshing}">
-                            <husk:ProgressRing IsIndeterminate="{Binding IsRefreshing}" HorizontalAlignment="Center" />
-                            <TextBlock Text="Updating..." />
+                            <husk:ProgressRing IsIndeterminate="{Binding IsRefreshing}" HorizontalAlignment="Center"
+                                               Height="16" Width="16" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_UpdatingLabelText}" />
                         </StackPanel>
                         <TabStrip Name="LayoutSelector" Theme="{StaticResource SegmentedTabStripTheme}"
                                   SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}">
@@ -434,14 +435,14 @@
                                      Command="{Binding GotoPackageExplorerViewCommand}">
                             <SplitButton.Flyout>
                                 <MenuFlyout>
-                                    <MenuItem Header="{x:Static lang:Resources.PackageContainer_BatchUpdateMenuText}"
+                                    <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_BatchUpdateMenuText}"
                                               Icon="{fie:SymbolIcon Symbol=ArrowForward,FontSize={StaticResource MediumFontSize}}"
                                               Command="{Binding UpdateBatchCommand}" />
                                     <MenuItem
-                                        Header="{x:Static lang:Resources.PackageContainer_DependencyGraphMenuText}"
+                                        Header="{x:Static lang:Resources.InstanceSetupView_DependencyGraphMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowSplit,FontSize={StaticResource MediumFontSize}}"
                                         IsEnabled="False" />
-                                    <MenuItem Header="{x:Static lang:Resources.PackageContainer_ExportListMenuText}"
+                                    <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ExportListMenuText}"
                                               Icon="{fie:SymbolIcon Symbol=ArrowExport,FontSize={StaticResource MediumFontSize}}"
                                               Command="{Binding ExportListCommand}" />
                                 </MenuFlyout>
@@ -449,7 +450,7 @@
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <icons:PackIconLucide Kind="WandSparkles" Height="{StaticResource MediumFontSize}"
                                                       VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Static lang:Resources.PackageContainer_GetMoreButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_GetMoreButtonText}" />
                             </StackPanel>
                         </SplitButton>
                     </StackPanel>
