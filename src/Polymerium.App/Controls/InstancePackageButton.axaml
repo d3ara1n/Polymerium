@@ -92,8 +92,8 @@
                                             <ToggleSwitch Grid.Column="2" OnContent="{x:Null}" OffContent="{x:Null}"
                                                           IsChecked="{Binding Owner.IsEnabled,Mode=TwoWay}" />
                                             <Button Grid.Column="3" Theme="{StaticResource OutlineButtonTheme}"
-                                                    Classes="Small"
-                                                    Flyout="{TemplateBinding ContextFlyout}">
+                                                    Classes="Small" DataContext="{Binding Owner}"
+                                                    Flyout="{Binding $parent[local:InstancePackageButton].ContextFlyout}">
                                                 <icons:PackIconLucide Kind="Ellipsis"
                                                                       Width="{StaticResource MediumFontSize}"
                                                                       Height="{StaticResource MediumFontSize}" />

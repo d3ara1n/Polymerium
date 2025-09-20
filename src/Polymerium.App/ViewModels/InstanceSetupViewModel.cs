@@ -127,27 +127,32 @@ public partial class InstanceSetupViewModel(
         {
             if (profile.Setup.Source is not null)
             {
-                if (PackageHelper.TryParse(profile.Setup.Source, out var r))
+                if (Reference is null
+                 || (Reference is { Value: InstanceReferenceModel { } reference }
+                  && reference.Purl != profile.Setup.Source))
                 {
-                    Reference = new(async _ =>
+                    if (PackageHelper.TryParse(profile.Setup.Source, out var r))
                     {
-                        var package = await dataService.ResolvePackageAsync(r.Label,
-                                                                            r.Namespace,
-                                                                            r.Pid,
-                                                                            r.Vid,
-                                                                            Filter.None with
-                                                                            {
-                                                                                Kind = ResourceKind.Modpack
-                                                                            });
+                        Reference = new(async _ =>
+                        {
+                            var package = await dataService.ResolvePackageAsync(r.Label,
+                                                                                    r.Namespace,
+                                                                                    r.Pid,
+                                                                                    r.Vid,
+                                                                                    Filter.None with
+                                                                                    {
+                                                                                        Kind = ResourceKind.Modpack
+                                                                                    });
 
-                        return new InstanceReferenceModel(profile.Setup.Source,
-                                                          r.Label,
-                                                          package.ProjectName,
-                                                          package.VersionId,
-                                                          package.VersionName,
-                                                          package.Thumbnail,
-                                                          package.Reference);
-                    });
+                            return new InstanceReferenceModel(profile.Setup.Source,
+                                                              r.Label,
+                                                              package.ProjectName,
+                                                              package.VersionId,
+                                                              package.VersionName,
+                                                              package.Thumbnail,
+                                                              package.Reference);
+                        });
+                    }
                 }
             }
             else
@@ -324,8 +329,11 @@ public partial class InstanceSetupViewModel(
         if (!InstanceManager.IsTracking(Basic.Key, out var tracker)
          || tracker is not UpdateTracker and not DeployTracker)
         {
-            TriggerPackageMerge();
-            TriggerReferenceRefresh();
+            Dispatcher.UIThread.Post(() =>
+            {
+                TriggerPackageMerge();
+                TriggerReferenceRefresh();
+            });
         }
 
         UpdatingPending = true;
