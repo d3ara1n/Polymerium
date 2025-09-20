@@ -102,7 +102,7 @@ public partial class InstanceSetupViewModel(
             }
 
             _stageSource.Remove(toRemove);
-            var toAdd = lookup.Select(x => new InstancePackageModel(x, x.Purl == Basic.Source)).ToList();
+            var toAdd = lookup.Select(x => new InstancePackageModel(x, x.Source == Basic.Source)).ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
             if (StageCount != profile.Setup.Packages.Count)
