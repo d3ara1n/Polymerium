@@ -67,7 +67,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     #endregion
 
-    #region Injected
+    #region Injected Protected
 
     protected readonly InstanceManager InstanceManager;
     protected readonly ProfileManager ProfileManager;

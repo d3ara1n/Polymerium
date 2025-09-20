@@ -7,7 +7,7 @@ using Trident.Abstractions.Repositories.Resources;
 namespace Polymerium.App.Models;
 
 public partial class PackageUpdaterModel(
-    InstancePackageModel entry,
+    InstancePackageModel model,
     Package package,
     Uri thumbnail,
     string oldVersionId,
@@ -26,7 +26,7 @@ public partial class PackageUpdaterModel(
 
     #region Direct
 
-    public InstancePackageModel Entry => entry;
+    public InstancePackageModel Model => model;
     public Package Package => package;
     public Uri Thumbnail => thumbnail;
     public string OldVersionId => oldVersionId;

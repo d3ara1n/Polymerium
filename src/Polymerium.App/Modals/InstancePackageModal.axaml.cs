@@ -1,16 +1,15 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
-using DynamicData;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services.Profiles;
@@ -57,7 +56,7 @@ public partial class InstancePackageModal : Modal
     public required Filter Filter { get; init; }
     public required OverlayService OverlayService { get; init; }
     public required PersistenceService PersistenceService { get; init; }
-    public required SourceCache<InstancePackageModel, Profile.Rice.Entry> StageCollection { get; init; }
+    public required IReadOnlyList<InstancePackageModel> Collection { get; init; }
 
     public LazyObject? LazyDependencies
     {
@@ -71,7 +70,7 @@ public partial class InstancePackageModal : Modal
         set => SetAndRaise(LazyDependantsProperty, ref field, value);
     }
 
-    private InstancePackageModel Model => (InstancePackageModel)DataContext!;
+    private InstancePackageInfoModel Model => (InstancePackageInfoModel)DataContext!;
 
     public LazyObject? LazyVersions
     {
@@ -109,22 +108,24 @@ public partial class InstancePackageModal : Modal
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
-                            var count =
-                                (uint)StageCollection.Items.Count(y => y.Version is InstancePackageVersionModel version
-                                                                    && version.Dependencies.Any(z => z.Label == x.Label
-                                                                        && z.Namespace == x.Namespace
-                                                                        && z.ProjectId == x.ProjectId));
-                            var found = StageCollection.Items.FirstOrDefault(y => y.Label == x.Label
-                                                                              && y.Namespace == x.Namespace
-                                                                              && y.ProjectId == x.ProjectId);
+                            var count = (uint)Collection.Count(y => y.Info is
+                                                                    {
+                                                                        Version: InstancePackageVersionModel version
+                                                                    }
+                                                                 && version.Dependencies.Any(z => z.Label == x.Label
+                                                                     && z.Namespace == x.Namespace
+                                                                     && z.ProjectId == x.ProjectId));
+                            var found = Collection.FirstOrDefault(y => y.Info?.Label == x.Label
+                                                                    && y.Info?.Namespace == x.Namespace
+                                                                    && y.Info?.ProjectId == x.ProjectId);
                             if (found is not null)
                             {
                                 return new(x.Label,
                                            x.Namespace,
                                            x.ProjectId,
                                            x.VersionId,
-                                           found.ProjectName,
-                                           found.Thumbnail,
+                                           found.Info!.ProjectName,
+                                           found.Info!.Thumbnail,
                                            count,
                                            x.IsRequired) { Installed = found };
                             }
@@ -159,33 +160,36 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            var dependants = await DataService.ResolvePackagesAsync(StageCollection
-                                                                   .Items
-                                                                   .Where(x =>
-                                                                              x.Version is InstancePackageVersionModel
-                                                                                  version
-                                                                           && version.Dependencies.Any(y => y.Label
-                                                                               == Model.Label
-                                                                               && y.Namespace
-                                                                               == Model.Namespace
-                                                                               && y.ProjectId
-                                                                               == Model.ProjectId))
-                                                                   .Select(x => (x.Label, x.Namespace, x.ProjectId,
+            var dependants = await DataService.ResolvePackagesAsync(Collection
+                                                                   .Where(x => x.Info is
+                                                                               {
+                                                                                   Version:
+                                                                                   InstancePackageVersionModel
+                                                                                   version
+                                                                               }
+                                                                            && version.Dependencies.Any(y => y.Label
+                                                                                == Model.Label
+                                                                                && y.Namespace
+                                                                                == Model.Namespace
+                                                                                && y.ProjectId
+                                                                                == Model.ProjectId))
+                                                                   .Select(x => (x.Info!.Label, x.Info!.Namespace,
+                                                                                           x.Info!.ProjectId,
                                                                                            (string?)
                                                                                            ((InstancePackageVersionModel)
-                                                                                               x.Version).Id)),
+                                                                                               x.Info!.Version).Id)),
                                                                     Filter.None);
             var tasks = dependants
                        .Select(async x =>
                         {
                             var count =
-                                (uint)StageCollection.Items.Count(y => y.Version is InstancePackageVersionModel version
-                                                                    && version.Dependencies.Any(z => z.Label == x.Label
-                                                                        && z.Namespace == x.Namespace
-                                                                        && z.ProjectId == x.ProjectId));
-                            var found = StageCollection.Items.FirstOrDefault(y => y.Label == x.Label
-                                                                              && y.Namespace == x.Namespace
-                                                                              && y.ProjectId == x.ProjectId);
+                                (uint)Collection.Count(y => y.Info!.Version is InstancePackageVersionModel version
+                                                         && version.Dependencies.Any(z => z.Label == x.Label
+                                                             && z.Namespace == x.Namespace
+                                                             && z.ProjectId == x.ProjectId));
+                            var found = Collection.FirstOrDefault(y => y.Info?.Label == x.Label
+                                                                    && y.Info?.Namespace == x.Namespace
+                                                                    && y.Info?.ProjectId == x.ProjectId);
                             var thumbnail = x.Thumbnail is not null
                                                 ? await DataService.GetBitmapAsync(x.Thumbnail)
                                                 : AssetUriIndex.DirtImageBitmap;
@@ -267,7 +271,7 @@ public partial class InstancePackageModal : Modal
             return;
         }
 
-        _old = Model.Entry.Purl;
+        _old = Model.Owner.Entry.Purl;
         IsFilterEnabled = true;
         LazyDependencies = ConstructDependencies();
         LazyDependants = ConstructDependants();
@@ -285,12 +289,12 @@ public partial class InstancePackageModal : Modal
     protected override async void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
-        if (Model.Entry.Purl != _old)
+        if (Model.Owner.Entry.Purl != _old)
         {
             PersistenceService.AppendAction(new(Guard.Key,
                                                 PersistenceService.ActionKind.EditPackage,
                                                 _old,
-                                                Model.Entry.Purl));
+                                                Model.Owner.Entry.Purl));
         }
 
         RemoveHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
@@ -320,7 +324,7 @@ public partial class InstancePackageModal : Modal
     [RelayCommand]
     private void RemoveVersion()
     {
-        Model.Version = InstancePackageUnspecifiedVersionModel.Instance;
+        Model.Version = InstancePackageUnspecifiedVersionModel.Default;
         SelectedVersionProxy = null;
     }
 
@@ -333,7 +337,7 @@ public partial class InstancePackageModal : Modal
             return;
         }
 
-        Model.Tags.Add(tag);
+        Model.Owner.Tags.Add(tag);
     }
 
     [RelayCommand]
@@ -344,29 +348,29 @@ public partial class InstancePackageModal : Modal
             return;
         }
 
-        var index = Model.Tags.IndexOf(tag);
+        var index = Model.Owner.Tags.IndexOf(tag);
         if (index >= 0)
         {
-            Model.Tags.RemoveAt(index);
+            Model.Owner.Tags.RemoveAt(index);
         }
     }
 
-    private bool CanViewPackage(InstancePackageDependencyModel? model) => model is { Installed: not null };
+    private bool CanViewPackage(InstancePackageDependencyModel? model) => model is { Installed: { Info: not null } };
 
 
     [RelayCommand(CanExecute = nameof(CanViewPackage))]
     private void ViewPackage(InstancePackageDependencyModel? model)
     {
-        if (model is { Installed: { } installed })
+        if (model is { Installed: { Info: not null } installed })
         {
             OverlayService.PopModal(new InstancePackageModal
             {
-                DataContext = installed,
+                DataContext = installed.Info,
                 Guard = Guard,
                 DataService = DataService,
                 OverlayService = OverlayService,
                 PersistenceService = PersistenceService,
-                StageCollection = StageCollection,
+                Collection = Collection,
                 Filter = Filter
             });
         }
