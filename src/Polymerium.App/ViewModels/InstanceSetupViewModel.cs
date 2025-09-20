@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,10 +16,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CsvHelper;
 using DynamicData;
+using DynamicData.Binding;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
+using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
@@ -50,202 +54,11 @@ public partial class InstanceSetupViewModel(
     PersistenceService persistenceService,
     ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Other
-
-    private void TriggerRefresh(CancellationToken token)
-    {
-        _refreshingCancellationTokenSource?.Cancel();
-        _refreshingCancellationTokenSource?.Dispose();
-        _refreshingCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        var inner = _refreshingCancellationTokenSource.Token;
-        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
-        {
-            Stage.Clear();
-            StageCount = profile.Setup.Packages.Count;
-            IsRefreshing = true;
-            Task.Run(async () =>
-                     {
-                         // 有 vid 的走 ResolvePackagesAsync 没有的走 QueryProjectsAsync
-                         try
-                         {
-                             var purls = profile
-                                        .Setup.Packages
-                                        .Select(x => PackageHelper.TryParse(x.Purl, out var purl)
-                                                         ? (Entry: x, Purl: purl)
-                                                         : throw new FormatException($"Failed to parse purl: {x.Purl}"))
-                                        .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Entry));
-                             var knownVids = purls.Where(x => x.Key.Vid is not null).ToList();
-                             var unknownVids = purls.Where(x => x.Key.Vid is null).ToList();
-
-                             if (inner.IsCancellationRequested)
-                             {
-                                 return;
-                             }
-
-                             // 固定 Vid 的不需要 Filter
-                             var knownPackages = await dataService
-                                                      .ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None)
-                                                      .ConfigureAwait(false);
-                             if (inner.IsCancellationRequested)
-                             {
-                                 return;
-                             }
-
-                             var unknownProjects = await dataService
-                                                        .QueryProjectsAsync(unknownVids.Select(x => (x.Key.Label,
-                                                                                            x.Key.Namespace,
-                                                                                            x.Key.Pid)))
-                                                        .ConfigureAwait(false);
-                             if (inner.IsCancellationRequested)
-                             {
-                                 return;
-                             }
-
-                             var thumbnailsTasks = knownPackages
-                                                  .Select(async x =>
-                                                              (Purl: (x.Label, x.Namespace, x.ProjectId,
-                                                                      (string?)x.VersionId),
-                                                               Thumbnail: x.Thumbnail is not null
-                                                                              ? await dataService
-                                                                                 .GetBitmapAsync(x.Thumbnail)
-                                                                                 .ConfigureAwait(false)
-                                                                              : AssetUriIndex.DirtImageBitmap))
-                                                  .Concat(unknownProjects.Select(async x =>
-                                                              (Purl: (x.Label, x.Namespace, x.ProjectId,
-                                                                      (string?)null),
-                                                               Thumbnail: x.Thumbnail is not null
-                                                                              ? await dataService
-                                                                                 .GetBitmapAsync(x.Thumbnail)
-                                                                                 .ConfigureAwait(false)
-                                                                              : AssetUriIndex.DirtImageBitmap)))
-                                                  .ToList();
-                             await Task.WhenAll(thumbnailsTasks).ConfigureAwait(false);
-                             if (inner.IsCancellationRequested)
-                             {
-                                 return;
-                             }
-
-                             foreach (var package in knownPackages)
-                             {
-                                 purls[(package.Label, package.Namespace, package.ProjectId, package.VersionId)]
-                                        .Package =
-                                     package;
-                             }
-
-                             foreach (var project in unknownProjects)
-                             {
-                                 purls[(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
-                             }
-
-                             foreach (var thumbnailsTask in thumbnailsTasks)
-                             {
-                                 purls[thumbnailsTask.Result.Purl].Thumbnail = thumbnailsTask.Result.Thumbnail;
-                             }
-
-                             var stages = purls
-                                         .Select(x => x.Value switch
-                                          {
-                                              { Package: not null, Thumbnail: not null } => new(x.Value.Entry,
-                                                  x.Value.Entry.Source is not null
-                                               && x.Value.Entry.Source == Basic.Source,
-                                                  x.Value.Package.Label,
-                                                  x.Value.Package.Namespace,
-                                                  x.Value.Package.ProjectId,
-                                                  x.Value.Package.ProjectName,
-                                                  new
-                                                      InstancePackageVersionModel(x.Value
-                                                             .Package.VersionId,
-                                                          x.Value.Package.VersionName,
-                                                          string.Join(",",
-                                                                      x.Value.Package
-                                                                       .Requirements
-                                                                       .AnyOfLoaders
-                                                                       .Select(LoaderHelper
-                                                                                  .ToDisplayName)),
-                                                          string.Join(",",
-                                                                      x.Value.Package
-                                                                       .Requirements
-                                                                       .AnyOfVersions),
-                                                          x.Value.Package.PublishedAt,
-                                                          x.Value.Package.ReleaseType,
-                                                          x.Value.Package.Dependencies)
-                                                      {
-                                                          IsCurrent = true
-                                                      },
-                                                  x.Value.Package.Author,
-                                                  x.Value.Package.Summary,
-                                                  x.Value.Package.Reference,
-                                                  x.Value.Thumbnail,
-                                                  x.Value.Package.Kind),
-                                              { Project: not null, Thumbnail: not null } => new
-                                                  InstancePackageModel(x.Value.Entry,
-                                                                       x.Value.Entry.Source is not null
-                                                                    && x.Value.Entry.Source == Basic.Source,
-                                                                       x.Value.Project.Label,
-                                                                       x.Value.Project.Namespace,
-                                                                       x.Value.Project.ProjectId,
-                                                                       x.Value.Project.ProjectName,
-                                                                       InstancePackageUnspecifiedVersionModel.Instance,
-                                                                       x.Value.Project.Author,
-                                                                       x.Value.Project.Summary,
-                                                                       x.Value.Project.Reference,
-                                                                       x.Value.Thumbnail,
-                                                                       x.Value.Project.Kind),
-                                              _ => throw new UnreachableException()
-                                          })
-                                         .ToList();
-
-                             Dispatcher.UIThread.Post(() =>
-                             {
-                                 StageCount = stages.Count;
-                                 Stage.AddOrUpdate(stages);
-                                 IsRefreshing = false;
-                             });
-                         }
-                         catch (OperationCanceledException) { }
-                         catch (Exception ex)
-                         {
-                             Dispatcher.UIThread.Post(() =>
-                             {
-                                 notificationService.PopMessage(ex.Message, "Failed to parse purl", GrowlLevel.Danger);
-                             });
-                         }
-                     },
-                     inner);
-        }
-
-        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
-        {
-            Reference = new(async t =>
-            {
-                var package = await dataService
-                                   .ResolvePackageAsync(r.Label,
-                                                        r.Namespace,
-                                                        r.Pid,
-                                                        r.Vid,
-                                                        Filter.None with { Kind = ResourceKind.Modpack })
-                                   .ConfigureAwait(false);
-
-                return new InstanceReferenceModel(Basic.Source,
-                                                  r.Label,
-                                                  package.ProjectName,
-                                                  package.VersionId,
-                                                  package.VersionName,
-                                                  package.Thumbnail,
-                                                  package.Reference);
-            });
-        }
-    }
-
-    #endregion
-
     #region Nested type: RefreshIntermediateData
 
-    #region Nested Type: RefreshIntermediateData
-
-    private class RefreshIntermediateData(Profile.Rice.Entry entry)
+    private class RefreshIntermediateData(InstancePackageModel model)
     {
-        public Profile.Rice.Entry Entry => entry;
+        public InstancePackageModel Model => model;
         public Bitmap? Thumbnail { get; set; }
         public Project? Project { get; set; }
         public Package? Package { get; set; }
@@ -253,13 +66,244 @@ public partial class InstanceSetupViewModel(
 
     #endregion
 
+    #region Other
+
+    private void TriggerPackageMerge()
+    {
+        var token = _pageCancellationTokenSource?.Token;
+        if (token is null || token.Value.IsCancellationRequested)
+        {
+            return;
+        }
+
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+        {
+            // 计算 profile.Setup.Packages 与 _stageSource.Keys 的差异
+            var lookup = profile.Setup.Packages.ToHashSet();
+            var toRemove = new List<Profile.Rice.Entry>();
+            var toUpdate = new List<InstancePackageModel>();
+            foreach (var entry in _stageSource.Keys)
+            {
+                // actualValue 必定是同一个，因为 Entry 是 class，基于地址比较
+                if (lookup.TryGetValue(entry, out _))
+                {
+                    var old = _stageSource.Lookup(entry).Value;
+                    if (old.OldPurlCache != entry.Purl)
+                    {
+                        toUpdate.Add(old);
+                    }
+
+                    lookup.Remove(entry);
+                }
+                else
+                {
+                    toRemove.Add(entry);
+                }
+            }
+
+            _stageSource.Remove(toRemove);
+            var toAdd = lookup.Select(x => new InstancePackageModel(x, x.Purl == Basic.Source)).ToList();
+            _stageSource.AddOrUpdate(toAdd);
+            StageCount += toAdd.Count - toRemove.Count;
+            if (StageCount != profile.Setup.Packages.Count)
+            {
+                throw new UnreachableException("使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了");
+            }
+
+            _ = RefreshPackagesAsync(toAdd.Concat(toUpdate).ToList(), token.Value);
+        }
+    }
+
+    private void TriggerReferenceRefresh()
+    {
+        var token = _pageCancellationTokenSource?.Token;
+        if (token is null || token.Value.IsCancellationRequested)
+        {
+            return;
+        }
+
+        // Basic 是 InstanceViewModel 维护的，理论上会先在 ProfileUpdated 时更新，但不可靠
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+        {
+            if (profile.Setup.Source is not null)
+            {
+                if (PackageHelper.TryParse(profile.Setup.Source, out var r))
+                {
+                    Reference = new(async _ =>
+                    {
+                        var package = await dataService.ResolvePackageAsync(r.Label,
+                                                                            r.Namespace,
+                                                                            r.Pid,
+                                                                            r.Vid,
+                                                                            Filter.None with
+                                                                            {
+                                                                                Kind = ResourceKind.Modpack
+                                                                            });
+
+                        return new InstanceReferenceModel(profile.Setup.Source,
+                                                          r.Label,
+                                                          package.ProjectName,
+                                                          package.VersionId,
+                                                          package.VersionName,
+                                                          package.Thumbnail,
+                                                          package.Reference);
+                    });
+                }
+            }
+            else
+            {
+                foreach (var model in _stageSource.Items)
+                {
+                    model.IsLocked = false;
+                }
+            }
+        }
+    }
+
+
+    private async Task RefreshPackagesAsync(IReadOnlyList<InstancePackageModel> packages, CancellationToken token)
+    {
+        if (token.IsCancellationRequested)
+        {
+            return;
+        }
+
+        IsRefreshing = true;
+        try
+        {
+            var purls = packages
+                       .Select(x => PackageHelper.TryParse(x.Entry.Purl, out var purl)
+                                        ? (Model: x, Purl: purl)
+                                        : throw new FormatException($"Failed to parse purl: {x.Entry.Purl}"))
+                       .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Model));
+            var knownVids = purls.Where(x => x.Key.Vid is not null).ToList();
+            var unknownVids = purls.Where(x => x.Key.Vid is null).ToList();
+
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            // 固定 Vid 的不需要 Filter
+            var knownPackages = await dataService.ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            var unknownProjects =
+                await dataService.QueryProjectsAsync(unknownVids.Select(x => (x.Key.Label, x.Key.Namespace,
+                                                                              x.Key.Pid)));
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            var thumbnailsTasks = knownPackages
+                                 .Select(async x => (Purl: (x.Label, x.Namespace, x.ProjectId, (string?)x.VersionId),
+                                                     Thumbnail: x.Thumbnail is not null
+                                                                    ? await dataService.GetBitmapAsync(x.Thumbnail)
+                                                                    : AssetUriIndex.DirtImageBitmap))
+                                 .Concat(unknownProjects.Select(async x =>
+                                                                    (Purl: (x.Label, x.Namespace, x.ProjectId,
+                                                                            (string?)null),
+                                                                     Thumbnail: x.Thumbnail is not null
+                                                                         ? await dataService
+                                                                              .GetBitmapAsync(x.Thumbnail)
+                                                                         : AssetUriIndex.DirtImageBitmap)))
+                                 .ToList();
+            await Task.WhenAll(thumbnailsTasks);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            foreach (var package in knownPackages)
+            {
+                purls[(package.Label, package.Namespace, package.ProjectId, package.VersionId)].Package = package;
+            }
+
+            foreach (var project in unknownProjects)
+            {
+                purls[(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
+            }
+
+            foreach (var thumbnailsTask in thumbnailsTasks)
+            {
+                purls[thumbnailsTask.Result.Purl].Thumbnail = thumbnailsTask.Result.Thumbnail;
+            }
+
+            foreach (var x in purls.Values)
+            {
+                InstancePackageInfoModel info = x switch
+                {
+                    { Package: not null, Thumbnail: not null } => new(x.Model,
+                                                                      x.Package.Label,
+                                                                      x.Package.Namespace,
+                                                                      x.Package.ProjectId,
+                                                                      x.Package.ProjectName,
+                                                                      new
+                                                                          InstancePackageVersionModel(x.Package
+                                                                                 .VersionId,
+                                                                              x.Package.VersionName,
+                                                                              string.Join(",",
+                                                                                  x.Package.Requirements
+                                                                                     .AnyOfLoaders
+                                                                                     .Select(LoaderHelper
+                                                                                         .ToDisplayName)),
+                                                                              string.Join(",",
+                                                                                  x.Package.Requirements
+                                                                                     .AnyOfVersions),
+                                                                              x.Package.PublishedAt,
+                                                                              x.Package.ReleaseType,
+                                                                              x.Package.Dependencies)
+                                                                          {
+                                                                              IsCurrent = true
+                                                                          },
+                                                                      x.Package.Author,
+                                                                      x.Package.Summary,
+                                                                      x.Package.Reference,
+                                                                      x.Thumbnail,
+                                                                      x.Package.Kind),
+                    { Project: not null, Thumbnail: not null } => new(x.Model,
+                                                                      x.Project.Label,
+                                                                      x.Project.Namespace,
+                                                                      x.Project.ProjectId,
+                                                                      x.Project.ProjectName,
+                                                                      InstancePackageUnspecifiedVersionModel.Default,
+                                                                      x.Project.Author,
+                                                                      x.Project.Summary,
+                                                                      x.Project.Reference,
+                                                                      x.Thumbnail,
+                                                                      x.Project.Kind),
+                    _ => throw new UnreachableException()
+                };
+
+                x.Model.Info = info;
+                x.Model.OldPurlCache = x.Model.Entry.Purl;
+            }
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                notificationService.PopMessage(ex.Message, "Failed to parse purl", GrowlLevel.Danger);
+            });
+        }
+
+        IsRefreshing = false;
+    }
+
     #endregion
 
     #region Fields
 
+    private CancellationToken? _lifetimeToken;
     private CancellationTokenSource? _pageCancellationTokenSource;
-    private CancellationTokenSource? _refreshingCancellationTokenSource;
+    private readonly SourceCache<InstancePackageModel, Profile.Rice.Entry> _stageSource = new(x => x.Entry);
     private IDisposable? _updatingSubscription;
+    private readonly CompositeDisposable _subscriptions = new();
 
     #endregion
 
@@ -277,30 +321,72 @@ public partial class InstanceSetupViewModel(
             LoaderLabel = Resources.Enum_None;
         }
 
-        _updatingSubscription?.Dispose();
+        if (!InstanceManager.IsTracking(Basic.Key, out var tracker)
+         || tracker is not UpdateTracker and not DeployTracker)
+        {
+            TriggerPackageMerge();
+            TriggerReferenceRefresh();
+        }
+
         UpdatingPending = true;
         UpdatingProgress = 0;
     }
 
     protected override async Task OnInitializeAsync(CancellationToken token)
     {
+        _lifetimeToken = token;
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        if (!InstanceManager.IsTracking(Basic.Key, out var tracker)
-         || tracker is not UpdateTracker and not DeployTracker)
-        {
-            TriggerRefresh(_pageCancellationTokenSource.Token);
-        }
+
+
+        _stageSource
+           .Connect()
+           .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
+           .Distinct()
+           .Transform(x => new InstancePackageFilterTagModel(x) { RefCount = 1 })
+           .Bind(out var tagsView)
+           .AutoRefresh()
+           .Filter(x => x.IsSelected)
+           .Transform(x => x.Content)
+           .Bind(out var filterTags)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        TagsView = tagsView;
+
+        var text = this.WhenValueChanged(x => x.FilterText).Select(BuildTextFilter);
+        var enability = this.WhenValueChanged(x => x.FilterEnability).Select(BuildEnabilityFilter);
+        var lockility = this.WhenValueChanged(x => x.FilterLockility).Select(BuildLockilityFilter);
+        var kind = this.WhenValueChanged(x => x.FilterKind).Select(BuildKindFilter);
+        var tags = filterTags.ToObservableChangeSet().Select(_ => BuildTagFilter(filterTags));
+        _stageSource
+           .Connect()
+           .Filter(enability)
+           .Filter(lockility)
+           .Filter(kind)
+           .Filter(tags)
+           .Filter(text)
+           .Bind(out var view)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        StageView = view;
+
+        filterTags
+           .ToObservableChangeSet()
+           .Select(_ => filterTags.Any())
+           .CombineLatest(this.WhenValueChanged(x => x.FilterEnability).Select(x => x is { Enability: not null }),
+                          (x, y) => x || y)
+           .CombineLatest(this.WhenValueChanged(x => x.FilterLockility).Select(x => x is { Lockility: not null }),
+                          (x, y) => x || y)
+           .CombineLatest(this.WhenValueChanged(x => x.FilterKind).Select(x => x is { Kind: not null }),
+                          (x, y) => x || y)
+           .Subscribe(x => IsFilterActive = x)
+           .DisposeWith(_subscriptions);
 
         await base.OnInitializeAsync(token);
     }
 
     protected override Task OnDeinitializeAsync(CancellationToken token)
     {
-        _pageCancellationTokenSource?.Cancel();
-        _pageCancellationTokenSource?.Dispose();
-        _pageCancellationTokenSource = null;
-        _updatingSubscription?.Dispose();
-
+        _subscriptions.Dispose();
         return base.OnDeinitializeAsync(token);
     }
 
@@ -310,13 +396,16 @@ public partial class InstanceSetupViewModel(
 
     protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
-        _refreshingCancellationTokenSource?.Cancel();
+        _pageCancellationTokenSource?.Cancel();
+        _pageCancellationTokenSource?.Dispose();
+        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_lifetimeToken!.Value);
         TrackUpdateProgress(tracker);
         base.OnInstanceUpdating(tracker);
     }
 
     protected override void OnInstanceUpdated(UpdateTracker tracker)
     {
+        _updatingSubscription?.Dispose();
         if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
             // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
             //  但该 TrackerBase.StateChanged 事件未接触订阅
@@ -328,19 +417,9 @@ public partial class InstanceSetupViewModel(
             return;
         }
 
-        TriggerRefresh(_pageCancellationTokenSource.Token);
+        // OnModelUpdated 会负责刷新列表
+        // TriggerRefresh(_pageCancellationTokenSource.Token);
         base.OnInstanceUpdated(tracker);
-    }
-
-    protected override void OnInstanceDeployed(DeployTracker tracker)
-    {
-        if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
-        {
-            return;
-        }
-
-        TriggerRefresh(_pageCancellationTokenSource.Token);
-        base.OnInstanceDeployed(tracker);
     }
 
     private void TrackUpdateProgress(UpdateTracker update)
@@ -357,6 +436,44 @@ public partial class InstanceSetupViewModel(
                                 })
                                .DisposeWith(update);
     }
+
+    #endregion
+
+    #region Filter
+
+    private static Func<InstancePackageModel, bool> BuildEnabilityFilter(PackageEntryEnabilityFilter? enablity) =>
+        x => enablity?.Enability is null || x.IsEnabled == enablity.Enability;
+
+    private static Func<InstancePackageModel, bool> BuildLockilityFilter(PackageEntryLockilityFilter? lockility) =>
+        x => lockility?.Lockility is null || x.IsLocked == lockility.Lockility;
+
+    private static Func<InstancePackageModel, bool> BuildKindFilter(PackageEntryKindFilter? kind) =>
+        x => kind?.Kind is null || x.Info?.Kind == kind.Kind;
+
+    private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
+        x => string.IsNullOrEmpty(filter)
+          || (x.Info is
+              {
+                  ProjectId: { } pid,
+                  ProjectName: { } name,
+                  Author: { } author,
+                  Summary: { } summary,
+                  Version: { } version
+              }
+           && filter
+             .Split(' ')
+             .All(y => y switch
+              {
+                  ['@', .. var a] => author.Contains(a, StringComparison.OrdinalIgnoreCase),
+                  ['#', .. var s] => summary.Contains(s, StringComparison.OrdinalIgnoreCase),
+                  ['!', .. var i] => pid.Contains(i, StringComparison.OrdinalIgnoreCase)
+                                  || (version is InstancePackageVersionModel v
+                                   && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase)),
+                  _ => name.Contains(y, StringComparison.OrdinalIgnoreCase)
+              }));
+
+    private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>
+        x => tags is null or { Count: 0 } || tags.All(x.Tags.Contains);
 
     #endregion
 
@@ -416,8 +533,10 @@ public partial class InstanceSetupViewModel(
         }
     }
 
-    [RelayCommand]
-    private void ViewPackage(InstancePackageModel? model)
+    private bool CanViewPackage(InstancePackageInfoModel? model) => model is not null;
+
+    [RelayCommand(CanExecute = nameof(CanViewPackage))]
+    private void ViewPackage(InstancePackageInfoModel? model)
     {
         if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
@@ -428,7 +547,7 @@ public partial class InstanceSetupViewModel(
                 DataService = dataService,
                 OverlayService = overlayService,
                 PersistenceService = persistenceService,
-                StageCollection = Stage,
+                Collection = _stageSource.Items,
                 Filter = new(Kind: model.Kind,
                              Version: Basic.Version,
                              Loader: Basic.Loader is not null
@@ -480,18 +599,18 @@ public partial class InstanceSetupViewModel(
 
 
     [RelayCommand]
-    private async Task UpdateBatchAsync(SourceCache<InstancePackageModel, Profile.Rice.Entry>? packages)
+    private async Task UpdateBatchAsync()
     {
         var cts = new CancellationTokenSource();
-        if (packages != null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            var total = packages.Items.Count;
+            var total = _stageSource.Items.Count;
             var notification = new GrowlItem
             {
                 Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
                 Content = Resources
                          .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt.Replace("{0}", "0")
-                         .Replace("{1}", packages.Count.ToString()),
+                         .Replace("{1}", _stageSource.Count.ToString()),
                 IsProgressBarVisible = true,
                 IsCloseButtonVisible = false
             };
@@ -502,9 +621,9 @@ public partial class InstanceSetupViewModel(
             notificationService.Pop(notification);
 
             var filter = new Filter(Kind: null,
-                                    Version: guard.Value.Setup.Version,
-                                    Loader: guard.Value.Setup.Loader is not null
-                                                ? LoaderHelper.TryParse(guard.Value.Setup.Loader, out var loader)
+                                    Version: profile.Setup.Version,
+                                    Loader: profile.Setup.Loader is not null
+                                                ? LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
                                                       ? loader.Identity
                                                       : null
                                                 : null);
@@ -515,7 +634,8 @@ public partial class InstanceSetupViewModel(
                 // 值设置太大会触发 API 限制
                 var semaphore = new SemaphoreSlim(2);
                 // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
-                var tasks = packages.Items.Select(x => UpdateAsync(x, semaphore, cts.Token));
+                // ReSharper disable once AccessToDisposedClosure
+                var tasks = _stageSource.Items.Select(x => UpdateAsync(x, semaphore, cts.Token));
                 await Task.WhenAll(tasks);
                 semaphore.Dispose();
             }
@@ -542,6 +662,8 @@ public partial class InstanceSetupViewModel(
                                                   .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
                                                new AsyncRelayCommand(ReviewAsync, CanReview)));
             notificationService.Pop(reviewNotification);
+            return;
+
 
             async Task UpdateAsync(InstancePackageModel entry, SemaphoreSlim semaphore, CancellationToken token)
             {
@@ -599,7 +721,9 @@ public partial class InstanceSetupViewModel(
                 Dispatcher.UIThread.Post(() =>
                 {
                     notification.Progress = Math.Min(100d,
-                                                     100d * (packages.Items.Count - total) / packages.Items.Count);
+                                                     100d
+                                                   * (_stageSource.Items.Count - total)
+                                                   / _stageSource.Items.Count);
                     notification.Content = Resources
                                           .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
                                           .Replace("{0}", updates.Count.ToString())
@@ -617,6 +741,12 @@ public partial class InstanceSetupViewModel(
 
             async Task ReviewAsync()
             {
+                // 这里有个性能 Trick，使用的是不可变 Profile 引用，这里不使用 ProfileGuard 是为了避免重复刷新
+                // 由于 Profile 是单例的，实际改变已经被应用，只是没有用 guard.DisposeAsync 通知写入硬盘
+                // 为什么不用 Guard：
+                // 除了避免触发无效的刷新 diff 以外还有一个原因是这里涉及跨三个控制流且可以在任意一层中断
+                // 导致 Guard 无法保证能被释放而出现泄露
+                // 缺陷：可能会导致批量更新未能保存到硬盘，例如进程被杀的情况
                 var dialog = new PackageBulkUpdaterDialog { Result = updates.ToList() };
                 reviewNotification.Dismiss();
                 if (await overlayService.PopDialogAsync(dialog)
@@ -624,25 +754,21 @@ public partial class InstanceSetupViewModel(
                 {
                     foreach (var model in results.Where(x => x.IsChecked))
                     {
-                        var old = model.Entry.Entry.Purl;
-                        model.Entry.Version = new InstancePackageVersionModel(model.NewVersionId,
-                                                                              model.NewVersionName,
-                                                                              string.Join(",",
-                                                                                  model.Package.Requirements
-                                                                                     .AnyOfLoaders
-                                                                                     .Select(LoaderHelper
-                                                                                         .ToDisplayName)),
-                                                                              string.Join(",",
-                                                                                  model.Package.Requirements
-                                                                                     .AnyOfVersions),
-                                                                              model.NewVersionTimeRaw,
-                                                                              model.Package.ReleaseType,
-                                                                              model.Package.Dependencies);
+                        var old = model.Model.Entry.Purl;
+                        model.Model.Info?.Version = new InstancePackageVersionModel(model.NewVersionId,
+                            model.NewVersionName,
+                            string.Join(",",
+                                        model.Package.Requirements.AnyOfLoaders
+                                             .Select(LoaderHelper.ToDisplayName)),
+                            string.Join(",", model.Package.Requirements.AnyOfVersions),
+                            model.NewVersionTimeRaw,
+                            model.Package.ReleaseType,
+                            model.Package.Dependencies);
                         // 设置 Version 会同步到 Entry.Purl
-                        persistenceService.AppendAction(new(guard!.Key,
+                        persistenceService.AppendAction(new(Basic.Key,
                                                             PersistenceService.ActionKind.EditPackage,
                                                             old,
-                                                            model.Entry.Entry.Purl));
+                                                            model.Model.Entry.Purl));
                     }
                 }
             }
@@ -806,9 +932,6 @@ public partial class InstanceSetupViewModel(
 
         try
         {
-            _refreshingCancellationTokenSource?.Cancel();
-            _refreshingCancellationTokenSource?.Dispose();
-            _refreshingCancellationTokenSource = null;
             InstanceManager.Update(Basic.Key, model.Label, model.Namespace, model.Pid, model.Vid);
         }
         catch (Exception ex)
@@ -836,14 +959,14 @@ public partial class InstanceSetupViewModel(
     {
         if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
-            guard.Value.Setup.Packages.Remove(model.Entry);
-            Stage.Remove(model);
-            StageCount--;
-            await guard.DisposeAsync();
-            persistenceService.AppendAction(new(Basic.Key,
-                                                PersistenceService.ActionKind.EditPackage,
-                                                model.Entry.Purl,
-                                                null));
+            await using (guard)
+            {
+                guard.Value.Setup.Packages.Remove(model.Entry);
+                persistenceService.AppendAction(new(Basic.Key,
+                                                    PersistenceService.ActionKind.EditPackage,
+                                                    model.Entry.Purl,
+                                                    null));
+            }
         }
     }
 
@@ -863,9 +986,6 @@ public partial class InstanceSetupViewModel(
     public partial string LoaderLabel { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial SourceCache<InstancePackageModel, Profile.Rice.Entry> Stage { get; set; } = new(x => x.Entry);
-
-    [ObservableProperty]
     public partial int StageCount { get; set; }
 
     [ObservableProperty]
@@ -876,6 +996,27 @@ public partial class InstanceSetupViewModel(
 
     [ObservableProperty]
     public partial bool IsRefreshing { get; set; } = false;
+
+    [ObservableProperty]
+    public partial ReadOnlyObservableCollection<InstancePackageModel>? StageView { get; set; }
+
+    [ObservableProperty]
+    public partial ReadOnlyObservableCollection<InstancePackageFilterTagModel>? TagsView { get; set; }
+
+    [ObservableProperty]
+    public partial string? FilterText { get; set; }
+
+    [ObservableProperty]
+    public partial PackageEntryEnabilityFilter? FilterEnability { get; set; }
+
+    [ObservableProperty]
+    public partial PackageEntryLockilityFilter? FilterLockility { get; set; }
+
+    [ObservableProperty]
+    public partial PackageEntryKindFilter? FilterKind { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsFilterActive { get; set; }
 
     #endregion
 }

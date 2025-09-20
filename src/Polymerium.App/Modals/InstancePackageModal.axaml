@@ -11,19 +11,19 @@
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             xmlns:controls="clr-namespace:Polymerium.App.Controls"
             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="360" MinWidth="360" Margin="64"
-            x:Class="Polymerium.App.Modals.InstancePackageModal" x:DataType="m:InstancePackageModel">
+            x:Class="Polymerium.App.Modals.InstancePackageModal" x:DataType="m:InstancePackageInfoModel">
     <husk:ConstrainedBox AspectRatio="0.8">
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
             <Border Grid.Row="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Padding="12"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                 <ToolTip.Tip>
-                    <TextBlock Text="{Binding ProjectName}" />
+                    <TextBlock Text="{Binding ProjectName,FallbackValue=Name}" />
                 </ToolTip.Tip>
                 <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
                     <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Height="48" Width="48"
                             CornerRadius="{StaticResource SmallCornerRadius}">
                         <Border.Background>
-                            <ImageBrush Source="{Binding Thumbnail}" />
+                            <ImageBrush Source="{Binding Thumbnail,FallbackValue={x:Null}}" />
                         </Border.Background>
                     </Border>
                     <TextBlock Grid.Row="0" Grid.Column="1"
@@ -32,7 +32,7 @@
                                FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                                 VerticalAlignment="Center">
-                        <HyperlinkButton NavigateUri="{Binding Reference}">
+                        <HyperlinkButton NavigateUri="{Binding Reference,FallbackValue={x:Null}}">
                             <ToolTip.Tip>
                                 <StackPanel Spacing="2">
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
@@ -78,7 +78,7 @@
                                         <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Margin="4,0"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                             <Run Text="/" />
-                                            <Run Text="{Binding Tags.Count,FallbackValue=0}" />
+                                            <Run Text="{Binding Owner.Tags.Count,FallbackValue=0}" />
                                         </TextBlock>
                                         <Button HorizontalAlignment="Left" Classes="Small"
                                                 Command="{Binding $parent[modals:InstancePackageModal].AddTagCommand}"
@@ -95,7 +95,7 @@
                             </Border>
                             <Panel Grid.Row="1">
                                 <StackPanel VerticalAlignment="Center"
-                                            IsVisible="{Binding Tags.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
+                                            IsVisible="{Binding Owner.Tags.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
                                             Spacing="8">
                                     <icons:PackIconLucide Kind="Tag" Height="{StaticResource ExtraLargeFontSize}"
                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -106,7 +106,7 @@
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                HorizontalAlignment="Center" />
                                 </StackPanel>
-                                <ItemsControl Margin="12" ItemsSource="{Binding Tags}">
+                                <ItemsControl Margin="12" ItemsSource="{Binding Owner.Tags}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <WrapPanel LineSpacing="6" ItemSpacing="6" />
@@ -146,7 +146,7 @@
                         <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                 CornerRadius="{StaticResource MediumCornerRadius}">
                             <ContentControl
-                                Content="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageModel)DataContext).Version,Mode=OneWay,FallbackValue={x:Null}}">
+                                Content="{Binding Version,FallbackValue={x:Null}}">
                                 <ContentControl.DataTemplates>
                                     <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
                                         <Grid Margin="6,12" ColumnDefinitions="Auto,*" RowDefinitions="*,*"
@@ -191,7 +191,7 @@
                                 </ContentControl.DataTemplates>
                             </ContentControl>
                         </Border>
-                        <husk:SwitchPresenter Grid.Row="1" Value="{Binding IsLocked}" TargetType="x:Boolean">
+                        <husk:SwitchPresenter Grid.Row="1" Value="{Binding Owner.IsLocked}" TargetType="x:Boolean">
                             <husk:SwitchCase Value="True">
                                 <StackPanel VerticalAlignment="Center" Spacing="8">
                                     <fi:SymbolIcon Symbol="LockClosed" FontSize="{StaticResource ExtraLargeFontSize}"
@@ -424,7 +424,7 @@
             </TabControl>
             <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <ToggleSwitch Grid.Column="0"
-                              IsChecked="{Binding IsEnabled,Mode=TwoWay}"
+                              IsChecked="{Binding Owner.IsEnabled,Mode=TwoWay}"
                               OnContent="{x:Static lang:Resources.Enum_Enabled}"
                               OffContent="{x:Static lang:Resources.Enum_Disabled}" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
