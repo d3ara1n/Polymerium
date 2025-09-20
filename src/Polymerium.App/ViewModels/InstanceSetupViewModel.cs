@@ -292,7 +292,7 @@ public partial class InstanceSetupViewModel(
             });
         }
 
-        // IsRefreshing = false;
+        IsRefreshing = false;
     }
 
     #endregion
