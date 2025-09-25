@@ -349,17 +349,17 @@ public partial class InstanceViewModel : ViewModelBase
         // Setup
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Assets
-        #if !DEBUG
+        #if DEBUG
         new(typeof(InstanceAssetsView), PackIconLucideKind.CassetteTape),
         #endif
         // Widgets
         new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
         // Statistics
-        #if !DEBUG
+        #if DEBUG
         new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
         #endif
         // Storage
-        #if !DEBUG
+        #if DEBUG
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
         #endif
         // Properties
