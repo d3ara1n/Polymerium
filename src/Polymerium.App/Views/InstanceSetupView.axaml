@@ -119,7 +119,7 @@
                 <husk:LazyContainer Grid.Column="1" MinWidth="198"
                                     Source="{Binding Reference,FallbackValue={x:Null}}"
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
-                    <husk:LazyContainer.BadContent>
+                    <husk:LazyContainer.FaultContent>
                         <husk:Card BorderThickness="2"
                                    BorderBrush="{StaticResource ControlBorderBrush}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -128,7 +128,7 @@
                                 <Button Content="Retry" IsVisible="False" />
                             </StackPanel>
                         </husk:Card>
-                    </husk:LazyContainer.BadContent>
+                    </husk:LazyContainer.FaultContent>
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
                             <Border Background="{StaticResource ControlBackgroundBrush}"
@@ -381,6 +381,7 @@
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
                                                     Margin="0,3"
+                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing,Mode=OneWay,FallbackValue={x:False}}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
                                                     Theme="{StaticResource ListPackageEntryButtonTheme}"
                                                     Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
@@ -398,6 +399,7 @@
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
+                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing,Mode=OneWay,FallbackValue={x:False}}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
                                                     ToolTip.Tip="{Binding Info.ProjectName,FallbackValue=Name}"
                                                     Theme="{StaticResource GridPackageEntryButtonTheme}"

@@ -124,10 +124,15 @@ public partial class InstanceHomeViewModel(
     protected override void OnModelUpdated(string key, Profile profile)
     {
         base.OnModelUpdated(key, profile);
-        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-        Screenshot = screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
+        Screenshot ??= GetRandomScreenshot(key);
         PackageCount = profile.Setup.Packages.Count;
         UpdateTime(key);
+    }
+
+    private Bitmap GetRandomScreenshot(string key)
+    {
+        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
+        return screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
     }
 
     #endregion
