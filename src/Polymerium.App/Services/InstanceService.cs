@@ -83,6 +83,8 @@ public class InstanceService(
                                                             profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
                                                                                     configurationService.Value
                                                                                        .GameWindowInitialHeight)),
+                                               quickConnectAddress:
+                                               profile.GetOverride<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER),
                                                launchMode: mode,
                                                account: cooked,
                                                brand: Program.Brand);

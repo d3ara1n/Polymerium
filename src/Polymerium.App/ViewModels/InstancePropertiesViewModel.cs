@@ -145,6 +145,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
         BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
+        QuickConnectAddressOverride = AccessOverrideString<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
+        QuickConnectAddressWatermark = "Disabled if unset";
 
         #endregion
 
@@ -379,6 +381,17 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     partial void OnWindowInitialWidthOverrideChanged(string value) =>
         WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH,
                       !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
+
+    [ObservableProperty]
+    public partial string QuickConnectAddressOverride { get; set; } = string.Empty;
+
+
+    [ObservableProperty]
+    public partial string QuickConnectAddressWatermark { get; set; } = string.Empty;
+
+    partial void OnQuickConnectAddressOverrideChanged(string value) =>
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, !string.IsNullOrEmpty(value) ? value : null);
+
 
     [ObservableProperty]
     public partial bool BehaviorResolveDependency { get; set; }
