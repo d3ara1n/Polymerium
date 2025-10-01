@@ -148,7 +148,8 @@
                             </husk:PlaceholderPresenter.SourceTemplate>
                             <husk:PlaceholderPresenter.Placeholder>
                                 <husk:SkeletonContainer
-                                    IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}" />
+                                    IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
+                                    IsAnimated="{TemplateBinding IsRefreshing}" />
                             </husk:PlaceholderPresenter.Placeholder>
                         </husk:PlaceholderPresenter>
                     </Panel>
@@ -206,7 +207,8 @@
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:PlaceholderPresenter.Placeholder>
                             <husk:SkeletonContainer
-                                IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}" />
+                                IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
+                                IsAnimated="{TemplateBinding IsRefreshing}" />
                         </husk:PlaceholderPresenter.Placeholder>
                     </husk:PlaceholderPresenter>
                 </husk:Card>

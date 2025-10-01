@@ -326,15 +326,12 @@ public partial class InstanceSetupViewModel(
             LoaderLabel = Resources.Enum_None;
         }
 
-        if (!InstanceManager.IsTracking(Basic.Key, out var tracker)
-         || tracker is not UpdateTracker and not DeployTracker)
+        // 即使正在 Update 或 Deploy 也会 Trigger
+        Dispatcher.UIThread.Post(() =>
         {
-            Dispatcher.UIThread.Post(() =>
-            {
-                TriggerPackageMerge();
-                TriggerReferenceRefresh();
-            });
-        }
+            TriggerPackageMerge();
+            TriggerReferenceRefresh();
+        });
 
         UpdatingPending = true;
         UpdatingProgress = 0;
@@ -404,6 +401,7 @@ public partial class InstanceSetupViewModel(
 
     protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
+        IsRefreshing = false;
         _pageCancellationTokenSource?.Cancel();
         _pageCancellationTokenSource?.Dispose();
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_lifetimeToken!.Value);
