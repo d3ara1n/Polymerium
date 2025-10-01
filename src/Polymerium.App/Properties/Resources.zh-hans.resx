@@ -222,9 +222,6 @@
     <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
         <value>切换版本</value>
     </data>
-    <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
-        <value>加载包信息...</value>
-    </data>
     <data name="MarketplacePortalView_Title" xml:space="preserve">
         <value>集市门户</value>
     </data>
@@ -1122,8 +1119,8 @@
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>共计</value>
     </data>
-    <data name="InstanceSetupView_UpdatingLabelText" xml:space="preserve">
-        <value>更新中...</value>
+    <data name="InstanceSetupView_RefreshingLabelText" xml:space="preserve">
+        <value>刷新中...</value>
     </data>
     <data name="AssetImporterDialog_Title" xml:space="preserve">
         <value>从文件添加包或资产</value>
@@ -1154,5 +1151,11 @@
     </data>
     <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
         <value>识别文件类型...</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
+        <value>自动连接到服务器</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
+        <value>地址</value>
     </data>
 </root>

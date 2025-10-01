@@ -1725,6 +1725,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string InstancePropertiesView_QuickConnectAddressLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_QuickConnectAddressLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect At Startup.
+        /// </summary>
+        public static string InstancePropertiesView_QuickConnectLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_QuickConnectLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string InstancePropertiesView_RemoveButtonText {
@@ -2004,15 +2022,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading packages information....
-        /// </summary>
-        public static string InstanceSetupView_LoadingPackageLabelText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_LoadingPackageLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open Website.
         /// </summary>
         public static string InstanceSetupView_OpenWebsiteMenuText {
@@ -2081,6 +2090,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_ReferenceUnavailableLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_ReferenceUnavailableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refreshing....
+        /// </summary>
+        public static string InstanceSetupView_RefreshingLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_RefreshingLabelText", resourceCulture);
             }
         }
         
@@ -2162,15 +2180,6 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_TypeLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_TypeLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updating....
-        /// </summary>
-        public static string InstanceSetupView_UpdatingLabelText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_UpdatingLabelText", resourceCulture);
             }
         }
         
