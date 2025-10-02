@@ -5,9 +5,9 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class ScreenshotModel : ModelBase
+public class AssetScreenshotModel : ModelBase
 {
-    public ScreenshotModel(Uri image, DateTimeOffset time)
+    public AssetScreenshotModel(Uri image, DateTimeOffset time)
     {
         Image = image;
         TimeRaw = time;
