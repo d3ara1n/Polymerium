@@ -142,10 +142,30 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private async Task PlayAsync(string key) => await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+    private async Task PlayAsync(string key)
+    {
+        try
+        {
+            await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to launch instance");
+        }
+    }
 
     [RelayCommand]
-    private void Deploy(string key) => _instanceService.Deploy(key);
+    private void Deploy(string key)
+    {
+        try
+        {
+            _instanceService.Deploy(key);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to deploy instance");
+        }
+    }
 
     [RelayCommand]
     private void OpenFolder(string? key)
