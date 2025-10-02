@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LiveChartsCore;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -104,7 +102,7 @@ public partial class MaintenanceStorageViewModel(
                 notificationService.PopMessage(ex, "Failed to purge cache");
             }
 
-            CalculateAsync();
+            await CalculateAsync();
         }
     }
 
@@ -121,9 +119,6 @@ public partial class MaintenanceStorageViewModel(
     #endregion
 
     #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<ISeries> TotalSeries { get; set; }
 
     [ObservableProperty]
     public partial ulong TotalSize { get; set; }

@@ -88,7 +88,8 @@ public partial class InstanceSetupViewModel(
                 if (lookup.TryGetValue(entry, out _))
                 {
                     var old = _stageSource.Lookup(entry).Value;
-                    if (old.OldPurlCache != entry.Purl)
+                    // old.Info is null 是考虑到有些上次加载还没完成就被打断，这次就继续加载
+                    if (old.OldPurlCache != entry.Purl || old.Info is null)
                     {
                         toUpdate.Add(old);
                     }
@@ -337,7 +338,7 @@ public partial class InstanceSetupViewModel(
         UpdatingProgress = 0;
     }
 
-    protected override async Task OnInitializeAsync()
+    protected override Task OnInitializeAsync()
     {
         _lifetimeToken = PageToken;
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(PageToken);
@@ -386,13 +387,13 @@ public partial class InstanceSetupViewModel(
            .Subscribe(x => IsFilterActive = x)
            .DisposeWith(_subscriptions);
 
-        await base.OnInitializeAsync();
+        return Task.CompletedTask;
     }
 
     protected override Task OnDeinitializeAsync()
     {
         _subscriptions.Dispose();
-        return base.OnDeinitializeAsync();
+        return Task.CompletedTask;
     }
 
     #endregion

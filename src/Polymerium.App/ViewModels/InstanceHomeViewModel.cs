@@ -101,7 +101,7 @@ public partial class InstanceHomeViewModel(
         }
 
 
-        return Task.CompletedTask;
+        return base.OnInitializeAsync();
     }
 
     protected override Task OnDeinitializeAsync()
@@ -114,7 +114,7 @@ public partial class InstanceHomeViewModel(
         }
 
         PinnedWidgets.Clear();
-        return base.OnDeinitializeAsync();
+        return Task.CompletedTask;
     }
 
 
