@@ -1131,6 +1131,51 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active Days.
+        /// </summary>
+        public static string InstanceActivitiesView_ActiveDaysLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ActiveDaysLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string InstanceActivitiesView_ChangelogLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ChangelogLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session Count.
+        /// </summary>
+        public static string InstanceActivitiesView_SessionCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_SessionCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Hours.
+        /// </summary>
+        public static string InstanceActivitiesView_TotalHoursLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_TotalHoursLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Hours Rank.
+        /// </summary>
+        public static string InstanceActivitiesView_TotalHoursRankLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_TotalHoursRankLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSTALLING.
         /// </summary>
         public static string InstanceEntryButton_InstallTagText {

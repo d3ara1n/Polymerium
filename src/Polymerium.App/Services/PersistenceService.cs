@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using FreeSql.DataAnnotations;
 using Trident.Core.Accounts;
@@ -135,6 +136,22 @@ public class PersistenceService(IFreeSql freeSql)
 
     public int GetActiveDays(string key) =>
         (int)freeSql.Select<Activity>().Where(x => x.Key == key).GroupBy(x => x.End.Date).Count();
+
+    public int GetSessionCount(string key) => (int)freeSql.Select<Activity>().Where(x => x.Key == key).Count();
+
+    public int GetTotalPlayTimeRank(string key)
+    {
+        var allActivities = freeSql.Select<Activity>().ToList();
+
+        var playTimes = allActivities
+                       .GroupBy(x => x.Key)
+                       .Select(g => new { g.Key, TotalHours = g.Sum(x => (x.End - x.Begin).TotalHours) })
+                       .OrderByDescending(x => x.TotalHours)
+                       .ToList();
+
+        var rank = playTimes.FindIndex(x => x.Key == key);
+        return rank == -1 ? playTimes.Count + 1 : rank + 1;
+    }
 
     public TimeSpan GetDayPlayTime(string key, DateTimeOffset date)
     {
