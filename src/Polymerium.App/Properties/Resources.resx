@@ -1182,4 +1182,7 @@
     <data name="AssetKind_Server" xml:space="preserve">
         <value>Servers</value>
     </data>
+    <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
+        <value>Export Modpack</value>
+    </data>
 </root>

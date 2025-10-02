@@ -247,6 +247,11 @@
                                                         CommandParameter="{Binding Basic.Key}" />
                                                     <MenuItem Header="-" />
                                                     <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=FolderZip,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ExportInstanceCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
+                                                    <MenuItem
                                                         Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
                                                         Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"

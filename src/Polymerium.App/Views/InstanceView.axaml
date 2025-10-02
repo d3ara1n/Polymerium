@@ -8,6 +8,7 @@
                      xmlns:m="using:Polymerium.App.Models"
                      xmlns:controls="using:Polymerium.App.Controls"
                      xmlns:trident="clr-namespace:Trident.Core;assembly=Trident.Core"
+                     xmlns:app="clr-namespace:Polymerium.App"
                      mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
                      Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"
                      Context="{Binding Context,Mode=OneWay}"
@@ -193,11 +194,10 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>
-                        <StackPanel Grid.Row="2" Spacing="2">
+                        <StackPanel Grid.Row="2" Spacing="2" Margin="12,0">
                             <Button ToolTip.Tip="Import asset from file"
                                     CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
-                                    Command="{Binding ImportFromFileCommand}"
-                                    Margin="12,0">
+                                    Command="{Binding ImportFromFileCommand}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
@@ -211,8 +211,8 @@
                             </Button>
                             <Button ToolTip.Tip="Export modpack to file"
                                     CornerRadius="0"
-                                    Command="{Binding ImportFromFileCommand}"
-                                    Margin="12,0">
+                                    Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand,FallbackValue={x:Null}}"
+                                    CommandParameter="{Binding Basic.Key}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
@@ -221,13 +221,12 @@
                                                  ConverterParameter="Deploying" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <icons:PackIconLucide Kind="FileArchive" Height="{StaticResource MediumFontSize}"
+                                <icons:PackIconLucide Kind="FolderArchive" Height="{StaticResource MediumFontSize}"
                                                       Width="{StaticResource MediumFontSize}" />
                             </Button>
                             <Button ToolTip.Tip="Open instance folder"
                                     CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                    Command="{Binding OpenFolderCommand}"
-                                    Margin="12,0">
+                                    Command="{Binding OpenFolderCommand}">
                                 <icons:PackIconLucide Kind="FolderOpen" Height="{StaticResource MediumFontSize}"
                                                       Width="{StaticResource MediumFontSize}" />
                             </Button>

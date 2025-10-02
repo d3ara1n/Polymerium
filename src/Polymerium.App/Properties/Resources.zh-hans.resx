@@ -1173,4 +1173,7 @@
     <data name="AssetKind_Server" xml:space="preserve">
         <value>服务器</value>
     </data>
+    <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
+        <value>导出整合包</value>
+    </data>
 </root>

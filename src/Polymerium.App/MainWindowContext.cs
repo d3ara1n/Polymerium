@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
@@ -51,6 +52,7 @@ public partial class MainWindowContext : ObservableObject
         _navigationService = navigationService;
         _persistenceService = persistenceService;
         _instanceService = instanceService;
+        _overlayService = overlayService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -91,6 +93,7 @@ public partial class MainWindowContext : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 
@@ -112,6 +115,15 @@ public partial class MainWindowContext : ObservableObject
         if (key is not null)
         {
             _navigationService.Navigate<InstanceView>(key);
+        }
+    }
+
+    [RelayCommand]
+    private void ExportInstance(string? key)
+    {
+        if (key is not null)
+        {
+            _overlayService.PopDialog(new ModpackExporterDialog());
         }
     }
 

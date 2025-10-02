@@ -133,6 +133,9 @@ public class PersistenceService(IFreeSql freeSql)
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
+    public int GetActiveDays(string key) =>
+        (int)freeSql.Select<Activity>().Where(x => x.Key == key).GroupBy(x => x.End.Date).Count();
+
     public TimeSpan GetDayPlayTime(string key, DateTimeOffset date)
     {
         var totalSeconds = freeSql
