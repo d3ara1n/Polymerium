@@ -159,7 +159,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             await _owned.DisposeAsync();
         }
 
-        await base.OnDeinitializeAsync();
+        await Task.CompletedTask;
     }
 
     #endregion

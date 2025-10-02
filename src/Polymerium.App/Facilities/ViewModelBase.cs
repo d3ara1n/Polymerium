@@ -9,9 +9,9 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
 {
     #region IPageModel Members
 
-    public Task InitializeAsync() => OnInitializeAsync();
+    public virtual Task InitializeAsync() => OnInitializeAsync();
 
-    public Task DeinitializeAsync() => OnDeinitializeAsync();
+    public virtual Task DeinitializeAsync() => OnDeinitializeAsync();
 
     #endregion
 
