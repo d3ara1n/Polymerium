@@ -13,16 +13,41 @@
                   x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <TabControl Padding="0">
-        <TabItem Header="{x:Static lang:Resources.AssetKind_Mod}" />
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Mod}" />
+                    <husk:PlaceholderPresenter Source="{Binding Mods}">
+                        <husk:PlaceholderPresenter.SourceTemplate>
+                            <DataTemplate DataType="m:AssetModCollection">
+                                <TextBlock
+                                    Text="{Binding Count,StringFormat={}({0}),FallbackValue=(0)}" />
+                            </DataTemplate>
+                        </husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:ProgressRing
+                            IsIndeterminate="{Binding Mods,Converter={x:Static ObjectConverters.IsNull}}"
+                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                    </husk:PlaceholderPresenter>
+                </StackPanel>
+            </TabItem.Header>
+        </TabItem>
         <TabItem Header="{x:Static lang:Resources.AssetKind_ResourcePack}" />
         <TabItem>
             <TabItem.Header>
-                <TextBlock>
-                    <Run Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
-                    <Run Text="(" />
-                    <Run Text="{Binding ScreenshotCount}" />
-                    <Run Text=")" />
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
+                    <husk:PlaceholderPresenter Source="{Binding ScreenshotGroups}">
+                        <husk:PlaceholderPresenter.SourceTemplate>
+                            <DataTemplate DataType="m:AssetScreenshotCollection">
+                                <TextBlock
+                                    Text="{Binding ScreenshotCount,StringFormat={}({0}),FallbackValue=(0)}" />
+                            </DataTemplate>
+                        </husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:ProgressRing
+                            IsIndeterminate="{Binding ScreenshotGroups,Converter={x:Static ObjectConverters.IsNull}}"
+                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                    </husk:PlaceholderPresenter>
+                </StackPanel>
             </TabItem.Header>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                 <ItemsControl ItemsSource="{Binding ScreenshotGroups}">
@@ -32,7 +57,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="m:ScreenshotGroupModel">
+                        <DataTemplate DataType="m:AssetScreenshotGroupModel">
                             <Border Background="{StaticResource CardBackgroundBrush}" BoxShadow="0 0 4 0 #3F000000"
                                     Margin="2" CornerRadius="{StaticResource MediumCornerRadius}" Width="256"
                                     VerticalAlignment="Top">
@@ -48,7 +73,7 @@
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
-                                                <DataTemplate DataType="m:ScreenshotModel">
+                                                <DataTemplate DataType="m:AssetScreenshotModel">
                                                     <Border Padding="8"
                                                             Height="178"
                                                             Background="{StaticResource OverlaySolidBackgroundBrush}"

@@ -26,16 +26,11 @@ public partial class MaintenanceStorageViewModel(
 
     #endregion
 
-    protected override async Task OnInitializeAsync()
-    {
-        _ = Task.Run(CalculateAsync, PageToken);
-
-        await base.OnInitializeAsync();
-    }
+    protected override async Task OnInitializeAsync() => await Task.Run(CalculateAsync);
 
     #region Other
 
-    private async Task CalculateAsync()
+    private Task CalculateAsync()
     {
         (PackageSize, PackageCount) = CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
         (LibrarySize, _) = CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
@@ -52,6 +47,7 @@ public partial class MaintenanceStorageViewModel(
 
         CacheSize = PackageSize + LibrarySize + AssetSize + RuntimeSize;
         TotalSize = CacheSize + InstanceSize;
+        return Task.CompletedTask;
     }
 
     private static (ulong, ulong) CalculateDirectorySize(string path)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,21 +19,26 @@ public partial class InstanceAssetsViewModel(
     ViewBag bag,
     InstanceManager instanceManager,
     ProfileManager profileManager,
-    OverlayService overlayService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    OverlayService overlayService,
+    NotificationService notificationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Reactive
 
-    public ObservableCollection<ScreenshotGroupModel> ScreenshotGroups { get; } = [];
+    [ObservableProperty]
+    public partial AssetScreenshotCollection? ScreenshotGroups { get; set; }
 
     [ObservableProperty]
-    public partial int ScreenshotCount { get; set; }
+    public partial int PackageCount { get; set; }
+
+    [ObservableProperty]
+    public partial AssetModCollection? Mods { get; set; }
 
     #endregion
 
     #region Commands
 
     [RelayCommand]
-    private void ViewImage(ScreenshotModel? model)
+    private void ViewImage(AssetScreenshotModel? model)
     {
         if (model != null)
         {
@@ -48,8 +52,8 @@ public partial class InstanceAssetsViewModel(
 
     protected override async Task OnInitializeAsync()
     {
-        await LoadModAsync();
-        await LoadScreenshotsAsync();
+        await Task.Run(LoadModAsync);
+        await Task.Run(LoadScreenshotsAsync);
     }
 
     #endregion
@@ -64,34 +68,44 @@ public partial class InstanceAssetsViewModel(
             return Task.CompletedTask;
         }
 
+        var groups = new AssetScreenshotCollection();
         foreach (var files in dir
                              .GetFiles("*.png", SearchOption.TopDirectoryOnly)
                              .GroupBy(x => x.CreationTimeUtc.Date)
                              .OrderByDescending(x => x.Key))
         {
-            var group = new ScreenshotGroupModel(files.Key);
+            var group = new AssetScreenshotGroupModel(files.Key);
             foreach (var file in files)
             {
                 group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc));
             }
 
-            ScreenshotGroups.Add(group);
+            groups.Add(group);
         }
 
-        ScreenshotCount = ScreenshotGroups.Sum(x => x.Screenshots.Count);
+        ScreenshotGroups = groups;
+        ScreenshotGroups.ScreenshotCount = groups.Sum(x => x.Screenshots.Count);
 
 
         return Task.CompletedTask;
     }
 
-    private async Task LoadModAsync() { }
+    private Task LoadModAsync()
+    {
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+        {
+            PackageCount = profile.Setup.Packages.Count;
+        }
+
+        return Task.CompletedTask;
+    }
 
     #endregion
 
     #region Commands
 
     [RelayCommand]
-    private void OpenScreenshotFile(ScreenshotModel? model)
+    private void OpenScreenshotFile(AssetScreenshotModel? model)
     {
         if (model != null)
         {
@@ -101,20 +115,30 @@ public partial class InstanceAssetsViewModel(
 
 
     [RelayCommand]
-    private async Task DeleteScreenshotAsync(ScreenshotModel? model)
+    private async Task DeleteScreenshotAsync(AssetScreenshotModel? model)
     {
         if (model != null
+         && ScreenshotGroups is not null
+         && File.Exists(model.Image.LocalPath)
          && await overlayService.RequestConfirmationAsync("Are you sure you want to delete this screenshot?"))
         {
-            File.Delete(model.Image.LocalPath);
-            var group = ScreenshotGroups.FirstOrDefault(x => x.Screenshots.Contains(model));
-            group?.Screenshots.Remove(model);
-            if (group?.Screenshots.Count == 0)
+            try
             {
-                ScreenshotGroups.Remove(group);
-            }
+                File.Delete(model.Image.LocalPath);
 
-            ScreenshotCount--;
+                var group = ScreenshotGroups.FirstOrDefault(x => x.Screenshots.Contains(model));
+                group?.Screenshots.Remove(model);
+                if (group?.Screenshots.Count == 0)
+                {
+                    ScreenshotGroups.Remove(group);
+                }
+
+                ScreenshotGroups.ScreenshotCount--;
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to delete screenshot file");
+            }
         }
     }
 
