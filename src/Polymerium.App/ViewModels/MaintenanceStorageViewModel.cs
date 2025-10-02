@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,16 +28,16 @@ public partial class MaintenanceStorageViewModel(
 
     #endregion
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        await Task.Run(Calculate, token);
+        _ = Task.Run(CalculateAsync, PageToken);
 
-        await base.OnInitializeAsync(token);
+        await base.OnInitializeAsync();
     }
 
     #region Other
 
-    private void Calculate()
+    private async Task CalculateAsync()
     {
         (PackageSize, PackageCount) = CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
         (LibrarySize, _) = CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
@@ -105,7 +104,7 @@ public partial class MaintenanceStorageViewModel(
                 notificationService.PopMessage(ex, "Failed to purge cache");
             }
 
-            Calculate();
+            CalculateAsync();
         }
     }
 
@@ -115,7 +114,7 @@ public partial class MaintenanceStorageViewModel(
         if (model != null)
         {
             navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
-                                                         typeof(InstanceStorageView)));
+                                                                            typeof(InstanceStorageView)));
         }
     }
 

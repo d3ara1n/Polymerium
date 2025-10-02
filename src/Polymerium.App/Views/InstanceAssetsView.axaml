@@ -7,15 +7,25 @@
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                   xmlns:m="clr-namespace:Polymerium.App.Models"
-                  xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                   xmlns:views="clr-namespace:Polymerium.App.Views"
+                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <TabControl Padding="0">
-        <TabItem Header="Screenshots">
+        <TabItem Header="{x:Static lang:Resources.AssetKind_Mod}" />
+        <TabItem Header="{x:Static lang:Resources.AssetKind_ResourcePack}" />
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock>
+                    <Run Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
+                    <Run Text="(" />
+                    <Run Text="{Binding ScreenshotCount}" />
+                    <Run Text=")" />
+                </TextBlock>
+            </TabItem.Header>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <ItemsControl ItemsSource="{Binding Groups}">
+                <ItemsControl ItemsSource="{Binding ScreenshotGroups}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="12" />
@@ -47,6 +57,7 @@
                                                             CornerRadius="{StaticResource MediumCornerRadius}">
                                                         <Grid RowDefinitions="*,Auto" RowSpacing="8">
                                                             <Button Grid.Row="0"
+                                                                    RenderOptions.BitmapInterpolationMode="LowQuality"
                                                                     Command="{Binding $parent[views:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ViewImageCommand,FallbackValue={x:Null}}"
                                                                     CommandParameter="{Binding}">
                                                                 <Button.Theme>
@@ -72,11 +83,11 @@
                                                                                             </Transitions>
                                                                                         </Border.Transitions>
                                                                                         <icons:PackIconLucide
-                                                                                            Kind="Image"
+                                                                                            Kind="View"
                                                                                             HorizontalAlignment="Center"
                                                                                             VerticalAlignment="Center"
-                                                                                            Height="48"
-                                                                                            Width="48"
+                                                                                            Height="36"
+                                                                                            Width="36"
                                                                                             Foreground="{StaticResource ControlWhiteForegroundBrush}" />
                                                                                     </Border>
                                                                                 </Panel>
@@ -90,19 +101,22 @@
                                                                     </ControlTheme>
                                                                 </Button.Theme>
                                                                 <Button.Background>
-                                                                    <ImageBrush
-                                                                        async:ImageBrushLoader.Source="{Binding Image}"
-                                                                        Stretch="UniformToFill" />
+                                                                    <ImageBrush Source="{Binding Thumbnail}"
+                                                                            Stretch="UniformToFill" />
                                                                 </Button.Background>
                                                             </Button>
                                                             <DockPanel Grid.Row="1">
                                                                 <husk:ButtonGroup DockPanel.Dock="Right">
-                                                                    <Button>
-                                                                        <icons:PackIconLucide Kind="Share"
+                                                                    <Button
+                                                                        Command="{Binding $parent[views:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenScreenshotFileCommand,FallbackValue={x:Null}}"
+                                                                        CommandParameter="{Binding}">
+                                                                        <icons:PackIconLucide Kind="ImagePlay"
                                                                                 Height="{StaticResource SmallFontSize}"
                                                                                 Width="{StaticResource SmallFontSize}" />
                                                                     </Button>
-                                                                    <Button>
+                                                                    <Button
+                                                                        Command="{Binding $parent[views:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteScreenshotCommand,FallbackValue={x:Null}}"
+                                                                        CommandParameter="{Binding}">
                                                                         <icons:PackIconLucide Kind="Trash2"
                                                                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                                                 Height="{StaticResource SmallFontSize}"
@@ -124,7 +138,7 @@
                 </ItemsControl>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="Saves" />
-        <TabItem Header="Servers" />
+        <TabItem Header="{x:Static lang:Resources.AssetKind_Save}" />
+        <TabItem Header="{x:Static lang:Resources.AssetKind_Server}" />
     </TabControl>
 </controls:Subpage>

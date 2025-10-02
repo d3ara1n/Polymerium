@@ -149,7 +149,17 @@
                             <husk:PlaceholderPresenter.Placeholder>
                                 <husk:SkeletonContainer
                                     IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
-                                    IsAnimated="{TemplateBinding IsRefreshing}" />
+                                    IsAnimated="{TemplateBinding IsRefreshing}">
+                                    <husk:SkeletonContainer.CornerRadius>
+                                        <MultiBinding
+                                            Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                            <Binding Path="CornerRadius"
+                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}" />
+                                            <Binding Path="Padding"
+                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}" />
+                                        </MultiBinding>
+                                    </husk:SkeletonContainer.CornerRadius>
+                                </husk:SkeletonContainer>
                             </husk:PlaceholderPresenter.Placeholder>
                         </husk:PlaceholderPresenter>
                     </Panel>
@@ -208,7 +218,16 @@
                         <husk:PlaceholderPresenter.Placeholder>
                             <husk:SkeletonContainer
                                 IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
-                                IsAnimated="{TemplateBinding IsRefreshing}" />
+                                IsAnimated="{TemplateBinding IsRefreshing}">
+                                <husk:SkeletonContainer.CornerRadius>
+                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                        <Binding Path="CornerRadius"
+                                                 RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}" />
+                                        <Binding Path="Padding"
+                                                 RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}" />
+                                    </MultiBinding>
+                                </husk:SkeletonContainer.CornerRadius>
+                            </husk:SkeletonContainer>
                         </husk:PlaceholderPresenter.Placeholder>
                     </husk:PlaceholderPresenter>
                 </husk:Card>

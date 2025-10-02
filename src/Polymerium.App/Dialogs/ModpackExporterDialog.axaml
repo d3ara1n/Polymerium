@@ -64,8 +64,15 @@
                 <TextBlock Text="Attachments" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
                         CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Border Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Border Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8">
+                        <Border.CornerRadius>
+                            <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                <Binding Path="CornerRadius"
+                                         RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                <Binding Path="Padding"
+                                         RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                            </MultiBinding>
+                        </Border.CornerRadius>
                         <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="*,Auto" ColumnSpacing="8" RowSpacing="8">
                             <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
                                 <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
@@ -89,7 +96,7 @@
                                 <fi:SymbolIcon Symbol="Info" FontSize="{StaticResource MediumFontSize}"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="Override file is located at" />
+                                    <Run Text="Override file being packed is located at" />
                                     <HyperlinkButton>
                                         <TextBlock Text="./import" />
                                     </HyperlinkButton>

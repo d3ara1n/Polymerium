@@ -8,5 +8,6 @@
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Image Viewer"
             x:Class="Polymerium.App.Toasts.ImageViewerToast" ClipToBounds="True"
             ScrollViewer.VerticalScrollBarVisibility="Disabled">
-    <Image async:ImageLoader.Source="{Binding $parent[local:ImageViewerToast].ImageSource}" />
+    <Image async:ImageLoader.Source="{Binding $parent[local:ImageViewerToast].ImageSource}"
+           RenderOptions.BitmapInterpolationMode="HighQuality" />
 </husk:Toast>

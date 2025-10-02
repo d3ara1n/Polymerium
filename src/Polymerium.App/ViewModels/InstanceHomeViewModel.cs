@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -79,10 +78,8 @@ public partial class InstanceHomeViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    protected override Task OnInitializeAsync()
     {
-        base.OnInitializeAsync(token);
-
         var selector = persistenceService.GetAccountSelector(Basic.Key);
         if (selector != null)
         {
@@ -107,7 +104,7 @@ public partial class InstanceHomeViewModel(
         return Task.CompletedTask;
     }
 
-    protected override Task OnDeinitializeAsync(CancellationToken token)
+    protected override Task OnDeinitializeAsync()
     {
         _subscription?.Dispose();
         _timerSubscription?.Dispose();
@@ -117,7 +114,7 @@ public partial class InstanceHomeViewModel(
         }
 
         PinnedWidgets.Clear();
-        return base.OnDeinitializeAsync(token);
+        return base.OnDeinitializeAsync();
     }
 
 

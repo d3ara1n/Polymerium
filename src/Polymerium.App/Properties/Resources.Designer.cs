@@ -510,6 +510,51 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mods.
+        /// </summary>
+        public static string AssetKind_Mod {
+            get {
+                return ResourceManager.GetString("AssetKind_Mod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource Packs.
+        /// </summary>
+        public static string AssetKind_ResourcePack {
+            get {
+                return ResourceManager.GetString("AssetKind_ResourcePack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves.
+        /// </summary>
+        public static string AssetKind_Save {
+            get {
+                return ResourceManager.GetString("AssetKind_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screenshots.
+        /// </summary>
+        public static string AssetKind_Screenshot {
+            get {
+                return ResourceManager.GetString("AssetKind_Screenshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servers.
+        /// </summary>
+        public static string AssetKind_Server {
+            get {
+                return ResourceManager.GetString("AssetKind_Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Building artifacts....
         /// </summary>
         public static string DeployStage_BuildArtifact {

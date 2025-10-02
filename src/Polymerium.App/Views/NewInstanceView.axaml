@@ -187,7 +187,7 @@
                         <icons:PackIconLucide
                             Width="18"
                             Height="18"
-                            Kind="PackagePlus" />
+                            Kind="SquarePlus" />
                         <TextBlock Text="{x:Static lang:Resources.NewInstanceView_CreateButtonText}"
                                    VerticalAlignment="Center" />
                     </StackPanel>

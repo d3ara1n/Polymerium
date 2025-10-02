@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -21,9 +20,9 @@ public partial class UnknownViewModel(
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        await Task.Delay(TimeSpan.FromSeconds(7), token);
+        await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
 
         if (Application.Current is { PlatformSettings: not null })
         {

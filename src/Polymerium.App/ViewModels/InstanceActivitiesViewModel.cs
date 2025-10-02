@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
@@ -116,7 +115,7 @@ public partial class InstanceActivitiesViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    protected override Task OnInitializeAsync()
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
         SinceDayIndex = 0;
