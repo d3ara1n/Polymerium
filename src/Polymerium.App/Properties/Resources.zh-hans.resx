@@ -1176,4 +1176,19 @@
     <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
         <value>导出整合包</value>
     </data>
+    <data name="InstanceActivitiesView_TotalHoursLabelText" xml:space="preserve">
+        <value>总小时</value>
+    </data>
+    <data name="InstanceActivitiesView_SessionCountLabelText" xml:space="preserve">
+        <value>会话数</value>
+    </data>
+    <data name="InstanceActivitiesView_ActiveDaysLabelText" xml:space="preserve">
+        <value>活跃日</value>
+    </data>
+    <data name="InstanceActivitiesView_TotalHoursRankLabelText" xml:space="preserve">
+        <value>总小时排名</value>
+    </data>
+    <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
+        <value>修改记录</value>
+    </data>
 </root>

@@ -1185,4 +1185,19 @@
     <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
         <value>Export Modpack</value>
     </data>
+    <data name="InstanceActivitiesView_TotalHoursLabelText" xml:space="preserve">
+        <value>Total Hours</value>
+    </data>
+    <data name="InstanceActivitiesView_SessionCountLabelText" xml:space="preserve">
+        <value>Session Count</value>
+    </data>
+    <data name="InstanceActivitiesView_ActiveDaysLabelText" xml:space="preserve">
+        <value>Active Days</value>
+    </data>
+    <data name="InstanceActivitiesView_TotalHoursRankLabelText" xml:space="preserve">
+        <value>Total Hours Rank</value>
+    </data>
+    <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
+        <value>Changelog</value>
+    </data>
 </root>

@@ -354,9 +354,7 @@ public partial class InstanceViewModel : ViewModelBase
         // Widgets
         new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
         // Statistics
-        #if DEBUG
         new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
-        #endif
         // Storage
         #if DEBUG
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
