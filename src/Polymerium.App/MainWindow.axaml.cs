@@ -91,6 +91,30 @@ public partial class MainWindow : AppWindow
         }
     }
 
+    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            e.IsValid = true;
+        }
+    }
+
+    private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            var file = e.Data.GetFiles()?.FirstOrDefault();
+            if (file != null)
+            {
+                var path = file.TryGetLocalPath();
+                if (path != null && DataContext is MainWindowContext context)
+                {
+                    context.Navigate(typeof(NewInstanceView), path);
+                }
+            }
+        }
+    }
+
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
@@ -167,28 +191,4 @@ public partial class MainWindow : AppWindow
     }
 
     #endregion
-
-    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
-    {
-        if (e.Data.Contains(DataFormats.Files))
-        {
-            e.IsValid = true;
-        }
-    }
-
-    private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
-    {
-        if (e.Data.Contains(DataFormats.Files))
-        {
-            var file = e.Data.GetFiles()?.FirstOrDefault();
-            if (file != null)
-            {
-                var path = file.TryGetLocalPath();
-                if (path != null && DataContext is MainWindowContext context)
-                {
-                    context.Navigate(typeof(NewInstanceView), path);
-                }
-            }
-        }
-    }
 }

@@ -79,18 +79,18 @@ public partial class MainWindowContext : ObservableObject
     private static Func<InstanceEntryModel, bool> BuildFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
+    #region Other
+
+    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
+
+    #endregion
+
     #region Injected
 
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
-
-    #endregion
-
-    #region Other
-
-    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
 
     #endregion
 
