@@ -244,7 +244,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             Directory.CreateDirectory(dir);
         }
 
-        File.WriteAllText(path, Basic.Key);
+        File.WriteAllText(path, Program.MagicWords);
         ProfileManager.Remove(Basic.Key);
         // 保留该 Key 避免单个会话中安装同一个整合包而导致 Key 被复用
         ProfileManager.RequestKey(Basic.Key);

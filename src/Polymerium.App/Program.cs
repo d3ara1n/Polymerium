@@ -20,6 +20,8 @@ internal static class Program
           ?.InformationalVersion.Split('+')[0]
      ?? typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
 
+    public static readonly string MagicWords = "say u say me";
+
     internal static IHost? AppHost { get; private set; }
 
     public static bool Debug { get; private set; } = Debugger.IsAttached;

@@ -45,7 +45,7 @@ public partial class PrivilegeRequirementModal : Modal
         if (!File.Exists(first))
             // 这里是没有用 try catch guard 的，要是出现异常奔溃那我没话说
         {
-            File.WriteAllText(first, "say u say me");
+            File.WriteAllText(first, Program.MagicWords);
         }
 
         if (File.Exists(symlink))
