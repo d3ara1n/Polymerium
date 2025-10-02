@@ -2,8 +2,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -22,7 +24,10 @@ public partial class InstanceAssetsViewModel(
 {
     #region Reactive
 
-    public ObservableCollection<ScreenshotGroupModel> Groups { get; } = [];
+    public ObservableCollection<ScreenshotGroupModel> ScreenshotGroups { get; } = [];
+
+    [ObservableProperty]
+    public partial int ScreenshotCount { get; set; }
 
     #endregion
 
@@ -41,13 +46,17 @@ public partial class InstanceAssetsViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync(CancellationToken token) => Task.Run(LoadAsync, token);
+    protected override async Task OnInitializeAsync()
+    {
+        await LoadModAsync();
+        await LoadScreenshotsAsync();
+    }
 
     #endregion
 
     #region Other
 
-    private Task LoadAsync()
+    private Task LoadScreenshotsAsync()
     {
         var dir = new DirectoryInfo(Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "screenshots"));
         if (!dir.Exists)
@@ -55,7 +64,10 @@ public partial class InstanceAssetsViewModel(
             return Task.CompletedTask;
         }
 
-        foreach (var files in dir.GetFiles("*.png", SearchOption.TopDirectoryOnly).GroupBy(x => x.CreationTimeUtc.Date))
+        foreach (var files in dir
+                             .GetFiles("*.png", SearchOption.TopDirectoryOnly)
+                             .GroupBy(x => x.CreationTimeUtc.Date)
+                             .OrderByDescending(x => x.Key))
         {
             var group = new ScreenshotGroupModel(files.Key);
             foreach (var file in files)
@@ -63,10 +75,47 @@ public partial class InstanceAssetsViewModel(
                 group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc));
             }
 
-            Groups.Add(group);
+            ScreenshotGroups.Add(group);
         }
 
+        ScreenshotCount = ScreenshotGroups.Sum(x => x.Screenshots.Count);
+
+
         return Task.CompletedTask;
+    }
+
+    private async Task LoadModAsync() { }
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void OpenScreenshotFile(ScreenshotModel? model)
+    {
+        if (model != null)
+        {
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new(model.Image.LocalPath));
+        }
+    }
+
+
+    [RelayCommand]
+    private async Task DeleteScreenshotAsync(ScreenshotModel? model)
+    {
+        if (model != null
+         && await overlayService.RequestConfirmationAsync("Are you sure you want to delete this screenshot?"))
+        {
+            File.Delete(model.Image.LocalPath);
+            var group = ScreenshotGroups.FirstOrDefault(x => x.Screenshots.Contains(model));
+            group?.Screenshots.Remove(model);
+            if (group?.Screenshots.Count == 0)
+            {
+                ScreenshotGroups.Remove(group);
+            }
+
+            ScreenshotCount--;
+        }
     }
 
     #endregion

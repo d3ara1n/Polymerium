@@ -1158,4 +1158,19 @@
     <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
         <value>地址</value>
     </data>
+    <data name="AssetKind_Mod" xml:space="preserve">
+        <value>模组</value>
+    </data>
+    <data name="AssetKind_ResourcePack" xml:space="preserve">
+        <value>资源包</value>
+    </data>
+    <data name="AssetKind_Save" xml:space="preserve">
+        <value>存档</value>
+    </data>
+    <data name="AssetKind_Screenshot" xml:space="preserve">
+        <value>截图</value>
+    </data>
+    <data name="AssetKind_Server" xml:space="preserve">
+        <value>服务器</value>
+    </data>
 </root>

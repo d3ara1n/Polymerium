@@ -9,9 +9,9 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
 {
     #region IPageModel Members
 
-    public Task InitializeAsync(CancellationToken token) => OnInitializeAsync(token);
+    public Task InitializeAsync() => OnInitializeAsync();
 
-    public Task DeinitializeAsync(CancellationToken token) => OnDeinitializeAsync(token);
+    public Task DeinitializeAsync() => OnDeinitializeAsync();
 
     #endregion
 
@@ -20,11 +20,13 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    protected virtual Task OnInitializeAsync(CancellationToken token) =>
+    protected virtual Task OnInitializeAsync() =>
         // Virtual function does nothing
         Task.CompletedTask;
 
-    protected virtual Task OnDeinitializeAsync(CancellationToken token) =>
+    protected virtual Task OnDeinitializeAsync() =>
         // Virtual function does nothing
         Task.CompletedTask;
+
+    public CancellationToken PageToken { get; set; } = CancellationToken.None;
 }

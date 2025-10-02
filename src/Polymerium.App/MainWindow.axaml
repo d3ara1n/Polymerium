@@ -167,7 +167,7 @@
                     <icons:PackIconLucide
                         Width="18"
                         Height="18"
-                        Kind="PackagePlus" />
+                        Kind="SquarePlus" />
                 </Button>
                 <Button
                     Grid.Row="1"

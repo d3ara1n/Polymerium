@@ -337,10 +337,10 @@ public partial class InstanceSetupViewModel(
         UpdatingProgress = 0;
     }
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        _lifetimeToken = token;
-        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+        _lifetimeToken = PageToken;
+        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(PageToken);
 
 
         _stageSource
@@ -386,13 +386,13 @@ public partial class InstanceSetupViewModel(
            .Subscribe(x => IsFilterActive = x)
            .DisposeWith(_subscriptions);
 
-        await base.OnInitializeAsync(token);
+        await base.OnInitializeAsync();
     }
 
-    protected override Task OnDeinitializeAsync(CancellationToken token)
+    protected override Task OnDeinitializeAsync()
     {
         _subscriptions.Dispose();
-        return base.OnDeinitializeAsync(token);
+        return base.OnDeinitializeAsync();
     }
 
     #endregion

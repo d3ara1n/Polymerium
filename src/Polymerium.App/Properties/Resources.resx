@@ -1167,4 +1167,19 @@
     <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
         <value>Address</value>
     </data>
+    <data name="AssetKind_Mod" xml:space="preserve">
+        <value>Mods</value>
+    </data>
+    <data name="AssetKind_ResourcePack" xml:space="preserve">
+        <value>Resource Packs</value>
+    </data>
+    <data name="AssetKind_Save" xml:space="preserve">
+        <value>Saves</value>
+    </data>
+    <data name="AssetKind_Screenshot" xml:space="preserve">
+        <value>Screenshots</value>
+    </data>
+    <data name="AssetKind_Server" xml:space="preserve">
+        <value>Servers</value>
+    </data>
 </root>
