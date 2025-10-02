@@ -152,6 +152,8 @@ public partial class InstanceActivitiesViewModel(
 
         // Configure Y-axis for hours
         YAxes = [new() { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
+
+        ActiveDays = persistenceService.GetActiveDays(Basic.Key);
         return Task.CompletedTask;
     }
 
@@ -186,6 +188,9 @@ public partial class InstanceActivitiesViewModel(
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
     public partial TimeSpan TotalPlayTimeRaw { get; set; }
+
+    [ObservableProperty]
+    public partial int ActiveDays { get; set; }
 
     [ObservableProperty]
     public partial int SinceDayIndex { get; set; } = -1;

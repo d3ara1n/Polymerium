@@ -13,6 +13,8 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
 
     public virtual Task DeinitializeAsync() => OnDeinitializeAsync();
 
+    public CancellationToken PageToken { get; set; } = CancellationToken.None;
+
     #endregion
 
     /// <summary>
@@ -27,6 +29,4 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
     protected virtual Task OnDeinitializeAsync() =>
         // Virtual function does nothing
         Task.CompletedTask;
-
-    public CancellationToken PageToken { get; set; } = CancellationToken.None;
 }

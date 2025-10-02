@@ -2355,6 +2355,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export Modpack.
+        /// </summary>
+        public static string MainWindow_ExportModpackMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_ExportModpackMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string MainWindow_HomeButtonText {

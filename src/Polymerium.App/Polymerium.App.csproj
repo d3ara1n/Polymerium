@@ -46,6 +46,7 @@
         <PackageReference Include="Semver" Version="3.0.0"/>
         <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.4.3"/>
         <PackageReference Include="HotAvalonia" Version="3.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Tomlyn" Version="0.19.0"/>
         <PackageReference Include="Velopack" Version="0.0.1298"/>
     </ItemGroup>
 
