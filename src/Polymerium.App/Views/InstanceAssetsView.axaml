@@ -141,18 +141,30 @@
                                                 </StackPanel>
 
                                                 <!-- 状态指示器 -->
-                                                <husk:SwitchPresenter Grid.Column="2" Value="{Binding IsEnabled}"
+                                                <husk:SwitchPresenter Grid.Column="2" Value="{Binding IsLocked}"
                                                                       TargetType="x:Boolean"
-                                                                      Width="8" Height="8" VerticalAlignment="Top">
+                                                                      Width="8" Height="8"
+                                                                      VerticalAlignment="Top">
+                                                    <husk:SwitchCase Value="{x:False}">
+                                                        <husk:SwitchPresenter Value="{Binding IsEnabled}"
+                                                                              TargetType="x:Boolean"
+                                                                              Width="8" Height="8">
+                                                            <husk:SwitchCase Value="{x:True}">
+                                                                <Border
+                                                                    CornerRadius="4"
+                                                                    Background="{StaticResource ControlSuccessBackgroundBrush}" />
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="{x:False}">
+                                                                <Border
+                                                                    CornerRadius="4"
+                                                                    Background="{StaticResource ControlDangerBackgroundBrush}" />
+                                                            </husk:SwitchCase>
+                                                        </husk:SwitchPresenter>
+                                                    </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <Border
                                                             CornerRadius="4"
-                                                            Background="{StaticResource ControlSuccessBackgroundBrush}" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="{x:False}">
-                                                        <Border
-                                                            CornerRadius="4"
-                                                            Background="{StaticResource ControlDangerBackgroundBrush}" />
+                                                            Background="{StaticResource ControlWarningBackgroundBrush}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
                                             </Grid>
@@ -189,7 +201,13 @@
                                                            TextTrimming="CharacterEllipsis" />
                                                 <TextBlock Text="{Binding Author}" TextTrimming="CharacterEllipsis"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <husk:Tag
+                                                        Classes="Primary"
+                                                        IsVisible="{Binding IsLocked}">
+                                                        <husk:IconLabel Icon="LockClosed"
+                                                                        Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
+                                                    </husk:Tag>
                                                     <husk:Tag
                                                         Content="{Binding Metadata.LoaderType}"
                                                         IsVisible="{Binding Metadata.LoaderType,Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
@@ -216,8 +234,8 @@
                                                 </husk:SwitchPresenter>
                                             </Button>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenModFileCommand,FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding}" IsEnabled="False">
+                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding FilePath}">
                                                 <icons:PackIconLucide Kind="FolderOpen"
                                                                       Height="{StaticResource MediumFontSize}"
                                                                       Width="{StaticResource MediumFontSize}" />
@@ -455,6 +473,13 @@
                                                                                     Width="{StaticResource SmallFontSize}" />
                                                                         </Button>
                                                                         <Button
+                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                                                            CommandParameter="{Binding Image.LocalPath}">
+                                                                            <icons:PackIconLucide Kind="FolderOpen"
+                                                                                    Height="{StaticResource SmallFontSize}"
+                                                                                    Width="{StaticResource SmallFontSize}" />
+                                                                        </Button>
+                                                                        <Button
                                                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteScreenshotCommand,FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
                                                                             <icons:PackIconLucide Kind="Trash2"
@@ -463,7 +488,15 @@
                                                                                     Width="{StaticResource SmallFontSize}" />
                                                                         </Button>
                                                                     </husk:ButtonGroup>
-                                                                    <husk:Tag Content="{Binding Time}" />
+                                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                                        <husk:Tag
+                                                                            Classes="Primary"
+                                                                            IsVisible="{Binding IsLocked}">
+                                                                            <husk:IconLabel Icon="LockClosed"
+                                                                                    Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
+                                                                        </husk:Tag>
+                                                                        <husk:Tag Content="{Binding Time}" />
+                                                                    </StackPanel>
                                                                 </DockPanel>
                                                             </Grid>
                                                         </Border>

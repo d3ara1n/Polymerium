@@ -10,13 +10,14 @@ namespace Polymerium.App.Models;
 
 public partial class AssetModModel : ModelBase
 {
-    public AssetModModel(FileInfo file, Bitmap icon, AssetModeMetadataModel metadata)
+    public AssetModModel(FileInfo file, Bitmap icon, AssetModeMetadataModel metadata, bool isLocked)
     {
         FilePath = file.FullName;
         FileSizeRaw = file.Length;
         LastModifiedRaw = file.LastWriteTime;
         Icon = icon;
         Metadata = metadata;
+        IsLocked = isLocked;
     }
 
     #region Direct
@@ -27,6 +28,7 @@ public partial class AssetModModel : ModelBase
     public DateTimeOffset LastModifiedRaw { get; }
     public string LastModified => LastModifiedRaw.Humanize();
     public AssetModeMetadataModel Metadata { get; }
+    public bool IsLocked { get; }
 
     public string FileSize => ByteSize.FromBytes(FileSizeRaw).ToString("0.#");
 

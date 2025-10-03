@@ -7,10 +7,11 @@ namespace Polymerium.App.Models;
 
 public class AssetScreenshotModel : ModelBase
 {
-    public AssetScreenshotModel(Uri image, DateTimeOffset time)
+    public AssetScreenshotModel(Uri image, DateTimeOffset time, bool isLocked)
     {
         Image = image;
         TimeRaw = time;
+        IsLocked = isLocked;
         using var stream = File.OpenRead(image.LocalPath);
         var memory = new MemoryStream();
         stream.CopyTo(memory);
@@ -21,6 +22,7 @@ public class AssetScreenshotModel : ModelBase
     #region Direct
 
     public DateTimeOffset TimeRaw { get; }
+    public bool IsLocked { get; }
     public string Time => TimeRaw.ToString("t");
 
     public Uri Image { get; }
