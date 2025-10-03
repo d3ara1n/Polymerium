@@ -14,6 +14,7 @@ using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Trident.Abstractions;
 using Trident.Core.Services;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
@@ -57,23 +58,19 @@ public partial class InstanceAssetsViewModel(
 
     private Task LoadScreenshotsAsync()
     {
-        var dir = new DirectoryInfo(Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "screenshots"));
-        if (!dir.Exists)
-        {
-            ScreenshotGroups = [];
-            return Task.CompletedTask;
-        }
-
+        var sourced = Basic.Source != null;
+        var import = PathDef.Default.DirectoryOfImport(Basic.Key);
         var groups = new AssetScreenshotCollection();
-        foreach (var files in dir
-                             .GetFiles("*.png", SearchOption.TopDirectoryOnly)
+        foreach (var files in AssetHelper
+                             .ScanNonSymlinks(Basic.Key, "*.png", ["screenshots"])
                              .GroupBy(x => x.CreationTimeUtc.Date)
                              .OrderByDescending(x => x.Key))
         {
             var group = new AssetScreenshotGroupModel(files.Key);
             foreach (var file in files)
             {
-                group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc));
+                var imported = sourced && FileHelper.IsInDirectory(file.FullName, import);
+                group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc, imported));
             }
 
             groups.Add(group);
@@ -93,24 +90,12 @@ public partial class InstanceAssetsViewModel(
             PackageCount = profile.Setup.Packages.Count;
         }
 
-        var modsDir = new DirectoryInfo(Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "mods"));
-        if (!modsDir.Exists)
-        {
-            Mods = [];
-            return Task.CompletedTask;
-        }
-
+        var sourced = Basic.Source != null;
         var mods = new AssetModCollection();
-        foreach (var file in modsDir
-                            .GetFiles("*.jar", SearchOption.TopDirectoryOnly)
-                            .Concat(modsDir.GetFiles("*.jar.disabled", SearchOption.TopDirectoryOnly)))
+        foreach (var file in AssetHelper
+                            .ScanNonSymlinks(Basic.Key, "*.jar", ["mods"])
+                            .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.jar.disabled", ["mods"])))
         {
-            if (File.ResolveLinkTarget(file.FullName, false) is not null)
-            {
-                // 跳过包引用
-                continue;
-            }
-
             // 解析 jar 文件中的 mod 元数据
             var metadata = ModMetadataHelper.ParseMetadata(file.FullName);
 
@@ -121,7 +106,9 @@ public partial class InstanceAssetsViewModel(
                 icon = ModMetadataHelper.ExtractIcon(file.FullName, metadata.LogoFile);
             }
 
-            var model = new AssetModModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata)
+            var imported = sourced
+                        && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
+            var model = new AssetModModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
             {
                 IsEnabled = file.Name.EndsWith(".jar")
             };
@@ -156,8 +143,22 @@ public partial class InstanceAssetsViewModel(
         }
     }
 
-
     [RelayCommand]
+    private void OpenFolder(string? filePath)
+    {
+        if (filePath != null)
+        {
+            var dir = Path.GetDirectoryName(filePath);
+            if (dir != null && Directory.Exists(dir))
+            {
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            }
+        }
+    }
+
+    private bool CanDeleteScreenshot(AssetScreenshotModel? model) => model is { IsLocked: false };
+
+    [RelayCommand(CanExecute = nameof(CanDeleteScreenshot))]
     private async Task DeleteScreenshotAsync(AssetScreenshotModel? model)
     {
         if (model != null
@@ -185,7 +186,9 @@ public partial class InstanceAssetsViewModel(
         }
     }
 
-    [RelayCommand]
+    private bool CanToggleMod(AssetModModel? model) => model is { IsLocked: false };
+
+    [RelayCommand(CanExecute = nameof(CanToggleMod))]
     private void ToggleMod(AssetModModel? model)
     {
         if (model == null || Mods == null)
@@ -208,16 +211,9 @@ public partial class InstanceAssetsViewModel(
         }
     }
 
-    [RelayCommand]
-    private void OpenModFile(AssetModModel? model)
-    {
-        if (model != null && File.Exists(model.FilePath))
-        {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new(model.FilePath));
-        }
-    }
+    private bool CanDeleteMod(AssetModModel? model) => model is { IsLocked: false };
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanDeleteMod))]
     private async Task DeleteModAsync(AssetModModel? model)
     {
         if (model != null
