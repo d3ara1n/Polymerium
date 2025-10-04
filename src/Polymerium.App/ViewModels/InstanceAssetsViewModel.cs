@@ -344,7 +344,7 @@ public partial class InstanceAssetsViewModel(
     private void LoadWorldDetails(AssetWorldModel world)
     {
         // 加载数据包列表
-        var dataPacks = AssetWorldHelper.ParseDataPacks(world.WorldPath);
+        var dataPacks = AssetWorldHelper.ParseDataPacks(world.WorldPath, world.Metadata);
         SelectedWorldDataPacks = new(dataPacks);
 
         // 加载玩家列表（只包含在账号管理中的玩家）

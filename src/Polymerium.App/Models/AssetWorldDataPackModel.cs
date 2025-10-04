@@ -9,13 +9,20 @@ namespace Polymerium.App.Models;
 /// </summary>
 public class AssetWorldDataPackModel : ModelBase
 {
-    public AssetWorldDataPackModel(string name, string fileName, Bitmap icon, string? description, int? packFormat)
+    public AssetWorldDataPackModel(
+        string name,
+        string fileName,
+        Bitmap icon,
+        string? description,
+        int? packFormat,
+        bool isEnabled)
     {
         Name = name;
         FileName = fileName;
         Icon = icon;
         Description = description;
         PackFormat = packFormat;
+        IsEnabled = isEnabled;
     }
 
     #region Direct
@@ -25,6 +32,7 @@ public class AssetWorldDataPackModel : ModelBase
     public Bitmap Icon { get; }
     public string? Description { get; }
     public int? PackFormat { get; }
+    public bool IsEnabled { get; }
 
     public string DisplayName => Name;
     public string PackFormatText => PackFormat?.ToString() ?? Resources.Enum_Unknown;

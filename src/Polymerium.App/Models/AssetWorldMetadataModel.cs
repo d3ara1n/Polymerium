@@ -1,4 +1,6 @@
-﻿namespace Polymerium.App.Models;
+﻿using System.Collections.Generic;
+
+namespace Polymerium.App.Models;
 
 /// <summary>
 ///     存档元数据模型（从 level.dat 解析）
@@ -29,4 +31,7 @@ public class AssetWorldMetadataModel
     public bool Thundering { get; set; }
     public int RainTime { get; set; }
     public int ThunderTime { get; set; }
+
+    // 数据包信息
+    public HashSet<string> EnabledDataPacks { get; set; } = new();
 }
