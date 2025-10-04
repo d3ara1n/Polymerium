@@ -112,9 +112,6 @@ public partial class InstanceAssetsViewModel(
     public partial ObservableCollection<AssetWorldPlayerStatEntryModel>? SelectedPlayerStats { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<AssetWorldPlayerAdvancementEntryModel>? SelectedPlayerAdvancements { get; set; }
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
     public partial FilterModel? ModFilterEnability { get; set; }
 
@@ -382,19 +379,14 @@ public partial class InstanceAssetsViewModel(
         {
             SelectedWorldPlayer = null;
             SelectedPlayerStats = null;
-            SelectedPlayerAdvancements = null;
         }
     }
 
     private void LoadPlayerDetails(AssetWorldPlayerModel player)
     {
         // 加载玩家统计数据
-        var stats = AssetWorldHelper.ConvertStatsToEntries(player.Stats);
+        var stats = player.Stats.GetDisplayStats();
         SelectedPlayerStats = new(stats);
-
-        // 加载玩家成就数据
-        var advancements = AssetWorldHelper.ConvertAdvancementsToEntries(player.Advancements);
-        SelectedPlayerAdvancements = new(advancements);
     }
 
     #endregion

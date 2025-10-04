@@ -1281,10 +1281,10 @@
                                     <!-- 数据包板块 -->
                                     <Expander Header="Data Packs" IsExpanded="True">
                                         <controls:EmptyContainer
-                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:False}}">
                                             <ScrollViewer MaxHeight="300">
                                                 <ItemsControl
-                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks}">
+                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks,FallbackValue={x:Null}}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate DataType="m:AssetWorldDataPackModel">
                                                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
@@ -1360,13 +1360,13 @@
                                     <!-- 玩家板块 -->
                                     <Expander Header="Players" IsExpanded="True">
                                         <controls:EmptyContainer
-                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:False}}">
                                             <Grid RowDefinitions="Auto,*" RowSpacing="12">
                                                 <!-- 玩家头像列表 -->
                                                 <TabStrip Grid.Row="0"
                                                           AutoScrollToSelectedItem="False"
-                                                          ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers}"
-                                                          SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer,Mode=TwoWay}">
+                                                          ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers,FallbackValue={x:Null}}"
+                                                          SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer,Mode=TwoWay,FallbackValue={x:Null}}">
                                                     <TabStrip.ItemTemplate>
                                                         <DataTemplate DataType="m:AssetWorldPlayerModel">
                                                             <StackPanel Spacing="4" Margin="8,4">
@@ -1386,7 +1386,7 @@
                                                     </TabStrip.ItemTemplate>
                                                 </TabStrip>
 
-                                                <!-- 玩家数据和成就 -->
+                                                <!-- 玩家数据 -->
                                                 <StackPanel Grid.Row="1" Spacing="16">
                                                     <!-- 统计数据 -->
                                                     <StackPanel Spacing="8">
@@ -1394,7 +1394,7 @@
                                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
                                                                    FontSize="{StaticResource MediumFontSize}" />
                                                         <ItemsControl
-                                                            ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerStats}">
+                                                            ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerStats,FallbackValue={x:Null}}">
                                                             <ItemsControl.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <WrapPanel Orientation="Horizontal" />
@@ -1425,34 +1425,6 @@
                                                                 </DataTemplate>
                                                             </ItemsControl.ItemTemplate>
                                                         </ItemsControl>
-                                                    </StackPanel>
-
-                                                    <!-- 成就（待定） -->
-                                                    <StackPanel Spacing="8" IsVisible="False">
-                                                        <TextBlock Text="Advancements"
-                                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                   FontSize="{StaticResource MediumFontSize}" />
-                                                        <ScrollViewer MaxHeight="300">
-                                                            <ListBox
-                                                                ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerAdvancements}"
-                                                                SelectionMode="Single">
-                                                                <ListBox.ItemTemplate>
-                                                                    <DataTemplate
-                                                                        DataType="m:AssetWorldPlayerAdvancementEntryModel">
-                                                                        <Grid ColumnDefinitions="Auto,*"
-                                                                              ColumnSpacing="8">
-                                                                            <Border Grid.Column="0" Width="16"
-                                                                                    Height="16"
-                                                                                    CornerRadius="8"
-                                                                                    Background="{Binding Completed}" />
-                                                                            <TextBlock Grid.Column="1"
-                                                                                    Text="{Binding Name}"
-                                                                                    FontSize="{StaticResource SmallFontSize}" />
-                                                                        </Grid>
-                                                                    </DataTemplate>
-                                                                </ListBox.ItemTemplate>
-                                                            </ListBox>
-                                                        </ScrollViewer>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </Grid>
