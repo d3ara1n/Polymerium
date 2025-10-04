@@ -17,6 +17,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.App.Utilities;
 using Trident.Abstractions;
 using Trident.Core.Services;
 using Trident.Core.Utilities;
@@ -28,7 +29,8 @@ public partial class InstanceAssetsViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     OverlayService overlayService,
-    NotificationService notificationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    NotificationService notificationService,
+    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Overrides
 
@@ -38,6 +40,7 @@ public partial class InstanceAssetsViewModel(
         await Task.Run(LoadResourcePacksAsync);
         await Task.Run(LoadDataPacksAsync);
         await Task.Run(LoadScreenshotsAsync);
+        await Task.Run(LoadWorldsAsync);
     }
 
     #endregion
@@ -89,6 +92,27 @@ public partial class InstanceAssetsViewModel(
 
     [ObservableProperty]
     public partial string DataPackSearchText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial ObservableCollection<AssetWorldModel>? Worlds { get; set; }
+
+    [ObservableProperty]
+    public partial AssetWorldModel? SelectedWorld { get; set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<AssetWorldDataPackModel>? SelectedWorldDataPacks { get; set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<AssetWorldPlayerModel>? SelectedWorldPlayers { get; set; }
+
+    [ObservableProperty]
+    public partial AssetWorldPlayerModel? SelectedWorldPlayer { get; set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<AssetWorldPlayerStatEntryModel>? SelectedPlayerStats { get; set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<AssetWorldPlayerAdvancementEntryModel>? SelectedPlayerAdvancements { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
@@ -272,6 +296,106 @@ public partial class InstanceAssetsViewModel(
         DataPacks = view;
 
         return Task.CompletedTask;
+    }
+
+    private Task LoadWorldsAsync()
+    {
+        var worlds = new ObservableCollection<AssetWorldModel>();
+        var savesDir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "saves");
+
+        if (Directory.Exists(savesDir))
+        {
+            foreach (var worldDir in Directory.GetDirectories(savesDir))
+            {
+                var levelDatPath = Path.Combine(worldDir, "level.dat");
+                if (File.Exists(levelDatPath))
+                {
+                    var folderName = Path.GetFileName(worldDir);
+                    var metadata = AssetWorldHelper.ParseMetadata(worldDir);
+                    var icon = AssetWorldHelper.ExtractIcon(worldDir) ?? AssetUriIndex.DirtImageBitmap;
+                    var lastPlayed = AssetWorldHelper.GetLastPlayed(worldDir);
+
+                    var world = new AssetWorldModel(folderName, worldDir, icon, metadata, lastPlayed);
+                    worlds.Add(world);
+                }
+            }
+        }
+
+        // 按最后游玩时间排序
+        Worlds = new(worlds.OrderByDescending(x => x.LastPlayedRaw));
+
+        // 如果有存档，默认选中第一个
+        if (Worlds.Count > 0)
+        {
+            SelectedWorld = Worlds[0];
+            LoadWorldDetails(SelectedWorld);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    partial void OnSelectedWorldChanged(AssetWorldModel? value)
+    {
+        if (value != null)
+        {
+            LoadWorldDetails(value);
+        }
+    }
+
+    partial void OnSelectedWorldPlayerChanged(AssetWorldPlayerModel? value)
+    {
+        if (value != null)
+        {
+            LoadPlayerDetails(value);
+        }
+    }
+
+    private void LoadWorldDetails(AssetWorldModel world)
+    {
+        // 加载数据包列表
+        var dataPacks = AssetWorldHelper.ParseDataPacks(world.WorldPath);
+        SelectedWorldDataPacks = new(dataPacks);
+
+        // 加载玩家列表（只包含在账号管理中的玩家）
+        var accounts = persistenceService
+                      .GetAccounts()
+                      .Select(x =>
+                       {
+                           var cooked = AccountHelper.ToCooked(x);
+                           return new AccountModel(cooked.GetType(),
+                                                   cooked.Uuid,
+                                                   cooked.Username,
+                                                   x.EnrolledAt,
+                                                   x.LastUsedAt);
+                       })
+                      .ToList();
+
+        var players = AssetWorldHelper.ParsePlayers(world.WorldPath, accounts);
+        SelectedWorldPlayers = new(players);
+
+        // 如果有玩家，默认选中第一个
+        if (SelectedWorldPlayers.Count > 0)
+        {
+            SelectedWorldPlayer = SelectedWorldPlayers[0];
+            LoadPlayerDetails(SelectedWorldPlayer);
+        }
+        else
+        {
+            SelectedWorldPlayer = null;
+            SelectedPlayerStats = null;
+            SelectedPlayerAdvancements = null;
+        }
+    }
+
+    private void LoadPlayerDetails(AssetWorldPlayerModel player)
+    {
+        // 加载玩家统计数据
+        var stats = AssetWorldHelper.ConvertStatsToEntries(player.Stats);
+        SelectedPlayerStats = new(stats);
+
+        // 加载玩家成就数据
+        var advancements = AssetWorldHelper.ConvertAdvancementsToEntries(player.Advancements);
+        SelectedPlayerAdvancements = new(advancements);
     }
 
     #endregion
