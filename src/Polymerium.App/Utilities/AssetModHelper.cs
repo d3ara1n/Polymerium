@@ -13,7 +13,7 @@ namespace Polymerium.App.Services;
 /// <summary>
 ///     Mod 元数据解析器，支持 Fabric、Forge 和 NeoForge
 /// </summary>
-public static class ModMetadataHelper
+public static class AssetModHelper
 {
     /// <summary>
     ///     从 jar 文件中解析 Mod 元数据
