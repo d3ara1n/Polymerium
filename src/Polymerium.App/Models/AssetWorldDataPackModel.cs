@@ -7,14 +7,9 @@ namespace Polymerium.App.Models;
 /// <summary>
 ///     存档中的数据包模型（只读，用于展示）
 /// </summary>
-public partial class AssetWorldDataPackModel : ModelBase
+public class AssetWorldDataPackModel : ModelBase
 {
-    public AssetWorldDataPackModel(
-        string name,
-        string fileName,
-        Bitmap icon,
-        string? description,
-        int? packFormat)
+    public AssetWorldDataPackModel(string name, string fileName, Bitmap icon, string? description, int? packFormat)
     {
         Name = name;
         FileName = fileName;
