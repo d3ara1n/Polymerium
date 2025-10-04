@@ -1200,4 +1200,7 @@
     <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
         <value>Changelog</value>
     </data>
+    <data name="AssetKind_DataPack" xml:space="preserve">
+        <value>Data Packs</value>
+    </data>
 </root>

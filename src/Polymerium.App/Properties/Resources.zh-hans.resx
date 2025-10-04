@@ -1191,4 +1191,7 @@
     <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
         <value>修改记录</value>
     </data>
+    <data name="AssetKind_DataPack" xml:space="preserve">
+        <value>数据包</value>
+    </data>
 </root>

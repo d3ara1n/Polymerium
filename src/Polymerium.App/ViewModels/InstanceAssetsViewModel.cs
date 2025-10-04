@@ -36,6 +36,7 @@ public partial class InstanceAssetsViewModel(
     {
         await Task.Run(LoadModAsync);
         await Task.Run(LoadResourcePacksAsync);
+        await Task.Run(LoadDataPacksAsync);
         await Task.Run(LoadScreenshotsAsync);
     }
 
@@ -48,6 +49,9 @@ public partial class InstanceAssetsViewModel(
 
     private readonly SourceCache<AssetResourcePackModel, string> _resourcePackCache = new(x => x.FilePath);
     private IDisposable? _resourcePackFilterSubscription;
+
+    private readonly SourceCache<AssetDataPackModel, string> _dataPackCache = new(x => x.FilePath);
+    private IDisposable? _dataPackFilterSubscription;
 
     #endregion
 
@@ -76,6 +80,15 @@ public partial class InstanceAssetsViewModel(
 
     [ObservableProperty]
     public partial string ResourcePackSearchText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial ReadOnlyObservableCollection<AssetDataPackModel>? DataPacks { get; set; }
+
+    [ObservableProperty]
+    public partial AssetDataPackModel? SelectedDataPack { get; set; }
+
+    [ObservableProperty]
+    public partial string DataPackSearchText { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
@@ -222,6 +235,45 @@ public partial class InstanceAssetsViewModel(
         return Task.CompletedTask;
     }
 
+    private Task LoadDataPacksAsync()
+    {
+        var sourced = Basic.Source != null;
+        var dataPacks = new List<AssetDataPackModel>();
+
+        // 扫描 datapacks 目录下的 zip 文件
+        foreach (var file in AssetHelper
+                            .ScanNonSymlinks(Basic.Key, "*.zip", ["datapacks"])
+                            .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.zip.disabled", ["datapacks"])))
+        {
+            // 解析 zip 文件中的数据包元数据
+            var metadata = AssetDataPackHelper.ParseMetadata(file.FullName);
+
+            // 尝试提取数据包图标
+            var icon = AssetDataPackHelper.ExtractIcon(file.FullName);
+
+            var imported = sourced
+                        && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
+            var model = new AssetDataPackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            {
+                IsEnabled = file.Name.EndsWith(".zip")
+            };
+
+            dataPacks.Add(model);
+        }
+
+        _dataPackCache.AddOrUpdate(dataPacks);
+
+        // 设置过滤器
+        _dataPackFilterSubscription?.Dispose();
+        var searchFilter = this.WhenValueChanged(x => x.DataPackSearchText).Select(BuildDataPackSearchFilter);
+
+        _dataPackFilterSubscription = _dataPackCache.Connect().Filter(searchFilter).Bind(out var view).Subscribe();
+
+        DataPacks = view;
+
+        return Task.CompletedTask;
+    }
+
     #endregion
 
     #region Filters
@@ -256,6 +308,11 @@ public partial class InstanceAssetsViewModel(
         };
 
     private static Func<AssetResourcePackModel, bool> BuildResourcePackSearchFilter(string? searchText) =>
+        x => string.IsNullOrEmpty(searchText)
+          || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+          || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
+
+    private static Func<AssetDataPackModel, bool> BuildDataPackSearchFilter(string? searchText) =>
         x => string.IsNullOrEmpty(searchText)
           || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
           || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
@@ -428,6 +485,60 @@ public partial class InstanceAssetsViewModel(
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex, "Failed to delete resource pack file");
+            }
+        }
+    }
+
+    private bool CanToggleDataPack(AssetDataPackModel? model) => model is { IsLocked: false };
+
+    [RelayCommand(CanExecute = nameof(CanToggleDataPack))]
+    private void ToggleDataPack(AssetDataPackModel? model)
+    {
+        if (model == null || DataPacks == null)
+        {
+            return;
+        }
+
+        var oldPath = model.FilePath;
+        var newPath = model.IsEnabled ? oldPath + ".disabled" : oldPath.Replace(".disabled", "");
+
+        try
+        {
+            File.Move(oldPath, newPath);
+            model.IsEnabled = !model.IsEnabled;
+            model.FilePath = newPath;
+        }
+        catch (Exception ex)
+        {
+            notificationService.PopMessage(ex, "Failed to toggle data pack");
+        }
+    }
+
+    private bool CanDeleteDataPack(AssetDataPackModel? model) => model is { IsLocked: false };
+
+    [RelayCommand(CanExecute = nameof(CanDeleteDataPack))]
+    private async Task DeleteDataPackAsync(AssetDataPackModel? model)
+    {
+        if (model != null
+         && DataPacks is not null
+         && File.Exists(model.FilePath)
+         && await overlayService.RequestConfirmationAsync($"Are you sure you want to delete '{model.DisplayName}'?"))
+        {
+            try
+            {
+                File.Delete(model.FilePath);
+                _dataPackCache.Remove(model);
+                if (SelectedDataPack == model)
+                {
+                    SelectedDataPack = null;
+                }
+
+                notificationService.PopMessage($"Data pack '{model.DisplayName}' deleted successfully",
+                                               "Data Pack Deleted");
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to delete data pack file");
             }
         }
     }
