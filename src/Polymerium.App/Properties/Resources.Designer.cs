@@ -510,6 +510,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Packs.
+        /// </summary>
+        public static string AssetKind_DataPack {
+            get {
+                return ResourceManager.GetString("AssetKind_DataPack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mods.
         /// </summary>
         public static string AssetKind_Mod {

@@ -37,6 +37,7 @@ public partial class AssetModModel : ModelBase
     public string DisplayName => Metadata.Name ?? Path.GetFileNameWithoutExtension(FileName);
 
     public string Version => Metadata.Version ?? Resources.Enum_Unknown;
+    public string Description => Metadata.Description ?? Resources.Enum_Unknown;
 
     public string Author =>
         Metadata.Authors is { Length: > 0 } ? string.Join(", ", Metadata.Authors) : Resources.Enum_Unknown;

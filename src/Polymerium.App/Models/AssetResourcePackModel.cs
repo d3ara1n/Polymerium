@@ -37,6 +37,7 @@ public partial class AssetResourcePackModel : ModelBase
     public string DisplayName => Path.GetFileNameWithoutExtension(FileName);
 
     public string PackFormat => Metadata.PackFormat?.ToString() ?? Resources.Enum_Unknown;
+    public string Description => Metadata.Description ?? Resources.Enum_Unknown;
 
     #endregion
 
