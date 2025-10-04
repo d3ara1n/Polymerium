@@ -204,6 +204,8 @@
             <Grid Grid.Row="2" RowDefinitions="Auto,*">
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="16,8"
                       ColumnSpacing="12">
+
+                    <!-- 搜索栏 -->
                     <TextBox Grid.Column="0"
                              Watermark="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}"
                              MinWidth="168"
@@ -269,7 +271,7 @@
                                                             Label="{x:Static lang:Resources.Enum_All}"
                                                             Lockility="{x:Null}" />
                                                         <controls:PackageEntryLockilityFilter
-                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceOriginalText}"
+                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
                                                             Lockility="{x:True}" />
                                                         <controls:PackageEntryLockilityFilter
                                                             Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"

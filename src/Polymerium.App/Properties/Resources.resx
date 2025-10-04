@@ -561,8 +561,8 @@
     <data name="Enum_Disabled" xml:space="preserve">
         <value>Disabled</value>
     </data>
-    <data name="InstanceSetupView_SourceOriginalText" xml:space="preserve">
-        <value>Original</value>
+    <data name="InstanceSetupView_SourceImportText" xml:space="preserve">
+        <value>Import</value>
     </data>
     <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>Local</value>
@@ -627,8 +627,8 @@
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
         <value>Disabled</value>
     </data>
-    <data name="InstancePackageButton_OriginalTagText" xml:space="preserve">
-        <value>Original</value>
+    <data name="InstancePackageButton_ImportTagText" xml:space="preserve">
+        <value>Import</value>
     </data>
     <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
         <value>Auto Version</value>

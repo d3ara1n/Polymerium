@@ -76,7 +76,7 @@
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
                                                           Classes="Primary" IsVisible="{Binding Owner.IsLocked}">
                                                     <husk:IconLabel Icon="LockClosed"
-                                                                    Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
+                                                                    Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <TextBlock

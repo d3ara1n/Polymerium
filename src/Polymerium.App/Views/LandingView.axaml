@@ -3,11 +3,359 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           xmlns:vm="using:Polymerium.App.ViewModels"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
            Background="{x:Null}"
-           x:Class="Polymerium.App.Views.LandingView">
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Image Source="/Assets/Icons/Ghost.png" Height="128" Width="128" />
-        <TextBlock Text="Boo!" FontSize="64" TextAlignment="Center" />
-    </StackPanel>
+           x:Class="Polymerium.App.Views.LandingView"
+           x:DataType="vm:LandingViewModel"
+           IsHeaderVisible="False" Padding="{StaticResource PageHeaderlessContentMargin}">
+    <ScrollViewer>
+        <Grid RowSpacing="24" RowDefinitions="Auto,Auto,Auto,Auto" Margin="24">
+
+            <!-- Header Section - Compact -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <Image Source="/Assets/Icons/Ghost.png"
+                           Height="48"
+                           Width="48"
+                           Opacity="0.9" />
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="Portal"
+                                   FontSize="24"
+                                   FontWeight="SemiBold" />
+                        <TextBlock Text="Quick access to your gaming world"
+                                   FontSize="12"
+                                   Opacity="0.6" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Quick Stats -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="5"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Text="Instances"
+                                   FontSize="11"
+                                   Opacity="0.6"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <Border Width="1" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="2"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Text="Accounts"
+                                   FontSize="11"
+                                   Opacity="0.6"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <!-- Continue Playing Section -->
+            <StackPanel Grid.Row="1" Spacing="12">
+                <TextBlock Text="Continue Playing"
+                           FontSize="16"
+                           FontWeight="SemiBold" />
+
+                <husk:Card Padding="0">
+                    <Button Theme="{StaticResource GhostButtonTheme}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Padding="0">
+                        <Grid ColumnDefinitions="Auto,*,Auto" Height="120">
+                            <!-- Screenshot/Thumbnail -->
+                            <Border Grid.Column="0"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Panel>
+                                    <Image Source="/Assets/Images/Placeholders/Dirt.png"
+                                           Stretch="UniformToFill" />
+                                    <Border Background="#80000000"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                                            <icons:PackIconLucide Kind="Play"
+                                                                  Width="32"
+                                                                  Height="32"
+                                                                  Foreground="White" />
+                                            <TextBlock Text="Continue"
+                                                       Foreground="White"
+                                                       FontSize="12"
+                                                       FontWeight="SemiBold" />
+                                        </StackPanel>
+                                    </Border>
+                                </Panel>
+                            </Border>
+
+                            <!-- Instance Info -->
+                            <StackPanel Grid.Column="1" Margin="16,12" Spacing="8" VerticalAlignment="Center">
+                                <TextBlock Text="All the Mods 10"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis" />
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <husk:Tag Content="1.21.1" Padding="6,2" />
+                                    <husk:Tag Content="NeoForge" Padding="6,2" />
+                                </StackPanel>
+                                <TextBlock Text="Last played 2 hours ago"
+                                           FontSize="12"
+                                           Opacity="0.6" />
+                            </StackPanel>
+
+                            <!-- Quick Actions -->
+                            <StackPanel Grid.Column="2" Margin="12" Spacing="8" VerticalAlignment="Center">
+                                <Button Theme="{StaticResource OutlineButtonTheme}"
+                                        Width="36"
+                                        Height="36"
+                                        Padding="0"
+                                        ToolTip.Tip="View Instance">
+                                    <icons:PackIconLucide Kind="Eye" Width="16" Height="16" />
+                                </Button>
+                                <Button Theme="{StaticResource OutlineButtonTheme}"
+                                        Width="36"
+                                        Height="36"
+                                        Padding="0"
+                                        ToolTip.Tip="Open Folder">
+                                    <icons:PackIconLucide Kind="FolderOpen" Width="16" Height="16" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                </husk:Card>
+            </StackPanel>
+
+            <!-- Accounts & Quick Actions Grid -->
+            <Grid Grid.Row="2" ColumnDefinitions="2*,*" ColumnSpacing="16">
+                <!-- Accounts Section -->
+                <StackPanel Grid.Column="0" Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0"
+                                   Text="Accounts"
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                        <Button Grid.Column="1"
+                                Theme="{StaticResource GhostButtonTheme}"
+                                Padding="8,4">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <icons:PackIconLucide Kind="Settings" Width="14" Height="14" />
+                                <TextBlock Text="Manage" FontSize="12" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <husk:Card Padding="12">
+                        <StackPanel Spacing="8">
+                            <!-- Account 1 -->
+                            <Border Padding="8"
+                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                    Background="{DynamicResource SubtleFillColorSecondaryBrush}">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <!-- Avatar -->
+                                    <Border Grid.Column="0"
+                                            Width="32"
+                                            Height="32"
+                                            CornerRadius="4"
+                                            ClipToBounds="True"
+                                            Background="{DynamicResource AccentFillColorDefaultBrush}">
+                                        <TextBlock Text="S"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+
+                                    <!-- Info -->
+                                    <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="Steve"
+                                                   FontWeight="SemiBold"
+                                                   FontSize="13" />
+                                        <TextBlock Text="Microsoft"
+                                                   FontSize="11"
+                                                   Opacity="0.6" />
+                                    </StackPanel>
+
+                                    <!-- Default Badge -->
+                                    <husk:Tag Grid.Column="2"
+                                              Content="Default"
+                                              Padding="6,2"
+                                              FontSize="10"
+                                              VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+
+                            <!-- Account 2 -->
+                            <Border Padding="8"
+                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                    Background="{DynamicResource SubtleFillColorSecondaryBrush}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <!-- Avatar -->
+                                    <Border Grid.Column="0"
+                                            Width="32"
+                                            Height="32"
+                                            CornerRadius="4"
+                                            ClipToBounds="True"
+                                            Background="{DynamicResource SuccessFillColorDefaultBrush}">
+                                        <TextBlock Text="A"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+
+                                    <!-- Info -->
+                                    <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="Alex"
+                                                   FontWeight="SemiBold"
+                                                   FontSize="13" />
+                                        <TextBlock Text="Offline"
+                                                   FontSize="11"
+                                                   Opacity="0.6" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </husk:Card>
+                </StackPanel>
+
+                <!-- Quick Stats Card -->
+                <StackPanel Grid.Column="1" Spacing="12">
+                    <TextBlock Text="Statistics"
+                               FontSize="16"
+                               FontWeight="SemiBold" />
+
+                    <husk:Card Padding="16">
+                        <StackPanel Spacing="16">
+                            <!-- Total Play Time -->
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Total Play Time"
+                                           FontSize="11"
+                                           Opacity="0.6" />
+                                <TextBlock Text="42.5 hrs"
+                                           FontSize="20"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+
+                            <Border Height="1" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+
+                            <!-- Sessions -->
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <StackPanel Grid.Column="0" Spacing="4">
+                                    <TextBlock Text="Sessions"
+                                               FontSize="11"
+                                               Opacity="0.6" />
+                                    <TextBlock Text="28"
+                                               FontSize="16"
+                                               FontWeight="SemiBold" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="Active Days"
+                                               FontSize="11"
+                                               Opacity="0.6" />
+                                    <TextBlock Text="12"
+                                               FontSize="16"
+                                               FontWeight="SemiBold" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </husk:Card>
+                </StackPanel>
+            </Grid>
+
+            <!-- Recent Activity Section -->
+            <StackPanel Grid.Row="3" Spacing="12">
+                <TextBlock Text="Recent Activity"
+                           FontSize="16"
+                           FontWeight="SemiBold" />
+
+                <husk:Card Padding="12">
+                    <StackPanel Spacing="4">
+                        <!-- Activity 1 -->
+                        <Border Padding="12,8"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                Background="{DynamicResource SubtleFillColorSecondaryBrush}">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <icons:PackIconLucide Grid.Column="0"
+                                                      Kind="Clock"
+                                                      Width="16"
+                                                      Height="16"
+                                                      Opacity="0.6"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1"
+                                           Margin="12,0"
+                                           FontSize="13"
+                                           VerticalAlignment="Center">
+                                    <Run Text="Played" />
+                                    <Run Text="All the Mods 10" FontWeight="SemiBold" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="2"
+                                           Text="2 hours ago"
+                                           FontSize="12"
+                                           Opacity="0.5"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Activity 2 -->
+                        <Border Padding="12,8"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                Background="{DynamicResource SubtleFillColorSecondaryBrush}">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <icons:PackIconLucide Grid.Column="0"
+                                                      Kind="Clock"
+                                                      Width="16"
+                                                      Height="16"
+                                                      Opacity="0.6"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1"
+                                           Margin="12,0"
+                                           FontSize="13"
+                                           VerticalAlignment="Center">
+                                    <Run Text="Played" />
+                                    <Run Text="Vanilla Plus" FontWeight="SemiBold" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="2"
+                                           Text="Yesterday"
+                                           FontSize="12"
+                                           Opacity="0.5"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Activity 3 -->
+                        <Border Padding="12,8"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                Background="{DynamicResource SubtleFillColorSecondaryBrush}">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <icons:PackIconLucide Grid.Column="0"
+                                                      Kind="Clock"
+                                                      Width="16"
+                                                      Height="16"
+                                                      Opacity="0.6"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1"
+                                           Margin="12,0"
+                                           FontSize="13"
+                                           VerticalAlignment="Center">
+                                    <Run Text="Played" />
+                                    <Run Text="Create: Above and Beyond" FontWeight="SemiBold" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="2"
+                                           Text="3 days ago"
+                                           FontSize="12"
+                                           Opacity="0.5"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </husk:Card>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </husk:Page>

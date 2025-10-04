@@ -552,8 +552,8 @@
     <data name="ResourceKind_ShaderPack" xml:space="preserve">
         <value>着色器包</value>
     </data>
-    <data name="InstanceSetupView_SourceOriginalText" xml:space="preserve">
-        <value>托管</value>
+    <data name="InstanceSetupView_SourceImportText" xml:space="preserve">
+        <value>导入</value>
     </data>
     <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>本地</value>
@@ -618,7 +618,7 @@
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
         <value>禁用</value>
     </data>
-    <data name="InstancePackageButton_OriginalTagText" xml:space="preserve">
+    <data name="InstancePackageButton_ImportTagText" xml:space="preserve">
         <value>导入</value>
     </data>
     <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
