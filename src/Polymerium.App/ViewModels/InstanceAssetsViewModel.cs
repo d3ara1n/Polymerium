@@ -35,6 +35,7 @@ public partial class InstanceAssetsViewModel(
     protected override async Task OnInitializeAsync()
     {
         await Task.Run(LoadModAsync);
+        await Task.Run(LoadResourcePacksAsync);
         await Task.Run(LoadScreenshotsAsync);
     }
 
@@ -44,6 +45,9 @@ public partial class InstanceAssetsViewModel(
 
     private readonly SourceCache<AssetModModel, string> _modCache = new(x => x.FilePath);
     private IDisposable? _modFilterSubscription;
+
+    private readonly SourceCache<AssetResourcePackModel, string> _resourcePackCache = new(x => x.FilePath);
+    private IDisposable? _resourcePackFilterSubscription;
 
     #endregion
 
@@ -63,6 +67,15 @@ public partial class InstanceAssetsViewModel(
 
     [ObservableProperty]
     public partial string ModSearchText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial ReadOnlyObservableCollection<AssetResourcePackModel>? ResourcePacks { get; set; }
+
+    [ObservableProperty]
+    public partial AssetResourcePackModel? SelectedResourcePack { get; set; }
+
+    [ObservableProperty]
+    public partial string ResourcePackSearchText { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
@@ -124,13 +137,13 @@ public partial class InstanceAssetsViewModel(
                             .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.jar.disabled", ["mods"])))
         {
             // 解析 jar 文件中的 mod 元数据
-            var metadata = ModMetadataHelper.ParseMetadata(file.FullName);
+            var metadata = AssetModHelper.ParseMetadata(file.FullName);
 
             // 尝试提取 Mod 图标
             Bitmap? icon = null;
             if (!string.IsNullOrEmpty(metadata.LogoFile))
             {
-                icon = ModMetadataHelper.ExtractIcon(file.FullName, metadata.LogoFile);
+                icon = AssetModHelper.ExtractIcon(file.FullName, metadata.LogoFile);
             }
 
             var imported = sourced
@@ -168,6 +181,47 @@ public partial class InstanceAssetsViewModel(
         return Task.CompletedTask;
     }
 
+    private Task LoadResourcePacksAsync()
+    {
+        var sourced = Basic.Source != null;
+        var resourcePacks = new List<AssetResourcePackModel>();
+        foreach (var file in AssetHelper
+                            .ScanNonSymlinks(Basic.Key, "*.zip", ["resourcepacks"])
+                            .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.zip.disabled", ["resourcepacks"])))
+        {
+            // 解析 zip 文件中的资源包元数据
+            var metadata = AssetResourcePackHelper.ParseMetadata(file.FullName);
+
+            // 尝试提取资源包图标
+            var icon = AssetResourcePackHelper.ExtractIcon(file.FullName);
+
+            var imported = sourced
+                        && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
+            var model = new AssetResourcePackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            {
+                IsEnabled = file.Name.EndsWith(".zip")
+            };
+
+            resourcePacks.Add(model);
+        }
+
+        _resourcePackCache.AddOrUpdate(resourcePacks);
+
+        // 设置过滤器
+        _resourcePackFilterSubscription?.Dispose();
+        var searchFilter = this.WhenValueChanged(x => x.ResourcePackSearchText).Select(BuildResourcePackSearchFilter);
+
+        _resourcePackFilterSubscription = _resourcePackCache
+                                         .Connect()
+                                         .Filter(searchFilter)
+                                         .Bind(out var view)
+                                         .Subscribe();
+
+        ResourcePacks = view;
+
+        return Task.CompletedTask;
+    }
+
     #endregion
 
     #region Filters
@@ -200,6 +254,11 @@ public partial class InstanceAssetsViewModel(
             ModLoaderKind loader => x => x.Metadata.LoaderType == loader,
             _ => _ => true
         };
+
+    private static Func<AssetResourcePackModel, bool> BuildResourcePackSearchFilter(string? searchText) =>
+        x => string.IsNullOrEmpty(searchText)
+          || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+          || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
 
     #endregion
 
@@ -315,6 +374,60 @@ public partial class InstanceAssetsViewModel(
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex, "Failed to delete mod file");
+            }
+        }
+    }
+
+    private bool CanToggleResourcePack(AssetResourcePackModel? model) => model is { IsLocked: false };
+
+    [RelayCommand(CanExecute = nameof(CanToggleResourcePack))]
+    private void ToggleResourcePack(AssetResourcePackModel? model)
+    {
+        if (model == null || ResourcePacks == null)
+        {
+            return;
+        }
+
+        var oldPath = model.FilePath;
+        var newPath = model.IsEnabled ? oldPath + ".disabled" : oldPath.Replace(".disabled", "");
+
+        try
+        {
+            File.Move(oldPath, newPath);
+            model.IsEnabled = !model.IsEnabled;
+            model.FilePath = newPath;
+        }
+        catch (Exception ex)
+        {
+            notificationService.PopMessage(ex, "Failed to toggle resource pack");
+        }
+    }
+
+    private bool CanDeleteResourcePack(AssetResourcePackModel? model) => model is { IsLocked: false };
+
+    [RelayCommand(CanExecute = nameof(CanDeleteResourcePack))]
+    private async Task DeleteResourcePackAsync(AssetResourcePackModel? model)
+    {
+        if (model != null
+         && ResourcePacks is not null
+         && File.Exists(model.FilePath)
+         && await overlayService.RequestConfirmationAsync($"Are you sure you want to delete '{model.DisplayName}'?"))
+        {
+            try
+            {
+                File.Delete(model.FilePath);
+                _resourcePackCache.Remove(model);
+                if (SelectedResourcePack == model)
+                {
+                    SelectedResourcePack = null;
+                }
+
+                notificationService.PopMessage($"Resource pack '{model.DisplayName}' deleted successfully",
+                                               "Resource Pack Deleted");
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to delete resource pack file");
             }
         }
     }
