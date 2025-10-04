@@ -238,19 +238,19 @@
                                                               SelectedItem="{Binding FilterEnability,Mode=TwoWay}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate
-                                                                DataType="controls:PackageEntryEnabilityFilter">
+                                                                DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <controls:PackageEntryEnabilityFilter
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
-                                                            Enability="{x:Null}" />
-                                                        <controls:PackageEntryEnabilityFilter
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_Enabled}"
-                                                            Enability="{x:True}" />
-                                                        <controls:PackageEntryEnabilityFilter
+                                                            Value="{x:True}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_Disabled}"
-                                                            Enability="{x:False}" />
+                                                            Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
@@ -263,19 +263,19 @@
                                                               SelectedItem="{Binding FilterLockility,Mode=TwoWay}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate
-                                                                DataType="controls:PackageEntryLockilityFilter">
+                                                                DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <controls:PackageEntryLockilityFilter
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
-                                                            Lockility="{x:Null}" />
-                                                        <controls:PackageEntryLockilityFilter
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
-                                                            Lockility="{x:True}" />
-                                                        <controls:PackageEntryLockilityFilter
+                                                            Value="{x:True}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
-                                                            Lockility="{x:False}" />
+                                                            Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
@@ -287,24 +287,24 @@
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
                                                               SelectedItem="{Binding FilterKind,Mode=TwoWay}">
                                                         <TabStrip.ItemTemplate>
-                                                            <DataTemplate DataType="controls:PackageEntryKindFilter">
+                                                            <DataTemplate DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <controls:PackageEntryKindFilter
-                                                            Label="{x:Static lang:Resources.Enum_All}" Kind="{x:Null}" />
-                                                        <controls:PackageEntryKindFilter
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_Mod}"
-                                                            Kind="{Binding Source=Mod,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
-                                                        <controls:PackageEntryKindFilter
+                                                            Value="{x:Static resources:ResourceKind.Mod}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
-                                                            Kind="{Binding Source=ResourcePack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
-                                                        <controls:PackageEntryKindFilter
+                                                            Value="{x:Static resources:ResourceKind.ResourcePack}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
-                                                            Kind="{Binding Source=ShaderPack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
-                                                        <controls:PackageEntryKindFilter
+                                                            Value="{x:Static resources:ResourceKind.ShaderPack}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_DataPack}"
-                                                            Kind="{Binding Source=DataPack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
+                                                            Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
