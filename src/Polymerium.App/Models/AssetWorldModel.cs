@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
@@ -13,14 +14,13 @@ namespace Polymerium.App.Models;
 public partial class AssetWorldModel : ModelBase
 {
     public AssetWorldModel(
-        string folderName,
-        string worldPath,
+        DirectoryInfo folder,
         Bitmap? icon,
         AssetWorldMetadataModel metadata,
         DateTimeOffset lastPlayed)
     {
-        FolderName = folderName;
-        WorldPath = worldPath;
+        FolderName = folder.Name;
+        WorldPath = folder.FullName;
         Icon = icon;
         Metadata = metadata;
         LastPlayedRaw = lastPlayed;

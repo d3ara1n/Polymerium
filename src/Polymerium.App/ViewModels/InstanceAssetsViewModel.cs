@@ -136,7 +136,7 @@ public partial class InstanceAssetsViewModel(
         var import = PathDef.Default.DirectoryOfImport(Basic.Key);
         var groups = new AssetScreenshotCollection();
         foreach (var files in AssetHelper
-                             .ScanNonSymlinks(Basic.Key, "*.png", ["screenshots"])
+                             .ScanNonSymlinkFiles(Basic.Key, "*.png", ["screenshots"])
                              .GroupBy(x => x.CreationTimeUtc.Date)
                              .OrderByDescending(x => x.Key))
         {
@@ -167,8 +167,8 @@ public partial class InstanceAssetsViewModel(
         var sourced = Basic.Source != null;
         var mods = new List<AssetModModel>();
         foreach (var file in AssetHelper
-                            .ScanNonSymlinks(Basic.Key, "*.jar", ["mods"])
-                            .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.jar.disabled", ["mods"])))
+                            .ScanNonSymlinkFiles(Basic.Key, "*.jar", ["mods"])
+                            .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.jar.disabled", ["mods"])))
         {
             // 解析 jar 文件中的 mod 元数据
             var metadata = AssetModHelper.ParseMetadata(file.FullName);
@@ -220,8 +220,8 @@ public partial class InstanceAssetsViewModel(
         var sourced = Basic.Source != null;
         var resourcePacks = new List<AssetResourcePackModel>();
         foreach (var file in AssetHelper
-                            .ScanNonSymlinks(Basic.Key, "*.zip", ["resourcepacks"])
-                            .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.zip.disabled", ["resourcepacks"])))
+                            .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["resourcepacks"])
+                            .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["resourcepacks"])))
         {
             // 解析 zip 文件中的资源包元数据
             var metadata = AssetResourcePackHelper.ParseMetadata(file.FullName);
@@ -263,8 +263,8 @@ public partial class InstanceAssetsViewModel(
 
         // 扫描 datapacks 目录下的 zip 文件
         foreach (var file in AssetHelper
-                            .ScanNonSymlinks(Basic.Key, "*.zip", ["datapacks"])
-                            .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.zip.disabled", ["datapacks"])))
+                            .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["datapacks"])
+                            .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["datapacks"])))
         {
             // 解析 zip 文件中的数据包元数据
             var metadata = AssetDataPackHelper.ParseMetadata(file.FullName);
@@ -298,23 +298,18 @@ public partial class InstanceAssetsViewModel(
     private Task LoadWorldsAsync()
     {
         var worlds = new ObservableCollection<AssetWorldModel>();
-        var savesDir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "saves");
-
-        if (Directory.Exists(savesDir))
+        var worldsDir = AssetHelper.ScanNonSymlinkDirectories(Basic.Key, "*", ["saves"]);
+        foreach (var worldDir in worldsDir)
         {
-            foreach (var worldDir in Directory.GetDirectories(savesDir))
+            var levelDatPath = Path.Combine(worldDir.FullName, "level.dat");
+            if (File.Exists(levelDatPath))
             {
-                var levelDatPath = Path.Combine(worldDir, "level.dat");
-                if (File.Exists(levelDatPath))
-                {
-                    var folderName = Path.GetFileName(worldDir);
-                    var metadata = AssetWorldHelper.ParseMetadata(worldDir);
-                    var icon = AssetWorldHelper.ExtractIcon(worldDir) ?? AssetUriIndex.DirtImageBitmap;
-                    var lastPlayed = AssetWorldHelper.GetLastPlayed(worldDir);
+                var metadata = AssetWorldHelper.ParseMetadata(worldDir.FullName);
+                var icon = AssetWorldHelper.ExtractIcon(worldDir.FullName) ?? AssetUriIndex.DirtImageBitmap;
+                var lastPlayed = AssetWorldHelper.GetLastPlayed(worldDir.FullName);
 
-                    var world = new AssetWorldModel(folderName, worldDir, icon, metadata, lastPlayed);
-                    worlds.Add(world);
-                }
+                var world = new AssetWorldModel(worldDir, icon, metadata, lastPlayed);
+                worlds.Add(world);
             }
         }
 
