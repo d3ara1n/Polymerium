@@ -1304,24 +1304,24 @@
                                                                     <DockPanel>
 
                                                                         <!-- 状态指示器 -->
-                                                                        <husk:SwitchPresenter
-                                                                            DockPanel.Dock="Right"
-                                                                            Value="{Binding IsEnabled}"
-                                                                            TargetType="x:Boolean"
-                                                                            Width="8" Height="8">
-                                                                            <husk:SwitchCase
-                                                                                Value="{x:True}">
-                                                                                <Border
-                                                                                    CornerRadius="4"
-                                                                                    Background="{StaticResource ControlSuccessBackgroundBrush}" />
-                                                                            </husk:SwitchCase>
-                                                                            <husk:SwitchCase
-                                                                                Value="{x:False}">
-                                                                                <Border
-                                                                                    CornerRadius="4"
-                                                                                    Background="{StaticResource ControlDangerBackgroundBrush}" />
-                                                                            </husk:SwitchCase>
-                                                                        </husk:SwitchPresenter>
+                                                                        <!-- <husk:SwitchPresenter -->
+                                                                        <!--     DockPanel.Dock="Right" -->
+                                                                        <!--     Value="{Binding IsEnabled}" -->
+                                                                        <!--     TargetType="x:Boolean" -->
+                                                                        <!--     Width="8" Height="8"> -->
+                                                                        <!--     <husk:SwitchCase -->
+                                                                        <!--         Value="{x:True}"> -->
+                                                                        <!--         <Border -->
+                                                                        <!--             CornerRadius="4" -->
+                                                                        <!--             Background="{StaticResource ControlSuccessBackgroundBrush}" /> -->
+                                                                        <!--     </husk:SwitchCase> -->
+                                                                        <!--     <husk:SwitchCase -->
+                                                                        <!--         Value="{x:False}"> -->
+                                                                        <!--         <Border -->
+                                                                        <!--             CornerRadius="4" -->
+                                                                        <!--             Background="{StaticResource ControlDangerBackgroundBrush}" /> -->
+                                                                        <!--     </husk:SwitchCase> -->
+                                                                        <!-- </husk:SwitchPresenter> -->
 
                                                                         <!-- 数据包名称 -->
                                                                         <TextBlock Text="{Binding DisplayName}"

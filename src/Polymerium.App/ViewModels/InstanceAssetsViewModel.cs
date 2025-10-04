@@ -328,7 +328,6 @@ public partial class InstanceAssetsViewModel(
         if (Worlds.Count > 0)
         {
             SelectedWorld = Worlds[0];
-            LoadWorldDetails(SelectedWorld);
         }
 
         return Task.CompletedTask;

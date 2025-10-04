@@ -99,13 +99,10 @@ public static class AssetWorldHelper
         var enabledDataPacks = new HashSet<string>();
 
         // 扫描 datapacks 目录下的 zip 文件
-        foreach (var file in Directory
-                            .GetFiles(datapacksDir, "*.zip")
-                            .Concat(Directory.GetFiles(datapacksDir, "*.zip.disabled")))
+        foreach (var file in Directory.GetFiles(datapacksDir, "*.zip"))
         {
             var fileInfo = new FileInfo(file);
             var fileName = fileInfo.Name;
-            var isEnabled = !fileName.EndsWith(".disabled");
 
             // 使用 AssetDataPackHelper 解析数据包元数据
             var metadata = AssetDataPackHelper.ParseMetadata(file);
@@ -114,37 +111,9 @@ public static class AssetWorldHelper
             // 获取显示名称（优先使用元数据中的描述，否则使用文件名）
             var displayName = !string.IsNullOrEmpty(metadata.Description)
                                   ? metadata.Description
-                                  : Path.GetFileNameWithoutExtension(fileName.Replace(".disabled", ""));
+                                  : Path.GetFileNameWithoutExtension(fileName);
 
-            dataPacks.Add(new(displayName, fileName, icon, metadata.Description, metadata.PackFormat, isEnabled));
-        }
-
-        // 扫描 datapacks 目录下的文件夹（解压的数据包）
-        foreach (var dir in Directory.GetDirectories(datapacksDir))
-        {
-            var dirInfo = new DirectoryInfo(dir);
-            var folderName = dirInfo.Name;
-
-            // 检查是否有 pack.mcmeta 文件
-            var packMetaPath = Path.Combine(dir, "pack.mcmeta");
-            if (File.Exists(packMetaPath))
-            {
-                // 解析 pack.mcmeta
-                var metadata = ParsePackMcmetaFromFile(packMetaPath);
-                var icon = ExtractIconFromFolder(dir) ?? AssetUriIndex.DirtImageBitmap;
-
-                // 文件夹形式的数据包默认启用
-                var isEnabled = true;
-
-                var displayName = !string.IsNullOrEmpty(metadata.Description) ? metadata.Description : folderName;
-
-                dataPacks.Add(new(displayName,
-                                  $"file/{folderName}",
-                                  icon,
-                                  metadata.Description,
-                                  metadata.PackFormat,
-                                  isEnabled));
-            }
+            dataPacks.Add(new(displayName, fileName, icon, metadata.Description, metadata.PackFormat));
         }
 
         return dataPacks;
