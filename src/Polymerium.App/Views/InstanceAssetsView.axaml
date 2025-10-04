@@ -9,7 +9,6 @@
                   xmlns:m="clr-namespace:Polymerium.App.Models"
                   xmlns:v="clr-namespace:Polymerium.App.Views"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
                   xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -108,19 +107,19 @@
                                                                   Theme="{StaticResource SegmentedTabStripTheme}"
                                                                   SelectedItem="{Binding ModFilterEnability,Mode=TwoWay}">
                                                             <TabStrip.ItemTemplate>
-                                                                <DataTemplate DataType="m:AssetModEnabilityFilter">
+                                                                <DataTemplate DataType="m:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:AssetModEnabilityFilter
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_All}"
-                                                                Enability="{x:Null}" />
-                                                            <m:AssetModEnabilityFilter
+                                                                Value="{x:Null}" />
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_Enabled}"
-                                                                Enability="{x:True}" />
-                                                            <m:AssetModEnabilityFilter
+                                                                Value="{x:True}" />
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_Disabled}"
-                                                                Enability="{x:False}" />
+                                                                Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
 
@@ -134,19 +133,19 @@
                                                                   Theme="{StaticResource SegmentedTabStripTheme}"
                                                                   SelectedItem="{Binding ModFilterLockility,Mode=TwoWay}">
                                                             <TabStrip.ItemTemplate>
-                                                                <DataTemplate DataType="m:AssetModLockilityFilter">
+                                                                <DataTemplate DataType="m:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:AssetModLockilityFilter
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_All}"
-                                                                Lockility="{x:Null}" />
-                                                            <m:AssetModLockilityFilter
+                                                                Value="{x:Null}" />
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
-                                                                Lockility="{x:True}" />
-                                                            <m:AssetModLockilityFilter
+                                                                Value="{x:True}" />
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
-                                                                Lockility="{x:False}" />
+                                                                Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
 
@@ -160,21 +159,21 @@
                                                                   Theme="{StaticResource SegmentedTabStripTheme}"
                                                                   SelectedItem="{Binding ModFilterLoader,Mode=TwoWay}">
                                                             <TabStrip.ItemTemplate>
-                                                                <DataTemplate DataType="m:AssetModLoaderFilter">
+                                                                <DataTemplate DataType="m:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:AssetModLoaderFilter
+                                                            <m:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_All}"
-                                                                Loader="{x:Null}" />
-                                                            <m:AssetModLoaderFilter Label="Fabric"
-                                                                    Loader="{x:Static m:ModLoaderKind.Fabric}" />
-                                                            <m:AssetModLoaderFilter Label="Forge"
-                                                                    Loader="{x:Static m:ModLoaderKind.Forge}" />
-                                                            <m:AssetModLoaderFilter Label="Quilt"
-                                                                    Loader="{x:Static m:ModLoaderKind.Quilt}" />
-                                                            <m:AssetModLoaderFilter Label="NeoForge"
-                                                                    Loader="{x:Static m:ModLoaderKind.NeoForge}" />
+                                                                Value="{x:Null}" />
+                                                            <m:FilterModel Label="Fabric"
+                                                                           Value="{x:Static m:ModLoaderKind.Fabric}" />
+                                                            <m:FilterModel Label="Forge"
+                                                                           Value="{x:Static m:ModLoaderKind.Forge}" />
+                                                            <m:FilterModel Label="Quilt"
+                                                                           Value="{x:Static m:ModLoaderKind.Quilt}" />
+                                                            <m:FilterModel Label="NeoForge"
+                                                                           Value="{x:Static m:ModLoaderKind.NeoForge}" />
                                                         </TabStrip>
                                                     </Grid>
                                                 </StackPanel>

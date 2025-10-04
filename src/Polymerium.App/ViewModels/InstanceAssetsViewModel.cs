@@ -30,13 +30,6 @@ public partial class InstanceAssetsViewModel(
     OverlayService overlayService,
     NotificationService notificationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Fields
-
-    private readonly SourceCache<AssetModModel, string> _modCache = new(x => x.FilePath);
-    private IDisposable? _modFilterSubscription;
-
-    #endregion
-
     #region Overrides
 
     protected override async Task OnInitializeAsync()
@@ -44,6 +37,13 @@ public partial class InstanceAssetsViewModel(
         await Task.Run(LoadModAsync);
         await Task.Run(LoadScreenshotsAsync);
     }
+
+    #endregion
+
+    #region Fields
+
+    private readonly SourceCache<AssetModModel, string> _modCache = new(x => x.FilePath);
+    private IDisposable? _modFilterSubscription;
 
     #endregion
 
@@ -66,20 +66,18 @@ public partial class InstanceAssetsViewModel(
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
-    public partial AssetModEnabilityFilter? ModFilterEnability { get; set; }
+    public partial FilterModel? ModFilterEnability { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
-    public partial AssetModLockilityFilter? ModFilterLockility { get; set; }
+    public partial FilterModel? ModFilterLockility { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
-    public partial AssetModLoaderFilter? ModFilterLoader { get; set; }
+    public partial FilterModel? ModFilterLoader { get; set; }
 
     public bool IsModFilterActive =>
-        ModFilterEnability?.Enability != null
-     || ModFilterLockility?.Lockility != null
-     || ModFilterLoader?.Loader != null;
+        ModFilterEnability?.Value != null || ModFilterLockility?.Value != null || ModFilterLoader?.Value != null;
 
     #endregion
 
@@ -172,7 +170,7 @@ public partial class InstanceAssetsViewModel(
 
     #endregion
 
-    #region Filter
+    #region Filters
 
     private static Func<AssetModModel, bool> BuildSearchFilter(string? searchText) =>
         x => string.IsNullOrEmpty(searchText)
@@ -180,27 +178,27 @@ public partial class InstanceAssetsViewModel(
           || (x.Metadata.ModId?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false)
           || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
 
-    private static Func<AssetModModel, bool> BuildEnabilityFilter(AssetModEnabilityFilter? filter) =>
-        filter?.Enability switch
+    private static Func<AssetModModel, bool> BuildEnabilityFilter(FilterModel? filter) =>
+        filter?.Value switch
         {
-            null => _ => true,
             true => x => x.IsEnabled,
-            false => x => !x.IsEnabled
+            false => x => !x.IsEnabled,
+            _ => _ => true
         };
 
-    private static Func<AssetModModel, bool> BuildLockilityFilter(AssetModLockilityFilter? filter) =>
-        filter?.Lockility switch
+    private static Func<AssetModModel, bool> BuildLockilityFilter(FilterModel? filter) =>
+        filter?.Value switch
         {
-            null => _ => true,
             true => x => x.IsLocked,
-            false => x => !x.IsLocked
+            false => x => !x.IsLocked,
+            _ => _ => true
         };
 
-    private static Func<AssetModModel, bool> BuildLoaderFilter(AssetModLoaderFilter? filter) =>
-        filter?.Loader switch
+    private static Func<AssetModModel, bool> BuildLoaderFilter(FilterModel? filter) =>
+        filter?.Value switch
         {
-            null => _ => true,
-            var loader => x => x.Metadata.LoaderType == loader
+            ModLoaderKind loader => x => x.Metadata.LoaderType == loader,
+            _ => _ => true
         };
 
     #endregion

@@ -21,7 +21,6 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
-using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
@@ -378,11 +377,11 @@ public partial class InstanceSetupViewModel(
         filterTags
            .ToObservableChangeSet()
            .Select(_ => filterTags.Any())
-           .CombineLatest(this.WhenValueChanged(x => x.FilterEnability).Select(x => x is { Enability: not null }),
+           .CombineLatest(this.WhenValueChanged(x => x.FilterEnability).Select(x => x is { Value: not null }),
                           (x, y) => x || y)
-           .CombineLatest(this.WhenValueChanged(x => x.FilterLockility).Select(x => x is { Lockility: not null }),
+           .CombineLatest(this.WhenValueChanged(x => x.FilterLockility).Select(x => x is { Value: not null }),
                           (x, y) => x || y)
-           .CombineLatest(this.WhenValueChanged(x => x.FilterKind).Select(x => x is { Kind: not null }),
+           .CombineLatest(this.WhenValueChanged(x => x.FilterKind).Select(x => x is { Value: not null }),
                           (x, y) => x || y)
            .Subscribe(x => IsFilterActive = x)
            .DisposeWith(_subscriptions);
@@ -446,16 +445,28 @@ public partial class InstanceSetupViewModel(
 
     #endregion
 
-    #region Filter
+    #region Filters
 
-    private static Func<InstancePackageModel, bool> BuildEnabilityFilter(PackageEntryEnabilityFilter? enablity) =>
-        x => enablity?.Enability is null || x.IsEnabled == enablity.Enability;
+    private static Func<InstancePackageModel, bool> BuildEnabilityFilter(FilterModel? enablity) =>
+        x => enablity?.Value switch
+        {
+            bool it => x.IsEnabled == it,
+            _ => true
+        };
 
-    private static Func<InstancePackageModel, bool> BuildLockilityFilter(PackageEntryLockilityFilter? lockility) =>
-        x => lockility?.Lockility is null || x.IsLocked == lockility.Lockility;
+    private static Func<InstancePackageModel, bool> BuildLockilityFilter(FilterModel? lockility) =>
+        x => lockility?.Value switch
+        {
+            bool it => x.IsLocked == it,
+            _ => true
+        };
 
-    private static Func<InstancePackageModel, bool> BuildKindFilter(PackageEntryKindFilter? kind) =>
-        x => kind?.Kind is null || x.Info?.Kind == kind.Kind;
+    private static Func<InstancePackageModel, bool> BuildKindFilter(FilterModel? kind) =>
+        x => kind?.Value switch
+        {
+            ResourceKind it => x.Info?.Kind == it,
+            _ => true
+        };
 
     private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter)
@@ -1014,13 +1025,13 @@ public partial class InstanceSetupViewModel(
     public partial string? FilterText { get; set; }
 
     [ObservableProperty]
-    public partial PackageEntryEnabilityFilter? FilterEnability { get; set; }
+    public partial FilterModel? FilterEnability { get; set; }
 
     [ObservableProperty]
-    public partial PackageEntryLockilityFilter? FilterLockility { get; set; }
+    public partial FilterModel? FilterLockility { get; set; }
 
     [ObservableProperty]
-    public partial PackageEntryKindFilter? FilterKind { get; set; }
+    public partial FilterModel? FilterKind { get; set; }
 
     [ObservableProperty]
     public partial bool IsFilterActive { get; set; }
