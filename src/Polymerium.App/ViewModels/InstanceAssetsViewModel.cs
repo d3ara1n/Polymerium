@@ -1,12 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
+using DynamicData.Binding;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -25,6 +30,13 @@ public partial class InstanceAssetsViewModel(
     OverlayService overlayService,
     NotificationService notificationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    #region Fields
+
+    private readonly SourceCache<AssetModModel, string> _modCache = new(x => x.FilePath);
+    private IDisposable? _modFilterSubscription;
+
+    #endregion
+
     #region Overrides
 
     protected override async Task OnInitializeAsync()
@@ -44,13 +56,30 @@ public partial class InstanceAssetsViewModel(
     public partial int PackageCount { get; set; }
 
     [ObservableProperty]
-    public partial AssetModCollection? Mods { get; set; }
+    public partial ReadOnlyObservableCollection<AssetModModel>? Mods { get; set; }
 
     [ObservableProperty]
     public partial AssetModModel? SelectedMod { get; set; }
 
     [ObservableProperty]
     public partial string ModSearchText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
+    public partial AssetModEnabilityFilter? ModFilterEnability { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
+    public partial AssetModLockilityFilter? ModFilterLockility { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsModFilterActive))]
+    public partial AssetModLoaderFilter? ModFilterLoader { get; set; }
+
+    public bool IsModFilterActive =>
+        ModFilterEnability?.Enability != null
+     || ModFilterLockility?.Lockility != null
+     || ModFilterLoader?.Loader != null;
 
     #endregion
 
@@ -91,7 +120,7 @@ public partial class InstanceAssetsViewModel(
         }
 
         var sourced = Basic.Source != null;
-        var mods = new AssetModCollection();
+        var mods = new List<AssetModModel>();
         foreach (var file in AssetHelper
                             .ScanNonSymlinks(Basic.Key, "*.jar", ["mods"])
                             .Concat(AssetHelper.ScanNonSymlinks(Basic.Key, "*.jar.disabled", ["mods"])))
@@ -116,10 +145,63 @@ public partial class InstanceAssetsViewModel(
             mods.Add(model);
         }
 
-        Mods = mods;
+        _modCache.AddOrUpdate(mods);
+
+        // 设置过滤器
+        _modFilterSubscription?.Dispose();
+        var searchFilter = this.WhenValueChanged(x => x.ModSearchText).Select(BuildSearchFilter);
+        var enabilityFilter = this.WhenValueChanged(x => x.ModFilterEnability).Select(BuildEnabilityFilter);
+        var lockilityFilter = this.WhenValueChanged(x => x.ModFilterLockility).Select(BuildLockilityFilter);
+        var loaderFilter = this.WhenValueChanged(x => x.ModFilterLoader).Select(BuildLoaderFilter);
+
+        var combinedFilter = searchFilter.CombineLatest(enabilityFilter,
+                                                        lockilityFilter,
+                                                        loaderFilter,
+                                                        (search, enability, lockility, loader) =>
+                                                            new Func<AssetModModel, bool>(x => search(x)
+                                                             && enability(x)
+                                                             && lockility(x)
+                                                             && loader(x)));
+
+        _modFilterSubscription = _modCache.Connect().Filter(combinedFilter).Bind(out var view).Subscribe();
+
+        Mods = view;
 
         return Task.CompletedTask;
     }
+
+    #endregion
+
+    #region Filter
+
+    private static Func<AssetModModel, bool> BuildSearchFilter(string? searchText) =>
+        x => string.IsNullOrEmpty(searchText)
+          || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+          || (x.Metadata.ModId?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false)
+          || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
+
+    private static Func<AssetModModel, bool> BuildEnabilityFilter(AssetModEnabilityFilter? filter) =>
+        filter?.Enability switch
+        {
+            null => _ => true,
+            true => x => x.IsEnabled,
+            false => x => !x.IsEnabled
+        };
+
+    private static Func<AssetModModel, bool> BuildLockilityFilter(AssetModLockilityFilter? filter) =>
+        filter?.Lockility switch
+        {
+            null => _ => true,
+            true => x => x.IsLocked,
+            false => x => !x.IsLocked
+        };
+
+    private static Func<AssetModModel, bool> BuildLoaderFilter(AssetModLoaderFilter? filter) =>
+        filter?.Loader switch
+        {
+            null => _ => true,
+            var loader => x => x.Metadata.LoaderType == loader
+        };
 
     #endregion
 
@@ -224,7 +306,7 @@ public partial class InstanceAssetsViewModel(
             try
             {
                 File.Delete(model.FilePath);
-                Mods.Remove(model);
+                _modCache.Remove(model);
                 if (SelectedMod == model)
                 {
                     SelectedMod = null;

@@ -1464,11 +1464,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Original.
+        ///   Looks up a localized string similar to Import.
         /// </summary>
-        public static string InstancePackageButton_OriginalTagText {
+        public static string InstancePackageButton_ImportTagText {
             get {
-                return ResourceManager.GetString("InstancePackageButton_OriginalTagText", resourceCulture);
+                return ResourceManager.GetString("InstancePackageButton_ImportTagText", resourceCulture);
             }
         }
         
@@ -2211,6 +2211,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string InstanceSetupView_SourceImportText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_SourceImportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Source.
         /// </summary>
         public static string InstanceSetupView_SourceLabelText {
@@ -2225,15 +2234,6 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_SourceLocalText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_SourceLocalText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Original.
-        /// </summary>
-        public static string InstanceSetupView_SourceOriginalText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_SourceOriginalText", resourceCulture);
             }
         }
         

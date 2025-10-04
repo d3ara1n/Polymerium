@@ -10,6 +10,8 @@
                   xmlns:v="clr-namespace:Polymerium.App.Views"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                  xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -20,7 +22,7 @@
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Mod}" />
                     <husk:PlaceholderPresenter Source="{Binding Mods}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate DataType="m:AssetModCollection">
+                            <DataTemplate DataType="collections:IList">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="(" />
                                     <TextBlock
@@ -77,40 +79,120 @@
                     <!-- 左侧：Mod 列表 -->
                     <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="8">
                         <!-- 搜索和过滤栏 -->
-                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                            <TextBox Grid.Column="0"
-                                     Watermark="Search mods..."
-                                     Text="{Binding ModSearchText,Mode=TwoWay}">
-                                <TextBox.InnerRightContent>
+                        <TextBox Grid.Row="0"
+                                 Watermark="Search mods..."
+                                 Text="{Binding ModSearchText,Mode=TwoWay}">
+                            <TextBox.InnerRightContent>
+                                <StackPanel Orientation="Horizontal">
                                     <Button
-                                        IsVisible="{Binding ModSearchText,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                        Command="{Binding $parent[TextBox].Clear}">
-                                        <fi:SymbolIcon Symbol="Dismiss" FontSize="{Binding $parent[Button].FontSize}" />
+                                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                        Command="{Binding $parent[TextBox].Clear}"
+                                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+
+                                    <!-- 过滤器面板 -->
+                                    <Button Classes.Primary="{Binding IsModFilterActive,Mode=OneWay}">
+                                        <Button.Flyout>
+                                            <Flyout>
+                                                <StackPanel Spacing="8" MinWidth="320" MaxWidth="420" Margin="12">
+                                                    <TextBlock Text="Filter Conditions"
+                                                               FontSize="{StaticResource SmallFontSize}"
+                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                               VerticalAlignment="Center" />
+
+                                                    <!-- 启用与禁用 -->
+                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                        <TextBlock Grid.Column="0" Text="Status"
+                                                                   VerticalAlignment="Bottom" />
+                                                        <TabStrip Grid.Column="1"
+                                                                  Theme="{StaticResource SegmentedTabStripTheme}"
+                                                                  SelectedItem="{Binding ModFilterEnability,Mode=TwoWay}">
+                                                            <TabStrip.ItemTemplate>
+                                                                <DataTemplate DataType="m:AssetModEnabilityFilter">
+                                                                    <TextBlock Text="{Binding Label}" />
+                                                                </DataTemplate>
+                                                            </TabStrip.ItemTemplate>
+                                                            <m:AssetModEnabilityFilter
+                                                                Label="{x:Static lang:Resources.Enum_All}"
+                                                                Enability="{x:Null}" />
+                                                            <m:AssetModEnabilityFilter
+                                                                Label="{x:Static lang:Resources.Enum_Enabled}"
+                                                                Enability="{x:True}" />
+                                                            <m:AssetModEnabilityFilter
+                                                                Label="{x:Static lang:Resources.Enum_Disabled}"
+                                                                Enability="{x:False}" />
+                                                        </TabStrip>
+                                                    </Grid>
+
+                                                    <husk:Divider />
+
+                                                    <!-- 是否上锁 -->
+                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                        <TextBlock Grid.Column="0" Text="Source"
+                                                                   VerticalAlignment="Bottom" />
+                                                        <TabStrip Grid.Column="1"
+                                                                  Theme="{StaticResource SegmentedTabStripTheme}"
+                                                                  SelectedItem="{Binding ModFilterLockility,Mode=TwoWay}">
+                                                            <TabStrip.ItemTemplate>
+                                                                <DataTemplate DataType="m:AssetModLockilityFilter">
+                                                                    <TextBlock Text="{Binding Label}" />
+                                                                </DataTemplate>
+                                                            </TabStrip.ItemTemplate>
+                                                            <m:AssetModLockilityFilter
+                                                                Label="{x:Static lang:Resources.Enum_All}"
+                                                                Lockility="{x:Null}" />
+                                                            <m:AssetModLockilityFilter
+                                                                Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
+                                                                Lockility="{x:True}" />
+                                                            <m:AssetModLockilityFilter
+                                                                Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
+                                                                Lockility="{x:False}" />
+                                                        </TabStrip>
+                                                    </Grid>
+
+                                                    <husk:Divider />
+
+                                                    <!-- 加载器类型 -->
+                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                        <TextBlock Grid.Column="0" Text="Loader"
+                                                                   VerticalAlignment="Bottom" />
+                                                        <TabStrip Grid.Column="1"
+                                                                  Theme="{StaticResource SegmentedTabStripTheme}"
+                                                                  SelectedItem="{Binding ModFilterLoader,Mode=TwoWay}">
+                                                            <TabStrip.ItemTemplate>
+                                                                <DataTemplate DataType="m:AssetModLoaderFilter">
+                                                                    <TextBlock Text="{Binding Label}" />
+                                                                </DataTemplate>
+                                                            </TabStrip.ItemTemplate>
+                                                            <m:AssetModLoaderFilter
+                                                                Label="{x:Static lang:Resources.Enum_All}"
+                                                                Loader="{x:Null}" />
+                                                            <m:AssetModLoaderFilter Label="Fabric"
+                                                                    Loader="{x:Static m:ModLoaderKind.Fabric}" />
+                                                            <m:AssetModLoaderFilter Label="Forge"
+                                                                    Loader="{x:Static m:ModLoaderKind.Forge}" />
+                                                            <m:AssetModLoaderFilter Label="Quilt"
+                                                                    Loader="{x:Static m:ModLoaderKind.Quilt}" />
+                                                            <m:AssetModLoaderFilter Label="NeoForge"
+                                                                    Loader="{x:Static m:ModLoaderKind.NeoForge}" />
+                                                        </TabStrip>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                        <icons:PackIconLucide Kind="ListFilter"
+                                                              Height="{StaticResource MediumFontSize}"
+                                                              Width="{StaticResource MediumFontSize}" />
                                     </Button>
-                                </TextBox.InnerRightContent>
-                            </TextBox>
-                            <Button Grid.Column="1">
-                                <icons:PackIconLucide Kind="ListFilter" Height="{StaticResource MediumFontSize}"
-                                                      Width="{StaticResource MediumFontSize}" />
-                            </Button>
-                        </Grid>
+                                </StackPanel>
+                            </TextBox.InnerRightContent>
+                        </TextBox>
 
                         <!-- Mod 列表 -->
                         <ScrollViewer Grid.Row="1">
-                            <Panel>
-                                <!-- 空状态 -->
-                                <StackPanel VerticalAlignment="Center"
-                                            IsVisible="{Binding Mods.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
-                                            Spacing="8" Margin="24">
-                                    <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
-                                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                          Width="{StaticResource ExtraLargeFontSize}"
-                                                          HorizontalAlignment="Center" />
-                                    <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                               FontSize="{StaticResource LargeFontSize}"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                               HorizontalAlignment="Center" />
-                                </StackPanel>
+
+                            <controls:EmptyContainer
+                                IsEmpty="{Binding Mods.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
 
                                 <!-- Mod 列表 -->
                                 <ListBox Theme="{StaticResource CleanListBoxTheme}" ItemsSource="{Binding Mods}"
@@ -171,7 +253,7 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                            </Panel>
+                            </controls:EmptyContainer>
                         </ScrollViewer>
                     </Grid>
 
@@ -206,7 +288,7 @@
                                                         Classes="Primary"
                                                         IsVisible="{Binding IsLocked}">
                                                         <husk:IconLabel Icon="LockClosed"
-                                                                        Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
+                                                                        Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                     </husk:Tag>
                                                     <husk:Tag
                                                         Content="{Binding Metadata.LoaderType}"
@@ -493,7 +575,7 @@
                                                                             Classes="Primary"
                                                                             IsVisible="{Binding IsLocked}">
                                                                             <husk:IconLabel Icon="LockClosed"
-                                                                                    Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
+                                                                                    Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                                         </husk:Tag>
                                                                         <husk:Tag Content="{Binding Time}" />
                                                                     </StackPanel>
