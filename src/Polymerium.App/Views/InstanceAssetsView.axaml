@@ -11,6 +11,8 @@
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
                   xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+                  xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -335,17 +337,15 @@
                                             <Button
                                                 Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding FilePath}">
-                                                <icons:PackIconLucide Kind="FolderOpen"
-                                                                      Height="{StaticResource MediumFontSize}"
-                                                                      Width="{StaticResource MediumFontSize}" />
+                                                <fi:SymbolIcon Symbol="FolderOpen"
+                                                               FontSize="{StaticResource MediumFontSize}" />
                                             </Button>
                                             <Button
                                                 Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteModCommand,FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
-                                                <icons:PackIconLucide Kind="Trash2"
-                                                                      Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                      Height="{StaticResource MediumFontSize}"
-                                                                      Width="{StaticResource MediumFontSize}" />
+                                                <fi:SymbolIcon Symbol="Delete"
+                                                               Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                               FontSize="{StaticResource MediumFontSize}" />
                                             </Button>
                                         </husk:ButtonGroup>
 
@@ -624,17 +624,15 @@
                                         <Button
                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
                                             CommandParameter="{Binding FilePath}">
-                                            <icons:PackIconLucide Kind="FolderOpen"
-                                                                  Height="{StaticResource MediumFontSize}"
-                                                                  Width="{StaticResource MediumFontSize}" />
+                                            <fi:SymbolIcon Symbol="FolderOpen"
+                                                           FontSize="{StaticResource MediumFontSize}" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteResourcePackCommand,FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide Kind="Trash2"
-                                                                  Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                  Height="{StaticResource MediumFontSize}"
-                                                                  Width="{StaticResource MediumFontSize}" />
+                                            <fi:SymbolIcon Symbol="Delete"
+                                                           Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                           FontSize="{StaticResource MediumFontSize}" />
                                         </Button>
                                     </husk:ButtonGroup>
 
@@ -891,17 +889,15 @@
                                         <Button
                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
                                             CommandParameter="{Binding FilePath}">
-                                            <icons:PackIconLucide Kind="FolderOpen"
-                                                                  Height="{StaticResource MediumFontSize}"
-                                                                  Width="{StaticResource MediumFontSize}" />
+                                            <fi:SymbolIcon Symbol="FolderOpen"
+                                                           FontSize="{StaticResource MediumFontSize}" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteDataPackCommand,FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide Kind="Trash2"
-                                                                  Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                  Height="{StaticResource MediumFontSize}"
-                                                                  Width="{StaticResource MediumFontSize}" />
+                                            <fi:SymbolIcon Symbol="Delete"
+                                                           Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                           FontSize="{StaticResource MediumFontSize}" />
                                         </Button>
                                     </husk:ButtonGroup>
 
@@ -1143,7 +1139,339 @@
                 </ScrollViewer>
             </Panel>
         </TabItem>
-        <!-- <TabItem Header="{x:Static lang:Resources.AssetKind_Save}" /> -->
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Save}" />
+                    <husk:PlaceholderPresenter Source="{Binding Worlds}">
+                        <husk:PlaceholderPresenter.SourceTemplate>
+                            <DataTemplate DataType="collections:IList">
+                                <TextBlock Text="{Binding Count,StringFormat={}({0}),FallbackValue=(0)}" />
+                            </DataTemplate>
+                        </husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:ProgressRing
+                            IsIndeterminate="{Binding Worlds,Converter={x:Static ObjectConverters.IsNull}}"
+                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                    </husk:PlaceholderPresenter>
+                </StackPanel>
+            </TabItem.Header>
+            <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                <!-- 存档列表 -->
+                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <TabStrip ItemsSource="{Binding Worlds}" SelectedItem="{Binding SelectedWorld,Mode=TwoWay}">
+                        <TabStrip.ItemTemplate>
+                            <DataTemplate DataType="m:AssetWorldModel">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4">
+                                    <Border Grid.Column="0" Width="48" Height="48"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Border.Background>
+                                            <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
+                                        </Border.Background>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Spacing="4">
+                                        <TextBlock Text="{Binding DisplayName}"
+                                                   FontSize="{StaticResource LargeFontSize}"
+                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding LastPlayed}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </TabStrip.ItemTemplate>
+                    </TabStrip>
+                </ScrollViewer>
+
+                <!-- 存档详情 -->
+                <ScrollViewer Grid.Row="1">
+                    <husk:PlaceholderPresenter Source="{Binding SelectedWorld}">
+                        <husk:PlaceholderPresenter.SourceTemplate>
+                            <DataTemplate DataType="m:AssetWorldModel">
+                                <StackPanel Spacing="12">
+                                    <!-- 存档头部 -->
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                        <Border Grid.Column="0" Width="82" Height="82"
+                                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                            <Border.Background>
+                                                <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
+                                            </Border.Background>
+                                        </Border>
+                                        <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding DisplayName}"
+                                                       FontSize="{StaticResource ExtraLargeFontSize}"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                <husk:Tag Content="{Binding Version}" />
+                                                <husk:Tag Content="{Binding GameMode}" />
+                                                <husk:Tag Content="{Binding Difficulty}" />
+                                                <husk:Tag Content="Hardcore" IsVisible="{Binding Hardcore}"
+                                                          Classes="Danger" />
+                                            </StackPanel>
+                                            <TextBlock>
+                                                <Run Text="Last Played:"
+                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <Run Text="{Binding LastPlayedFormatted}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- 操作按钮 -->
+                                    <husk:ButtonGroup>
+                                        <Button
+                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding WorldPath}">
+                                            <husk:IconLabel Icon="Archive" Text="Export" />
+                                        </Button>
+                                        <Button
+                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding WorldPath}">
+                                            <fi:SymbolIcon Symbol="FolderOpen"
+                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        </Button>
+                                        <Button
+                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding WorldPath}">
+                                            <fi:SymbolIcon Symbol="Delete"
+                                                           Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        </Button>
+                                    </husk:ButtonGroup>
+
+                                    <!-- 基本信息 -->
+                                    <Border Background="{StaticResource CardBackgroundBrush}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}"
+                                            Padding="16">
+                                        <StackPanel Spacing="12">
+                                            <TextBlock Text="World Information"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                                  ColumnSpacing="16" RowSpacing="8">
+                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Game Time:"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Row="0" Grid.Column="1">
+                                                    <Run Text="{Binding GameTime}" />
+                                                    <Run Text="ticks"
+                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                </TextBlock>
+
+                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Day:"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DayCount}" />
+
+                                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Day Time:"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DayTime}" />
+
+                                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Commands:"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Row="3" Grid.Column="1"
+                                                           Text="{Binding AllowCommands}" />
+
+                                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Folder:"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding FolderName}"
+                                                           TextWrapping="Wrap" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- 数据包板块（可折叠） -->
+                                    <Expander Header="Data Packs" IsExpanded="True">
+                                        <controls:EmptyContainer
+                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                                            <ScrollViewer MaxHeight="300">
+                                                <ItemsControl
+                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate DataType="m:AssetWorldDataPackModel">
+                                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                                                <!-- 数据包图标 -->
+                                                                <Border Grid.Column="0" Width="48" Height="48"
+                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <Border.Background>
+                                                                        <ImageBrush Source="{Binding Icon}"
+                                                                                Stretch="Uniform" />
+                                                                    </Border.Background>
+                                                                </Border>
+
+                                                                <!-- 数据包信息 -->
+                                                                <StackPanel Grid.Column="1"
+                                                                            VerticalAlignment="Center"
+                                                                            Spacing="4">
+                                                                    <DockPanel>
+
+                                                                        <!-- 状态指示器 -->
+                                                                        <husk:SwitchPresenter
+                                                                            DockPanel.Dock="Right"
+                                                                            Value="{Binding IsEnabled}"
+                                                                            TargetType="x:Boolean"
+                                                                            Width="8" Height="8">
+                                                                            <husk:SwitchCase
+                                                                                Value="{x:True}">
+                                                                                <Border
+                                                                                    CornerRadius="4"
+                                                                                    Background="{StaticResource ControlSuccessBackgroundBrush}" />
+                                                                            </husk:SwitchCase>
+                                                                            <husk:SwitchCase
+                                                                                Value="{x:False}">
+                                                                                <Border
+                                                                                    CornerRadius="4"
+                                                                                    Background="{StaticResource ControlDangerBackgroundBrush}" />
+                                                                            </husk:SwitchCase>
+                                                                        </husk:SwitchPresenter>
+
+                                                                        <!-- 数据包名称 -->
+                                                                        <TextBlock Text="{Binding DisplayName}"
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                                TextTrimming="CharacterEllipsis" />
+                                                                    </DockPanel>
+
+                                                                    <!-- 描述 -->
+                                                                    <TextBlock Text="{Binding DescriptionText}"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               FontSize="{StaticResource SmallFontSize}"
+                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+
+                                                                    <DockPanel>
+                                                                        <!-- 包格式版本 -->
+                                                                        <husk:Tag DockPanel.Dock="Right"
+                                                                                Classes="Small"
+                                                                                Content="{Binding PackFormatText,StringFormat='Format {0}'}" />
+
+                                                                        <!-- 文件名 -->
+                                                                        <TextBlock Text="{Binding FileName}"
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                TextTrimming="CharacterEllipsis" />
+                                                                    </DockPanel>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+                                        </controls:EmptyContainer>
+                                    </Expander>
+
+                                    <!-- 玩家板块 -->
+                                    <Expander Header="Players" IsExpanded="True">
+                                        <controls:EmptyContainer
+                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                                            <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                                                <!-- 玩家头像列表 -->
+                                                <TabStrip Grid.Row="0"
+                                                          AutoScrollToSelectedItem="False"
+                                                          ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers}"
+                                                          SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer,Mode=TwoWay}">
+                                                    <TabStrip.ItemTemplate>
+                                                        <DataTemplate DataType="m:AssetWorldPlayerModel">
+                                                            <StackPanel Spacing="4" Margin="8,4">
+                                                                <Border Width="48" Height="48"
+                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <Border.Background>
+                                                                        <ImageBrush
+                                                                            async:ImageBrushLoader.Source="{Binding FaceUrl}"
+                                                                            Stretch="Uniform" />
+                                                                    </Border.Background>
+                                                                </Border>
+                                                                <TextBlock Text="{Binding UserName}"
+                                                                           FontSize="{StaticResource SmallFontSize}"
+                                                                           HorizontalAlignment="Center" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </TabStrip.ItemTemplate>
+                                                </TabStrip>
+
+                                                <!-- 玩家数据和成就 -->
+                                                <StackPanel Grid.Row="1" Spacing="16">
+                                                    <!-- 统计数据 -->
+                                                    <StackPanel Spacing="8">
+                                                        <TextBlock Text="Statistics"
+                                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                        <ItemsControl
+                                                            ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerStats}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel Orientation="Horizontal" />
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate
+                                                                    DataType="m:AssetWorldPlayerStatEntryModel">
+                                                                    <Border
+                                                                        Background="{StaticResource CardBackgroundBrush}"
+                                                                        CornerRadius="{StaticResource MediumCornerRadius}"
+                                                                        Padding="12,8"
+                                                                        Margin="0,0,8,8"
+                                                                        MinWidth="120">
+                                                                        <StackPanel Spacing="4">
+                                                                            <icons:PackIconLucide Kind="{Binding Icon}"
+                                                                                    Width="20" Height="20"
+                                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                                                    HorizontalAlignment="Left" />
+                                                                            <TextBlock Text="{Binding Name}"
+                                                                                    FontSize="{StaticResource SmallFontSize}"
+                                                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                            <TextBlock Text="{Binding Value}"
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+
+                                                    <!-- 成就（待定） -->
+                                                    <StackPanel Spacing="8" IsVisible="False">
+                                                        <TextBlock Text="Advancements"
+                                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                        <ScrollViewer MaxHeight="300">
+                                                            <ListBox
+                                                                ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerAdvancements}"
+                                                                SelectionMode="Single">
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate
+                                                                        DataType="m:AssetWorldPlayerAdvancementEntryModel">
+                                                                        <Grid ColumnDefinitions="Auto,*"
+                                                                              ColumnSpacing="8">
+                                                                            <Border Grid.Column="0" Width="16"
+                                                                                    Height="16"
+                                                                                    CornerRadius="8"
+                                                                                    Background="{Binding Completed}" />
+                                                                            <TextBlock Grid.Column="1"
+                                                                                    Text="{Binding Name}"
+                                                                                    FontSize="{StaticResource SmallFontSize}" />
+                                                                        </Grid>
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                        </ScrollViewer>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </controls:EmptyContainer>
+                                    </Expander>
+                                </StackPanel>
+                            </DataTemplate>
+                        </husk:PlaceholderPresenter.SourceTemplate>
+
+                        <!-- 空状态 -->
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
+                            <icons:PackIconLucide Kind="Globe"
+                                                  Height="32" Width="32" HorizontalAlignment="Center"
+                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock Text="No worlds found"
+                                       FontSize="{StaticResource LargeFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        </StackPanel>
+                    </husk:PlaceholderPresenter>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
         <!-- <TabItem Header="{x:Static lang:Resources.AssetKind_Server}" /> -->
     </TabControl>
 </controls:Subpage>
