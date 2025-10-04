@@ -251,6 +251,7 @@
 
                                                     <!-- 描述 -->
                                                     <TextBlock Text="{Binding Description}"
+                                                               MaxLines="1"
                                                                TextTrimming="CharacterEllipsis"
                                                                FontSize="{StaticResource SmallFontSize}"
                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -544,6 +545,7 @@
 
                                                 <!-- 描述 -->
                                                 <TextBlock Text="{Binding Description}"
+                                                           MaxLines="1"
                                                            TextTrimming="CharacterEllipsis"
                                                            FontSize="{StaticResource SmallFontSize}"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -809,6 +811,7 @@
 
                                                 <!-- 描述 -->
                                                 <TextBlock Text="{Binding Description}"
+                                                           MaxLines="1"
                                                            TextTrimming="CharacterEllipsis"
                                                            FontSize="{StaticResource SmallFontSize}"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -1161,19 +1164,18 @@
                     <TabStrip ItemsSource="{Binding Worlds}" SelectedItem="{Binding SelectedWorld,Mode=TwoWay}">
                         <TabStrip.ItemTemplate>
                             <DataTemplate DataType="m:AssetWorldModel">
-                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4">
-                                    <Border Grid.Column="0" Width="48" Height="48"
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                    <Border Grid.Column="0" Width="42" Height="42"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
                                         <Border.Background>
                                             <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                         </Border.Background>
                                     </Border>
-                                    <StackPanel Grid.Column="1" Spacing="4">
+                                    <StackPanel Grid.Column="1">
                                         <TextBlock Text="{Binding DisplayName}"
                                                    FontSize="{StaticResource LargeFontSize}"
                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   HorizontalAlignment="Center" />
+                                                   TextTrimming="CharacterEllipsis" />
                                         <TextBlock Text="{Binding LastPlayed}"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     </StackPanel>
@@ -1276,7 +1278,7 @@
                                         </StackPanel>
                                     </Border>
 
-                                    <!-- 数据包板块（可折叠） -->
+                                    <!-- 数据包板块 -->
                                     <Expander Header="Data Packs" IsExpanded="True">
                                         <controls:EmptyContainer
                                             IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
@@ -1329,6 +1331,7 @@
 
                                                                     <!-- 描述 -->
                                                                     <TextBlock Text="{Binding DescriptionText}"
+                                                                               MaxLines="1"
                                                                                TextTrimming="CharacterEllipsis"
                                                                                FontSize="{StaticResource SmallFontSize}"
                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
