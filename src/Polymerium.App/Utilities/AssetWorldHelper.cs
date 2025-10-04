@@ -84,7 +84,7 @@ public static class AssetWorldHelper
     /// <summary>
     ///     解析存档中的数据包列表
     /// </summary>
-    public static List<AssetWorldDataPackModel> ParseDataPacks(string worldPath)
+    public static IReadOnlyList<AssetWorldDataPackModel> ParseDataPacks(string worldPath)
     {
         var dataPacks = new List<AssetWorldDataPackModel>();
         var datapacksDir = Path.Combine(worldPath, "datapacks");
@@ -99,22 +99,20 @@ public static class AssetWorldHelper
         var enabledDataPacks = new HashSet<string>();
 
         // 扫描 datapacks 目录下的 zip 文件
-        foreach (var file in Directory.GetFiles(datapacksDir, "*.zip"))
-        {
-            var fileInfo = new FileInfo(file);
-            var fileName = fileInfo.Name;
-
-            // 使用 AssetDataPackHelper 解析数据包元数据
-            var metadata = AssetDataPackHelper.ParseMetadata(file);
-            var icon = AssetDataPackHelper.ExtractIcon(file) ?? AssetUriIndex.DirtImageBitmap;
-
-            // 获取显示名称（优先使用元数据中的描述，否则使用文件名）
-            var displayName = !string.IsNullOrEmpty(metadata.Description)
-                                  ? metadata.Description
-                                  : Path.GetFileNameWithoutExtension(fileName);
-
-            dataPacks.Add(new(displayName, fileName, icon, metadata.Description, metadata.PackFormat));
-        }
+        dataPacks.AddRange(from file in Directory.GetFiles(datapacksDir, "*.zip")
+                           let fileInfo = new FileInfo(file)
+                           let fileName = fileInfo.Name
+                           let metadata = AssetDataPackHelper.ParseMetadata(file)
+                           let icon = AssetDataPackHelper.ExtractIcon(file) ?? AssetUriIndex.DirtImageBitmap
+                           let displayName =
+                               !string.IsNullOrEmpty(metadata.Description)
+                                   ? metadata.Description
+                                   : Path.GetFileNameWithoutExtension(fileName)
+                           select new AssetWorldDataPackModel(displayName,
+                                                              fileName,
+                                                              icon,
+                                                              metadata.Description,
+                                                              metadata.PackFormat));
 
         return dataPacks;
     }
@@ -177,7 +175,9 @@ public static class AssetWorldHelper
     /// <summary>
     ///     解析存档中的玩家列表（只包含在 Polymerium 账号管理中的玩家）
     /// </summary>
-    public static List<AssetWorldPlayerModel> ParsePlayers(string worldPath, IEnumerable<AccountModel> managedAccounts)
+    public static IReadOnlyList<AssetWorldPlayerModel> ParsePlayers(
+        string worldPath,
+        IEnumerable<AccountModel> managedAccounts)
     {
         var players = new List<AssetWorldPlayerModel>();
 
@@ -315,35 +315,9 @@ public static class AssetWorldHelper
         if (uuid.Length == 32)
         {
             // 无连字符格式转换为带连字符格式
-            return
-                $"{uuid.Substring(0, 8)}-{uuid.Substring(8, 4)}-{uuid.Substring(12, 4)}-{uuid.Substring(16, 4)}-{uuid.Substring(20)}";
+            return $"{uuid[..8]}-{uuid[8..12]}-{uuid[12..16]}-{uuid[16..20]}-{uuid[20..]}";
         }
 
         return uuid;
-    }
-
-    /// <summary>
-    ///     将统计数据转换为展示用的条目列表
-    /// </summary>
-    public static List<AssetWorldPlayerStatEntryModel> ConvertStatsToEntries(AssetWorldPlayerStatsModel stats) =>
-        // 直接使用 Model 中的方法
-        stats.GetDisplayStats();
-
-    /// <summary>
-    ///     将成就数据转换为展示用的条目列表
-    /// </summary>
-    public static List<AssetWorldPlayerAdvancementEntryModel> ConvertAdvancementsToEntries(
-        AssetWorldPlayerAdvancementsModel advancements) =>
-        advancements
-           .Advancements
-           .Select(kvp => new AssetWorldPlayerAdvancementEntryModel(FormatAdvancementName(kvp.Key), kvp.Value))
-           .ToList();
-
-    private static string FormatAdvancementName(string key)
-    {
-        // 简单的格式化：移除命名空间，替换下划线为空格
-        var parts = key.Split(':');
-        var name = parts.Length > 1 ? parts[^1] : key;
-        return name.Replace('_', ' ').Replace('/', '>');
     }
 }
