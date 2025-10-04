@@ -1,5 +1,4 @@
 ﻿using Avalonia.Media.Imaging;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Resources = Polymerium.App.Properties.Resources;
 
@@ -15,23 +14,14 @@ public partial class AssetWorldDataPackModel : ModelBase
         string fileName,
         Bitmap icon,
         string? description,
-        int? packFormat,
-        bool isEnabled)
+        int? packFormat)
     {
         Name = name;
         FileName = fileName;
         Icon = icon;
         Description = description;
         PackFormat = packFormat;
-        IsEnabled = isEnabled;
     }
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial bool IsEnabled { get; set; }
-
-    #endregion
 
     #region Direct
 
