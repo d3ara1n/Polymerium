@@ -108,10 +108,6 @@ public partial class InstanceHomeViewModel(
     {
         _subscription?.Dispose();
         _timerSubscription?.Dispose();
-        foreach (var widget in PinnedWidgets)
-        {
-            widget.DeinitializeAsync();
-        }
 
         PinnedWidgets.Clear();
         return Task.CompletedTask;

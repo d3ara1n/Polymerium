@@ -310,7 +310,9 @@
                                 <husk:Card>
                                     <Grid RowDefinitions="Auto,*" RowSpacing="8">
                                         <husk:IconLabel Grid.Row="0" Icon="{Binding Icon}"
-                                                        Text="{Binding Title}" Spacing="8" />
+                                                        Text="{Binding Title}"
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Spacing="8" />
                                         <ContentControl Grid.Row="1" Content="{Binding}"
                                                         ContentTemplate="{Binding SlimTemplate}" />
                                     </Grid>

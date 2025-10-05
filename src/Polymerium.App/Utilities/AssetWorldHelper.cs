@@ -20,10 +20,7 @@ public static class AssetWorldHelper
     /// </summary>
     public static AssetWorldMetadataModel ParseMetadata(string worldPath)
     {
-        var metadata = new AssetWorldMetadataModel
-        {
-            LevelName = Path.GetFileName(worldPath)
-        };
+        var metadata = new AssetWorldMetadataModel { LevelName = Path.GetFileName(worldPath) };
 
         try
         {

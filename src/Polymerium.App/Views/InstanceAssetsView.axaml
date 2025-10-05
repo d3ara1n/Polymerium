@@ -1279,12 +1279,12 @@
                                     </Border>
 
                                     <!-- 数据包板块 -->
-                                    <Expander Header="Data Packs" IsExpanded="True">
+                                    <Expander Header="Data Packs" IsExpanded="True" Padding="0">
                                         <controls:EmptyContainer
                                             IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:False}}">
                                             <ScrollViewer MaxHeight="320">
-                                                <ItemsControl
-                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks,FallbackValue={x:Null}}">
+                                                <ItemsControl Margin="{StaticResource ExpanderContentMargin}"
+                                                              ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks,FallbackValue={x:Null}}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <StackPanel Spacing="8" />
@@ -1452,6 +1452,5 @@
                 </ScrollViewer>
             </Grid>
         </TabItem>
-        <!-- <TabItem Header="{x:Static lang:Resources.AssetKind_Server}" /> -->
     </TabControl>
 </controls:Subpage>
