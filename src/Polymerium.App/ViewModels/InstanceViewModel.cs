@@ -348,9 +348,7 @@ public partial class InstanceViewModel : ViewModelBase
         // Setup
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Assets
-        #if DEBUG
         new(typeof(InstanceAssetsView), PackIconLucideKind.SquareLibrary),
-        #endif
         // Widgets
         new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
         // Statistics

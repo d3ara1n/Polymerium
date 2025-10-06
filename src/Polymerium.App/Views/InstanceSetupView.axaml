@@ -225,13 +225,13 @@
                                             <StackPanel Spacing="8" MinWidth="320" MaxWidth="520" MaxHeight="360"
                                                         Margin="12">
                                                 <TextBlock
-                                                    Text="{x:Static lang:Resources.InstanceSetupView_ConditionLabelText}"
+                                                    Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     VerticalAlignment="Center" />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_StatusLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_StatusFilterText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column="1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
@@ -256,7 +256,7 @@
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_SourceLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_SourceFilterText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column="1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
@@ -281,7 +281,7 @@
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_TypeLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_TypeFilterText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column=" 1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
@@ -310,7 +310,7 @@
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_TagLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_TagFilterText}"
                                                                VerticalAlignment="Center"
                                                                FontSize="{StaticResource SmallFontSize}"
                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />

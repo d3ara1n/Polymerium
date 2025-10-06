@@ -528,10 +528,10 @@
     <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
         <value>Enter filter string...</value>
     </data>
-    <data name="InstanceSetupView_ConditionLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_FilterLabelText" xml:space="preserve">
         <value>Filter</value>
     </data>
-    <data name="InstanceSetupView_TagLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TagFilterText" xml:space="preserve">
         <value>Tags</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -567,10 +567,10 @@
     <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>Local</value>
     </data>
-    <data name="InstanceSetupView_SourceLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceFilterText" xml:space="preserve">
         <value>Source</value>
     </data>
-    <data name="InstanceSetupView_TypeLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TypeFilterText" xml:space="preserve">
         <value>Type</value>
     </data>
     <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
@@ -999,7 +999,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>World</value>
     </data>
-    <data name="InstanceSetupView_StatusLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_StatusFilterText" xml:space="preserve">
         <value>Status</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
@@ -1202,5 +1202,65 @@
     </data>
     <data name="AssetKind_DataPack" xml:space="preserve">
         <value>Data Packs</value>
+    </data>
+    <data name="InstanceAssetsView_FilterLabelText" xml:space="preserve">
+        <value>Filter</value>
+    </data>
+    <data name="InstanceAssetsView_LoaderFilterText" xml:space="preserve">
+        <value>Loader</value>
+    </data>
+    <data name="InstanceAssetsView_StatusFilterText" xml:space="preserve">
+        <value>Status</value>
+    </data>
+    <data name="InstanceAssetsView_SourceFilterText" xml:space="preserve">
+        <value>Source</value>
+    </data>
+    <data name="InstanceAssetsView_SourceLocalText" xml:space="preserve">
+        <value>Local</value>
+    </data>
+    <data name="InstanceAssetsView_SourceImportText" xml:space="preserve">
+        <value>Import</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarTitle" xml:space="preserve">
+        <value>This page shows physical mod files only</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarText" xml:space="preserve">
+        <value>External package references are managed separately and not displayed here.</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileNameLabelText" xml:space="preserve">
+        <value>File Name:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetModIdLabelText" xml:space="preserve">
+        <value>Mod Id:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLicenseLabelText" xml:space="preserve">
+        <value>License:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileSizeLabelText" xml:space="preserve">
+        <value>File Size:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLastModifiedLabelText" xml:space="preserve">
+        <value>Last Modified:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetStatusLabelText" xml:space="preserve">
+        <value>Status:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetVisitWebsiteButtonText" xml:space="preserve">
+        <value>Visit Website</value>
+    </data>
+    <data name="InstanceAssetsView_DetailsLabelText" xml:space="preserve">
+        <value>Details</value>
+    </data>
+    <data name="InstanceAssetsView_AssetPackFormatLabelText" xml:space="preserve">
+        <value>Pack Format:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetEmptyPrompt" xml:space="preserve">
+        <value>Select an item to view details</value>
+    </data>
+    <data name="InstanceAssetsView_DataPacksLabelText" xml:space="preserve">
+        <value>Data Packs</value>
+    </data>
+    <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
+        <value>Players</value>
     </data>
 </root>
