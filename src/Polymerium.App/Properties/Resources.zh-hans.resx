@@ -519,10 +519,10 @@
     <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
         <value>输入过滤字符串...</value>
     </data>
-    <data name="InstanceSetupView_ConditionLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_FilterLabelText" xml:space="preserve">
         <value>条件</value>
     </data>
-    <data name="InstanceSetupView_TagLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TagFilterText" xml:space="preserve">
         <value>标签</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -558,10 +558,10 @@
     <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>本地</value>
     </data>
-    <data name="InstanceSetupView_SourceLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceFilterText" xml:space="preserve">
         <value>来源</value>
     </data>
-    <data name="InstanceSetupView_TypeLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TypeFilterText" xml:space="preserve">
         <value>类型</value>
     </data>
     <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
@@ -990,7 +990,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>存档</value>
     </data>
-    <data name="InstanceSetupView_StatusLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_StatusFilterText" xml:space="preserve">
         <value>状态</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
@@ -1193,5 +1193,65 @@
     </data>
     <data name="AssetKind_DataPack" xml:space="preserve">
         <value>数据包</value>
+    </data>
+    <data name="InstanceAssetsView_FilterLabelText" xml:space="preserve">
+        <value>条件</value>
+    </data>
+    <data name="InstanceAssetsView_LoaderFilterText" xml:space="preserve">
+        <value>加载器</value>
+    </data>
+    <data name="InstanceAssetsView_SourceFilterText" xml:space="preserve">
+        <value>来源</value>
+    </data>
+    <data name="InstanceAssetsView_StatusFilterText" xml:space="preserve">
+        <value>状态</value>
+    </data>
+    <data name="InstanceAssetsView_SourceLocalText" xml:space="preserve">
+        <value>本地</value>
+    </data>
+    <data name="InstanceAssetsView_SourceImportText" xml:space="preserve">
+        <value>导入</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarTitle" xml:space="preserve">
+        <value>本页面只展示实体模组文件</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarText" xml:space="preserve">
+        <value>外部包引用需要在其他页面查看并管理。</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileNameLabelText" xml:space="preserve">
+        <value>文件名：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetModIdLabelText" xml:space="preserve">
+        <value>Mod Id：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLicenseLabelText" xml:space="preserve">
+        <value>许可：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileSizeLabelText" xml:space="preserve">
+        <value>文件大小：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLastModifiedLabelText" xml:space="preserve">
+        <value>最后修改：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetStatusLabelText" xml:space="preserve">
+        <value>状态：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetVisitWebsiteButtonText" xml:space="preserve">
+        <value>访问网站</value>
+    </data>
+    <data name="InstanceAssetsView_DetailsLabelText" xml:space="preserve">
+        <value>细节</value>
+    </data>
+    <data name="InstanceAssetsView_AssetPackFormatLabelText" xml:space="preserve">
+        <value>包格式：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetEmptyPrompt" xml:space="preserve">
+        <value>选择一个项目以查看详情</value>
+    </data>
+    <data name="InstanceAssetsView_DataPacksLabelText" xml:space="preserve">
+        <value>数据包</value>
+    </data>
+    <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
+        <value>玩家</value>
     </data>
 </root>
