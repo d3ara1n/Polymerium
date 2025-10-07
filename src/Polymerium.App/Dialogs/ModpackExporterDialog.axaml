@@ -5,37 +5,31 @@
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:local="clr-namespace:Polymerium.App.Dialogs"
              mc:Ignorable="d" Width="450" d:DesignHeight="600"
-             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog" Title="Packing cherry_picks">
+             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog" Title="Packing instance dialog"
+             IsPrimaryButtonVisible="True">
     <!-- 当确认键被按下时根据选中的格式决定默认文件名，然后提示用户SaveFileDialog -->
     <!-- 选择文件之后开始 Notification 读条，保存完成之后显示成功消息并附带 Open Folder 操作 -->
     <ScrollViewer>
         <StackPanel Spacing="24">
-            <TabStrip>
-                <TabStripItem IsEnabled="False">
-                    <StackPanel>
-                        <TextBlock Text="Tripack" FontSize="{StaticResource LargeFontSize}" />
-                    </StackPanel>
-                </TabStripItem>
-                <TabStripItem>
-                    <StackPanel>
-                        <TextBlock Text="Packwiz" FontSize="{StaticResource LargeFontSize}" />
-                    </StackPanel>
-                </TabStripItem>
-                <TabStripItem>
-                    <StackPanel>
-                        <TextBlock Text="CurseForge" FontSize="{StaticResource LargeFontSize}" />
-                    </StackPanel>
-                </TabStripItem>
-                <TabStripItem>
-                    <StackPanel>
-                        <TextBlock Text="Modrinth" FontSize="{StaticResource LargeFontSize}" />
-                    </StackPanel>
-                </TabStripItem>
-            </TabStrip>
+            <StackPanel Spacing="8">
+                <TextBlock Text="Format" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TabStrip
+                    ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels,Mode=OneWay,FallbackValue={x:Null}}"
+                    SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel,Mode=TwoWay,FallbackValue={x:Null}}">
+                    <TabStrip.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
+                        </DataTemplate>
+                    </TabStrip.ItemTemplate>
+                </TabStrip>
+            </StackPanel>
             <StackPanel Spacing="8">
                 <TextBlock Text="Name" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <TextBox Text="Cherry Picks" Watermark="Cherry Picks">
+                <TextBox
+                    Text="{Binding $parent[local:ModpackExporterDialog].NameOverride,Mode=TwoWay,FallbackValue={x:Null}}"
+                    Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal,FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
@@ -48,8 +42,9 @@
                     </TextBox.InnerLeftContent>
                 </TextBox>
                 <TextBlock Text="Author" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <!-- 取自默认 Account -->
-                <TextBox Text="Dearain" Watermark="Dearain">
+                <TextBox
+                    Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride,Mode=TwoWay,FallbackValue={x:Null}}"
+                    Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal,FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
@@ -57,6 +52,21 @@
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Kind="User" Margin="12,0" />
+                            <husk:Divider Orientation="Vertical" />
+                        </StackPanel>
+                    </TextBox.InnerLeftContent>
+                </TextBox>
+                <TextBlock Text="Version" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBox
+                    Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride,Mode=TwoWay,FallbackValue={x:Null}}"
+                    Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal,FallbackValue=Unknown}">
+                    <TextBox.InnerLeftContent>
+                        <StackPanel Orientation="Horizontal">
+                            <icons:PackIconLucide
+                                Height="{StaticResource MediumFontSize}"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="GitBranch" Margin="12,0" />
                             <husk:Divider Orientation="Vertical" />
                         </StackPanel>
                     </TextBox.InnerLeftContent>
@@ -80,16 +90,18 @@
                                     <TextBlock
                                         Text="Packages"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                    <TextBlock Text="114"
-                                               FontSize="{StaticResource LargeFontSize}" />
+                                    <TextBlock
+                                        Text="{Binding $parent[local:ModpackExporterDialog].PackageCount,FallbackValue=Unknown}"
+                                        FontSize="{StaticResource LargeFontSize}" />
                                 </StackPanel>
                             </Grid>
                             <husk:Divider Grid.Row="0" Grid.Column="1" Orientation="Vertical" />
                             <StackPanel Grid.Row="0" Grid.Column="2">
                                 <TextBlock Text="Mod Loader"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Text="None"
-                                           FontSize="{StaticResource LargeFontSize}" />
+                                <TextBlock
+                                    Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel,FallbackValue=Unknown}"
+                                    FontSize="{StaticResource LargeFontSize}" />
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
                                         Spacing="6">
@@ -97,7 +109,8 @@
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                     <Run Text="Override file being packed is located at" />
-                                    <HyperlinkButton>
+                                    <HyperlinkButton
+                                        Command="{Binding $parent[local:ModpackExporterDialog].OpenImportFolderCommand}">
                                         <TextBlock Text="./import" />
                                     </HyperlinkButton>
                                 </TextBlock>

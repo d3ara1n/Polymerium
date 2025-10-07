@@ -119,7 +119,7 @@ public partial class NetworkCheckerWidget : WidgetBase
             var httpClientFactory = Program.AppHost?.Services.GetService<IHttpClientFactory>();
             var httpClient = httpClientFactory?.CreateClient() ?? new HttpClient();
 
-            await NetworkCheckHelper.TestConnectionsAsync(Sites, httpClient, _cts.Token);
+            await NetworkCheckHelper.TestConnectionsAsync(Sites, httpClient, _cts?.Token ?? CancellationToken.None);
 
             HasTested = true;
             ButtonText = "Test Again";

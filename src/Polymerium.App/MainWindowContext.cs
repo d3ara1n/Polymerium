@@ -24,6 +24,7 @@ using Polymerium.App.Views;
 using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.Tasks;
+using Trident.Abstractions.Utilities;
 using Trident.Core.Exceptions;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
@@ -46,13 +47,16 @@ public partial class MainWindowContext : ObservableObject
         NavigationService navigationService,
         PersistenceService persistenceService,
         InstanceService instanceService,
-        OverlayService overlayService)
+        OverlayService overlayService,
+        ExporterAgent exporterAgent)
     {
+        _profileManager = profileManager;
         _notificationService = notificationService;
         _navigationService = navigationService;
         _persistenceService = persistenceService;
         _instanceService = instanceService;
         _overlayService = overlayService;
+        _exporterAgent = exporterAgent;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -94,6 +98,8 @@ public partial class MainWindowContext : ObservableObject
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
     private readonly OverlayService _overlayService;
+    private readonly ProfileManager _profileManager;
+    private readonly ExporterAgent _exporterAgent;
 
     #endregion
 
@@ -119,11 +125,83 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private void ExportInstance(string? key)
+    private async Task ExportInstance(string? key)
     {
-        if (key is not null)
+        if (key is not null && _profileManager.TryGetImmutable(key, out var profile))
         {
-            _overlayService.PopDialog(new ModpackExporterDialog());
+            var loaderLabel = "None";
+            if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader))
+            {
+                loaderLabel = LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version);
+            }
+
+            var user = string.Empty;
+            var account = _persistenceService.GetAccounts().FirstOrDefault(x => x.IsDefault);
+            if (account != null)
+            {
+                user = AccountHelper.ToCooked(account).Username;
+            }
+
+            var dialog = new ModpackExporterDialog
+            {
+                NameOriginal = profile.Name,
+                LoaderLabel = loaderLabel,
+                PackageCount = profile.Setup.Packages.Count,
+                AuthorOriginal = user,
+                VersionOriginal = "1.0.0",
+                Result = new ModpackExporterModel(key)
+            };
+
+
+            if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
+            {
+                var top = TopLevel.GetTopLevel(MainWindow.Instance);
+                if (top != null)
+                {
+                    var storage = top.StorageProvider;
+                    if (storage.CanOpen)
+                    {
+                        var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : profile.Name;
+                        var author = !string.IsNullOrEmpty(model.AuthorOverride) ? model.AuthorOverride : user;
+                        var version = !string.IsNullOrEmpty(model.VersionOverride) ? model.VersionOverride : "1.0.0";
+                        var storageItem = await storage.SaveFilePickerAsync(new()
+                        {
+                            SuggestedStartLocation =
+                                await storage
+                                   .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                                  .Downloads),
+                            SuggestedFileName = name,
+                            DefaultExtension = "zip"
+                        });
+                        if (storageItem is not null)
+                        {
+                            try
+                            {
+                                var notification = _notificationService.PopProgress("...", "Exporting...");
+                                var container = await _exporterAgent.ExportAsync(model.SelectedExporterLabel,
+                                                    key,
+                                                    name,
+                                                    author,
+                                                    version);
+                                notification.Report(33);
+                                await using var packed = await _exporterAgent.PackCompressedAsync(container);
+                                notification.Report(66);
+                                await using var stream = await storageItem.OpenWriteAsync();
+                                await packed.CopyToAsync(stream);
+                                notification.Report(100);
+                                await Task.Delay(TimeSpan.FromSeconds(1));
+                                notification.Dispose();
+                                var path = storageItem.TryGetLocalPath();
+                                _notificationService.PopMessage(path ?? "Unknown", "Export successfully");
+                            }
+                            catch (Exception ex)
+                            {
+                                _notificationService.PopMessage(ex, "Failed to export instance");
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
