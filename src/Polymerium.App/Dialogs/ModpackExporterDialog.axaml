@@ -6,15 +6,16 @@
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:local="clr-namespace:Polymerium.App.Dialogs"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" Width="450" d:DesignHeight="600"
-             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog" Title="Packing instance dialog"
+             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog"
+             Title="{x:Static lang:Resources.ModpackExporterDialog_Title}"
              IsPrimaryButtonVisible="True">
-    <!-- 当确认键被按下时根据选中的格式决定默认文件名，然后提示用户SaveFileDialog -->
-    <!-- 选择文件之后开始 Notification 读条，保存完成之后显示成功消息并附带 Open Folder 操作 -->
     <ScrollViewer>
         <StackPanel Spacing="24">
             <StackPanel Spacing="8">
-                <TextBlock Text="Format" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <TabStrip
                     ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels,Mode=OneWay,FallbackValue={x:Null}}"
                     SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel,Mode=TwoWay,FallbackValue={x:Null}}">
@@ -26,7 +27,8 @@
                 </TabStrip>
             </StackPanel>
             <StackPanel Spacing="8">
-                <TextBlock Text="Name" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <TextBox
                     Text="{Binding $parent[local:ModpackExporterDialog].NameOverride,Mode=TwoWay,FallbackValue={x:Null}}"
                     Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal,FallbackValue=Unknown}">
@@ -41,7 +43,8 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Text="Author" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <TextBox
                     Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride,Mode=TwoWay,FallbackValue={x:Null}}"
                     Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal,FallbackValue=Unknown}">
@@ -56,7 +59,8 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Text="Version" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <TextBox
                     Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride,Mode=TwoWay,FallbackValue={x:Null}}"
                     Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal,FallbackValue=Unknown}">
@@ -71,7 +75,8 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Text="Attachments" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsLabelText}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8">
@@ -88,7 +93,7 @@
                                 <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
                                 <StackPanel Grid.Column="1">
                                     <TextBlock
-                                        Text="Packages"
+                                        Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     <TextBlock
                                         Text="{Binding $parent[local:ModpackExporterDialog].PackageCount,FallbackValue=Unknown}"
@@ -97,7 +102,7 @@
                             </Grid>
                             <husk:Divider Grid.Row="0" Grid.Column="1" Orientation="Vertical" />
                             <StackPanel Grid.Row="0" Grid.Column="2">
-                                <TextBlock Text="Mod Loader"
+                                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock
                                     Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel,FallbackValue=Unknown}"
@@ -108,7 +113,7 @@
                                 <fi:SymbolIcon Symbol="Info" FontSize="{StaticResource MediumFontSize}"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="Override file being packed is located at" />
+                                    <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
                                     <HyperlinkButton
                                         Command="{Binding $parent[local:ModpackExporterDialog].OpenImportFolderCommand}">
                                         <TextBlock Text="./import" />
