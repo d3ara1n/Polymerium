@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
-using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
@@ -137,7 +136,7 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Debug() => overlayService.PopDialog(new ModpackExporterDialog());
+    private void Debug() { }
 
     #endregion
 }
