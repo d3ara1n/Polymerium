@@ -1263,4 +1263,31 @@
     <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
         <value>Players</value>
     </data>
+    <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="ModpackExporterDialog_AuthorLabelText" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="ModpackExporterDialog_Title" xml:space="preserve">
+        <value>Packing instance</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsLabelText" xml:space="preserve">
+        <value>Attachments</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
+        <value>Override file being packed is located at</value>
+    </data>
+    <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
+        <value>Version</value>
+    </data>
+    <data name="ModpackExporterDialog_FormatLabelText" xml:space="preserve">
+        <value>Format</value>
+    </data>
+    <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
+        <value>Mod Loader</value>
+    </data>
 </root>

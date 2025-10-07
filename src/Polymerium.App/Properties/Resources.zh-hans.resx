@@ -1254,4 +1254,31 @@
     <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
         <value>玩家</value>
     </data>
+    <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
+        <value>标题</value>
+    </data>
+    <data name="ModpackExporterDialog_AuthorLabelText" xml:space="preserve">
+        <value>作者</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsLabelText" xml:space="preserve">
+        <value>附件</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
+        <value>被一起打包的 Overrides 文件位于</value>
+    </data>
+    <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="ModpackExporterDialog_Title" xml:space="preserve">
+        <value>打包实例</value>
+    </data>
+    <data name="ModpackExporterDialog_FormatLabelText" xml:space="preserve">
+        <value>类型</value>
+    </data>
+    <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
+        <value>模组加载器</value>
+    </data>
+    <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
+        <value>包数量</value>
+    </data>
 </root>

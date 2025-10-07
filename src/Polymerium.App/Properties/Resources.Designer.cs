@@ -2877,6 +2877,87 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attachments.
+        /// </summary>
+        public static string ModpackExporterDialog_AttachmentsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AttachmentsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override file being packed is located at.
+        /// </summary>
+        public static string ModpackExporterDialog_AttachmentsPrompt {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AttachmentsPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string ModpackExporterDialog_AuthorLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AuthorLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format.
+        /// </summary>
+        public static string ModpackExporterDialog_FormatLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_FormatLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Loader.
+        /// </summary>
+        public static string ModpackExporterDialog_ModLoaderLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_ModLoaderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string ModpackExporterDialog_NameLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_NameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string ModpackExporterDialog_PackagesLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_PackagesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packing instance.
+        /// </summary>
+        public static string ModpackExporterDialog_Title {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string ModpackExporterDialog_VersionLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create instance.
         /// </summary>
         public static string NewInstanceView_CreateButtonText {
