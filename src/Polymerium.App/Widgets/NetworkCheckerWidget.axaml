@@ -37,7 +37,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="m:ConnectionTestSiteModel">
                             <Border BoxShadow="0 2 4 0 #3F000000"
-                                    Margin="2"
+                                    Margin="2" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                 <DockPanel>
                                     <!-- 延迟进度条 -->
@@ -57,8 +57,7 @@
 
                                     <!-- 内容区域 -->
                                     <Border Margin="8,4"
-                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
-                                            Background="{StaticResource OverlaySolidBackgroundBrush}">
+                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                                         <Grid ColumnDefinitions="*,Auto">
                                             <!-- 网站名称 -->
                                             <StackPanel Grid.Column="0"
