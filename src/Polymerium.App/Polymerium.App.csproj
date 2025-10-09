@@ -11,15 +11,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.3.6"/>
-        <PackageReference Include="Avalonia.Desktop" Version="11.3.6"/>
+        <PackageReference Include="Avalonia" Version="11.3.7"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.7"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.6"/>
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.7"/>
         <PackageReference Include="Avalonia.Svg" Version="11.3.0"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="CsvHelper" Version="33.1.0"/>
         <PackageReference Include="DynamicData" Version="9.4.1"/>
-        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.310"/>
+        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.311"/>
+        <PackageReference Include="fNbt" Version="1.0.0"/>
         <PackageReference Include="FreeSql.Provider.SqliteCore" Version="3.5.213"/>
         <PackageReference Include="GitVersion.MsBuild" Version="6.4.0">
             <PrivateAssets>all</PrivateAssets>
@@ -46,6 +47,7 @@
         <PackageReference Include="Semver" Version="3.0.0"/>
         <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.4.3"/>
         <PackageReference Include="HotAvalonia" Version="3.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Tomlyn" Version="0.19.0"/>
         <PackageReference Include="Velopack" Version="0.0.1298"/>
     </ItemGroup>
 

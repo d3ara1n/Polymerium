@@ -69,11 +69,11 @@
                             </ComboBox>
                         </DataTemplate>
                     </husk:LazyContainer.SourceTemplate>
-                    <husk:LazyContainer.BadContent>
+                    <husk:LazyContainer.FaultContent>
                         <ComboBox IsEnabled="False" SelectedIndex="0">
                             <ComboBoxItem Content="(Network unreachable)" />
                         </ComboBox>
-                    </husk:LazyContainer.BadContent>
+                    </husk:LazyContainer.FaultContent>
                 </husk:LazyContainer>
             </Grid>
         </husk:SwitchCase>

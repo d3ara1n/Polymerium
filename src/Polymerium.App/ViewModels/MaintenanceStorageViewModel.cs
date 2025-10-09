@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LiveChartsCore;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -29,16 +26,11 @@ public partial class MaintenanceStorageViewModel(
 
     #endregion
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
-    {
-        await Task.Run(Calculate, token);
-
-        await base.OnInitializeAsync(token);
-    }
+    protected override async Task OnInitializeAsync() => await Task.Run(CalculateAsync);
 
     #region Other
 
-    private void Calculate()
+    private Task CalculateAsync()
     {
         (PackageSize, PackageCount) = CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
         (LibrarySize, _) = CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
@@ -55,6 +47,7 @@ public partial class MaintenanceStorageViewModel(
 
         CacheSize = PackageSize + LibrarySize + AssetSize + RuntimeSize;
         TotalSize = CacheSize + InstanceSize;
+        return Task.CompletedTask;
     }
 
     private static (ulong, ulong) CalculateDirectorySize(string path)
@@ -105,7 +98,7 @@ public partial class MaintenanceStorageViewModel(
                 notificationService.PopMessage(ex, "Failed to purge cache");
             }
 
-            Calculate();
+            await CalculateAsync();
         }
     }
 
@@ -115,16 +108,13 @@ public partial class MaintenanceStorageViewModel(
         if (model != null)
         {
             navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
-                                                         typeof(InstanceStorageView)));
+                                                                            typeof(InstanceStorageView)));
         }
     }
 
     #endregion
 
     #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<ISeries> TotalSeries { get; set; }
 
     [ObservableProperty]
     public partial ulong TotalSize { get; set; }

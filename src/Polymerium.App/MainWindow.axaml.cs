@@ -55,8 +55,8 @@ public partial class MainWindow : AppWindow
         {
             0 =>
             [
-                WindowTransparencyLevel.AcrylicBlur,
                 WindowTransparencyLevel.Mica,
+                WindowTransparencyLevel.AcrylicBlur,
                 WindowTransparencyLevel.Blur,
                 WindowTransparencyLevel.None
             ],
@@ -88,6 +88,30 @@ public partial class MainWindow : AppWindow
         if (Application.Current is App { Theme: { } theme })
         {
             theme.Corner = corner;
+        }
+    }
+
+    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            e.IsValid = true;
+        }
+    }
+
+    private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            var file = e.Data.GetFiles()?.FirstOrDefault();
+            if (file != null)
+            {
+                var path = file.TryGetLocalPath();
+                if (path != null && DataContext is MainWindowContext context)
+                {
+                    context.Navigate(typeof(NewInstanceView), path);
+                }
+            }
         }
     }
 
@@ -167,28 +191,4 @@ public partial class MainWindow : AppWindow
     }
 
     #endregion
-
-    private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
-    {
-        if (e.Data.Contains(DataFormats.Files))
-        {
-            e.IsValid = true;
-        }
-    }
-
-    private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
-    {
-        if (e.Data.Contains(DataFormats.Files))
-        {
-            var file = e.Data.GetFiles()?.FirstOrDefault();
-            if (file != null)
-            {
-                var path = file.TryGetLocalPath();
-                if (path != null && DataContext is MainWindowContext context)
-                {
-                    context.Navigate(typeof(NewInstanceView), path);
-                }
-            }
-        }
-    }
 }

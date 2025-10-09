@@ -510,6 +510,60 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Packs.
+        /// </summary>
+        public static string AssetKind_DataPack {
+            get {
+                return ResourceManager.GetString("AssetKind_DataPack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mods.
+        /// </summary>
+        public static string AssetKind_Mod {
+            get {
+                return ResourceManager.GetString("AssetKind_Mod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource Packs.
+        /// </summary>
+        public static string AssetKind_ResourcePack {
+            get {
+                return ResourceManager.GetString("AssetKind_ResourcePack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves.
+        /// </summary>
+        public static string AssetKind_Save {
+            get {
+                return ResourceManager.GetString("AssetKind_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screenshots.
+        /// </summary>
+        public static string AssetKind_Screenshot {
+            get {
+                return ResourceManager.GetString("AssetKind_Screenshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servers.
+        /// </summary>
+        public static string AssetKind_Server {
+            get {
+                return ResourceManager.GetString("AssetKind_Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Building artifacts....
         /// </summary>
         public static string DeployStage_BuildArtifact {
@@ -1086,6 +1140,231 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active Days.
+        /// </summary>
+        public static string InstanceActivitiesView_ActiveDaysLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ActiveDaysLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string InstanceActivitiesView_ChangelogLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ChangelogLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session Count.
+        /// </summary>
+        public static string InstanceActivitiesView_SessionCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_SessionCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Hours.
+        /// </summary>
+        public static string InstanceActivitiesView_TotalHoursLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_TotalHoursLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Hours Rank.
+        /// </summary>
+        public static string InstanceActivitiesView_TotalHoursRankLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_TotalHoursRankLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select an item to view details.
+        /// </summary>
+        public static string InstanceAssetsView_AssetEmptyPrompt {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetEmptyPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Name:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetFileNameLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetFileNameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Size:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetFileSizeLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetFileSizeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Modified:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetLastModifiedLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetLastModifiedLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetLicenseLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetLicenseLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Id:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetModIdLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetModIdLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pack Format:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetPackFormatLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetPackFormatLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status:.
+        /// </summary>
+        public static string InstanceAssetsView_AssetStatusLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetStatusLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visit Website.
+        /// </summary>
+        public static string InstanceAssetsView_AssetVisitWebsiteButtonText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_AssetVisitWebsiteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Packs.
+        /// </summary>
+        public static string InstanceAssetsView_DataPacksLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_DataPacksLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string InstanceAssetsView_DetailsLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_DetailsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string InstanceAssetsView_FilterLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_FilterLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loader.
+        /// </summary>
+        public static string InstanceAssetsView_LoaderFilterText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_LoaderFilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External package references are managed separately and not displayed here..
+        /// </summary>
+        public static string InstanceAssetsView_ModInfoBarText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ModInfoBarText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This page shows physical mod files only.
+        /// </summary>
+        public static string InstanceAssetsView_ModInfoBarTitle {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ModInfoBarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string InstanceAssetsView_PlayersLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_PlayersLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string InstanceAssetsView_SourceFilterText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_SourceFilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string InstanceAssetsView_SourceImportText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_SourceImportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local.
+        /// </summary>
+        public static string InstanceAssetsView_SourceLocalText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_SourceLocalText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string InstanceAssetsView_StatusFilterText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_StatusFilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSTALLING.
         /// </summary>
         public static string InstanceEntryButton_InstallTagText {
@@ -1374,11 +1653,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Original.
+        ///   Looks up a localized string similar to Import.
         /// </summary>
-        public static string InstancePackageButton_OriginalTagText {
+        public static string InstancePackageButton_ImportTagText {
             get {
-                return ResourceManager.GetString("InstancePackageButton_OriginalTagText", resourceCulture);
+                return ResourceManager.GetString("InstancePackageButton_ImportTagText", resourceCulture);
             }
         }
         
@@ -1725,6 +2004,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string InstancePropertiesView_QuickConnectAddressLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_QuickConnectAddressLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect At Startup.
+        /// </summary>
+        public static string InstancePropertiesView_QuickConnectLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_QuickConnectLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string InstancePropertiesView_RemoveButtonText {
@@ -1941,15 +2238,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filter.
-        /// </summary>
-        public static string InstanceSetupView_ConditionLabelText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_ConditionLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Dependency Graph.
         /// </summary>
         public static string InstanceSetupView_DependencyGraphMenuText {
@@ -1977,6 +2265,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string InstanceSetupView_FilterLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_FilterLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get More.
         /// </summary>
         public static string InstanceSetupView_GetMoreButtonText {
@@ -2000,15 +2297,6 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_LoaderLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_LoaderLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading packages information....
-        /// </summary>
-        public static string InstanceSetupView_LoadingPackageLabelText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_LoadingPackageLabelText", resourceCulture);
             }
         }
         
@@ -2085,6 +2373,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refreshing....
+        /// </summary>
+        public static string InstanceSetupView_RefreshingLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_RefreshingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string InstanceSetupView_RemoveMenuText {
@@ -2105,9 +2402,18 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Source.
         /// </summary>
-        public static string InstanceSetupView_SourceLabelText {
+        public static string InstanceSetupView_SourceFilterText {
             get {
-                return ResourceManager.GetString("InstanceSetupView_SourceLabelText", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupView_SourceFilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string InstanceSetupView_SourceImportText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_SourceImportText", resourceCulture);
             }
         }
         
@@ -2121,20 +2427,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Original.
-        /// </summary>
-        public static string InstanceSetupView_SourceOriginalText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_SourceOriginalText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
-        public static string InstanceSetupView_StatusLabelText {
+        public static string InstanceSetupView_StatusFilterText {
             get {
-                return ResourceManager.GetString("InstanceSetupView_StatusLabelText", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupView_StatusFilterText", resourceCulture);
             }
         }
         
@@ -2150,27 +2447,18 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
-        public static string InstanceSetupView_TagLabelText {
+        public static string InstanceSetupView_TagFilterText {
             get {
-                return ResourceManager.GetString("InstanceSetupView_TagLabelText", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupView_TagFilterText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
-        public static string InstanceSetupView_TypeLabelText {
+        public static string InstanceSetupView_TypeFilterText {
             get {
-                return ResourceManager.GetString("InstanceSetupView_TypeLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updating....
-        /// </summary>
-        public static string InstanceSetupView_UpdatingLabelText {
-            get {
-                return ResourceManager.GetString("InstanceSetupView_UpdatingLabelText", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupView_TypeFilterText", resourceCulture);
             }
         }
         
@@ -2297,6 +2585,15 @@ namespace Polymerium.App.Properties {
         public static string MainWindow_DeployMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_DeployMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Modpack.
+        /// </summary>
+        public static string MainWindow_ExportModpackMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_ExportModpackMenuText", resourceCulture);
             }
         }
         
@@ -2576,6 +2873,87 @@ namespace Polymerium.App.Properties {
         public static string MarketplaceSearchView_Title {
             get {
                 return ResourceManager.GetString("MarketplaceSearchView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attachments.
+        /// </summary>
+        public static string ModpackExporterDialog_AttachmentsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AttachmentsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override file being packed is located at.
+        /// </summary>
+        public static string ModpackExporterDialog_AttachmentsPrompt {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AttachmentsPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string ModpackExporterDialog_AuthorLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AuthorLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format.
+        /// </summary>
+        public static string ModpackExporterDialog_FormatLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_FormatLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Loader.
+        /// </summary>
+        public static string ModpackExporterDialog_ModLoaderLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_ModLoaderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string ModpackExporterDialog_NameLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_NameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string ModpackExporterDialog_PackagesLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_PackagesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packing instance.
+        /// </summary>
+        public static string ModpackExporterDialog_Title {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string ModpackExporterDialog_VersionLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_VersionLabelText", resourceCulture);
             }
         }
         

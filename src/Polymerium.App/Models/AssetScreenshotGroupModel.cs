@@ -4,11 +4,11 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class ScreenshotGroupModel(DateTimeOffset date) : ModelBase
+public class AssetScreenshotGroupModel(DateTimeOffset date) : ModelBase
 {
     #region Reactive
 
-    public ObservableCollection<ScreenshotModel> Screenshots { get; } = [];
+    public ObservableCollection<AssetScreenshotModel> Screenshots { get; } = [];
 
     #endregion
 

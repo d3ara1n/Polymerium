@@ -1,6 +1,9 @@
 using System;
+using Avalonia;
 using Avalonia.Data.Converters;
+using Avalonia.Media;
 using Huskui.Avalonia.Converters;
+using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Core.Igniters;
@@ -84,5 +87,36 @@ public static class InternalConverters
     {
         ulong l => (double)l / 1024 / 1024 / 1024,
         _ => v
+    });
+
+    public static IMultiValueConverter LatencyToColorBrush { get; } = new RelayMultiConverter((values, _, _) =>
+    {
+        if (values is [double latency, ConnectionTestStatus status])
+        {
+            return status switch
+            {
+                // 不可用: 红色 (Danger)
+                ConnectionTestStatus.Failed => Brushes.Red,
+                ConnectionTestStatus.Success => latency switch
+                {
+                    // 根据延迟返回不同颜色
+                    // < 1000ms: 绿色 (Success)
+                    // 100-300ms: 黄色 (Warning)
+                    < 1000 => Application.Current?.TryGetResource("ControlSuccessBackgroundBrush",
+                                                                  null,
+                                                                  out var resource)
+                           == true
+                                  ? resource as SolidColorBrush
+                                  : Brushes.Green,
+                    _ => Application.Current?.TryGetResource("ControlWarningBackgroundBrush", null, out var resource)
+                      == true
+                             ? resource as SolidColorBrush
+                             : Brushes.Orange
+                },
+                _ => Brushes.Gray
+            };
+        }
+
+        return Brushes.Gray;
     });
 }

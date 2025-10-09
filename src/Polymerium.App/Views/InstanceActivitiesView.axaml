@@ -23,21 +23,38 @@
                         CornerRadius="{StaticResource MediumCornerRadius}"
                         BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="2,2,2,6">
                     <StackPanel VerticalAlignment="Center" Spacing="8">
-                        <TextBlock Text="Active Days" HorizontalAlignment="Center"
+                        <TextBlock Text="{x:Static lang:Resources.InstanceActivitiesView_TotalHoursRankLabelText}"
+                                   HorizontalAlignment="Center"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <Border Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                 HorizontalAlignment="Center" Padding="12,4"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                            <TextBlock Text="#1"
+                            <TextBlock Text="{Binding TotalPlayTimeRank,StringFormat={}#{0},FallbackValue=#1}"
                                        FontSize="{StaticResource ExtraLargeFontSize}"
                                        Foreground="{StaticResource FlyoutBackgroundBrush}" />
                         </Border>
                     </StackPanel>
                 </Border>
-                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="12">
-                    <TextBlock Text="Total Hours" />
-                    <TextBlock Grid.Column="1" Text="{Binding TotalPlayTime,FallbackValue=128 hrs}"
-                               FontSize="{StaticResource ExtraLargeFontSize}" />
+                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" Margin="12">
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="{x:Static lang:Resources.InstanceActivitiesView_SessionCountLabelText}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SessionCount,FallbackValue=114}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                               HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="{x:Static lang:Resources.InstanceActivitiesView_ActiveDaysLabelText}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ActiveDays,FallbackValue=514}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                               HorizontalAlignment="Right" />
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="{x:Static lang:Resources.InstanceActivitiesView_TotalHoursLabelText}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1"
+                               Text="{Binding TotalHours,StringFormat={}{0:0.0},FallbackValue=1919.8}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                               HorizontalAlignment="Right" />
                 </Grid>
             </Grid>
             <husk:Card Grid.Column="1">
@@ -51,7 +68,8 @@
                 <DockPanel>
                     <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto"
                           Margin="{Binding Source={StaticResource CardContentMargin},Converter={x:Static husk:ThicknessConverters.WithoutBottom}}">
-                        <TextBlock Grid.Column="0" Text="Changelog"
+                        <TextBlock Grid.Column="0"
+                                   Text="{x:Static lang:Resources.InstanceActivitiesView_ChangelogLabelText}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}"
                                    FontSize="{StaticResource LargeFontSize}" />
                         <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}"

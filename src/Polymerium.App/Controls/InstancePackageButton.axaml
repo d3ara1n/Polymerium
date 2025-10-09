@@ -23,7 +23,7 @@
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
                 <husk:Card Name="Background" Height="68" Background="{StaticResource LayerBackgroundBrush}"
-                           CornerRadius="{StaticResource MediumCornerRadius}">
+                           CornerRadius="{StaticResource MediumCornerRadius}" Padding="0">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
                             <Binding Path="IsEnabled" Mode="OneWay" />
@@ -62,7 +62,8 @@
                         <husk:PlaceholderPresenter Source="{Binding Info}">
                             <husk:PlaceholderPresenter.SourceTemplate>
                                 <DataTemplate DataType="m:InstancePackageInfoModel">
-                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*" ColumnSpacing="8">
+                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*" ColumnSpacing="8"
+                                          Margin="{StaticResource CardContentMargin}">
                                         <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
                                                 CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
                                                 Width="{Binding $self.Bounds.Height}">
@@ -75,8 +76,8 @@
                                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
                                                           Classes="Primary" IsVisible="{Binding Owner.IsLocked}">
-                                                    <TextBlock
-                                                        Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
+                                                    <husk:IconLabel Icon="LockClosed"
+                                                                    Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <TextBlock
@@ -148,7 +149,9 @@
                             </husk:PlaceholderPresenter.SourceTemplate>
                             <husk:PlaceholderPresenter.Placeholder>
                                 <husk:SkeletonContainer
-                                    IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}" />
+                                    IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
+                                    IsAnimated="{TemplateBinding IsRefreshing}"
+                                    CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}" />
                             </husk:PlaceholderPresenter.Placeholder>
                         </husk:PlaceholderPresenter>
                     </Panel>
@@ -176,7 +179,7 @@
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
                 <husk:Card Name="Background" Background="{StaticResource LayerBackgroundBrush}"
-                           CornerRadius="{StaticResource MediumCornerRadius}">
+                           CornerRadius="{StaticResource MediumCornerRadius}" Padding="0">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
                             <Binding Path="IsEnabled" Mode="OneWay" />
@@ -197,7 +200,7 @@
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate x:DataType="m:InstancePackageInfoModel">
                                 <Border CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
-                                        Width="64" Height="64">
+                                        Width="64" Height="64" Margin="{StaticResource CardContentMargin}">
                                     <Border.Background>
                                         <ImageBrush Source="{Binding Thumbnail}" />
                                     </Border.Background>
@@ -206,7 +209,9 @@
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:PlaceholderPresenter.Placeholder>
                             <husk:SkeletonContainer
-                                IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}" />
+                                IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
+                                IsAnimated="{TemplateBinding IsRefreshing}"
+                                CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}" />
                         </husk:PlaceholderPresenter.Placeholder>
                     </husk:PlaceholderPresenter>
                 </husk:Card>

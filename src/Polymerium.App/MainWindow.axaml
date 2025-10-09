@@ -12,6 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     ExtendClientAreaChromeHints="NoChrome"
     ExtendClientAreaToDecorationsHint="True"
     Title="{x:Static local:Program.Brand}"
@@ -81,10 +82,7 @@
                             x:Name="MinimizeButton"
                             Padding="10"
                             Click="MinimizeButton_OnClick">
-                            <icons:PackIconLucide
-                                Width="10"
-                                Height="10"
-                                Kind="Minus" />
+                            <fi:SymbolIcon Symbol="Subtract" FontSize="10" />
                         </Button>
                         <Button
                             x:Name="ToggleMaximizeButton"
@@ -93,16 +91,10 @@
                             <husk:SwitchPresenter Value="{Binding $parent[husk:AppWindow].IsMaximized,Mode=OneWay}"
                                                   TargetType="x:Boolean">
                                 <husk:SwitchCase Value="True">
-                                    <icons:PackIconLucide
-                                        Width="10"
-                                        Height="10"
-                                        Kind="SquareSquare" />
+                                    <fi:SymbolIcon Symbol="SquareMultiple" FontSize="10" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="False">
-                                    <icons:PackIconLucide
-                                        Width="10"
-                                        Height="10"
-                                        Kind="Square" />
+                                    <fi:SymbolIcon Symbol="Square" FontSize="10" />
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
                         </Button>
@@ -110,10 +102,7 @@
                             x:Name="CloseButton"
                             Padding="10"
                             Click="CloseButton_OnClick">
-                            <icons:PackIconLucide
-                                Width="10"
-                                Height="10"
-                                Kind="X" />
+                            <fi:SymbolIcon Symbol="Dismiss" FontSize="10" />
                         </Button>
                     </husk:ButtonGroup>
                 </StackPanel>
@@ -167,7 +156,7 @@
                     <icons:PackIconLucide
                         Width="18"
                         Height="18"
-                        Kind="PackagePlus" />
+                        Kind="SquarePlus" />
                 </Button>
                 <Button
                     Grid.Row="1"
@@ -257,6 +246,11 @@
                                                         Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand,FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}" />
                                                     <MenuItem Header="-" />
+                                                    <MenuItem
+                                                        Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
+                                                        Icon="{fie:SymbolIcon Symbol=FolderZip,FontSize={StaticResource MediumFontSize}}"
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ExportInstanceCommand,FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}" />
                                                     <MenuItem
                                                         Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"

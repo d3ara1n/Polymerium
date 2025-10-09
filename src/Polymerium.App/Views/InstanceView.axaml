@@ -8,6 +8,7 @@
                      xmlns:m="using:Polymerium.App.Models"
                      xmlns:controls="using:Polymerium.App.Controls"
                      xmlns:trident="clr-namespace:Trident.Core;assembly=Trident.Core"
+                     xmlns:app="clr-namespace:Polymerium.App"
                      mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
                      Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"
                      Context="{Binding Context,Mode=OneWay}"
@@ -111,14 +112,14 @@
                     </StackPanel>
                 </Panel>
             </husk:DropContainer.Overlay>
-            <Grid ColumnDefinitions="Auto,0,*">
+            <Grid ColumnDefinitions="Auto,*">
                 <Border Grid.Column="0" Background="{StaticResource LayerBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
-                    <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,12,Auto,12,Auto">
+                    <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="12">
                         <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
                             <icons:PackIconLucide Kind="ArrowLeft" />
                         </Button>
-                        <ListBox x:Name="EntryBox" Grid.Row="2" SelectionMode="Single"
+                        <ListBox x:Name="EntryBox" Grid.Row="1" SelectionMode="Single"
                                  ItemsSource="{Binding PageEntries}"
                                  SelectedValue="{Binding SelectedPage}"
                                  Padding="0" SelectionChanged="EntryBox_OnSelectionChanged"
@@ -193,24 +194,44 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>
-                        <Button Grid.Row="6" ToolTip.Tip="Import asset from file"
-                                Command="{Binding ImportFromFileCommand}"
-                                Margin="12,0">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                    <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                             ConverterParameter="Updating" />
-                                    <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                             ConverterParameter="Deploying" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
-                            <icons:PackIconLucide Kind="Import" />
-                        </Button>
-                        <Button Grid.Row="8" ToolTip.Tip="Open instance folder" Command="{Binding OpenFolderCommand}"
-                                Margin="12,0">
-                            <icons:PackIconLucide Kind="Folder" />
-                        </Button>
-                        <Border Grid.Row="10" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
+                        <StackPanel Grid.Row="2" Spacing="2" Margin="12,0">
+                            <Button ToolTip.Tip="Import asset from file"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
+                                    Command="{Binding ImportFromFileCommand}">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                                 ConverterParameter="Updating" />
+                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                                 ConverterParameter="Deploying" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                                <icons:PackIconLucide Kind="FilePlus" Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}" />
+                            </Button>
+                            <Button ToolTip.Tip="Export modpack to file"
+                                    CornerRadius="0"
+                                    Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand,FallbackValue={x:Null}}"
+                                    CommandParameter="{Binding Basic.Key}">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                                 ConverterParameter="Updating" />
+                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                                 ConverterParameter="Deploying" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                                <icons:PackIconLucide Kind="FolderArchive" Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}" />
+                            </Button>
+                            <Button ToolTip.Tip="Open instance folder"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                    Command="{Binding OpenFolderCommand}">
+                                <icons:PackIconLucide Kind="FolderOpen" Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
+                        <Border Grid.Row="3" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
                                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
                                 Height="{Binding $self.Bounds.Width}"
                                 BackgroundSizing="InnerBorderEdge">
@@ -220,7 +241,7 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Panel Grid.Column="2">
+                <Panel Grid.Column="1">
                     <husk:Frame x:Name="Frame" />
                 </Panel>
             </Grid>

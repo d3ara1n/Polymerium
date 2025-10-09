@@ -167,6 +167,7 @@ public class App : Application
 
                 if (viewModel is IPageModel pageModel)
                 {
+                    pageModel.PageToken = page.LifetimeToken;
                     page.Model = pageModel;
                 }
             }

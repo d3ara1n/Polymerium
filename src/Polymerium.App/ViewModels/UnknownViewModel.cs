@@ -1,11 +1,9 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
-using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
@@ -21,9 +19,9 @@ public partial class UnknownViewModel(
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        await Task.Delay(TimeSpan.FromSeconds(7), token);
+        await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
 
         if (Application.Current is { PlatformSettings: not null })
         {
@@ -138,7 +136,7 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Debug() => overlayService.PopDialog(new ModpackExporterDialog());
+    private void Debug() { }
 
     #endregion
 }

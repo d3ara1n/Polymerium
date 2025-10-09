@@ -25,35 +25,27 @@ public class LaunchBar : TemplatedControl
                                                               o => o.DashboardCommand,
                                                               (o, v) => o.DashboardCommand = v);
 
-    private ICommand? _abortCommand;
-
-    private ICommand? _dashboardCommand;
-
-    private ICommand? _playCommand;
-
-    private InstanceState _state;
-
     public InstanceState State
     {
-        get => _state;
-        set => SetAndRaise(StateProperty, ref _state, value);
+        get;
+        set => SetAndRaise(StateProperty, ref field, value);
     }
 
     public ICommand? PlayCommand
     {
-        get => _playCommand;
-        set => SetAndRaise(PlayCommandProperty, ref _playCommand, value);
+        get;
+        set => SetAndRaise(PlayCommandProperty, ref field, value);
     }
 
     public ICommand? AbortCommand
     {
-        get => _abortCommand;
-        set => SetAndRaise(AbortCommandProperty, ref _abortCommand, value);
+        get;
+        set => SetAndRaise(AbortCommandProperty, ref field, value);
     }
 
     public ICommand? DashboardCommand
     {
-        get => _dashboardCommand;
-        set => SetAndRaise(DashboardCommandProperty, ref _dashboardCommand, value);
+        get;
+        set => SetAndRaise(DashboardCommandProperty, ref field, value);
     }
 }
