@@ -13,7 +13,7 @@
     <ScrollViewer>
         <Grid RowSpacing="24" RowDefinitions="Auto,Auto,Auto,Auto" Margin="24">
 
-            <!-- Header Section - Compact -->
+            <!-- Header Section -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
                     <Image Source="/Assets/Icons/Ghost.png"
@@ -23,10 +23,9 @@
                     <StackPanel VerticalAlignment="Center" Spacing="2">
                         <TextBlock Text="Portal"
                                    FontSize="24"
-                                   FontWeight="SemiBold" />
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Text="Quick access to your gaming world"
-                                   FontSize="12"
-                                   Opacity="0.6" />
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -34,23 +33,20 @@
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                     <StackPanel Spacing="2">
                         <TextBlock Text="5"
-                                   FontSize="20"
-                                   FontWeight="SemiBold"
+                                   FontSize="{StaticResource ExtraLargeFontSize}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
                                    HorizontalAlignment="Center" />
                         <TextBlock Text="Instances"
-                                   FontSize="11"
-                                   Opacity="0.6"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
-                    <Border Width="1" Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
                     <StackPanel Spacing="2">
                         <TextBlock Text="2"
-                                   FontSize="20"
-                                   FontWeight="SemiBold"
+                                   FontSize="{StaticResource ExtraLargeFontSize}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
                                    HorizontalAlignment="Center" />
                         <TextBlock Text="Accounts"
-                                   FontSize="11"
-                                   Opacity="0.6"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
                 </StackPanel>
