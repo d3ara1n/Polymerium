@@ -103,20 +103,20 @@ game-changing benefits:
 
 ##### Windows 11
 
-```sh
+```
 Settings → System → For developers → Developer Mode
 ```
 
 ##### Windows 10
 
-```sh
+```
 Settings → Update & Security → For developers → Developer Mode
 ```
 
 ##### Windows 7/8
 
-```sh
-Upgrade to Windows 10+ first 😉
+```
+Upgrade to Windows 10+ first 💥
 ```
 
 ### 📥 Installation
@@ -168,7 +168,7 @@ Polymerium/
 
 ### 🔨 Building from Source
 
-```bash
+```sh
 # Clone with submodules
 git clone --recursive https://github.com/d3ara1n/Polymerium.git
 cd Polymerium
@@ -182,7 +182,7 @@ dotnet build
 
 ### 🛠️ Development Commands
 
-```powershell
+```sh
 # Development mode
 ./Development.ps1
 
