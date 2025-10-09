@@ -68,13 +68,13 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Nested type: Activity
 
-    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, bool dieInPeace)
+    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, string accountId, bool dieInPeace)
     {
         public string Key { get; set; } = key;
 
         public DateTime Begin { get; set; } = begin.DateTime;
         public DateTime End { get; set; } = end.DateTime;
-
+        public string AccountId { get; set; } = accountId;
         public bool DieInPeace { get; set; } = dieInPeace;
     }
 
@@ -257,17 +257,4 @@ public class PersistenceService(IFreeSql freeSql)
     }
 
     #endregion
-
-    // public class Preference
-    // {
-    //     public const string BEHAVIOR_DEPLOY_METHOD = "behavior.deploy.method";
-    //     public const string BEHAVIOR_DEPLOY_FASTMODE = "behavior.deploy.fastmode";
-    //     public const string BEHAVIOR_RESOLVE_DEPENDENCY = "behavior.resolve.dependency";
-    //
-    //     public string Key { get; set; }
-    //     public string Id { get; set; }
-    //     public string? String { get; set; }
-    //     public bool? Boolean { get; set; }
-    //     public int? Integer { get; set; }
-    // }
 }
