@@ -273,7 +273,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstancePropertiesView)));
+                                                          typeof(InstancePropertiesView)));
         }
     }
 
@@ -283,7 +283,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstanceSetupView)));
+                                                          typeof(InstanceSetupView)));
         }
     }
 
@@ -639,7 +639,11 @@ public partial class MainWindowContext : ObservableObject
                             _notificationService.PopMessage(e.FailureReason, e.Key);
                         }
                     });
-                    _persistenceService.AppendActivity(new(e.Key, e.StartedAt, DateTimeOffset.Now, false));
+                    _persistenceService.AppendActivity(new(e.Key,
+                                                           e.StartedAt,
+                                                           DateTimeOffset.Now,
+                                                           e.Account?.Uuid ?? string.Empty,
+                                                           false));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -650,7 +654,11 @@ public partial class MainWindowContext : ObservableObject
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });
-                    _persistenceService.AppendActivity(new(e.Key, e.StartedAt, DateTimeOffset.Now, true));
+                    _persistenceService.AppendActivity(new(e.Key,
+                                                           e.StartedAt,
+                                                           DateTimeOffset.Now,
+                                                           e.Account?.Uuid ?? string.Empty,
+                                                           true));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

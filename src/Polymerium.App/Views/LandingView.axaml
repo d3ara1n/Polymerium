@@ -56,71 +56,77 @@
             <StackPanel Grid.Row="1" Spacing="12">
                 <TextBlock Text="Continue Playing"
                            FontSize="16"
-                           FontWeight="SemiBold" />
+                           FontWeight="{StaticResource ControlStrongFontWeight}" />
 
-                <husk:Card Padding="0">
-                    <Button Theme="{StaticResource GhostButtonTheme}"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Padding="0">
-                        <Grid ColumnDefinitions="Auto,*,Auto" Height="120">
-                            <!-- Screenshot/Thumbnail -->
-                            <Border Grid.Column="0"
-                                    CornerRadius="{StaticResource MediumCornerRadius}">
-                                <Panel>
-                                    <Image Source="/Assets/Images/Placeholders/Dirt.png"
-                                           Stretch="UniformToFill" />
-                                    <Border Background="#80000000"
-                                            CornerRadius="{StaticResource MediumCornerRadius}">
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
-                                            <icons:PackIconLucide Kind="Play"
-                                                                  Width="32"
-                                                                  Height="32"
-                                                                  Foreground="White" />
-                                            <TextBlock Text="Continue"
-                                                       Foreground="White"
-                                                       FontSize="12"
-                                                       FontWeight="SemiBold" />
-                                        </StackPanel>
-                                    </Border>
-                                </Panel>
-                            </Border>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <husk:Card Grid.Column="0" Padding="0">
+                        <Button Theme="{StaticResource GhostButtonTheme}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Padding="0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" Height="120">
+                                <!-- Screenshot/Thumbnail -->
+                                <Border Grid.Column="0"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Panel>
+                                        <Image Source="/Assets/Images/Placeholders/Dirt.png"
+                                               Stretch="UniformToFill" />
+                                        <Border Background="#80000000"
+                                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                        Spacing="8">
+                                                <icons:PackIconLucide Kind="Play"
+                                                                      Width="32"
+                                                                      Height="32"
+                                                                      Foreground="White" />
+                                                <TextBlock Text="Continue"
+                                                           Foreground="White"
+                                                           FontSize="12"
+                                                           FontWeight="SemiBold" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Panel>
+                                </Border>
 
-                            <!-- Instance Info -->
-                            <StackPanel Grid.Column="1" Margin="16,12" Spacing="8" VerticalAlignment="Center">
-                                <TextBlock Text="All the Mods 10"
-                                           FontSize="18"
-                                           FontWeight="SemiBold"
-                                           TextTrimming="CharacterEllipsis" />
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <husk:Tag Content="1.21.1" Padding="6,2" />
-                                    <husk:Tag Content="NeoForge" Padding="6,2" />
+                                <!-- Instance Info -->
+                                <StackPanel Grid.Column="1" Margin="16,12" Spacing="8" VerticalAlignment="Center">
+                                    <TextBlock Text="All the Mods 10"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <husk:Tag Content="1.21.1" Padding="6,2" />
+                                        <husk:Tag Content="NeoForge" Padding="6,2" />
+                                    </StackPanel>
+                                    <TextBlock Text="Last played 2 hours ago"
+                                               FontSize="12"
+                                               Opacity="0.6" />
                                 </StackPanel>
-                                <TextBlock Text="Last played 2 hours ago"
-                                           FontSize="12"
-                                           Opacity="0.6" />
-                            </StackPanel>
 
-                            <!-- Quick Actions -->
-                            <StackPanel Grid.Column="2" Margin="12" Spacing="8" VerticalAlignment="Center">
-                                <Button Theme="{StaticResource OutlineButtonTheme}"
-                                        Width="36"
-                                        Height="36"
-                                        Padding="0"
-                                        ToolTip.Tip="View Instance">
-                                    <icons:PackIconLucide Kind="Eye" Width="16" Height="16" />
-                                </Button>
-                                <Button Theme="{StaticResource OutlineButtonTheme}"
-                                        Width="36"
-                                        Height="36"
-                                        Padding="0"
-                                        ToolTip.Tip="Open Folder">
-                                    <icons:PackIconLucide Kind="FolderOpen" Width="16" Height="16" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </Button>
-                </husk:Card>
+                                <!-- Quick Actions -->
+                                <StackPanel Grid.Column="2" Margin="12" Spacing="8" VerticalAlignment="Center">
+                                    <Button Theme="{StaticResource OutlineButtonTheme}"
+                                            Width="36"
+                                            Height="36"
+                                            Padding="0"
+                                            ToolTip.Tip="View Instance">
+                                        <icons:PackIconLucide Kind="Eye" Width="16" Height="16" />
+                                    </Button>
+                                    <Button Theme="{StaticResource OutlineButtonTheme}"
+                                            Width="36"
+                                            Height="36"
+                                            Padding="0"
+                                            ToolTip.Tip="Open Folder">
+                                        <icons:PackIconLucide Kind="FolderOpen" Width="16" Height="16" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </husk:Card>
+                    <husk:Card Grid.Column="1" Padding="0">
+                        
+                    </husk:Card>
+                </Grid>
             </StackPanel>
 
             <!-- Accounts & Quick Actions Grid -->
