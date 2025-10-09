@@ -42,12 +42,12 @@ public class NavigationService
                                  transition
                               ?? (page.IsAssignableTo(typeof(ScopedPage))
                                       ? new PageCoverOverTransition(null, DirectionFrom.Right)
-                                      : new PopUpTransition()));
+                                      : new CrossFadeTransition()));
 
     public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page
     {
         Navigate(typeof(T), parameter, transition);
-        _logger.LogInformation("Navigating to {} with {}", typeof(T).Name, parameter ?? "(null)");
+        _logger.LogInformation("Navigating to {page} with {arg}", typeof(T).Name, parameter ?? "(null)");
     }
 
     public void GoBack() => _goBackHandler?.Invoke();
