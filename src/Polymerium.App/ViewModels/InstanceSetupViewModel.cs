@@ -347,16 +347,22 @@ public partial class InstanceSetupViewModel(
         _stageSource
            .Connect()
            .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
-           .Distinct()
-           .Transform(x => new InstancePackageFilterTagModel(x) { RefCount = 1 })
+           .GroupOn(x => x)
+           .Transform(group => new InstancePackageFilterTagModel(group.GroupKey) { RefCount = group.List.Count })
+           .DisposeMany()
            .Bind(out var tagsView)
-           .AutoRefresh()
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        TagsView = tagsView;
+
+        tagsView
+           .ToObservableChangeSet()
+           .AutoRefresh(x => x.IsSelected)
            .Filter(x => x.IsSelected)
            .Transform(x => x.Content)
            .Bind(out var filterTags)
            .Subscribe()
            .DisposeWith(_subscriptions);
-        TagsView = tagsView;
 
         var text = this.WhenValueChanged(x => x.FilterText).Select(BuildTextFilter);
         var enability = this.WhenValueChanged(x => x.FilterEnability).Select(BuildEnabilityFilter);

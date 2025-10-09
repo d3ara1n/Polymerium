@@ -343,8 +343,20 @@
                                                                     CornerRadius="{StaticResource SmallCornerRadius}"
                                                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                                                     BorderThickness="1" Padding="8">
-                                                                    <CheckBox Content="{Binding Content}"
-                                                                              IsChecked="{Binding IsSelected,Mode=TwoWay}" />
+                                                                    <CheckBox
+                                                                        IsChecked="{Binding IsSelected,Mode=TwoWay}">
+                                                                        <StackPanel Orientation="Horizontal"
+                                                                                Spacing="4">
+                                                                            <TextBlock Text="{Binding Content}" />
+                                                                            <TextBlock
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                                                <Run Text="(" />
+                                                                                <Run
+                                                                                    Text="{Binding RefCount,Mode=OneWay}" />
+                                                                                <Run Text=")" />
+                                                                            </TextBlock>
+                                                                        </StackPanel>
+                                                                    </CheckBox>
                                                                 </Border>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>

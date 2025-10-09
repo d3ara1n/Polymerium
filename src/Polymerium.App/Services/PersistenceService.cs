@@ -82,8 +82,6 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Nested type: WidgetLocalSection
 
-    #region Nested Type: WidgetLocalSection
-
     public class WidgetLocalSection(string key, string widgetId, string indicator, string data)
     {
         [Column(IsPrimary = true)]
@@ -98,8 +96,6 @@ public class PersistenceService(IFreeSql freeSql)
         [Column(DbType = "BLOB")]
         public string Data { get; set; } = data;
     }
-
-    #endregion
 
     #endregion
 
