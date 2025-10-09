@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
@@ -34,9 +33,9 @@ public partial class NewInstanceViewModel(
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        if (token.IsCancellationRequested)
+        if (PageToken.IsCancellationRequested)
         {
             return;
         }

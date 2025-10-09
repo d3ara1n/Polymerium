@@ -222,9 +222,6 @@
     <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
         <value>切换版本</value>
     </data>
-    <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
-        <value>加载包信息...</value>
-    </data>
     <data name="MarketplacePortalView_Title" xml:space="preserve">
         <value>集市门户</value>
     </data>
@@ -522,10 +519,10 @@
     <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
         <value>输入过滤字符串...</value>
     </data>
-    <data name="InstanceSetupView_ConditionLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_FilterLabelText" xml:space="preserve">
         <value>条件</value>
     </data>
-    <data name="InstanceSetupView_TagLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TagFilterText" xml:space="preserve">
         <value>标签</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -555,16 +552,16 @@
     <data name="ResourceKind_ShaderPack" xml:space="preserve">
         <value>着色器包</value>
     </data>
-    <data name="InstanceSetupView_SourceOriginalText" xml:space="preserve">
-        <value>托管</value>
+    <data name="InstanceSetupView_SourceImportText" xml:space="preserve">
+        <value>导入</value>
     </data>
     <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>本地</value>
     </data>
-    <data name="InstanceSetupView_SourceLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceFilterText" xml:space="preserve">
         <value>来源</value>
     </data>
-    <data name="InstanceSetupView_TypeLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TypeFilterText" xml:space="preserve">
         <value>类型</value>
     </data>
     <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
@@ -621,7 +618,7 @@
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
         <value>禁用</value>
     </data>
-    <data name="InstancePackageButton_OriginalTagText" xml:space="preserve">
+    <data name="InstancePackageButton_ImportTagText" xml:space="preserve">
         <value>导入</value>
     </data>
     <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
@@ -993,7 +990,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>存档</value>
     </data>
-    <data name="InstanceSetupView_StatusLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_StatusFilterText" xml:space="preserve">
         <value>状态</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
@@ -1122,8 +1119,8 @@
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>共计</value>
     </data>
-    <data name="InstanceSetupView_UpdatingLabelText" xml:space="preserve">
-        <value>更新中...</value>
+    <data name="InstanceSetupView_RefreshingLabelText" xml:space="preserve">
+        <value>刷新中...</value>
     </data>
     <data name="AssetImporterDialog_Title" xml:space="preserve">
         <value>从文件添加包或资产</value>
@@ -1154,5 +1151,134 @@
     </data>
     <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
         <value>识别文件类型...</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
+        <value>自动连接到服务器</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
+        <value>地址</value>
+    </data>
+    <data name="AssetKind_Mod" xml:space="preserve">
+        <value>模组</value>
+    </data>
+    <data name="AssetKind_ResourcePack" xml:space="preserve">
+        <value>资源包</value>
+    </data>
+    <data name="AssetKind_Save" xml:space="preserve">
+        <value>存档</value>
+    </data>
+    <data name="AssetKind_Screenshot" xml:space="preserve">
+        <value>截图</value>
+    </data>
+    <data name="AssetKind_Server" xml:space="preserve">
+        <value>服务器</value>
+    </data>
+    <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
+        <value>导出整合包</value>
+    </data>
+    <data name="InstanceActivitiesView_TotalHoursLabelText" xml:space="preserve">
+        <value>总小时</value>
+    </data>
+    <data name="InstanceActivitiesView_SessionCountLabelText" xml:space="preserve">
+        <value>会话数</value>
+    </data>
+    <data name="InstanceActivitiesView_ActiveDaysLabelText" xml:space="preserve">
+        <value>活跃日</value>
+    </data>
+    <data name="InstanceActivitiesView_TotalHoursRankLabelText" xml:space="preserve">
+        <value>总小时排名</value>
+    </data>
+    <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
+        <value>修改记录</value>
+    </data>
+    <data name="AssetKind_DataPack" xml:space="preserve">
+        <value>数据包</value>
+    </data>
+    <data name="InstanceAssetsView_FilterLabelText" xml:space="preserve">
+        <value>条件</value>
+    </data>
+    <data name="InstanceAssetsView_LoaderFilterText" xml:space="preserve">
+        <value>加载器</value>
+    </data>
+    <data name="InstanceAssetsView_SourceFilterText" xml:space="preserve">
+        <value>来源</value>
+    </data>
+    <data name="InstanceAssetsView_StatusFilterText" xml:space="preserve">
+        <value>状态</value>
+    </data>
+    <data name="InstanceAssetsView_SourceLocalText" xml:space="preserve">
+        <value>本地</value>
+    </data>
+    <data name="InstanceAssetsView_SourceImportText" xml:space="preserve">
+        <value>导入</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarTitle" xml:space="preserve">
+        <value>本页面只展示实体模组文件</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarText" xml:space="preserve">
+        <value>外部包引用需要在其他页面查看并管理。</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileNameLabelText" xml:space="preserve">
+        <value>文件名：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetModIdLabelText" xml:space="preserve">
+        <value>Mod Id：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLicenseLabelText" xml:space="preserve">
+        <value>许可：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileSizeLabelText" xml:space="preserve">
+        <value>文件大小：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLastModifiedLabelText" xml:space="preserve">
+        <value>最后修改：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetStatusLabelText" xml:space="preserve">
+        <value>状态：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetVisitWebsiteButtonText" xml:space="preserve">
+        <value>访问网站</value>
+    </data>
+    <data name="InstanceAssetsView_DetailsLabelText" xml:space="preserve">
+        <value>细节</value>
+    </data>
+    <data name="InstanceAssetsView_AssetPackFormatLabelText" xml:space="preserve">
+        <value>包格式：</value>
+    </data>
+    <data name="InstanceAssetsView_AssetEmptyPrompt" xml:space="preserve">
+        <value>选择一个项目以查看详情</value>
+    </data>
+    <data name="InstanceAssetsView_DataPacksLabelText" xml:space="preserve">
+        <value>数据包</value>
+    </data>
+    <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
+        <value>玩家</value>
+    </data>
+    <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
+        <value>标题</value>
+    </data>
+    <data name="ModpackExporterDialog_AuthorLabelText" xml:space="preserve">
+        <value>作者</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsLabelText" xml:space="preserve">
+        <value>附件</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
+        <value>被一起打包的 Overrides 文件位于</value>
+    </data>
+    <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="ModpackExporterDialog_Title" xml:space="preserve">
+        <value>打包实例</value>
+    </data>
+    <data name="ModpackExporterDialog_FormatLabelText" xml:space="preserve">
+        <value>类型</value>
+    </data>
+    <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
+        <value>模组加载器</value>
+    </data>
+    <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
+        <value>包数量</value>
     </data>
 </root>

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
-using System.Threading;
+using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,7 +19,6 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Refit;
-using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -106,9 +105,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        if (token.IsCancellationRequested)
+        if (PageToken.IsCancellationRequested)
         {
             return;
         }

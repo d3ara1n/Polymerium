@@ -119,7 +119,7 @@
                 <husk:LazyContainer Grid.Column="1" MinWidth="198"
                                     Source="{Binding Reference,FallbackValue={x:Null}}"
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
-                    <husk:LazyContainer.BadContent>
+                    <husk:LazyContainer.FaultContent>
                         <husk:Card BorderThickness="2"
                                    BorderBrush="{StaticResource ControlBorderBrush}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -128,7 +128,7 @@
                                 <Button Content="Retry" IsVisible="False" />
                             </StackPanel>
                         </husk:Card>
-                    </husk:LazyContainer.BadContent>
+                    </husk:LazyContainer.FaultContent>
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
                             <Border Background="{StaticResource ControlBackgroundBrush}"
@@ -204,6 +204,8 @@
             <Grid Grid.Row="2" RowDefinitions="Auto,*">
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="16,8"
                       ColumnSpacing="12">
+
+                    <!-- 搜索栏 -->
                     <TextBox Grid.Column="0"
                              Watermark="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}"
                              MinWidth="168"
@@ -223,92 +225,92 @@
                                             <StackPanel Spacing="8" MinWidth="320" MaxWidth="520" MaxHeight="360"
                                                         Margin="12">
                                                 <TextBlock
-                                                    Text="{x:Static lang:Resources.InstanceSetupView_ConditionLabelText}"
+                                                    Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     VerticalAlignment="Center" />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_StatusLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_StatusFilterText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column="1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
                                                               SelectedItem="{Binding FilterEnability,Mode=TwoWay}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate
-                                                                DataType="controls:PackageEntryEnabilityFilter">
+                                                                DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <controls:PackageEntryEnabilityFilter
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
-                                                            Enability="{x:Null}" />
-                                                        <controls:PackageEntryEnabilityFilter
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_Enabled}"
-                                                            Enability="{x:True}" />
-                                                        <controls:PackageEntryEnabilityFilter
+                                                            Value="{x:True}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_Disabled}"
-                                                            Enability="{x:False}" />
+                                                            Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_SourceLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_SourceFilterText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column="1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
                                                               SelectedItem="{Binding FilterLockility,Mode=TwoWay}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate
-                                                                DataType="controls:PackageEntryLockilityFilter">
+                                                                DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <controls:PackageEntryLockilityFilter
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
-                                                            Lockility="{x:Null}" />
-                                                        <controls:PackageEntryLockilityFilter
-                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceOriginalText}"
-                                                            Lockility="{x:True}" />
-                                                        <controls:PackageEntryLockilityFilter
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
+                                                            Value="{x:True}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
-                                                            Lockility="{x:False}" />
+                                                            Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_TypeLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_TypeFilterText}"
                                                                VerticalAlignment="Bottom" />
                                                     <TabStrip Grid.Column=" 1"
                                                               Theme="{StaticResource SegmentedTabStripTheme}"
                                                               SelectedItem="{Binding FilterKind,Mode=TwoWay}">
                                                         <TabStrip.ItemTemplate>
-                                                            <DataTemplate DataType="controls:PackageEntryKindFilter">
+                                                            <DataTemplate DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <controls:PackageEntryKindFilter
-                                                            Label="{x:Static lang:Resources.Enum_All}" Kind="{x:Null}" />
-                                                        <controls:PackageEntryKindFilter
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_Mod}"
-                                                            Kind="{Binding Source=Mod,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
-                                                        <controls:PackageEntryKindFilter
+                                                            Value="{x:Static resources:ResourceKind.Mod}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
-                                                            Kind="{Binding Source=ResourcePack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
-                                                        <controls:PackageEntryKindFilter
+                                                            Value="{x:Static resources:ResourceKind.ResourcePack}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
-                                                            Kind="{Binding Source=ShaderPack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
-                                                        <controls:PackageEntryKindFilter
+                                                            Value="{x:Static resources:ResourceKind.ShaderPack}" />
+                                                        <m:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_DataPack}"
-                                                            Kind="{Binding Source=DataPack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
+                                                            Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_TagLabelText}"
+                                                               Text="{x:Static lang:Resources.InstanceSetupView_TagFilterText}"
                                                                VerticalAlignment="Center"
                                                                FontSize="{StaticResource SmallFontSize}"
                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -369,7 +371,7 @@
                         <StackPanel IsVisible="{Binding IsRefreshing}">
                             <husk:ProgressRing IsIndeterminate="{Binding IsRefreshing}" HorizontalAlignment="Center"
                                                Height="16" Width="16" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_UpdatingLabelText}" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_RefreshingLabelText}" />
                         </StackPanel>
                         <TabStrip Name="LayoutSelector" Theme="{StaticResource SegmentedTabStripTheme}"
                                   SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}">
@@ -381,6 +383,7 @@
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
                                                     Margin="0,3"
+                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing,Mode=OneWay,FallbackValue={x:False}}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
                                                     Theme="{StaticResource ListPackageEntryButtonTheme}"
                                                     Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
@@ -398,6 +401,7 @@
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
+                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing,Mode=OneWay,FallbackValue={x:False}}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
                                                     ToolTip.Tip="{Binding Info.ProjectName,FallbackValue=Name}"
                                                     Theme="{StaticResource GridPackageEntryButtonTheme}"

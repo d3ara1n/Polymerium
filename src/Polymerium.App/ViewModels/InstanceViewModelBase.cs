@@ -1,4 +1,3 @@
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -76,7 +75,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     #region Tracking
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    public override async Task InitializeAsync()
     {
         InstanceManager.InstanceUpdating += OnInstanceUpdating;
         InstanceManager.InstanceDeploying += OnInstanceDeploying;
@@ -109,16 +108,16 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
         OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
 
-        return Task.CompletedTask;
+        await OnInitializeAsync();
     }
 
-    protected override Task OnDeinitializeAsync(CancellationToken token)
+    public override async Task DeinitializeAsync()
     {
         InstanceManager.InstanceUpdating -= OnInstanceUpdating;
         InstanceManager.InstanceDeploying -= OnInstanceDeploying;
         InstanceManager.InstanceLaunching -= OnInstanceLaunching;
         ProfileManager.ProfileUpdated -= OnProfileUpdated;
-        return Task.CompletedTask;
+        await OnDeinitializeAsync();
     }
 
     private void OnInstanceUpdating(object? sender, UpdateTracker tracker)

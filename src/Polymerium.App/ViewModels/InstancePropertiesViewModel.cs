@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -124,7 +123,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         ThumbnailOverwrite = Basic.Thumbnail;
     }
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    protected override Task OnInitializeAsync()
     {
         if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
@@ -145,20 +144,22 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
         BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
+        QuickConnectAddressOverride = AccessOverrideString<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
+        QuickConnectAddressWatermark = "Disabled if unset";
 
         #endregion
 
-        return base.OnInitializeAsync(token);
+        return base.OnInitializeAsync();
     }
 
-    protected override async Task OnDeinitializeAsync(CancellationToken token)
+    protected override async Task OnDeinitializeAsync()
     {
         if (_owned != null)
         {
             await _owned.DisposeAsync();
         }
 
-        await base.OnDeinitializeAsync(token);
+        await Task.CompletedTask;
     }
 
     #endregion
@@ -242,8 +243,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             Directory.CreateDirectory(dir);
         }
 
-        File.WriteAllText(path, Basic.Key);
+        File.WriteAllText(path, Program.MagicWords);
         ProfileManager.Remove(Basic.Key);
+        // 保留该 Key 避免单个会话中安装同一个整合包而导致 Key 被复用
+        ProfileManager.RequestKey(Basic.Key);
 
         if (_navigationService.CanGoBack)
         {
@@ -379,6 +382,17 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     partial void OnWindowInitialWidthOverrideChanged(string value) =>
         WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH,
                       !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
+
+    [ObservableProperty]
+    public partial string QuickConnectAddressOverride { get; set; } = string.Empty;
+
+
+    [ObservableProperty]
+    public partial string QuickConnectAddressWatermark { get; set; } = string.Empty;
+
+    partial void OnQuickConnectAddressOverrideChanged(string value) =>
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, !string.IsNullOrEmpty(value) ? value : null);
+
 
     [ObservableProperty]
     public partial bool BehaviorResolveDependency { get; set; }

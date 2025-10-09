@@ -11,7 +11,9 @@ using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Services;
 using Trident.Abstractions;
+using Trident.Abstractions.Exporters;
 using Trident.Abstractions.Importers;
+using Trident.Core.Exporters;
 using Trident.Core.Extensions;
 using Trident.Core.Importers;
 using Trident.Core.Services;
@@ -69,6 +71,8 @@ public static class Startup
         services
            .AddTransient<IProfileImporter, CurseForgeImporter>()
            .AddTransient<IProfileImporter, ModrinthImporter>()
+           .AddTransient<IProfileExporter, CurseForgeExporter>()
+           .AddTransient<IProfileExporter, ModrinthExporter>()
            .AddPrismLauncher()
            .AddMojangLauncher()
            .AddMicrosoft()
@@ -77,6 +81,7 @@ public static class Startup
            .AddSingleton<ProfileManager>()
            .AddSingleton<RepositoryAgent>()
            .AddSingleton<ImporterAgent>()
+           .AddSingleton<ExporterAgent>()
            .AddSingleton<InstanceManager>();
 
 

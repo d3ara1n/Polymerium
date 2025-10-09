@@ -231,9 +231,6 @@
     <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
         <value>Switch Version</value>
     </data>
-    <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
-        <value>Loading packages information...</value>
-    </data>
     <data name="MarketplacePortalView_Title" xml:space="preserve">
         <value>Marketplace Portal</value>
     </data>
@@ -531,10 +528,10 @@
     <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
         <value>Enter filter string...</value>
     </data>
-    <data name="InstanceSetupView_ConditionLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_FilterLabelText" xml:space="preserve">
         <value>Filter</value>
     </data>
-    <data name="InstanceSetupView_TagLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TagFilterText" xml:space="preserve">
         <value>Tags</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -564,16 +561,16 @@
     <data name="Enum_Disabled" xml:space="preserve">
         <value>Disabled</value>
     </data>
-    <data name="InstanceSetupView_SourceOriginalText" xml:space="preserve">
-        <value>Original</value>
+    <data name="InstanceSetupView_SourceImportText" xml:space="preserve">
+        <value>Import</value>
     </data>
     <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
         <value>Local</value>
     </data>
-    <data name="InstanceSetupView_SourceLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_SourceFilterText" xml:space="preserve">
         <value>Source</value>
     </data>
-    <data name="InstanceSetupView_TypeLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_TypeFilterText" xml:space="preserve">
         <value>Type</value>
     </data>
     <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
@@ -630,8 +627,8 @@
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
         <value>Disabled</value>
     </data>
-    <data name="InstancePackageButton_OriginalTagText" xml:space="preserve">
-        <value>Original</value>
+    <data name="InstancePackageButton_ImportTagText" xml:space="preserve">
+        <value>Import</value>
     </data>
     <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
         <value>Auto Version</value>
@@ -1002,7 +999,7 @@
     <data name="ResourceKind_World" xml:space="preserve">
         <value>World</value>
     </data>
-    <data name="InstanceSetupView_StatusLabelText" xml:space="preserve">
+    <data name="InstanceSetupView_StatusFilterText" xml:space="preserve">
         <value>Status</value>
     </data>
     <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
@@ -1131,8 +1128,8 @@
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>Overview</value>
     </data>
-    <data name="InstanceSetupView_UpdatingLabelText" xml:space="preserve">
-        <value>Updating...</value>
+    <data name="InstanceSetupView_RefreshingLabelText" xml:space="preserve">
+        <value>Refreshing...</value>
     </data>
     <data name="AssetImporterDialog_Title" xml:space="preserve">
         <value>Add asset or package from file</value>
@@ -1163,5 +1160,134 @@
     </data>
     <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
         <value>Identifying file type...</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
+        <value>Connect At Startup</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
+        <value>Address</value>
+    </data>
+    <data name="AssetKind_Mod" xml:space="preserve">
+        <value>Mods</value>
+    </data>
+    <data name="AssetKind_ResourcePack" xml:space="preserve">
+        <value>Resource Packs</value>
+    </data>
+    <data name="AssetKind_Save" xml:space="preserve">
+        <value>Saves</value>
+    </data>
+    <data name="AssetKind_Screenshot" xml:space="preserve">
+        <value>Screenshots</value>
+    </data>
+    <data name="AssetKind_Server" xml:space="preserve">
+        <value>Servers</value>
+    </data>
+    <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
+        <value>Export Modpack</value>
+    </data>
+    <data name="InstanceActivitiesView_TotalHoursLabelText" xml:space="preserve">
+        <value>Total Hours</value>
+    </data>
+    <data name="InstanceActivitiesView_SessionCountLabelText" xml:space="preserve">
+        <value>Session Count</value>
+    </data>
+    <data name="InstanceActivitiesView_ActiveDaysLabelText" xml:space="preserve">
+        <value>Active Days</value>
+    </data>
+    <data name="InstanceActivitiesView_TotalHoursRankLabelText" xml:space="preserve">
+        <value>Total Hours Rank</value>
+    </data>
+    <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
+        <value>Changelog</value>
+    </data>
+    <data name="AssetKind_DataPack" xml:space="preserve">
+        <value>Data Packs</value>
+    </data>
+    <data name="InstanceAssetsView_FilterLabelText" xml:space="preserve">
+        <value>Filter</value>
+    </data>
+    <data name="InstanceAssetsView_LoaderFilterText" xml:space="preserve">
+        <value>Loader</value>
+    </data>
+    <data name="InstanceAssetsView_StatusFilterText" xml:space="preserve">
+        <value>Status</value>
+    </data>
+    <data name="InstanceAssetsView_SourceFilterText" xml:space="preserve">
+        <value>Source</value>
+    </data>
+    <data name="InstanceAssetsView_SourceLocalText" xml:space="preserve">
+        <value>Local</value>
+    </data>
+    <data name="InstanceAssetsView_SourceImportText" xml:space="preserve">
+        <value>Import</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarTitle" xml:space="preserve">
+        <value>This page shows physical mod files only</value>
+    </data>
+    <data name="InstanceAssetsView_ModInfoBarText" xml:space="preserve">
+        <value>External package references are managed separately and not displayed here.</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileNameLabelText" xml:space="preserve">
+        <value>File Name:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetModIdLabelText" xml:space="preserve">
+        <value>Mod Id:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLicenseLabelText" xml:space="preserve">
+        <value>License:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetFileSizeLabelText" xml:space="preserve">
+        <value>File Size:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetLastModifiedLabelText" xml:space="preserve">
+        <value>Last Modified:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetStatusLabelText" xml:space="preserve">
+        <value>Status:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetVisitWebsiteButtonText" xml:space="preserve">
+        <value>Visit Website</value>
+    </data>
+    <data name="InstanceAssetsView_DetailsLabelText" xml:space="preserve">
+        <value>Details</value>
+    </data>
+    <data name="InstanceAssetsView_AssetPackFormatLabelText" xml:space="preserve">
+        <value>Pack Format:</value>
+    </data>
+    <data name="InstanceAssetsView_AssetEmptyPrompt" xml:space="preserve">
+        <value>Select an item to view details</value>
+    </data>
+    <data name="InstanceAssetsView_DataPacksLabelText" xml:space="preserve">
+        <value>Data Packs</value>
+    </data>
+    <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
+        <value>Players</value>
+    </data>
+    <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="ModpackExporterDialog_AuthorLabelText" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="ModpackExporterDialog_Title" xml:space="preserve">
+        <value>Packing instance</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsLabelText" xml:space="preserve">
+        <value>Attachments</value>
+    </data>
+    <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
+        <value>Override file being packed is located at</value>
+    </data>
+    <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
+        <value>Version</value>
+    </data>
+    <data name="ModpackExporterDialog_FormatLabelText" xml:space="preserve">
+        <value>Format</value>
+    </data>
+    <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
+        <value>Mod Loader</value>
     </data>
 </root>

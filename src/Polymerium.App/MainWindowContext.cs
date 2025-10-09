@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
@@ -23,6 +24,7 @@ using Polymerium.App.Views;
 using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.Tasks;
+using Trident.Abstractions.Utilities;
 using Trident.Core.Exceptions;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
@@ -45,12 +47,16 @@ public partial class MainWindowContext : ObservableObject
         NavigationService navigationService,
         PersistenceService persistenceService,
         InstanceService instanceService,
-        OverlayService overlayService)
+        OverlayService overlayService,
+        ExporterAgent exporterAgent)
     {
+        _profileManager = profileManager;
         _notificationService = notificationService;
         _navigationService = navigationService;
         _persistenceService = persistenceService;
         _instanceService = instanceService;
+        _overlayService = overlayService;
+        _exporterAgent = exporterAgent;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -79,18 +85,21 @@ public partial class MainWindowContext : ObservableObject
     private static Func<InstanceEntryModel, bool> BuildFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
+    #region Other
+
+    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
+
+    #endregion
+
     #region Injected
 
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
-
-    #endregion
-
-    #region Other
-
-    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
+    private readonly OverlayService _overlayService;
+    private readonly ProfileManager _profileManager;
+    private readonly ExporterAgent _exporterAgent;
 
     #endregion
 
@@ -112,6 +121,87 @@ public partial class MainWindowContext : ObservableObject
         if (key is not null)
         {
             _navigationService.Navigate<InstanceView>(key);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportInstance(string? key)
+    {
+        if (key is not null && _profileManager.TryGetImmutable(key, out var profile))
+        {
+            var loaderLabel = "None";
+            if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader))
+            {
+                loaderLabel = LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version);
+            }
+
+            var user = string.Empty;
+            var account = _persistenceService.GetAccounts().FirstOrDefault(x => x.IsDefault);
+            if (account != null)
+            {
+                user = AccountHelper.ToCooked(account).Username;
+            }
+
+            var dialog = new ModpackExporterDialog
+            {
+                NameOriginal = profile.Name,
+                LoaderLabel = loaderLabel,
+                PackageCount = profile.Setup.Packages.Count,
+                AuthorOriginal = user,
+                VersionOriginal = "1.0.0",
+                Result = new ModpackExporterModel(key)
+            };
+
+
+            if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
+            {
+                var top = TopLevel.GetTopLevel(MainWindow.Instance);
+                if (top != null)
+                {
+                    var storage = top.StorageProvider;
+                    if (storage.CanOpen)
+                    {
+                        var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : profile.Name;
+                        var author = !string.IsNullOrEmpty(model.AuthorOverride) ? model.AuthorOverride : user;
+                        var version = !string.IsNullOrEmpty(model.VersionOverride) ? model.VersionOverride : "1.0.0";
+                        var storageItem = await storage.SaveFilePickerAsync(new()
+                        {
+                            SuggestedStartLocation =
+                                await storage
+                                   .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                                  .Downloads),
+                            SuggestedFileName = name,
+                            DefaultExtension = "zip"
+                        });
+                        if (storageItem is not null)
+                        {
+                            try
+                            {
+                                var notification = _notificationService.PopProgress("...", "Exporting...");
+                                var container = await _exporterAgent.ExportAsync(model.SelectedExporterLabel,
+                                                    key,
+                                                    name,
+                                                    author,
+                                                    version);
+                                notification.Report(33);
+                                await using var packed = await _exporterAgent.PackCompressedAsync(container);
+                                notification.Report(66);
+                                await using var stream = await storageItem.OpenWriteAsync();
+                                await packed.CopyToAsync(stream);
+                                notification.Report(100);
+                                await Task.Delay(TimeSpan.FromSeconds(1));
+                                notification.Dispose();
+                                var path = storageItem.TryGetLocalPath();
+                                _notificationService.PopMessage(path ?? "Unknown", "Export successfully");
+                            }
+                            catch (Exception ex)
+                            {
+                                _notificationService.PopMessage(ex, "Failed to export instance");
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -142,10 +232,30 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private async Task PlayAsync(string key) => await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+    private async Task PlayAsync(string key)
+    {
+        try
+        {
+            await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to launch instance");
+        }
+    }
 
     [RelayCommand]
-    private void Deploy(string key) => _instanceService.Deploy(key);
+    private void Deploy(string key)
+    {
+        try
+        {
+            _instanceService.Deploy(key);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to deploy instance");
+        }
+    }
 
     [RelayCommand]
     private void OpenFolder(string? key)

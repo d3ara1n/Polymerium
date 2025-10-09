@@ -19,7 +19,7 @@ public class WidgetHostService(PersistenceService persistenceService)
 
     #endregion
 
-    public Type[] WidgetTypes => [typeof(NoteWidget)];
+    public Type[] WidgetTypes => [typeof(NoteWidget), typeof(NetworkCheckerWidget)];
 
     public WidgetContext GetOrCreateContext(string key, string widgetId)
     {

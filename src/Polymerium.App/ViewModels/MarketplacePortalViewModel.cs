@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,9 +20,9 @@ public partial class MarketplacePortalViewModel(
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
-        if (token.IsCancellationRequested)
+        if (PageToken.IsCancellationRequested)
         {
             return;
         }

@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Humanizer;
 using Huskui.Avalonia.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -116,7 +114,7 @@ public partial class InstanceActivitiesViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    protected override Task OnInitializeAsync()
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
         SinceDayIndex = 0;
@@ -153,6 +151,10 @@ public partial class InstanceActivitiesViewModel(
 
         // Configure Y-axis for hours
         YAxes = [new() { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
+
+        TotalPlayTimeRank = persistenceService.GetTotalPlayTimeRank(Basic.Key);
+        SessionCount = persistenceService.GetSessionCount(Basic.Key);
+        ActiveDays = persistenceService.GetActiveDays(Basic.Key);
         return Task.CompletedTask;
     }
 
@@ -182,11 +184,20 @@ public partial class InstanceActivitiesViewModel(
     [ObservableProperty]
     public partial LazyObject? PagedActions { get; set; }
 
-    public string TotalPlayTime => TotalPlayTimeRaw.Humanize(maxUnit: TimeUnit.Hour);
+    public double TotalHours => TotalPlayTimeRaw.TotalHours;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
+    [NotifyPropertyChangedFor(nameof(TotalHours))]
     public partial TimeSpan TotalPlayTimeRaw { get; set; }
+
+    [ObservableProperty]
+    public partial int TotalPlayTimeRank { get; set; }
+
+    [ObservableProperty]
+    public partial int SessionCount { get; set; }
+
+    [ObservableProperty]
+    public partial int ActiveDays { get; set; }
 
     [ObservableProperty]
     public partial int SinceDayIndex { get; set; } = -1;

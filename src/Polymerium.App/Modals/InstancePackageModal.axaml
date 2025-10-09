@@ -226,44 +226,9 @@
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate DataType="m:InstancePackageVersionModel">
                                                             <StackPanel Spacing="4">
-                                                                <husk:SwitchPresenter
-                                                                    Value="{Binding IsCurrent,FallbackValue=False}"
-                                                                    TargetType="x:Boolean">
-                                                                    <husk:SwitchCase Value="True">
-                                                                        <TextBlock
-                                                                            Text="{Binding Name,FallbackValue=Display}"
-                                                                            Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                                                                    </husk:SwitchCase>
-                                                                    <husk:SwitchCase Value="False">
-                                                                        <TextBlock
-                                                                            Text="{Binding Name,FallbackValue=Display}" />
-                                                                    </husk:SwitchCase>
-                                                                </husk:SwitchPresenter>
-                                                                <Grid ColumnDefinitions="Auto,Auto,Auto,*"
-                                                                      ColumnSpacing="4">
-                                                                    <fi:SymbolIcon Grid.Column="0" Symbol="Flag"
-                                                                            FontSize="{StaticResource SmallFontSize}"
-                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                                    <TextBlock Grid.Column="1"
-                                                                               Text="{Binding CompatibleLoaders}"
-                                                                               FontSize="{StaticResource SmallFontSize}"
-                                                                               TextTrimming="CharacterEllipsis"
-                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                                    <fi:SymbolIcon Grid.Column="2" Symbol="Branch"
-                                                                            FontSize="{StaticResource SmallFontSize}"
-                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                                    <TextBlock Grid.Column="3"
-                                                                               Text="{Binding CompatibleVersions}"
-                                                                               FontSize="{StaticResource SmallFontSize}"
-                                                                               TextTrimming="CharacterEllipsis"
-                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                                </Grid>
                                                                 <DockPanel>
-                                                                    <StackPanel Orientation="Horizontal"
-                                                                            DockPanel.Dock="Right">
-                                                                        <TextBlock Text="{Binding PublishedAt}" />
-                                                                    </StackPanel>
                                                                     <husk:SwitchPresenter
+                                                                        DockPanel.Dock="Right"
                                                                         TargetType="trident:ReleaseType"
                                                                         Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
                                                                         <husk:SwitchCase Value="Release">
@@ -288,7 +253,42 @@
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                     </husk:SwitchPresenter>
+                                                                    <husk:SwitchPresenter
+                                                                        Value="{Binding IsCurrent,FallbackValue=False}"
+                                                                        TargetType="x:Boolean">
+                                                                        <husk:SwitchCase Value="True">
+                                                                            <TextBlock
+                                                                                Text="{Binding Name,FallbackValue=Display}"
+                                                                                Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="False">
+                                                                            <TextBlock
+                                                                                Text="{Binding Name,FallbackValue=Display}" />
+                                                                        </husk:SwitchCase>
+                                                                    </husk:SwitchPresenter>
                                                                 </DockPanel>
+                                                                <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto"
+                                                                      ColumnSpacing="4">
+                                                                    <fi:SymbolIcon Grid.Column="0" Symbol="Flag"
+                                                                            FontSize="{StaticResource SmallFontSize}"
+                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                    <TextBlock Grid.Column="1"
+                                                                               Text="{Binding CompatibleLoaders}"
+                                                                               FontSize="{StaticResource SmallFontSize}"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                    <fi:SymbolIcon Grid.Column="2" Symbol="Branch"
+                                                                            FontSize="{StaticResource SmallFontSize}"
+                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                    <TextBlock Grid.Column="3"
+                                                                               Text="{Binding CompatibleVersions}"
+                                                                               FontSize="{StaticResource SmallFontSize}"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                    <TextBlock Grid.Column="4"
+                                                                               FontSize="{StaticResource SmallFontSize}"
+                                                                               Text="{Binding PublishedAt}" />
+                                                                </Grid>
                                                             </StackPanel>
                                                         </DataTemplate>
                                                     </ListBox.ItemTemplate>

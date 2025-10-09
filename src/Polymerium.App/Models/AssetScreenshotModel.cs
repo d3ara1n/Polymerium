@@ -1,0 +1,32 @@
+using System;
+using System.IO;
+using Avalonia.Media.Imaging;
+using Polymerium.App.Facilities;
+
+namespace Polymerium.App.Models;
+
+public class AssetScreenshotModel : ModelBase
+{
+    public AssetScreenshotModel(Uri image, DateTimeOffset time, bool isLocked)
+    {
+        Image = image;
+        TimeRaw = time;
+        IsLocked = isLocked;
+        using var stream = File.OpenRead(image.LocalPath);
+        var memory = new MemoryStream();
+        stream.CopyTo(memory);
+        memory.Position = 0;
+        Thumbnail = Bitmap.DecodeToWidth(memory, 256, BitmapInterpolationMode.LowQuality);
+    }
+
+    #region Direct
+
+    public DateTimeOffset TimeRaw { get; }
+    public bool IsLocked { get; }
+    public string Time => TimeRaw.ToString("t");
+
+    public Uri Image { get; }
+    public Bitmap Thumbnail { get; }
+
+    #endregion
+}

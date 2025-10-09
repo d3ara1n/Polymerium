@@ -2,8 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -79,10 +79,8 @@ public partial class InstanceHomeViewModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    protected override Task OnInitializeAsync()
     {
-        base.OnInitializeAsync(token);
-
         var selector = persistenceService.GetAccountSelector(Basic.Key);
         if (selector != null)
         {
@@ -104,30 +102,31 @@ public partial class InstanceHomeViewModel(
         }
 
 
-        return Task.CompletedTask;
+        return base.OnInitializeAsync();
     }
 
-    protected override Task OnDeinitializeAsync(CancellationToken token)
+    protected override Task OnDeinitializeAsync()
     {
         _subscription?.Dispose();
         _timerSubscription?.Dispose();
-        foreach (var widget in PinnedWidgets)
-        {
-            widget.DeinitializeAsync();
-        }
 
         PinnedWidgets.Clear();
-        return base.OnDeinitializeAsync(token);
+        return Task.CompletedTask;
     }
 
 
     protected override void OnModelUpdated(string key, Profile profile)
     {
         base.OnModelUpdated(key, profile);
-        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-        Screenshot = screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
+        Screenshot ??= GetRandomScreenshot(key);
         PackageCount = profile.Setup.Packages.Count;
         UpdateTime(key);
+    }
+
+    private Bitmap GetRandomScreenshot(string key)
+    {
+        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
+        return screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
     }
 
     #endregion

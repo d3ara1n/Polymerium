@@ -152,6 +152,11 @@
                     </TextBox>
                 </Grid>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem
+                Header="{x:Static lang:Resources.InstancePropertiesView_QuickConnectLabelText}">
+                <TextBox Text="{Binding QuickConnectAddressOverride,Mode=TwoWay}"
+                         Watermark="{Binding QuickConnectAddressWatermark}" />
+            </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
         <!-- <controls:SettingsEntry Icon="Camera" Title="Snapshots (WIP)" Summary="Backup, yes, it's called backup"> -->
@@ -192,7 +197,7 @@
         <husk:Divider />
         <husk:BusyContainer
             Background="Transparent"
-            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
+            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=False}">
             <controls:SettingsEntry Icon="Bug" Title="{x:Static lang:Resources.InstancePropertiesView_DebugTitle}"
                                     Summary="{x:Static lang:Resources.InstancePropertiesView_DebugSubtitle}">
                 <controls:SettingsEntryItem
@@ -223,7 +228,7 @@
         </husk:Divider>
         <husk:BusyContainer
             Background="Transparent"
-            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
+            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=False}">
             <controls:SettingsEntry Icon="WarningShield"
                                     Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
                                     Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">

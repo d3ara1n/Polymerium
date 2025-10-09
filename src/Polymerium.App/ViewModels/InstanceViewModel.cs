@@ -2,7 +2,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -187,7 +186,7 @@ public partial class InstanceViewModel : ViewModelBase
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync()
     {
         // 终究还是得有个 InstanceStateAggregator
         _instanceManager.InstanceUpdating += OnProfileUpdating;
@@ -222,7 +221,7 @@ public partial class InstanceViewModel : ViewModelBase
         }
     }
 
-    protected override async Task OnDeinitializeAsync(CancellationToken token)
+    protected override async Task OnDeinitializeAsync()
 
     {
         _instanceManager.InstanceUpdating -= OnProfileUpdating;
@@ -349,17 +348,13 @@ public partial class InstanceViewModel : ViewModelBase
         // Setup
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Assets
-        #if !DEBUG
-        new(typeof(InstanceAssetsView), PackIconLucideKind.CassetteTape),
-        #endif
+        new(typeof(InstanceAssetsView), PackIconLucideKind.SquareLibrary),
         // Widgets
         new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
         // Statistics
-        #if !DEBUG
         new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
-        #endif
         // Storage
-        #if !DEBUG
+        #if DEBUG
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
         #endif
         // Properties

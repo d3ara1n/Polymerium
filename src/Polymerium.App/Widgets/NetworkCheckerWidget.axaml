@@ -5,16 +5,30 @@
                   xmlns:local="clr-namespace:Polymerium.App.Widgets"
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:m="clr-namespace:Polymerium.App.Models"
+                  xmlns:converters="clr-namespace:Polymerium.App.Converters"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Widgets.NetworkCheckerWidget" Title="Network Checker" Icon="NetworkCheck">
+                  x:Class="Polymerium.App.Widgets.NetworkCheckerWidget" Title="Network Checker"
+                  Icon="NetworkCheck">
     <local:WidgetBase.FullTemplate>
         <DataTemplate DataType="local:NetworkCheckerWidget">
             <StackPanel Spacing="12">
-                <Button Classes="Primary" HorizontalAlignment="Center" Command="{Binding PerformCommand}">
-                    <TextBlock Text="Perform" />
+                <!-- 操作按钮 -->
+                <Button Classes="Primary"
+                        HorizontalAlignment="Center"
+                        Command="{Binding PerformCommand}"
+                        IsEnabled="{Binding !IsTesting}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="{Binding ButtonText}" />
+                        <husk:ProgressRing IsIndeterminate="True"
+                                           Background="{StaticResource ControlForegroundBrush}"
+                                           Width="16"
+                                           Height="16"
+                                           IsVisible="{Binding IsTesting}" />
+                    </StackPanel>
                 </Button>
-                <!-- 下面是一个测试结果条目的样式，进度条的颜色会随着百分比分阶段使用Success/Warning(50%)/Danger(100%) -->
-                <ItemsControl>
+
+                <!-- 测试结果列表 -->
+                <ItemsControl ItemsSource="{Binding Sites}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="6" />
@@ -23,19 +37,69 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="m:ConnectionTestSiteModel">
                             <Border BoxShadow="0 2 4 0 #3F000000"
-                                    Margin="2" CornerRadius="{StaticResource SmallCornerRadius}">
+                                    Margin="2" Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                 <DockPanel>
-                                    <ProgressBar DockPanel.Dock="Bottom" Maximum="200" Value="138"
-                                                 CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                                 Background="{StaticResource ControlWarningForegroundBrush}" />
-                                    <Border
-                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
-                                        Background="{StaticResource OverlaySolidBackgroundBrush}">
-                                        <Grid ColumnDefinitions="*,Auto" Margin="16,12">
-                                            <TextBlock Grid.Column="0" Text="{Binding Display}" />
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding Source={Binding Latency},StringFormat={}{0}ms}"
-                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <!-- 延迟进度条 -->
+                                    <ProgressBar DockPanel.Dock="Bottom"
+                                                 Maximum="500"
+                                                 Value="{Binding Latency}"
+                                                 IsIndeterminate="{Binding IsTesting}"
+                                                 CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource FindAncestor, AncestorType=Border},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                        <ProgressBar.Background>
+                                            <MultiBinding
+                                                Converter="{x:Static converters:InternalConverters.LatencyToColorBrush}">
+                                                <Binding Path="Latency" />
+                                                <Binding Path="Status" />
+                                            </MultiBinding>
+                                        </ProgressBar.Background>
+                                    </ProgressBar>
+
+                                    <!-- 内容区域 -->
+                                    <Border Margin="8,4"
+                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <!-- 网站名称 -->
+                                            <StackPanel Grid.Column="0"
+                                                        VerticalAlignment="Center">
+                                                <TextBlock
+                                                    Text="{Binding Display}" />
+                                                <TextBlock
+                                                    Text="{Binding Endpoint}"
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            </StackPanel>
+
+                                            <!-- 状态显示 -->
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <!-- 延迟显示 -->
+                                                <TextBlock
+                                                    Text="{Binding Latency, StringFormat={}{0:F0}ms}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    VerticalAlignment="Center"
+                                                    IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}" />
+
+                                                <!-- 错误消息 -->
+                                                <TextBlock
+                                                    Text="{Binding ErrorMessage}"
+                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                    VerticalAlignment="Center"
+                                                    IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}" />
+
+                                                <!-- 等待中 -->
+                                                <TextBlock
+                                                    Text="Waiting..."
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    VerticalAlignment="Center"
+                                                    IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}" />
+
+                                                <!-- 测试中 -->
+                                                <TextBlock
+                                                    Text="Testing..."
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    VerticalAlignment="Center"
+                                                    IsVisible="{Binding IsTesting}" />
+                                            </StackPanel>
                                         </Grid>
                                     </Border>
                                 </DockPanel>
@@ -46,4 +110,67 @@
             </StackPanel>
         </DataTemplate>
     </local:WidgetBase.FullTemplate>
+
+    <!-- Slim 模板：紧凑视图 -->
+    <local:WidgetBase.SlimTemplate>
+        <DataTemplate DataType="local:NetworkCheckerWidget">
+            <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                <!-- 简化的测试结果 -->
+                <ScrollViewer Grid.Row="0">
+                    <ItemsControl ItemsSource="{Binding Sites}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="m:ConnectionTestSiteModel">
+                                <Grid ColumnDefinitions="*,Auto" Margin="4,2">
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding Display}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center" />
+
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                        <!-- 成功状态 -->
+                                        <TextBlock
+                                            Text="{Binding Latency, StringFormat={}{0:F0}ms}"
+                                            FontSize="11"
+                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                            VerticalAlignment="Center"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}" />
+
+                                        <!-- 失败状态 -->
+                                        <TextBlock
+                                            Text="✗"
+                                            FontSize="11"
+                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                            VerticalAlignment="Center"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}" />
+
+                                        <!-- 等待状态 -->
+                                        <TextBlock
+                                            Text="—"
+                                            FontSize="11"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            VerticalAlignment="Center"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <!-- 操作按钮 -->
+                <Button Grid.Row="1"
+                        Classes="Small"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding PerformCommand}"
+                        IsEnabled="{Binding !IsTesting}">
+                    <TextBlock Text="{Binding ButtonText}" />
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </local:WidgetBase.SlimTemplate>
 </local:WidgetBase>

@@ -114,18 +114,18 @@
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{x:Static lang:Resources.InstanceHomeView_PackageCountText}" />
                     </StackPanel>
-                    <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
                         <icons:PackIconLucide
                             Grid.Column="0"
                             Height="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlAccentForegroundBrush}"
                             Kind="Boxes" />
                         <TextBlock
-                            Grid.Column="2"
+                            Grid.Column="1"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.InstanceHomeView_SetupTitle}" />
                         <Button
-                            Grid.Column="4"
+                            Grid.Column="2"
                             Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                             CommandParameter="{x:Type v:InstanceSetupView}"
                             Theme="{StaticResource SectionHeaderButtonTheme}">
@@ -137,7 +137,17 @@
                         </Button>
                     </Grid>
                     <husk:Card Grid.Row="2" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                               BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
+                               BorderThickness="0">
+                        <husk:Card.CornerRadius>
+                            <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                <Binding
+                                    RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}"
+                                    Path="CornerRadius" />
+                                <Binding
+                                    RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}"
+                                    Path="Padding" />
+                            </MultiBinding>
+                        </husk:Card.CornerRadius>
                         <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="12">
                             <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="4">
                                 <TextBlock Grid.Row="0" Text="{x:Static lang:Resources.InstanceHomeView_SetupTypeText}"
@@ -173,8 +183,8 @@
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="0"
-            RowDefinitions="Auto,12,*">
-            <Grid Grid.Row="0" ColumnDefinitions="*,12,Auto">
+            RowDefinitions="Auto,*" RowSpacing="12">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
@@ -182,7 +192,7 @@
                     Text="{x:Static lang:Resources.InstanceHomeView_ActivitiesTitle}" />
                 <Button
                     Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                     CommandParameter="{x:Type v:InstanceActivitiesView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
@@ -193,8 +203,8 @@
                     </StackPanel>
                 </Button>
             </Grid>
-            <husk:Card Grid.Row="2">
-                <Grid RowDefinitions="*,12,Auto">
+            <husk:Card Grid.Row="1">
+                <Grid RowDefinitions="*,Auto" RowSpacing="12">
                     <Panel
                         Grid.Row="0"
                         Width="122"
@@ -210,23 +220,43 @@
                                        Text="{Binding TotalPlayTime,StringFormat={}{0:0.0},FallbackValue=12.4}" />
                         </StackPanel>
                     </Panel>
-                    <StackPanel Grid.Row="2" Spacing="8">
+                    <StackPanel Grid.Row="1" Spacing="8">
                         <husk:Card Background="Transparent">
-                            <Grid ColumnDefinitions="Auto,4,*,4,Auto">
+                            <husk:Card.CornerRadius>
+                                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                    <Binding
+                                        RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}"
+                                        Path="CornerRadius" />
+                                    <Binding
+                                        RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}"
+                                        Path="Padding" />
+                                </MultiBinding>
+                            </husk:Card.CornerRadius>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
                                 <fi:SymbolIcon
                                     Grid.Column="0"
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="HourglassHalf" />
-                                <TextBlock Grid.Column="4" Text="{Binding LastPlayTime,FallbackValue=52 mins}" />
+                                <TextBlock Grid.Column="2" Text="{Binding LastPlayTime,FallbackValue=52 mins}" />
                             </Grid>
                         </husk:Card>
                         <husk:Card Background="Transparent">
-                            <Grid ColumnDefinitions="Auto,4,*,4,Auto">
+                            <husk:Card.CornerRadius>
+                                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                    <Binding
+                                        RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}"
+                                        Path="CornerRadius" />
+                                    <Binding
+                                        RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}"
+                                        Path="Padding" />
+                                </MultiBinding>
+                            </husk:Card.CornerRadius>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
                                 <fi:SymbolIcon
                                     Grid.Column="0"
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Clock" />
-                                <TextBlock Grid.Column="4" Text="{Binding LastPlayedAt,FallbackValue=one day ago}" />
+                                <TextBlock Grid.Column="2" Text="{Binding LastPlayedAt,FallbackValue=one day ago}" />
                             </Grid>
                         </husk:Card>
                     </StackPanel>
@@ -237,8 +267,8 @@
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="2"
-            RowDefinitions="Auto,12,*">
-            <Grid Grid.Row="0" ColumnDefinitions="*,12,Auto">
+            RowDefinitions="Auto,*" RowSpacing="12">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
@@ -246,7 +276,7 @@
                     Text="{x:Static lang:Resources.InstanceHomeView_WidgetsTitle}" />
                 <Button
                     Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                     CommandParameter="{x:Type v:InstanceWidgetsView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
@@ -258,11 +288,11 @@
                 </Button>
             </Grid>
             <Panel
-                Grid.Row="2">
+                Grid.Row="1">
                 <StackPanel VerticalAlignment="Center"
                             Spacing="8"
                             IsVisible="{Binding PinnedWidgets.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
-                    <icons:PackIconLucide Kind="Microchip" Height="{StaticResource ExtraLargeFontSize}"
+                    <icons:PackIconLucide Kind="LayoutGrid" Height="{StaticResource ExtraLargeFontSize}"
                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                           Width="{StaticResource ExtraLargeFontSize}"
                                           HorizontalAlignment="Center" />
@@ -280,7 +310,9 @@
                                 <husk:Card>
                                     <Grid RowDefinitions="Auto,*" RowSpacing="8">
                                         <husk:IconLabel Grid.Row="0" Icon="{Binding Icon}"
-                                                        Text="{Binding Title}" Spacing="8" />
+                                                        Text="{Binding Title}"
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Spacing="8" />
                                         <ContentControl Grid.Row="1" Content="{Binding}"
                                                         ContentTemplate="{Binding SlimTemplate}" />
                                     </Grid>
