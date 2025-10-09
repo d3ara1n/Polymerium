@@ -119,7 +119,7 @@
                             Grid.Column="0"
                             Height="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlAccentForegroundBrush}"
-                            Kind="Boxes" />
+                            Kind="Pyramid" />
                         <TextBlock
                             Grid.Column="1"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
