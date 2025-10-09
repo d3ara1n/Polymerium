@@ -5,6 +5,7 @@
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
+           xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
            Background="{x:Null}"
            x:Class="Polymerium.App.Views.LandingView"
@@ -20,10 +21,17 @@
                            Height="48"
                            Width="48"
                            Opacity="0.9" />
-                    <StackPanel VerticalAlignment="Center" Spacing="2">
-                        <TextBlock Text="Portal"
-                                   FontSize="24"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Welcome Back"
+                                   FontSize="{StaticResource ExtraLargeFontSize}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                    <GradientStop Offset="0" Color="{DynamicResource Accent6Color}" />
+                                    <GradientStop Offset="1" Color="{DynamicResource Accent9Color}" />
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
                         <TextBlock Text="Quick access to your gaming world"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
@@ -31,7 +39,7 @@
 
                 <!-- Quick Stats -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                    <StackPanel Spacing="2">
+                    <StackPanel>
                         <TextBlock Text="5"
                                    FontSize="{StaticResource ExtraLargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -40,7 +48,7 @@
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
-                    <StackPanel Spacing="2">
+                    <StackPanel>
                         <TextBlock Text="2"
                                    FontSize="{StaticResource ExtraLargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -57,74 +65,40 @@
                 <TextBlock Text="Continue Playing"
                            FontSize="16"
                            FontWeight="{StaticResource ControlStrongFontWeight}" />
-
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <husk:Card Grid.Column="0" Padding="0">
-                        <Button Theme="{StaticResource GhostButtonTheme}"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                Padding="0">
-                            <Grid ColumnDefinitions="Auto,*,Auto" Height="120">
-                                <!-- Screenshot/Thumbnail -->
-                                <Border Grid.Column="0"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Panel>
-                                        <Image Source="/Assets/Images/Placeholders/Dirt.png"
-                                               Stretch="UniformToFill" />
-                                        <Border Background="#80000000"
-                                                CornerRadius="{StaticResource MediumCornerRadius}">
-                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                        Spacing="8">
-                                                <icons:PackIconLucide Kind="Play"
-                                                                      Width="32"
-                                                                      Height="32"
-                                                                      Foreground="White" />
-                                                <TextBlock Text="Continue"
-                                                           Foreground="White"
-                                                           FontSize="12"
-                                                           FontWeight="SemiBold" />
-                                            </StackPanel>
-                                        </Border>
-                                    </Panel>
-                                </Border>
-
-                                <!-- Instance Info -->
-                                <StackPanel Grid.Column="1" Margin="16,12" Spacing="8" VerticalAlignment="Center">
-                                    <TextBlock Text="All the Mods 10"
-                                               FontSize="18"
-                                               FontWeight="SemiBold"
-                                               TextTrimming="CharacterEllipsis" />
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <husk:Card Grid.Column="0" CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="All the Mods 10" FontSize="{StaticResource LargeFontSize}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <husk:Tag Content="1.21.1" Padding="6,2" />
-                                        <husk:Tag Content="NeoForge" Padding="6,2" />
+                                        <husk:Tag Content="1.21.1" />
+                                        <husk:Tag Content="NeoForge" />
                                     </StackPanel>
-                                    <TextBlock Text="Last played 2 hours ago"
-                                               FontSize="12"
-                                               Opacity="0.6" />
                                 </StackPanel>
-
-                                <!-- Quick Actions -->
-                                <StackPanel Grid.Column="2" Margin="12" Spacing="8" VerticalAlignment="Center">
-                                    <Button Theme="{StaticResource OutlineButtonTheme}"
-                                            Width="36"
-                                            Height="36"
-                                            Padding="0"
-                                            ToolTip.Tip="View Instance">
-                                        <icons:PackIconLucide Kind="Eye" Width="16" Height="16" />
-                                    </Button>
-                                    <Button Theme="{StaticResource OutlineButtonTheme}"
-                                            Width="36"
-                                            Height="36"
-                                            Padding="0"
-                                            ToolTip.Tip="Open Folder">
-                                        <icons:PackIconLucide Kind="FolderOpen" Width="16" Height="16" />
-                                    </Button>
-                                </StackPanel>
+                                <Border Grid.Column="1" Width="{Binding $self.Bounds.Height}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Border.Background>
+                                        <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
+                                    </Border.Background>
+                                </Border>
                             </Grid>
-                        </Button>
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
+                                <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
+                                    <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource SmallFontSize}" />
+                                </Button>
+                                <Button Grid.Column="1" Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
+                                    <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource SmallFontSize}" />
+                                </Button>
+                                <Button Grid.Column="3" Classes="Primary Small">
+                                    <fi:SymbolIcon Symbol="Play" FontSize="{StaticResource SmallFontSize}" />
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </husk:Card>
                     <husk:Card Grid.Column="1" Padding="0">
-                        
+
                     </husk:Card>
                 </Grid>
             </StackPanel>
