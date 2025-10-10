@@ -8,7 +8,8 @@
     <local:WidgetBase.FullTemplate>
         <DataTemplate x:DataType="local:NoteWidget">
             <TextBox Theme="{StaticResource FieldTextBoxTheme}" Text="{Binding NoteText,Mode=TwoWay}"
-                     AcceptsReturn="True" AcceptsTab="True" />
+                     AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
         </DataTemplate>
     </local:WidgetBase.FullTemplate>
     <local:WidgetBase.SlimTemplate>
