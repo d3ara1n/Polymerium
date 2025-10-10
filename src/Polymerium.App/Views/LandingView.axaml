@@ -115,10 +115,10 @@
                 <husk:Card Grid.Column="2">
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                         <StackPanel Grid.Column="0" Spacing="6">
-                            <icons:PackIconLucide Kind="Squirrel" Height="{StaticResource ExtraLargeFontSize}"
+                            <icons:PackIconLucide Kind="Nut" Height="{StaticResource ExtraLargeFontSize}"
                                                   Width="{StaticResource ExtraLargeFontSize}"
                                                   Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                            <TextBlock Text="Squirrels" />
+                            <TextBlock Text="Nuts" />
                         </StackPanel>
                         <TextBlock Grid.Column="1" Text="42" FontSize="{StaticResource ExtraLargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" VerticalAlignment="Center" />
