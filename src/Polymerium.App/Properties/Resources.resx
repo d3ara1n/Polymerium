@@ -1290,4 +1290,7 @@
     <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
         <value>Mod Loader</value>
     </data>
+    <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
+        <value>Description</value>
+    </data>
 </root>
