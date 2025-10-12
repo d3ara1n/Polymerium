@@ -1275,6 +1275,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string InstanceAssetsView_DescriptionLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_DescriptionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string InstanceAssetsView_DetailsLabelText {

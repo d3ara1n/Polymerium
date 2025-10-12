@@ -1281,4 +1281,7 @@
     <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
         <value>包数量</value>
     </data>
+    <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
+        <value>描述</value>
+    </data>
 </root>
