@@ -8,7 +8,7 @@
            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
            x:Class="Polymerium.App.Views.LandingView"
-           x:DataType="vm:LandingViewModel"
+           x:DataType="vm:LandingViewModel" Background="{x:Null}"
            IsHeaderVisible="False" Padding="{StaticResource PageHeaderlessContentMargin}">
     <StackPanel Spacing="24">
 
@@ -40,7 +40,7 @@
             <TextBlock Text="Continue Playing"
                        FontWeight="{StaticResource ControlStrongFontWeight}" />
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <husk:Card Grid.Column="0" CornerRadius="{StaticResource MediumCornerRadius}">
+                <husk:Card Grid.Column="0" CornerRadius="{StaticResource MediumCornerRadius}" BorderBrush="{StaticResource ControlAccentBorderBrush}" BorderThickness="2">
                     <Grid ColumnDefinitions="*,Auto">
                         <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="12">
                             <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="12">
@@ -78,8 +78,23 @@
                     </Grid>
                 </husk:Card>
                 <!-- User Face -->
-                <husk:Card Grid.Column="1" Padding="0">
-
+                <husk:Card Grid.Column="1">
+                    <Grid RowDefinitions="*,Auto" ColumnDefinitions="Auto,*" RowSpacing="12" ColumnSpacing="12">
+                        <Border Grid.Row="0" Grid.Column="0" Width="{Binding $self.Bounds.Height}"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                            <Border.Background>
+                                <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" />
+                            </Border.Background>
+                        </Border>
+                        <StackPanel Grid.Row="0" Grid.Column="1">
+                            <TextBlock Text="Stewie Griffin" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <TextBlock Text="Trial" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        </StackPanel>
+                        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
+                            <husk:IconLabel Icon="PersonBoard" Text="Switch" />
+                        </Button>
+                    </Grid>
                 </husk:Card>
             </Grid>
         </StackPanel>

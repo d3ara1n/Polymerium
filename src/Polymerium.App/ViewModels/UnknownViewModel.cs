@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
@@ -16,19 +18,31 @@ public partial class UnknownViewModel(
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IBrush Accent1Brush { get; set; } = Brushes.Black;
+    [ObservableProperty]
+    public partial IBrush Accent2Brush { get; set; } = Brushes.Black;
+    [ObservableProperty]
+    public partial IBrush Accent3Brush { get; set; } = Brushes.Black;
+
+    #endregion
 
     #region Overrides
 
     protected override async Task OnInitializeAsync()
     {
-        await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
-
         if (Application.Current is { PlatformSettings: not null })
         {
             var accent1 = Application.Current.PlatformSettings.GetColorValues().AccentColor1;
             var accent2 = Application.Current.PlatformSettings.GetColorValues().AccentColor2;
             var accent3 = Application.Current.PlatformSettings.GetColorValues().AccentColor3;
+
+            Accent1Brush = new SolidColorBrush(accent1);
         }
+
+        await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
     }
 
     #endregion
