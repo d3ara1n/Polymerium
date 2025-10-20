@@ -14,92 +14,92 @@
                      Context="{Binding Context,Mode=OneWay}"
                      x:Class="Polymerium.App.Views.InstanceView">
     <Panel>
-        <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState">
-            <husk:SwitchCase Value="Idle" />
-            <husk:SwitchCase Value="Updating">
-                <Rectangle Margin="-250" Opacity="0.2">
-                    <Rectangle.Fill>
-                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
-                                     Stretch="Fill">
-                            <VisualBrush.Visual>
-                                <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250"
-                                       Width="250" />
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.Fill>
-                    <Rectangle.Styles>
-                        <Style Selector="Rectangle">
-                            <Style.Animations>
-                                <Animation Duration="0:0:5" IterationCount="Infinite">
-                                    <KeyFrame Cue="0%">
-                                        <Setter Property="TranslateTransform.Y" Value="250" />
-                                    </KeyFrame>
-                                    <KeyFrame Cue="100%">
-                                        <Setter Property="TranslateTransform.Y" Value="0" />
-                                    </KeyFrame>
-                                </Animation>
-                            </Style.Animations>
-                        </Style>
-                    </Rectangle.Styles>
-                </Rectangle>
-            </husk:SwitchCase>
-            <husk:SwitchCase Value="Deploying">
-                <Rectangle Margin="-250" Opacity="0.2">
-                    <Rectangle.Fill>
-                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
-                                     Stretch="Fill">
-                            <VisualBrush.Visual>
-                                <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250"
-                                       Width="250" />
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.Fill>
-                    <Rectangle.Styles>
-                        <Style Selector="Rectangle">
-                            <Style.Animations>
-                                <Animation Duration="0:0:5" IterationCount="Infinite">
-                                    <KeyFrame Cue="0%">
-                                        <Setter Property="TranslateTransform.X" Value="0" />
-                                        <Setter Property="TranslateTransform.Y" Value="250" />
-                                    </KeyFrame>
-                                    <KeyFrame Cue="100%">
-                                        <Setter Property="TranslateTransform.X" Value="250" />
-                                        <Setter Property="TranslateTransform.Y" Value="0" />
-                                    </KeyFrame>
-                                </Animation>
-                            </Style.Animations>
-                        </Style>
-                    </Rectangle.Styles>
-                </Rectangle>
-            </husk:SwitchCase>
-            <husk:SwitchCase Value="Running">
-                <Rectangle Margin="-250" Opacity="0.2">
-                    <Rectangle.Fill>
-                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
-                                     Stretch="Fill">
-                            <VisualBrush.Visual>
-                                <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250"
-                                       Width="250" />
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.Fill>
-                    <Rectangle.Styles>
-                        <Style Selector="Rectangle">
-                            <Style.Animations>
-                                <Animation Duration="0:0:5" IterationCount="Infinite">
-                                    <KeyFrame Cue="0%">
-                                        <Setter Property="TranslateTransform.X" Value="250" />
-                                    </KeyFrame>
-                                    <KeyFrame Cue="100%">
-                                        <Setter Property="TranslateTransform.X" Value="0" />
-                                    </KeyFrame>
-                                </Animation>
-                            </Style.Animations>
-                        </Style>
-                    </Rectangle.Styles>
-                </Rectangle>
-            </husk:SwitchCase>
-        </husk:SwitchPresenter>
+        <!-- <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState"> -->
+        <!--     <husk:SwitchCase Value="Idle" /> -->
+        <!--     <husk:SwitchCase Value="Updating"> -->
+        <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
+        <!--             <Rectangle.Fill> -->
+        <!--                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" -->
+        <!--                              Stretch="Fill"> -->
+        <!--                     <VisualBrush.Visual> -->
+        <!--                         <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250" -->
+        <!--                                Width="250" /> -->
+        <!--                     </VisualBrush.Visual> -->
+        <!--                 </VisualBrush> -->
+        <!--             </Rectangle.Fill> -->
+        <!--             <Rectangle.Styles> -->
+        <!--                 <Style Selector="Rectangle"> -->
+        <!--                     <Style.Animations> -->
+        <!--                         <Animation Duration="0:0:5" IterationCount="Infinite"> -->
+        <!--                             <KeyFrame Cue="0%"> -->
+        <!--                                 <Setter Property="TranslateTransform.Y" Value="250" /> -->
+        <!--                             </KeyFrame> -->
+        <!--                             <KeyFrame Cue="100%"> -->
+        <!--                                 <Setter Property="TranslateTransform.Y" Value="0" /> -->
+        <!--                             </KeyFrame> -->
+        <!--                         </Animation> -->
+        <!--                     </Style.Animations> -->
+        <!--                 </Style> -->
+        <!--             </Rectangle.Styles> -->
+        <!--         </Rectangle> -->
+        <!--     </husk:SwitchCase> -->
+        <!--     <husk:SwitchCase Value="Deploying"> -->
+        <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
+        <!--             <Rectangle.Fill> -->
+        <!--                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" -->
+        <!--                              Stretch="Fill"> -->
+        <!--                     <VisualBrush.Visual> -->
+        <!--                         <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250" -->
+        <!--                                Width="250" /> -->
+        <!--                     </VisualBrush.Visual> -->
+        <!--                 </VisualBrush> -->
+        <!--             </Rectangle.Fill> -->
+        <!--             <Rectangle.Styles> -->
+        <!--                 <Style Selector="Rectangle"> -->
+        <!--                     <Style.Animations> -->
+        <!--                         <Animation Duration="0:0:5" IterationCount="Infinite"> -->
+        <!--                             <KeyFrame Cue="0%"> -->
+        <!--                                 <Setter Property="TranslateTransform.X" Value="0" /> -->
+        <!--                                 <Setter Property="TranslateTransform.Y" Value="250" /> -->
+        <!--                             </KeyFrame> -->
+        <!--                             <KeyFrame Cue="100%"> -->
+        <!--                                 <Setter Property="TranslateTransform.X" Value="250" /> -->
+        <!--                                 <Setter Property="TranslateTransform.Y" Value="0" /> -->
+        <!--                             </KeyFrame> -->
+        <!--                         </Animation> -->
+        <!--                     </Style.Animations> -->
+        <!--                 </Style> -->
+        <!--             </Rectangle.Styles> -->
+        <!--         </Rectangle> -->
+        <!--     </husk:SwitchCase> -->
+        <!--     <husk:SwitchCase Value="Running"> -->
+        <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
+        <!--             <Rectangle.Fill> -->
+        <!--                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" -->
+        <!--                              Stretch="Fill"> -->
+        <!--                     <VisualBrush.Visual> -->
+        <!--                         <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250" -->
+        <!--                                Width="250" /> -->
+        <!--                     </VisualBrush.Visual> -->
+        <!--                 </VisualBrush> -->
+        <!--             </Rectangle.Fill> -->
+        <!--             <Rectangle.Styles> -->
+        <!--                 <Style Selector="Rectangle"> -->
+        <!--                     <Style.Animations> -->
+        <!--                         <Animation Duration="0:0:5" IterationCount="Infinite"> -->
+        <!--                             <KeyFrame Cue="0%"> -->
+        <!--                                 <Setter Property="TranslateTransform.X" Value="250" /> -->
+        <!--                             </KeyFrame> -->
+        <!--                             <KeyFrame Cue="100%"> -->
+        <!--                                 <Setter Property="TranslateTransform.X" Value="0" /> -->
+        <!--                             </KeyFrame> -->
+        <!--                         </Animation> -->
+        <!--                     </Style.Animations> -->
+        <!--                 </Style> -->
+        <!--             </Rectangle.Styles> -->
+        <!--         </Rectangle> -->
+        <!--     </husk:SwitchCase> -->
+        <!-- </husk:SwitchPresenter> -->
         <husk:DropContainer DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
             <husk:DropContainer.Overlay>
                 <Panel HorizontalAlignment="Center" VerticalAlignment="Center">

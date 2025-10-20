@@ -20,5 +20,6 @@
         <ResourceInclude Source="/Controls/StorageInstanceButton.axaml" />
         <ResourceInclude Source="/Controls/InstancePackageDependencyButton.axaml" />
         <ResourceInclude Source="/Controls/InstanceActionCard.axaml" />
+        <ResourceInclude Source="/Controls/ProgressBar.axaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
