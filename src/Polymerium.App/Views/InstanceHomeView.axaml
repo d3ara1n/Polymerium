@@ -389,11 +389,11 @@
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Deploying">
                         <Panel Margin="8">
-                            <ProgressBar
-                                CornerRadius="{StaticResource MediumCornerRadius}"
-                                IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
-                                Value="{Binding DeployingProgressCurrent, Mode=OneWay}"
-                                Maximum="{Binding DeployingProgressTotal, Mode=OneWay}">
+                            <ProgressBar Theme="{StaticResource LaunchProgressBarTheme}"
+                                         CornerRadius="{StaticResource MediumCornerRadius}"
+                                         IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
+                                         Value="{Binding DeployingProgressCurrent, Mode=OneWay}"
+                                         Maximum="{Binding DeployingProgressTotal, Mode=OneWay}">
                                 <ProgressBar.Transitions>
                                     <Transitions>
                                         <DoubleTransition
@@ -421,11 +421,44 @@
                         </Panel>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Running">
-                        <TextBlock Loaded="Timer_OnLoaded" Unloaded="Timer_OnUnloaded"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="{StaticResource ExtraLargeFontSize}"
-                                   Text="{Binding TimerCount,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay,FallbackValue=0:0:24}" />
+                        <Panel>
+                            <Border
+                                CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}}"
+                                ClipToBounds="True">
+                                <Rectangle Margin="-250" Opacity="0.2">
+                                    <Rectangle.Fill>
+                                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250"
+                                                     TileMode="Tile"
+                                                     Stretch="Fill">
+                                            <VisualBrush.Visual>
+                                                <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill"
+                                                       Height="250"
+                                                       Width="250" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Rectangle.Fill>
+                                    <Rectangle.Styles>
+                                        <Style Selector="Rectangle">
+                                            <Style.Animations>
+                                                <Animation Duration="0:0:5" IterationCount="Infinite">
+                                                    <KeyFrame Cue="0%">
+                                                        <Setter Property="TranslateTransform.X" Value="250" />
+                                                    </KeyFrame>
+                                                    <KeyFrame Cue="100%">
+                                                        <Setter Property="TranslateTransform.X" Value="0" />
+                                                    </KeyFrame>
+                                                </Animation>
+                                            </Style.Animations>
+                                        </Style>
+                                    </Rectangle.Styles>
+                                </Rectangle>
+                            </Border>
+                            <TextBlock Loaded="Timer_OnLoaded" Unloaded="Timer_OnUnloaded"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="{StaticResource ExtraLargeFontSize}"
+                                       Text="{Binding TimerCount,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay,FallbackValue=0:0:24}" />
+                        </Panel>
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>

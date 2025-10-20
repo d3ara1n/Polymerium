@@ -1,0 +1,134 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.PreviewWith>
+        <Grid ColumnDefinitions="*,32,*" Background="White">
+            <StackPanel Grid.Column="0" Width="256" Margin="32" Spacing="36" VerticalAlignment="Center">
+                <ProgressBar Value="50" Height="64" Theme="{StaticResource LaunchProgressBarTheme}"
+                             ShowProgressText="True">
+                    <!-- <ProgressBar.Styles> -->
+                    <!--     <Style Selector="ProgressBar"> -->
+                    <!--         <Style.Animations> -->
+                    <!--             <Animation Duration="0:0:1" IterationCount="Infinite" Easing="QuadraticEaseOut"> -->
+                    <!--                 <KeyFrame Cue="0%"> -->
+                    <!--                     <Setter Property="Value" Value="0" /> -->
+                    <!--                 </KeyFrame> -->
+                    <!--                 <KeyFrame Cue="100%"> -->
+                    <!--                     <Setter Property="Value" Value="100" /> -->
+                    <!--                 </KeyFrame> -->
+                    <!--             </Animation> -->
+                    <!--         </Style.Animations> -->
+                    <!--     </Style> -->
+                    <!-- </ProgressBar.Styles> -->
+                </ProgressBar>
+                <ProgressBar Value="50" IsIndeterminate="True" Theme="{StaticResource LaunchProgressBarTheme}"
+                             ShowProgressText="True" />
+            </StackPanel>
+        </Grid>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="LaunchProgressBarTheme" TargetType="ProgressBar">
+        <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="TextBlock.FontSize" Value="{StaticResource SmallFontSize}" />
+        <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel x:Name="Container" Margin="3">
+                    <Panel.Resources>
+                        <SolidColorBrush x:Key="BarBrush" Color="{StaticResource White5Color}" />
+                    </Panel.Resources>
+                    <Border Background="{StaticResource ControlBackgroundBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                    <Panel Name="Determinate">
+                       <Border Name="PART_Indicator" HorizontalAlignment="Left"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                ClipToBounds="True">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="6" Opacity="0.5" OffsetX="0" OffsetY="0"
+                                                  Color="{DynamicResource Accent9Color}" />
+                            </Border.Effect>
+                            <Rectangle Margin="-80">
+                                <Rectangle.Fill>
+                                    <DrawingBrush DestinationRect="0,0,80,80" SourceRect="0,0,80,80"
+                                                  Stretch="Fill"
+                                                  TileMode="Tile" Transform="rotate(30deg)">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="{StaticResource BarBrush}"
+                                                                 Geometry="M0,0 L0,80 L20,80 L20,0 Z" />
+                                                <GeometryDrawing Brush="{StaticResource BarBrush}"
+                                                                 Geometry="M60,0 L60,80 L80,80 L80,0 Z" />
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.Styles>
+                                    <Style Selector="Rectangle">
+                                        <Style.Animations>
+                                            <Animation Duration="0:0:2.5" IterationCount="Infinite">
+                                                <KeyFrame Cue="0%">
+                                                    <Setter Property="TranslateTransform.X" Value="80" />
+                                                </KeyFrame>
+                                                <KeyFrame Cue="100%">
+                                                    <Setter Property="TranslateTransform.X" Value="-14" />
+                                                </KeyFrame>
+                                            </Animation>
+                                        </Style.Animations>
+                                    </Style>
+                                </Rectangle.Styles>
+                            </Rectangle>
+                        </Border>
+                    </Panel>
+                    <Panel Name="Indeterminate" IsVisible="False">
+                        <Rectangle Margin="-80">
+                            <Rectangle.Fill>
+                                <DrawingBrush DestinationRect="0,0,80,80" SourceRect="0,0,80,80"
+                                              Stretch="Fill"
+                                              TileMode="Tile" Transform="rotate(30deg)">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Brush="{StaticResource BarBrush}"
+                                                             Geometry="M0,0 L0,80 L20,80 L20,0 Z" />
+                                            <GeometryDrawing Brush="{StaticResource BarBrush}"
+                                                             Geometry="M60,0 L60,80 L80,80 L80,0 Z" />
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                            <Rectangle.Styles>
+                                <Style Selector="Rectangle">
+                                    <Style.Animations>
+                                        <Animation Duration="0:0:2.5" IterationCount="Infinite">
+                                            <KeyFrame Cue="0%">
+                                                <Setter Property="TranslateTransform.X" Value="80" />
+                                            </KeyFrame>
+                                            <KeyFrame Cue="100%">
+                                                <Setter Property="TranslateTransform.X" Value="-14" />
+                                            </KeyFrame>
+                                        </Animation>
+                                    </Style.Animations>
+                                </Style>
+                            </Rectangle.Styles>
+                        </Rectangle>
+                    </Panel>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:disabled /template/ Panel#Container">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^:indeterminate">
+            <Style Selector="^ /template/ Panel#Determinate">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ Panel#Indeterminate">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>
