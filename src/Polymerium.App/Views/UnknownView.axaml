@@ -315,6 +315,13 @@
                     </husk:Card>
                 </husk:DropContainer>
             </TabItem>
+            <TabItem Header="Colors">
+                <WrapPanel LineSpacing="8" ItemSpacing="8">
+                    <Border Height="64" Width="64" Background="{Binding Accent1Brush}" />
+                    <Border Height="64" Width="64" Background="{Binding Accent2Brush}" />
+                    <Border Height="64" Width="64" Background="{Binding Accent3Brush}" />
+                </WrapPanel>
+            </TabItem>
         </TabControl>
     </StackPanel>
 </husk:Page>
