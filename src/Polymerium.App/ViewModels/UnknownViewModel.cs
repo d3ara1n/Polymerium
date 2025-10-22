@@ -101,7 +101,7 @@ public partial class UnknownViewModel(
                 Spacing = 8d,
                 Children = { new TextBox { Text = $"DRAWER {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
             };
-            overlayService.PopDrawer(drawer);
+            overlayService.PopSidebar(drawer);
         }
     }
 

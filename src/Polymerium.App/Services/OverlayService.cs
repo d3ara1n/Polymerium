@@ -33,7 +33,7 @@ public class OverlayService
 
     #region Drawers
 
-    public void PopDrawer(Sidebar sidebar) => _drawerHandler?.Invoke(sidebar);
+    public void PopSidebar(Sidebar sidebar) => _drawerHandler?.Invoke(sidebar);
 
     #endregion
 

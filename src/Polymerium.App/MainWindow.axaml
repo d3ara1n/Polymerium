@@ -72,43 +72,62 @@
                        IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
                 <StackPanel DockPanel.Dock="Right">
                     <husk:ButtonGroup BorderThickness="0">
-                        <!-- <Button x:Name="NotificationButton" Padding="10"> -->
-                        <!--     <icons:PackIconLucide -->
-                        <!--         Width="10" -->
-                        <!--         Height="10" -->
-                        <!--         Kind="Bell" /> -->
-                        <!-- </Button> -->
+                        <husk:ButtonGroup.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Padding" Value="10" />
+                            </Style>
+                            <Style Selector="fi|SymbolIcon">
+                                <Setter Property="FontSize" Value="10" />
+                            </Style>
+                            <Style Selector="icons|PackIconLucide">
+                                <Setter Property="Height" Value="10" />
+                                <Setter Property="Width" Value="10" />
+                            </Style>
+                        </husk:ButtonGroup.Styles>
+                        <Button x:Name="NotificationButton" Command="{Binding OpenNotificationSidebarCommand}">
+                            <icons:PackIconLucide Kind="Bell" />
+                        </Button>
                         <Button
                             x:Name="MinimizeButton"
-                            Padding="10"
                             Click="MinimizeButton_OnClick">
-                            <fi:SymbolIcon Symbol="Subtract" FontSize="10" />
+                            <icons:PackIconLucide Kind="Minus" />
                         </Button>
                         <Button
                             x:Name="ToggleMaximizeButton"
-                            Padding="10"
                             Click="ToggleMaximizeButton_OnClick">
                             <husk:SwitchPresenter Value="{Binding $parent[husk:AppWindow].IsMaximized,Mode=OneWay}"
                                                   TargetType="x:Boolean">
                                 <husk:SwitchCase Value="True">
-                                    <fi:SymbolIcon Symbol="SquareMultiple" FontSize="10" />
+                                    <icons:PackIconLucide Kind="SquareSquare" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="False">
-                                    <fi:SymbolIcon Symbol="Square" FontSize="10" />
+                                    <icons:PackIconLucide Kind="Square" />
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
                         </Button>
                         <Button
                             x:Name="CloseButton"
-                            Padding="10"
                             Click="CloseButton_OnClick">
-                            <fi:SymbolIcon Symbol="Dismiss" FontSize="10" />
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover icons|PackIconLucide">
+                                    <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
+                                </Style>
+                            </Button.Styles>
+                            <icons:PackIconLucide Kind="X">
+                                <icons:PackIconLucide.Transitions>
+                                    <Transitions>
+                                        <BrushTransition Property="Foreground" Easing="SineEaseOut"
+                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Transitions>
+                                </icons:PackIconLucide.Transitions>
+                            </icons:PackIconLucide>
                         </Button>
                     </husk:ButtonGroup>
                 </StackPanel>
                 <StackPanel
-                    Margin="12,12,12,0"
+                    Margin="12,0,0,-9"
                     IsHitTestVisible="False"
+                    VerticalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="6">
                     <StackPanel.Effect>
@@ -116,7 +135,7 @@
                     </StackPanel.Effect>
                     <icons:PackIconLucide Height="{StaticResource MediumFontSize}"
                                           Width="{StaticResource MediumFontSize}" Kind="Squirrel"
-                                          VerticalAlignment="Center" />
+                                          VerticalAlignment="Center" HasMirrorTransform="True" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"

@@ -1,8 +1,14 @@
-﻿using Huskui.Avalonia.Controls;
+﻿using Avalonia.Interactivity;
+using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Drawers;
 
 public partial class NotificationSidebar : Sidebar
 {
     public NotificationSidebar() => InitializeComponent();
+
+    private void DimissButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+    }
 }

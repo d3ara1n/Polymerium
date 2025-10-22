@@ -14,6 +14,7 @@ using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Dialogs;
+using Polymerium.App.Drawers;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
@@ -285,6 +286,13 @@ public partial class MainWindowContext : ObservableObject
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
                                                           typeof(InstanceSetupView)));
         }
+    }
+
+    [RelayCommand]
+    private void OpenNotificationSidebar()
+    {
+        var sidebar = new NotificationSidebar();
+        _overlayService.PopSidebar(sidebar);
     }
 
     #endregion
