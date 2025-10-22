@@ -80,15 +80,39 @@
                         </LinearGradientBrush>
                     </Border.OpacityMask>
                 </Border>
-                <Grid Margin="24" RowDefinitions="Auto,8,Auto">
-                    <husk:Tag Grid.Row="0" Content="{x:Static lang:Resources.InstanceHomeView_OverviewTitle}" />
-                    <TextBlock
-                        Grid.Row="2"
-                        FontSize="36"
-                        MaxLines="2"
-                        Text="{Binding Basic.Name}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="Wrap" />
+                <Grid Margin="24" RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="8"
+                      ColumnSpacing="8">
+                    <husk:Tag Grid.Column="0" Grid.Row="0"
+                              Content="{x:Static lang:Resources.InstanceHomeView_OverviewTitle}" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="1"
+                               Grid.ColumnSpan="2"
+                               FontSize="36"
+                               MaxLines="2"
+                               Text="{Binding Basic.Name}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="Wrap" />
+                    <Border Grid.Row="0" Grid.Column="1" IsVisible="False"
+                            Background="{StaticResource ControlAccentBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}" Padding="2">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                                    Padding="4">
+                                <Border.CornerRadius>
+                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                        <Binding Path="CornerRadius"
+                                                 RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                        <Binding Path="Padding"
+                                                 RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                    </MultiBinding>
+                                </Border.CornerRadius>
+                                <icons:PackIconLucide Kind="Star" Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}" />
+                            </Border>
+                            <TextBlock Grid.Column="1" Margin="4,0" VerticalAlignment="Center" Text="Favorite" />
+                        </Grid>
+                    </Border>
                 </Grid>
             </Panel>
         </husk:Card>
