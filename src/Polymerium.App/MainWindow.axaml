@@ -22,7 +22,7 @@
     MinHeight="460"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d" x:DataType="local:MainWindowContext">
+    mc:Ignorable="d" x:DataType="local:MainWindowContext" Icon="/Assets/Icon.ico">
     <husk:AppWindow.Styles>
         <Style Selector="husk|Dialog">
             <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
