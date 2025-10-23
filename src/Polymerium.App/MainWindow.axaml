@@ -64,7 +64,7 @@
                         TextAlignment="Center"
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
-                <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" />
+                <husk:Frame x:Name="Root" />
             </Panel>
         </DockPanel>
         <DockPanel x:Name="Sidebar" Grid.Column="1">

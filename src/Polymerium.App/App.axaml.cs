@@ -258,6 +258,9 @@ public class App : Application
         // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
         window.DataContext = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.AppHost.Services);
 
+        // MainWindowContext 没有 InitializeAsync 能力，这里代替进行初始化
+        navigation.Navigate<LandingView>();
+
         return window;
     }
 }
