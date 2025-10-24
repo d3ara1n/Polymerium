@@ -130,10 +130,20 @@ public class PersistenceService(IFreeSql freeSql)
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
+    public TimeSpan GetTotalPlayTime()
+    {
+        var totalSeconds = freeSql.Select<Activity>().Sum(x => (x.End - x.Begin).TotalSeconds);
+        return TimeSpan.FromSeconds((double)totalSeconds);
+    }
+
     public int GetActiveDays(string key) =>
         (int)freeSql.Select<Activity>().Where(x => x.Key == key).GroupBy(x => x.End.Date).Count();
 
+    public int GetActiveDays() => (int)freeSql.Select<Activity>().GroupBy(x => x.End.Date).Count();
+
     public int GetSessionCount(string key) => (int)freeSql.Select<Activity>().Where(x => x.Key == key).Count();
+
+    public int GetSessionCount() => (int)freeSql.Select<Activity>().Count();
 
     public int GetTotalPlayTimeRank(string key)
     {

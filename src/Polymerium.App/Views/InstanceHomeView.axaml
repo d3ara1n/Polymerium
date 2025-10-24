@@ -91,6 +91,7 @@
             </Style>
 
             <Style Selector="^:pressed /template/ Border#Background">
+                <Setter Property="Opacity" Value="0.9" />
                 <Setter Property="Effect">
                     <DropShadowEffect BlurRadius="10" Opacity="0.0" OffsetX="0" OffsetY="0"
                                       Color="{DynamicResource Accent9Color}" />
