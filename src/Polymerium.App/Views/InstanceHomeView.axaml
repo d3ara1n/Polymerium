@@ -29,28 +29,75 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Padding" Value="12,4" />
         </ControlTheme>
-        <ControlTheme
-            x:Key="LaunchButtonTheme"
-            BasedOn="{StaticResource {x:Type Button}}"
-            TargetType="Button">
+        <ControlTheme x:Key="LaunchButtonTheme" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="ClipToBounds" Value="False" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
-            <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
-            <Setter Property="BorderThickness" Value="0,0,0,3" />
-            <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
-            <Setter Property="BorderBrush" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
-            <Setter Property="RenderTransformOrigin" Value="50%,100%" />
-            <Setter Property="Transitions">
-                <Transitions>
-                    <TransformOperationsTransition Property="RenderTransform"
-                                                   Duration="{StaticResource ControlFastestAnimationDuration}" />
-                    <ThicknessTransition Property="BorderThickness"
-                                         Duration="{StaticResource ControlFastestAnimationDuration}" />
-                </Transitions>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Panel Margin="4">
+                        <Border Name="Background" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" Opacity="0.3" OffsetX="0" OffsetY="0"
+                                                  Color="{DynamicResource Accent9Color}" />
+                            </Border.Effect>
+                            <Border.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <BrushTransition Property="Background" Easing="SineEaseOut"
+                                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <EffectTransition Property="Effect" Easing="SineEaseOut"
+                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
+                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter.Transitions>
+                                <Transitions>
+                                    <TransformOperationsTransition Property="RenderTransform" Easing="CubicEaseOut"
+                                                                   Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </ContentPresenter.Transitions>
+                        </ContentPresenter>
+                    </Panel>
+                </ControlTemplate>
             </Setter>
 
-            <Style Selector="^:pressed">
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="RenderTransform" Value="scaleY(0.98)" />
+            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="RenderTransform" Value="scale(1.1)" />
+            </Style>
+
+
+            <Style Selector="^:pointerover /template/ Border#Background">
+                <Setter Property="Opacity" Value="0.75" />
+                <Setter Property="Effect">
+                    <DropShadowEffect BlurRadius="10" Opacity="0.9" OffsetX="0" OffsetY="0"
+                                      Color="{DynamicResource Accent9Color}" />
+                </Setter>
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Background">
+                <Setter Property="Effect">
+                    <DropShadowEffect BlurRadius="10" Opacity="0.0" OffsetX="0" OffsetY="0"
+                                      Color="{DynamicResource Accent9Color}" />
+                </Setter>
+            </Style>
+            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="RenderTransform" Value="scale(0.95)" />
             </Style>
         </ControlTheme>
     </controls:Subpage.Resources>
@@ -496,13 +543,23 @@
                         <Grid ColumnDefinitions="Auto,0,Auto">
                             <Button
                                 Grid.Column="0"
-                                Margin="8"
+                                Margin="4"
                                 Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                 BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                                 Foreground="{StaticResource ControlBlackForegroundBrush}"
                                 Command="{Binding PlayCommand}"
                                 IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Theme="{StaticResource LaunchButtonTheme}">
+                                <Button.CornerRadius>
+                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                        <Binding
+                                            RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}"
+                                            Path="CornerRadius" />
+                                        <Binding
+                                            RelativeSource="{RelativeSource Self}"
+                                            Path="Margin" />
+                                    </MultiBinding>
+                                </Button.CornerRadius>
                                 <StackPanel VerticalAlignment="Center" Spacing="6">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
