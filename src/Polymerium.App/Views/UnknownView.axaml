@@ -125,7 +125,7 @@
                             </TextBlock>
                         </StackPanel>
                     </husk:GrowlItem>
-                    <Slider Value="50" />
+                    <Slider Value="{Binding #Notification.Progress, Mode=TwoWay}" />
                     <DockPanel>
                         <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
                             <ComboBoxItem Content="这是一个 1" />
