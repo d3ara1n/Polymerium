@@ -4,80 +4,12 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-           xmlns:async="using:AsyncImageLoader"
            xmlns:vm="using:Polymerium.App.ViewModels"
-           xmlns:m="using:Polymerium.App.Models"
-           xmlns:v="using:Polymerium.App.Views"
            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            Header="{x:Static lang:Resources.MarketplacePortalView_Title}" Padding="0"
            x:Class="Polymerium.App.Views.MarketplacePortalView" x:DataType="vm:MarketplacePortalViewModel">
-    <husk:Page.Resources>
-        <DataTemplate x:Key="BigNewsDataTemplate" DataType="m:MinecraftNewsModel">
-            <Grid RowDefinitions="4*,Auto,*" Width="342">
-                <Border Grid.Row="0" Grid.RowSpan="3" Margin="16"
-                        CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Border.Background>
-                        <ImageBrush async:ImageBrushLoader.Source="{Binding Cover}" Stretch="Fill" />
-                    </Border.Background>
-                </Border>
-                <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
-                        Background="{StaticResource OverlaySolidBackgroundBrush}">
-                    <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="12">
-                        <Border Grid.Column="0"
-                                Background="{StaticResource OverlaySmokeBackgroundBrush}"
-                                CornerRadius="99">
-                            <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14"
-                                                  Foreground="{StaticResource ControlReversedForegroundBrush}"
-                                                  Margin="8" />
-                        </Border>
-                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Title}"
-                                       TextTrimming="CharacterEllipsis"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                        </StackPanel>
-                        <Button Grid.Column="4" Classes="Small"
-                                Theme="{StaticResource GhostButtonTheme}"
-                                Command="{Binding $parent[v:MarketplacePortalView].((vm:MarketplacePortalViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
-                                CommandParameter="{Binding}">
-                            <TextBlock Text="{x:Static lang:Resources.MarketplacePortalView_NewsLearnMoreButtonText}" />
-                        </Button>
-                    </Grid>
-                    <Border.Effect>
-                        <DropShadowEffect OffsetY="0" OffsetX="0" Opacity="0.1" />
-                    </Border.Effect>
-                </Border>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="SmallNewsDataTemplate" DataType="m:MinecraftNewsModel">
-            <Grid RowDefinitions="*,0,Auto" Margin="8" Width="256">
-                <Border Grid.Row="0" Grid.RowSpan="3"
-                        CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Border.Background>
-                        <ImageBrush async:ImageBrushLoader.Source="{Binding Cover}" Stretch="Fill" />
-                    </Border.Background>
-                </Border>
-                <Border Grid.Row="2" CornerRadius="{StaticResource MediumCornerRadius}" Margin="8"
-                        Background="{StaticResource OverlaySolidBackgroundBrush}">
-                    <Grid Margin="6">
-                        <Button Classes="Small"
-                                Theme="{StaticResource GhostButtonTheme}"
-                                Command="{Binding $parent[v:MarketplacePortalView].((vm:MarketplacePortalViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
-                                CommandParameter="{Binding}">
-                            <TextBlock Text="{Binding Title}"
-                                       TextTrimming="CharacterEllipsis"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}" TextWrapping="Wrap"
-                                       MaxLines="2" TextAlignment="Center" />
-                        </Button>
-                    </Grid>
-                </Border>
-            </Grid>
-        </DataTemplate>
-    </husk:Page.Resources>
-    <Grid RowDefinitions="Auto,0,*">
+    <Grid RowDefinitions="Auto,0">
         <Panel Grid.Row="0" Height="{Binding $parent[husk:Page].Bounds.Height,Mode=OneWay}"
                Margin="{StaticResource PageToplessBottomlessContentMargin}">
             <StackPanel Spacing="24" VerticalAlignment="Center" MaxWidth="1270">
@@ -115,30 +47,5 @@
                 </Button>
             </StackPanel>
         </Panel>
-        <StackPanel Grid.Row="2" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="36">
-            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="Auto,0,*" Height="232">
-                <husk:SkeletonContainer Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
-                                        IsLoading="{Binding HeadNews,Converter={x:Static ObjectConverters.IsNull}}">
-                    <ContentControl Content="{Binding HeadNews}" ContentTemplate="{StaticResource BigNewsDataTemplate}" />
-                </husk:SkeletonContainer>
-                <TextBlock Grid.Column="2" Grid.Row="0"
-                           Text="{x:Static lang:Resources.MarketplacePortalView_NewsLabelText}" Margin="12,12,0,0"
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource ExtraLargeFontSize}" />
-                <husk:SkeletonContainer Grid.Column="2" Grid.Row="2" Margin="6"
-                                        IsLoading="{Binding TailNews,Converter={x:Static ObjectConverters.IsNull}}">
-                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding TailNews}"
-                                      ItemTemplate="{StaticResource SmallNewsDataTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </husk:SkeletonContainer>
-            </Grid>
-        </StackPanel>
     </Grid>
 </husk:Page>

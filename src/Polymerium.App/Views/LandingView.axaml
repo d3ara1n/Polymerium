@@ -6,6 +6,11 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+           xmlns:controls="clr-namespace:Polymerium.App.Controls"
+           xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+           xmlns:m="clr-namespace:Polymerium.App.Models"
+           xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+           xmlns:v="clr-namespace:Polymerium.App.Views"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
            x:Class="Polymerium.App.Views.LandingView"
            x:DataType="vm:LandingViewModel" Background="Transparent"
@@ -174,12 +179,13 @@
                     <StackPanel Spacing="12">
                         <!-- Total Play Time -->
                         <StackPanel Spacing="6">
-                            <TextBlock Text="Total Play Time"
-                                       FontSize="11"
-                                       Opacity="0.6" />
-                            <TextBlock Text="42.5 hrs"
-                                       FontSize="20"
-                                       FontWeight="SemiBold" />
+                            <TextBlock Text="Total Play Hours"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock
+                                Text="{Binding TotalPlayHours, StringFormat={}{0:0.0} hrs, FallbackValue=45.3 hrs}"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                         </StackPanel>
 
                         <husk:Divider Orientation="Horizontal" Height="1" />
@@ -188,20 +194,20 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                             <StackPanel Grid.Column="0" Spacing="4">
                                 <TextBlock Text="Sessions"
-                                           FontSize="11"
-                                           Opacity="0.6" />
-                                <TextBlock Text="28"
-                                           FontSize="16"
-                                           FontWeight="SemiBold" />
+                                           FontSize="{StaticResource MediumFontSize}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Text="{Binding TotalSessions, FallbackValue=12}"
+                                           FontSize="{StaticResource LargeFontSize}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Spacing="4">
                                 <TextBlock Text="Active Days"
-                                           FontSize="11"
-                                           Opacity="0.6" />
-                                <TextBlock Text="12"
-                                           FontSize="16"
-                                           FontWeight="SemiBold" />
+                                           FontSize="{StaticResource MediumFontSize}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Text="{Binding ActiveDays, FallbackValue=6}"
+                                           FontSize="{StaticResource LargeFontSize}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -210,7 +216,58 @@
 
             <!-- Remaining Stack -->
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-
+                <!-- News Section -->
+                <husk:LazyContainer Source="{Binding MinecraftNews}">
+                    <husk:LazyContainer.SourceTemplate>
+                        <DataTemplate DataType="collections:IList">
+                            <DockPanel VerticalSpacing="8" MinHeight="24">
+                                <TextBlock DockPanel.Dock="Top" Text="Recent Releases" FontSize="{StaticResource LargeFontSize}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                <ItemsControl ItemsSource="{Binding}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <controls:WaterfallPanel ColumnWidth="262" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="m:MinecraftReleasePatchModel">
+                                            <husk:Card>
+                                                <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                                                    <husk:ConstrainedBox Grid.Row="0"
+                                                                         AspectRatio="117:50">
+                                                        <Border
+                                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                                            <Border.Background>
+                                                                <ImageBrush
+                                                                    async:ImageBrushLoader.Source="{Binding Cover}"
+                                                                    Stretch="UniformToFill" />
+                                                            </Border.Background>
+                                                        </Border>
+                                                    </husk:ConstrainedBox>
+                                                    <StackPanel Grid.Row="1" Spacing="4">
+                                                        <TextBlock Text="{Binding Title}"
+                                                                   FontSize="{StaticResource LargeFontSize}"
+                                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                   TextWrapping="Wrap" />
+                                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+                                                        <DockPanel HorizontalSpacing="8">
+                                                            <husk:Tag DockPanel.Dock="Right" Classes="Small">
+                                                                <TextBlock Text="{Binding Category}" />
+                                                            </husk:Tag>
+                                                            <husk:IconLabel Icon="Clock" Text="{Binding PublishedAt}"
+                                                                            FontSize="{StaticResource SmallFontSize}"
+                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </husk:Card>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DockPanel>
+                        </DataTemplate>
+                    </husk:LazyContainer.SourceTemplate>
+                </husk:LazyContainer>
             </StackPanel>
         </Grid>
     </StackPanel>
