@@ -1,7 +1,7 @@
 ﻿using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;
 
-namespace Polymerium.App.Drawers;
+namespace Polymerium.App.Sidebars;
 
 public partial class NotificationSidebar : Sidebar
 {

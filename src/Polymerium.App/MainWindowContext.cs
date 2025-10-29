@@ -14,7 +14,6 @@ using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Dialogs;
-using Polymerium.App.Drawers;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
@@ -30,6 +29,7 @@ using Trident.Core.Exceptions;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
+using NotificationSidebar = Polymerium.App.Sidebars.NotificationSidebar;
 
 namespace Polymerium.App;
 

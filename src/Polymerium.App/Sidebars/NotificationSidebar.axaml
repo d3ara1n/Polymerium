@@ -4,12 +4,13 @@
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
               xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="380"
-              x:Class="Polymerium.App.Drawers.NotificationSidebar">
+              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600" Width="380"
+              x:Class="Polymerium.App.Sidebars.NotificationSidebar" Padding="0">
     <Grid RowDefinitions="Auto,*">
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12"
+              Margin="{StaticResource SidebarBottomlessContentMargin}">
             <TextBlock Grid.Column="0" Text="Notifications" FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}" VerticalAlignment="Center"/>
+                       FontWeight="{StaticResource ControlStrongFontWeight}" VerticalAlignment="Center" />
             <Button Grid.Column="1" Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
                 <husk:IconLabel Icon="Checkmark" Text="Mark all as read" />
             </Button>
@@ -17,5 +18,71 @@
                 <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
             </Button>
         </Grid>
+        <!-- 临时模板 -->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="{StaticResource SidebarContentMargin}" Spacing="6" ClipToBounds="False">
+                <Border MinHeight="64" BoxShadow="0 0 5 0 #1F000000"
+                        CornerRadius="{StaticResource LargeCornerRadius}">
+                    <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
+                            BorderThickness="3,0,0,0" CornerRadius="{Binding $parent[Border].CornerRadius}"
+                            Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="12,8">
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*,Auto" ColumnSpacing="12"
+                              RowSpacing="8">
+                            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Hello World"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <Border Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Width="36" Height="36"
+                                    RenderOptions.BitmapInterpolationMode="MediumQuality"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Border.Background>
+                                    <ImageBrush Source="/Assets/Icons/Desert.png" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Grid.Column="1" Grid.Row="1"
+                                       Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+                                       TextWrapping="Wrap" />
+                            <Button Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Padding="4">
+                                <fi:SymbolIcon Symbol="MoreVertical" FontSize="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                                        Orientation="Horizontal" Spacing="8">
+                                <Button Classes="Primary Small" Content="Read more" />
+                                <Button Classes="Small" Content="Never again" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Border>
+                <Border MinHeight="64" BorderBrush="{StaticResource ControlSuccessBorderBrush}"
+                        BorderThickness="3,0,0,0"
+                        CornerRadius="{StaticResource LargeCornerRadius}"
+                        Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="12,8">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="6" OffsetX="0" OffsetY="0" Opacity="0.1" />
+                    </Border.Effect>
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*,Auto" ColumnSpacing="12"
+                          RowSpacing="8">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Hello World"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <Border Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Width="36" Height="36"
+                                RenderOptions.BitmapInterpolationMode="MediumQuality"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                            <Border.Background>
+                                <ImageBrush Source="/Assets/Icons/Desert.png" />
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Grid.Column="1" Grid.Row="1"
+                                   Text="Lorem ipsum dolor sit amet."
+                                   TextWrapping="Wrap" />
+                        <Button Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Padding="4">
+                            <fi:SymbolIcon Symbol="MoreVertical" FontSize="{StaticResource SmallFontSize}" />
+                        </Button>
+                        <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                                    Orientation="Horizontal" Spacing="8">
+                            <Button Classes="Primary Small" Content="Read more" />
+                            <Button Classes="Small" Content="Never again" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </husk:Sidebar>

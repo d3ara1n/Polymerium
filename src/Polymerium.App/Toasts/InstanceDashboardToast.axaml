@@ -120,7 +120,7 @@
             </TextBox>
             <ToggleButton Grid.Column="4" Classes="Small"
                           IsChecked="{Binding $parent[local:InstanceDashboardToast].IsAutoScroll,Mode=TwoWay}">
-                <fi:SymbolIcon Symbol="TextboxAlignBottom" FontSize="{StaticResource LargeFontSize}" />
+                <fi:SymbolIcon Symbol="TextBoxAlignBottom" FontSize="{StaticResource LargeFontSize}" />
             </ToggleButton>
         </Grid>
     </Grid>
