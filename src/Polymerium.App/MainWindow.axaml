@@ -84,17 +84,14 @@
                                 <Setter Property="Width" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button x:Name="NotificationButton" Command="{Binding OpenNotificationSidebarCommand}">
+                        <Button IsVisible="{x:Static local:Program.Debug}"
+                                Command="{Binding OpenNotificationSidebarCommand}">
                             <icons:PackIconLucide Kind="Bell" />
                         </Button>
-                        <Button
-                            x:Name="MinimizeButton"
-                            Click="MinimizeButton_OnClick">
+                        <Button Click="MinimizeButton_OnClick">
                             <icons:PackIconLucide Kind="Minus" />
                         </Button>
-                        <Button
-                            x:Name="ToggleMaximizeButton"
-                            Click="ToggleMaximizeButton_OnClick">
+                        <Button Click="ToggleMaximizeButton_OnClick">
                             <husk:SwitchPresenter Value="{Binding $parent[husk:AppWindow].IsMaximized,Mode=OneWay}"
                                                   TargetType="x:Boolean">
                                 <husk:SwitchCase Value="True">
@@ -105,9 +102,7 @@
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
                         </Button>
-                        <Button
-                            x:Name="CloseButton"
-                            Click="CloseButton_OnClick">
+                        <Button Click="CloseButton_OnClick">
                             <Button.Styles>
                                 <Style Selector="Button:pointerover icons|PackIconLucide">
                                     <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
