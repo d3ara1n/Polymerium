@@ -45,7 +45,7 @@
                                               Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="12"
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding InstanceCount}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="Instances"
@@ -60,7 +60,7 @@
                                               Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="1"
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding AccountCount}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="Accounts"
@@ -79,64 +79,116 @@
         <!-- Content Area -->
         <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,Auto" ColumnSpacing="12" RowSpacing="12">
             <!-- Continue Play -->
-            <husk:Card Grid.Column="0" Grid.Row="0" CornerRadius="{StaticResource MediumCornerRadius}"
-                       BorderBrush="{StaticResource ControlAccentBorderBrush}" BorderThickness="2">
-                <Grid ColumnDefinitions="*,Auto">
-                    <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="12">
-                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                            <Border Grid.Column="0" Width="{Binding $self.Bounds.Height}"
-                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                <Border.Background>
-                                    <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                                </Border.Background>
-                            </Border>
-                            <StackPanel Grid.Column="1" Spacing="2">
-                                <TextBlock Text="All the Mods 10" FontSize="{StaticResource LargeFontSize}"
-                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <husk:Tag Content="1.21.1" />
-                                    <husk:Tag Content="NeoForge" />
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                        <TextBlock Grid.Row="1" Text="Last played 2 hours ago"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                    </Grid>
-                    <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="12">
-                        <Button Grid.Row="0" Classes="Primary" Padding="12,8">
-                            <husk:IconLabel Icon="Play" Text="Play" />
-                        </Button>
-                        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
-                            <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
-                                <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource SmallFontSize}" />
-                            </Button>
-                            <Button Grid.Column="1" Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
-                                <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource SmallFontSize}" />
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </husk:Card>
+            <husk:PlaceholderPresenter Grid.Column="0" Grid.Row="0" Source="{Binding RecentPlay}">
+                <husk:PlaceholderPresenter.SourceTemplate>
+                    <DataTemplate DataType="m:RecentPlayModel">
+                        <husk:Card CornerRadius="{StaticResource MediumCornerRadius}"
+                                   BorderBrush="{StaticResource ControlAccentBorderBrush}" BorderThickness="2">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Grid Grid.Column="0" RowDefinitions="Auto,Auto" RowSpacing="12">
+                                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                        <Border Grid.Column="0" Width="{Binding $self.Bounds.Height}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <Border.Background>
+                                                <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
+                                            </Border.Background>
+                                        </Border>
+                                        <StackPanel Grid.Column="1" Spacing="2">
+                                            <TextBlock Text="{Binding Name}" FontSize="{StaticResource LargeFontSize}"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <husk:Tag Content="{Binding Version}" />
+                                                <husk:Tag Content="{Binding LoaderLabel}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                    <TextBlock Grid.Row="1" Text="{Binding LastPlayed}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                </Grid>
+                                <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="12">
+                                    <Button Grid.Row="0" Classes="Primary" Padding="12,8">
+                                        <husk:IconLabel Icon="Play" Text="Play" />
+                                    </Button>
+                                    <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
+                                        <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}"
+                                                Classes="Small"
+                                                Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding Key}">
+                                            <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource SmallFontSize}" />
+                                        </Button>
+                                        <Button Grid.Column="1" Theme="{StaticResource OutlineButtonTheme}"
+                                                Classes="Small"
+                                                Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).OpenInstanceFolderCommand, FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding Key}">
+                                            <fi:SymbolIcon Symbol="FolderOpen"
+                                                           FontSize="{StaticResource SmallFontSize}" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </husk:Card>
+                    </DataTemplate>
+                </husk:PlaceholderPresenter.SourceTemplate>
+                <husk:PlaceholderPresenter.Placeholder>
+                    <husk:Card>
+                        <!-- TODO: 添加没有最近游戏的提示面板 -->
+                    </husk:Card>
+                </husk:PlaceholderPresenter.Placeholder>
+            </husk:PlaceholderPresenter>
 
             <!-- User Face -->
-            <husk:Card Grid.Column="1" Grid.Row="0">
-                <Grid RowDefinitions="*,Auto" ColumnDefinitions="Auto,*" RowSpacing="12" ColumnSpacing="12">
-                    <Border Grid.Row="0" Grid.Column="0" Width="{Binding $self.Bounds.Height}"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" />
-                        </Border.Background>
-                    </Border>
-                    <StackPanel Grid.Row="0" Grid.Column="1">
-                        <TextBlock Text="Stewie Griffin" FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Text="Trial" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                    </StackPanel>
-                    <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                            Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
-                        <husk:IconLabel Icon="PersonBoard" Text="Switch" />
-                    </Button>
-                </Grid>
-            </husk:Card>
+            <husk:PlaceholderPresenter Grid.Column="1" Grid.Row="0" Source="{Binding RecentPlay}">
+                <husk:PlaceholderPresenter.SourceTemplate>
+                    <DataTemplate DataType="m:RecentPlayModel">
+                        <husk:PlaceholderPresenter Source="{Binding Account}">
+                            <husk:PlaceholderPresenter.SourceTemplate>
+                                <DataTemplate DataType="m:RecentAccountModel">
+                                    <husk:Card>
+                                        <Grid RowDefinitions="*,Auto" ColumnDefinitions="Auto,*" RowSpacing="12"
+                                              ColumnSpacing="12">
+                                            <Border Grid.Row="0" Grid.Column="0" Width="{Binding $self.Bounds.Height}"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Border.Background>
+                                                    <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
+                                                </Border.Background>
+                                            </Border>
+                                            <StackPanel Grid.Row="0" Grid.Column="1">
+                                                <TextBlock Text="{Binding UserName}"
+                                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                                <TextBlock Text="{Binding TypeName}"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            </StackPanel>
+                                            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                                    Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
+                                                <husk:IconLabel Icon="PersonBoard" Text="Switch" />
+                                            </Button>
+                                        </Grid>
+                                    </husk:Card>
+                                </DataTemplate>
+                            </husk:PlaceholderPresenter.SourceTemplate>
+                            <husk:PlaceholderPresenter.Placeholder>
+                                <husk:Card>
+                                    <Grid RowDefinitions="*,Auto" RowSpacing="12"
+                                          ColumnSpacing="12">
+                                        <husk:IconLabel Grid.Row="0" Icon="PersonLink" Text="No Account"
+                                                        FontSize="{StaticResource LargeFontSize}" />
+                                        <Button Grid.Row="1"
+                                                Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
+                                            <husk:IconLabel Icon="PersonBoard" Text="Choose" />
+                                        </Button>
+                                    </Grid>
+                                </husk:Card>
+                            </husk:PlaceholderPresenter.Placeholder>
+                        </husk:PlaceholderPresenter>
+                    </DataTemplate>
+                </husk:PlaceholderPresenter.SourceTemplate>
+                <husk:PlaceholderPresenter.Placeholder>
+                    <husk:Card>
+                        <!-- TODO: 添加单个快捷操作的面板 -->
+                    </husk:Card>
+                </husk:PlaceholderPresenter.Placeholder>
+            </husk:PlaceholderPresenter>
+
 
             <!-- Left Stack -->
             <StackPanel Grid.Column="0" Grid.Row="1" Spacing="12">
@@ -221,7 +273,8 @@
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate DataType="collections:IList">
                             <DockPanel VerticalSpacing="8" MinHeight="24">
-                                <TextBlock DockPanel.Dock="Top" Text="Recent Releases" FontSize="{StaticResource LargeFontSize}"
+                                <TextBlock DockPanel.Dock="Top" Text="Recent Releases"
+                                           FontSize="{StaticResource LargeFontSize}"
                                            FontWeight="{StaticResource ControlStrongFontWeight}" />
                                 <ItemsControl ItemsSource="{Binding}">
                                     <ItemsControl.ItemsPanel>
