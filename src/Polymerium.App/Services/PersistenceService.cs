@@ -124,6 +124,8 @@ public class PersistenceService(IFreeSql freeSql)
     public Activity? GetLastActivity(string key) =>
         freeSql.Select<Activity>().Where(x => x.Key == key).OrderByDescending(x => x.End).First();
 
+    public Activity? GetLastActivity() => freeSql.Select<Activity>().OrderByDescending(x => x.End).First();
+
     public TimeSpan GetTotalPlayTime(string key)
     {
         var totalSeconds = freeSql.Select<Activity>().Where(x => x.Key == key).Sum(x => (x.End - x.Begin).TotalSeconds);
