@@ -226,10 +226,7 @@
                             <husk:SwitchCase Value="{x:False}">
                                 <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
                                         Command="{Binding CheckUpdatesCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="4">
-                                        <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesCheckButtonText}" />
-                                        <ProgressBar IsIndeterminate="{Binding CheckUpdatesCommand.IsRunning}" />
-                                    </StackPanel>
+                                    <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesCheckButtonText}" />
                                 </Button>
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>

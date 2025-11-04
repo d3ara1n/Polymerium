@@ -100,9 +100,10 @@ public partial class LandingViewModel(
                 Key = last.Key,
                 Name = profile.Name,
                 Version = profile.Setup.Version,
-                LoaderLabel = profile.Setup.Loader is not null
-                                  ? LoaderHelper.ToDisplayName(profile.Setup.Loader)
-                                  : Resources.Enum_Vanilla,
+                LoaderLabel =
+                    profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                        ? LoaderHelper.ToDisplayName(loader.Identity)
+                        : Resources.Enum_Vanilla,
                 Thumbnail = icon,
                 LastPlayedRaw = last.End
             };
