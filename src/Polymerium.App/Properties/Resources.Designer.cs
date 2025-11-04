@@ -60,6 +60,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft.
+        /// </summary>
+        public static string Account_Microsoft {
+            get {
+                return ResourceManager.GetString("Account_Microsoft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string Account_Offline {
+            get {
+                return ResourceManager.GetString("Account_Offline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trial.
+        /// </summary>
+        public static string Account_Trial {
+            get {
+                return ResourceManager.GetString("Account_Trial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The account has been linked. Checkout in the next page..
         /// </summary>
         public static string AccountCreationMicrosoft_DoneSubtitle {
@@ -2540,6 +2567,87 @@ namespace Polymerium.App.Properties {
         public static string JavaHomeContainer_UnknownLabelText {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_UnknownLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string LandingView_OverviewAccountsLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_OverviewAccountsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instances.
+        /// </summary>
+        public static string LandingView_OverviewInstancesLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_OverviewInstancesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose.
+        /// </summary>
+        public static string LandingView_RecentAccountChooseButtonText {
+            get {
+                return ResourceManager.GetString("LandingView_RecentAccountChooseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch.
+        /// </summary>
+        public static string LandingView_RecentAccountSwitchButtonText {
+            get {
+                return ResourceManager.GetString("LandingView_RecentAccountSwitchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        public static string LandingView_RecentPlayButtonText {
+            get {
+                return ResourceManager.GetString("LandingView_RecentPlayButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recent Releases.
+        /// </summary>
+        public static string LandingView_RecentReleasesLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_RecentReleasesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Days.
+        /// </summary>
+        public static string LandingView_StatisticsActiveDaysLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_StatisticsActiveDaysLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Play Hours.
+        /// </summary>
+        public static string LandingView_StatisticsHoursLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_StatisticsHoursLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sessions.
+        /// </summary>
+        public static string LandingView_StatisticsSessionsLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_StatisticsSessionsLabelText", resourceCulture);
             }
         }
         
