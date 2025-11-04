@@ -1,25 +1,31 @@
-using Avalonia;
-using Avalonia.Controls;
 using System;
 using System.Linq;
+using Avalonia;
+using Avalonia.Controls;
 
 namespace Polymerium.App.Controls;
 
 /// <summary>
-/// A Panel that arranges its children in a waterfall layout.
-/// It arranges items in columns, adding each new item to the shortest column.
-/// This is a non-virtualizing panel.
+///     A Panel that arranges its children in a waterfall layout.
+///     It arranges items in columns, adding each new item to the shortest column.
+///     This is a non-virtualizing panel.
 /// </summary>
 public class WaterfallPanel : Panel
 {
     /// <summary>
-    /// Defines the <see cref="ColumnWidth"/> property.
+    ///     Defines the <see cref="ColumnWidth" /> property.
     /// </summary>
     public static readonly StyledProperty<double> ColumnWidthProperty =
         AvaloniaProperty.Register<WaterfallPanel, double>(nameof(ColumnWidth), 200.0);
 
     /// <summary>
-    /// Gets or sets the width of each column.
+    ///     Defines the <see cref="Spacing" /> property.
+    /// </summary>
+    public static readonly StyledProperty<double> SpacingProperty =
+        AvaloniaProperty.Register<WaterfallPanel, double>(nameof(Spacing), 10.0);
+
+    /// <summary>
+    ///     Gets or sets the width of each column.
     /// </summary>
     public double ColumnWidth
     {
@@ -28,13 +34,7 @@ public class WaterfallPanel : Panel
     }
 
     /// <summary>
-    /// Defines the <see cref="Spacing"/> property.
-    /// </summary>
-    public static readonly StyledProperty<double> SpacingProperty =
-        AvaloniaProperty.Register<WaterfallPanel, double>(nameof(Spacing), 10.0);
-
-    /// <summary>
-    /// * Gets or sets the spacing between columns and rows.
+    ///     * Gets or sets the spacing between columns and rows.
     /// </summary>
     public double Spacing
     {
@@ -43,7 +43,7 @@ public class WaterfallPanel : Panel
     }
 
     /// <summary>
-    /// Measures the size required for arranging the children.
+    ///     Measures the size required for arranging the children.
     /// </summary>
     /// <param name="availableSize">The available size for the panel.</param>
     /// <returns>The desired size.</returns>
@@ -56,7 +56,7 @@ public class WaterfallPanel : Panel
 
         if (childCount == 0 || columnWidth <= 0)
         {
-            return new Size(0, 0);
+            return new(0, 0);
         }
 
         // Calculate the number of columns that can fit in the available width.
@@ -67,7 +67,7 @@ public class WaterfallPanel : Panel
         for (var i = 0; i < childCount; i++)
         {
             var child = children[i];
-            child.Measure(new Size(columnWidth, double.PositiveInfinity));
+            child.Measure(new(columnWidth, double.PositiveInfinity));
 
             // Find the shortest column.
             var shortestColumnIndex = 0;
@@ -87,11 +87,11 @@ public class WaterfallPanel : Panel
         var desiredHeight = columnHeights.Max() - spacing; // Subtract last spacing
         var desiredWidth = columnCount * columnWidth + (columnCount - 1) * spacing;
 
-        return new Size(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
+        return new(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
     }
 
     /// <summary>
-    /// Arranges the children within the panel.
+    ///     Arranges the children within the panel.
     /// </summary>
     /// <param name="finalSize">The final size allocated to the panel.</param>
     /// <returns>The actual size used by the panel.</returns>

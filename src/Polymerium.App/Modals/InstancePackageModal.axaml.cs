@@ -109,9 +109,9 @@ public partial class InstancePackageModal : Modal
                        .Dependencies.Select(async x =>
                         {
                             var count = (uint)Collection.Count(y => y.Info is
-                                                                    {
-                                                                        Version: InstancePackageVersionModel version
-                                                                    }
+                                                                        {
+                                                                            Version: InstancePackageVersionModel version
+                                                                        }
                                                                  && version.Dependencies.Any(z => z.Label == x.Label
                                                                      && z.Namespace == x.Namespace
                                                                      && z.ProjectId == x.ProjectId));

@@ -57,13 +57,11 @@ public static class NetworkCheckHelper
                 model.IsTesting = false;
                 return true;
             }
-            else
-            {
-                model.Status = ConnectionTestStatus.Failed;
-                model.ErrorMessage = $"HTTP {(int)response.StatusCode}";
-                model.IsTesting = false;
-                return false;
-            }
+
+            model.Status = ConnectionTestStatus.Failed;
+            model.ErrorMessage = $"HTTP {(int)response.StatusCode}";
+            model.IsTesting = false;
+            return false;
         }
         catch (OperationCanceledException)
         {

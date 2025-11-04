@@ -202,10 +202,7 @@ public partial class LandingViewModel(
     }
 
     [RelayCommand]
-    private void OpenAccountsView()
-    {
-        navigationService.Navigate<AccountsView>();
-    }
+    private void OpenAccountsView() => navigationService.Navigate<AccountsView>();
 
     [RelayCommand]
     private async Task PlayAsync(string key)

@@ -42,7 +42,7 @@
                     <Border Background="{StaticResource ControlBackgroundBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}" />
                     <Panel Name="Determinate">
-                       <Border Name="PART_Indicator" HorizontalAlignment="Left"
+                        <Border Name="PART_Indicator" HorizontalAlignment="Left"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 ClipToBounds="True">

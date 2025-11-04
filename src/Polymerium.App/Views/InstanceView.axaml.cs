@@ -22,8 +22,8 @@ public partial class InstanceView : ScopedPage
         ContextProperty =
             AvaloniaProperty
                .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter?>(nameof(Context),
-                                                                        o => o.Context,
-                                                                        (o, v) => o.Context = v);
+                    o => o.Context,
+                    (o, v) => o.Context = v);
 
 
     public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =

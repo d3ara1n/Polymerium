@@ -7,7 +7,6 @@
                      xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                      xmlns:m="using:Polymerium.App.Models"
                      xmlns:controls="using:Polymerium.App.Controls"
-                     xmlns:trident="clr-namespace:Trident.Core;assembly=Trident.Core"
                      xmlns:app="clr-namespace:Polymerium.App"
                      mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
                      Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"

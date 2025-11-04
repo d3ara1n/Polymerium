@@ -1,11 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
-using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 
@@ -15,7 +9,6 @@ public partial class MarketplacePortalViewModel(
     ConfigurationService configurationService,
     NavigationService navigationService) : ViewModelBase
 {
-
     #region Commands
 
     [RelayCommand]
