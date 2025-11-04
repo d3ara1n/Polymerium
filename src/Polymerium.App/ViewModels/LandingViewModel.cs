@@ -16,6 +16,7 @@ using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Trident.Abstractions;
 using Trident.Abstractions.Utilities;
+using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Utilities;
 
@@ -27,7 +28,9 @@ public partial class LandingViewModel(
     MojangLauncherService mojangLauncherService,
     PersistenceService persistenceService,
     ProfileManager profileManager,
-    OverlayService overlayService) : ViewModelBase
+    InstanceService instanceService,
+    OverlayService overlayService,
+    NotificationService notificationService) : ViewModelBase
 {
     #region Reactive
 
@@ -144,8 +147,15 @@ public partial class LandingViewModel(
     {
         if (key != null)
         {
-            var dir = PathDef.Default.DirectoryOfHome(key);
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            try
+            {
+                var dir = PathDef.Default.DirectoryOfHome(key);
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to open folder");
+            }
         }
     }
 
@@ -195,6 +205,19 @@ public partial class LandingViewModel(
     private void OpenAccountsView()
     {
         navigationService.Navigate<AccountsView>();
+    }
+
+    [RelayCommand]
+    private async Task PlayAsync(string key)
+    {
+        try
+        {
+            await instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+        }
+        catch (Exception ex)
+        {
+            notificationService.PopMessage(ex, "Failed to launch instance");
+        }
     }
 
     #endregion
