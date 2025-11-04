@@ -109,7 +109,9 @@
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 </Grid>
                                 <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="12">
-                                    <Button Grid.Row="0" Classes="Primary" Padding="12,8">
+                                    <Button Grid.Row="0" Classes="Primary" Padding="12,8"
+                                            Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Key}">
                                         <husk:IconLabel Icon="Play"
                                                         Text="{x:Static lang:Resources.LandingView_RecentPlayButtonText}" />
                                     </Button>
