@@ -75,9 +75,7 @@
         </Grid>
 
         <!-- Announcements -->
-        <Panel IsVisible="False">
-
-        </Panel>
+        <Panel IsVisible="False" />
 
         <!-- Content Area -->
         <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,Auto" ColumnSpacing="12" RowSpacing="12">

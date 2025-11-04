@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
 using Trident.Core.Accounts;
+using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Models;
 
@@ -18,7 +19,7 @@ public partial class AccountModel : ModelBase
         LastUsedAtRaw = lastUsedAt;
         if (type.IsAssignableTo(typeof(MicrosoftAccount)))
         {
-            TypeName = Properties.Resources.Account_Microsoft;
+            TypeName = Resources.Account_Microsoft;
             Color1 = Color.FromArgb(255, 131, 158, 255);
             Color2 = Color.FromArgb(255, 121, 255, 207);
             FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{uuid}/face", UriKind.Absolute);
@@ -26,7 +27,7 @@ public partial class AccountModel : ModelBase
         }
         else if (type.IsAssignableTo(typeof(TrialAccount)))
         {
-            TypeName = Properties.Resources.Account_Trial;
+            TypeName = Resources.Account_Trial;
             Color1 = Color.FromArgb(255, 253, 160, 133);
             Color2 = Color.FromArgb(255, 246, 211, 101);
             FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face", UriKind.Absolute);
@@ -35,7 +36,7 @@ public partial class AccountModel : ModelBase
         }
         else
         {
-            TypeName = Properties.Resources.Account_Offline;
+            TypeName = Resources.Account_Offline;
             Color1 = Color.FromArgb(255, 134, 143, 150);
             Color2 = Color.FromArgb(255, 89, 97, 100);
             FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face", UriKind.Absolute);

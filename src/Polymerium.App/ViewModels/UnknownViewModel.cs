@@ -18,17 +18,6 @@ public partial class UnknownViewModel(
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
-    #region Reactive
-
-    [ObservableProperty]
-    public partial IBrush Accent1Brush { get; set; } = Brushes.Black;
-    [ObservableProperty]
-    public partial IBrush Accent2Brush { get; set; } = Brushes.Black;
-    [ObservableProperty]
-    public partial IBrush Accent3Brush { get; set; } = Brushes.Black;
-
-    #endregion
-
     #region Overrides
 
     protected override async Task OnInitializeAsync()
@@ -44,6 +33,19 @@ public partial class UnknownViewModel(
 
         await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
     }
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IBrush Accent1Brush { get; set; } = Brushes.Black;
+
+    [ObservableProperty]
+    public partial IBrush Accent2Brush { get; set; } = Brushes.Black;
+
+    [ObservableProperty]
+    public partial IBrush Accent3Brush { get; set; } = Brushes.Black;
 
     #endregion
 
