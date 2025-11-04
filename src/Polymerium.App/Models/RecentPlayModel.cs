@@ -21,7 +21,7 @@ public partial class RecentPlayModel : ModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial RecentAccountModel? Account { get; set; }
+    public partial AccountModel? Account { get; set; }
 
     [ObservableProperty]
     public required partial DateTimeOffset LastPlayedRaw { get; set; }

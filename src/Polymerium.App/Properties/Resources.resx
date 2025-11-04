@@ -1293,4 +1293,40 @@
     <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
         <value>Description</value>
     </data>
+    <data name="Account_Microsoft" xml:space="preserve">
+        <value>Microsoft</value>
+    </data>
+    <data name="Account_Offline" xml:space="preserve">
+        <value>Offline</value>
+    </data>
+    <data name="Account_Trial" xml:space="preserve">
+        <value>Trial</value>
+    </data>
+    <data name="LandingView_RecentAccountSwitchButtonText" xml:space="preserve">
+        <value>Switch</value>
+    </data>
+    <data name="LandingView_RecentAccountChooseButtonText" xml:space="preserve">
+        <value>Choose</value>
+    </data>
+    <data name="LandingView_RecentPlayButtonText" xml:space="preserve">
+        <value>Play</value>
+    </data>
+    <data name="LandingView_RecentReleasesLabelText" xml:space="preserve">
+        <value>Recent Releases</value>
+    </data>
+    <data name="LandingView_StatisticsActiveDaysLabelText" xml:space="preserve">
+        <value>Active Days</value>
+    </data>
+    <data name="LandingView_StatisticsSessionsLabelText" xml:space="preserve">
+        <value>Sessions</value>
+    </data>
+    <data name="LandingView_StatisticsHoursLabelText" xml:space="preserve">
+        <value>Total Play Hours</value>
+    </data>
+    <data name="LandingView_OverviewInstancesLabelText" xml:space="preserve">
+        <value>Instances</value>
+    </data>
+    <data name="LandingView_OverviewAccountsLabelText" xml:space="preserve">
+        <value>Accounts</value>
+    </data>
 </root>

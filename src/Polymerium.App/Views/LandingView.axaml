@@ -11,6 +11,7 @@
            xmlns:m="clr-namespace:Polymerium.App.Models"
            xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
            xmlns:v="clr-namespace:Polymerium.App.Views"
+           xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
            x:Class="Polymerium.App.Views.LandingView"
            x:DataType="vm:LandingViewModel" Background="Transparent"
@@ -48,7 +49,8 @@
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding InstanceCount}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Instances"
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   Text="{x:Static lang:Resources.LandingView_OverviewInstancesLabelText}"
                                    FontSize="{StaticResource SmallFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </Grid>
@@ -63,7 +65,8 @@
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding AccountCount}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Accounts"
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   Text="{x:Static lang:Resources.LandingView_OverviewAccountsLabelText}"
                                    FontSize="{StaticResource SmallFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </Grid>
@@ -90,7 +93,7 @@
                                         <Border Grid.Column="0" Width="{Binding $self.Bounds.Height}"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                             <Border.Background>
-                                                <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
+                                                <ImageBrush Source="{Binding Thumbnail}" />
                                             </Border.Background>
                                         </Border>
                                         <StackPanel Grid.Column="1" Spacing="2">
@@ -102,12 +105,13 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
-                                    <TextBlock Grid.Row="1" Text="{Binding LastPlayed}"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <husk:IconLabel Grid.Row="1" Text="{Binding LastPlayed}" Icon="Calendar"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 </Grid>
                                 <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="12">
                                     <Button Grid.Row="0" Classes="Primary" Padding="12,8">
-                                        <husk:IconLabel Icon="Play" Text="Play" />
+                                        <husk:IconLabel Icon="Play"
+                                                        Text="{x:Static lang:Resources.LandingView_RecentPlayButtonText}" />
                                     </Button>
                                     <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
                                         <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}"
@@ -130,9 +134,7 @@
                     </DataTemplate>
                 </husk:PlaceholderPresenter.SourceTemplate>
                 <husk:PlaceholderPresenter.Placeholder>
-                    <husk:Card>
-                        <!-- TODO: 添加没有最近游戏的提示面板 -->
-                    </husk:Card>
+                    <!-- TODO: 添加没有最近游戏的提示面板 -->
                 </husk:PlaceholderPresenter.Placeholder>
             </husk:PlaceholderPresenter>
 
@@ -142,7 +144,7 @@
                     <DataTemplate DataType="m:RecentPlayModel">
                         <husk:PlaceholderPresenter Source="{Binding Account}">
                             <husk:PlaceholderPresenter.SourceTemplate>
-                                <DataTemplate DataType="m:RecentAccountModel">
+                                <DataTemplate DataType="m:AccountModel">
                                     <husk:Card>
                                         <Grid RowDefinitions="*,Auto" ColumnDefinitions="Auto,*" RowSpacing="12"
                                               ColumnSpacing="12">
@@ -159,8 +161,10 @@
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                             </StackPanel>
                                             <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                                    Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).PickAccountCommand, FallbackValue={x:Null}}"
                                                     Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
-                                                <husk:IconLabel Icon="PersonBoard" Text="Switch" />
+                                                <husk:IconLabel Icon="PersonBoard"
+                                                                Text="{x:Static lang:Resources.LandingView_RecentAccountSwitchButtonText}" />
                                             </Button>
                                         </Grid>
                                     </husk:Card>
@@ -171,10 +175,14 @@
                                     <Grid RowDefinitions="*,Auto" RowSpacing="12"
                                           ColumnSpacing="12">
                                         <husk:IconLabel Grid.Row="0" Icon="PersonLink" Text="No Account"
-                                                        FontSize="{StaticResource LargeFontSize}" />
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        FontSize="{StaticResource LargeFontSize}"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         <Button Grid.Row="1"
+                                                Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).PickAccountCommand, FallbackValue={x:Null}}"
                                                 Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
-                                            <husk:IconLabel Icon="PersonBoard" Text="Choose" />
+                                            <husk:IconLabel Icon="PersonBoard"
+                                                            Text="{x:Static lang:Resources.LandingView_RecentAccountChooseButtonText}" />
                                         </Button>
                                     </Grid>
                                 </husk:Card>
@@ -183,15 +191,13 @@
                     </DataTemplate>
                 </husk:PlaceholderPresenter.SourceTemplate>
                 <husk:PlaceholderPresenter.Placeholder>
-                    <husk:Card>
-                        <!-- TODO: 添加单个快捷操作的面板 -->
-                    </husk:Card>
+                    <!-- TODO: 添加单个快捷操作的面板 -->
                 </husk:PlaceholderPresenter.Placeholder>
             </husk:PlaceholderPresenter>
 
 
             <!-- Left Stack -->
-            <StackPanel Grid.Column="0" Grid.Row="1" Spacing="12">
+            <StackPanel Grid.Column="0" Grid.Row="1" Spacing="12" IsVisible="False">
                 <!-- Quick Actions -->
                 <WrapPanel ItemSpacing="6" LineSpacing="6" ItemHeight="128" ItemWidth="168">
                     <husk:Card Padding="0">
@@ -231,7 +237,7 @@
                     <StackPanel Spacing="12">
                         <!-- Total Play Time -->
                         <StackPanel Spacing="6">
-                            <TextBlock Text="Total Play Hours"
+                            <TextBlock Text="{x:Static lang:Resources.LandingView_StatisticsHoursLabelText}"
                                        FontSize="{StaticResource MediumFontSize}"
                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <TextBlock
@@ -245,7 +251,7 @@
                         <!-- Sessions -->
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                             <StackPanel Grid.Column="0" Spacing="4">
-                                <TextBlock Text="Sessions"
+                                <TextBlock Text="{x:Static lang:Resources.LandingView_StatisticsSessionsLabelText}"
                                            FontSize="{StaticResource MediumFontSize}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Text="{Binding TotalSessions, FallbackValue=12}"
@@ -254,7 +260,7 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Spacing="4">
-                                <TextBlock Text="Active Days"
+                                <TextBlock Text="{x:Static lang:Resources.LandingView_StatisticsActiveDaysLabelText}"
                                            FontSize="{StaticResource MediumFontSize}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Text="{Binding ActiveDays, FallbackValue=6}"
@@ -273,7 +279,8 @@
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate DataType="collections:IList">
                             <DockPanel VerticalSpacing="8" MinHeight="24">
-                                <TextBlock DockPanel.Dock="Top" Text="Recent Releases"
+                                <TextBlock DockPanel.Dock="Top"
+                                           Text="{x:Static lang:Resources.LandingView_RecentReleasesLabelText}"
                                            FontSize="{StaticResource LargeFontSize}"
                                            FontWeight="{StaticResource ControlStrongFontWeight}" />
                                 <ItemsControl ItemsSource="{Binding}">

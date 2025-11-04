@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
@@ -26,10 +27,8 @@ public partial class LandingViewModel(
     MojangLauncherService mojangLauncherService,
     PersistenceService persistenceService,
     ProfileManager profileManager,
-    InstanceManager instanceManager) : ViewModelBase
+    OverlayService overlayService) : ViewModelBase
 {
-    public InstanceManager InstanceManager { get; } = instanceManager;
-
     #region Reactive
 
     [ObservableProperty]
@@ -108,14 +107,11 @@ public partial class LandingViewModel(
              && persistenceService.GetAccount(selector.Uuid) is { } account)
             {
                 var cooked = AccountHelper.ToCooked(account);
-                RecentPlay.Account = new()
-                {
-                    UserName = cooked.Username,
-                    Uuid = cooked.Uuid,
-                    TypeName = cooked.UserType,
-                    FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{cooked.Uuid}/face",
-                                  UriKind.Absolute)
-                };
+                RecentPlay.Account = new(cooked.GetType(),
+                                         cooked.Uuid,
+                                         cooked.Username,
+                                         account.EnrolledAt,
+                                         account.LastUsedAt);
             }
         }
 
@@ -160,6 +156,45 @@ public partial class LandingViewModel(
         {
             navigationService.Navigate<InstanceView>(key);
         }
+    }
+
+    [RelayCommand]
+    private async Task PickAccountAsync()
+    {
+        if (RecentPlay is not null)
+        {
+            var accounts = persistenceService
+                          .GetAccounts()
+                          .Select(x =>
+                           {
+                               var cooked = AccountHelper.ToCooked(x);
+                               return RecentPlay.Account?.Uuid == cooked.Uuid
+                                          ? RecentPlay.Account
+                                          : new(cooked.GetType(),
+                                                cooked.Uuid,
+                                                cooked.Username,
+                                                x.EnrolledAt,
+                                                x.LastUsedAt);
+                           })
+                          .ToList();
+            var dialog = new AccountPickerDialog
+            {
+                GotoManagerViewCommand = OpenAccountsViewCommand,
+                AccountsSource = accounts,
+                Result = accounts.FirstOrDefault(x => x.Uuid == RecentPlay.Account?.Uuid)
+            };
+            if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
+            {
+                RecentPlay.Account = account;
+                persistenceService.SetAccountSelector(RecentPlay.Key, account.Uuid);
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void OpenAccountsView()
+    {
+        navigationService.Navigate<AccountsView>();
     }
 
     #endregion

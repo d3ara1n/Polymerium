@@ -1284,4 +1284,40 @@
     <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
         <value>描述</value>
     </data>
+    <data name="Account_Microsoft" xml:space="preserve">
+        <value>微软</value>
+    </data>
+    <data name="Account_Offline" xml:space="preserve">
+        <value>离线</value>
+    </data>
+    <data name="Account_Trial" xml:space="preserve">
+        <value>试用</value>
+    </data>
+    <data name="LandingView_RecentAccountSwitchButtonText" xml:space="preserve">
+        <value>切换</value>
+    </data>
+    <data name="LandingView_RecentAccountChooseButtonText" xml:space="preserve">
+        <value>选择</value>
+    </data>
+    <data name="LandingView_RecentPlayButtonText" xml:space="preserve">
+        <value>开始</value>
+    </data>
+    <data name="LandingView_RecentReleasesLabelText" xml:space="preserve">
+        <value>近期发版</value>
+    </data>
+    <data name="LandingView_StatisticsActiveDaysLabelText" xml:space="preserve">
+        <value>活跃日</value>
+    </data>
+    <data name="LandingView_StatisticsSessionsLabelText" xml:space="preserve">
+        <value>会话次数</value>
+    </data>
+    <data name="LandingView_StatisticsHoursLabelText" xml:space="preserve">
+        <value>总游玩时数</value>
+    </data>
+    <data name="LandingView_OverviewAccountsLabelText" xml:space="preserve">
+        <value>账号</value>
+    </data>
+    <data name="LandingView_OverviewInstancesLabelText" xml:space="preserve">
+        <value>实例</value>
+    </data>
 </root>
