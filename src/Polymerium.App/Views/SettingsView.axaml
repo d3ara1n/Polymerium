@@ -16,6 +16,7 @@
            x:Class="Polymerium.App.Views.SettingsView" Header="{x:Static lang:Resources.SettingsView_Title}"
            x:DataType="vm:SettingsViewModel">
     <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
+        <!-- Super Power -->
         <controls:SettingsEntry Title="{x:Static lang:Resources.SettingsView_SuperPowerTitle}" Icon="Wand"
                                 Summary="{x:Static lang:Resources.SettingsView_SuperPowerSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SuperPowerLabelText}">
@@ -25,6 +26,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
+        <!-- Display -->
         <controls:SettingsEntry Icon="LocalLanguage" Title="{x:Static lang:Resources.SettingsView_DisplayTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_DisplaySubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_TitleBarVisibilityLabelText}">
@@ -104,15 +106,27 @@
                 </ComboBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_BackgroundStyleLabelText}">
-                <ComboBox SelectedIndex="{Binding BackgroundMode,Mode=TwoWay}">
-                    <ComboBoxItem Content="{x:Static lang:Resources.SettingsView_BackgroundStyleAutoText}" />
-                    <ComboBoxItem Content="{x:Static lang:Resources.SettingsView_BackgroundStyleMicaText}"
-                                  IsEnabled="{OnPlatform {x:False},Windows={x:True}}" />
-                    <ComboBoxItem Content="{x:Static lang:Resources.SettingsView_BackgroundStyleAcrylicText}"
-                                  IsEnabled="{OnPlatform {x:False},Windows={x:True}}" />
-                    <ComboBoxItem Content="{x:Static lang:Resources.SettingsView_BackgroundStyleBlurText}"
-                                  IsEnabled="{OnPlatform {x:False},macOS={x:True}}" />
-                    <ComboBoxItem Content="{x:Static lang:Resources.SettingsView_BackgroundStyleNoneText}" />
+                <ComboBox SelectedItem="{Binding BackgroundMode,Mode=TwoWay}" ItemsSource="{Binding BackgroundStyles}">
+                    <ComboBox.SelectionBoxItemTemplate>
+                        <DataTemplate DataType="m:BackgroundStyleModel">
+                            <DockPanel>
+                                <husk:Tag DockPanel.Dock="Right"
+                                          IsVisible="{Binding Applicable,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                          Classes="Small" Content="{Binding Applicable}" />
+                                <TextBlock Text="{Binding Display}" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </ComboBox.SelectionBoxItemTemplate>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="m:BackgroundStyleModel">
+                            <DockPanel>
+                                <husk:Tag DockPanel.Dock="Right"
+                                          IsVisible="{Binding Applicable,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                          Classes="Small" Content="{Binding Applicable}" />
+                                <TextBlock Text="{Binding Display}" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_LanguageLabelText}">
@@ -134,6 +148,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
+        <!-- Java -->
         <controls:SettingsEntry Icon="DrinkCoffee" Title="{x:Static lang:Resources.SettingsView_JavaTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_JavaSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java8LabelText}">
@@ -150,6 +165,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
+        <!-- Game Defaults -->
         <controls:SettingsEntry Icon="Joystick" Title="{x:Static lang:Resources.SettingsView_GameDefaultsTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_GameDefaultsSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaMaxMemoryLabelText}">
@@ -196,6 +212,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
+        <!-- Maintenance -->
         <controls:SettingsEntry Icon="Wrench" Title="{x:Static lang:Resources.SettingsView_MaintenanceTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_MaintenanceSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
@@ -320,6 +337,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
+        <!-- About -->
         <Panel>
             <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.6840277777777778"
                                  Height="{Binding #LinksPanel.Bounds.Height}">
@@ -386,6 +404,7 @@
             </StackPanel>
         </Panel>
         <husk:Divider />
+        <!-- Disclaimer -->
         <StackPanel>
             <TextBlock Text="Disclaimer:" />
             <TextBlock Text="1. 作为 Advanced Instance Manager，Polymerium 仅提供功能，不提供任何服务，所使用的服务均来自第三方平台，日后也不会提供联机服务。"
