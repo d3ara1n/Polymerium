@@ -83,36 +83,38 @@
                         </Border>
                     </Panel>
                     <Panel Name="Indeterminate" IsVisible="False">
-                        <Rectangle Margin="-80">
-                            <Rectangle.Fill>
-                                <DrawingBrush DestinationRect="0,0,80,80" SourceRect="0,0,80,80"
-                                              Stretch="Fill"
-                                              TileMode="Tile" Transform="rotate(30deg)">
-                                    <DrawingBrush.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing Brush="{StaticResource BarBrush}"
-                                                             Geometry="M0,0 L0,80 L20,80 L20,0 Z" />
-                                            <GeometryDrawing Brush="{StaticResource BarBrush}"
-                                                             Geometry="M60,0 L60,80 L80,80 L80,0 Z" />
-                                        </DrawingGroup>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Rectangle.Fill>
-                            <Rectangle.Styles>
-                                <Style Selector="Rectangle">
-                                    <Style.Animations>
-                                        <Animation Duration="0:0:2.5" IterationCount="Infinite">
-                                            <KeyFrame Cue="0%">
-                                                <Setter Property="TranslateTransform.X" Value="80" />
-                                            </KeyFrame>
-                                            <KeyFrame Cue="100%">
-                                                <Setter Property="TranslateTransform.X" Value="-14" />
-                                            </KeyFrame>
-                                        </Animation>
-                                    </Style.Animations>
-                                </Style>
-                            </Rectangle.Styles>
-                        </Rectangle>
+                        <Border CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                            <Rectangle Margin="-80">
+                                <Rectangle.Fill>
+                                    <DrawingBrush DestinationRect="0,0,80,80" SourceRect="0,0,80,80"
+                                                  Stretch="Fill"
+                                                  TileMode="Tile" Transform="rotate(30deg)">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="{StaticResource BarBrush}"
+                                                                 Geometry="M0,0 L0,80 L20,80 L20,0 Z" />
+                                                <GeometryDrawing Brush="{StaticResource BarBrush}"
+                                                                 Geometry="M60,0 L60,80 L80,80 L80,0 Z" />
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.Styles>
+                                    <Style Selector="Rectangle">
+                                        <Style.Animations>
+                                            <Animation Duration="0:0:2.5" IterationCount="Infinite">
+                                                <KeyFrame Cue="0%">
+                                                    <Setter Property="TranslateTransform.X" Value="80" />
+                                                </KeyFrame>
+                                                <KeyFrame Cue="100%">
+                                                    <Setter Property="TranslateTransform.X" Value="-14" />
+                                                </KeyFrame>
+                                            </Animation>
+                                        </Style.Animations>
+                                    </Style>
+                                </Rectangle.Styles>
+                            </Rectangle>
+                        </Border>
                     </Panel>
                 </Panel>
             </ControlTemplate>
