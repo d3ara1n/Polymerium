@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Velopack;
 
@@ -35,7 +36,9 @@ public partial class SettingsViewModel : ViewModelBase
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
         AccentColor = configurationService.Value.ApplicationStyleAccent;
         CornerStyle = configurationService.Value.ApplicationStyleCorner;
-        BackgroundMode = configurationService.Value.ApplicationStyleBackground;
+        BackgroundMode =
+            BackgroundStyles.FirstOrDefault(x => x.Index == configurationService.Value.ApplicationStyleBackground)
+         ?? BackgroundStyles.First();
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
                 ?? Languages.First();
@@ -250,13 +253,22 @@ public partial class SettingsViewModel : ViewModelBase
     #region BackgroundMode
 
     [ObservableProperty]
-    public partial int BackgroundMode { get; set; }
+    public partial BackgroundStyleModel BackgroundMode { get; set; }
 
-    partial void OnBackgroundModeChanged(int value)
+    partial void OnBackgroundModeChanged(BackgroundStyleModel value)
     {
-        _configurationService.Value.ApplicationStyleBackground = value;
-        MainWindow.Instance.SetTransparencyLevelHintByIndex(value);
+        _configurationService.Value.ApplicationStyleBackground = value.Index;
+        MainWindow.Instance.SetTransparencyLevelHintByIndex(value.Index);
     }
+
+    public BackgroundStyleModel[] BackgroundStyles { get; } =
+    [
+        new(0, Resources.SettingsView_BackgroundStyleAutoText),
+        new(1, Resources.SettingsView_BackgroundStyleMicaText, "Windows 11+"),
+        new(2, Resources.SettingsView_BackgroundStyleAcrylicText, "Windows 10+"),
+        new(3, Resources.SettingsView_BackgroundStyleBlurText, "macOS"),
+        new(4, Resources.SettingsView_BackgroundStyleNoneText)
+    ];
 
     #endregion
 
