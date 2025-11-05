@@ -25,7 +25,7 @@ namespace Polymerium.App.ViewModels;
 public partial class LandingViewModel(
     NavigationService navigationService,
     DataService dataService,
-    MojangLauncherService mojangLauncherService,
+    MojangService mojangServuce,
     PersistenceService persistenceService,
     ProfileManager profileManager,
     InstanceService instanceService,
@@ -72,7 +72,7 @@ public partial class LandingViewModel(
                         .Entries.Take(24)
                         .Select((x, i) =>
                          {
-                             var url = mojangLauncherService.GetAbsoluteImageUrl(x.Image.Url);
+                             var url = mojangServuce.GetAbsoluteImageUrl(x.Image.Url);
 
                              return new MinecraftReleasePatchModel(url, x.Type, x.Title, x.ShortText, x.Date);
                          })

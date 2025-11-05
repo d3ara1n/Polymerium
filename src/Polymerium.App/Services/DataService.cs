@@ -25,7 +25,7 @@ public class DataService(
     IMemoryCache cache,
     RepositoryAgent agent,
     PrismLauncherService prismLauncherService,
-    MojangLauncherService mojangLauncherService)
+    MojangService mojangService)
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
 
@@ -152,7 +152,7 @@ public class DataService(
         GetOrCreate("minecraft:versions", () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));
 
     public ValueTask<MinecraftReleasePatchesResponse> GetMinecraftReleasePatchesAsync() =>
-        GetOrCreate("minecraft:news", mojangLauncherService.GetMinecraftNewsAsync);
+        GetOrCreate("minecraft:news", mojangService.GetMinecraftNewsAsync);
 
 
     public ValueTask<RepositoryStatus> CheckStatusAsync(string label) =>
