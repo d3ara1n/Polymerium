@@ -266,7 +266,7 @@ public partial class SettingsViewModel : ViewModelBase
         new(0, Resources.SettingsView_BackgroundStyleAutoText),
         new(1, Resources.SettingsView_BackgroundStyleMicaText, "Windows 11+"),
         new(2, Resources.SettingsView_BackgroundStyleAcrylicText, "Windows 10+"),
-        new(3, Resources.SettingsView_BackgroundStyleBlurText, "macOS"),
+        new(3, Resources.SettingsView_BackgroundStyleBlurText, "macOS/Linux"),
         new(4, Resources.SettingsView_BackgroundStyleNoneText)
     ];
 
