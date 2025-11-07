@@ -130,18 +130,22 @@
                 </ComboBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_LanguageLabelText}">
-                <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language,Mode=TwoWay}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="m:LanguageModel">
-                            <Grid ColumnDefinitions="*,4,Auto">
-                                <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
-                                <husk:Tag Grid.Column="2" Classes="Small" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Id}" />
-                                </husk:Tag>
-                            </Grid>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <StackPanel>
+                    <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language,Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="m:LanguageModel">
+                                <Grid ColumnDefinitions="*,4,Auto">
+                                    <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
+                                    <husk:Tag Grid.Column="2" Classes="Small" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Id}" />
+                                    </husk:Tag>
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="Restart needed." FontSize="{StaticResource SmallFontSize}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                </StackPanel>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_FontLabelText}">
                 <TextBox Watermark="(Builtin)" IsEnabled="False" />
@@ -209,6 +213,59 @@
                         </TextBox.InnerLeftContent>
                     </TextBox>
                 </Grid>
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <!-- Network -->
+        <controls:SettingsEntry Icon="TopSpeed" Title="Network" Summary="Network settings">
+            <controls:SettingsEntryItem Header="Proxy">
+                <StackPanel Spacing="6">
+                    <RadioButton Content="System" />
+                    <RadioButton VerticalContentAlignment="Top">
+                        <RadioButton.Styles>
+                            <Style Selector="TextBox">
+                                <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+                                <Setter Property="Padding" Value="10,6" />
+                            </Style>
+                        </RadioButton.Styles>
+                        <ContentControl>
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Manual" />
+                                <TextBox>
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="HTTP" Padding="6,0" VerticalAlignment="Center" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                </TextBox>
+                                <TextBox>
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="HTTPS" Padding="6,0" VerticalAlignment="Center" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                </TextBox>
+                                <TextBox>
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="SOCKS" Padding="6,0" VerticalAlignment="Center" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                </TextBox>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <RadioButton Content="Socks5" />
+                                    <RadioButton Content="Socks4" />
+                                </StackPanel>
+                            </StackPanel>
+                        </ContentControl>
+                    </RadioButton>
+                    <RadioButton Content="None" />
+                    <TextBlock Text="Restart needed." FontSize="{StaticResource SmallFontSize}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                </StackPanel>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
