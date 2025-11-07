@@ -137,13 +137,13 @@ public class DataService(
 
     public ValueTask<ComponentIndex> GetComponentAsync(string loaderId) =>
         GetOrCreate($"loader:{loaderId}",
-                    () => prismLauncherService.GetVersionsAsync(PrismLauncherService.UID_MAPPINGS[loaderId],
+                    () => prismLauncherService.GetVersionsAsync(PrismLauncherService.UidMappings[loaderId],
                                                                 CancellationToken.None));
 
     public ValueTask<IReadOnlyList<ComponentIndex.ComponentVersion>>
         GetComponentVersionsAsync(string loaderId, string gameVersion) =>
         GetOrCreate($"loader:{loaderId}:{gameVersion}",
-                    () => prismLauncherService.GetVersionsForMinecraftVersionAsync(PrismLauncherService.UID_MAPPINGS
+                    () => prismLauncherService.GetVersionsForMinecraftVersionAsync(PrismLauncherService.UidMappings
                             [loaderId],
                         gameVersion,
                         CancellationToken.None));
