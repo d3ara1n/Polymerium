@@ -48,8 +48,8 @@ internal static class Program
 
         var builder = Host.CreateApplicationBuilder(args);
         Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
-        AppHost = builder.Build();
         Debug = Debug || builder.Environment.EnvironmentName == "Development";
+        AppHost = builder.Build();
         AppHost.Run();
     }
 

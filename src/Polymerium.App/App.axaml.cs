@@ -17,6 +17,7 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Sentry;
 
 namespace Polymerium.App;
 
@@ -55,6 +56,8 @@ public class App : Application
 
     private static void ShowOrDump(object core, bool critical = false)
     {
+        if (core is Exception rec)
+            SentrySdk.CaptureException(rec);
         if (core is Exception ex
          && !critical
          && Program.AppHost?.Services.GetService<NavigationService>() is { } navigation)

@@ -39,4 +39,10 @@ public static class ServiceCollectionExtensions
         });
         return services;
     }
+
+    public static IServiceCollection AddSentry(this IServiceCollection services)
+    {
+        services.AddHostedService<SentryHostedService>();
+        return services;
+    }
 }
