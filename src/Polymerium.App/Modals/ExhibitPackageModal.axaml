@@ -13,6 +13,7 @@
             xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
+            xmlns:skia="clr-namespace:SkiaMarkdown.Avalonia.Controls;assembly=SkiaMarkdown.Avalonia"
             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="660" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
@@ -504,12 +505,13 @@
                                     Source="{Binding $parent[modals:ExhibitPackageModal].LazyDescription}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="x:String">
-                                            <mdxaml:MarkdownScrollViewer Markdown="{Binding}" Margin="12">
-                                                <mdxaml:MarkdownScrollViewer.Engine>
-                                                    <md:Markdown
-                                                        HyperlinkCommand="{Binding $parent[modals:ExhibitPackageModal].NavigateUriCommand}" />
-                                                </mdxaml:MarkdownScrollViewer.Engine>
-                                            </mdxaml:MarkdownScrollViewer>
+                                            <!-- <mdxaml:MarkdownScrollViewer Markdown="{Binding}" Margin="12"> -->
+                                            <!--     <mdxaml:MarkdownScrollViewer.Engine> -->
+                                            <!--         <md:Markdown -->
+                                            <!--             HyperlinkCommand="{Binding $parent[modals:ExhibitPackageModal].NavigateUriCommand}" /> -->
+                                            <!--     </mdxaml:MarkdownScrollViewer.Engine> -->
+                                            <!-- </mdxaml:MarkdownScrollViewer> -->
+                                            <skia:MarkdownView Markdown="{Binding}" />
                                         </DataTemplate>
                                     </husk:LazyContainer.SourceTemplate>
                                 </husk:LazyContainer>
@@ -631,7 +633,7 @@
                             <StackPanel VerticalAlignment="Center"
                                         IsVisible="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion,Converter={x:Static ObjectConverters.IsNull},FallbackValue=False}"
                                         Spacing="8">
-                                <icons:PackIconLucide Kind="Text" Height="{StaticResource ExtraLargeFontSize}"
+                                <icons:PackIconLucide Kind="CheckLine" Height="{StaticResource ExtraLargeFontSize}"
                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                       Width="{StaticResource ExtraLargeFontSize}"
                                                       HorizontalAlignment="Center" />

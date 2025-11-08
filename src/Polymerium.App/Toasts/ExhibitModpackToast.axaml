@@ -11,6 +11,7 @@
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
+            xmlns:skia="clr-namespace:SkiaMarkdown.Avalonia.Controls;assembly=SkiaMarkdown.Avalonia"
             Header="{Binding ProjectName,FallbackValue=Display}"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
@@ -206,12 +207,13 @@
                             Source="{Binding $parent[local:ExhibitModpackToast].LazyDescription,Mode=OneWay}">
             <husk:LazyContainer.SourceTemplate>
                 <DataTemplate DataType="x:String">
-                    <mdxaml:MarkdownScrollViewer Markdown="{Binding}">
-                        <mdxaml:MarkdownScrollViewer.Engine>
-                            <md:Markdown
-                                HyperlinkCommand="{Binding $parent[local:ExhibitModpackToast].NavigateUriCommand}" />
-                        </mdxaml:MarkdownScrollViewer.Engine>
-                    </mdxaml:MarkdownScrollViewer>
+                    <!-- <mdxaml:MarkdownScrollViewer Markdown="{Binding}"> -->
+                    <!--     <mdxaml:MarkdownScrollViewer.Engine> -->
+                    <!--         <md:Markdown -->
+                    <!--             HyperlinkCommand="{Binding $parent[local:ExhibitModpackToast].NavigateUriCommand}" /> -->
+                    <!--     </mdxaml:MarkdownScrollViewer.Engine> -->
+                    <!-- </mdxaml:MarkdownScrollViewer> -->
+                    <skia:MarkdownView Markdown="{Binding}" />
                 </DataTemplate>
             </husk:LazyContainer.SourceTemplate>
         </husk:LazyContainer>
