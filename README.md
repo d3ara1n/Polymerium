@@ -229,7 +229,7 @@ We welcome contributions! Please ensure your code follows the established patter
 
 Polymerium respects your privacy:
 
-- **No Telemetry**: Zero data collection or tracking
+- **Minor Telemetry**: Collect least necessary data for debugging
 - **Local Storage**: All data stays on your machine
 - **Minimal Footprint**: Clean uninstall leaves no traces
 - **Open Source**: Transparent, auditable codebase

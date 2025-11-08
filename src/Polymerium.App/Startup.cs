@@ -27,6 +27,7 @@ public static class Startup
     public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
         services
+           .AddSentry()
            .AddAvalonia()
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder
