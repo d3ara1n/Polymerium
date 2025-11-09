@@ -6,6 +6,7 @@
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:local="clr-namespace:Polymerium.App.Dialogs"
              xmlns:m="clr-namespace:Polymerium.App.Models"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" d:DesignWidth="460" IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.LoaderEditorDialog">
     <husk:SwitchPresenter
@@ -44,7 +45,7 @@
                         </Button>
                     </Grid>
                 </Border>
-                <TextBlock Grid.Row="2" Text="More Versions" />
+                <TextBlock Grid.Row="2" Text="{x:Static lang:Resources.LoaderEditorDialog_VersionLabelText}" />
                 <husk:LazyContainer Grid.Row="4" Source="{Binding $parent[local:LoaderEditorDialog].LazyVersions}"
                                     MinHeight="36">
                     <husk:LazyContainer.SourceTemplate>
@@ -82,8 +83,8 @@
                 <StackPanel Grid.Row="0" Spacing="6">
                     <fi:SymbolIcon Symbol="VehicleTractor" FontSize="{StaticResource ExtraLargeFontSize}"
                                    HorizontalAlignment="Center" />
-                    <TextBlock Text="No loader selected yet..." HorizontalAlignment="Center" />
-                    <TextBlock Text="Mods will not function without a loader."
+                    <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderText}" HorizontalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderPrompt}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                HorizontalAlignment="Center" />
                 </StackPanel>
@@ -91,7 +92,7 @@
                         Click="AddLoaderButton_OnClick">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                        <TextBlock Text="Add Loader" />
+                        <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_AddLoaderButtonText}" />
                     </StackPanel>
                 </Button>
             </Grid>

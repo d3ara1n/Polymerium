@@ -2679,6 +2679,51 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Loader.
+        /// </summary>
+        public static string LoaderEditorDialog_AddLoaderButtonText {
+            get {
+                return ResourceManager.GetString("LoaderEditorDialog_AddLoaderButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mods will not function without a loader..
+        /// </summary>
+        public static string LoaderEditorDialog_NoLoaderPrompt {
+            get {
+                return ResourceManager.GetString("LoaderEditorDialog_NoLoaderPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No loader selected yet....
+        /// </summary>
+        public static string LoaderEditorDialog_NoLoaderText {
+            get {
+                return ResourceManager.GetString("LoaderEditorDialog_NoLoaderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More Versions.
+        /// </summary>
+        public static string LoaderEditorDialog_VersionLabelText {
+            get {
+                return ResourceManager.GetString("LoaderEditorDialog_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a mod loader.
+        /// </summary>
+        public static string LoaderPickerDialog_Title {
+            get {
+                return ResourceManager.GetString("LoaderPickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string MainWindow_AccountButtonText {
