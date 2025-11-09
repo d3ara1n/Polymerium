@@ -1329,4 +1329,19 @@
     <data name="LandingView_OverviewAccountsLabelText" xml:space="preserve">
         <value>Accounts</value>
     </data>
+    <data name="LoaderEditorDialog_VersionLabelText" xml:space="preserve">
+        <value>More Versions</value>
+    </data>
+    <data name="LoaderEditorDialog_NoLoaderText" xml:space="preserve">
+        <value>No loader selected yet...</value>
+    </data>
+    <data name="LoaderEditorDialog_NoLoaderPrompt" xml:space="preserve">
+        <value>Mods will not function without a loader.</value>
+    </data>
+    <data name="LoaderEditorDialog_AddLoaderButtonText" xml:space="preserve">
+        <value>Add Loader</value>
+    </data>
+    <data name="LoaderPickerDialog_Title" xml:space="preserve">
+        <value>Pick a mod loader</value>
+    </data>
 </root>

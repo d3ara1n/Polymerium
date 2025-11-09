@@ -1320,4 +1320,19 @@
     <data name="LandingView_OverviewInstancesLabelText" xml:space="preserve">
         <value>实例</value>
     </data>
+    <data name="LoaderEditorDialog_VersionLabelText" xml:space="preserve">
+        <value>更多版本</value>
+    </data>
+    <data name="LoaderEditorDialog_NoLoaderText" xml:space="preserve">
+        <value>未选择加载器……</value>
+    </data>
+    <data name="LoaderEditorDialog_NoLoaderPrompt" xml:space="preserve">
+        <value>模组需要一个加载器才能工作。</value>
+    </data>
+    <data name="LoaderEditorDialog_AddLoaderButtonText" xml:space="preserve">
+        <value>添加加载器</value>
+    </data>
+    <data name="LoaderPickerDialog_Title" xml:space="preserve">
+        <value>挑选一个加载器</value>
+    </data>
 </root>

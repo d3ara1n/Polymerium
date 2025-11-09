@@ -5,7 +5,8 @@
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="clr-namespace:Polymerium.App.Models"
-             mc:Ignorable="d" Title="Pick a mod loader" IsPrimaryButtonVisible="True"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             mc:Ignorable="d" Title="{x:Static lang:Resources.LoaderPickerDialog_Title}" IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.LoaderPickerDialog">
     <TabStrip ItemsSource="{Binding $parent[local:LoaderPickerDialog].Candidates}"
               SelectedItem="{Binding $parent[local:LoaderPickerDialog].Result,Mode=TwoWay}">
