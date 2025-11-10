@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using Microsoft.Extensions.Hosting;
 using Sentry;
+using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
 
@@ -16,9 +18,12 @@ public class SentryHostedService(IHostEnvironment environment) : IHostedService
             options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
             options.AutoSessionTracking = true;
             options.Environment = environment.EnvironmentName;
+            options.CacheDirectoryPath = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "sentry");
+            options.AddExceptionFilterForType<OperationCanceledException>();
             if (Program.Debug)
             {
                 options.Release = "In Dev";
+                options.Debug = true;
                 options.ProfilesSampleRate = 1.0f;
                 options.TracesSampleRate = 1.0f;
             }
