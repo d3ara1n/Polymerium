@@ -100,6 +100,13 @@
             <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="RenderTransform" Value="scale(0.95)" />
             </Style>
+
+            <Style Selector="^:disabled /template/ Border#Background">
+                <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            </Style>
+            <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            </Style>
         </ControlTheme>
     </controls:Subpage.Resources>
     <Grid MaxWidth="1024" MaxHeight="750" RowDefinitions="*,*,100" ColumnSpacing="24" RowSpacing="24">
