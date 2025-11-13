@@ -152,10 +152,7 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Debug()
-    {
-        throw new NotImplementedException("The sun is leaking...");
-    }
+    private void Debug() => throw new NotImplementedException("The sun is leaking...");
 
     #endregion
 }

@@ -83,7 +83,8 @@
                 <StackPanel Grid.Row="0" Spacing="6">
                     <fi:SymbolIcon Symbol="VehicleTractor" FontSize="{StaticResource ExtraLargeFontSize}"
                                    HorizontalAlignment="Center" />
-                    <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderText}" HorizontalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderText}"
+                               HorizontalAlignment="Center" />
                     <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderPrompt}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                HorizontalAlignment="Center" />
