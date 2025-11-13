@@ -58,6 +58,11 @@ public partial class SettingsViewModel : ViewModelBase
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
+        ProxyEnabled = configurationService.Value.NetworkProxyEnabled;
+        ProxyAddress = configurationService.Value.NetworkProxyAddress;
+        ProxyPort = configurationService.Value.NetworkProxyPort;
+        ProxyUsername = configurationService.Value.NetworkProxyUsername;
+        ProxyPassword = configurationService.Value.NetworkProxyPassword;
     }
 
     #region Service Export
@@ -364,6 +369,35 @@ public partial class SettingsViewModel : ViewModelBase
 
     partial void OnWindowInitialHeightChanged(uint value) =>
         _configurationService.Value.GameWindowInitialHeight = value;
+
+    #endregion
+
+    #region Proxy Settings
+
+    [ObservableProperty]
+    public partial bool ProxyEnabled { get; set; }
+
+    partial void OnProxyEnabledChanged(bool value) => _configurationService.Value.NetworkProxyEnabled = value;
+
+    [ObservableProperty]
+    public partial string ProxyAddress { get; set; }
+
+    partial void OnProxyAddressChanged(string value) => _configurationService.Value.NetworkProxyAddress = value;
+
+    [ObservableProperty]
+    public partial uint ProxyPort { get; set; }
+
+    partial void OnProxyPortChanged(uint value) => _configurationService.Value.NetworkProxyPort = value;
+
+    [ObservableProperty]
+    public partial string ProxyUsername { get; set; }
+
+    partial void OnProxyUsernameChanged(string value) => _configurationService.Value.NetworkProxyUsername = value;
+
+    [ObservableProperty]
+    public partial string ProxyPassword { get; set; }
+
+    partial void OnProxyPasswordChanged(string value) => _configurationService.Value.NetworkProxyPassword = value;
 
     #endregion
 }

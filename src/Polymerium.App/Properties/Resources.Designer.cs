@@ -3705,6 +3705,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart required.
+        /// </summary>
+        public static string SettingsView_RestartRequiredLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_RestartRequiredLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sidebar Placement.
         /// </summary>
         public static string SettingsView_SidebarPlacementLabelText {
