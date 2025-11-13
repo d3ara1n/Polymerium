@@ -217,27 +217,32 @@
         </controls:SettingsEntry>
         <husk:Divider />
         <!-- Network -->
-        <controls:SettingsEntry Icon="TopSpeed" Title="Network" Summary="Network settings">
-            <controls:SettingsEntryItem Header="Enable Proxy">
+        <controls:SettingsEntry Icon="TopSpeed" Title="{x:Static lang:Resources.SettingsView_NetworkTitle}"
+                                Summary="{x:Static lang:Resources.SettingsView_NetworkSubtitle}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyEnabledLabelText}">
                 <ToggleSwitch IsChecked="{Binding ProxyEnabled,Mode=TwoWay}"
                               OnContent="{x:Static lang:Resources.Enum_On}"
                               OffContent="{x:Static lang:Resources.Enum_Off}" />
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Proxy Address" IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="127.0.0.1 or proxy.example.com"
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyAddressLabelText}"
+                                        IsEnabled="{Binding ProxyEnabled}">
+                <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyAddressPlaceholder}"
                          Text="{Binding ProxyAddress,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Proxy Port" IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="8080"
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyPortLabelText}"
+                                        IsEnabled="{Binding ProxyEnabled}">
+                <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyPortPlaceholder}"
                          Text="{Binding ProxyPort,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Username (Optional)" IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="Leave empty if not required"
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyUsernameLabelText}"
+                                        IsEnabled="{Binding ProxyEnabled}">
+                <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyUsernamePlaceholder}"
                          Text="{Binding ProxyUsername,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Password (Optional)" IsEnabled="{Binding ProxyEnabled}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyPasswordLabelText}"
+                                        IsEnabled="{Binding ProxyEnabled}">
                 <StackPanel Spacing="6">
-                    <TextBox Watermark="Leave empty if not required"
+                    <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}"
                              PasswordChar="●"
                              Text="{Binding ProxyPassword,Mode=TwoWay}" />
                     <TextBlock Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}"

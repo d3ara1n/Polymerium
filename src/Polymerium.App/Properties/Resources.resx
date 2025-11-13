@@ -432,6 +432,39 @@
     <data name="SettingsView_WindowWidthLabelText" xml:space="preserve">
         <value>Width</value>
     </data>
+    <data name="SettingsView_NetworkTitle" xml:space="preserve">
+        <value>Network</value>
+    </data>
+    <data name="SettingsView_NetworkSubtitle" xml:space="preserve">
+        <value>Network settings</value>
+    </data>
+    <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
+        <value>Enable Proxy</value>
+    </data>
+    <data name="SettingsView_ProxyAddressLabelText" xml:space="preserve">
+        <value>Proxy Address</value>
+    </data>
+    <data name="SettingsView_ProxyAddressPlaceholder" xml:space="preserve">
+        <value>127.0.0.1 or proxy.example.com</value>
+    </data>
+    <data name="SettingsView_ProxyPortLabelText" xml:space="preserve">
+        <value>Proxy Port</value>
+    </data>
+    <data name="SettingsView_ProxyPortPlaceholder" xml:space="preserve">
+        <value>8080</value>
+    </data>
+    <data name="SettingsView_ProxyUsernameLabelText" xml:space="preserve">
+        <value>Username (Optional)</value>
+    </data>
+    <data name="SettingsView_ProxyUsernamePlaceholder" xml:space="preserve">
+        <value>Leave empty if not required</value>
+    </data>
+    <data name="SettingsView_ProxyPasswordLabelText" xml:space="preserve">
+        <value>Password (Optional)</value>
+    </data>
+    <data name="SettingsView_ProxyPasswordPlaceholder" xml:space="preserve">
+        <value>Leave empty if not required</value>
+    </data>
     <data name="AccountCreationMicrosoft_Title" xml:space="preserve">
         <value>Microsoft Authentication</value>
     </data>
