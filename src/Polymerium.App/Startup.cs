@@ -32,10 +32,46 @@ public static class Startup
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder
                                                   .RemoveAllLoggers()
-                                                  .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                                                  .ConfigurePrimaryHttpMessageHandler(serviceProvider =>
                                                    {
-                                                       // TODO: Add User Interface to configure
-                                                       UseProxy = true, UseDefaultCredentials = true
+                                                       var handler = new HttpClientHandler();
+
+                                                       // Try to get configuration service to apply proxy settings
+                                                       var configService = serviceProvider.GetService<ConfigurationService>();
+                                                       if (configService != null)
+                                                       {
+                                                           var config = configService.Value;
+                                                           if (config.NetworkProxyEnabled && !string.IsNullOrEmpty(config.NetworkProxyAddress))
+                                                           {
+                                                               var proxyUri = new Uri($"http://{config.NetworkProxyAddress}:{config.NetworkProxyPort}");
+                                                               handler.Proxy = new System.Net.WebProxy(proxyUri);
+                                                               handler.UseProxy = true;
+
+                                                               // Set credentials if username is provided
+                                                               if (!string.IsNullOrEmpty(config.NetworkProxyUsername))
+                                                               {
+                                                                   handler.Proxy.Credentials = new System.Net.NetworkCredential(
+                                                                       config.NetworkProxyUsername,
+                                                                       config.NetworkProxyPassword);
+                                                               }
+                                                               else
+                                                               {
+                                                                   handler.UseDefaultCredentials = true;
+                                                               }
+                                                           }
+                                                           else
+                                                           {
+                                                               handler.UseProxy = true;
+                                                               handler.UseDefaultCredentials = true;
+                                                           }
+                                                       }
+                                                       else
+                                                       {
+                                                           handler.UseProxy = true;
+                                                           handler.UseDefaultCredentials = true;
+                                                       }
+
+                                                       return handler;
                                                    })
                                                   .ConfigureHttpClient(client =>
                                                                            client.DefaultRequestHeaders.UserAgent

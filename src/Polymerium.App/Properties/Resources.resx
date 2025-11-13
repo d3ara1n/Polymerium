@@ -1344,4 +1344,7 @@
     <data name="LoaderPickerDialog_Title" xml:space="preserve">
         <value>Pick a mod loader</value>
     </data>
+    <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
+        <value>Restart required</value>
+    </data>
 </root>

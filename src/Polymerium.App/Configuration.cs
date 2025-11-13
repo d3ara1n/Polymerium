@@ -25,6 +25,11 @@ public class Configuration
     public const string GAME_JAVA_ADDITIONAL_ARGUMENTS = "Game.Java.AdditionalArguments";
     public const string GAME_WINDOW_HEIGHT = "Game.Window.Height";
     public const string GAME_WINDOW_WIDTH = "Game.Window.Width";
+    public const string NETWORK_PROXY_ENABLED = "Network.Proxy.Enabled";
+    public const string NETWORK_PROXY_ADDRESS = "Network.Proxy.Address";
+    public const string NETWORK_PROXY_PORT = "Network.Proxy.Port";
+    public const string NETWORK_PROXY_USERNAME = "Network.Proxy.Username";
+    public const string NETWORK_PROXY_PASSWORD = "Network.Proxy.Password";
 
     private static readonly Dictionary<string, object?> DEFAULTS = new()
     {
@@ -45,7 +50,12 @@ public class Configuration
         { GAME_JAVA_MAX_MEMORY, 4096u },
         { GAME_JAVA_ADDITIONAL_ARGUMENTS, string.Empty },
         { GAME_WINDOW_WIDTH, 1270u },
-        { GAME_WINDOW_HEIGHT, 720u }
+        { GAME_WINDOW_HEIGHT, 720u },
+        { NETWORK_PROXY_ENABLED, false },
+        { NETWORK_PROXY_ADDRESS, string.Empty },
+        { NETWORK_PROXY_PORT, 0u },
+        { NETWORK_PROXY_USERNAME, string.Empty },
+        { NETWORK_PROXY_PASSWORD, string.Empty }
     };
 
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
@@ -67,6 +77,11 @@ public class Configuration
     public string GameJavaAdditionalArguments { get; set; } = AccessDefault<string>(GAME_JAVA_ADDITIONAL_ARGUMENTS);
     public uint GameWindowInitialWidth { get; set; } = AccessDefault<uint>(GAME_WINDOW_WIDTH);
     public uint GameWindowInitialHeight { get; set; } = AccessDefault<uint>(GAME_WINDOW_HEIGHT);
+    public bool NetworkProxyEnabled { get; set; } = AccessDefault<bool>(NETWORK_PROXY_ENABLED);
+    public string NetworkProxyAddress { get; set; } = AccessDefault<string>(NETWORK_PROXY_ADDRESS);
+    public uint NetworkProxyPort { get; set; } = AccessDefault<uint>(NETWORK_PROXY_PORT);
+    public string NetworkProxyUsername { get; set; } = AccessDefault<string>(NETWORK_PROXY_USERNAME);
+    public string NetworkProxyPassword { get; set; } = AccessDefault<string>(NETWORK_PROXY_PASSWORD);
 
     public static T AccessDefault<T>(string key) => (T)DEFAULTS[key]!;
 }
