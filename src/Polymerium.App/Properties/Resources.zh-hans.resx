@@ -423,6 +423,39 @@
     <data name="SettingsView_WindowWidthLabelText" xml:space="preserve">
         <value>宽度</value>
     </data>
+    <data name="SettingsView_NetworkTitle" xml:space="preserve">
+        <value>网络</value>
+    </data>
+    <data name="SettingsView_NetworkSubtitle" xml:space="preserve">
+        <value>网络设置</value>
+    </data>
+    <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
+        <value>启用代理</value>
+    </data>
+    <data name="SettingsView_ProxyAddressLabelText" xml:space="preserve">
+        <value>代理地址</value>
+    </data>
+    <data name="SettingsView_ProxyAddressPlaceholder" xml:space="preserve">
+        <value>127.0.0.1 或 proxy.example.com</value>
+    </data>
+    <data name="SettingsView_ProxyPortLabelText" xml:space="preserve">
+        <value>代理端口</value>
+    </data>
+    <data name="SettingsView_ProxyPortPlaceholder" xml:space="preserve">
+        <value>8080</value>
+    </data>
+    <data name="SettingsView_ProxyUsernameLabelText" xml:space="preserve">
+        <value>用户名（可选）</value>
+    </data>
+    <data name="SettingsView_ProxyUsernamePlaceholder" xml:space="preserve">
+        <value>如不需要请留空</value>
+    </data>
+    <data name="SettingsView_ProxyPasswordLabelText" xml:space="preserve">
+        <value>密码（可选）</value>
+    </data>
+    <data name="SettingsView_ProxyPasswordPlaceholder" xml:space="preserve">
+        <value>如不需要请留空</value>
+    </data>
     <data name="AccountCreationMicrosoft_Title" xml:space="preserve">
         <value>微软验证</value>
     </data>

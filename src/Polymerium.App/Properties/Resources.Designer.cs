@@ -3705,6 +3705,105 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network settings.
+        /// </summary>
+        public static string SettingsView_NetworkSubtitle {
+            get {
+                return ResourceManager.GetString("SettingsView_NetworkSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network.
+        /// </summary>
+        public static string SettingsView_NetworkTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_NetworkTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proxy Address.
+        /// </summary>
+        public static string SettingsView_ProxyAddressLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyAddressLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 127.0.0.1 or proxy.example.com.
+        /// </summary>
+        public static string SettingsView_ProxyAddressPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyAddressPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Proxy.
+        /// </summary>
+        public static string SettingsView_ProxyEnabledLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyEnabledLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password (Optional).
+        /// </summary>
+        public static string SettingsView_ProxyPasswordLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyPasswordLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave empty if not required.
+        /// </summary>
+        public static string SettingsView_ProxyPasswordPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyPasswordPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proxy Port.
+        /// </summary>
+        public static string SettingsView_ProxyPortLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyPortLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8080.
+        /// </summary>
+        public static string SettingsView_ProxyPortPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyPortPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username (Optional).
+        /// </summary>
+        public static string SettingsView_ProxyUsernameLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyUsernameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave empty if not required.
+        /// </summary>
+        public static string SettingsView_ProxyUsernamePlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_ProxyUsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restart required.
         /// </summary>
         public static string SettingsView_RestartRequiredLabelText {
