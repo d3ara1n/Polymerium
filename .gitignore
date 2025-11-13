@@ -364,6 +364,9 @@ FodyWeavers.xsd
 
 .idea/
 .vscode/
+.roo/
+.kilocode/
+.kiro/
 
 appsettings.*.json
 build/
