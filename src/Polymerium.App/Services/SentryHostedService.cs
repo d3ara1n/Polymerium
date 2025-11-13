@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 using Microsoft.Extensions.Hosting;
 using Sentry;
 using Trident.Abstractions;
@@ -11,6 +10,8 @@ namespace Polymerium.App.Services;
 
 public class SentryHostedService(IHostEnvironment environment) : IHostedService
 {
+    #region IHostedService Members
+
     public Task StartAsync(CancellationToken cancellationToken)
     {
         SentrySdk.Init(options =>
@@ -33,6 +34,7 @@ public class SentryHostedService(IHostEnvironment environment) : IHostedService
                 options.ProfilesSampleRate = 0.1f;
                 options.TracesSampleRate = 0.1f;
             }
+
             options.SendDefaultPii = true;
         });
 
@@ -44,4 +46,6 @@ public class SentryHostedService(IHostEnvironment environment) : IHostedService
         SentrySdk.Close();
         return Task.CompletedTask;
     }
+
+    #endregion
 }
