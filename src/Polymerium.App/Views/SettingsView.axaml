@@ -231,7 +231,7 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyPortLabelText}"
                                         IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyPortPlaceholder}"
+                <TextBox Watermark="7890"
                          Text="{Binding ProxyPort,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyUsernameLabelText}"

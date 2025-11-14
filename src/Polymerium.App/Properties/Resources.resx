@@ -450,9 +450,6 @@
     <data name="SettingsView_ProxyPortLabelText" xml:space="preserve">
         <value>Proxy Port</value>
     </data>
-    <data name="SettingsView_ProxyPortPlaceholder" xml:space="preserve">
-        <value>8080</value>
-    </data>
     <data name="SettingsView_ProxyUsernameLabelText" xml:space="preserve">
         <value>Username (Optional)</value>
     </data>
