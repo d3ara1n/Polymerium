@@ -2,8 +2,351 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:vm="using:Polymerium.App.ViewModels"
+                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                  xmlns:fi="using:FluentIcons.Avalonia"
+                  xmlns:converters="clr-namespace:Polymerium.App.Converters"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Views.InstanceStorageView">
-    WIP
+                  x:Class="Polymerium.App.Views.InstanceStorageView"
+                  x:DataType="vm:InstanceStorageViewModel">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <!-- 总览区域 -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0" Spacing="4">
+                <husk:Tag Content="Total Instance Size" />
+                <TextBlock>
+                    <Run
+                        Text="{Binding TotalSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=0.00}"
+                        FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <Run Text="GiB" FontSize="18" />
+                </TextBlock>
+            </StackPanel>
+            <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                    Command="{Binding OpenInstanceFolderCommand}">
+                <husk:IconLabel Icon="FolderOpen" Text="Open Folder" />
+            </Button>
+        </Grid>
+
+        <!-- 主要存储分类 -->
+        <StackPanel Grid.Row="1" Spacing="4">
+            <TextBlock Text="Storage Breakdown" FontSize="{StaticResource LargeFontSize}"
+                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+                <!-- Mods -->
+                <husk:Card Grid.Column="0">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                        <TextBlock Text="Mods" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding ModsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},Mode=OneWay,FallbackValue=0.00}" />
+                            <Run Text="MiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #ModsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   FontSize="{StaticResource SmallFontSize}">
+                            <Run Text="{Binding ModsCount,FallbackValue=0}" />
+                            <fi:SymbolIcon Symbol="Box" FontSize="{StaticResource SmallFontSize}" />
+                        </TextBlock>
+                        <ProgressBar Name="ModsProgressBar" Value="{Binding ModsSize}"
+                                     Maximum="{Binding TotalSize}" />
+                    </StackPanel>
+                </husk:Card>
+
+                <!-- Resource Packs -->
+                <husk:Card Grid.Column="1">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="#9B59B6" />
+                        <TextBlock Text="Resource Packs" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding ResourcePacksSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},Mode=OneWay,FallbackValue=0.00}" />
+                            <Run Text="MiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #ResourcePacksProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   FontSize="{StaticResource SmallFontSize}">
+                            <Run Text="{Binding ResourcePacksCount,FallbackValue=0}" />
+                            <fi:SymbolIcon Symbol="Box" FontSize="{StaticResource SmallFontSize}" />
+                        </TextBlock>
+                        <ProgressBar Name="ResourcePacksProgressBar" Value="{Binding ResourcePacksSize}"
+                                     Maximum="{Binding TotalSize}" />
+                    </StackPanel>
+                </husk:Card>
+
+                <!-- Shader Packs -->
+                <husk:Card Grid.Column="2">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="#E67E22" />
+                        <TextBlock Text="Shader Packs" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding ShaderPacksSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},Mode=OneWay,FallbackValue=0.00}" />
+                            <Run Text="MiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #ShaderPacksProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   FontSize="{StaticResource SmallFontSize}">
+                            <Run Text="{Binding ShaderPacksCount,FallbackValue=0}" />
+                            <fi:SymbolIcon Symbol="Box" FontSize="{StaticResource SmallFontSize}" />
+                        </TextBlock>
+                        <ProgressBar Name="ShaderPacksProgressBar" Value="{Binding ShaderPacksSize}"
+                                     Maximum="{Binding TotalSize}" />
+                    </StackPanel>
+                </husk:Card>
+
+                <!-- Worlds/Saves -->
+                <husk:Card Grid.Column="3">
+                    <StackPanel Spacing="4">
+                        <icons:PackIconLucide Kind="Globe" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="#27AE60" />
+                        <TextBlock Text="Worlds" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run
+                                Text="{Binding WorldsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},Mode=OneWay,FallbackValue=0.00}" />
+                            <Run Text="MiB" />
+                            <Run Text=" / " />
+                            <Run Text="{Binding #WorldsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                        </TextBlock>
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   FontSize="{StaticResource SmallFontSize}">
+                            <Run Text="{Binding WorldsCount,FallbackValue=0}" />
+                            <fi:SymbolIcon Symbol="Globe" FontSize="{StaticResource SmallFontSize}" />
+                        </TextBlock>
+                        <ProgressBar Name="WorldsProgressBar" Value="{Binding WorldsSize}"
+                                     Maximum="{Binding TotalSize}" />
+                    </StackPanel>
+                </husk:Card>
+            </Grid>
+        </StackPanel>
+
+        <!-- 详细存储信息 -->
+        <ScrollViewer Grid.Row="2">
+            <StackPanel Spacing="12">
+                <!-- 其他文件夹 -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Additional Folders" FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
+                        <!-- Screenshots -->
+                        <husk:Card Grid.Row="0" Grid.Column="0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <icons:PackIconLucide Grid.Column="0" Kind="Image"
+                                                      Height="{StaticResource LargeFontSize}"
+                                                      Width="{StaticResource LargeFontSize}"
+                                                      Foreground="#3498DB" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Screenshots"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run
+                                            Text="{Binding ScreenshotsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
+                                        <Run Text="MiB" />
+                                        <Run Text="·" />
+                                        <Run Text="{Binding ScreenshotsCount,FallbackValue=0}" />
+                                        <Run Text="files" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                                        Command="{Binding OpenFolderCommand}"
+                                        CommandParameter="screenshots">
+                                    <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
+                            </Grid>
+                        </husk:Card>
+
+                        <!-- Logs -->
+                        <husk:Card Grid.Row="0" Grid.Column="1">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <icons:PackIconLucide Grid.Column="0" Kind="FileText"
+                                                      Height="{StaticResource LargeFontSize}"
+                                                      Width="{StaticResource LargeFontSize}"
+                                                      Foreground="#95A5A6" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Logs" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run
+                                            Text="{Binding LogsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
+                                        <Run Text="MiB" />
+                                        <Run Text="·" />
+                                        <Run Text="{Binding LogsCount,FallbackValue=0}" />
+                                        <Run Text="files" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                                        Command="{Binding OpenFolderCommand}"
+                                        CommandParameter="logs">
+                                    <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
+                            </Grid>
+                        </husk:Card>
+
+                        <!-- Crash Reports -->
+                        <husk:Card Grid.Row="1" Grid.Column="0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <icons:PackIconLucide Grid.Column="0" Kind="TriangleAlert"
+                                                      Height="{StaticResource LargeFontSize}"
+                                                      Width="{StaticResource LargeFontSize}"
+                                                      Foreground="#E74C3C" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Crash Reports"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run
+                                            Text="{Binding CrashReportsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
+                                        <Run Text="MiB" />
+                                        <Run Text="·" />
+                                        <Run Text="{Binding CrashReportsCount,FallbackValue=0}" />
+                                        <Run Text="files" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                                        Command="{Binding OpenFolderCommand}"
+                                        CommandParameter="crash-reports">
+                                    <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
+                            </Grid>
+                        </husk:Card>
+
+                        <!-- Config -->
+                        <husk:Card Grid.Row="1" Grid.Column="1">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <icons:PackIconLucide Grid.Column="0" Kind="Settings"
+                                                      Height="{StaticResource LargeFontSize}"
+                                                      Width="{StaticResource LargeFontSize}"
+                                                      Foreground="#F39C12" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Config" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run
+                                            Text="{Binding ConfigSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
+                                        <Run Text="MiB" />
+                                        <Run Text="·" />
+                                        <Run Text="{Binding ConfigCount,FallbackValue=0}" />
+                                        <Run Text="files" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                                        Command="{Binding OpenFolderCommand}"
+                                        CommandParameter="config">
+                                    <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
+                            </Grid>
+                        </husk:Card>
+
+                        <!-- Options & Servers -->
+                        <husk:Card Grid.Row="2" Grid.Column="0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <icons:PackIconLucide Grid.Column="0" Kind="SlidersHorizontal"
+                                                      Height="{StaticResource LargeFontSize}"
+                                                      Width="{StaticResource LargeFontSize}"
+                                                      Foreground="#16A085" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Options &amp; Servers"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run
+                                            Text="{Binding OptionsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
+                                        <Run Text="MiB" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                                        Command="{Binding OpenInstanceFolderCommand}">
+                                    <fi:SymbolIcon Symbol="FolderOpen" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
+                            </Grid>
+                        </husk:Card>
+
+                        <!-- Other Files -->
+                        <husk:Card Grid.Row="2" Grid.Column="1">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <icons:PackIconLucide Grid.Column="0" Kind="FolderTree"
+                                                      Height="{StaticResource LargeFontSize}"
+                                                      Width="{StaticResource LargeFontSize}"
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Other Files"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run
+                                            Text="{Binding OtherSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
+                                        <Run Text="MiB" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </husk:Card>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 清理建议 -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Cleanup Suggestions" FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <husk:InfoBar IsVisible="{Binding HasCleanupSuggestions,FallbackValue=False}">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="You can free up disk space by cleaning up the following:"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <StackPanel Spacing="4">
+                                <TextBlock IsVisible="{Binding ShouldCleanLogs,FallbackValue=False}">
+                                    <Run Text="•" />
+                                    <Run Text="Old log files" />
+                                    <Run Text="(" />
+                                    <Run
+                                        Text="{Binding LogsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}}" />
+                                    <Run Text="MiB)" />
+                                </TextBlock>
+                                <TextBlock IsVisible="{Binding ShouldCleanCrashReports,FallbackValue=False}">
+                                    <Run Text="•" />
+                                    <Run Text="Crash reports" />
+                                    <Run Text="(" />
+                                    <Run
+                                        Text="{Binding CrashReportsSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}}" />
+                                    <Run Text="MiB)" />
+                                </TextBlock>
+                            </StackPanel>
+                            <husk:ButtonGroup>
+                                <Button Classes="Small" Command="{Binding CleanLogsCommand}"
+                                        IsVisible="{Binding ShouldCleanLogs,FallbackValue=False}">
+                                    <husk:IconLabel Icon="DeleteLines" Text="Clean Logs" />
+                                </Button>
+                                <Button Classes="Small" Command="{Binding CleanCrashReportsCommand}"
+                                        IsVisible="{Binding ShouldCleanCrashReports,FallbackValue=False}">
+                                    <husk:IconLabel Icon="DeleteLines" Text="Clean Crash Reports" />
+                                </Button>
+                            </husk:ButtonGroup>
+                        </StackPanel>
+                    </husk:InfoBar>
+                </StackPanel>
+
+                <!-- 存储趋势（可选） -->
+                <StackPanel Spacing="4" IsVisible="False">
+                    <TextBlock Text="Storage Trend" FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <husk:Card>
+                        <TextBlock Text="Storage trend chart will be displayed here"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                    </husk:Card>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </controls:Subpage>
