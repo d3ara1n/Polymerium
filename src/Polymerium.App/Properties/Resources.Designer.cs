@@ -3777,15 +3777,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 8080.
-        /// </summary>
-        public static string SettingsView_ProxyPortPlaceholder {
-            get {
-                return ResourceManager.GetString("SettingsView_ProxyPortPlaceholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Username (Optional).
         /// </summary>
         public static string SettingsView_ProxyUsernameLabelText {

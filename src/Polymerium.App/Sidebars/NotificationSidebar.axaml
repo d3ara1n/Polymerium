@@ -20,7 +20,7 @@
         </Grid>
         <!-- 临时模板 -->
         <ScrollViewer Grid.Row="1">
-            <StackPanel Margin="{StaticResource SidebarContentMargin}" Spacing="6" ClipToBounds="False">
+            <StackPanel Margin="{StaticResource SidebarContentMargin}" Spacing="6">
                 <Border MinHeight="64" BoxShadow="0 0 5 0 #1F000000"
                         CornerRadius="{StaticResource LargeCornerRadius}">
                     <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"

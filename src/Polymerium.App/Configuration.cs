@@ -53,7 +53,7 @@ public class Configuration
         { GAME_WINDOW_HEIGHT, 720u },
         { NETWORK_PROXY_ENABLED, false },
         { NETWORK_PROXY_ADDRESS, string.Empty },
-        { NETWORK_PROXY_PORT, 0u },
+        { NETWORK_PROXY_PORT, 7890u },
         { NETWORK_PROXY_USERNAME, string.Empty },
         { NETWORK_PROXY_PASSWORD, string.Empty }
     };
