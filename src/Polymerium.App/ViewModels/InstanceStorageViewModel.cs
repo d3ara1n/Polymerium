@@ -1,19 +1,23 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
 using Trident.Abstractions;
 using Trident.Core.Services;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceStorageViewModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
-    : InstanceViewModelBase(bag, instanceManager, profileManager)
+public partial class InstanceStorageViewModel(
+    ViewBag bag,
+    InstanceManager instanceManager,
+    ProfileManager profileManager) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Reactive Properties
+    #region Reactive
 
     [ObservableProperty]
     public partial ulong TotalSize { get; set; }
@@ -67,101 +71,64 @@ public partial class InstanceStorageViewModel(ViewBag bag, InstanceManager insta
     public partial ulong ConfigCount { get; set; }
 
     [ObservableProperty]
-    public partial ulong OptionsSize { get; set; }
-
-    [ObservableProperty]
     public partial ulong OtherSize { get; set; }
-
-    [ObservableProperty]
-    public partial bool HasCleanupSuggestions { get; set; }
-
-    [ObservableProperty]
-    public partial bool ShouldCleanLogs { get; set; }
-
-    [ObservableProperty]
-    public partial bool ShouldCleanCrashReports { get; set; }
 
     #endregion
 
-    protected override async Task OnInitializeAsync() => await Task.Run(CalculateAsync);
+    #region Overrides
 
-    #region Calculation
+    protected override async Task OnInitializeAsync() => await Task.Run(Calculate);
 
-    private Task CalculateAsync()
+    #endregion
+
+    #region Other
+
+    private void Calculate()
     {
         var homeDir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
 
         // Calculate main categories
-        (ModsSize, ModsCount) = CalculateDirectorySize(Path.Combine(liveDir, "mods"));
-        (ResourcePacksSize, ResourcePacksCount) = CalculateDirectorySize(Path.Combine(liveDir, "resourcepacks"));
-        (ShaderPacksSize, ShaderPacksCount) = CalculateDirectorySize(Path.Combine(liveDir, "shaderpacks"));
-        (WorldsSize, WorldsCount) = CalculateDirectorySize(Path.Combine(liveDir, "saves"));
+        (ModsSize, ModsCount) = CalculateDirectorySize("mods");
+        (ResourcePacksSize, ResourcePacksCount) = CalculateDirectorySize("resourcepacks");
+        (ShaderPacksSize, ShaderPacksCount) = CalculateDirectorySize("shaderpacks");
+        (WorldsSize, WorldsCount) = CalculateDirectorySize("saves");
 
         // Calculate additional folders
-        (ScreenshotsSize, ScreenshotsCount) = CalculateDirectorySize(Path.Combine(liveDir, "screenshots"));
-        (LogsSize, LogsCount) = CalculateDirectorySize(Path.Combine(liveDir, "logs"));
-        (CrashReportsSize, CrashReportsCount) = CalculateDirectorySize(Path.Combine(liveDir, "crash-reports"));
-        (ConfigSize, ConfigCount) = CalculateDirectorySize(Path.Combine(liveDir, "config"));
-
-        // Calculate options and servers (small files)
-        var optionsSize = 0ul;
-        var optionsFile = Path.Combine(liveDir, "options.txt");
-        var serversFile = Path.Combine(liveDir, "servers.dat");
-        if (File.Exists(optionsFile))
-        {
-            optionsSize += (ulong)new FileInfo(optionsFile).Length;
-        }
-        if (File.Exists(serversFile))
-        {
-            optionsSize += (ulong)new FileInfo(serversFile).Length;
-        }
-        OptionsSize = optionsSize;
+        (ScreenshotsSize, ScreenshotsCount) = CalculateDirectorySize("screenshots");
+        (LogsSize, LogsCount) = CalculateDirectorySize("logs");
+        (CrashReportsSize, CrashReportsCount) = CalculateDirectorySize("crash-reports");
+        (ConfigSize, ConfigCount) = CalculateDirectorySize("config");
 
         // Calculate total
-        var calculatedTotal = ModsSize + ResourcePacksSize + ShaderPacksSize + WorldsSize +
-                             ScreenshotsSize + LogsSize + CrashReportsSize + ConfigSize + OptionsSize;
+        var calculatedTotal = ModsSize
+                            + ResourcePacksSize
+                            + ShaderPacksSize
+                            + WorldsSize
+                            + ScreenshotsSize
+                            + LogsSize
+                            + CrashReportsSize
+                            + ConfigSize;
 
         // Calculate other files (total directory size minus calculated categories)
         var (totalDirSize, _) = CalculateDirectorySize(homeDir);
         TotalSize = totalDirSize;
         OtherSize = totalDirSize > calculatedTotal ? totalDirSize - calculatedTotal : 0;
-
-        // Determine cleanup suggestions
-        ShouldCleanLogs = LogsSize > 10 * 1024 * 1024; // > 10 MiB
-        ShouldCleanCrashReports = CrashReportsSize > 5 * 1024 * 1024; // > 5 MiB
-        HasCleanupSuggestions = ShouldCleanLogs || ShouldCleanCrashReports;
-
-        return Task.CompletedTask;
     }
 
-    private static (ulong size, ulong count) CalculateDirectorySize(string path)
+    private (ulong, ulong) CalculateDirectorySize(string folderName)
     {
-        if (!Directory.Exists(path))
-        {
-            return (0ul, 0ul);
-        }
+        var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
+        var importDir = PathDef.Default.DirectoryOfImport(Basic.Key);
+        var persistDir = PathDef.Default.DirectoryOfPersist(Basic.Key);
 
-        try
+        var agg = new[]
         {
-            var directory = new DirectoryInfo(path);
-            var (size, count) = directory
-                               .GetFiles()
-                               .Aggregate((0ul, 0ul),
-                                          (current, file) => (current.Item1 + (ulong)file.Length, current.Item2 + 1));
-            return directory
-                  .GetDirectories()
-                  .Aggregate((size, count),
-                             (current, dir) =>
-                             {
-                                 var (subSize, subCount) = CalculateDirectorySize(dir.FullName);
-                                 return (current.size + subSize, current.count + subCount);
-                             });
-        }
-        catch
-        {
-            return (0ul, 0ul);
-        }
+            FileHelper.CalculateDirectorySize(Path.Combine(buildDir, folderName)),
+            FileHelper.CalculateDirectorySize(Path.Combine(importDir, folderName)),
+            FileHelper.CalculateDirectorySize(Path.Combine(persistDir, folderName))
+        };
+
+        return agg.Aggregate((0ul, 0ul), (acc, t) => (acc.Item1 + t.Item1, acc.Item2 + t.Item2));
     }
 
     #endregion
@@ -174,73 +141,49 @@ public partial class InstanceStorageViewModel(ViewBag bag, InstanceManager insta
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         if (Directory.Exists(dir))
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = dir,
-                UseShellExecute = true
-            });
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
         }
     }
 
-    [RelayCommand]
-    private void OpenFolder(string folderName)
+    private bool CanOpenBuildFolder(string folderName) =>
+        Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), folderName));
+
+    [RelayCommand(CanExecute = nameof(CanOpenBuildFolder))]
+    private void OpenBuildFolder(string folderName)
     {
-        var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
-        var dir = Path.Combine(liveDir, folderName);
+        var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
+        var dir = Path.Combine(buildDir, folderName);
         if (Directory.Exists(dir))
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = dir,
-                UseShellExecute = true
-            });
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
         }
     }
 
-    [RelayCommand]
-    private async Task CleanLogs()
+    private bool CanOpenImportFolder(string folderName) =>
+        Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfImport(Basic.Key), folderName));
+
+    [RelayCommand(CanExecute = nameof(CanOpenImportFolder))]
+    private void OpenImportFolder(string folderName)
     {
-        var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
-        var logsDir = Path.Combine(liveDir, "logs");
-        if (Directory.Exists(logsDir))
+        var import = PathDef.Default.DirectoryOfImport(Basic.Key);
+        var dir = Path.Combine(import, folderName);
+        if (Directory.Exists(dir))
         {
-            try
-            {
-                // Keep only the latest.log file
-                var files = Directory.GetFiles(logsDir);
-                foreach (var file in files)
-                {
-                    var fileName = Path.GetFileName(file);
-                    if (fileName != "latest.log")
-                    {
-                        File.Delete(file);
-                    }
-                }
-                await CalculateAsync();
-            }
-            catch
-            {
-                // Ignore errors
-            }
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
         }
     }
 
-    [RelayCommand]
-    private async Task CleanCrashReports()
+    private bool CanOpenPersistFolder(string folderName) =>
+        Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfPersist(Basic.Key), folderName));
+
+    [RelayCommand(CanExecute = nameof(CanOpenPersistFolder))]
+    private void OpenPersistFolder(string folderName)
     {
-        var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
-        var crashDir = Path.Combine(liveDir, "crash-reports");
-        if (Directory.Exists(crashDir))
+        var persistDir = PathDef.Default.DirectoryOfPersist(Basic.Key);
+        var dir = Path.Combine(persistDir, folderName);
+        if (Directory.Exists(dir))
         {
-            try
-            {
-                Directory.Delete(crashDir, true);
-                await CalculateAsync();
-            }
-            catch
-            {
-                // Ignore errors
-            }
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
         }
     }
 

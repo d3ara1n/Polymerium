@@ -233,7 +233,7 @@
                         <Border Grid.Row="3" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
                                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
                                 Height="{Binding $self.Bounds.Width}"
-                                BackgroundSizing="InnerBorderEdge">
+                                BackgroundSizing="InnerBorderEdge" ToolTip.Tip="{Binding Basic.Name}">
                             <Border.Background>
                                 <ImageBrush Source="{Binding Basic.Thumbnail}" />
                             </Border.Background>
