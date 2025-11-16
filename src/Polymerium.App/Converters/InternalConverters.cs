@@ -2,11 +2,12 @@ using System;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using Humanizer;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
-using Polymerium.App.Properties;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Core.Igniters;
+using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Converters;
 
@@ -86,6 +87,15 @@ public static class InternalConverters
     public static IValueConverter UnsignedLongToGiBDoubleConverter { get; } = new RelayConverter(v => v switch
     {
         ulong l => (double)l / 1024 / 1024 / 1024,
+        _ => v
+    });
+
+    public static IValueConverter ByteSizeConverter { get; } = new RelayConverter((v, _) => v switch
+    {
+        int i => ByteSize.FromBytes(i).Humanize(),
+        long l => ByteSize.FromBytes(l).Humanize(),
+        float f => ByteSize.FromBytes(f).Humanize(),
+        double d => ByteSize.FromBytes(d).Humanize(),
         _ => v
     });
 
