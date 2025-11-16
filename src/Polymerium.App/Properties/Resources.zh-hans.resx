@@ -1368,4 +1368,31 @@
     <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
         <value>需要重启</value>
     </data>
+    <data name="InstanceStorageView_OpenFolderButtonText" xml:space="preserve">
+        <value>打开目录</value>
+    </data>
+    <data name="InstanceStorageView_GotoExplorerButtonText" xml:space="preserve">
+        <value>前往资源浏览器</value>
+    </data>
+    <data name="AssetKind_ShaderPack" xml:space="preserve">
+        <value>着色器包</value>
+    </data>
+    <data name="InstanceStorageView_BreakdownLabelText" xml:space="preserve">
+        <value>拆解</value>
+    </data>
+    <data name="InstanceStorageView_AdditionalLabelText" xml:space="preserve">
+        <value>其他</value>
+    </data>
+    <data name="AssetKind_Log" xml:space="preserve">
+        <value>日志</value>
+    </data>
+    <data name="AssetKind_CrashReport" xml:space="preserve">
+        <value>崩溃报告</value>
+    </data>
+    <data name="AssetKind_Config" xml:space="preserve">
+        <value>配置设定</value>
+    </data>
+    <data name="InstanceStorageView_OtherLabelText" xml:space="preserve">
+        <value>杂项</value>
+    </data>
 </root>

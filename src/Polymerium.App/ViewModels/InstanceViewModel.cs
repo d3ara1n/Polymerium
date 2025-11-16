@@ -354,9 +354,7 @@ public partial class InstanceViewModel : ViewModelBase
         // Statistics
         new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
         // Storage
-        #if DEBUG
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
-        #endif
         // Properties
         new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench)
     ];

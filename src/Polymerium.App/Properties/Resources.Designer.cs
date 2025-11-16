@@ -537,11 +537,38 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Config.
+        /// </summary>
+        public static string AssetKind_Config {
+            get {
+                return ResourceManager.GetString("AssetKind_Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crash Reports.
+        /// </summary>
+        public static string AssetKind_CrashReport {
+            get {
+                return ResourceManager.GetString("AssetKind_CrashReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Packs.
         /// </summary>
         public static string AssetKind_DataPack {
             get {
                 return ResourceManager.GetString("AssetKind_DataPack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logs.
+        /// </summary>
+        public static string AssetKind_Log {
+            get {
+                return ResourceManager.GetString("AssetKind_Log", resourceCulture);
             }
         }
         
@@ -564,7 +591,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saves.
+        ///   Looks up a localized string similar to Worlds.
         /// </summary>
         public static string AssetKind_Save {
             get {
@@ -587,6 +614,15 @@ namespace Polymerium.App.Properties {
         public static string AssetKind_Server {
             get {
                 return ResourceManager.GetString("AssetKind_Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shader Packs.
+        /// </summary>
+        public static string AssetKind_ShaderPack {
+            get {
+                return ResourceManager.GetString("AssetKind_ShaderPack", resourceCulture);
             }
         }
         
@@ -2504,6 +2540,51 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_VersionLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional.
+        /// </summary>
+        public static string InstanceStorageView_AdditionalLabelText {
+            get {
+                return ResourceManager.GetString("InstanceStorageView_AdditionalLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Breakdown.
+        /// </summary>
+        public static string InstanceStorageView_BreakdownLabelText {
+            get {
+                return ResourceManager.GetString("InstanceStorageView_BreakdownLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Resource Explorer.
+        /// </summary>
+        public static string InstanceStorageView_GotoExplorerButtonText {
+            get {
+                return ResourceManager.GetString("InstanceStorageView_GotoExplorerButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Folder.
+        /// </summary>
+        public static string InstanceStorageView_OpenFolderButtonText {
+            get {
+                return ResourceManager.GetString("InstanceStorageView_OpenFolderButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Files.
+        /// </summary>
+        public static string InstanceStorageView_OtherLabelText {
+            get {
+                return ResourceManager.GetString("InstanceStorageView_OtherLabelText", resourceCulture);
             }
         }
         

@@ -1204,7 +1204,7 @@
         <value>Resource Packs</value>
     </data>
     <data name="AssetKind_Save" xml:space="preserve">
-        <value>Saves</value>
+        <value>Worlds</value>
     </data>
     <data name="AssetKind_Screenshot" xml:space="preserve">
         <value>Screenshots</value>
@@ -1376,5 +1376,32 @@
     </data>
     <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
         <value>Restart required</value>
+    </data>
+    <data name="InstanceStorageView_OpenFolderButtonText" xml:space="preserve">
+        <value>Open Folder</value>
+    </data>
+    <data name="InstanceStorageView_GotoExplorerButtonText" xml:space="preserve">
+        <value>Go to Resource Explorer</value>
+    </data>
+    <data name="AssetKind_ShaderPack" xml:space="preserve">
+        <value>Shader Packs</value>
+    </data>
+    <data name="InstanceStorageView_BreakdownLabelText" xml:space="preserve">
+        <value>Breakdown</value>
+    </data>
+    <data name="InstanceStorageView_AdditionalLabelText" xml:space="preserve">
+        <value>Additional</value>
+    </data>
+    <data name="AssetKind_Log" xml:space="preserve">
+        <value>Logs</value>
+    </data>
+    <data name="AssetKind_CrashReport" xml:space="preserve">
+        <value>Crash Reports</value>
+    </data>
+    <data name="AssetKind_Config" xml:space="preserve">
+        <value>Config</value>
+    </data>
+    <data name="InstanceStorageView_OtherLabelText" xml:space="preserve">
+        <value>Other Files</value>
     </data>
 </root>
