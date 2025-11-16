@@ -9,6 +9,7 @@
                   xmlns:fi="using:FluentIcons.Avalonia"
                   xmlns:converters="clr-namespace:Polymerium.App.Converters"
                   xmlns:v="clr-namespace:Polymerium.App.Views"
+                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                   x:Class="Polymerium.App.Views.InstanceStorageView"
                   x:DataType="vm:InstanceStorageViewModel">
@@ -16,7 +17,6 @@
         <!-- 总览区域 -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
             <StackPanel Grid.Column="0" Spacing="4">
-                <husk:Tag Content="Total Instance Size" />
                 <TextBlock>
                     <Run
                         Text="{Binding TotalSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=0.00}"
@@ -28,20 +28,23 @@
                 <Button Theme="{StaticResource OutlineButtonTheme}" VerticalAlignment="Center"
                         Classes="Small"
                         Command="{Binding OpenInstanceFolderCommand}">
-                    <husk:IconLabel Icon="FolderOpen" Text="Open Folder" />
+                    <husk:IconLabel Icon="FolderOpen"
+                                    Text="{x:Static lang:Resources.InstanceStorageView_OpenFolderButtonText}" />
                 </Button>
                 <Button Theme="{StaticResource OutlineButtonTheme}" VerticalAlignment="Center"
                         Classes="Small"
                         Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                         CommandParameter="{x:Type v:InstanceAssetsView}">
-                    <husk:IconLabel Icon="Library" Text="Go to Resource Explorer" />
+                    <husk:IconLabel Icon="Library"
+                                    Text="{x:Static lang:Resources.InstanceStorageView_GotoExplorerButtonText}" />
                 </Button>
             </StackPanel>
         </Grid>
 
         <!-- 主要存储分类 -->
         <StackPanel Grid.Row="1" Spacing="4">
-            <TextBlock Text="Breakdown" FontSize="{StaticResource LargeFontSize}"
+            <TextBlock Text="{x:Static lang:Resources.InstanceStorageView_BreakdownLabelText}"
+                       FontSize="{StaticResource LargeFontSize}"
                        FontWeight="{StaticResource ControlStrongFontWeight}" />
             <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
                 <!-- Mods -->
@@ -50,7 +53,8 @@
                         <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Text="Mods" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.AssetKind_Mod}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -73,7 +77,8 @@
                         <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="#9B59B6" />
-                        <TextBlock Text="Resource Packs" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.AssetKind_ResourcePack}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -96,7 +101,8 @@
                         <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="#E67E22" />
-                        <TextBlock Text="Shader Packs" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.AssetKind_ShaderPack}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -119,7 +125,8 @@
                         <icons:PackIconLucide Kind="Globe" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="#27AE60" />
-                        <TextBlock Text="Worlds" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.AssetKind_Save}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -143,7 +150,8 @@
             <StackPanel Spacing="12">
                 <!-- 其他文件夹 -->
                 <StackPanel Spacing="4">
-                    <TextBlock Text="Additional" FontSize="{StaticResource LargeFontSize}"
+                    <TextBlock Text="{x:Static lang:Resources.InstanceStorageView_AdditionalLabelText}"
+                               FontSize="{StaticResource LargeFontSize}"
                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
                         <!-- Screenshots -->
@@ -154,7 +162,7 @@
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#3498DB" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Screenshots"
+                                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Screenshot}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}">
@@ -175,12 +183,12 @@
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenImportFolderCommand}"
                                             CommandParameter="screenshots">
-                                        <TextBlock Text="Import" />
+                                        <TextBlock Text="Imports" />
                                     </Button>
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenPersistFolderCommand}"
                                             CommandParameter="screenshots">
-                                        <TextBlock Text="Persist" />
+                                        <TextBlock Text="Persists" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
@@ -194,7 +202,8 @@
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#95A5A6" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Logs" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Log}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}">
                                         <Run
@@ -214,12 +223,12 @@
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenImportFolderCommand}"
                                             CommandParameter="logs">
-                                        <TextBlock Text="Import" />
+                                        <TextBlock Text="Imports" />
                                     </Button>
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenPersistFolderCommand}"
                                             CommandParameter="logs">
-                                        <TextBlock Text="Persist" />
+                                        <TextBlock Text="Persists" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
@@ -233,7 +242,7 @@
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#E74C3C" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Crash Reports"
+                                    <TextBlock Text="{x:Static lang:Resources.AssetKind_CrashReport}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}">
@@ -254,12 +263,12 @@
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenImportFolderCommand}"
                                             CommandParameter="crash-reports">
-                                        <TextBlock Text="Import" />
+                                        <TextBlock Text="Imports" />
                                     </Button>
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenPersistFolderCommand}"
                                             CommandParameter="crash-reports">
-                                        <TextBlock Text="Persist" />
+                                        <TextBlock Text="Persists" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
@@ -273,7 +282,8 @@
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#F39C12" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Config" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Config}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}">
                                         <Run
@@ -293,12 +303,12 @@
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenImportFolderCommand}"
                                             CommandParameter="config">
-                                        <TextBlock Text="Import" />
+                                        <TextBlock Text="Imports" />
                                     </Button>
                                     <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                                             Command="{Binding OpenPersistFolderCommand}"
                                             CommandParameter="config">
-                                        <TextBlock Text="Persist" />
+                                        <TextBlock Text="Persists" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
@@ -312,7 +322,7 @@
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Other Files"
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceStorageView_OtherLabelText}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}">
