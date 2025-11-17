@@ -54,10 +54,6 @@ jobs:
                 with:
                     useConfigFile: true
 
-            -   name: Install git-cliff
-                run: |
-                    cargo install git-cliff
-
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
 
@@ -103,7 +99,19 @@ jobs:
                 id: changelog
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
-                    git cliff --latest -o changelog.md
+                    if [ "${{ matrix.runtime }}" = "win-x64" ]; then
+                        pwsh scripts/Update-Changelog.ps1 -Version "$version" -CommitChanges
+                    else
+                        pwsh scripts/Update-Changelog.ps1 -Version "$version"
+                    fi
+                shell: bash
+
+            -   name: Push Changelog Changes
+                if: matrix.runtime == 'win-x64'
+                run: |
+                    git config user.name "github-actions[bot]"
+                    git config user.email "github-actions[bot]@users.noreply.github.com"
+                    git push origin HEAD:${{ github.ref_name }}
                 shell: bash
 
             -   name: Decide Executable Name
@@ -119,7 +127,7 @@ jobs:
             -   name: Pack with Velopack
                 run: |
                     vpk download github --repoUrl https://github.com/${{ github.repository }}
-                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes changelog.md --mainExe ${{ steps.exe_name.outputs.exe_name }}
+                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }}
 
             -   name: Upload Build Artifact
                 uses: actions/upload-artifact@v4
@@ -134,7 +142,7 @@ jobs:
                     name: release-metadata
                     path: |
                         release.properties
-                        changelog.md
+                        CHANGELOG.md
 
     publish:
         name: Publish Release
@@ -163,7 +171,7 @@ jobs:
             -   name: Create GitHub Release
                 uses: softprops/action-gh-release@v2
                 with:
-                    body_path: ./artifacts/release-metadata/changelog.md
+                    body_path: ./artifacts/release-metadata/CHANGELOG.md
                     files: Releases/*
                     name: ${{ steps.metadata.outputs.release_name }}
                     prerelease: ${{ steps.metadata.outputs.is_prerelease }}
