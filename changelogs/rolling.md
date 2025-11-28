@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- 当游戏异常退出时弹出错误报告界面以供诊断
+- 当游戏异常退出时弹出错误报告界面以供诊断(#POLY-5)
 
 ### Changed
 
