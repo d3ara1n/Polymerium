@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -11,6 +10,7 @@ using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 
 namespace Polymerium.App.Modals;
 
@@ -128,7 +128,8 @@ public partial class GameCrashReportModal : Modal
             var fileName = $"crash-diagnostic-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
             var file = await top.StorageProvider.SaveFilePickerAsync(new()
             {
-                Title = "Export Diagnostic Package",
+                Title = Properties.Resources
+                                  .GameCrashReportModal_ExportDialogTitle,
                 SuggestedFileName = fileName,
                 DefaultExtension = "zip",
                 FileTypeChoices =
