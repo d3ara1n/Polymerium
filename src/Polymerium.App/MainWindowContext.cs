@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -293,6 +295,17 @@ public partial class MainWindowContext : ObservableObject
     {
         var sidebar = new NotificationSidebar();
         _overlayService.PopSidebar(sidebar);
+    }
+
+    [RelayCommand]
+    private void DiagnoseGameCrash(LaunchTracker? tracker)
+    {
+        if (tracker == null)
+            return;
+
+        var crashReport = BuildCrashReport(tracker);
+        var modal = new GameCrashReportModal { Report = crashReport };
+        _overlayService.PopModal(modal);
     }
 
     #endregion
@@ -629,9 +642,27 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        if (e.FailureReason is AggregateException { InnerException: ProcessFaultedException }
-                                            or ProcessFaultedException)
+
+                        // Determine if this is an account issue or game crash
+                        var isAccountIssue = e.FailureReason is AccountAuthenticationException
+                                                             or AggregateException
+                                                                {
+                                                                    InnerException: AccountAuthenticationException
+                                                                };
+                        var isGameCrash = e.FailureReason is ProcessFaultedException
+                                                          or AggregateException
+                                                             {
+                                                                 InnerException: ProcessFaultedException
+                                                             };
+
+                        if (isAccountIssue)
                         {
+                            // TODO: Detailed message
+                            _notificationService.PopMessage(e.FailureReason, e.Key);
+                        }
+                        else if (isGameCrash)
+                        {
+                            // Game crash error
                             _notificationService.PopMessage(e.FailureReason,
                                                             e.Key,
                                                             actions:
@@ -639,18 +670,20 @@ public partial class MainWindowContext : ObservableObject
                                                                 new(Resources
                                                                        .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
                                                                     ViewLogCommand,
-                                                                    e)
+                                                                    e),
+                                                                new("Diagnose", DiagnoseGameCrashCommand, e)
                                                             ]);
                         }
                         else
                         {
+                            // Other errors
                             _notificationService.PopMessage(e.FailureReason, e.Key);
                         }
                     });
                     _persistenceService.AppendActivity(new(e.Key,
                                                            e.StartedAt,
                                                            DateTimeOffset.Now,
-                                                           e.Account?.Uuid ?? string.Empty,
+                                                           e.Options.Account?.Uuid ?? string.Empty,
                                                            false));
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -665,7 +698,7 @@ public partial class MainWindowContext : ObservableObject
                     _persistenceService.AppendActivity(new(e.Key,
                                                            e.StartedAt,
                                                            DateTimeOffset.Now,
-                                                           e.Account?.Uuid ?? string.Empty,
+                                                           e.Options.Account?.Uuid ?? string.Empty,
                                                            true));
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -677,6 +710,144 @@ public partial class MainWindowContext : ObservableObject
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
+    }
+
+    #endregion
+
+    #region Diagnostic Helpers
+
+    private CrashReportModel BuildCrashReport(LaunchTracker tracker)
+    {
+        var profile = _profileManager.TryGetImmutable(tracker.Key, out var p) ? p : null;
+        var gameDir = PathDef.Default.DirectoryOfBuild(tracker.Key);
+        var logPath = Path.Combine(gameDir, "logs", "latest.log");
+        var crashReportPath = FindLatestCrashReport(gameDir);
+
+        // Extract loader info
+        var loaderLabel = profile?.Setup.Loader != null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                              ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
+                              : Resources.Enum_Vanilla;
+
+        // Get Java info
+        var javaVersion = tracker.JavaVersion?.ToString();
+        var javaPath = tracker.JavaHome;
+
+        // Get allocated memory
+        var allocatedMemory = $"{tracker.Options.MaxMemory} MB";
+
+        // Get last log lines
+        string? lastLogLines = null;
+        try
+        {
+            if (File.Exists(logPath))
+            {
+                var lines = File.ReadAllLines(logPath);
+                var lastLines = lines.TakeLast(50).ToArray();
+                lastLogLines = string.Join(Environment.NewLine, lastLines);
+            }
+        }
+        catch
+        {
+            // Ignore errors reading log
+        }
+
+        // Get OS info
+        var osDescription = RuntimeInformation.OSDescription;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            osDescription = $"Windows {Environment.OSVersion.Version}";
+        }
+
+        // Extract exit code and exception message
+        var exitCode = tracker.FailureReason is ProcessFaultedException pfe ? pfe.ExitCode : -1;
+        var exceptionMessage = tracker.FailureReason?.Message ?? "Unknown error";
+        if (tracker.FailureReason is AggregateException ae && ae.InnerException != null)
+        {
+            exceptionMessage = ae.InnerException.Message;
+            if (ae.InnerException is ProcessFaultedException innerPfe)
+            {
+                exitCode = innerPfe.ExitCode;
+            }
+        }
+
+        return new()
+        {
+            InstanceKey = tracker.Key,
+            InstanceName = profile?.Name ?? tracker.Key,
+            ExitCode = exitCode,
+            CrashTime = DateTimeOffset.Now,
+            ExceptionMessage = exceptionMessage,
+            MinecraftVersion = profile?.Setup.Version ?? "Unknown",
+            LoaderLabel = loaderLabel,
+            GameDirectory = gameDir,
+            OperatingSystem = osDescription,
+            JavaVersion = javaVersion ?? "Unknown",
+            JavaPath = javaPath ?? "Unknown",
+            AllocatedMemory = allocatedMemory,
+            LogFilePath = File.Exists(logPath) ? logPath : null,
+            CrashReportPath = crashReportPath,
+            LastLogLines = lastLogLines,
+            ModCount = profile?.Setup.Packages.Count ?? 0
+        };
+    }
+
+    private string? FindLatestCrashReport(string gameDir)
+    {
+        try
+        {
+            var crashReportsDir = Path.Combine(gameDir, "crash-reports");
+            if (!Directory.Exists(crashReportsDir))
+            {
+                return null;
+            }
+
+            var crashReports = Directory
+                              .GetFiles(crashReportsDir, "crash-*.txt")
+                              .OrderByDescending(File.GetLastWriteTime)
+                              .FirstOrDefault();
+
+            return crashReports;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private (string ErrorType, string ErrorMessage, string? SuggestedAction) AnalyzeAccountException(
+        Exception exception)
+    {
+        // Unwrap AggregateException if needed
+        var actualException = exception;
+        if (exception is AggregateException ae && ae.InnerException != null)
+        {
+            actualException = ae.InnerException;
+        }
+
+        return actualException switch
+        {
+            MinecraftGameNotOwnedException => ("Game Not Owned", "The selected account does not own Minecraft.",
+                                               "Please ensure you are using an account that has purchased Minecraft Java Edition."),
+
+            XboxLiveAuthenticationException xboxEx when
+                xboxEx.Kind == XboxLiveAuthenticationException.ErrorKind.ParentControl => ("Parental Control",
+                            "This account is restricted by parental controls.",
+                            "Please check the Xbox parental control settings and ensure multiplayer gaming is allowed."),
+
+            XboxLiveAuthenticationException xboxEx when
+                xboxEx.Kind == XboxLiveAuthenticationException.ErrorKind.UnsupportedRegion => ("Unsupported Region",
+                            "Xbox Live is not available in your region.",
+                            "You may need to use a different account or check your Xbox account region settings."),
+
+            XboxLiveAuthenticationException xboxEx => ("Xbox Live Authentication Failed", xboxEx.Message,
+                                                       "There was a problem authenticating with Xbox Live. Try logging out and logging back in."),
+
+            AccountAuthenticationException authEx => ("Account Authentication Failed", authEx.Message,
+                                                      "Your account authentication has failed. Please try logging in again."),
+
+            _ => ("Unknown Account Error", actualException.Message,
+                  "An unexpected account-related error occurred. Please try logging out and logging back in.")
+        };
     }
 
     #endregion
