@@ -107,9 +107,9 @@ public partial class InstanceView : ScopedPage
 
     private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+			if (e.Data.Contains(DataFormat.File))
         {
-            var path = e.Data.GetFiles()?.FirstOrDefault()?.TryGetLocalPath();
+				var path = e.Data.TryGetFile()?.TryGetLocalPath();
             if (path != null && File.Exists(path))
             {
                 e.IsValid = true;
@@ -119,9 +119,9 @@ public partial class InstanceView : ScopedPage
 
     private async void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+			if (e.Data.Contains(DataFormat.File))
         {
-            var path = e.Data.GetFiles()?.FirstOrDefault()?.TryGetLocalPath();
+				var path = e.Data.TryGetFile()?.TryGetLocalPath();
             if (path != null && File.Exists(path) && DataContext is InstanceViewModel viewModel)
             {
                 await viewModel.ImportFromFileAsync(path);

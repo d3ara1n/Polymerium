@@ -16,7 +16,7 @@ public partial class FilePickerDialog : Dialog
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+			if (e.Data.Contains(DataFormat.File))
         {
             e.Accepted = true;
         }
@@ -24,9 +24,9 @@ public partial class FilePickerDialog : Dialog
 
     private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+			if (e.Data.Contains(DataFormat.File))
         {
-            var file = e.Data.GetFiles()?.FirstOrDefault();
+				var file = e.Data.TryGetFile();
             if (file != null)
             {
                 e.Model = file.TryGetLocalPath();
