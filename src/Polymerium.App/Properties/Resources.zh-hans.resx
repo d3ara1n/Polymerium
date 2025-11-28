@@ -1395,4 +1395,73 @@
     <data name="InstanceStorageView_OtherLabelText" xml:space="preserve">
         <value>杂项</value>
     </data>
+    <data name="GameCrashReportModal_Title" xml:space="preserve">
+        <value>游戏崩溃</value>
+    </data>
+    <data name="GameCrashReportModal_ExitCodeLabel" xml:space="preserve">
+        <value>退出代码</value>
+    </data>
+    <data name="GameCrashReportModal_MinecraftVersionLabel" xml:space="preserve">
+        <value>Minecraft 版本</value>
+    </data>
+    <data name="GameCrashReportModal_CrashTimeLabel" xml:space="preserve">
+        <value>崩溃时间</value>
+    </data>
+    <data name="GameCrashReportModal_InstanceSectionTitle" xml:space="preserve">
+        <value>实例</value>
+    </data>
+    <data name="GameCrashReportModal_NameLabel" xml:space="preserve">
+        <value>名称：</value>
+    </data>
+    <data name="GameCrashReportModal_ModLoaderLabel" xml:space="preserve">
+        <value>模组加载器：</value>
+    </data>
+    <data name="GameCrashReportModal_InstalledModsLabel" xml:space="preserve">
+        <value>已安装模组：</value>
+    </data>
+    <data name="GameCrashReportModal_SystemEnvironmentTitle" xml:space="preserve">
+        <value>系统环境</value>
+    </data>
+    <data name="GameCrashReportModal_OperatingSystemLabel" xml:space="preserve">
+        <value>操作系统：</value>
+    </data>
+    <data name="GameCrashReportModal_JavaVersionLabel" xml:space="preserve">
+        <value>Java 版本：</value>
+    </data>
+    <data name="GameCrashReportModal_JavaPathLabel" xml:space="preserve">
+        <value>Java 路径：</value>
+    </data>
+    <data name="GameCrashReportModal_AllocatedMemoryLabel" xml:space="preserve">
+        <value>分配内存：</value>
+    </data>
+    <data name="GameCrashReportModal_LastLogOutputTitle" xml:space="preserve">
+        <value>最近日志输出</value>
+    </data>
+    <data name="GameCrashReportModal_QuickActionsTitle" xml:space="preserve">
+        <value>快捷操作</value>
+    </data>
+    <data name="GameCrashReportModal_OpenLatestLogButton" xml:space="preserve">
+        <value>打开最新日志</value>
+    </data>
+    <data name="GameCrashReportModal_OpenCrashReportButton" xml:space="preserve">
+        <value>打开崩溃报告</value>
+    </data>
+    <data name="GameCrashReportModal_OpenGameDirectoryButton" xml:space="preserve">
+        <value>打开游戏目录</value>
+    </data>
+    <data name="GameCrashReportModal_ExportDiagnosticPackageButton" xml:space="preserve">
+        <value>导出诊断包</value>
+    </data>
+    <data name="GameCrashReportModal_CopyReportButton" xml:space="preserve">
+        <value>复制报告</value>
+    </data>
+    <data name="GameCrashReportModal_CloseButton" xml:space="preserve">
+        <value>关闭</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationDiagnoseText" xml:space="preserve">
+        <value>诊断</value>
+    </data>
+    <data name="GameCrashReportModal_ExportDialogTitle" xml:space="preserve">
+        <value>导出诊断包</value>
+    </data>
 </root>

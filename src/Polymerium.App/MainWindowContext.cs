@@ -18,7 +18,6 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
-using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Polymerium.App.ViewModels;
@@ -431,8 +430,9 @@ public partial class MainWindowContext : ObservableObject
                         model.State = InstanceEntryState.Idle;
                         _entries.Remove(model);
                         _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceInstallingDangerNotificationTitle
-                                                                 .Replace("{0}", e.Key));
+                                                        Properties.Resources
+                                                                  .MainWindow_InstanceInstallingDangerNotificationTitle
+                                                                  .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -440,11 +440,11 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceInstallingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Properties.Resources
+                                                                  .MainWindow_InstanceInstallingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success,
-                                                        actions: new GrowlAction(Resources
+                                                        actions: new GrowlAction(Properties.Resources
                                                                .MainWindow_InstanceInstallingSuccessNotificationOpenText,
                                                             ViewInstanceCommand,
                                                             e.Key),
@@ -506,8 +506,9 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
-                                                                 .Replace("{0}", e.Key));
+                                                        Properties.Resources
+                                                                  .MainWindow_InstanceUpdatingDangerNotificationTitle
+                                                                  .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -515,11 +516,12 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Properties.Resources
+                                                                  .MainWindow_InstanceUpdatingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success,
                                                         true,
-                                                        new GrowlAction(Resources
+                                                        new GrowlAction(Properties.Resources
                                                                            .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
                                                                         ViewInstanceCommand,
                                                                         e.Key));
@@ -585,8 +587,9 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceDeployingNotificationTitle
-                                                                 .Replace("{0}", e.Key));
+                                                        Properties.Resources
+                                                                  .MainWindow_InstanceDeployingNotificationTitle
+                                                                  .Replace("{0}", e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -594,7 +597,8 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources.MainWindow_InstanceDeployingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Properties.Resources
+                                                                  .MainWindow_InstanceDeployingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });
@@ -667,11 +671,14 @@ public partial class MainWindowContext : ObservableObject
                                                             e.Key,
                                                             actions:
                                                             [
-                                                                new(Resources
-                                                                       .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
+                                                                new(Properties.Resources
+                                                                              .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
                                                                     ViewLogCommand,
                                                                     e),
-                                                                new("Diagnose", DiagnoseGameCrashCommand, e)
+                                                                new(Properties.Resources
+                                                                              .MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
+                                                                    DiagnoseGameCrashCommand,
+                                                                    e)
                                                             ]);
                         }
                         else
@@ -691,7 +698,8 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources.MainWindow_InstanceLaunchingSuccessNotificationPrompt,
+                        _notificationService.PopMessage(Properties.Resources
+                                                                  .MainWindow_InstanceLaunchingSuccessNotificationPrompt,
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });
@@ -726,7 +734,7 @@ public partial class MainWindowContext : ObservableObject
         // Extract loader info
         var loaderLabel = profile?.Setup.Loader != null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
                               ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
-                              : Resources.Enum_Vanilla;
+                              : Properties.Resources.Enum_Vanilla;
 
         // Get Java info
         var javaVersion = tracker.JavaVersion?.ToString();

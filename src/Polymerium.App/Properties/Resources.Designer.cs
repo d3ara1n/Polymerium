@@ -1185,6 +1185,204 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allocated Memory:.
+        /// </summary>
+        public static string GameCrashReportModal_AllocatedMemoryLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AllocatedMemoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string GameCrashReportModal_CloseButton {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Report.
+        /// </summary>
+        public static string GameCrashReportModal_CopyReportButton {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_CopyReportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crash Time.
+        /// </summary>
+        public static string GameCrashReportModal_CrashTimeLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_CrashTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit Code.
+        /// </summary>
+        public static string GameCrashReportModal_ExitCodeLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_ExitCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Diagnostic Package.
+        /// </summary>
+        public static string GameCrashReportModal_ExportDiagnosticPackageButton {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_ExportDiagnosticPackageButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Diagnostic Package.
+        /// </summary>
+        public static string GameCrashReportModal_ExportDialogTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_ExportDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed Mods:.
+        /// </summary>
+        public static string GameCrashReportModal_InstalledModsLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_InstalledModsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instance.
+        /// </summary>
+        public static string GameCrashReportModal_InstanceSectionTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_InstanceSectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Path:.
+        /// </summary>
+        public static string GameCrashReportModal_JavaPathLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_JavaPathLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Version:.
+        /// </summary>
+        public static string GameCrashReportModal_JavaVersionLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_JavaVersionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Log Output.
+        /// </summary>
+        public static string GameCrashReportModal_LastLogOutputTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_LastLogOutputTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minecraft Version.
+        /// </summary>
+        public static string GameCrashReportModal_MinecraftVersionLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_MinecraftVersionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Loader:.
+        /// </summary>
+        public static string GameCrashReportModal_ModLoaderLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_ModLoaderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string GameCrashReportModal_NameLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Crash Report.
+        /// </summary>
+        public static string GameCrashReportModal_OpenCrashReportButton {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_OpenCrashReportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Game Directory.
+        /// </summary>
+        public static string GameCrashReportModal_OpenGameDirectoryButton {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_OpenGameDirectoryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Latest Log.
+        /// </summary>
+        public static string GameCrashReportModal_OpenLatestLogButton {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_OpenLatestLogButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating System:.
+        /// </summary>
+        public static string GameCrashReportModal_OperatingSystemLabel {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_OperatingSystemLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Actions.
+        /// </summary>
+        public static string GameCrashReportModal_QuickActionsTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_QuickActionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Environment.
+        /// </summary>
+        public static string GameCrashReportModal_SystemEnvironmentTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_SystemEnvironmentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GAME CRASHED.
+        /// </summary>
+        public static string GameCrashReportModal_Title {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pick a game version.
         /// </summary>
         public static string GameVersionPickerDialog_Title {
@@ -2900,6 +3098,15 @@ namespace Polymerium.App.Properties {
         public static string MainWindow_InstanceInstallingSuccessNotificationPrompt {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diagnose.
+        /// </summary>
+        public static string MainWindow_InstanceLaunchingDangerNotificationDiagnoseText {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationDiagnoseText", resourceCulture);
             }
         }
         
