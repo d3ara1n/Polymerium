@@ -93,7 +93,7 @@ public partial class MainWindow : AppWindow
 
     private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+			if (e.Data.Contains(DataFormat.File))
         {
             e.IsValid = true;
         }
@@ -101,9 +101,9 @@ public partial class MainWindow : AppWindow
 
     private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+			if (e.Data.Contains(DataFormat.File))
         {
-            var file = e.Data.GetFiles()?.FirstOrDefault();
+				var file = e.Data.TryGetFile();
             if (file != null)
             {
                 var path = file.TryGetLocalPath();

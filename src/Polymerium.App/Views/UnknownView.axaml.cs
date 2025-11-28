@@ -72,7 +72,7 @@ public partial class UnknownView : Page
 
     private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Text))
+			if (e.Data.Contains(DataFormat.Text))
         {
             e.IsValid = true;
         }
@@ -80,9 +80,9 @@ public partial class UnknownView : Page
 
     private void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Text))
+			if (e.Data.Contains(DataFormat.Text))
         {
-            var text = e.Data.GetText();
+				var text = e.Data.TryGetText();
             if (text != null)
             {
                 DragText.Text = text;
