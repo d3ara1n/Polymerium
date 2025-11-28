@@ -1,0 +1,216 @@
+<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            MaxWidth="750"
+            mc:Ignorable="d" Background="{StaticResource GrowlDangerBackgroundBrush}"
+            x:Class="Polymerium.App.Modals.GameCrashReportModal">
+    <DockPanel>
+        <!-- Action Buttons at Bottom -->
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,Auto,Auto,Auto"
+              Margin="{StaticResource ModalContentMargin}" ColumnSpacing="8">
+            <Button Grid.Column="1"
+                    Command="{Binding $parent[modals:GameCrashReportModal].ExportDiagnosticPackageCommand}">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <icons:PackIconLucide Kind="Package" Height="14" />
+                    <TextBlock Text="Export Diagnostic Package" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="2"
+                    Command="{Binding $parent[modals:GameCrashReportModal].CopyToClipboardCommand}">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <icons:PackIconLucide Kind="Copy" Height="14" />
+                    <TextBlock Text="Copy Report" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="3" IsCancel="True" Classes="Primary"
+                    Command="{Binding $parent[modals:GameCrashReportModal].Dismiss}">
+                <TextBlock Text="Close" />
+            </Button>
+        </Grid>
+
+        <ScrollViewer DockPanel.Dock="Top" MaxHeight="650">
+            <StackPanel Spacing="0">
+                <!-- Critical Error Banner -->
+                <StackPanel Spacing="6">
+                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
+                               FontSize="{StaticResource ExtraLargeFontSize}">
+                        <Run Text="⚠" />
+                        <Run Text=" GAME CRASHED" />
+                    </TextBlock>
+                    <TextBlock
+                        Text="{Binding $parent[modals:GameCrashReportModal].Report.ExceptionMessage,FallbackValue={x:Null}}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!-- Content Area -->
+                <StackPanel Margin="{StaticResource ModalContentMargin}" Spacing="20">
+                    <!-- Key Information Cards -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                        <!-- Exit Code Card -->
+                        <Border Grid.Column="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Padding="16,12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Exit Code"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock
+                                    Text="{Binding $parent[modals:GameCrashReportModal].Report.ExitCode,FallbackValue={x:Null}}"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Foreground="{StaticResource SystemFillColorCriticalBrush}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Minecraft Version Card -->
+                        <Border Grid.Column="1" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Padding="16,12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Minecraft Version"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock
+                                    Text="{Binding $parent[modals:GameCrashReportModal].Report.MinecraftVersion,FallbackValue={x:Null}}"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Crash Time Card -->
+                        <Border Grid.Column="2" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Padding="16,12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Crash Time"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock
+                                    Text="{Binding $parent[modals:GameCrashReportModal].Report.CrashTime, StringFormat='{}{0:HH:mm:ss}',FallbackValue={x:Null}}"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Separator />
+
+                    <!-- Instance Information -->
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Instance" FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="15" />
+                        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Padding="16">
+                            <Grid ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding $parent[modals:GameCrashReportModal].Report.InstanceName,FallbackValue={x:Null}}" />
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Mod Loader:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="6">
+                                    <TextBlock
+                                        Text="{Binding $parent[modals:GameCrashReportModal].Report.LoaderLabel,FallbackValue={x:Null}}" />
+                                </StackPanel>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Installed Mods:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.ModCount, Converter={x:Static husk:NumberConverters.IsPositive},FallbackValue={x:False}}" />
+                                <TextBlock Grid.Row="2" Grid.Column="1"
+                                           Text="{Binding $parent[modals:GameCrashReportModal].Report.ModCount,FallbackValue={x:Null}}"
+                                           IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.ModCount, Converter={x:Static husk:NumberConverters.IsPositive},FallbackValue={x:False}}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- System Information -->
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="System Environment" FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="15" />
+                        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Padding="16">
+                            <Grid ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Operating System:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding $parent[modals:GameCrashReportModal].Report.OperatingSystem,FallbackValue={x:Null}}" />
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Java Version:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding $parent[modals:GameCrashReportModal].Report.JavaVersion,FallbackValue={x:Null}}" />
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Java Path:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap"
+                                           Text="{Binding $parent[modals:GameCrashReportModal].Report.JavaPath,FallbackValue={x:Null}}"
+                                           FontFamily="Consolas,Courier New,monospace" FontSize="11" />
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Allocated Memory:"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.AllocatedMemory, Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}" />
+                                <TextBlock Grid.Row="3" Grid.Column="1"
+                                           Text="{Binding $parent[modals:GameCrashReportModal].Report.AllocatedMemory,FallbackValue={x:Null}}"
+                                           IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.AllocatedMemory, Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Last Log Lines (if available) -->
+                    <StackPanel Spacing="8"
+                                IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.LastLogLines, Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}">
+                        <TextBlock Text="Last Log Output" FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="15" />
+                        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                Padding="12"
+                                MaxHeight="200">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                                <TextBlock
+                                    Text="{Binding $parent[modals:GameCrashReportModal].Report.LastLogLines,FallbackValue={x:Null}}"
+                                    FontFamily="Consolas,Courier New,monospace"
+                                    FontSize="10"
+                                    TextWrapping="NoWrap" />
+                            </ScrollViewer>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Quick Actions -->
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Quick Actions" FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="15" />
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch"
+                                    Command="{Binding $parent[modals:GameCrashReportModal].OpenLogFileCommand}"
+                                    IsEnabled="{Binding $parent[modals:GameCrashReportModal].Report.LogFilePath, Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <icons:PackIconLucide Kind="FileText" Height="16" />
+                                    <TextBlock Text="Open Latest Log" />
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch"
+                                    Command="{Binding $parent[modals:GameCrashReportModal].OpenCrashReportCommand}"
+                                    IsEnabled="{Binding $parent[modals:GameCrashReportModal].Report.CrashReportPath, Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <icons:PackIconLucide Kind="MailWarning" Height="16" />
+                                    <TextBlock Text="Open Crash Report" />
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch"
+                                    Command="{Binding $parent[modals:GameCrashReportModal].OpenGameDirectoryCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <icons:PackIconLucide Kind="Folder" Height="16" />
+                                    <TextBlock Text="Open Game Directory" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</husk:Modal>

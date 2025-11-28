@@ -8,17 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Highlights
--
+
+- 当游戏异常退出时弹出错误报告界面以供诊断
 
 ### Added
--
+
+- 当游戏异常退出时弹出错误报告界面以供诊断
 
 ### Changed
+
 -
 
-
 ### Removed
+
 -
 
 ### Fixed
--
+
+- 修复整合包搜索中加载器过滤失效(#POLY-16)

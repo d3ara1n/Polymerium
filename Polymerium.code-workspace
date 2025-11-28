@@ -29,9 +29,9 @@
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "build",
-				"program": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net9.0/Polymerium.App.dll",
+				"program": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net10.0/Polymerium.App.dll",
 				"args": [],
-				"cwd": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net9.0",
+				"cwd": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net10.0",
 				"console": "internalConsole",
 				"stopAtEntry": false
 			},
@@ -40,9 +40,9 @@
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "build",
-				"program": "${workspaceFolder}/submodules/Huskui.Avalonia/src/Huskui.Gallery/bin/Debug/net9.0/Huskui.Gallery.dll",
+				"program": "${workspaceFolder}/submodules/Huskui.Avalonia/src/Huskui.Gallery/bin/Debug/net10.0/Huskui.Gallery.dll",
 				"args": [],
-				"cwd": "${workspaceFolder}/submodules/Huskui.Avalonia/src/Huskui.Gallery/bin/Debug/net9.0",
+				"cwd": "${workspaceFolder}/submodules/Huskui.Avalonia/src/Huskui.Gallery/bin/Debug/net10.0",
 				"console": "internalConsole",
 				"stopAtEntry": false
 			},
