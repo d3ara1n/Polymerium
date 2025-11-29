@@ -4254,15 +4254,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply update.
-        /// </summary>
-        public static string SettingsView_UpdatesApplyButtonText {
-            get {
-                return ResourceManager.GetString("SettingsView_UpdatesApplyButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Check for updates.
         /// </summary>
         public static string SettingsView_UpdatesCheckButtonText {
@@ -4304,6 +4295,15 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_UpdatesUnavailableLabelText {
             get {
                 return ResourceManager.GetString("SettingsView_UpdatesUnavailableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View update.
+        /// </summary>
+        public static string SettingsView_UpdatesViewButtonText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdatesViewButtonText", resourceCulture);
             }
         }
         

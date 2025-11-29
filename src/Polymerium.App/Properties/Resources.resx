@@ -1137,8 +1137,8 @@
     <data name="SettingsView_UpdatesLabelText" xml:space="preserve">
         <value>Updates</value>
     </data>
-    <data name="SettingsView_UpdatesApplyButtonText" xml:space="preserve">
-        <value>Apply update</value>
+    <data name="SettingsView_UpdatesViewButtonText" xml:space="preserve">
+        <value>View update</value>
     </data>
     <data name="SettingsView_UpdatesCheckButtonText" xml:space="preserve">
         <value>Check for updates</value>

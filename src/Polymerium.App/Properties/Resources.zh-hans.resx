@@ -1128,8 +1128,8 @@
     <data name="SettingsView_UpdatesLabelText" xml:space="preserve">
         <value>更新</value>
     </data>
-    <data name="SettingsView_UpdatesApplyButtonText" xml:space="preserve">
-        <value>应用更新</value>
+    <data name="SettingsView_UpdatesViewButtonText" xml:space="preserve">
+        <value>查看更新</value>
     </data>
     <data name="SettingsView_UpdatesCheckButtonText" xml:space="preserve">
         <value>检查更新</value>
