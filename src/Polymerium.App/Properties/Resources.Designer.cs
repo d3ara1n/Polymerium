@@ -447,6 +447,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string AppUpdateModal_CancelButtonText {
+            get {
+                return ResourceManager.GetString("AppUpdateModal_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Now.
+        /// </summary>
+        public static string AppUpdateModal_ConfirmButtonText {
+            get {
+                return ResourceManager.GetString("AppUpdateModal_ConfirmButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No release notes available.
+        /// </summary>
+        public static string AppUpdateModal_NoReleaseNotesLabelText {
+            get {
+                return ResourceManager.GetString("AppUpdateModal_NoReleaseNotesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Available.
+        /// </summary>
+        public static string AppUpdateModal_Title {
+            get {
+                return ResourceManager.GetString("AppUpdateModal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Falls back to traditional mod.jar placement, losing Polymerium&apos;s file management benefits..
         /// </summary>
         public static string AssetImporterDialog_AsAssetDescription {

@@ -89,7 +89,7 @@ $unreleasedSection
     $unreleasedTemplate = @"
 ## [Unreleased]
 
-### Highlights
+### ✨ Highlights ✨
 
 -
 

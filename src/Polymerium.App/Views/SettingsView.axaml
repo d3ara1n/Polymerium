@@ -274,7 +274,7 @@
                                         <fi:SymbolIcon Symbol="ArrowClockwise" HorizontalAlignment="Center"
                                                        FontSize="{StaticResource SmallFontSize}" />
                                     </Button>
-                                    <Button Classes="Small Primary" Command="{Binding ApplyUpdateCommand}"
+                                    <Button Classes="Small Primary" Command="{Binding ViewReleaseCommand}"
                                             CommandParameter="{Binding UpdateTarget}">
                                         <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesApplyButtonText}" />
                                     </Button>

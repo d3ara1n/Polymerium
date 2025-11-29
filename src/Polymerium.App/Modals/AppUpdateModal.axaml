@@ -1,0 +1,98 @@
+﻿<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
+            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+            mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
+            Width="560" MaxHeight="600"
+            x:Class="Polymerium.App.Modals.AppUpdateModal">
+    <DockPanel>
+        <!-- Header -->
+        <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,16">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}"
+                        Classes="Small" IsCancel="True"
+                        Command="{Binding $parent[modals:AppUpdateModal].Dismiss}">
+                    <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource LargeFontSize}"
+                                          VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_Title}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                               FontSize="{StaticResource LargeFontSize}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <husk:Tag Classes="Small Primary">
+                    <TextBlock Text="{Binding $parent[modals:AppUpdateModal].Model.Version, FallbackValue=0.0.0}" />
+                </husk:Tag>
+                <husk:Tag Classes="Small Warning"
+                          IsVisible="{Binding $parent[modals:AppUpdateModal].Model.IsPrerelease, FallbackValue=False}">
+                    <TextBlock Text="Pre-release" />
+                </husk:Tag>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Action Buttons at Bottom -->
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,16,0,0">
+            <!-- Progress Bar -->
+            <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Center"
+                        IsVisible="{Binding $parent[modals:AppUpdateModal].IsDownloading, FallbackValue=False}">
+                <ProgressBar Value="{Binding $parent[modals:AppUpdateModal].DownloadProgress}"
+                             Minimum="0" Maximum="100" Height="6" />
+                <TextBlock Text="{Binding $parent[modals:AppUpdateModal].DownloadProgress, StringFormat={}{0}%}"
+                           FontSize="{StaticResource SmallFontSize}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            </StackPanel>
+
+            <Button Grid.Column="1" Classes="Primary"
+                    IsEnabled="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}"
+                    Command="{Binding $parent[modals:AppUpdateModal].ConfirmUpdateCommand}">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <icons:PackIconLucide Kind="Download" Height="14"
+                                          IsVisible="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}" />
+                    <icons:PackIconLucide Kind="LoaderCircle" Height="14" Classes="Spinning"
+                                          IsVisible="{Binding $parent[modals:AppUpdateModal].IsDownloading, FallbackValue=False}" />
+                    <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_ConfirmButtonText}" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="2"
+                    IsVisible="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}"
+                    Command="{Binding $parent[modals:AppUpdateModal].Dismiss}">
+                <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_CancelButtonText}" />
+            </Button>
+        </Grid>
+
+        <!-- Release Notes Content -->
+        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}"
+                Padding="12">
+            <husk:SwitchPresenter
+                Value="{Binding $parent[modals:AppUpdateModal].Model.ReleaseNotes, Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}"
+                TargetType="x:Boolean">
+                <husk:SwitchCase Value="{x:True}">
+                    <mdxaml:MarkdownScrollViewer
+                        Markdown="{Binding $parent[modals:AppUpdateModal].Model.ReleaseNotes,FallbackValue=No release notes}" />
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="{x:False}">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                        <icons:PackIconLucide Kind="FileText" Height="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                              HorizontalAlignment="Center" />
+                        <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_NoReleaseNotesLabelText}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </husk:SwitchCase>
+            </husk:SwitchPresenter>
+        </Border>
+    </DockPanel>
+</husk:Modal>

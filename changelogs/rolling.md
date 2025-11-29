@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Highlights
+### ✨ Highlights ✨
 
 - 当游戏异常退出时弹出错误报告界面以供诊断
+- 应用更新会提供模态框以显示更新日志
 
 ### Added
 
 - 当游戏异常退出时弹出错误报告界面以供诊断(#POLY-5)
+- 应用更新会提供模态框以显示更新日志(#POLY-6)
 
 ### Changed
 
