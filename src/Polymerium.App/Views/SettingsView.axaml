@@ -143,7 +143,8 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}" FontSize="{StaticResource SmallFontSize}"
+                    <TextBlock Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}"
+                               FontSize="{StaticResource SmallFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </StackPanel>
             </controls:SettingsEntryItem>
@@ -276,7 +277,7 @@
                                     </Button>
                                     <Button Classes="Small Primary" Command="{Binding ViewReleaseCommand}"
                                             CommandParameter="{Binding UpdateTarget}">
-                                        <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesApplyButtonText}" />
+                                        <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdatesViewButtonText}" />
                                     </Button>
                                 </DockPanel>
                             </husk:SwitchCase>
