@@ -1473,4 +1473,16 @@
     <data name="GameCrashReportModal_ExportDialogTitle" xml:space="preserve">
         <value>Export Diagnostic Package</value>
     </data>
+    <data name="AppUpdateModal_Title" xml:space="preserve">
+        <value>Update Available</value>
+    </data>
+    <data name="AppUpdateModal_CancelButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="AppUpdateModal_ConfirmButtonText" xml:space="preserve">
+        <value>Update Now</value>
+    </data>
+    <data name="AppUpdateModal_NoReleaseNotesLabelText" xml:space="preserve">
+        <value>No release notes available</value>
+    </data>
 </root>

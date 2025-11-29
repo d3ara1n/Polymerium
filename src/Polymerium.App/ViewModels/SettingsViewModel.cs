@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
 using Polymerium.App.Facilities;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
@@ -133,46 +133,22 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
 
-    private bool CanApplyUpdate() => UpdateTarget != null;
+    private bool CanViewRelease(AppUpdateModel? model) => model != null;
 
-    [RelayCommand(CanExecute = nameof(CanApplyUpdate))]
-    private async Task ApplyUpdateAsync(AppUpdateModel? model)
+    [RelayCommand(CanExecute = nameof(CanViewRelease))]
+    private void ViewRelease(AppUpdateModel? model)
     {
         if (model == null)
         {
             return;
         }
 
-        var progress = _notificationService.PopProgress("Downloading...", "Apply the update");
-        try
+        OverlayService.PopModal(new AppUpdateModal
         {
-            // 即使处置了也没事，内部会处理空引用
-            // ReSharper disable once AccessToDisposedClosure
-            void Report(int value) => Dispatcher.UIThread.Post(() => progress.Report(value));
-
-            await _updateManager.DownloadUpdatesAsync(model.Update, Report);
-            _notificationService.PopMessage("Restart required to take effect",
-                                            "Apply the update",
-                                            actions: [new("Restart", RestartAndUpdateCommand, model)]);
-        }
-        catch (Exception ex)
-        {
-            progress.Dispose();
-            _notificationService.PopMessage(ex, "Failed to download update");
-        }
-
-        progress.Dispose();
-    }
-
-    private bool CanRestartAndUpdate(AppUpdateModel? model) => model is not null;
-
-    [RelayCommand(CanExecute = nameof(CanRestartAndUpdate))]
-    private void RestartAndUpdate(AppUpdateModel? model)
-    {
-        if (model != null)
-        {
-            _updateManager.ApplyUpdatesAndRestart(model.Update);
-        }
+            Model = model,
+            UpdateManager = _updateManager,
+            NotificationService = _notificationService
+        });
     }
 
     #endregion
