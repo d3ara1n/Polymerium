@@ -1986,6 +1986,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatically select the best compatible version.
+        /// </summary>
+        public static string InstancePackageDependencyModal_AutoVersionSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePackageDependencyModal_AutoVersionSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Version.
+        /// </summary>
+        public static string InstancePackageDependencyModal_AutoVersionTitle {
+            get {
+                return ResourceManager.GetString("InstancePackageDependencyModal_AutoVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string InstancePackageModal_AddTagButtonText {

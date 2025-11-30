@@ -1053,6 +1053,12 @@
     <data name="InstancePackageDependencyButton_RefCountTagText" xml:space="preserve">
         <value>Refs:</value>
     </data>
+    <data name="InstancePackageDependencyModal_AutoVersionTitle" xml:space="preserve">
+        <value>Auto Version</value>
+    </data>
+    <data name="InstancePackageDependencyModal_AutoVersionSubtitle" xml:space="preserve">
+        <value>Automatically select the best compatible version</value>
+    </data>
     <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
         <value>Dependencies</value>
     </data>
