@@ -116,6 +116,8 @@ jobs:
                 run: |
                     git config user.name "github-actions[bot]"
                     git config user.email "github-actions[bot]@users.noreply.github.com"
+                    git add changelogs/rolling.md
+                    git add changelogs/v*.md
                     git commit -m "chore(release): update changelog for ${{ steps.gitversion.outputs.semVer }}"
                     git push origin HEAD:main
                 shell: bash
