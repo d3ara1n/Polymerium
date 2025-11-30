@@ -25,4 +25,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--
+- 修复包管理的信息页面无法在版本板块更改为自动版本的问题(#POLY-18)
