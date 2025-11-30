@@ -355,14 +355,20 @@ public partial class InstancePackageModal : Modal
         }
     }
 
-    private bool CanViewPackage(InstancePackageDependencyModel? model) => model is { Installed: { Info: not null } };
+    private bool CanViewPackage(InstancePackageDependencyModel? model) => model is not null;
 
 
     [RelayCommand(CanExecute = nameof(CanViewPackage))]
     private void ViewPackage(InstancePackageDependencyModel? model)
     {
-        if (model is { Installed: { Info: not null } installed })
+        if (model is null)
         {
+            return;
+        }
+
+        if (model.Installed is { Info: not null } installed)
+        {
+            // 本地已安装的依赖，打开 InstancePackageModal
             OverlayService.PopModal(new InstancePackageModal
             {
                 DataContext = installed.Info,
@@ -373,6 +379,37 @@ public partial class InstancePackageModal : Modal
                 Collection = Collection,
                 Filter = Filter
             });
+        }
+        else
+        {
+            // 在线依赖，打开 InstancePackageDependencyModal
+            OverlayService.PopModal(new InstancePackageDependencyModal
+            {
+                DataContext = model,
+                Guard = Guard,
+                DataService = DataService,
+                PersistenceService = PersistenceService,
+                Collection = Collection,
+                Filter = Filter,
+                OnPackageInstalledCallback = OnDependencyInstalled
+            });
+        }
+    }
+
+    private void OnDependencyInstalled(InstancePackageModel newPackage)
+    {
+        // 当依赖安装完成后，更新对应的 InstancePackageDependencyModel.Installed
+        // 由于 LazyDependencies 已经加载完成，我们需要找到对应的依赖并更新其 Installed 属性
+        if (LazyDependencies?.Value is InstancePackageDependencyCollection dependencies)
+        {
+            var dependency = dependencies.FirstOrDefault(x => PackageHelper.IsMatched(newPackage.Entry.Purl,
+                                                             x.Label,
+                                                             x.Namespace,
+                                                             x.ProjectId));
+            if (dependency is not null)
+            {
+                dependency.Installed = newPackage;
+            }
         }
     }
 
