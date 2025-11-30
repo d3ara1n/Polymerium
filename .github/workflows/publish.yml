@@ -106,7 +106,6 @@ jobs:
 
             -   name: Generate Changelog
                 id: changelog
-                if: matrix.runtime == 'win-x64'
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
                     pwsh scripts/Update-Changelog.ps1 -Version "$version"
