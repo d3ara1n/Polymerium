@@ -104,7 +104,9 @@ public partial class InstanceSetupViewModel(
 
             StageCount = _stageSource.Count;
             _stageSource.Remove(toRemove);
-            var toAdd = lookup.Select(x => new InstancePackageModel(x, x.Source == Basic.Source)).ToList();
+            var toAdd = lookup
+                       .Select(x => new InstancePackageModel(x, x.Source is not null && x.Source == Basic.Source))
+                       .ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
             if (StageCount != profile.Setup.Packages.Count)
@@ -113,7 +115,11 @@ public partial class InstanceSetupViewModel(
                 throw new UnreachableException("使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了");
             }
 
-            _ = RefreshPackagesAsync(toAdd.Concat(toUpdate).ToList(), token.Value);
+            var toModify = toAdd.Concat(toUpdate).ToList();
+            if (toModify.Count > 0)
+            {
+                _ = RefreshPackagesAsync(toModify, token.Value);
+            }
         }
     }
 

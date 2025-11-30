@@ -345,6 +345,10 @@ public partial class InstanceViewModel : ViewModelBase
     [
         // Home
         new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
+        // Dashboard
+        #if DEBUG
+        new(typeof(InstanceDashboardView), PackIconLucideKind.Activity),
+        #endif
         // Setup
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Assets
