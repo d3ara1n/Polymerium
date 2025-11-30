@@ -97,10 +97,10 @@ $unreleasedSection
         if ($existingContent -match '(?s)^(# [^\n]+\n+)(.*)$') {
             $header = $Matches[1]
             $body = $Matches[2]
-            $newArchiveContent = "$header$versionEntry`n`n$body"
+            $newArchiveContent = "$header`n$versionEntry`n$body"
         } else {
             # No header, just prepend
-            $newArchiveContent = "$versionEntry`n`n$existingContent"
+            $newArchiveContent = "$versionEntry`n$existingContent"
         }
         Set-Content -Path $versionArchiveFile -Value $newArchiveContent.TrimEnd() -Encoding UTF8 -NoNewline
     } else {
