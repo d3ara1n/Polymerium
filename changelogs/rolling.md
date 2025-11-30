@@ -9,13 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ✨ Highlights ✨
 
-- 当游戏异常退出时弹出错误报告界面以供诊断
-- 应用更新会提供模态框以显示更新日志
+- 实例的包管理页面可以查看在线依赖并添加
 
 ### Added
 
-- 当游戏异常退出时弹出错误报告界面以供诊断(#POLY-5)
-- 应用更新会提供模态框以显示更新日志(#POLY-6)
+- 实例的包管理页面可以查看在线依赖并添加(#53 #POLY-11)
 
 ### Changed
 
@@ -27,4 +25,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- 修复整合包搜索中加载器过滤失效(#POLY-16)
+-

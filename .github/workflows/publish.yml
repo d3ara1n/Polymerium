@@ -106,13 +106,10 @@ jobs:
 
             -   name: Generate Changelog
                 id: changelog
+                if: matrix.runtime == 'win-x64'
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
-                    if [ "${{ matrix.runtime }}" = "win-x64" ]; then
-                        pwsh scripts/Update-Changelog.ps1 -Version "$version" -CommitChanges
-                    else
-                        pwsh scripts/Update-Changelog.ps1 -Version "$version"
-                    fi
+                    pwsh scripts/Update-Changelog.ps1 -Version "$version"
                 shell: bash
 
             -   name: Push Changelog Changes
@@ -120,6 +117,7 @@ jobs:
                 run: |
                     git config user.name "github-actions[bot]"
                     git config user.email "github-actions[bot]@users.noreply.github.com"
+                    git commit -m "chore(release): update changelog for ${{ steps.gitversion.outputs.semVer }}"
                     git push origin HEAD:main
                 shell: bash
 
