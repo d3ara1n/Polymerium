@@ -41,6 +41,11 @@ $versionWithV = if ($Version.StartsWith('v')) { $Version } else { "v$Version" }
 $rollingChangelog = Join-Path $PSScriptRoot ".." "changelogs" "rolling.md"
 $outputChangelog = Join-Path $PSScriptRoot ".." "CHANGELOG.md"
 
+# Determine the version archive file (e.g., v0.1.md for version 0.1.0)
+$versionParts = $normalizedVersion -split '\.'
+$majorMinorVersion = "$($versionParts[0]).$($versionParts[1])"
+$versionArchiveFile = Join-Path $PSScriptRoot ".." "changelogs" "v$majorMinorVersion.md"
+
 # Verify rolling.md exists
 if (-not (Test-Path $rollingChangelog)) {
     Write-Error "Rolling changelog not found at: $rollingChangelog"
@@ -77,6 +82,37 @@ $unreleasedSection
     # Write to changelog.md
     Set-Content -Path $outputChangelog -Value $releaseNotes -Encoding UTF8 -NoNewline
     Write-Host "✓ Created CHANGELOG.md with release notes" -ForegroundColor Green
+
+    # Archive to version file (e.g., v0.0.md)
+    $versionEntry = @"
+## [$normalizedVersion] - $releaseDate
+
+$unreleasedSection
+"@
+
+    if (Test-Path $versionArchiveFile) {
+        # Prepend to existing file (after the header)
+        $existingContent = Get-Content $versionArchiveFile -Raw -Encoding UTF8
+        # Check if file has a header, if so insert after it
+        if ($existingContent -match '^(# Changelog[^\n]*\n\n)(.*)$') {
+            $header = $Matches[1]
+            $body = $Matches[2]
+            $newArchiveContent = "$header$versionEntry`n`n$body"
+        } else {
+            # No header, just prepend
+            $newArchiveContent = "$versionEntry`n`n$existingContent"
+        }
+        Set-Content -Path $versionArchiveFile -Value $newArchiveContent.TrimEnd() -Encoding UTF8 -NoNewline
+    } else {
+        # Create new version archive file
+        $newArchiveContent = @"
+# Changelog
+
+$versionEntry
+"@
+        Set-Content -Path $versionArchiveFile -Value $newArchiveContent -Encoding UTF8 -NoNewline
+    }
+    Write-Host "✓ Archived to $(Split-Path $versionArchiveFile -Leaf)" -ForegroundColor Green
 
     # Create the archived version entry
     $archivedEntry = @"
@@ -121,37 +157,10 @@ $archivedEntry
     Set-Content -Path $rollingChangelog -Value $newContent -Encoding UTF8 -NoNewline
     Write-Host "✓ Updated rolling.md with archived version and new [Unreleased] template" -ForegroundColor Green
 
-    # Commit changes if requested
-    if ($CommitChanges) {
-        Write-Host "`nCommitting changelog changes..." -ForegroundColor Cyan
-
-        # Check if we're in a git repository
-        $gitRoot = git rev-parse --show-toplevel 2>$null
-        if ($LASTEXITCODE -ne 0) {
-            Write-Error "Not in a git repository"
-            exit 1
-        }
-
-        # Stage the changelog files
-        git add $rollingChangelog $outputChangelog
-
-        # Commit the changes
-        $commitMessage = "chore(release): update changelog for $versionWithV"
-        git commit -m $commitMessage
-
-        if ($LASTEXITCODE -eq 0) {
-            Write-Host "✓ Committed changelog changes" -ForegroundColor Green
-            Write-Host "  Commit message: $commitMessage" -ForegroundColor Gray
-        } else {
-            Write-Warning "Failed to commit changes. Please commit manually."
-        }
-    } else {
-        Write-Host "`nChanges not committed. Use -CommitChanges to commit automatically." -ForegroundColor Yellow
-    }
-
     Write-Host "`n✓ Changelog processing complete!" -ForegroundColor Green
-    Write-Host "  - changelog.md: Release notes for $versionWithV" -ForegroundColor Gray
+    Write-Host "  - CHANGELOG.md: Release notes for $versionWithV" -ForegroundColor Gray
     Write-Host "  - rolling.md: Archived $versionWithV and reset [Unreleased]" -ForegroundColor Gray
+    Write-Host "  - $(Split-Path $versionArchiveFile -Leaf): Version archive updated" -ForegroundColor Gray
 
 } else {
     Write-Error "Could not find [Unreleased] section in rolling.md"
