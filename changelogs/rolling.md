@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ✨ Highlights ✨
 
+-
+
+### Added
+
+-
+
+### Changed
+
+-
+
+### Removed
+
+-
+
+### Fixed
+
+-
+
+## [0.7.20] - 2025-11-30
+
+### ✨ Highlights ✨
+
 - 实例的包管理页面可以查看在线依赖并添加
 
 ### Added
