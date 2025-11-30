@@ -147,6 +147,11 @@ public class PersistenceService(IFreeSql freeSql)
 
     public int GetSessionCount() => (int)freeSql.Select<Activity>().Count();
 
+    public int GetCrashCount(string key) =>
+        (int)freeSql.Select<Activity>().Where(x => x.Key == key && !x.DieInPeace).Count();
+
+    public int GetCrashCount() => (int)freeSql.Select<Activity>().Where(x => !x.DieInPeace).Count();
+
     public int GetTotalPlayTimeRank(string key)
     {
         var allActivities = freeSql.Select<Activity>().ToList();

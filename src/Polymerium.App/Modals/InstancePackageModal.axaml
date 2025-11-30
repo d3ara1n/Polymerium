@@ -181,7 +181,7 @@
                                             <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
                                                     Margin="4,0,0,0"
                                                     Classes="Small"
-                                                    IsVisible="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageModel)DataContext).IsLocked,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
+                                                    IsVisible="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageInfoModel)DataContext).Owner.IsLocked,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
                                                     Command="{Binding $parent[modals:InstancePackageModal].RemoveVersionCommand}">
                                                 <fi:SymbolIcon Symbol="Dismiss"
                                                                FontSize="{StaticResource MediumFontSize}" />
