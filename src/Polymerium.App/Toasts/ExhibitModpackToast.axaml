@@ -69,7 +69,7 @@
                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                         <TextBlock
                                             Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Label,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                        <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                        <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource MediumFontSize}" />
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>

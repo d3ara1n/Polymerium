@@ -1044,6 +1044,12 @@
     <data name="InstancePackageDependencyButton_RefCountTagText" xml:space="preserve">
         <value>引用：</value>
     </data>
+    <data name="InstancePackageDependencyModal_AutoVersionTitle" xml:space="preserve">
+        <value>自动版本</value>
+    </data>
+    <data name="InstancePackageDependencyModal_AutoVersionSubtitle" xml:space="preserve">
+        <value>自动选择最佳兼容版本</value>
+    </data>
     <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
         <value>依赖</value>
     </data>

@@ -183,7 +183,7 @@
                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                         <TextBlock
                                             Text="{Binding Label,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                        <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                        <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource MediumFontSize}" />
                                     </StackPanel>
                                 </HyperlinkButton>
                                 <TextBlock Text="{Binding AuthorName,StringFormat={}@{0},FallbackValue=@Author}" />

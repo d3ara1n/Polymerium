@@ -16,14 +16,14 @@ public partial class InstancePackageInfoModel(
     InstancePackageVersionModelBase version,
     string author,
     string summary,
-    Uri? reference,
+    Uri reference,
     Bitmap thumbnail,
     ResourceKind kind) : ModelBase
 {
     #region Direct
 
     public InstancePackageModel Owner => owner;
-    public Uri? Reference => reference;
+    public Uri Reference => reference;
     public string Label => label;
     public string? Namespace => @namespace;
     public string ProjectId => projectId;

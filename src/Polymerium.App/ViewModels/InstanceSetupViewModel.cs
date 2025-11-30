@@ -102,12 +102,14 @@ public partial class InstanceSetupViewModel(
                 }
             }
 
+            StageCount = _stageSource.Count;
             _stageSource.Remove(toRemove);
             var toAdd = lookup.Select(x => new InstancePackageModel(x, x.Source == Basic.Source)).ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
             if (StageCount != profile.Setup.Packages.Count)
             {
+                // NOTE: 通过即时给 StageCount 赋值，以容忍两次 Merge 期间外部对 _stageSource 的修改
                 throw new UnreachableException("使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了");
             }
 
@@ -572,7 +574,7 @@ public partial class InstanceSetupViewModel(
                 DataService = dataService,
                 OverlayService = overlayService,
                 PersistenceService = persistenceService,
-                Collection = _stageSource.Items,
+                Collection = _stageSource,
                 Filter = new(Kind: model.Kind,
                              Version: Basic.Version,
                              Loader: Basic.Loader is not null

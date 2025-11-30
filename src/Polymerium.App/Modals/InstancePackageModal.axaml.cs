@@ -1,15 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services.Profiles;
@@ -56,7 +57,7 @@ public partial class InstancePackageModal : Modal
     public required Filter Filter { get; init; }
     public required OverlayService OverlayService { get; init; }
     public required PersistenceService PersistenceService { get; init; }
-    public required IReadOnlyList<InstancePackageModel> Collection { get; init; }
+    public required SourceCache<InstancePackageModel, Profile.Rice.Entry> Collection { get; init; }
 
     public LazyObject? LazyDependencies
     {
@@ -108,16 +109,18 @@ public partial class InstancePackageModal : Modal
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
-                            var count = (uint)Collection.Count(y => y.Info is
-                                                                        {
-                                                                            Version: InstancePackageVersionModel version
-                                                                        }
-                                                                 && version.Dependencies.Any(z => z.Label == x.Label
-                                                                     && z.Namespace == x.Namespace
-                                                                     && z.ProjectId == x.ProjectId));
-                            var found = Collection.FirstOrDefault(y => y.Info?.Label == x.Label
-                                                                    && y.Info?.Namespace == x.Namespace
-                                                                    && y.Info?.ProjectId == x.ProjectId);
+                            var count = (uint)Collection.Items.Count(y => y.Info is
+                                                                          {
+                                                                              Version: InstancePackageVersionModel
+                                                                              version
+                                                                          }
+                                                                       && version.Dependencies.Any(z => z.Label
+                                                                           == x.Label
+                                                                           && z.Namespace == x.Namespace
+                                                                           && z.ProjectId == x.ProjectId));
+                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Label
+                                                                          && y.Info?.Namespace == x.Namespace
+                                                                          && y.Info?.ProjectId == x.ProjectId);
                             if (found is not null)
                             {
                                 return new(x.Label,
@@ -126,6 +129,7 @@ public partial class InstancePackageModal : Modal
                                            x.VersionId,
                                            found.Info!.ProjectName,
                                            found.Info!.Thumbnail,
+                                           found.Info!.Reference,
                                            count,
                                            x.IsRequired) { Installed = found };
                             }
@@ -140,6 +144,7 @@ public partial class InstancePackageModal : Modal
                                                                       x.VersionId,
                                                                       project.ProjectName,
                                                                       thumbnail,
+                                                                      project.Reference,
                                                                       count,
                                                                       x.IsRequired);
                         })
@@ -161,6 +166,7 @@ public partial class InstancePackageModal : Modal
             }
 
             var dependants = await DataService.ResolvePackagesAsync(Collection
+                                                                   .Items
                                                                    .Where(x => x.Info is
                                                                                {
                                                                                    Version:
@@ -183,13 +189,13 @@ public partial class InstancePackageModal : Modal
                        .Select(async x =>
                         {
                             var count =
-                                (uint)Collection.Count(y => y.Info!.Version is InstancePackageVersionModel version
-                                                         && version.Dependencies.Any(z => z.Label == x.Label
-                                                             && z.Namespace == x.Namespace
-                                                             && z.ProjectId == x.ProjectId));
-                            var found = Collection.FirstOrDefault(y => y.Info?.Label == x.Label
-                                                                    && y.Info?.Namespace == x.Namespace
-                                                                    && y.Info?.ProjectId == x.ProjectId);
+                                (uint)Collection.Items.Count(y => y.Info!.Version is InstancePackageVersionModel version
+                                                               && version.Dependencies.Any(z => z.Label == x.Label
+                                                                   && z.Namespace == x.Namespace
+                                                                   && z.ProjectId == x.ProjectId));
+                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Label
+                                                                          && y.Info?.Namespace == x.Namespace
+                                                                          && y.Info?.ProjectId == x.ProjectId);
                             var thumbnail = x.Thumbnail is not null
                                                 ? await DataService.GetBitmapAsync(x.Thumbnail)
                                                 : AssetUriIndex.DirtImageBitmap;
@@ -199,6 +205,7 @@ public partial class InstancePackageModal : Modal
                                                                       x.VersionId,
                                                                       x.ProjectName,
                                                                       thumbnail,
+                                                                      x.Reference,
                                                                       count,
                                                                       x.Dependencies
                                                                        .FirstOrDefault(y => y.Label == Model.Label
@@ -406,10 +413,7 @@ public partial class InstancePackageModal : Modal
                                                              x.Label,
                                                              x.Namespace,
                                                              x.ProjectId));
-            if (dependency is not null)
-            {
-                dependency.Installed = newPackage;
-            }
+            dependency?.Installed = newPackage;
         }
     }
 

@@ -29,9 +29,28 @@
                                FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                                 VerticalAlignment="Center">
-                        <TextBlock
-                            Text="{Binding Label,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <HyperlinkButton NavigateUri="{Binding Reference,FallbackValue={x:Null}}">
+                            <ToolTip.Tip>
+                                <StackPanel Spacing="2">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}" />
+                                        <fi:SymbolIcon Grid.Column="1" Symbol="Open"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                       FontSize="{StaticResource MediumFontSize}" />
+                                    </Grid>
+                                    <TextBlock
+                                        Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock
+                                    Text="{Binding Label,FallbackValue=Label,Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource MediumFontSize}" />
+                            </StackPanel>
+                        </HyperlinkButton>
                         <husk:Tag Content="{x:Static lang:Resources.InstancePackageDependencyButton_RequiredTagText}"
                                   IsVisible="{Binding IsRequired}" Classes="Warning" />
                     </StackPanel>
@@ -39,12 +58,37 @@
             </Border>
 
             <!-- Version List -->
-            <Grid Grid.Row="1" RowDefinitions="Auto,*" RowSpacing="8">
-                <CheckBox Grid.Row="0"
+            <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*" RowSpacing="8">
+                <!-- Auto Version Toggle -->
+                <Border Grid.Row="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="{StaticResource SmallCornerRadius}" Padding="12,8">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <fi:SymbolIcon Grid.Column="0" Symbol="Sparkle"
+                                       FontSize="{StaticResource LargeFontSize}"
+                                       Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                       VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Static lang:Resources.InstancePackageDependencyModal_AutoVersionTitle}"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <TextBlock
+                                Text="{x:Static lang:Resources.InstancePackageDependencyModal_AutoVersionSubtitle}"
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="2"
+                                      IsChecked="{Binding $parent[modals:InstancePackageDependencyModal].IsAutoVersion,Mode=TwoWay}"
+                                      OnContent="" OffContent="" />
+                    </Grid>
+                </Border>
+                <!-- Filter Checkbox -->
+                <CheckBox Grid.Row="1"
                           Content="{x:Static lang:Resources.InstancePackageModal_FilterLabelText}"
-                          IsChecked="{Binding $parent[modals:InstancePackageDependencyModal].IsFilterEnabled,Mode=TwoWay}" />
-                <husk:LazyContainer Grid.Row="1"
-                                    Source="{Binding $parent[modals:InstancePackageDependencyModal].LazyVersions}">
+                          IsChecked="{Binding $parent[modals:InstancePackageDependencyModal].IsFilterEnabled,Mode=TwoWay}"
+                          IsVisible="{Binding $parent[modals:InstancePackageDependencyModal].IsAutoVersion,Converter={x:Static BoolConverters.Not}}" />
+                <!-- Version ListBox -->
+                <husk:LazyContainer Grid.Row="2"
+                                    Source="{Binding $parent[modals:InstancePackageDependencyModal].LazyVersions}"
+                                    IsVisible="{Binding $parent[modals:InstancePackageDependencyModal].IsAutoVersion,Converter={x:Static BoolConverters.Not}}">
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate DataType="m:InstancePackageVersionCollection">
                             <ListBox ItemsSource="{Binding}"
@@ -113,15 +157,15 @@
 
             <!-- Footer -->
             <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <Button Grid.Column="0" Content="{x:Static lang:Resources.Dialog_DismissButtonText}" IsCancel="True"
-                        Command="{Binding $parent[modals:InstancePackageDependencyModal].Dismiss}" />
-                <Button Grid.Column="1" Classes="Primary"
+                <Button Grid.Column="0" Classes="Primary"
                         Command="{Binding $parent[modals:InstancePackageDependencyModal].InstallCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
                         <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_AddButtonText}" />
                     </StackPanel>
                 </Button>
+                <Button Grid.Column="1" Content="{x:Static lang:Resources.Dialog_DismissButtonText}" IsCancel="True"
+                        Command="{Binding $parent[modals:InstancePackageDependencyModal].Dismiss}" />
             </Grid>
         </Grid>
     </husk:ConstrainedBox>
