@@ -93,8 +93,8 @@ $unreleasedSection
     if (Test-Path $versionArchiveFile) {
         # Prepend to existing file (after the header)
         $existingContent = Get-Content $versionArchiveFile -Raw -Encoding UTF8
-        # Check if file has a header, if so insert after it
-        if ($existingContent -match '^(# Changelog[^\n]*\n\n)(.*)$') {
+        # Check if file has a header (e.g., "# Changelog v0.7"), if so insert after it
+        if ($existingContent -match '(?s)^(# [^\n]+\n+)(.*)$') {
             $header = $Matches[1]
             $body = $Matches[2]
             $newArchiveContent = "$header$versionEntry`n`n$body"
@@ -106,7 +106,7 @@ $unreleasedSection
     } else {
         # Create new version archive file
         $newArchiveContent = @"
-# Changelog
+# Changelog v$majorMinorVersion
 
 $versionEntry
 "@
