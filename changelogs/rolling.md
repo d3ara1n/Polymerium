@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
--
+- 崩溃报告窗以及导出的诊断包提供更多信息(#POLY-20)
 
 ### Removed
 
@@ -25,26 +25,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--
-
-## [0.7.20] - 2025-11-30
-
-### ✨ Highlights ✨
-
-- 实例的包管理页面可以查看在线依赖并添加
-
-### Added
-
-- 实例的包管理页面可以查看在线依赖并添加(#53 #POLY-11)
-
-### Changed
-
-- 更改发布工作流中版本日志的格式
-
-### Removed
-
--
-
-### Fixed
-
-- 修复包管理的信息页面无法在版本板块更改为自动版本的问题(#POLY-18)
+- 修复 CI 脚本中的错误的滚动日志模板更新方法
