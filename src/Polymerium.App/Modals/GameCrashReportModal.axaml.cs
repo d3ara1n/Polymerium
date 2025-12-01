@@ -36,53 +36,7 @@ public partial class GameCrashReportModal : Modal
         if (Report == null)
             return;
 
-        var sb = new StringBuilder();
-        sb.AppendLine("=== GAME CRASH REPORT ===");
-        sb.AppendLine();
-        sb.AppendLine($"Instance: {Report.InstanceName} ({Report.InstanceKey})");
-        sb.AppendLine($"Crash Time: {Report.CrashTime:yyyy-MM-dd HH:mm:ss}");
-        sb.AppendLine($"Exit Code: {Report.ExitCode}");
-        sb.AppendLine($"Error: {Report.ExceptionMessage}");
-        sb.AppendLine();
-        sb.AppendLine("--- Game Information ---");
-        sb.AppendLine($"Minecraft Version: {Report.MinecraftVersion}");
-        sb.AppendLine($"Loader: {Report.LoaderLabel}");
-
-        sb.AppendLine($"Game Directory: {Report.GameDirectory}");
-        if (Report.ModCount > 0)
-        {
-            sb.AppendLine($"Installed Mods: {Report.ModCount}");
-        }
-
-        sb.AppendLine();
-        sb.AppendLine("--- System Information ---");
-        sb.AppendLine($"Operating System: {Report.OperatingSystem}");
-        sb.AppendLine($"Java Version: {Report.JavaVersion}");
-        sb.AppendLine($"Java Path: {Report.JavaPath}");
-        if (!string.IsNullOrEmpty(Report.AllocatedMemory))
-        {
-            sb.AppendLine($"Allocated Memory: {Report.AllocatedMemory}");
-        }
-
-        sb.AppendLine();
-        if (!string.IsNullOrEmpty(Report.LastLogLines))
-        {
-            sb.AppendLine("--- Last Log Lines ---");
-            sb.AppendLine(Report.LastLogLines);
-            sb.AppendLine();
-        }
-
-        if (!string.IsNullOrEmpty(Report.LogFilePath))
-        {
-            sb.AppendLine($"Log File: {Report.LogFilePath}");
-        }
-
-        if (!string.IsNullOrEmpty(Report.CrashReportPath))
-        {
-            sb.AppendLine($"Crash Report: {Report.CrashReportPath}");
-        }
-
-        var text = sb.ToString();
+        var text = GenerateCrashReportText();
         TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(text);
     }
 
@@ -152,6 +106,14 @@ public partial class GameCrashReportModal : Modal
             await using (var writer = new StreamWriter(await summaryEntry.OpenAsync()))
             {
                 await writer.WriteAsync(GenerateCrashReportText());
+            }
+
+            // Add command line
+            if (Report.CommandLine != null)
+            {
+                var commandLineEntry = archive.CreateEntry("command-line.txt");
+                await using var writer = new StreamWriter(await commandLineEntry.OpenAsync());
+                await writer.WriteAsync(Report.CommandLine);
             }
 
             // Add debug.log (not latest.log)
@@ -228,6 +190,7 @@ public partial class GameCrashReportModal : Modal
         sb.AppendLine();
         sb.AppendLine("--- Crash Summary ---");
         sb.AppendLine($"Instance: {Report.InstanceName} ({Report.InstanceKey})");
+        sb.AppendLine($"Launch Time: {Report.LaunchTime:yyyy-MM-dd HH:mm:ss}");
         sb.AppendLine($"Crash Time: {Report.CrashTime:yyyy-MM-dd HH:mm:ss}");
         sb.AppendLine($"Exit Code: {Report.ExitCode}");
         sb.AppendLine($"Error Message: {Report.ExceptionMessage}");
@@ -270,18 +233,6 @@ public partial class GameCrashReportModal : Modal
         {
             sb.AppendLine($"Crash Report: {Report.CrashReportPath}");
         }
-
-        sb.AppendLine();
-        sb.AppendLine("--- Included Files in Diagnostic Package ---");
-        sb.AppendLine("This diagnostic package contains the following files:");
-        sb.AppendLine("  - crash-report.txt: This summary report");
-        sb.AppendLine("  - profile.json: Instance profile configuration");
-        sb.AppendLine("  - logs/debug.log: Full debug log (if available)");
-        sb.AppendLine("  - logs/latest.log: Latest game log");
-        sb.AppendLine("  - crash-reports/*.txt: Minecraft crash reports (recent)");
-        sb.AppendLine("  - options.txt: Game settings");
-        sb.AppendLine("  - mods-list.txt: List of installed mods");
-        sb.AppendLine("  - jvm-crashes/*.log: JVM crash logs (if any)");
 
         return sb.ToString();
     }

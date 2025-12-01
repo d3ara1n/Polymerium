@@ -1413,40 +1413,40 @@
     <data name="GameCrashReportModal_Title" xml:space="preserve">
         <value>GAME CRASHED</value>
     </data>
-    <data name="GameCrashReportModal_ExitCodeLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_ExitCodeLabelText" xml:space="preserve">
         <value>Exit Code</value>
     </data>
-    <data name="GameCrashReportModal_MinecraftVersionLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_MinecraftVersionLabelText" xml:space="preserve">
         <value>Minecraft Version</value>
     </data>
-    <data name="GameCrashReportModal_CrashTimeLabel" xml:space="preserve">
-        <value>Crash Time</value>
+    <data name="GameCrashReportModal_PlayTimeLabelText" xml:space="preserve">
+        <value>Play Time</value>
     </data>
     <data name="GameCrashReportModal_InstanceSectionTitle" xml:space="preserve">
         <value>Instance</value>
     </data>
-    <data name="GameCrashReportModal_NameLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_NameLabelText" xml:space="preserve">
         <value>Name:</value>
     </data>
-    <data name="GameCrashReportModal_ModLoaderLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_ModLoaderLabelText" xml:space="preserve">
         <value>Mod Loader:</value>
     </data>
-    <data name="GameCrashReportModal_InstalledModsLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_InstalledModsLabelText" xml:space="preserve">
         <value>Installed Mods:</value>
     </data>
     <data name="GameCrashReportModal_SystemEnvironmentTitle" xml:space="preserve">
         <value>System Environment</value>
     </data>
-    <data name="GameCrashReportModal_OperatingSystemLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_OperatingSystemLabelText" xml:space="preserve">
         <value>Operating System:</value>
     </data>
-    <data name="GameCrashReportModal_JavaVersionLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_JavaVersionLabelText" xml:space="preserve">
         <value>Java Version:</value>
     </data>
-    <data name="GameCrashReportModal_JavaPathLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_JavaPathLabelText" xml:space="preserve">
         <value>Java Path:</value>
     </data>
-    <data name="GameCrashReportModal_AllocatedMemoryLabel" xml:space="preserve">
+    <data name="GameCrashReportModal_AllocatedMemoryLabelText" xml:space="preserve">
         <value>Allocated Memory:</value>
     </data>
     <data name="GameCrashReportModal_LastLogOutputTitle" xml:space="preserve">
@@ -1455,22 +1455,22 @@
     <data name="GameCrashReportModal_QuickActionsTitle" xml:space="preserve">
         <value>Quick Actions</value>
     </data>
-    <data name="GameCrashReportModal_OpenLatestLogButton" xml:space="preserve">
+    <data name="GameCrashReportModal_OpenLatestLogButtonText" xml:space="preserve">
         <value>Open Latest Log</value>
     </data>
-    <data name="GameCrashReportModal_OpenCrashReportButton" xml:space="preserve">
+    <data name="GameCrashReportModal_OpenCrashReportButtonText" xml:space="preserve">
         <value>Open Crash Report</value>
     </data>
-    <data name="GameCrashReportModal_OpenGameDirectoryButton" xml:space="preserve">
+    <data name="GameCrashReportModal_OpenGameDirectoryButtonText" xml:space="preserve">
         <value>Open Game Directory</value>
     </data>
-    <data name="GameCrashReportModal_ExportDiagnosticPackageButton" xml:space="preserve">
+    <data name="GameCrashReportModal_ExportDiagnosticPackageButtonText" xml:space="preserve">
         <value>Export Diagnostic Package</value>
     </data>
-    <data name="GameCrashReportModal_CopyReportButton" xml:space="preserve">
+    <data name="GameCrashReportModal_CopyReportButtonText" xml:space="preserve">
         <value>Copy Report</value>
     </data>
-    <data name="GameCrashReportModal_CloseButton" xml:space="preserve">
+    <data name="GameCrashReportModal_CloseButtonText" xml:space="preserve">
         <value>Close</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationDiagnoseText" xml:space="preserve">
@@ -1490,5 +1490,11 @@
     </data>
     <data name="AppUpdateModal_NoReleaseNotesLabelText" xml:space="preserve">
         <value>No release notes available</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+        <value>Crashed!</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationPrompt" xml:space="preserve">
+        <value>Click the link for more details.</value>
     </data>
 </root>

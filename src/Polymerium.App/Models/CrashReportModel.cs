@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Humanizer;
 
 namespace Polymerium.App.Models;
 
@@ -9,6 +10,7 @@ public class CrashReportModel
     public required string InstanceKey { get; init; }
     public required string InstanceName { get; init; }
     public required int ExitCode { get; init; }
+    public required DateTimeOffset LaunchTime { get; init; }
     public required DateTimeOffset CrashTime { get; init; }
     public required string ExceptionMessage { get; init; }
 
@@ -31,4 +33,14 @@ public class CrashReportModel
     // Mods info (if applicable)
     public List<string>? InstalledMods { get; init; }
     public int ModCount { get; init; }
+
+    // Process
+    public string? CommandLine { get; init; }
+
+    #region Calculated
+
+    public TimeSpan PlayTimeRaw => CrashTime - LaunchTime;
+    public string PlayTime => PlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
+
+    #endregion
 }
