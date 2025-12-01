@@ -146,15 +146,8 @@ $unreleasedSection
 -
 "@
 
-    # Replace the Unreleased section with both the new template and archived version
-    $newContent = $content -replace $unreleasedPattern, @"
-$unreleasedTemplate
-
-$archivedEntry
-"@
-
     # Write back to rolling.md
-    Set-Content -Path $rollingChangelog -Value $newContent -Encoding UTF8 -NoNewline
+    Set-Content -Path $rollingChangelog -Value $unreleasedTemplate -Encoding UTF8 -NoNewline
     Write-Host "✓ Updated rolling.md with archived version and new [Unreleased] template" -ForegroundColor Green
 
     Write-Host "`n✓ Changelog processing complete!" -ForegroundColor Green
