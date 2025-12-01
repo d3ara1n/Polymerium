@@ -667,14 +667,11 @@ public partial class MainWindowContext : ObservableObject
                         else if (isGameCrash)
                         {
                             // Game crash error
-                            _notificationService.PopMessage(e.FailureReason,
-                                                            e.Key,
+                            _notificationService.PopMessage(e.Key,
+                                                            Properties.Resources
+                                                                      .MainWindow_InstanceLaunchingDangerNotificationTitle,
                                                             actions:
                                                             [
-                                                                new(Properties.Resources
-                                                                              .MainWindow_InstanceLaunchingDangerNotificationViewOutputText,
-                                                                    ViewLogCommand,
-                                                                    e),
                                                                 new(Properties.Resources
                                                                               .MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
                                                                     DiagnoseGameCrashCommand,
@@ -783,6 +780,7 @@ public partial class MainWindowContext : ObservableObject
             InstanceKey = tracker.Key,
             InstanceName = profile?.Name ?? tracker.Key,
             ExitCode = exitCode,
+            LaunchTime = tracker.StartedAt,
             CrashTime = DateTimeOffset.Now,
             ExceptionMessage = exceptionMessage,
             MinecraftVersion = profile?.Setup.Version ?? "Unknown",
@@ -795,7 +793,8 @@ public partial class MainWindowContext : ObservableObject
             LogFilePath = File.Exists(logPath) ? logPath : null,
             CrashReportPath = crashReportPath,
             LastLogLines = lastLogLines,
-            ModCount = profile?.Setup.Packages.Count ?? 0
+            ModCount = profile?.Setup.Packages.Count ?? 0,
+            CommandLine = tracker.CommandLine
         };
     }
 
