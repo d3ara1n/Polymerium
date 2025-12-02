@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ✨ Highlights ✨
 
--
+- 改进了代理设置界面提供更多协议可选
 
 ### Added
 
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - 崩溃报告窗以及导出的诊断包提供更多信息(#POLY-20)
+- 改进了代理设置界面提供更多协议可选(#POLY-22)
 
 ### Removed
 

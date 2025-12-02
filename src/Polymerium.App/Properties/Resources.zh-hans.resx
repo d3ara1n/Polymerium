@@ -444,7 +444,7 @@
     <data name="SettingsView_ProxyUsernameLabelText" xml:space="preserve">
         <value>用户名（可选）</value>
     </data>
-    <data name="SettingsView_ProxyUsernamePlaceholder" xml:space="preserve">
+    <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>如不需要请留空</value>
     </data>
     <data name="SettingsView_ProxyPasswordLabelText" xml:space="preserve">
@@ -1484,5 +1484,74 @@
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
         <value>坠毁！</value>
+    </data>
+    <data name="ProxySettingsDialog_Title" xml:space="preserve">
+        <value>代理设置</value>
+    </data>
+    <data name="ProxySettingsDialog_ModeAutoTitle" xml:space="preserve">
+        <value>自动</value>
+    </data>
+    <data name="ProxySettingsDialog_ModeManualTitle" xml:space="preserve">
+        <value>手动</value>
+    </data>
+    <data name="ProxySettingsDialog_ModeDisabledTitle" xml:space="preserve">
+        <value>禁用</value>
+    </data>
+    <data name="ProxySettingsDialog_AutoDescription" xml:space="preserve">
+        <value>使用系统代理</value>
+    </data>
+    <data name="ProxySettingsDialog_AutoSubtitle" xml:space="preserve">
+        <value>自动检测并使用系统代理设置</value>
+    </data>
+    <data name="ProxySettingsDialog_ProtocolLabelText" xml:space="preserve">
+        <value>协议</value>
+    </data>
+    <data name="ProxySettingsDialog_AddressLabelText" xml:space="preserve">
+        <value>地址</value>
+    </data>
+    <data name="ProxySettingsDialog_PortLabelText" xml:space="preserve">
+        <value>端口</value>
+    </data>
+    <data name="ProxySettingsDialog_AuthenticationTitle" xml:space="preserve">
+        <value>身份验证（可选）</value>
+    </data>
+    <data name="ProxySettingsDialog_UsernameLabelText" xml:space="preserve">
+        <value>用户名</value>
+    </data>
+    <data name="ProxySettingsDialog_PasswordLabelText" xml:space="preserve">
+        <value>密码</value>
+    </data>
+    <data name="ProxySettingsDialog_TestConnectionButtonText" xml:space="preserve">
+        <value>测试连接</value>
+    </data>
+    <data name="ProxySettingsDialog_TestingLabelText" xml:space="preserve">
+        <value>测试中...</value>
+    </data>
+    <data name="ProxySettingsDialog_DisabledDescription" xml:space="preserve">
+        <value>直接连接</value>
+    </data>
+    <data name="ProxySettingsDialog_DisabledSubtitle" xml:space="preserve">
+        <value>不使用任何代理直接连接网络</value>
+    </data>
+    <data name="ProxySettingsDialog_RestartRequiredLabelText" xml:space="preserve">
+        <value>代理设置将在重启应用程序后生效</value>
+    </data>
+    <data name="SettingsView_ProxyCurrentStatusLabelText" xml:space="preserve">
+        <value>当前状态</value>
+    </data>
+    <data name="SettingsView_ProxyStatusAutoText" xml:space="preserve">
+        <value>自动（系统代理）</value>
+    </data>
+    <data name="SettingsView_ProxyStatusDisabledText" xml:space="preserve">
+        <value>禁用（直接连接）</value>
+    </data>
+    <data name="SettingsView_ProxyStatusManualText" xml:space="preserve">
+        <value>手动: {0}://{1}:{2}</value>
+    </data>
+    <data name="ProxySettingsDialog_TestSuccessLabelText" xml:space="preserve">
+        <value>连接成功</value>
+    </data>
+    <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
+        <value>连接失败</value>
     </data>
 </root>
