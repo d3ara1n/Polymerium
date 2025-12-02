@@ -131,7 +131,7 @@
                     </husk:LazyContainer.FaultContent>
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
-                            <Border Background="{StaticResource ControlBackgroundBrush}"
+                            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}" MaxWidth="320">
                                 <controls:Plaque>
                                     <controls:Plaque.Header>
