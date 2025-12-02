@@ -441,23 +441,8 @@
     <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
         <value>Enable Proxy</value>
     </data>
-    <data name="SettingsView_ProxyAddressLabelText" xml:space="preserve">
-        <value>Proxy Address</value>
-    </data>
-    <data name="SettingsView_ProxyAddressPlaceholder" xml:space="preserve">
-        <value>127.0.0.1 or proxy.example.com</value>
-    </data>
-    <data name="SettingsView_ProxyPortLabelText" xml:space="preserve">
-        <value>Proxy Port</value>
-    </data>
-    <data name="SettingsView_ProxyUsernameLabelText" xml:space="preserve">
-        <value>Username (Optional)</value>
-    </data>
-    <data name="SettingsView_ProxyUsernamePlaceholder" xml:space="preserve">
+    <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>Leave empty if not required</value>
-    </data>
-    <data name="SettingsView_ProxyPasswordLabelText" xml:space="preserve">
-        <value>Password (Optional)</value>
     </data>
     <data name="SettingsView_ProxyPasswordPlaceholder" xml:space="preserve">
         <value>Leave empty if not required</value>
@@ -1496,5 +1481,74 @@
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationPrompt" xml:space="preserve">
         <value>Click the link for more details.</value>
+    </data>
+    <data name="ProxySettingsDialog_Title" xml:space="preserve">
+        <value>Proxy Settings</value>
+    </data>
+    <data name="ProxySettingsDialog_ModeAutoTitle" xml:space="preserve">
+        <value>Auto</value>
+    </data>
+    <data name="ProxySettingsDialog_ModeManualTitle" xml:space="preserve">
+        <value>Manual</value>
+    </data>
+    <data name="ProxySettingsDialog_ModeDisabledTitle" xml:space="preserve">
+        <value>Disabled</value>
+    </data>
+    <data name="ProxySettingsDialog_AutoDescription" xml:space="preserve">
+        <value>Use System Proxy</value>
+    </data>
+    <data name="ProxySettingsDialog_AutoSubtitle" xml:space="preserve">
+        <value>Automatically detect and use system proxy settings</value>
+    </data>
+    <data name="ProxySettingsDialog_ProtocolLabelText" xml:space="preserve">
+        <value>Protocol</value>
+    </data>
+    <data name="ProxySettingsDialog_AddressLabelText" xml:space="preserve">
+        <value>Address</value>
+    </data>
+    <data name="ProxySettingsDialog_PortLabelText" xml:space="preserve">
+        <value>Port</value>
+    </data>
+    <data name="ProxySettingsDialog_AuthenticationTitle" xml:space="preserve">
+        <value>Authentication (Optional)</value>
+    </data>
+    <data name="ProxySettingsDialog_UsernameLabelText" xml:space="preserve">
+        <value>Username</value>
+    </data>
+    <data name="ProxySettingsDialog_PasswordLabelText" xml:space="preserve">
+        <value>Password</value>
+    </data>
+    <data name="ProxySettingsDialog_TestConnectionButtonText" xml:space="preserve">
+        <value>Test Connection</value>
+    </data>
+    <data name="ProxySettingsDialog_TestingLabelText" xml:space="preserve">
+        <value>Testing...</value>
+    </data>
+    <data name="ProxySettingsDialog_DisabledDescription" xml:space="preserve">
+        <value>Direct Connection</value>
+    </data>
+    <data name="ProxySettingsDialog_DisabledSubtitle" xml:space="preserve">
+        <value>Connect to the Internet without any proxy</value>
+    </data>
+    <data name="ProxySettingsDialog_RestartRequiredLabelText" xml:space="preserve">
+        <value>Proxy settings will take effect after restarting the application</value>
+    </data>
+    <data name="SettingsView_ProxyCurrentStatusLabelText" xml:space="preserve">
+        <value>Current Status</value>
+    </data>
+    <data name="SettingsView_ProxyStatusAutoText" xml:space="preserve">
+        <value>Auto (System Proxy)</value>
+    </data>
+    <data name="SettingsView_ProxyStatusDisabledText" xml:space="preserve">
+        <value>Disabled (Direct Connection)</value>
+    </data>
+    <data name="SettingsView_ProxyStatusManualText" xml:space="preserve">
+        <value>Manual: {0}://{1}:{2}</value>
+    </data>
+    <data name="ProxySettingsDialog_TestSuccessLabelText" xml:space="preserve">
+        <value>Connected</value>
+    </data>
+    <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
+        <value>Failed</value>
     </data>
 </root>

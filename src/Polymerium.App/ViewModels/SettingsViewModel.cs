@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
@@ -58,11 +59,18 @@ public partial class SettingsViewModel : ViewModelBase
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
+
+        // Initialize proxy settings
+        ProxyMode = (ProxyMode)configurationService.Value.NetworkProxyMode;
+        ProxyProtocol = (ProxyProtocol)configurationService.Value.NetworkProxyProtocol;
         ProxyEnabled = configurationService.Value.NetworkProxyEnabled;
         ProxyAddress = configurationService.Value.NetworkProxyAddress;
         ProxyPort = configurationService.Value.NetworkProxyPort;
         ProxyUsername = configurationService.Value.NetworkProxyUsername;
         ProxyPassword = configurationService.Value.NetworkProxyPassword;
+
+        // Initialize proxy status text
+        UpdateProxyStatusText();
     }
 
     #region Service Export
@@ -351,6 +359,24 @@ public partial class SettingsViewModel : ViewModelBase
     #region Proxy Settings
 
     [ObservableProperty]
+    public partial ProxyMode ProxyMode { get; set; }
+
+    partial void OnProxyModeChanged(ProxyMode value)
+    {
+        _configurationService.Value.NetworkProxyMode = (int)value;
+        UpdateProxyStatusText();
+    }
+
+    [ObservableProperty]
+    public partial ProxyProtocol ProxyProtocol { get; set; }
+
+    partial void OnProxyProtocolChanged(ProxyProtocol value)
+    {
+        _configurationService.Value.NetworkProxyProtocol = (int)value;
+        UpdateProxyStatusText();
+    }
+
+    [ObservableProperty]
     public partial bool ProxyEnabled { get; set; }
 
     partial void OnProxyEnabledChanged(bool value) => _configurationService.Value.NetworkProxyEnabled = value;
@@ -358,12 +384,20 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string ProxyAddress { get; set; }
 
-    partial void OnProxyAddressChanged(string value) => _configurationService.Value.NetworkProxyAddress = value;
+    partial void OnProxyAddressChanged(string value)
+    {
+        _configurationService.Value.NetworkProxyAddress = value;
+        UpdateProxyStatusText();
+    }
 
     [ObservableProperty]
     public partial uint ProxyPort { get; set; }
 
-    partial void OnProxyPortChanged(uint value) => _configurationService.Value.NetworkProxyPort = value;
+    partial void OnProxyPortChanged(uint value)
+    {
+        _configurationService.Value.NetworkProxyPort = value;
+        UpdateProxyStatusText();
+    }
 
     [ObservableProperty]
     public partial string ProxyUsername { get; set; }
@@ -374,6 +408,51 @@ public partial class SettingsViewModel : ViewModelBase
     public partial string ProxyPassword { get; set; }
 
     partial void OnProxyPasswordChanged(string value) => _configurationService.Value.NetworkProxyPassword = value;
+
+    [ObservableProperty]
+    public partial string ProxyStatusText { get; set; } = string.Empty;
+
+    private void UpdateProxyStatusText()
+    {
+        ProxyStatusText = ProxyMode switch
+        {
+            ProxyMode.Auto => Resources.SettingsView_ProxyStatusAutoText,
+            ProxyMode.Disabled => Resources.SettingsView_ProxyStatusDisabledText,
+            ProxyMode.Manual => Resources
+                               .SettingsView_ProxyStatusManualText.Replace("{0}", ProxyProtocol.ToString().ToLower())
+                               .Replace("{1}", ProxyAddress)
+                               .Replace("{2}", ProxyPort.ToString()),
+            _ => string.Empty
+        };
+    }
+
+    [RelayCommand]
+    private async Task OpenProxySettingsAsync()
+    {
+        var currentSettings = new ProxySettingsModel
+        {
+            Mode = ProxyMode,
+            Protocol = ProxyProtocol,
+            Address = ProxyAddress,
+            Port = ProxyPort,
+            Username = ProxyUsername,
+            Password = ProxyPassword
+        };
+
+        var dialog = new ProxySettingsDialog();
+        dialog.Initialize(currentSettings);
+
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is ProxySettingsModel newSettings)
+        {
+            // Apply the new settings
+            ProxyMode = newSettings.Mode;
+            ProxyProtocol = newSettings.Protocol;
+            ProxyAddress = newSettings.Address;
+            ProxyPort = newSettings.Port;
+            ProxyUsername = newSettings.Username;
+            ProxyPassword = newSettings.Password;
+        }
+    }
 
     #endregion
 }

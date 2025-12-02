@@ -221,31 +221,31 @@
         <controls:SettingsEntry Icon="TopSpeed" Title="{x:Static lang:Resources.SettingsView_NetworkTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_NetworkSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyEnabledLabelText}">
-                <ToggleSwitch IsChecked="{Binding ProxyEnabled,Mode=TwoWay}"
-                              OnContent="{x:Static lang:Resources.Enum_On}"
-                              OffContent="{x:Static lang:Resources.Enum_Off}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyAddressLabelText}"
-                                        IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyAddressPlaceholder}"
-                         Text="{Binding ProxyAddress,Mode=TwoWay}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyPortLabelText}"
-                                        IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="7890"
-                         Text="{Binding ProxyPort,Mode=TwoWay}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyUsernameLabelText}"
-                                        IsEnabled="{Binding ProxyEnabled}">
-                <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyUsernamePlaceholder}"
-                         Text="{Binding ProxyUsername,Mode=TwoWay}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyPasswordLabelText}"
-                                        IsEnabled="{Binding ProxyEnabled}">
-                <StackPanel Spacing="6">
-                    <TextBox Watermark="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}"
-                             PasswordChar="●"
-                             Text="{Binding ProxyPassword,Mode=TwoWay}" />
+                <StackPanel Spacing="4">
+                    <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Grid Margin="3" ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                    Padding="8">
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="{x:Static lang:Resources.SettingsView_ProxyCurrentStatusLabelText}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        FontSize="{StaticResource SmallFontSize}" />
+                                    <TextBlock Text="{Binding ProxyStatusText}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                </StackPanel>
+                            </Border>
+                            <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
+                                    Classes="Small"
+                                    Command="{Binding OpenProxySettingsCommand}">
+                                <fi:SymbolIcon Symbol="Settings"
+                                               FontSize="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </Grid>
+                    </Border>
                     <TextBlock Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}"
                                FontSize="{StaticResource SmallFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -265,7 +265,7 @@
                 <controls:Plaque>
                     <controls:Plaque.Header>
                         <husk:SwitchPresenter
-                            Value="{Binding UpdateTarget,Converter={x:Static ObjectConverters.IsNotNull}}"
+                            Value="{Binding UpdateTarget,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}"
                             TargetType="x:Boolean">
                             <husk:SwitchCase Value="{x:True}">
                                 <DockPanel HorizontalSpacing="{StaticResource PlaqueSpacing}">

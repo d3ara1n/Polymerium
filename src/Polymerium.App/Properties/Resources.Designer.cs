@@ -3696,6 +3696,186 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string ProxySettingsDialog_AddressLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_AddressLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication (Optional).
+        /// </summary>
+        public static string ProxySettingsDialog_AuthenticationTitle {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_AuthenticationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use System Proxy.
+        /// </summary>
+        public static string ProxySettingsDialog_AutoDescription {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_AutoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically detect and use system proxy settings.
+        /// </summary>
+        public static string ProxySettingsDialog_AutoSubtitle {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_AutoSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direct Connection.
+        /// </summary>
+        public static string ProxySettingsDialog_DisabledDescription {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_DisabledDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect to the Internet without any proxy.
+        /// </summary>
+        public static string ProxySettingsDialog_DisabledSubtitle {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_DisabledSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string ProxySettingsDialog_ModeAutoTitle {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ModeAutoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string ProxySettingsDialog_ModeDisabledTitle {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ModeDisabledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string ProxySettingsDialog_ModeManualTitle {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ModeManualTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string ProxySettingsDialog_PasswordLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_PasswordLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        public static string ProxySettingsDialog_PortLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_PortLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protocol.
+        /// </summary>
+        public static string ProxySettingsDialog_ProtocolLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ProtocolLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proxy settings will take effect after restarting the application.
+        /// </summary>
+        public static string ProxySettingsDialog_RestartRequiredLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_RestartRequiredLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Connection.
+        /// </summary>
+        public static string ProxySettingsDialog_TestConnectionButtonText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_TestConnectionButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed.
+        /// </summary>
+        public static string ProxySettingsDialog_TestFailedLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_TestFailedLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing....
+        /// </summary>
+        public static string ProxySettingsDialog_TestingLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_TestingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        public static string ProxySettingsDialog_TestSuccessLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_TestSuccessLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proxy Settings.
+        /// </summary>
+        public static string ProxySettingsDialog_Title {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string ProxySettingsDialog_UsernameLabelText {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_UsernameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave empty if not required.
+        /// </summary>
+        public static string ProxySettingsDialog_UsernamePlaceholder {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_UsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All the mods will be replaced. Configs will be replaced with new ones..
         /// </summary>
         public static string ReferenceVersionPickerDialog_Prompt {
@@ -4083,20 +4263,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Proxy Address.
+        ///   Looks up a localized string similar to Current Status.
         /// </summary>
-        public static string SettingsView_ProxyAddressLabelText {
+        public static string SettingsView_ProxyCurrentStatusLabelText {
             get {
-                return ResourceManager.GetString("SettingsView_ProxyAddressLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 127.0.0.1 or proxy.example.com.
-        /// </summary>
-        public static string SettingsView_ProxyAddressPlaceholder {
-            get {
-                return ResourceManager.GetString("SettingsView_ProxyAddressPlaceholder", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ProxyCurrentStatusLabelText", resourceCulture);
             }
         }
         
@@ -4110,15 +4281,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password (Optional).
-        /// </summary>
-        public static string SettingsView_ProxyPasswordLabelText {
-            get {
-                return ResourceManager.GetString("SettingsView_ProxyPasswordLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Leave empty if not required.
         /// </summary>
         public static string SettingsView_ProxyPasswordPlaceholder {
@@ -4128,29 +4290,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Proxy Port.
+        ///   Looks up a localized string similar to Auto (System Proxy).
         /// </summary>
-        public static string SettingsView_ProxyPortLabelText {
+        public static string SettingsView_ProxyStatusAutoText {
             get {
-                return ResourceManager.GetString("SettingsView_ProxyPortLabelText", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ProxyStatusAutoText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username (Optional).
+        ///   Looks up a localized string similar to Disabled (Direct Connection).
         /// </summary>
-        public static string SettingsView_ProxyUsernameLabelText {
+        public static string SettingsView_ProxyStatusDisabledText {
             get {
-                return ResourceManager.GetString("SettingsView_ProxyUsernameLabelText", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ProxyStatusDisabledText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leave empty if not required.
+        ///   Looks up a localized string similar to Manual: {0}://{1}:{2}.
         /// </summary>
-        public static string SettingsView_ProxyUsernamePlaceholder {
+        public static string SettingsView_ProxyStatusManualText {
             get {
-                return ResourceManager.GetString("SettingsView_ProxyUsernamePlaceholder", resourceCulture);
+                return ResourceManager.GetString("SettingsView_ProxyStatusManualText", resourceCulture);
             }
         }
         
