@@ -24,12 +24,14 @@ public partial class SettingsViewModel : ViewModelBase
         OverlayService overlayService,
         NavigationService navigationService,
         NotificationService notificationService,
+        PersistenceService persistenceService,
         UpdateManager updateManager)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
         _navigationService = navigationService;
         _notificationService = notificationService;
+        _persistenceService = persistenceService;
         _updateManager = updateManager;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
@@ -84,6 +86,7 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly ConfigurationService _configurationService;
     private readonly NavigationService _navigationService;
     private readonly NotificationService _notificationService;
+    private readonly PersistenceService _persistenceService;
     private readonly UpdateManager _updateManager;
 
     #endregion
@@ -157,6 +160,30 @@ public partial class SettingsViewModel : ViewModelBase
             UpdateManager = _updateManager,
             NotificationService = _notificationService
         });
+    }
+
+    [RelayCommand]
+    private async Task ClearStatisticsAsync()
+    {
+        var confirmed = await OverlayService.RequestConfirmationAsync(
+            Resources.SettingsView_ClearStatisticsConfirmationMessage,
+            Resources.SettingsView_ClearStatisticsConfirmationTitle);
+        if (confirmed)
+        {
+            _persistenceService.ClearAllActivities();
+        }
+    }
+
+    [RelayCommand]
+    private async Task ClearRecordsAsync()
+    {
+        var confirmed = await OverlayService.RequestConfirmationAsync(
+            Resources.SettingsView_ClearRecordsConfirmationMessage,
+            Resources.SettingsView_ClearRecordsConfirmationTitle);
+        if (confirmed)
+        {
+            _persistenceService.ClearAllActions();
+        }
     }
 
     #endregion

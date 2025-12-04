@@ -115,6 +115,10 @@ public class PersistenceService(IFreeSql freeSql)
            .OrderByDescending(x => x.At)
            .ToList();
 
+    public int ClearActions(string key) => freeSql.Delete<Action>().Where(x => x.Key == key).ExecuteAffrows();
+
+    public int ClearAllActions() => freeSql.Delete<Action>().Where("1=1").ExecuteAffrows();
+
     #endregion
 
     #region Activity
@@ -194,6 +198,36 @@ public class PersistenceService(IFreeSql freeSql)
 
         return (double)(keyTotalSeconds / allTotalSeconds);
     }
+
+    public Activity? GetFirstActivity(string key) =>
+        freeSql.Select<Activity>().Where(x => x.Key == key).OrderBy(x => x.Begin).First();
+
+    public TimeSpan GetLongestSession(string key)
+    {
+        var activities = freeSql.Select<Activity>().Where(x => x.Key == key).ToList();
+        if (activities.Count == 0)
+        {
+            return TimeSpan.Zero;
+        }
+
+        var longest = activities.Max(x => (x.End - x.Begin).TotalSeconds);
+        return TimeSpan.FromSeconds(longest);
+    }
+
+    public TimeSpan GetWeekPlayTime(string key, int weeksAgo)
+    {
+        var weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - (weeksAgo * 7));
+        var weekEnd = weekStart.AddDays(7);
+        var totalSeconds = freeSql
+                          .Select<Activity>()
+                          .Where(x => x.Key == key && x.End >= weekStart && x.End < weekEnd)
+                          .Sum(x => (x.End - x.Begin).TotalSeconds);
+        return TimeSpan.FromSeconds((double)totalSeconds);
+    }
+
+    public int ClearActivities(string key) => freeSql.Delete<Activity>().Where(x => x.Key == key).ExecuteAffrows();
+
+    public int ClearAllActivities() => freeSql.Delete<Activity>().Where("1=1").ExecuteAffrows();
 
     #endregion
 

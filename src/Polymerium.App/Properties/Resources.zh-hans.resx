@@ -432,23 +432,8 @@
     <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
         <value>启用代理</value>
     </data>
-    <data name="SettingsView_ProxyAddressLabelText" xml:space="preserve">
-        <value>代理地址</value>
-    </data>
-    <data name="SettingsView_ProxyAddressPlaceholder" xml:space="preserve">
-        <value>127.0.0.1 或 proxy.example.com</value>
-    </data>
-    <data name="SettingsView_ProxyPortLabelText" xml:space="preserve">
-        <value>代理端口</value>
-    </data>
-    <data name="SettingsView_ProxyUsernameLabelText" xml:space="preserve">
-        <value>用户名（可选）</value>
-    </data>
     <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>如不需要请留空</value>
-    </data>
-    <data name="SettingsView_ProxyPasswordLabelText" xml:space="preserve">
-        <value>密码（可选）</value>
     </data>
     <data name="SettingsView_ProxyPasswordPlaceholder" xml:space="preserve">
         <value>如不需要请留空</value>
@@ -855,7 +840,7 @@
     <data name="NewInstanceView_IconSavingDangerNotificationTitle" xml:space="preserve">
         <value>写入图标失败</value>
     </data>
-    <data name="AccountsView_AccountAddingDangerNotificationPrompt" xml:space="preserve">
+    <data name="AccountsView_AccountAddingDangerNotificationMessage" xml:space="preserve">
         <value>已存在相同 UUID 的账号</value>
     </data>
     <data name="AccountsView_AccountAddingDangerNotificationTitle" xml:space="preserve">
@@ -870,7 +855,7 @@
     <data name="InstanceHomeView_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
         <value>账号不存在</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationPrompt" xml:space="preserve">
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationMessage" xml:space="preserve">
         <value>未提供账号或被移除</value>
     </data>
     <data name="InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
@@ -885,7 +870,7 @@
     <data name="InstancePropertiesView_RequestJavaTitle" xml:space="preserve">
         <value>选择 Java 可执行文件</value>
     </data>
-    <data name="InstancePropertiesView_UnlockingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="InstancePropertiesView_UnlockingSuccessNotificationMessage" xml:space="preserve">
         <value>实例不再与任何整合包关联并可以随意编辑。</value>
     </data>
     <data name="InstancePropertiesView_RequestThumbnailTitle" xml:space="preserve">
@@ -897,7 +882,7 @@
     <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
         <value>设置实例图标</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt" xml:space="preserve">
+    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationMessage" xml:space="preserve">
         <value>选择的文件不是有效图像或无文件可用。</value>
     </data>
     <data name="InstancePropertiesView_RequestNameTitle" xml:space="preserve">
@@ -933,7 +918,7 @@
     <data name="MainWindow_InstanceInstallingDangerNotificationTitle" xml:space="preserve">
         <value>安装 {0} 失败</value>
     </data>
-    <data name="MainWindow_InstanceInstallingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceInstallingSuccessNotificationMessage" xml:space="preserve">
         <value>实例安装完成</value>
     </data>
     <data name="MainWindow_InstanceInstallingSuccessNotificationOpenText" xml:space="preserve">
@@ -942,7 +927,7 @@
     <data name="MainWindow_InstanceUpdatingDangerNotificationTitle" xml:space="preserve">
         <value>更新 {0} 失败</value>
     </data>
-    <data name="MainWindow_InstanceUpdatingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceUpdatingSuccessNotificationMessage" xml:space="preserve">
         <value>实例更新完成</value>
     </data>
     <data name="MainWindow_InstanceUpdatingSuccessNotificationOpenText" xml:space="preserve">
@@ -951,10 +936,10 @@
     <data name="MainWindow_InstanceDeployingNotificationTitle" xml:space="preserve">
         <value>部署 {0} 失败</value>
     </data>
-    <data name="MainWindow_InstanceDeployingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceDeployingSuccessNotificationMessage" xml:space="preserve">
         <value>实例部署完成</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceLaunchingSuccessNotificationMessage" xml:space="preserve">
         <value>实例正常退出</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
@@ -996,7 +981,7 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>批量更新包版本</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt" xml:space="preserve">
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
         <value>检查版本...({0}/{1})</value>
     </data>
     <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
@@ -1005,13 +990,13 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
         <value>批量更新包版本</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt" xml:space="preserve">
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
         <value>{0} 个包存在新版本</value>
     </data>
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>查看</value>
     </data>
-    <data name="MarketplaceSearchView_ModpackInstallingNotificationPrompt" xml:space="preserve">
+    <data name="MarketplaceSearchView_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} 已添加到队列</value>
     </data>
     <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
@@ -1553,5 +1538,92 @@
     </data>
     <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
         <value>连接失败</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationMessage" xml:space="preserve">
+        <value>{0} 非正常退出。点击链接查看具体信息。</value>
+    </data>
+    <data name="InstanceActivitiesView_CrashCountLabelText" xml:space="preserve">
+        <value>崩溃次数</value>
+    </data>
+    <data name="InstanceActivitiesView_HealthTabText" xml:space="preserve">
+        <value>健康度</value>
+    </data>
+    <data name="InstanceActivitiesView_PlaytimeTabText" xml:space="preserve">
+        <value>游玩时间</value>
+    </data>
+    <data name="InstanceActivitiesView_SuccessRateLabelText" xml:space="preserve">
+        <value>成功率</value>
+    </data>
+    <data name="InstanceActivitiesView_StatisticsTabText" xml:space="preserve">
+        <value>统计</value>
+    </data>
+    <data name="InstanceActivitiesView_TrendsTabText" xml:space="preserve">
+        <value>趋势</value>
+    </data>
+    <data name="InstanceActivitiesView_AverageSessionLabelText" xml:space="preserve">
+        <value>平均时长</value>
+    </data>
+    <data name="InstanceActivitiesView_LongestSessionLabelText" xml:space="preserve">
+        <value>最长游戏</value>
+    </data>
+    <data name="InstanceActivitiesView_FirstPlayedLabelText" xml:space="preserve">
+        <value>首次游玩</value>
+    </data>
+    <data name="InstanceActivitiesView_LastPlayedLabelText" xml:space="preserve">
+        <value>最后游玩</value>
+    </data>
+    <data name="InstanceActivitiesView_PlaytimePercentageLabelText" xml:space="preserve">
+        <value>时间占比</value>
+    </data>
+    <data name="InstanceActivitiesView_ThisWeekLabelText" xml:space="preserve">
+        <value>本周</value>
+    </data>
+    <data name="InstanceActivitiesView_LastWeekLabelText" xml:space="preserve">
+        <value>上周</value>
+    </data>
+    <data name="InstanceActivitiesView_DataManagementTitle" xml:space="preserve">
+        <value>数据管理</value>
+    </data>
+    <data name="InstanceActivitiesView_DataManagementSubtitle" xml:space="preserve">
+        <value>管理此实例的统计数据和操作记录</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearStatisticsButtonText" xml:space="preserve">
+        <value>清除统计</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearRecordsButtonText" xml:space="preserve">
+        <value>清除记录</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+        <value>清除统计</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+        <value>确定要清除此实例的所有统计数据吗？此操作不可撤销。</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearRecordsConfirmationTitle" xml:space="preserve">
+        <value>清除记录</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearRecordsConfirmationMessage" xml:space="preserve">
+        <value>确定要清除此实例的所有操作记录吗？此操作不可撤销。</value>
+    </data>
+    <data name="SettingsView_DataManagementLabelText" xml:space="preserve">
+        <value>数据管理</value>
+    </data>
+    <data name="SettingsView_ClearStatisticsButtonText" xml:space="preserve">
+        <value>清除统计</value>
+    </data>
+    <data name="SettingsView_ClearRecordsButtonText" xml:space="preserve">
+        <value>清除记录</value>
+    </data>
+    <data name="SettingsView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+        <value>清除统计</value>
+    </data>
+    <data name="SettingsView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+        <value>确定要清除所有实例的游玩统计数据吗？此操作不可撤销。</value>
+    </data>
+    <data name="SettingsView_ClearRecordsConfirmationTitle" xml:space="preserve">
+        <value>清除记录</value>
+    </data>
+    <data name="SettingsView_ClearRecordsConfirmationMessage" xml:space="preserve">
+        <value>确定要清除所有实例的操作记录吗？此操作不可撤销。</value>
     </data>
 </root>

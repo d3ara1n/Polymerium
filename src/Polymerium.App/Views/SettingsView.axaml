@@ -261,6 +261,14 @@
                         HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type v:MaintenanceStorageView}" Classes="Small" />
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_DataManagementLabelText}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Content="{x:Static lang:Resources.SettingsView_ClearStatisticsButtonText}"
+                            Command="{Binding ClearStatisticsCommand}" Classes="Small" />
+                    <Button Content="{x:Static lang:Resources.SettingsView_ClearRecordsButtonText}"
+                            Command="{Binding ClearRecordsCommand}" Classes="Small" />
+                </StackPanel>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdatesLabelText}">
                 <controls:Plaque>
                     <controls:Plaque.Header>

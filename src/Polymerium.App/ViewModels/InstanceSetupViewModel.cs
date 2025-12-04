@@ -642,7 +642,7 @@ public partial class InstanceSetupViewModel(
             {
                 Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
                 Content = Resources
-                         .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt.Replace("{0}", "0")
+                         .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace("{0}", "0")
                          .Replace("{1}", _stageSource.Count.ToString()),
                 IsProgressBarVisible = true,
                 IsCloseButtonVisible = false
@@ -688,7 +688,7 @@ public partial class InstanceSetupViewModel(
             {
                 Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
                 Content = Resources
-                         .InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt
+                         .InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage
                          .Replace("{0}", updates.Count.ToString())
             };
             reviewNotification.Actions.Add(new(Resources
@@ -758,7 +758,7 @@ public partial class InstanceSetupViewModel(
                                                    * (_stageSource.Items.Count - total)
                                                    / _stageSource.Items.Count);
                     notification.Content = Resources
-                                          .InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt
+                                          .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage
                                           .Replace("{0}", updates.Count.ToString())
                                           .Replace("{1}", total.ToString());
                 });

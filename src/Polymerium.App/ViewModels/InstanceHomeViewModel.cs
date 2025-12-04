@@ -219,7 +219,7 @@ public partial class InstanceHomeViewModel(
         }
         catch (AccountNotFoundException)
         {
-            notificationService.PopMessage(Resources.InstanceHomeView_AccountNotFoundDangerNotificationPrompt,
+            notificationService.PopMessage(Resources.InstanceHomeView_AccountNotFoundDangerNotificationMessage,
                                            Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
                                            GrowlLevel.Danger,
                                            actions:

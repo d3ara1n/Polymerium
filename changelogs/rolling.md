@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Highlights ✨
 
 - 改进了代理设置界面提供更多协议可选
+- 实例活动页面添加更多统计信息
 
 ### Added
 
--
+- 实例活动页面添加更多统计信息(#POLY-21)
+- 设置页面提供清除统计和记录信息的入口
 
 ### Changed
 

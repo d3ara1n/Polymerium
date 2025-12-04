@@ -37,7 +37,7 @@ public partial class AccountsViewModel(
         var found = persistenceService.GetAccount(account.Uuid);
         if (found != null)
         {
-            notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationPrompt,
+            notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationMessage,
                                            Resources.AccountsView_AccountAddingDangerNotificationTitle,
                                            GrowlLevel.Danger);
             return false;
