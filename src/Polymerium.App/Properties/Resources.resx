@@ -852,7 +852,7 @@
     <data name="AccountsView_AccountAddingDangerNotificationTitle" xml:space="preserve">
         <value>Account creation failed</value>
     </data>
-    <data name="AccountsView_AccountAddingDangerNotificationPrompt" xml:space="preserve">
+    <data name="AccountsView_AccountAddingDangerNotificationMessage" xml:space="preserve">
         <value>Account with the same uuid already exists</value>
     </data>
     <data name="InstanceHomeView_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
@@ -864,7 +864,7 @@
     <data name="InstanceHomeView_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
         <value>Account Not Found</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationPrompt" xml:space="preserve">
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationMessage" xml:space="preserve">
         <value>Account is not provided or removed after set</value>
     </data>
     <data name="InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
@@ -879,7 +879,7 @@
     <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
         <value>Pick a file like /bin/java.exe or /bin/javaw.exe</value>
     </data>
-    <data name="InstancePropertiesView_UnlockingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="InstancePropertiesView_UnlockingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance is no longer associated to any modpack brand and free to edit.</value>
     </data>
     <data name="InstancePropertiesView_RequestThumbnailTitle" xml:space="preserve">
@@ -891,7 +891,7 @@
     <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
         <value>Set instance thumbnail</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt" xml:space="preserve">
+    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationMessage" xml:space="preserve">
         <value>Selected file is not a valid image or no file selected.</value>
     </data>
     <data name="InstancePropertiesView_RequestNameTitle" xml:space="preserve">
@@ -927,7 +927,7 @@
     <data name="MainWindow_InstanceInstallingDangerNotificationTitle" xml:space="preserve">
         <value>Failed to install {0}</value>
     </data>
-    <data name="MainWindow_InstanceInstallingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceInstallingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has been installed</value>
     </data>
     <data name="MainWindow_InstanceInstallingSuccessNotificationOpenText" xml:space="preserve">
@@ -936,7 +936,7 @@
     <data name="MainWindow_InstanceUpdatingDangerNotificationTitle" xml:space="preserve">
         <value>Failed to update {0}</value>
     </data>
-    <data name="MainWindow_InstanceUpdatingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceUpdatingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has been updated</value>
     </data>
     <data name="MainWindow_InstanceUpdatingSuccessNotificationOpenText" xml:space="preserve">
@@ -945,10 +945,10 @@
     <data name="MainWindow_InstanceDeployingNotificationTitle" xml:space="preserve">
         <value>Failed to deploy {0}</value>
     </data>
-    <data name="MainWindow_InstanceDeployingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceDeployingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has been deployed</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingSuccessNotificationPrompt" xml:space="preserve">
+    <data name="MainWindow_InstanceLaunchingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has been exited</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
@@ -990,7 +990,7 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt" xml:space="preserve">
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
         <value>Checking updates...({0}/{1})</value>
     </data>
     <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
@@ -999,13 +999,13 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt" xml:space="preserve">
+    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
         <value>{0} packages to be updated</value>
     </data>
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>Review</value>
     </data>
-    <data name="MarketplaceSearchView_ModpackInstallingNotificationPrompt" xml:space="preserve">
+    <data name="MarketplaceSearchView_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} has been added to the queue</value>
     </data>
     <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
@@ -1479,8 +1479,8 @@
     <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
         <value>Crashed!</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationPrompt" xml:space="preserve">
-        <value>Click the link for more details.</value>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationMessage" xml:space="preserve">
+        <value>{0} exit unexpectedly. Click the link for more details.</value>
     </data>
     <data name="ProxySettingsDialog_Title" xml:space="preserve">
         <value>Proxy Settings</value>
@@ -1550,5 +1550,89 @@
     </data>
     <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
         <value>Failed</value>
+    </data>
+    <data name="InstanceActivitiesView_PlaytimeTabText" xml:space="preserve">
+        <value>Playtime</value>
+    </data>
+    <data name="InstanceActivitiesView_HealthTabText" xml:space="preserve">
+        <value>Health</value>
+    </data>
+    <data name="InstanceActivitiesView_CrashCountLabelText" xml:space="preserve">
+        <value>Crash Count</value>
+    </data>
+    <data name="InstanceActivitiesView_SuccessRateLabelText" xml:space="preserve">
+        <value>Success Rate</value>
+    </data>
+    <data name="InstanceActivitiesView_StatisticsTabText" xml:space="preserve">
+        <value>Statistics</value>
+    </data>
+    <data name="InstanceActivitiesView_TrendsTabText" xml:space="preserve">
+        <value>Trends</value>
+    </data>
+    <data name="InstanceActivitiesView_AverageSessionLabelText" xml:space="preserve">
+        <value>Avg. Session</value>
+    </data>
+    <data name="InstanceActivitiesView_LongestSessionLabelText" xml:space="preserve">
+        <value>Longest Session</value>
+    </data>
+    <data name="InstanceActivitiesView_FirstPlayedLabelText" xml:space="preserve">
+        <value>First Played</value>
+    </data>
+    <data name="InstanceActivitiesView_LastPlayedLabelText" xml:space="preserve">
+        <value>Last Played</value>
+    </data>
+    <data name="InstanceActivitiesView_PlaytimePercentageLabelText" xml:space="preserve">
+        <value>Playtime Share</value>
+    </data>
+    <data name="InstanceActivitiesView_ThisWeekLabelText" xml:space="preserve">
+        <value>This Week</value>
+    </data>
+    <data name="InstanceActivitiesView_LastWeekLabelText" xml:space="preserve">
+        <value>Last Week</value>
+    </data>
+    <data name="InstanceActivitiesView_DataManagementTitle" xml:space="preserve">
+        <value>Data Management</value>
+    </data>
+    <data name="InstanceActivitiesView_DataManagementSubtitle" xml:space="preserve">
+        <value>Manage statistics and action records for this instance</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearStatisticsButtonText" xml:space="preserve">
+        <value>Clear Statistics</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearRecordsButtonText" xml:space="preserve">
+        <value>Clear Records</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+        <value>Clear Statistics</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to clear all statistics for this instance? This action cannot be undone.</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearRecordsConfirmationTitle" xml:space="preserve">
+        <value>Clear Records</value>
+    </data>
+    <data name="InstanceActivitiesView_ClearRecordsConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to clear all action records for this instance? This action cannot be undone.</value>
+    </data>
+    <data name="SettingsView_DataManagementLabelText" xml:space="preserve">
+        <value>Data Management</value>
+    </data>
+    <data name="SettingsView_ClearStatisticsButtonText" xml:space="preserve">
+        <value>Clear Statistics</value>
+    </data>
+    <data name="SettingsView_ClearRecordsButtonText" xml:space="preserve">
+        <value>Clear Records</value>
+    </data>
+    <data name="SettingsView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+        <value>Clear Statistics</value>
+    </data>
+    <data name="SettingsView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to clear all play statistics for all instances? This action cannot be undone.</value>
+    </data>
+    <data name="SettingsView_ClearRecordsConfirmationTitle" xml:space="preserve">
+        <value>Clear Records</value>
+    </data>
+    <data name="SettingsView_ClearRecordsConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to clear all action records for all instances? This action cannot be undone.</value>
     </data>
 </root>

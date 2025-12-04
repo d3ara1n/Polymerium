@@ -266,7 +266,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         var oldSource = Basic.Source;
         Basic.Source = null;
         _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Unlock, oldSource, null));
-        _notificationService.PopMessage(Resources.InstancePropertiesView_UnlockingSuccessNotificationPrompt,
+        _notificationService.PopMessage(Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
                                         Basic.Key,
                                         GrowlLevel.Success);
     }
@@ -293,7 +293,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             else
             {
                 _notificationService.PopMessage(Resources
-                                                   .InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt,
+                                                   .InstancePropertiesView_ThumbnailSettingDangerNotificationMessage,
                                                 Resources
                                                    .InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
                                                 GrowlLevel.Warning);

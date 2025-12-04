@@ -395,9 +395,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Account with the same uuid already exists.
         /// </summary>
-        public static string AccountsView_AccountAddingDangerNotificationPrompt {
+        public static string AccountsView_AccountAddingDangerNotificationMessage {
             get {
-                return ResourceManager.GetString("AccountsView_AccountAddingDangerNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("AccountsView_AccountAddingDangerNotificationMessage", resourceCulture);
             }
         }
         
@@ -1446,6 +1446,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avg. Session.
+        /// </summary>
+        public static string InstanceActivitiesView_AverageSessionLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_AverageSessionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changelog.
         /// </summary>
         public static string InstanceActivitiesView_ChangelogLabelText {
@@ -1455,11 +1464,182 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Records.
+        /// </summary>
+        public static string InstanceActivitiesView_ClearRecordsButtonText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ClearRecordsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to clear all action records for this instance? This action cannot be undone..
+        /// </summary>
+        public static string InstanceActivitiesView_ClearRecordsConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ClearRecordsConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Records.
+        /// </summary>
+        public static string InstanceActivitiesView_ClearRecordsConfirmationTitle {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ClearRecordsConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Statistics.
+        /// </summary>
+        public static string InstanceActivitiesView_ClearStatisticsButtonText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ClearStatisticsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to clear all statistics for this instance? This action cannot be undone..
+        /// </summary>
+        public static string InstanceActivitiesView_ClearStatisticsConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ClearStatisticsConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Statistics.
+        /// </summary>
+        public static string InstanceActivitiesView_ClearStatisticsConfirmationTitle {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ClearStatisticsConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crash Count.
+        /// </summary>
+        public static string InstanceActivitiesView_CrashCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_CrashCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage statistics and action records for this instance.
+        /// </summary>
+        public static string InstanceActivitiesView_DataManagementSubtitle {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_DataManagementSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Management.
+        /// </summary>
+        public static string InstanceActivitiesView_DataManagementTitle {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_DataManagementTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Played.
+        /// </summary>
+        public static string InstanceActivitiesView_FirstPlayedLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_FirstPlayedLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Health.
+        /// </summary>
+        public static string InstanceActivitiesView_HealthTabText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_HealthTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Played.
+        /// </summary>
+        public static string InstanceActivitiesView_LastPlayedLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_LastPlayedLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Week.
+        /// </summary>
+        public static string InstanceActivitiesView_LastWeekLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_LastWeekLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longest Session.
+        /// </summary>
+        public static string InstanceActivitiesView_LongestSessionLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_LongestSessionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playtime Share.
+        /// </summary>
+        public static string InstanceActivitiesView_PlaytimePercentageLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_PlaytimePercentageLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playtime.
+        /// </summary>
+        public static string InstanceActivitiesView_PlaytimeTabText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_PlaytimeTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session Count.
         /// </summary>
         public static string InstanceActivitiesView_SessionCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesView_SessionCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        public static string InstanceActivitiesView_StatisticsTabText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_StatisticsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success Rate.
+        /// </summary>
+        public static string InstanceActivitiesView_SuccessRateLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_SuccessRateLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This Week.
+        /// </summary>
+        public static string InstanceActivitiesView_ThisWeekLabelText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_ThisWeekLabelText", resourceCulture);
             }
         }
         
@@ -1478,6 +1658,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceActivitiesView_TotalHoursRankLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesView_TotalHoursRankLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trends.
+        /// </summary>
+        public static string InstanceActivitiesView_TrendsTabText {
+            get {
+                return ResourceManager.GetString("InstanceActivitiesView_TrendsTabText", resourceCulture);
             }
         }
         
@@ -1745,9 +1934,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Account is not provided or removed after set.
         /// </summary>
-        public static string InstanceHomeView_AccountNotFoundDangerNotificationPrompt {
+        public static string InstanceHomeView_AccountNotFoundDangerNotificationMessage {
             get {
-                return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationMessage", resourceCulture);
             }
         }
         
@@ -2465,9 +2654,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Selected file is not a valid image or no file selected..
         /// </summary>
-        public static string InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt {
+        public static string InstancePropertiesView_ThumbnailSettingDangerNotificationMessage {
             get {
-                return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationMessage", resourceCulture);
             }
         }
         
@@ -2510,9 +2699,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The instance is no longer associated to any modpack brand and free to edit..
         /// </summary>
-        public static string InstancePropertiesView_UnlockingSuccessNotificationPrompt {
+        public static string InstancePropertiesView_UnlockingSuccessNotificationMessage {
             get {
-                return ResourceManager.GetString("InstancePropertiesView_UnlockingSuccessNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("InstancePropertiesView_UnlockingSuccessNotificationMessage", resourceCulture);
             }
         }
         
@@ -2636,9 +2825,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} packages to be updated.
         /// </summary>
-        public static string InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt {
+        public static string InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage {
             get {
-                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage", resourceCulture);
             }
         }
         
@@ -2672,9 +2861,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Checking updates...({0}/{1}).
         /// </summary>
-        public static string InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt {
+        public static string InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage {
             get {
-                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage", resourceCulture);
             }
         }
         
@@ -3113,9 +3302,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The instance has been deployed.
         /// </summary>
-        public static string MainWindow_InstanceDeployingSuccessNotificationPrompt {
+        public static string MainWindow_InstanceDeployingSuccessNotificationMessage {
             get {
-                return ResourceManager.GetString("MainWindow_InstanceDeployingSuccessNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("MainWindow_InstanceDeployingSuccessNotificationMessage", resourceCulture);
             }
         }
         
@@ -3138,20 +3327,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The instance has been installed.
+        /// </summary>
+        public static string MainWindow_InstanceInstallingSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string MainWindow_InstanceInstallingSuccessNotificationOpenText {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationOpenText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The instance has been installed.
-        /// </summary>
-        public static string MainWindow_InstanceInstallingSuccessNotificationPrompt {
-            get {
-                return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationPrompt", resourceCulture);
             }
         }
         
@@ -3165,11 +3354,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click the link for more details..
+        ///   Looks up a localized string similar to {0} exit unexpectedly. Click the link for more details..
         /// </summary>
-        public static string MainWindow_InstanceLaunchingDangerNotificationPrompt {
+        public static string MainWindow_InstanceLaunchingDangerNotificationMessage {
             get {
-                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationMessage", resourceCulture);
             }
         }
         
@@ -3194,9 +3383,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The instance has been exited.
         /// </summary>
-        public static string MainWindow_InstanceLaunchingSuccessNotificationPrompt {
+        public static string MainWindow_InstanceLaunchingSuccessNotificationMessage {
             get {
-                return ResourceManager.GetString("MainWindow_InstanceLaunchingSuccessNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("MainWindow_InstanceLaunchingSuccessNotificationMessage", resourceCulture);
             }
         }
         
@@ -3210,20 +3399,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The instance has been updated.
+        /// </summary>
+        public static string MainWindow_InstanceUpdatingSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string MainWindow_InstanceUpdatingSuccessNotificationOpenText {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationOpenText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The instance has been updated.
-        /// </summary>
-        public static string MainWindow_InstanceUpdatingSuccessNotificationPrompt {
-            get {
-                return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationPrompt", resourceCulture);
             }
         }
         
@@ -3329,9 +3518,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {0} has been added to the queue.
         /// </summary>
-        public static string MarketplaceSearchView_ModpackInstallingNotificationPrompt {
+        public static string MarketplaceSearchView_ModpackInstallingNotificationMessage {
             get {
-                return ResourceManager.GetString("MarketplaceSearchView_ModpackInstallingNotificationPrompt", resourceCulture);
+                return ResourceManager.GetString("MarketplaceSearchView_ModpackInstallingNotificationMessage", resourceCulture);
             }
         }
         
@@ -4065,11 +4254,74 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Records.
+        /// </summary>
+        public static string SettingsView_ClearRecordsButtonText {
+            get {
+                return ResourceManager.GetString("SettingsView_ClearRecordsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to clear all action records for all instances? This action cannot be undone..
+        /// </summary>
+        public static string SettingsView_ClearRecordsConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SettingsView_ClearRecordsConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Records.
+        /// </summary>
+        public static string SettingsView_ClearRecordsConfirmationTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_ClearRecordsConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Statistics.
+        /// </summary>
+        public static string SettingsView_ClearStatisticsButtonText {
+            get {
+                return ResourceManager.GetString("SettingsView_ClearStatisticsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to clear all play statistics for all instances? This action cannot be undone..
+        /// </summary>
+        public static string SettingsView_ClearStatisticsConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SettingsView_ClearStatisticsConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Statistics.
+        /// </summary>
+        public static string SettingsView_ClearStatisticsConfirmationTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_ClearStatisticsConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Corner Radius.
         /// </summary>
         public static string SettingsView_CornerStyleLabelText {
             get {
                 return ResourceManager.GetString("SettingsView_CornerStyleLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Management.
+        /// </summary>
+        public static string SettingsView_DataManagementLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_DataManagementLabelText", resourceCulture);
             }
         }
         

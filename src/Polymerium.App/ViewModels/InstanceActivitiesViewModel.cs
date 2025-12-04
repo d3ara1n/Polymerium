@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -13,6 +14,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using SkiaSharp;
 using Trident.Abstractions.Repositories;
@@ -27,7 +29,8 @@ public partial class InstanceActivitiesViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     DataService dataService,
-    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService,
+    OverlayService overlayService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Other
 
@@ -155,6 +158,20 @@ public partial class InstanceActivitiesViewModel(
         TotalPlayTimeRank = persistenceService.GetTotalPlayTimeRank(Basic.Key);
         SessionCount = persistenceService.GetSessionCount(Basic.Key);
         ActiveDays = persistenceService.GetActiveDays(Basic.Key);
+        CrashCount = persistenceService.GetCrashCount(Basic.Key);
+
+        // Statistics Tab 数据
+        var lastActivity = persistenceService.GetLastActivity(Basic.Key);
+        LastPlayedAt = lastActivity?.End;
+        var firstActivity = persistenceService.GetFirstActivity(Basic.Key);
+        FirstPlayedAt = firstActivity?.Begin;
+        LongestSessionRaw = persistenceService.GetLongestSession(Basic.Key);
+
+        // Trends Tab 数据
+        PlaytimePercentage = persistenceService.GetPercentageInTotalPlayTime(Basic.Key) * 100.0;
+        ThisWeekPlayTimeRaw = persistenceService.GetWeekPlayTime(Basic.Key, 0);
+        LastWeekPlayTimeRaw = persistenceService.GetWeekPlayTime(Basic.Key, 1);
+
         return Task.CompletedTask;
     }
 
@@ -194,6 +211,7 @@ public partial class InstanceActivitiesViewModel(
     public partial int TotalPlayTimeRank { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SuccessRate))]
     public partial int SessionCount { get; set; }
 
     [ObservableProperty]
@@ -210,6 +228,58 @@ public partial class InstanceActivitiesViewModel(
 
     [ObservableProperty]
     public partial IEnumerable<Axis>? YAxes { get; set; }
+
+    // 健康度相关属性
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SuccessRate))]
+    public partial int CrashCount { get; set; }
+
+    // 正常运行率（计算属性）
+    public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
+
+    // Statistics Tab 属性
+    // 最后一次游戏时间
+    [ObservableProperty]
+    public partial DateTime? LastPlayedAt { get; set; }
+
+    // 首次游戏时间
+    [ObservableProperty]
+    public partial DateTime? FirstPlayedAt { get; set; }
+
+    // 最长单次游戏时长
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LongestSessionHours))]
+    public partial TimeSpan LongestSessionRaw { get; set; }
+
+    public double LongestSessionHours => LongestSessionRaw.TotalHours;
+
+    // 平均每次游戏时长（计算属性）
+    public double AverageSessionMinutes => SessionCount > 0 ? TotalPlayTimeRaw.TotalMinutes / SessionCount : 0;
+
+    // Trends Tab 属性
+    // 占总游戏时间百分比
+    [ObservableProperty]
+    public partial double PlaytimePercentage { get; set; }
+
+    // 本周游戏时间
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ThisWeekPlayTimeHours))]
+    public partial TimeSpan ThisWeekPlayTimeRaw { get; set; }
+
+    public double ThisWeekPlayTimeHours => ThisWeekPlayTimeRaw.TotalHours;
+
+    // 上周游戏时间
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LastWeekPlayTimeHours))]
+    public partial TimeSpan LastWeekPlayTimeRaw { get; set; }
+
+    public double LastWeekPlayTimeHours => LastWeekPlayTimeRaw.TotalHours;
+
+    // 周对比变化率（计算属性）
+    public double WeekChangePercentage =>
+        LastWeekPlayTimeRaw.TotalHours > 0
+            ? (ThisWeekPlayTimeRaw.TotalHours - LastWeekPlayTimeRaw.TotalHours) / LastWeekPlayTimeRaw.TotalHours * 100
+            : (ThisWeekPlayTimeRaw.TotalHours > 0 ? 100 : 0);
 
     #endregion
 }

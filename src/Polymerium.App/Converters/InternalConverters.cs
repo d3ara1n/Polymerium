@@ -13,6 +13,7 @@ namespace Polymerium.App.Converters;
 
 public static class InternalConverters
 {
+
     public static IMultiValueConverter OneOr { get; } = new RelayMultiConverter((v, _, _) =>
     {
         if (v is [bool b, double d])

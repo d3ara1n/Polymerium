@@ -140,10 +140,10 @@
                                                                 Label="{x:Static lang:Resources.Enum_All}"
                                                                 Value="{x:Null}" />
                                                             <m:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
+                                                                Label="{x:Static lang:Resources.InstanceAssetsView_SourceImportText}"
                                                                 Value="{x:True}" />
                                                             <m:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
+                                                                Label="{x:Static lang:Resources.InstanceAssetsView_SourceLocalText}"
                                                                 Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
