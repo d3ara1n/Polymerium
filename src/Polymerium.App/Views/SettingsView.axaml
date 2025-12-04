@@ -452,23 +452,5 @@
                 </TextBlock>
             </StackPanel>
         </Panel>
-        <husk:Divider />
-        <!-- Disclaimer -->
-        <StackPanel>
-            <TextBlock Text="Disclaimer:" />
-            <TextBlock Text="1. 作为 Advanced Instance Manager，Polymerium 仅提供功能，不提供任何服务，所使用的服务均来自第三方平台，日后也不会提供联机服务。"
-                       TextWrapping="Wrap" />
-            <TextBlock
-                Text="2. Polymerium 为整合包创作者和整合包体验者设计，专门为游玩和编辑实例优化功能，为此引入了大量区别于传统的实例构建机制，这些机制可能会有极高的上手门槛，甚至会降低非目标用户的使用体验。"
-                TextWrapping="Wrap" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Spacing="12">
-            <Border Background="{DynamicResource SettingsAiBadgeEnglishImageBrush}"
-                    Width="132"
-                    Height="42" />
-            <Border Background="{DynamicResource SettingsAiBadgeChineseImageBrush}"
-                    Width="132"
-                    Height="42" />
-        </StackPanel>
     </StackPanel>
 </husk:Page>
