@@ -124,19 +124,19 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock VerticalAlignment="Center" Margin="8,0">
-                            <Run Text="{x:Static lang:Resources.MarketplaceSearchView_ResultCountLabelText}"
-                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <fi:SymbolIcon Symbol="FilterDismiss" FontSize="{StaticResource MediumFontSize}" />
                                 <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_ResetFilterButtonText}" />
                             </StackPanel>
                         </HyperlinkButton>
+                        <TextBlock VerticalAlignment="Center">
+                            <Run Text="{x:Static lang:Resources.MarketplaceSearchView_ResultCountLabelText}"
+                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
                         <TabStrip Name="LayoutSelector" SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}"
                                   Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>

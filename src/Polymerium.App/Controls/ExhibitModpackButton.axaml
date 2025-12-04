@@ -158,7 +158,7 @@
                     <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
                         <Grid Grid.Row="0" ColumnDefinitions="Auto,*"
                               Margin="12" ColumnSpacing="8">
-                            <Border Grid.Column="0" Height="70" Width="70"
+                            <Border Grid.Column="0" Height="80" Width="80"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                 <Border.Background>
                                     <ImageBrush Stretch="UniformToFill"
