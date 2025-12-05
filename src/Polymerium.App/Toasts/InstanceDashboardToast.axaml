@@ -9,36 +9,51 @@
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
             xmlns:m="clr-namespace:Polymerium.App.Models"
+            xmlns:services="clr-namespace:Polymerium.App.Services"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             Header="Dashboard" Padding="0"
             x:Class="Polymerium.App.Toasts.InstanceDashboardToast"
             ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <husk:Toast.Resources>
         <DataTemplate x:Key="ScrapTemplate" DataType="m:ScrapModel">
-            <Border Background="Transparent">
-                <Panel Margin="4,2">
-                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
-                    <StackPanel x:Name="InfoPanel" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                Orientation="Horizontal" Spacing="2">
-                        <husk:Tag Content="{Binding Sender,FallbackValue=*}" FontSize="{StaticResource SmallFontSize}" />
-                        <husk:Tag Content="{Binding Thread,FallbackValue=None}"
-                                  FontSize="{StaticResource SmallFontSize}" />
-                        <husk:Tag Content="{Binding Time, StringFormat=HH:mm:ss}"
-                                  FontSize="{StaticResource SmallFontSize}" />
-                        <StackPanel.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseInOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            </Transitions>
-                        </StackPanel.Transitions>
-                    </StackPanel>
-                </Panel>
-                <Border.Styles>
-                    <Style Selector="Border:pointerover StackPanel#InfoPanel">
-                        <Setter Property="Opacity" Value="0.0" />
-                    </Style>
-                </Border.Styles>
-            </Border>
+            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="4">
+                <!-- 时间戳 -->
+                <TextBlock Grid.Column="0"
+                           Text="{Binding Time, StringFormat=HH:mm:ss}"
+                           FontFamily="Cascadia Code, Consolas, monospace"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                           VerticalAlignment="Center" />
+
+                <!-- 来源标签 -->
+                <Border Grid.Column="1"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="2"
+                        Padding="4,1"
+                        VerticalAlignment="Center">
+                    <Border.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                            <Binding Path="Thread" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                            <Binding Path="Sender" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                        </MultiBinding>
+                    </Border.IsVisible>
+                    <TextBlock FontFamily="Cascadia Code, Consolas, monospace"
+                               FontSize="{StaticResource ExtraSmallFontSize}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <Run Text="[" />
+                        <Run Text="{Binding Thread, FallbackValue=?}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding Sender, FallbackValue=?}" />
+                        <Run Text="]" />
+                    </TextBlock>
+                </Border>
+
+                <!-- 消息内容 -->
+                <TextBlock Grid.Column="2"
+                           Text="{Binding Message}"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip.Tip="{Binding Message}"
+                           VerticalAlignment="Center" />
+            </Grid>
         </DataTemplate>
     </husk:Toast.Resources>
     <Grid RowDefinitions="*,0,Auto">
@@ -46,37 +61,41 @@
             <ScrollViewer x:Name="Viewer" Margin="0,72,0,0">
                 <ItemsControl ItemsSource="{Binding $parent[local:InstanceDashboardToast].Bindable}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="m:ScrapModel">
-                            <Panel>
-                                <husk:SwitchPresenter Value="{Binding Level}" TargetType="launching:ScrapLevel">
-                                    <husk:SwitchCase Value="Information">
-                                        <Border BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
-                                            <ContentControl Content="{Binding}"
-                                                            ContentTemplate="{StaticResource ScrapTemplate}" />
-                                        </Border>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Warning">
-                                        <Border BorderBrush="{StaticResource ControlWarningBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}">
-                                            <ContentControl Content="{Binding}"
-                                                            ContentTemplate="{StaticResource ScrapTemplate}"
-                                                            Foreground="{StaticResource ControlWarningForegroundBrush}" />
-                                        </Border>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Error">
-                                        <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}">
-                                            <ContentControl Content="{Binding}"
-                                                            ContentTemplate="{StaticResource ScrapTemplate}"
-                                                            Foreground="{StaticResource ControlDangerForegroundBrush}" />
-                                        </Border>
-                                    </husk:SwitchCase>
-                                </husk:SwitchPresenter>
-                            </Panel>
+                        <DataTemplate x:DataType="m:ScrapModel">
+                            <husk:SwitchPresenter
+                                Value="{Binding Level}"
+                                TargetType="launching:ScrapLevel">
+                                <!-- Information 级别 -->
+                                <husk:SwitchCase Value="Information">
+                                    <Border BorderBrush="{StaticResource ControlBorderBrush}"
+                                            BorderThickness="3,0,0,0"
+                                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                            Padding="8,1">
+                                        <ContentControl Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                    </Border>
+                                </husk:SwitchCase>
+                                <!-- Warning 级别 -->
+                                <husk:SwitchCase Value="Warning">
+                                    <Border BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                                            BorderThickness="3,0,0,0"
+                                            Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
+                                            Padding="8,1">
+                                        <ContentControl Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                    </Border>
+                                </husk:SwitchCase>
+                                <!-- Error 级别 -->
+                                <husk:SwitchCase Value="Error">
+                                    <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
+                                            BorderThickness="3,0,0,0"
+                                            Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
+                                            Padding="8,1">
+                                        <ContentControl Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                    </Border>
+                                </husk:SwitchCase>
+                            </husk:SwitchPresenter>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
@@ -108,7 +127,7 @@
                                 Text="{Binding $parent[local:InstanceDashboardToast].Bindable.Count,Mode=OneWay,FallbackValue=0}" />
                             <Run Text="/" />
                             <Run
-                                Text="9527" />
+                                Text="{Binding Source={x:Static services:ScrapService.CAPACITY}}" />
                         </TextBlock>
                         <Button
                             IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
