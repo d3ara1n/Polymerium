@@ -189,8 +189,27 @@
                 <!-- 控制区域 -->
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,12,*,12,Auto,12,Auto" Margin="8">
                     <!-- 数据源选择 -->
-                    <ComboBox Grid.Column="0"
-                              MinWidth="180">
+                    <ComboBox Grid.Column="0" MinWidth="180" SelectedIndex="0">
+                        <ComboBoxItem>
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <icons:PackIconLucide Grid.Column="0" Kind="Radio"
+                                                      Width="{StaticResource MediumFontSize}"
+                                                      Height="{StaticResource MediumFontSize}"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="实时日志" />
+                                <husk:Tag Grid.Column="2" Classes="Small Success" Content="Live" />
+                            </Grid>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <icons:PackIconLucide Grid.Column="0" Kind="File"
+                                                      Width="{StaticResource MediumFontSize}"
+                                                      Height="{StaticResource MediumFontSize}"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="latest.log" />
+                                <husk:Tag Grid.Column="2" Classes="Small" Content="Live" />
+                            </Grid>
+                        </ComboBoxItem>
                     </ComboBox>
 
                     <!-- 搜索框 -->
