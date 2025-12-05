@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using ObservableCollections;
 using Polymerium.App.Models;
 using Trident.Abstractions.Extensions;
@@ -12,6 +13,7 @@ namespace Polymerium.App.Services;
 
 public class ScrapService : IDisposable
 {
+    public const int CAPACITY = 9527;
     private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = new();
 
     #region Injected
@@ -37,7 +39,7 @@ public class ScrapService : IDisposable
     {
         if (!_buffers.TryGetValue(e.Key, out var buffer))
         {
-            buffer = new(9527);
+            buffer = new(CAPACITY);
             _buffers.Add(e.Key, buffer);
         }
 
@@ -53,18 +55,13 @@ public class ScrapService : IDisposable
                                       }
                                       else
                                       {
-                                          if (buffer.Count > 0)
-                                          {
-                                              buffer[^1].Message += "\n" + x.Message;
-                                          }
-                                          else
-                                          {
-                                              buffer.AddLast(new(x.Message,
-                                                                 ScrapLevel.Information,
-                                                                 DateTimeOffset.Now,
-                                                                 "Unknown",
-                                                                 "Unknown"));
-                                          }
+                                          var last = buffer.LastOrDefault();
+
+                                          buffer.AddLast(new(x.Message,
+                                                             last?.Level ?? ScrapLevel.Information,
+                                                             DateTimeOffset.Now,
+                                                             null,
+                                                             null));
                                       }
                                   },
                                   () =>

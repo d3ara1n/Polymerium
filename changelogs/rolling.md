@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 改进了代理设置界面提供更多协议可选
 - 实例活动页面添加更多统计信息
+- 优化实例运行日志条目的显示效果
 
 ### Added
 
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 改进了代理设置界面提供更多协议可选(#POLY-22)
 - 优化了整合包搜索界面的元素排版
 - 优化了实例元数据页面的视觉效果
+- 优化实例运行日志条目的显示效果
 
 ### Removed
 

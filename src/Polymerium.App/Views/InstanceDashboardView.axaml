@@ -24,7 +24,6 @@
                 <TextBlock Grid.Column="0"
                            Text="{Binding Time, StringFormat=HH:mm:ss}"
                            FontFamily="Cascadia Code, Consolas, monospace"
-                           FontSize="{StaticResource SmallFontSize}"
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                            VerticalAlignment="Center" />
 
@@ -34,13 +33,19 @@
                         CornerRadius="2"
                         Padding="4,1"
                         VerticalAlignment="Center">
+                    <Border.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                            <Binding Path="Thread" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                            <Binding Path="Sender" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                        </MultiBinding>
+                    </Border.IsVisible>
                     <TextBlock FontFamily="Cascadia Code, Consolas, monospace"
-                               FontSize="{StaticResource SmallFontSize}"
+                               FontSize="{StaticResource ExtraSmallFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="[" />
-                        <Run Text="{Binding Thread, FallbackValue=Main}" />
+                        <Run Text="{Binding Thread, FallbackValue=?}" />
                         <Run Text="/" />
-                        <Run Text="{Binding Sender, FallbackValue=INFO}" />
+                        <Run Text="{Binding Sender, FallbackValue=?}" />
                         <Run Text="]" />
                     </TextBlock>
                 </Border>
@@ -337,10 +342,10 @@
                                         TargetType="launching:ScrapLevel">
                                         <!-- Information 级别 -->
                                         <husk:SwitchCase Value="Information">
-                                            <Border
-                                                BorderBrush="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                                                BorderThickness="2,0,0,0"
-                                                Padding="8,4">
+                                            <Border BorderBrush="{StaticResource ControlBorderBrush}"
+                                                    BorderThickness="3,0,0,0"
+                                                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                    Padding="8,4">
                                                 <ContentControl Content="{Binding}"
                                                                 ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
@@ -348,7 +353,7 @@
                                         <!-- Warning 级别 -->
                                         <husk:SwitchCase Value="Warning">
                                             <Border BorderBrush="{StaticResource ControlWarningBorderBrush}"
-                                                    BorderThickness="2,0,0,0"
+                                                    BorderThickness="3,0,0,0"
                                                     Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
                                                     Padding="8,4">
                                                 <ContentControl Content="{Binding}"
@@ -358,7 +363,7 @@
                                         <!-- Error 级别 -->
                                         <husk:SwitchCase Value="Error">
                                             <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
-                                                    BorderThickness="2,0,0,0"
+                                                    BorderThickness="3,0,0,0"
                                                     Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
                                                     Padding="8,4">
                                                 <ContentControl Content="{Binding}"
