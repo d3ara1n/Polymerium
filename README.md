@@ -145,7 +145,7 @@ Upgrade to Windows 10+ first 💥
 
 | 🛠️ Technology           | 📋 Purpose                              | 🔗 Integration       |
 |--------------------------|-----------------------------------------|----------------------|
-| **.NET 9.0**             | Latest runtime with C# preview features | Core platform        |
+| **.NET 10.0**             | Latest runtime with C# preview features | Core platform        |
 | **Avalonia 11**          | Cross-platform XAML UI framework        | Presentation layer   |
 | **MVVM Pattern**         | Clean separation of concerns            | Architecture pattern |
 | **Dependency Injection** | Modular, testable architecture          | Service management   |
@@ -155,7 +155,6 @@ Upgrade to Windows 10+ first 💥
 
 ```sh
 Polymerium/
-├── 🛠️ .kiro/steering/         # Development guidelines
 ├── 📚 docs/                   # Documentation
 ├── 🎨 src/Polymerium.App/     # UI application layer
 ├── 🔗 submodules/             # Shared components
