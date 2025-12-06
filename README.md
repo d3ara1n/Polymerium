@@ -7,7 +7,7 @@
 **A next-generation Minecraft instance manager that thinks differently about game management.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![.NET 9.0](https://img.shields.io/badge/.NET-9-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
+[![.NET 10.0](https://img.shields.io/badge/.NET-10-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
 [![Avalonia](https://img.shields.io/badge/Avalonia-11-3355FF?style=for-the-badge&logoColor=white)](https://avaloniaui.net/)
 [![C#](https://img.shields.io/badge/C%23-14-239120?style=for-the-badge&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
 
