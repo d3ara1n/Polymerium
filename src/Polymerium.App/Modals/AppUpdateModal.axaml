@@ -31,10 +31,10 @@
                 </StackPanel>
             </DockPanel>
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <husk:Tag Classes="Small Primary">
+                <husk:Tag Classes="Primary">
                     <TextBlock Text="{Binding $parent[modals:AppUpdateModal].Model.Version, FallbackValue=0.0.0}" />
                 </husk:Tag>
-                <husk:Tag Classes="Small Warning"
+                <husk:Tag Classes="Warning"
                           IsVisible="{Binding $parent[modals:AppUpdateModal].Model.IsPrerelease, FallbackValue=False}">
                     <TextBlock Text="Pre-release" />
                 </husk:Tag>
@@ -46,10 +46,10 @@
             <!-- Progress Bar -->
             <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Center"
                         IsVisible="{Binding $parent[modals:AppUpdateModal].IsDownloading, FallbackValue=False}">
-                <ProgressBar Value="{Binding $parent[modals:AppUpdateModal].DownloadProgress}" />
                 <TextBlock Text="{Binding $parent[modals:AppUpdateModal].DownloadProgress, StringFormat={}{0}%}"
                            FontSize="{StaticResource SmallFontSize}"
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <ProgressBar Value="{Binding $parent[modals:AppUpdateModal].DownloadProgress}" />
             </StackPanel>
 
             <Button Grid.Column="1" Classes="Primary"

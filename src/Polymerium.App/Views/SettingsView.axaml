@@ -323,9 +323,9 @@
                                            FontSize="{StaticResource SmallFontSize}" />
                             </StackPanel>
                         </StackPanel>
-                        <DockPanel Grid.Column="1" VerticalSpacing="4" TextBlock.TextAlignment="Right">
+                        <DockPanel Grid.Column="1" VerticalSpacing="4" HorizontalAlignment="Right">
                             <husk:SwitchPresenter DockPanel.Dock="Top" Value="{Binding UpdateState}"
-                                                  TargetType="m:AppUpdateState">
+                                                  TargetType="m:AppUpdateState" HorizontalAlignment="Right">
                                 <husk:SwitchCase Value="Idle" />
                                 <husk:SwitchCase Value="Unavailable">
                                     <husk:Tag Classes="Small" VerticalAlignment="Top"
