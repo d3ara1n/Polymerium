@@ -6,7 +6,7 @@ using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Dialogs;
 
-public class TagPickerDialog : Dialog
+public partial class TagPickerDialog : Dialog
 {
     public static readonly DirectProperty<TagPickerDialog, IReadOnlyList<string>?> ExistingTagsProperty =
         AvaloniaProperty.RegisterDirect<TagPickerDialog, IReadOnlyList<string>?>(nameof(ExistingTags),
@@ -16,8 +16,6 @@ public class TagPickerDialog : Dialog
     public static readonly DirectProperty<TagPickerDialog, bool> HasExistingTagsProperty =
         AvaloniaProperty.RegisterDirect<TagPickerDialog, bool>(nameof(HasExistingTags), o => o.HasExistingTags);
 
-    private IReadOnlyList<string>? _existingTags;
-
     public TagPickerDialog()
     {
         InitializeComponent();
@@ -26,10 +24,10 @@ public class TagPickerDialog : Dialog
 
     public IReadOnlyList<string>? ExistingTags
     {
-        get => _existingTags;
+        get;
         set
         {
-            SetAndRaise(ExistingTagsProperty, ref _existingTags, value);
+            SetAndRaise(ExistingTagsProperty, ref field, value);
             RaisePropertyChanged(HasExistingTagsProperty, !HasExistingTags, HasExistingTags);
         }
     }

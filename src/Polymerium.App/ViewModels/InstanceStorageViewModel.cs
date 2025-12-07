@@ -73,6 +73,9 @@ public partial class InstanceStorageViewModel(
     [ObservableProperty]
     public partial ulong OtherSize { get; set; }
 
+    [ObservableProperty]
+    public partial ulong OtherCount { get; set; }
+
     #endregion
 
     #region Overrides
@@ -100,19 +103,29 @@ public partial class InstanceStorageViewModel(
         (ConfigSize, ConfigCount) = CalculateDirectorySize("config");
 
         // Calculate total
-        var calculatedTotal = ModsSize
-                            + ResourcePacksSize
-                            + ShaderPacksSize
-                            + WorldsSize
-                            + ScreenshotsSize
-                            + LogsSize
-                            + CrashReportsSize
-                            + ConfigSize;
+        var calculatedTotalSize = ModsSize
+                                + ResourcePacksSize
+                                + ShaderPacksSize
+                                + WorldsSize
+                                + ScreenshotsSize
+                                + LogsSize
+                                + CrashReportsSize
+                                + ConfigSize;
+
+        var calculatedTotalCount = ModsCount
+                                 + ResourcePacksCount
+                                 + ShaderPacksCount
+                                 + WorldsCount
+                                 + ScreenshotsCount
+                                 + LogsCount
+                                 + CrashReportsCount
+                                 + ConfigCount;
 
         // Calculate other files (total directory size minus calculated categories)
-        var (totalDirSize, _) = CalculateDirectorySize(homeDir);
+        var (totalDirSize, totalDirCount) = CalculateDirectorySize(homeDir);
         TotalSize = totalDirSize;
-        OtherSize = totalDirSize > calculatedTotal ? totalDirSize - calculatedTotal : 0;
+        OtherSize = totalDirSize > calculatedTotalSize ? totalDirSize - calculatedTotalSize : 0;
+        OtherCount = totalDirCount > calculatedTotalCount ? totalDirCount - calculatedTotalCount : 0;
     }
 
     private (ulong, ulong) CalculateDirectorySize(string folderName)
