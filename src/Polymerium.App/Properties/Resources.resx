@@ -714,6 +714,21 @@
     <data name="UserInputDialog_Prompt" xml:space="preserve">
         <value>Just write something down below...</value>
     </data>
+    <data name="TagPickerDialog_Title" xml:space="preserve">
+        <value>Add Tag</value>
+    </data>
+    <data name="TagPickerDialog_Prompt" xml:space="preserve">
+        <value>Enter a new tag or select from existing ones</value>
+    </data>
+    <data name="TagPickerDialog_InputTextBoxPlaceholder" xml:space="preserve">
+        <value>Enter tag name...</value>
+    </data>
+    <data name="TagPickerDialog_ExistingTagsLabelText" xml:space="preserve">
+        <value>Existing Tags</value>
+    </data>
+    <data name="TagPickerDialog_NoExistingTagsLabelText" xml:space="preserve">
+        <value>No existing tags</value>
+    </data>
     <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
         <value>Next</value>
     </data>

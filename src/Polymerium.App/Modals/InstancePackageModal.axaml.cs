@@ -8,6 +8,7 @@ using DynamicData;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
@@ -338,13 +339,23 @@ public partial class InstancePackageModal : Modal
     [RelayCommand]
     private async Task AddTag()
     {
-        var tag = await OverlayService.RequestInputAsync();
-        if (string.IsNullOrEmpty(tag))
-        {
-            return;
-        }
+        // 收集所有现有标签（去重，排除当前包已有的标签）
+        var existingTags = Collection
+                          .Items.SelectMany(x => x.Tags)
+                          .Distinct()
+                          .Where(t => !Model.Owner.Tags.Contains(t))
+                          .OrderBy(t => t)
+                          .ToList();
 
-        Model.Owner.Tags.Add(tag);
+        var dialog = new TagPickerDialog { ExistingTags = existingTags };
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
+        {
+            // 避免添加重复标签
+            if (!Model.Owner.Tags.Contains(tag))
+            {
+                Model.Owner.Tags.Add(tag);
+            }
+        }
     }
 
     [RelayCommand]
