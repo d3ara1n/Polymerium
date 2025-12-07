@@ -4812,6 +4812,51 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existing Tags.
+        /// </summary>
+        public static string TagPickerDialog_ExistingTagsLabelText {
+            get {
+                return ResourceManager.GetString("TagPickerDialog_ExistingTagsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter tag name....
+        /// </summary>
+        public static string TagPickerDialog_InputTextBoxPlaceholder {
+            get {
+                return ResourceManager.GetString("TagPickerDialog_InputTextBoxPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No existing tags.
+        /// </summary>
+        public static string TagPickerDialog_NoExistingTagsLabelText {
+            get {
+                return ResourceManager.GetString("TagPickerDialog_NoExistingTagsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a new tag or select from existing ones.
+        /// </summary>
+        public static string TagPickerDialog_Prompt {
+            get {
+                return ResourceManager.GetString("TagPickerDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Tag.
+        /// </summary>
+        public static string TagPickerDialog_Title {
+            get {
+                return ResourceManager.GetString("TagPickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Just write something down below....
         /// </summary>
         public static string UserInputDialog_Prompt {

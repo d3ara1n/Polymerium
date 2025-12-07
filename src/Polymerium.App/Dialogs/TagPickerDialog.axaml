@@ -1,0 +1,69 @@
+﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:local="using:Polymerium.App.Dialogs"
+             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             mc:Ignorable="d" d:DesignWidth="360" d:DesignHeight="400"
+             IsPrimaryButtonVisible="True"
+             Title="{x:Static lang:Resources.TagPickerDialog_Title}"
+             Message="{x:Static lang:Resources.TagPickerDialog_Prompt}"
+             Width="360"
+             x:Class="Polymerium.App.Dialogs.TagPickerDialog">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <!-- 输入框 -->
+        <TextBox Grid.Row="0"
+                 Text="{Binding $parent[local:TagPickerDialog].Result, Mode=TwoWay}"
+                 Watermark="{x:Static lang:Resources.TagPickerDialog_InputTextBoxPlaceholder}" />
+
+        <!-- 现有标签标题 -->
+        <TextBlock Grid.Row="1"
+                   Text="{x:Static lang:Resources.TagPickerDialog_ExistingTagsLabelText}"
+                   FontSize="{StaticResource SmallFontSize}"
+                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                   IsVisible="{Binding $parent[local:TagPickerDialog].HasExistingTags}" />
+
+        <!-- 现有标签列表 -->
+        <ScrollViewer Grid.Row="2" MaxHeight="200">
+            <Panel>
+                <!-- 空状态 -->
+                <StackPanel VerticalAlignment="Center" Spacing="8"
+                            IsVisible="{Binding !$parent[local:TagPickerDialog].HasExistingTags}">
+                    <fi:SymbolIcon Symbol="Tag" FontSize="{StaticResource LargeFontSize}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.TagPickerDialog_NoExistingTagsLabelText}"
+                               FontSize="{StaticResource MediumFontSize}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <!-- 标签列表 -->
+                <ItemsControl ItemsSource="{Binding $parent[local:TagPickerDialog].ExistingTags}"
+                              IsVisible="{Binding $parent[local:TagPickerDialog].HasExistingTags}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel LineSpacing="6" ItemSpacing="6" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Button Theme="{StaticResource OutlineButtonTheme}"
+                                    Padding="8,4"
+                                    Command="{Binding $parent[local:TagPickerDialog].SelectTagCommand}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <fi:SymbolIcon Symbol="Tag"
+                                                   FontSize="{StaticResource SmallFontSize}" />
+                                    <TextBlock Text="{Binding}" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Panel>
+        </ScrollViewer>
+    </Grid>
+</husk:Dialog>
