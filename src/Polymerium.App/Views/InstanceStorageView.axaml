@@ -49,13 +49,27 @@
             <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
                 <!-- Mods -->
                 <husk:Card Grid.Column="0">
-                    <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}"
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto"
+                          ColumnSpacing="4">
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
+                            <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                             CommandParameter="mods" />
+                            <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                             CommandParameter="mods" />
+                            <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                             CommandParameter="mods" />
+                        </StackPanel>
+                        <icons:PackIconLucide Grid.Column="0" Grid.Row="0" Kind="Boxes"
+                                              Height="32"
+                                              Width="32"
                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Text="{x:Static lang:Resources.AssetKind_Mod}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="{x:Static lang:Resources.AssetKind_Mod}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <Run Text="{Binding ModsCount}" />
@@ -66,20 +80,35 @@
                             <Run Text=" / " />
                             <Run Text="{Binding #ModsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="ModsProgressBar" Value="{Binding ModsSize}"
+                        <ProgressBar Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="ModsProgressBar"
+                                     Value="{Binding ModsSize}"
                                      Maximum="{Binding TotalSize}" />
-                    </StackPanel>
+                    </Grid>
                 </husk:Card>
 
                 <!-- Resource Packs -->
                 <husk:Card Grid.Column="1">
-                    <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}"
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto"
+                          ColumnSpacing="4">
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
+                            <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                             CommandParameter="resourcepacks" />
+                            <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                             CommandParameter="resourcepacks" />
+                            <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                             CommandParameter="resourcepacks" />
+                        </StackPanel>
+                        <icons:PackIconLucide Grid.Column="0" Grid.Row="0" Kind="Package"
+                                              Height="32"
+                                              Width="32"
                                               Foreground="#9B59B6" />
-                        <TextBlock Text="{x:Static lang:Resources.AssetKind_ResourcePack}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="{x:Static lang:Resources.AssetKind_ResourcePack}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <Run Text="{Binding ResourcePacksCount,Mode=OneWay}" />
@@ -90,20 +119,35 @@
                             <Run Text=" / " />
                             <Run Text="{Binding #ResourcePacksProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="ResourcePacksProgressBar" Value="{Binding ResourcePacksSize}"
+                        <ProgressBar Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="ResourcePacksProgressBar"
+                                     Value="{Binding ResourcePacksSize}"
                                      Maximum="{Binding TotalSize}" />
-                    </StackPanel>
+                    </Grid>
                 </husk:Card>
 
                 <!-- Shader Packs -->
                 <husk:Card Grid.Column="2">
-                    <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}"
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto"
+                          ColumnSpacing="4">
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
+                            <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                             CommandParameter="shaderpacks" />
+                            <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                             CommandParameter="shaderpacks" />
+                            <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                             CommandParameter="shaderpacks" />
+                        </StackPanel>
+                        <icons:PackIconLucide Grid.Column="0" Grid.Row="0" Kind="Sparkles"
+                                              Height="32"
+                                              Width="32"
                                               Foreground="#E67E22" />
-                        <TextBlock Text="{x:Static lang:Resources.AssetKind_ShaderPack}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="{x:Static lang:Resources.AssetKind_ShaderPack}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <Run Text="{Binding ShaderPacksCount,Mode=OneWay}" />
@@ -114,20 +158,35 @@
                             <Run Text=" / " />
                             <Run Text="{Binding #ShaderPacksProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="ShaderPacksProgressBar" Value="{Binding ShaderPacksSize}"
+                        <ProgressBar Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="ShaderPacksProgressBar"
+                                     Value="{Binding ShaderPacksSize}"
                                      Maximum="{Binding TotalSize}" />
-                    </StackPanel>
+                    </Grid>
                 </husk:Card>
 
                 <!-- Worlds/Saves -->
                 <husk:Card Grid.Column="3">
-                    <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="Globe" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}"
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto"
+                          ColumnSpacing="4">
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
+                            <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                             CommandParameter="saves" />
+                            <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                             CommandParameter="saves" />
+                            <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                             CommandParameter="saves" />
+                        </StackPanel>
+                        <icons:PackIconLucide Grid.Column="0" Grid.Row="0" Kind="Globe"
+                                              Height="32"
+                                              Width="32"
                                               Foreground="#27AE60" />
-                        <TextBlock Text="{x:Static lang:Resources.AssetKind_Save}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                   Text="{x:Static lang:Resources.AssetKind_Save}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <fi:SymbolIcon Symbol="Document" FontSize="{StaticResource SmallFontSize}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <Run Text="{Binding WorldsCount,Mode=OneWay}" />
@@ -138,9 +197,10 @@
                             <Run Text=" / " />
                             <Run Text="{Binding #WorldsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="WorldsProgressBar" Value="{Binding WorldsSize}"
+                        <ProgressBar Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="WorldsProgressBar"
+                                     Value="{Binding WorldsSize}"
                                      Maximum="{Binding TotalSize}" />
-                    </StackPanel>
+                    </Grid>
                 </husk:Card>
             </Grid>
         </StackPanel>
@@ -149,19 +209,20 @@
         <ScrollViewer Grid.Row="2">
             <StackPanel Spacing="12">
                 <!-- 其他文件夹 -->
-                <StackPanel Spacing="4">
+                <StackPanel>
                     <TextBlock Text="{x:Static lang:Resources.InstanceStorageView_AdditionalLabelText}"
                                FontSize="{StaticResource LargeFontSize}"
                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
                         <!-- Screenshots -->
                         <husk:Card Grid.Row="0" Grid.Column="0">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <icons:PackIconLucide Grid.Column="0" Kind="Image"
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12"
+                                  RowSpacing="8">
+                                <icons:PackIconLucide Grid.Row="0" Grid.Column="0" Kind="Image"
                                                       Height="{StaticResource LargeFontSize}"
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#3498DB" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Screenshot}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -172,36 +233,35 @@
                                         <Run Text="·" />
                                         <Run Text="{Binding ScreenshotsCount,FallbackValue=0}" />
                                         <Run Text="files" />
+                                        <Run Text=" / " />
+                                        <Run
+                                            Text="{Binding #ScreenshotsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                                     </TextBlock>
                                 </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenBuildFolderCommand}"
-                                            CommandParameter="screenshots">
-                                        <fi:SymbolIcon Symbol="Folder" FontSize="{StaticResource SmallFontSize}" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenImportFolderCommand}"
-                                            CommandParameter="screenshots">
-                                        <TextBlock Text="Imports" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenPersistFolderCommand}"
-                                            CommandParameter="screenshots">
-                                        <TextBlock Text="Persists" />
-                                    </Button>
-                                </StackPanel>
+                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                           VerticalAlignment="Center">
+                                    <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                                     CommandParameter="screenshots" />
+                                    <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                                     CommandParameter="screenshots" />
+                                    <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                                     CommandParameter="screenshots" />
+                                </TextBlock>
+                                <ProgressBar Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
+                                             Name="ScreenshotsProgressBar"
+                                             Value="{Binding ScreenshotsSize}" Maximum="{Binding TotalSize}" />
                             </Grid>
                         </husk:Card>
 
                         <!-- Logs -->
                         <husk:Card Grid.Row="0" Grid.Column="1">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <icons:PackIconLucide Grid.Column="0" Kind="FileText"
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12"
+                                  RowSpacing="8">
+                                <icons:PackIconLucide Grid.Row="0" Grid.Column="0" Kind="FileText"
                                                       Height="{StaticResource LargeFontSize}"
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#95A5A6" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Log}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -212,36 +272,33 @@
                                         <Run Text="·" />
                                         <Run Text="{Binding LogsCount,FallbackValue=0}" />
                                         <Run Text="files" />
+                                        <Run Text=" / " />
+                                        <Run Text="{Binding #LogsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                                     </TextBlock>
                                 </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenBuildFolderCommand}"
-                                            CommandParameter="logs">
-                                        <fi:SymbolIcon Symbol="Folder" FontSize="{StaticResource SmallFontSize}" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenImportFolderCommand}"
-                                            CommandParameter="logs">
-                                        <TextBlock Text="Imports" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenPersistFolderCommand}"
-                                            CommandParameter="logs">
-                                        <TextBlock Text="Persists" />
-                                    </Button>
-                                </StackPanel>
+                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                           VerticalAlignment="Center">
+                                    <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                                     CommandParameter="logs" />
+                                    <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                                     CommandParameter="logs" />
+                                    <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                                     CommandParameter="logs" />
+                                </TextBlock>
+                                <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Name="LogsProgressBar"
+                                             Value="{Binding LogsSize}" Maximum="{Binding TotalSize}" />
                             </Grid>
                         </husk:Card>
 
                         <!-- Crash Reports -->
                         <husk:Card Grid.Row="1" Grid.Column="0">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <icons:PackIconLucide Grid.Column="0" Kind="TriangleAlert"
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12"
+                                  RowSpacing="8">
+                                <icons:PackIconLucide Grid.Row="0" Grid.Column="0" Kind="TriangleAlert"
                                                       Height="{StaticResource LargeFontSize}"
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#E74C3C" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{x:Static lang:Resources.AssetKind_CrashReport}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -252,36 +309,34 @@
                                         <Run Text="·" />
                                         <Run Text="{Binding CrashReportsCount,FallbackValue=0}" />
                                         <Run Text="files" />
+                                        <Run Text=" / " />
+                                        <Run
+                                            Text="{Binding #CrashReportsProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                                     </TextBlock>
                                 </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenBuildFolderCommand}"
-                                            CommandParameter="crash-reports">
-                                        <fi:SymbolIcon Symbol="Folder" FontSize="{StaticResource SmallFontSize}" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenImportFolderCommand}"
-                                            CommandParameter="crash-reports">
-                                        <TextBlock Text="Imports" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenPersistFolderCommand}"
-                                            CommandParameter="crash-reports">
-                                        <TextBlock Text="Persists" />
-                                    </Button>
-                                </StackPanel>
+                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                           VerticalAlignment="Center">
+                                    <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                                     CommandParameter="crash-reports" />
+                                    <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                                     CommandParameter="crash-reports" />
+                                    <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                                     CommandParameter="crash-reports" />
+                                </TextBlock>
+                                <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Name="CrashReportsProgressBar"
+                                             Value="{Binding CrashReportsSize}" Maximum="{Binding TotalSize}" />
                             </Grid>
                         </husk:Card>
 
                         <!-- Config -->
                         <husk:Card Grid.Row="1" Grid.Column="1">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <icons:PackIconLucide Grid.Column="0" Kind="Settings"
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12"
+                                  RowSpacing="8">
+                                <icons:PackIconLucide Grid.Row="0" Grid.Column="0" Kind="Settings"
                                                       Height="{StaticResource LargeFontSize}"
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="#F39C12" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Config}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -292,36 +347,33 @@
                                         <Run Text="·" />
                                         <Run Text="{Binding ConfigCount,FallbackValue=0}" />
                                         <Run Text="files" />
+                                        <Run Text=" / " />
+                                        <Run Text="{Binding #ConfigProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                                     </TextBlock>
                                 </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenBuildFolderCommand}"
-                                            CommandParameter="config">
-                                        <fi:SymbolIcon Symbol="Folder" FontSize="{StaticResource SmallFontSize}" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenImportFolderCommand}"
-                                            CommandParameter="config">
-                                        <TextBlock Text="Imports" />
-                                    </Button>
-                                    <Button Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                            Command="{Binding OpenPersistFolderCommand}"
-                                            CommandParameter="config">
-                                        <TextBlock Text="Persists" />
-                                    </Button>
-                                </StackPanel>
+                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                           VerticalAlignment="Center">
+                                    <HyperlinkButton Content="Build" Command="{Binding OpenBuildFolderCommand}"
+                                                     CommandParameter="config" />
+                                    <HyperlinkButton Content="Imports" Command="{Binding OpenImportFolderCommand}"
+                                                     CommandParameter="config" />
+                                    <HyperlinkButton Content="Persists" Command="{Binding OpenPersistFolderCommand}"
+                                                     CommandParameter="config" />
+                                </TextBlock>
+                                <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Name="ConfigProgressBar"
+                                             Value="{Binding ConfigSize}" Maximum="{Binding TotalSize}" />
                             </Grid>
                         </husk:Card>
 
                         <!-- Other Files -->
                         <husk:Card Grid.Row="2" Grid.Column="0">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                <icons:PackIconLucide Grid.Column="0" Kind="FolderTree"
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12"
+                                  RowSpacing="8">
+                                <icons:PackIconLucide Grid.Row="0" Grid.Column="0" Kind="FolderTree"
                                                       Height="{StaticResource LargeFontSize}"
                                                       Width="{StaticResource LargeFontSize}"
                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{x:Static lang:Resources.InstanceStorageView_OtherLabelText}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -329,8 +381,15 @@
                                         <Run
                                             Text="{Binding OtherSize,Mode=OneWay,StringFormat=F2,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=0.00}" />
                                         <Run Text="MiB" />
+                                        <Run Text="·" />
+                                        <Run Text="{Binding OtherCount,FallbackValue=0}" />
+                                        <Run Text="files" />
+                                        <Run Text=" / " />
+                                        <Run Text="{Binding #OtherProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
                                     </TextBlock>
                                 </StackPanel>
+                                <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" Name="OtherProgressBar"
+                                             Value="{Binding OtherSize}" Maximum="{Binding TotalSize}" />
                             </Grid>
                         </husk:Card>
                     </Grid>
