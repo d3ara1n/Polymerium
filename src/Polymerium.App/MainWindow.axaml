@@ -22,6 +22,7 @@
     MinHeight="460"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="Control_OnLoaded"
     mc:Ignorable="d" x:DataType="local:MainWindowContext" Icon="/Assets/Icon.ico">
     <husk:AppWindow.Styles>
         <Style Selector="husk|Dialog">
