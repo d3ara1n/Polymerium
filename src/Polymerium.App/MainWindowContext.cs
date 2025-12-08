@@ -72,20 +72,27 @@ public partial class MainWindowContext : ObservableObject
                                                                                ?? DateTimeOffset.MinValue))
            .Subscribe();
         View = view;
-
-        if (OperatingSystem.IsWindows() && (Program.Debug || Program.FirstRun))
-        {
-            var model = new PrivilegeRequirementModal { NotificationService = notificationService };
-            if (!model.Check())
-            {
-                overlayService.PopModal(model);
-            }
-        }
     }
 
 
     private static Func<InstanceEntryModel, bool> BuildFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
+
+    #region Lifecycles
+
+    public void OnInitialize()
+    {
+        if (OperatingSystem.IsWindows() && (Program.Debug || Program.FirstRun))
+        {
+            var model = new PrivilegeRequirementModal { NotificationService = _notificationService };
+            if (!model.Check())
+            {
+                _overlayService.PopModal(model);
+            }
+        }
+    }
+
+    #endregion
 
     #region Other
 
@@ -169,7 +176,9 @@ public partial class MainWindowContext : ObservableObject
                         var storageItem = await storage.SaveFilePickerAsync(new()
                         {
                             SuggestedStartLocation =
-                                await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
+                                await storage
+                                   .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                                  .Downloads),
                             SuggestedFileName = name,
                             DefaultExtension = "zip"
                         });
@@ -273,7 +282,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstancePropertiesView)));
+                                                          typeof(InstancePropertiesView)));
         }
     }
 
@@ -283,7 +292,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstanceSetupView)));
+                                                          typeof(InstanceSetupView)));
         }
     }
 
@@ -438,7 +447,7 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(Resources
-                                                                  .MainWindow_InstanceInstallingSuccessNotificationMessage,
+                                                           .MainWindow_InstanceInstallingSuccessNotificationMessage,
                                                         e.Key,
                                                         GrowlLevel.Success,
                                                         actions: new GrowlAction(Resources
@@ -512,8 +521,7 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                                  .MainWindow_InstanceUpdatingSuccessNotificationMessage,
+                        _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
                                                         e.Key,
                                                         GrowlLevel.Success,
                                                         true,
@@ -593,7 +601,7 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(Resources
-                                                                  .MainWindow_InstanceDeployingSuccessNotificationMessage,
+                                                           .MainWindow_InstanceDeployingSuccessNotificationMessage,
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });
@@ -663,8 +671,8 @@ public partial class MainWindowContext : ObservableObject
                         {
                             // Game crash error
                             _notificationService.PopMessage(Resources
-                                                                      .MainWindow_InstanceLaunchingDangerNotificationMessage
-                                                                      .Replace("{0}", e.Key),
+                                                           .MainWindow_InstanceLaunchingDangerNotificationMessage
+                                                           .Replace("{0}", e.Key),
                                                             Resources
                                                                .MainWindow_InstanceLaunchingDangerNotificationTitle,
                                                             GrowlLevel.Danger,
@@ -694,7 +702,7 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(Resources
-                                                                  .MainWindow_InstanceLaunchingSuccessNotificationMessage,
+                                                           .MainWindow_InstanceLaunchingSuccessNotificationMessage,
                                                         e.Key,
                                                         GrowlLevel.Success);
                     });
