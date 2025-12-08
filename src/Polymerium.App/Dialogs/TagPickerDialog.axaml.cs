@@ -19,7 +19,6 @@ public partial class TagPickerDialog : Dialog
     public TagPickerDialog()
     {
         InitializeComponent();
-        SelectTagCommand = new RelayCommand<string>(SelectTag);
     }
 
     public IReadOnlyList<string>? ExistingTags
@@ -34,8 +33,9 @@ public partial class TagPickerDialog : Dialog
 
     public bool HasExistingTags => ExistingTags is { Count: > 0 };
 
-    public ICommand SelectTagCommand { get; }
+    #region Commands
 
+    [RelayCommand]
     private void SelectTag(string? tag)
     {
         if (!string.IsNullOrEmpty(tag))
@@ -43,6 +43,8 @@ public partial class TagPickerDialog : Dialog
             Result = tag;
         }
     }
+
+    #endregion
 
     protected override bool ValidateResult(object? result) => result is string str && !string.IsNullOrEmpty(str);
 }
