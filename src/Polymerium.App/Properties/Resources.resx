@@ -1650,4 +1650,13 @@
     <data name="SettingsView_ClearRecordsConfirmationMessage" xml:space="preserve">
         <value>Are you sure you want to clear all action records for all instances? This action cannot be undone.</value>
     </data>
+    <data name="Shared_Copy" xml:space="preserve">
+        <value>Copy</value>
+    </data>
+    <data name="Shared_Cut" xml:space="preserve">
+        <value>Cut</value>
+    </data>
+    <data name="Shared_Paste" xml:space="preserve">
+        <value>Paste</value>
+    </data>
 </root>
