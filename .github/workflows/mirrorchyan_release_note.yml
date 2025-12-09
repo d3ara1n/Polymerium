@@ -1,4 +1,4 @@
-name: mirrorchyan_release_note
+name: MirrorChyan Release Note Upload
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
 jobs:
   mirrorchyan:
     runs-on: macos-latest
-    # if: ${{ github.repository_owner == 'd3ara1n' }}
+    if: ${{ github.repository_owner == 'd3ara1n' }}
 
     steps:
       - id: uploading

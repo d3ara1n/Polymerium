@@ -1,4 +1,4 @@
-name: mirrorchyan_release
+name: MirrorChyan Release Upload
 
 on:
   workflow_dispatch:
@@ -12,7 +12,8 @@ on:
 jobs:
   mirrorchyan:
     runs-on: macos-latest
-    # if: ${{ github.repository_owner == 'd3ara1n' }}
+    if: ${{ github.repository_owner == 'd3ara1n' }}
+
     strategy:
       fail-fast: false
       matrix:
