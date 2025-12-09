@@ -71,7 +71,7 @@
                                                 <ImageBrush Source="{Binding Thumbnail}" />
                                             </Border.Background>
                                         </Border>
-                                        <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*,Auto,Auto"
+                                        <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*,Auto"
                                               ColumnSpacing="6">
                                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
@@ -92,13 +92,6 @@
                                                        VerticalAlignment="Center" />
                                             <ToggleSwitch Grid.Column="2" OnContent="{x:Null}" OffContent="{x:Null}"
                                                           IsChecked="{Binding Owner.IsEnabled,Mode=TwoWay}" />
-                                            <Button Grid.Column="3" Theme="{StaticResource OutlineButtonTheme}"
-                                                    Classes="Small" DataContext="{Binding Owner}"
-                                                    Flyout="{Binding $parent[local:InstancePackageButton].ContextFlyout}">
-                                                <icons:PackIconLucide Kind="Ellipsis"
-                                                                      Width="{StaticResource MediumFontSize}"
-                                                                      Height="{StaticResource MediumFontSize}" />
-                                            </Button>
                                         </Grid>
                                         <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,Auto,*,Auto"
                                               ColumnSpacing="8">

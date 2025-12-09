@@ -453,7 +453,7 @@
                             <SplitButton.Flyout>
                                 <MenuFlyout>
                                     <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_BatchUpdateMenuText}"
-                                              Icon="{fie:SymbolIcon Symbol=ArrowForward,FontSize={StaticResource MediumFontSize}}"
+                                              Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,FontSize={StaticResource MediumFontSize}}"
                                               Command="{Binding UpdateBatchCommand}" />
                                     <MenuItem
                                         Header="{x:Static lang:Resources.InstanceSetupView_DependencyGraphMenuText}"

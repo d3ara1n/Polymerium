@@ -161,7 +161,7 @@
                                             <TextBlock Grid.Row="1" Grid.Column="1"
                                                        Text="{x:Static lang:Resources.InstancePackageModal_VersionBoxUnspecificSubtitle}"
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                       FontSize="{StaticResource MediumFontSize}" />
+                                                       FontSize="{StaticResource SmallFontSize}" />
                                         </Grid>
                                     </DataTemplate>
                                     <DataTemplate DataType="m:InstancePackageVersionModel">

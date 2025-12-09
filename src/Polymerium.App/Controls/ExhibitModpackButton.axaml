@@ -94,12 +94,6 @@
                                             Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
-                                <Button Classes="Small" Flyout="{TemplateBinding ContextFlyout}">
-                                    <!-- <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10" -->
-                                    <!--                       VerticalAlignment="Center" /> -->
-                                    <fi:SymbolIcon Symbol="MoreHorizontal"
-                                                   FontSize="{StaticResource SmallFontSize}" />
-                                </Button>
                             </StackPanel>
                             <ItemsControl ItemsSource="{Binding Tags}">
                                 <ItemsControl.ItemsPanel>
@@ -172,26 +166,18 @@
                                            FontSize="{StaticResource LargeFontSize}"
                                            TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ProjectName}"
                                            TextWrapping="Wrap" MaxLines="2" />
-                                <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                    <Button Grid.Column="0"
-                                            Classes="Primary Small"
-                                            Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding}"
-                                            BackgroundSizing="InnerBorderEdge">
-                                        <StackPanel Orientation="Horizontal" Spacing="12">
-                                            <fi:SymbolIcon Symbol="ArrowDownload"
-                                                           FontSize="{StaticResource SmallFontSize}" />
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Grid.Column="1"
-                                            Classes="Small"
-                                            Flyout="{TemplateBinding ContextFlyout}">
-                                        <fi:SymbolIcon Symbol="MoreHorizontal"
+                                <Button Grid.Row="1"
+                                        Classes="Primary Small"
+                                        Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                        CommandParameter="{Binding}"
+                                        BackgroundSizing="InnerBorderEdge">
+                                    <StackPanel Orientation="Horizontal" Spacing="12">
+                                        <fi:SymbolIcon Symbol="ArrowDownload"
                                                        FontSize="{StaticResource SmallFontSize}" />
-                                    </Button>
-                                </Grid>
+                                        <TextBlock
+                                            Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </Grid>
                         <Border Grid.Row="1" ToolTip.Tip="{Binding Summary}">
