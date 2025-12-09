@@ -10,7 +10,7 @@
                   xmlns:v="clr-namespace:Polymerium.App.Views"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
-                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
                   xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"

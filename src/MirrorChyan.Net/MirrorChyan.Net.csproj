@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <!-- NuGet Package Metadata -->
+        <PackageId>MirrorChyan.Net</PackageId>
+        <Authors>d3ara1n</Authors>
+        <Company>d3ara1n</Company>
+        <Product>MirrorChyan.Net</Product>
+        <Description>Unofficial .NET SDK for MirrorChyan.</Description>
+        <PackageTags>mirrorchyan;mirror;chyan;sdk</PackageTags>
+        <PackageProjectUrl>https://github.com/d3ara1n/MirrorChyan.Net</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/d3ara1n/MirrorChyan.Net</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <!-- <PackageReadmeFile>README.md</PackageReadmeFile> -->
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <Title>MirrorChyan dotnet SDK</Title>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Refit" Version="9.0.2" />
+    </ItemGroup>
+
+</Project>
