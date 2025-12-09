@@ -3,9 +3,9 @@ name: MirrorChyan Release Note Upload
 on:
   workflow_dispatch:
     inputs:
-        tag:
-            default: ''
-            required: false
+      tag:
+        default: ''
+        required: false
   release:
     types: [edited, released]
 
