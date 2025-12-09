@@ -1641,4 +1641,13 @@
     <data name="SettingsView_ClearRecordsConfirmationMessage" xml:space="preserve">
         <value>确定要清除所有实例的操作记录吗？此操作不可撤销。</value>
     </data>
+    <data name="Shared_Copy" xml:space="preserve">
+        <value>复制</value>
+    </data>
+    <data name="Shared_Cut" xml:space="preserve">
+        <value>剪切</value>
+    </data>
+    <data name="Shared_Paste" xml:space="preserve">
+        <value>粘贴</value>
+    </data>
 </root>

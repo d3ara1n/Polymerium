@@ -4785,6 +4785,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Shared_Copy {
+            get {
+                return ResourceManager.GetString("Shared_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string Shared_Cut {
+            get {
+                return ResourceManager.GetString("Shared_Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Entries.
         /// </summary>
         public static string Shared_EmptyListLabelText {
@@ -4808,6 +4826,15 @@ namespace Polymerium.App.Properties {
         public static string Shared_FetchingLabelText {
             get {
                 return ResourceManager.GetString("Shared_FetchingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string Shared_Paste {
+            get {
+                return ResourceManager.GetString("Shared_Paste", resourceCulture);
             }
         }
         
