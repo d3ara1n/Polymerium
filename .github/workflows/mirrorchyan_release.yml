@@ -6,8 +6,8 @@ on:
         tag:
             default: ''
             required: false
-#   release:
-#     types: [released]
+  release:
+    types: [released]
 
 jobs:
   mirrorchyan:
