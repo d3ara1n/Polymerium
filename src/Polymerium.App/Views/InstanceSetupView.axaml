@@ -11,7 +11,7 @@
                   xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
                   xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
                   xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"

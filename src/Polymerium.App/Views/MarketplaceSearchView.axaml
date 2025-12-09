@@ -11,7 +11,7 @@
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
            xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-           xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+           xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"

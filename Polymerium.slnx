@@ -10,6 +10,7 @@
         <File Path="GitVersion.yml" />
         <File Path="README.zh.md" />
     </Folder>
+    <Project Path="src/MirrorChyan.Net/MirrorChyan.Net.csproj" />
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" />
     <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
     <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" />

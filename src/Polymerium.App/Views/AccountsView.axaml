@@ -9,7 +9,7 @@
            xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
            xmlns:m="clr-namespace:Polymerium.App.Models"
            xmlns:v="clr-namespace:Polymerium.App.Views"
-           xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+           xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            x:Class="Polymerium.App.Views.AccountsView" x:DataType="vm:AccountsViewModel">
     <husk:Page.Header>
