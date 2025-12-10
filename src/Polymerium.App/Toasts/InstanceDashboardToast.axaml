@@ -7,7 +7,7 @@
             xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-            xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+            xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
             xmlns:m="clr-namespace:Polymerium.App.Models"
             xmlns:services="clr-namespace:Polymerium.App.Services"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
