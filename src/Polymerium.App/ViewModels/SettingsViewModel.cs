@@ -73,6 +73,8 @@ public partial class SettingsViewModel : ViewModelBase
 
         // Initialize proxy status text
         UpdateProxyStatusText();
+
+        SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
 
     #region Service Export
@@ -165,9 +167,9 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ClearStatisticsAsync()
     {
-        var confirmed = await OverlayService.RequestConfirmationAsync(
-            Resources.SettingsView_ClearStatisticsConfirmationMessage,
-            Resources.SettingsView_ClearStatisticsConfirmationTitle);
+        var confirmed =
+            await OverlayService.RequestConfirmationAsync(Resources.SettingsView_ClearStatisticsConfirmationMessage,
+                                                          Resources.SettingsView_ClearStatisticsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -177,9 +179,9 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ClearRecordsAsync()
     {
-        var confirmed = await OverlayService.RequestConfirmationAsync(
-            Resources.SettingsView_ClearRecordsConfirmationMessage,
-            Resources.SettingsView_ClearRecordsConfirmationTitle);
+        var confirmed =
+            await OverlayService.RequestConfirmationAsync(Resources.SettingsView_ClearRecordsConfirmationMessage,
+                                                          Resources.SettingsView_ClearRecordsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
@@ -480,6 +482,13 @@ public partial class SettingsViewModel : ViewModelBase
             ProxyPassword = newSettings.Password;
         }
     }
+
+    #endregion
+
+    #region
+
+    [ObservableProperty]
+    public partial string SafeCode { get; set; }
 
     #endregion
 }
