@@ -391,7 +391,7 @@
         <husk:Divider />
         <!-- About -->
         <Panel>
-            <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.6840277777777778"
+            <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.684"
                                  Height="{Binding #LinksPanel.Bounds.Height}">
                 <Border CornerRadius="{StaticResource MediumCornerRadius}"
                         RenderOptions.BitmapInterpolationMode="HighQuality"
