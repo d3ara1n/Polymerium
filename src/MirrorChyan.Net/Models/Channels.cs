@@ -10,9 +10,10 @@ public static class Channels
     {
         return kind switch
         {
+            ChannelKind.Stable => STABLE,
             ChannelKind.Beta => BETA,
             ChannelKind.Alpha => ALPHA,
-            _ => STABLE
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
         };
     }
 
@@ -20,9 +21,10 @@ public static class Channels
     {
         return channel switch
         {
+            STABLE => ChannelKind.Stable,
             BETA => ChannelKind.Beta,
             ALPHA => ChannelKind.Alpha,
-            _ => ChannelKind.Stable
+            _ => throw new ArgumentOutOfRangeException(nameof(channel), channel, null)
         };
     }
 }

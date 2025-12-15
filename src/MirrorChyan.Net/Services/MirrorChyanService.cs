@@ -7,15 +7,15 @@ namespace MirrorChyan.Net.Services;
 
 public class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanOptions> options)
 {
-    public async Task<VersionModel> GetLatestVersionAsync(string? cdk, string? os, string? arch, ChannelKind? channel)
+    public async Task<VersionModel> GetLatestVersionAsync(string? cdk, ChannelKind? channel)
     {
         var response = await client
                             .GetLatestVersionAsync(options.Value.ProductId,
-                                                   options.Value.VersionString,
+                                                   options.Value.IsIncrementalEnabled ? options.Value.VersionString : null,
                                                    cdk,
                                                    options.Value.ClientName,
-                                                   os,
-                                                   arch,
+                                                   options.Value.Os,
+                                                   options.Value.Arch,
                                                    Channels.FromKind(channel))
                             .ConfigureAwait(false);
         if (response.Code != 0)
@@ -28,15 +28,14 @@ public class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanO
             };
         }
 
-        return new(response.Data.UpdateType,
-                   Channels.ToKind(response.Data.Channel),
+        return new(Channels.ToKind(response.Data.Channel),
                    response.Data.VersionName,
                    response.Data.VersionNumber,
-                   response.Data.ReleaseNote,
-                   new(response.Data.Url,
+                   response.Data.ReleaseNote, response.Data.Url is not null && response.Data.FileSize.HasValue && response.Data.Sha256 is not null && response.Data.UpdateType.HasValue ? new(response.Data.UpdateType.Value, response.Data.Url,
                        response.Data.Sha256,
-                       response.Data.FileSize,
+                       response.Data.FileSize.Value,
                        response.Data.Os,
-                       response.Data.Arch));
+                       response.Data.Arch) : null
+                   );
     }
 }

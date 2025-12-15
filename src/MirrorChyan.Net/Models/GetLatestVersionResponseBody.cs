@@ -3,12 +3,12 @@
 public record GetLatestVersionResponseBody(
     string VersionName,
     int VersionNumber,
-    Uri Url,
-    int FileSize,
-    string Sha256,
-    UpdateKind UpdateType,
+    Uri? Url,
+    int? FileSize,
+    string? Sha256,
+    UpdateKind? UpdateType,
     string Os,
     string Arch,
     string Channel,
     string ReleaseNote,
-    int CdkExpiredTime);
+    int? CdkExpiredTime);

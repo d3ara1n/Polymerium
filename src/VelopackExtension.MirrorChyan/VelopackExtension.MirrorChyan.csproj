@@ -7,11 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Velopack" Version="0.0.*" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.1" />
+        <PackageReference Include="Velopack" Version="0.0.1298" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\MirrorChyan.Net\MirrorChyan.Net.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Exceptions\" />
     </ItemGroup>
 
 </Project>

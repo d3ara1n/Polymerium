@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace MirrorChyan.Net.Models;
 
-public static class Archs
+public static class Arches
 {
     public const string _386 = "386";
     public const string X86 = "x86";
