@@ -4497,6 +4497,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get CDK from mirrorchyan.com to support development.
+        /// </summary>
+        public static string SettingsView_MirrorChyanCdkHint {
+            get {
+                return ResourceManager.GetString("SettingsView_MirrorChyanCdkHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MirrorChyan CDK.
+        /// </summary>
+        public static string SettingsView_MirrorChyanCdkLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_MirrorChyanCdkLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Optional) Enter your CDK here.
+        /// </summary>
+        public static string SettingsView_MirrorChyanCdkPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_MirrorChyanCdkPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network settings.
         /// </summary>
         public static string SettingsView_NetworkSubtitle {
@@ -4736,6 +4763,33 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_UpdatesNotFoundLabelText {
             get {
                 return ResourceManager.GetString("SettingsView_UpdatesNotFoundLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GitHub.
+        /// </summary>
+        public static string SettingsView_UpdateSourceGithubText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdateSourceGithubText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Source.
+        /// </summary>
+        public static string SettingsView_UpdateSourceLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdateSourceLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MirrorChyan.
+        /// </summary>
+        public static string SettingsView_UpdateSourceMirrorChyanText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdateSourceMirrorChyanText", resourceCulture);
             }
         }
         

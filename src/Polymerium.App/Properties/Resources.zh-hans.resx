@@ -1149,6 +1149,21 @@
     <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
         <value>存在新版本</value>
     </data>
+    <data name="SettingsView_UpdateSourceGithubText" xml:space="preserve">
+        <value>GitHub</value>
+    </data>
+    <data name="SettingsView_UpdateSourceMirrorChyanText" xml:space="preserve">
+        <value>Mirror酱</value>
+    </data>
+    <data name="SettingsView_MirrorChyanCdkLabelText" xml:space="preserve">
+        <value>Mirror酱 CDK</value>
+    </data>
+    <data name="SettingsView_MirrorChyanCdkPlaceholder" xml:space="preserve">
+        <value>（可选）在此输入你的 CDK</value>
+    </data>
+    <data name="SettingsView_MirrorChyanCdkHint" xml:space="preserve">
+        <value>从 mirrorchyan.com 获取 CDK 以支持开发</value>
+    </data>
     <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
         <value>附属</value>
     </data>
@@ -1649,5 +1664,8 @@
     </data>
     <data name="Shared_Paste" xml:space="preserve">
         <value>粘贴</value>
+    </data>
+    <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
+        <value>更新源</value>
     </data>
 </root>

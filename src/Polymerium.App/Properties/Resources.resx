@@ -1158,6 +1158,21 @@
     <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
         <value>Update available</value>
     </data>
+    <data name="SettingsView_UpdateSourceGithubText" xml:space="preserve">
+        <value>GitHub</value>
+    </data>
+    <data name="SettingsView_UpdateSourceMirrorChyanText" xml:space="preserve">
+        <value>MirrorChyan</value>
+    </data>
+    <data name="SettingsView_MirrorChyanCdkLabelText" xml:space="preserve">
+        <value>MirrorChyan CDK</value>
+    </data>
+    <data name="SettingsView_MirrorChyanCdkPlaceholder" xml:space="preserve">
+        <value>(Optional) Enter your CDK here</value>
+    </data>
+    <data name="SettingsView_MirrorChyanCdkHint" xml:space="preserve">
+        <value>Get CDK from mirrorchyan.com to support development</value>
+    </data>
     <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
         <value>Dependants</value>
     </data>
@@ -1658,5 +1673,8 @@
     </data>
     <data name="Shared_Paste" xml:space="preserve">
         <value>Paste</value>
+    </data>
+    <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
+        <value>Update Source</value>
     </data>
 </root>

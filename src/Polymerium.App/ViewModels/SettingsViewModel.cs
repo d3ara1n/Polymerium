@@ -62,6 +62,10 @@ public partial class SettingsViewModel : ViewModelBase
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
 
+        // Initialize update source settings
+        UpdateSource = configurationService.Value.UpdateSource;
+        MirrorChyanCdk = configurationService.Value.UpdateMirrorChyanCdk;
+
         // Initialize proxy settings
         ProxyMode = (ProxyMode)configurationService.Value.NetworkProxyMode;
         ProxyProtocol = (ProxyProtocol)configurationService.Value.NetworkProxyProtocol;
@@ -198,6 +202,16 @@ public partial class SettingsViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial AppUpdateModel? UpdateTarget { get; set; }
+
+    [ObservableProperty]
+    public partial int UpdateSource { get; set; }
+
+    partial void OnUpdateSourceChanged(int value) => _configurationService.Value.UpdateSource = value;
+
+    [ObservableProperty]
+    public partial string MirrorChyanCdk { get; set; }
+
+    partial void OnMirrorChyanCdkChanged(string value) => _configurationService.Value.UpdateMirrorChyanCdk = value;
 
     #endregion
 
