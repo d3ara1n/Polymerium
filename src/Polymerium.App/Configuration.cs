@@ -33,6 +33,8 @@ public class Configuration
     public const string NETWORK_PROXY_PORT = "Network.Proxy.Port";
     public const string NETWORK_PROXY_USERNAME = "Network.Proxy.Username";
     public const string NETWORK_PROXY_PASSWORD = "Network.Proxy.Password";
+    public const string UPDATE_SOURCE = "Update.Source";
+    public const string UPDATE_MIRRORCHYAN_CDK = "Update.MirrorChyan.Cdk";
 
     private static readonly Dictionary<string, object?> DEFAULTS = new()
     {
@@ -60,7 +62,9 @@ public class Configuration
         { NETWORK_PROXY_ADDRESS, "127.0.0.1" },
         { NETWORK_PROXY_PORT, 7890u },
         { NETWORK_PROXY_USERNAME, string.Empty },
-        { NETWORK_PROXY_PASSWORD, string.Empty }
+        { NETWORK_PROXY_PASSWORD, string.Empty },
+        { UPDATE_SOURCE, 1 },
+        { UPDATE_MIRRORCHYAN_CDK, string.Empty }
     };
 
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
@@ -89,6 +93,8 @@ public class Configuration
     public uint NetworkProxyPort { get; set; } = AccessDefault<uint>(NETWORK_PROXY_PORT);
     public string NetworkProxyUsername { get; set; } = AccessDefault<string>(NETWORK_PROXY_USERNAME);
     public string NetworkProxyPassword { get; set; } = AccessDefault<string>(NETWORK_PROXY_PASSWORD);
+    public int UpdateSource { get; set; } = AccessDefault<int>(UPDATE_SOURCE);
+    public string UpdateMirrorChyanCdk { get; set; } = AccessDefault<string>(UPDATE_MIRRORCHYAN_CDK);
 
     public static T AccessDefault<T>(string key) => (T)DEFAULTS[key]!;
 }
