@@ -2,6 +2,9 @@
     <Folder Name="/Changelogs/">
         <File Path="changelogs/rolling.md" />
     </Folder>
+    <Folder Name="/MirrorChyan.Net/">
+        <Project Path="src/MirrorChyan.Net/MirrorChyan.Net.csproj" />
+    </Folder>
     <Folder Name="/Misc/">
         <File Path="README.md" />
         <File Path=".gitignore" />
@@ -10,11 +13,15 @@
         <File Path="GitVersion.yml" />
         <File Path="README.zh.md" />
     </Folder>
-    <Project Path="src/MirrorChyan.Net/MirrorChyan.Net.csproj" />
+    <Folder Name="/Trident.Net/">
+        <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" />
+        <Project Path="submodules\Trident.Net\src\Trident.Cli\Trident.Cli.csproj" />
+        <Project Path="submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" />
+        <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" />
+    </Folder>
+    <Folder Name="/VelopackExtension.MirrorChyan/">
+        <Project Path="src/VelopackExtension.MirrorChyan/VelopackExtension.MirrorChyan.csproj" />
+    </Folder>
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" />
     <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
-    <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" />
-    <Project Path="submodules\Trident.Net\src\Trident.Cli\Trident.Cli.csproj" />
-    <Project Path="submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" />
-    <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" />
 </Solution>
