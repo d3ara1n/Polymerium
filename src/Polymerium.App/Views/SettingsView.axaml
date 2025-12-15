@@ -371,8 +371,7 @@
                     </Grid>
                 </controls:Plaque>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}"
-                                        IsEnabled="{Binding #Lock.IsUnlocked }">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
                 <Button Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}"
                         HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type v:MaintenanceStorageView}" Classes="Small" />
