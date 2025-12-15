@@ -134,8 +134,17 @@ jobs:
 
             -   name: Pack with Velopack
                 run: |
-                    vpk download github --repoUrl https://github.com/${{ github.repository }}
-                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }}
+                    download_extra_args=""
+                    pack_extra_args=""
+                    if [ "${{ steps.get_version.outputs.is_prerelease }}" = "true" ]; then
+                        download_extra_args="--pre"
+                    fi
+                    if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
+                        pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.png"
+                    fi
+                    vpk download github --repoUrl https://github.com/${{ github.repository }} $download_extra_args
+                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
+                shell: bash
 
             -   name: Upload Build Artifact
                 uses: actions/upload-artifact@v4
