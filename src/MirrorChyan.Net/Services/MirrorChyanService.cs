@@ -20,7 +20,12 @@ public class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanO
                             .ConfigureAwait(false);
         if (response.Code != 0)
         {
-            throw new UnexpectedResponseCodeException(response.Msg, response.Code);
+            throw response.Code switch
+            {
+                >= 7000 and < 8000 => new CdkNotAvailableException(response.Msg, cdk ?? "null"),
+                8001 => new ProductIdNotFoundException(response.Msg, options.Value.ProductId),
+                _ => new UnexpectedResponseCodeException(response.Msg, response.Code)
+            };
         }
 
         return new(response.Data.UpdateType,
