@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Velopack" Version="0.0.*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MirrorChyan.Net\MirrorChyan.Net.csproj" />
+    </ItemGroup>
+
 </Project>
