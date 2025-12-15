@@ -256,19 +256,6 @@
         <!-- Maintenance -->
         <controls:SettingsEntry Icon="Wrench" Title="{x:Static lang:Resources.SettingsView_MaintenanceTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_MaintenanceSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
-                <Button Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}"
-                        HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Type v:MaintenanceStorageView}" Classes="Small" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_DataManagementLabelText}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <Button Content="{x:Static lang:Resources.SettingsView_ClearStatisticsButtonText}"
-                            Command="{Binding ClearStatisticsCommand}" Classes="Small" />
-                    <Button Content="{x:Static lang:Resources.SettingsView_ClearRecordsButtonText}"
-                            Command="{Binding ClearRecordsCommand}" Classes="Small" />
-                </StackPanel>
-            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdatesLabelText}">
                 <controls:Plaque>
                     <controls:Plaque.Header>
@@ -384,11 +371,27 @@
                     </Grid>
                 </controls:Plaque>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}"
+                                        IsEnabled="{Binding #Lock.IsUnlocked }">
+                <Button Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}"
+                        HorizontalAlignment="Left" Command="{Binding NavigateCommand}"
+                        CommandParameter="{x:Type v:MaintenanceStorageView}" Classes="Small" />
+            </controls:SettingsEntryItem>
+            <cp:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_DataManagementLabelText}"
+                                        IsEnabled="{Binding #Lock.IsUnlocked }">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Content="{x:Static lang:Resources.SettingsView_ClearStatisticsButtonText}"
+                            Command="{Binding ClearStatisticsCommand}" Classes="Small" />
+                    <Button Content="{x:Static lang:Resources.SettingsView_ClearRecordsButtonText}"
+                            Command="{Binding ClearRecordsCommand}" Classes="Small" />
+                </StackPanel>
+            </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
         <!-- About -->
         <Panel>
-            <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.6840277777777778"
+            <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.684"
                                  Height="{Binding #LinksPanel.Bounds.Height}">
                 <Border CornerRadius="{StaticResource MediumCornerRadius}"
                         RenderOptions.BitmapInterpolationMode="HighQuality"
