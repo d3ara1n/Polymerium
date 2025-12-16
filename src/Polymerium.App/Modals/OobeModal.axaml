@@ -1,0 +1,55 @@
+<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+            mc:Ignorable="d" Width="480"
+            x:Class="Polymerium.App.Modals.OobeModal">
+    <DockPanel VerticalSpacing="24">
+        <!-- Footer: Navigation Buttons -->
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Command="{Binding $parent[modals:OobeModal].GoBackCommand}"
+                    IsVisible="{Binding $parent[modals:OobeModal].IsBackAvailable,FallbackValue=False}">
+                <TextBlock Text="{x:Static lang:Resources.OobeModal_BackButtonText}" />
+            </Button>
+            <Button Classes="Primary" IsDefault="True"
+                    IsVisible="{Binding $parent[modals:OobeModal].IsLast,Converter={x:Static BoolConverters.Not},FallbackValue=True}"
+                    Command="{Binding $parent[modals:OobeModal].GoNextCommand}">
+                <TextBlock Text="{x:Static lang:Resources.OobeModal_NextButtonText}" />
+            </Button>
+            <Button Classes="Primary" IsDefault="True"
+                    Command="{Binding $parent[modals:OobeModal].GoFinishCommand}"
+                    IsVisible="{Binding $parent[modals:OobeModal].IsLast,FallbackValue=False}">
+                <TextBlock Text="{x:Static lang:Resources.OobeModal_FinishButtonText}" />
+            </Button>
+            <Button IsCancel="True"
+                    Command="{Binding $parent[modals:OobeModal].SkipCommand}"
+                    IsVisible="{Binding $parent[modals:OobeModal].IsLast,Converter={x:Static BoolConverters.Not},FallbackValue=True}">
+                <TextBlock Text="{x:Static lang:Resources.OobeModal_SkipButtonText}" />
+            </Button>
+        </StackPanel>
+
+        <!-- Header: Step Indicator -->
+        <husk:StepControl x:Name="StepIndicator"
+                          DockPanel.Dock="Top"
+                          Theme="{StaticResource MinimalStepControlTheme}"
+                          SelectedIndex="{Binding $parent[modals:OobeModal].StepIndex,Mode=OneWay}"
+                          HorizontalAlignment="Center"
+                          IsHitTestVisible="False" />
+
+        <!-- Content: Step Panels -->
+        <TransitioningContentControl Content="{Binding $parent[modals:OobeModal].CurrentStep}"
+                                     IsTransitionReversed="{Binding $parent[modals:OobeModal].IsReversed}">
+            <TransitioningContentControl.PageTransition>
+                <CompositePageTransition>
+                    <CrossFade Duration="{StaticResource ControlFasterAnimationDuration}" FadeInEasing="CubicEaseOut"
+                               FadeOutEasing="CubicEaseIn" />
+                    <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}" SlideInEasing="CubicEaseOut"
+                               SlideOutEasing="CubicEaseIn" />
+                </CompositePageTransition>
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
+    </DockPanel>
+</husk:Modal>

@@ -1,0 +1,50 @@
+<controls:OobeStep xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                    xmlns:components="clr-namespace:Polymerium.App.Components"
+                    xmlns:models="clr-namespace:Polymerium.App.Models"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
+                    x:Class="Polymerium.App.Components.OobeFeatures">
+    <StackPanel Spacing="16" VerticalAlignment="Center">
+        <!-- Title -->
+        <TextBlock Text="{x:Static lang:Resources.OobeFeatures_Title}"
+                   HorizontalAlignment="Center"
+                   FontSize="{StaticResource LargeFontSize}"
+                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+
+        <!-- Feature Cards Grid -->
+        <ItemsControl ItemsSource="{Binding $parent[components:OobeFeatures].Features}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="models:OobeFeatureModel">
+                    <Border Margin="4"
+                            Padding="12"
+                            CornerRadius="{StaticResource MediumCornerRadius}"
+                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                        <StackPanel Spacing="8">
+                            <fi:SymbolIcon Symbol="{Binding Icon}"
+                                           FontSize="24"
+                                           HorizontalAlignment="Left"
+                                           Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                            <TextBlock Text="{Binding Title}"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}"
+                                       TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding Description}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       FontSize="{StaticResource SmallFontSize}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</controls:OobeStep>

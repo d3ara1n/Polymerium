@@ -50,7 +50,8 @@ public partial class MainWindowContext : ObservableObject
         PersistenceService persistenceService,
         InstanceService instanceService,
         OverlayService overlayService,
-        ExporterAgent exporterAgent)
+        ExporterAgent exporterAgent,
+        ConfigurationService configurationService)
     {
         _profileManager = profileManager;
         _notificationService = notificationService;
@@ -59,6 +60,7 @@ public partial class MainWindowContext : ObservableObject
         _instanceService = instanceService;
         _overlayService = overlayService;
         _exporterAgent = exporterAgent;
+        _configurationService = configurationService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -82,13 +84,16 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnInitialize()
     {
-        if (OperatingSystem.IsWindows() && (Program.Debug || Program.FirstRun))
+        // Show OOBE modal for first-time users
+        // OOBE now includes privilege check step on Windows
+        if (Program.FirstRun)
         {
-            var model = new PrivilegeRequirementModal { NotificationService = _notificationService };
-            if (!model.Check())
+            _overlayService.PopModal(new OobeModal
             {
-                _overlayService.PopModal(model);
-            }
+                ConfigurationService = _configurationService,
+                OverlayService = _overlayService,
+                NotificationService = _notificationService
+            });
         }
     }
 
@@ -109,6 +114,7 @@ public partial class MainWindowContext : ObservableObject
     private readonly OverlayService _overlayService;
     private readonly ProfileManager _profileManager;
     private readonly ExporterAgent _exporterAgent;
+    private readonly ConfigurationService _configurationService;
 
     #endregion
 

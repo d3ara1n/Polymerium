@@ -3786,6 +3786,459 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Git to collaborate on modpack development with portable metadata files.
+        /// </summary>
+        public static string OobeFeatures_GitIntegration_Description {
+            get {
+                return ResourceManager.GetString("OobeFeatures_GitIntegration_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git Integration.
+        /// </summary>
+        public static string OobeFeatures_GitIntegration_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_GitIntegration_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every deployment validates file completeness and correctness.
+        /// </summary>
+        public static string OobeFeatures_IntegrityCheck_Description {
+            get {
+                return ResourceManager.GetString("OobeFeatures_IntegrityCheck_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integrity Guaranteed.
+        /// </summary>
+        public static string OobeFeatures_IntegrityCheck_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_IntegrityCheck_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Native integration with CurseForge and Modrinth.
+        /// </summary>
+        public static string OobeFeatures_MultiRepository_Description {
+            get {
+                return ResourceManager.GetString("OobeFeatures_MultiRepository_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multi-Repository.
+        /// </summary>
+        public static string OobeFeatures_MultiRepository_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_MultiRepository_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Build your game files on-demand from lightweight metadata.
+        /// </summary>
+        public static string OobeFeatures_OneClick_Description {
+            get {
+                return ResourceManager.GetString("OobeFeatures_OneClick_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-Click Deployment.
+        /// </summary>
+        public static string OobeFeatures_OneClick_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_OneClick_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share your exact game experience with a simple configuration file.
+        /// </summary>
+        public static string OobeFeatures_PortableMetadata_Description {
+            get {
+                return ResourceManager.GetString("OobeFeatures_PortableMetadata_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portable Metadata.
+        /// </summary>
+        public static string OobeFeatures_PortableMetadata_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_PortableMetadata_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zero file duplication with intelligent symlink distribution.
+        /// </summary>
+        public static string OobeFeatures_SmartResource_Description {
+            get {
+                return ResourceManager.GetString("OobeFeatures_SmartResource_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smart Resource Management.
+        /// </summary>
+        public static string OobeFeatures_SmartResource_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_SmartResource_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What Makes Us Different.
+        /// </summary>
+        public static string OobeFeatures_Title {
+            get {
+                return ResourceManager.GetString("OobeFeatures_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start creating your first Minecraft instance and enjoy a new way of game management..
+        /// </summary>
+        public static string OobeFinish_Description {
+            get {
+                return ResourceManager.GetString("OobeFinish_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tip: You can always change these settings later in the Settings page..
+        /// </summary>
+        public static string OobeFinish_Tip {
+            get {
+                return ResourceManager.GetString("OobeFinish_Tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re All Set!.
+        /// </summary>
+        public static string OobeFinish_Title {
+            get {
+                return ResourceManager.GetString("OobeFinish_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string OobeModal_BackButtonText {
+            get {
+                return ResourceManager.GetString("OobeModal_BackButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Started.
+        /// </summary>
+        public static string OobeModal_FinishButtonText {
+            get {
+                return ResourceManager.GetString("OobeModal_FinishButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string OobeModal_NextButtonText {
+            get {
+                return ResourceManager.GetString("OobeModal_NextButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        public static string OobeModal_SkipButtonText {
+            get {
+                return ResourceManager.GetString("OobeModal_SkipButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game assets are stored once and linked to each instance, saving gigabytes of disk space..
+        /// </summary>
+        public static string OobePrivilege_Benefit1Description {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Benefit1Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zero File Duplication.
+        /// </summary>
+        public static string OobePrivilege_Benefit1Title {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Benefit1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating links is nearly instant compared to copying large mod files..
+        /// </summary>
+        public static string OobePrivilege_Benefit2Description {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Benefit2Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instant Deployment.
+        /// </summary>
+        public static string OobePrivilege_Benefit2Title {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Benefit2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update a mod once, and all linked instances get the update automatically..
+        /// </summary>
+        public static string OobePrivilege_Benefit3Description {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Benefit3Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Centralized Updates.
+        /// </summary>
+        public static string OobePrivilege_Benefit3Title {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Benefit3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What You Get.
+        /// </summary>
+        public static string OobePrivilege_GrantedBenefitsTitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_GrantedBenefitsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbolic Link Creation privilege from Windows Developer Mode. This allows Polymerium to create file links instead of copying files, enabling efficient resource management across multiple game instances..
+        /// </summary>
+        public static string OobePrivilege_GrantedWhatDescription {
+            get {
+                return ResourceManager.GetString("OobePrivilege_GrantedWhatDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What Permission Was Granted?.
+        /// </summary>
+        public static string OobePrivilege_GrantedWhatTitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_GrantedWhatTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. Click the button below to open Windows Settings
+        ///2. Find &quot;Developer Mode&quot; toggle
+        ///3. Turn it ON
+        ///4. Return here and click &quot;Recheck&quot;.
+        /// </summary>
+        public static string OobePrivilege_InstructionsDescription {
+            get {
+                return ResourceManager.GetString("OobePrivilege_InstructionsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to Enable.
+        /// </summary>
+        public static string OobePrivilege_InstructionsTitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_InstructionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Developer Settings.
+        /// </summary>
+        public static string OobePrivilege_OpenSettingsButtonText {
+            get {
+                return ResourceManager.GetString("OobePrivilege_OpenSettingsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recheck.
+        /// </summary>
+        public static string OobePrivilege_RecheckButtonText {
+            get {
+                return ResourceManager.GetString("OobePrivilege_RecheckButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developer Mode is a Windows feature that enables symbolic links creation without admin rights. It&apos;s safe for normal use and can be disabled anytime..
+        /// </summary>
+        public static string OobePrivilege_SafetyDescription {
+            get {
+                return ResourceManager.GetString("OobePrivilege_SafetyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Developer Mode Safe?.
+        /// </summary>
+        public static string OobePrivilege_SafetyNote {
+            get {
+                return ResourceManager.GetString("OobePrivilege_SafetyNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbolic link creation is enabled. You&apos;re all set!.
+        /// </summary>
+        public static string OobePrivilege_StatusGrantedMessage {
+            get {
+                return ResourceManager.GetString("OobePrivilege_StatusGrantedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permission Granted.
+        /// </summary>
+        public static string OobePrivilege_StatusGrantedTitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_StatusGrantedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developer Mode is needed to create symbolic links for smart resource management..
+        /// </summary>
+        public static string OobePrivilege_StatusRequiredMessage {
+            get {
+                return ResourceManager.GetString("OobePrivilege_StatusRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permission Required.
+        /// </summary>
+        public static string OobePrivilege_StatusRequiredTitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_StatusRequiredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Developer Mode for optimal performance.
+        /// </summary>
+        public static string OobePrivilege_Subtitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permission Required.
+        /// </summary>
+        public static string OobePrivilege_Title {
+            get {
+                return ResourceManager.GetString("OobePrivilege_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent Color.
+        /// </summary>
+        public static string OobeQuickSetup_AccentColorLabel {
+            get {
+                return ResourceManager.GetString("OobeQuickSetup_AccentColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string OobeQuickSetup_LanguageLabel {
+            get {
+                return ResourceManager.GetString("OobeQuickSetup_LanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proxy.
+        /// </summary>
+        public static string OobeQuickSetup_ProxyLabel {
+            get {
+                return ResourceManager.GetString("OobeQuickSetup_ProxyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get started with your preferences.
+        /// </summary>
+        public static string OobeQuickSetup_Subtitle {
+            get {
+                return ResourceManager.GetString("OobeQuickSetup_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string OobeQuickSetup_ThemeLabel {
+            get {
+                return ResourceManager.GetString("OobeQuickSetup_ThemeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Setup.
+        /// </summary>
+        public static string OobeQuickSetup_Title {
+            get {
+                return ResourceManager.GetString("OobeQuickSetup_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Experience a new way of managing your Minecraft instances with portable metadata and intelligent resource management..
+        /// </summary>
+        public static string OobeWelcome_Description {
+            get {
+                return ResourceManager.GetString("OobeWelcome_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A next-generation Minecraft instance manager.
+        /// </summary>
+        public static string OobeWelcome_Subtitle {
+            get {
+                return ResourceManager.GetString("OobeWelcome_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Polymerium.
+        /// </summary>
+        public static string OobeWelcome_Title {
+            get {
+                return ResourceManager.GetString("OobeWelcome_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update packages in bulk.
         /// </summary>
         public static string PackageBulkUpdaterModal_Title {
@@ -3989,6 +4442,33 @@ namespace Polymerium.App.Properties {
         public static string ProxySettingsDialog_ProtocolLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ProtocolLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string ProxySettingsDialog_ProxyMode_Auto {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string ProxySettingsDialog_ProxyMode_Disabled {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string ProxySettingsDialog_ProxyMode_Manual {
+            get {
+                return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Manual", resourceCulture);
             }
         }
         

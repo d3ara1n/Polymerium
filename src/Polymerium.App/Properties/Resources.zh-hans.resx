@@ -1668,4 +1668,174 @@
     <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
         <value>更新源</value>
     </data>
+    <!-- OOBE Modal -->
+    <data name="OobeModal_BackButtonText" xml:space="preserve">
+        <value>返回</value>
+    </data>
+    <data name="OobeModal_NextButtonText" xml:space="preserve">
+        <value>下一步</value>
+    </data>
+    <data name="OobeModal_FinishButtonText" xml:space="preserve">
+        <value>开始使用</value>
+    </data>
+    <data name="OobeModal_SkipButtonText" xml:space="preserve">
+        <value>跳过</value>
+    </data>
+    <!-- OOBE Welcome Panel -->
+    <data name="OobeWelcome_Title" xml:space="preserve">
+        <value>欢迎使用 Polymerium</value>
+    </data>
+    <data name="OobeWelcome_Subtitle" xml:space="preserve">
+        <value>新一代 Minecraft 实例管理器</value>
+    </data>
+    <data name="OobeWelcome_Description" xml:space="preserve">
+        <value>体验全新的 Minecraft 实例管理方式，通过可移植的元数据和智能资源管理来组织你的游戏。</value>
+    </data>
+    <!-- OOBE Features Panel -->
+    <data name="OobeFeatures_Title" xml:space="preserve">
+        <value>与众不同之处</value>
+    </data>
+    <data name="OobeFeatures_GitIntegration_Title" xml:space="preserve">
+        <value>Git 集成</value>
+    </data>
+    <data name="OobeFeatures_GitIntegration_Description" xml:space="preserve">
+        <value>使用 Git 协作开发整合包，通过可移植的元数据文件实现版本控制</value>
+    </data>
+    <data name="OobeFeatures_PortableMetadata_Title" xml:space="preserve">
+        <value>可移植元数据</value>
+    </data>
+    <data name="OobeFeatures_PortableMetadata_Description" xml:space="preserve">
+        <value>通过简单的配置文件分享你的完整游戏体验</value>
+    </data>
+    <data name="OobeFeatures_MultiRepository_Title" xml:space="preserve">
+        <value>多资源仓库</value>
+    </data>
+    <data name="OobeFeatures_MultiRepository_Description" xml:space="preserve">
+        <value>原生集成 CurseForge 和 Modrinth</value>
+    </data>
+    <data name="OobeFeatures_SmartResource_Title" xml:space="preserve">
+        <value>智能资源管理</value>
+    </data>
+    <data name="OobeFeatures_SmartResource_Description" xml:space="preserve">
+        <value>通过智能符号链接实现零文件重复</value>
+    </data>
+    <data name="OobeFeatures_IntegrityCheck_Title" xml:space="preserve">
+        <value>完整性保障</value>
+    </data>
+    <data name="OobeFeatures_IntegrityCheck_Description" xml:space="preserve">
+        <value>每次部署都会验证文件的完整性和正确性</value>
+    </data>
+    <data name="OobeFeatures_OneClick_Title" xml:space="preserve">
+        <value>一键部署</value>
+    </data>
+    <data name="OobeFeatures_OneClick_Description" xml:space="preserve">
+        <value>从轻量级元数据按需构建游戏文件</value>
+    </data>
+    <!-- OOBE Quick Setup Panel -->
+    <data name="OobeQuickSetup_Title" xml:space="preserve">
+        <value>快速设置</value>
+    </data>
+    <data name="OobeQuickSetup_Subtitle" xml:space="preserve">
+        <value>根据你的偏好开始配置</value>
+    </data>
+    <data name="OobeQuickSetup_LanguageLabel" xml:space="preserve">
+        <value>语言</value>
+    </data>
+    <data name="OobeQuickSetup_ThemeLabel" xml:space="preserve">
+        <value>主题</value>
+    </data>
+    <data name="OobeQuickSetup_AccentColorLabel" xml:space="preserve">
+        <value>强调色</value>
+    </data>
+    <data name="OobeQuickSetup_ProxyLabel" xml:space="preserve">
+        <value>代理</value>
+    </data>
+    <!-- OOBE Finish Panel -->
+    <data name="OobeFinish_Title" xml:space="preserve">
+        <value>准备就绪！</value>
+    </data>
+    <data name="OobeFinish_Description" xml:space="preserve">
+        <value>开始创建你的第一个 Minecraft 实例，体验全新的游戏管理方式。</value>
+    </data>
+    <data name="OobeFinish_Tip" xml:space="preserve">
+        <value>提示：你可以随时在设置页面中更改这些设置。</value>
+    </data>
+    <!-- Proxy Settings Dialog (additional for OOBE) -->
+    <data name="ProxySettingsDialog_ProxyMode_Auto" xml:space="preserve">
+        <value>自动</value>
+    </data>
+    <data name="ProxySettingsDialog_ProxyMode_Manual" xml:space="preserve">
+        <value>手动</value>
+    </data>
+    <data name="ProxySettingsDialog_ProxyMode_Disabled" xml:space="preserve">
+        <value>禁用</value>
+    </data>
+    <!-- OOBE Privilege Panel -->
+    <data name="OobePrivilege_Title" xml:space="preserve">
+        <value>需要权限</value>
+    </data>
+    <data name="OobePrivilege_Subtitle" xml:space="preserve">
+        <value>启用开发者模式以获得最佳性能</value>
+    </data>
+    <data name="OobePrivilege_InstructionsTitle" xml:space="preserve">
+        <value>如何启用</value>
+    </data>
+    <data name="OobePrivilege_InstructionsDescription" xml:space="preserve">
+        <value>1. 点击下方按钮打开 Windows 设置
+2. 找到"开发者模式"开关
+3. 将其打开
+4. 返回此处并点击"重新检查"</value>
+    </data>
+    <data name="OobePrivilege_OpenSettingsButtonText" xml:space="preserve">
+        <value>打开开发者设置</value>
+    </data>
+    <data name="OobePrivilege_RecheckButtonText" xml:space="preserve">
+        <value>重新检查</value>
+    </data>
+    <data name="OobePrivilege_SafetyNote" xml:space="preserve">
+        <value>开发者模式安全吗？</value>
+    </data>
+    <data name="OobePrivilege_SafetyDescription" xml:space="preserve">
+        <value>开发者模式是 Windows 的一项功能，允许无需管理员权限即可创建符号链接。它对于日常使用是安全的，可以随时关闭。</value>
+    </data>
+    <data name="OobePrivilege_StatusGrantedTitle" xml:space="preserve">
+        <value>权限已授予</value>
+    </data>
+    <data name="OobePrivilege_StatusGrantedMessage" xml:space="preserve">
+        <value>符号链接创建已启用，一切准备就绪！</value>
+    </data>
+    <data name="OobePrivilege_StatusRequiredTitle" xml:space="preserve">
+        <value>需要权限</value>
+    </data>
+    <data name="OobePrivilege_StatusRequiredMessage" xml:space="preserve">
+        <value>需要开发者模式来创建符号链接以实现智能资源管理。</value>
+    </data>
+    <!-- OOBE Privilege - Granted State Details -->
+    <data name="OobePrivilege_GrantedWhatTitle" xml:space="preserve">
+        <value>获得了什么权限？</value>
+    </data>
+    <data name="OobePrivilege_GrantedWhatDescription" xml:space="preserve">
+        <value>来自 Windows 开发者模式的符号链接创建权限。这使得 Polymerium 可以创建文件链接而非复制文件，从而实现多个游戏实例之间的高效资源管理。</value>
+    </data>
+    <data name="OobePrivilege_GrantedBenefitsTitle" xml:space="preserve">
+        <value>你将获得</value>
+    </data>
+    <data name="OobePrivilege_Benefit1Title" xml:space="preserve">
+        <value>零文件重复</value>
+    </data>
+    <data name="OobePrivilege_Benefit1Description" xml:space="preserve">
+        <value>游戏资源只存储一份，通过链接分发到各个实例，可节省数 GB 的磁盘空间。</value>
+    </data>
+    <data name="OobePrivilege_Benefit2Title" xml:space="preserve">
+        <value>极速部署</value>
+    </data>
+    <data name="OobePrivilege_Benefit2Description" xml:space="preserve">
+        <value>创建链接几乎是瞬时完成的，比复制大型模组文件快得多。</value>
+    </data>
+    <data name="OobePrivilege_Benefit3Title" xml:space="preserve">
+        <value>集中更新</value>
+    </data>
+    <data name="OobePrivilege_Benefit3Description" xml:space="preserve">
+        <value>只需更新一次模组，所有链接的实例都会自动获得更新。</value>
+    </data>
 </root>

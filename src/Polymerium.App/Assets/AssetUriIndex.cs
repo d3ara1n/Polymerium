@@ -6,6 +6,9 @@ namespace Polymerium.App.Assets;
 
 public static class AssetUriIndex
 {
+    public static readonly Uri Icon =
+        new("avares://Polymerium.App/Assets/Icon.png", UriKind.Absolute);
+
     public static readonly Uri RepositoryHeaderCurseforge =
         new("avares://Polymerium.App/Assets/Images/Repositories/Header_CurseForge.png", UriKind.Absolute);
 
@@ -45,6 +48,8 @@ public static class AssetUriIndex
     public static readonly Bitmap DirtImageBitmap = new(AssetLoader.Open(DirtImage));
 
     public static readonly Bitmap WallpaperImageBitmap = new(AssetLoader.Open(WallpaperImage));
+
+    public static readonly Bitmap IconBitmap = new(AssetLoader.Open(Icon));
 
     public static readonly Bitmap LoaderNeoforgeBitmap = new(AssetLoader.Open(LoaderNeoforge));
     public static readonly Bitmap LoaderForgeBitmap = new(AssetLoader.Open(LoaderForge));

@@ -1677,4 +1677,174 @@
     <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
         <value>Update Source</value>
     </data>
+    <!-- OOBE Modal -->
+    <data name="OobeModal_BackButtonText" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="OobeModal_NextButtonText" xml:space="preserve">
+        <value>Next</value>
+    </data>
+    <data name="OobeModal_FinishButtonText" xml:space="preserve">
+        <value>Get Started</value>
+    </data>
+    <data name="OobeModal_SkipButtonText" xml:space="preserve">
+        <value>Skip</value>
+    </data>
+    <!-- OOBE Welcome Panel -->
+    <data name="OobeWelcome_Title" xml:space="preserve">
+        <value>Welcome to Polymerium</value>
+    </data>
+    <data name="OobeWelcome_Subtitle" xml:space="preserve">
+        <value>A next-generation Minecraft instance manager</value>
+    </data>
+    <data name="OobeWelcome_Description" xml:space="preserve">
+        <value>Experience a new way of managing your Minecraft instances with portable metadata and intelligent resource management.</value>
+    </data>
+    <!-- OOBE Features Panel -->
+    <data name="OobeFeatures_Title" xml:space="preserve">
+        <value>What Makes Us Different</value>
+    </data>
+    <data name="OobeFeatures_GitIntegration_Title" xml:space="preserve">
+        <value>Git Integration</value>
+    </data>
+    <data name="OobeFeatures_GitIntegration_Description" xml:space="preserve">
+        <value>Use Git to collaborate on modpack development with portable metadata files</value>
+    </data>
+    <data name="OobeFeatures_PortableMetadata_Title" xml:space="preserve">
+        <value>Portable Metadata</value>
+    </data>
+    <data name="OobeFeatures_PortableMetadata_Description" xml:space="preserve">
+        <value>Share your exact game experience with a simple configuration file</value>
+    </data>
+    <data name="OobeFeatures_MultiRepository_Title" xml:space="preserve">
+        <value>Multi-Repository</value>
+    </data>
+    <data name="OobeFeatures_MultiRepository_Description" xml:space="preserve">
+        <value>Native integration with CurseForge and Modrinth</value>
+    </data>
+    <data name="OobeFeatures_SmartResource_Title" xml:space="preserve">
+        <value>Smart Resource Management</value>
+    </data>
+    <data name="OobeFeatures_SmartResource_Description" xml:space="preserve">
+        <value>Zero file duplication with intelligent symlink distribution</value>
+    </data>
+    <data name="OobeFeatures_IntegrityCheck_Title" xml:space="preserve">
+        <value>Integrity Guaranteed</value>
+    </data>
+    <data name="OobeFeatures_IntegrityCheck_Description" xml:space="preserve">
+        <value>Every deployment validates file completeness and correctness</value>
+    </data>
+    <data name="OobeFeatures_OneClick_Title" xml:space="preserve">
+        <value>One-Click Deployment</value>
+    </data>
+    <data name="OobeFeatures_OneClick_Description" xml:space="preserve">
+        <value>Build your game files on-demand from lightweight metadata</value>
+    </data>
+    <!-- OOBE Quick Setup Panel -->
+    <data name="OobeQuickSetup_Title" xml:space="preserve">
+        <value>Quick Setup</value>
+    </data>
+    <data name="OobeQuickSetup_Subtitle" xml:space="preserve">
+        <value>Get started with your preferences</value>
+    </data>
+    <data name="OobeQuickSetup_LanguageLabel" xml:space="preserve">
+        <value>Language</value>
+    </data>
+    <data name="OobeQuickSetup_ThemeLabel" xml:space="preserve">
+        <value>Theme</value>
+    </data>
+    <data name="OobeQuickSetup_AccentColorLabel" xml:space="preserve">
+        <value>Accent Color</value>
+    </data>
+    <data name="OobeQuickSetup_ProxyLabel" xml:space="preserve">
+        <value>Proxy</value>
+    </data>
+    <!-- OOBE Finish Panel -->
+    <data name="OobeFinish_Title" xml:space="preserve">
+        <value>You're All Set!</value>
+    </data>
+    <data name="OobeFinish_Description" xml:space="preserve">
+        <value>Start creating your first Minecraft instance and enjoy a new way of game management.</value>
+    </data>
+    <data name="OobeFinish_Tip" xml:space="preserve">
+        <value>Tip: You can always change these settings later in the Settings page.</value>
+    </data>
+    <!-- Proxy Settings Dialog (additional for OOBE) -->
+    <data name="ProxySettingsDialog_ProxyMode_Auto" xml:space="preserve">
+        <value>Auto</value>
+    </data>
+    <data name="ProxySettingsDialog_ProxyMode_Manual" xml:space="preserve">
+        <value>Manual</value>
+    </data>
+    <data name="ProxySettingsDialog_ProxyMode_Disabled" xml:space="preserve">
+        <value>Disabled</value>
+    </data>
+    <!-- OOBE Privilege Panel -->
+    <data name="OobePrivilege_Title" xml:space="preserve">
+        <value>Permission Required</value>
+    </data>
+    <data name="OobePrivilege_Subtitle" xml:space="preserve">
+        <value>Enable Developer Mode for optimal performance</value>
+    </data>
+    <data name="OobePrivilege_InstructionsTitle" xml:space="preserve">
+        <value>How to Enable</value>
+    </data>
+    <data name="OobePrivilege_InstructionsDescription" xml:space="preserve">
+        <value>1. Click the button below to open Windows Settings
+2. Find "Developer Mode" toggle
+3. Turn it ON
+4. Return here and click "Recheck"</value>
+    </data>
+    <data name="OobePrivilege_OpenSettingsButtonText" xml:space="preserve">
+        <value>Open Developer Settings</value>
+    </data>
+    <data name="OobePrivilege_RecheckButtonText" xml:space="preserve">
+        <value>Recheck</value>
+    </data>
+    <data name="OobePrivilege_SafetyNote" xml:space="preserve">
+        <value>Is Developer Mode Safe?</value>
+    </data>
+    <data name="OobePrivilege_SafetyDescription" xml:space="preserve">
+        <value>Developer Mode is a Windows feature that enables symbolic links creation without admin rights. It's safe for normal use and can be disabled anytime.</value>
+    </data>
+    <data name="OobePrivilege_StatusGrantedTitle" xml:space="preserve">
+        <value>Permission Granted</value>
+    </data>
+    <data name="OobePrivilege_StatusGrantedMessage" xml:space="preserve">
+        <value>Symbolic link creation is enabled. You're all set!</value>
+    </data>
+    <data name="OobePrivilege_StatusRequiredTitle" xml:space="preserve">
+        <value>Permission Required</value>
+    </data>
+    <data name="OobePrivilege_StatusRequiredMessage" xml:space="preserve">
+        <value>Developer Mode is needed to create symbolic links for smart resource management.</value>
+    </data>
+    <!-- OOBE Privilege - Granted State Details -->
+    <data name="OobePrivilege_GrantedWhatTitle" xml:space="preserve">
+        <value>What Permission Was Granted?</value>
+    </data>
+    <data name="OobePrivilege_GrantedWhatDescription" xml:space="preserve">
+        <value>Symbolic Link Creation privilege from Windows Developer Mode. This allows Polymerium to create file links instead of copying files, enabling efficient resource management across multiple game instances.</value>
+    </data>
+    <data name="OobePrivilege_GrantedBenefitsTitle" xml:space="preserve">
+        <value>What You Get</value>
+    </data>
+    <data name="OobePrivilege_Benefit1Title" xml:space="preserve">
+        <value>Zero File Duplication</value>
+    </data>
+    <data name="OobePrivilege_Benefit1Description" xml:space="preserve">
+        <value>Game assets are stored once and linked to each instance, saving gigabytes of disk space.</value>
+    </data>
+    <data name="OobePrivilege_Benefit2Title" xml:space="preserve">
+        <value>Instant Deployment</value>
+    </data>
+    <data name="OobePrivilege_Benefit2Description" xml:space="preserve">
+        <value>Creating links is nearly instant compared to copying large mod files.</value>
+    </data>
+    <data name="OobePrivilege_Benefit3Title" xml:space="preserve">
+        <value>Centralized Updates</value>
+    </data>
+    <data name="OobePrivilege_Benefit3Description" xml:space="preserve">
+        <value>Update a mod once, and all linked instances get the update automatically.</value>
+    </data>
 </root>
