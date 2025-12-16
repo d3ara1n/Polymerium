@@ -3894,6 +3894,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Explore the key features that set us apart.
+        /// </summary>
+        public static string OobeFeatures_Subtitle {
+            get {
+                return ResourceManager.GetString("OobeFeatures_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What Makes Us Different.
         /// </summary>
         public static string OobeFeatures_Title {
@@ -3962,6 +3971,114 @@ namespace Polymerium.App.Properties {
         public static string OobeModal_SkipButtonText {
             get {
                 return ResourceManager.GetString("OobeModal_SkipButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By continuing, you acknowledge and agree to the privacy terms above..
+        /// </summary>
+        public static string OobePrivacy_AgreementNote {
+            get {
+                return ResourceManager.GetString("OobePrivacy_AgreementNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Our Promise.
+        /// </summary>
+        public static string OobePrivacy_OurPromiseTitle {
+            get {
+                return ResourceManager.GetString("OobePrivacy_OurPromiseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We never collect your personal information, account credentials, or game content..
+        /// </summary>
+        public static string OobePrivacy_Promise1Description {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Promise1Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Personal Data.
+        /// </summary>
+        public static string OobePrivacy_Promise1Title {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Promise1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All your game data stays on your computer. Nothing is uploaded without explicit action..
+        /// </summary>
+        public static string OobePrivacy_Promise2Description {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Promise2Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local First.
+        /// </summary>
+        public static string OobePrivacy_Promise2Title {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Promise2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is an open-source project. You can review all our code on GitHub..
+        /// </summary>
+        public static string OobePrivacy_Promise3Description {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Promise3Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Source.
+        /// </summary>
+        public static string OobePrivacy_Promise3Title {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Promise3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your data, your control.
+        /// </summary>
+        public static string OobePrivacy_Subtitle {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Notice.
+        /// </summary>
+        public static string OobePrivacy_Title {
+            get {
+                return ResourceManager.GetString("OobePrivacy_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When the application crashes or encounters errors, we may collect error information and diagnostic data to help improve the user experience in future updates..
+        /// </summary>
+        public static string OobePrivacy_WhatWeCollectDescription {
+            get {
+                return ResourceManager.GetString("OobePrivacy_WhatWeCollectDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What We May Collect.
+        /// </summary>
+        public static string OobePrivacy_WhatWeCollectTitle {
+            get {
+                return ResourceManager.GetString("OobePrivacy_WhatWeCollectTitle", resourceCulture);
             }
         }
         

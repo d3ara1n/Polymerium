@@ -1704,6 +1704,9 @@
     <data name="OobeFeatures_Title" xml:space="preserve">
         <value>What Makes Us Different</value>
     </data>
+    <data name="OobeFeatures_Subtitle" xml:space="preserve">
+        <value>Explore the key features that set us apart</value>
+    </data>
     <data name="OobeFeatures_GitIntegration_Title" xml:space="preserve">
         <value>Git Integration</value>
     </data>
@@ -1846,5 +1849,42 @@
     </data>
     <data name="OobePrivilege_Benefit3Description" xml:space="preserve">
         <value>Update a mod once, and all linked instances get the update automatically.</value>
+    </data>
+    <!-- OOBE Privacy Panel -->
+    <data name="OobePrivacy_Title" xml:space="preserve">
+        <value>Privacy Notice</value>
+    </data>
+    <data name="OobePrivacy_Subtitle" xml:space="preserve">
+        <value>Your data, your control</value>
+    </data>
+    <data name="OobePrivacy_WhatWeCollectTitle" xml:space="preserve">
+        <value>What We May Collect</value>
+    </data>
+    <data name="OobePrivacy_WhatWeCollectDescription" xml:space="preserve">
+        <value>When the application crashes or encounters errors, we may collect error information and diagnostic data to help improve the user experience in future updates.</value>
+    </data>
+    <data name="OobePrivacy_OurPromiseTitle" xml:space="preserve">
+        <value>Our Promise</value>
+    </data>
+    <data name="OobePrivacy_Promise1Title" xml:space="preserve">
+        <value>No Personal Data</value>
+    </data>
+    <data name="OobePrivacy_Promise1Description" xml:space="preserve">
+        <value>We never collect your personal information, account credentials, or game content.</value>
+    </data>
+    <data name="OobePrivacy_Promise2Title" xml:space="preserve">
+        <value>Local First</value>
+    </data>
+    <data name="OobePrivacy_Promise2Description" xml:space="preserve">
+        <value>All your game data stays on your computer. Nothing is uploaded without explicit action.</value>
+    </data>
+    <data name="OobePrivacy_Promise3Title" xml:space="preserve">
+        <value>Open Source</value>
+    </data>
+    <data name="OobePrivacy_Promise3Description" xml:space="preserve">
+        <value>This is an open-source project. You can review all our code on GitHub.</value>
+    </data>
+    <data name="OobePrivacy_AgreementNote" xml:space="preserve">
+        <value>By continuing, you acknowledge and agree to the privacy terms above.</value>
     </data>
 </root>
