@@ -40,16 +40,20 @@
                           IsHitTestVisible="False" />
 
         <!-- Content: Step Panels -->
-        <TransitioningContentControl Content="{Binding $parent[modals:OobeModal].CurrentStep}"
-                                     IsTransitionReversed="{Binding $parent[modals:OobeModal].IsReversed}">
-            <TransitioningContentControl.PageTransition>
-                <CompositePageTransition>
-                    <CrossFade Duration="{StaticResource ControlFasterAnimationDuration}" FadeInEasing="CubicEaseOut"
-                               FadeOutEasing="CubicEaseIn" />
-                    <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}" SlideInEasing="CubicEaseOut"
-                               SlideOutEasing="CubicEaseIn" />
-                </CompositePageTransition>
-            </TransitioningContentControl.PageTransition>
-        </TransitioningContentControl>
+        <ScrollViewer>
+            <TransitioningContentControl Content="{Binding $parent[modals:OobeModal].CurrentStep}"
+                                         IsTransitionReversed="{Binding $parent[modals:OobeModal].IsReversed}">
+                <TransitioningContentControl.PageTransition>
+                    <CompositePageTransition>
+                        <CrossFade Duration="{StaticResource ControlFasterAnimationDuration}"
+                                   FadeInEasing="CubicEaseOut"
+                                   FadeOutEasing="CubicEaseIn" />
+                        <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}"
+                                   SlideInEasing="CubicEaseOut"
+                                   SlideOutEasing="CubicEaseIn" />
+                    </CompositePageTransition>
+                </TransitioningContentControl.PageTransition>
+            </TransitioningContentControl>
+        </ScrollViewer>
     </DockPanel>
 </husk:Modal>
