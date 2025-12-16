@@ -60,6 +60,7 @@
                                           IsVisible="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}" />
                     <husk:ProgressRing Theme="{StaticResource SolidProgressRingTheme}"
                                        Height="{StaticResource MediumFontSize}"
+                                       Width="{StaticResource MediumFontSize}"
                                        IsVisible="{Binding $parent[modals:AppUpdateModal].IsDownloading, FallbackValue=False}" />
                     <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_ConfirmButtonText}" />
                 </StackPanel>
