@@ -342,9 +342,8 @@
                                         <StackPanel Spacing="4">
                                             <TextBlock
                                                 Text="{Binding Version,StringFormat={}v{0},FallbackValue=v0.2.0}"
-                                                FontSize="{StaticResource LargeFontSize}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4"
-                                                        HorizontalAlignment="Right">
+                                                FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Right" />
+                                            <StackPanel Orientation="Horizontal" Spacing="4">
                                                 <husk:SwitchPresenter Value="{Binding IsPrerelease}"
                                                                       TargetType="x:Boolean">
                                                     <husk:SwitchCase Value="{x:True}">
