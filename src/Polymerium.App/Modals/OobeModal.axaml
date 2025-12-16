@@ -5,7 +5,7 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-            mc:Ignorable="d" Width="480"
+            mc:Ignorable="d" Width="520"
             x:Class="Polymerium.App.Modals.OobeModal">
     <DockPanel VerticalSpacing="24">
         <!-- Footer: Navigation Buttons -->

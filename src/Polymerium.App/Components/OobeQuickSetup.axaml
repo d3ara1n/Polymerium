@@ -1,16 +1,16 @@
 <controls:OobeStep xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                    xmlns:components="clr-namespace:Polymerium.App.Components"
-                    xmlns:models="clr-namespace:Polymerium.App.Models"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                    mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="380"
-                    x:Class="Polymerium.App.Components.OobeQuickSetup">
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                   xmlns:components="clr-namespace:Polymerium.App.Components"
+                   xmlns:models="clr-namespace:Polymerium.App.Models"
+                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                   mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="380"
+                   x:Class="Polymerium.App.Components.OobeQuickSetup">
     <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
         <!-- Header -->
         <StackPanel Spacing="8" HorizontalAlignment="Center">
@@ -43,28 +43,29 @@
                     <fi:SymbolIcon Grid.Column="0"
                                    Symbol="LocalLanguage" FontSize="20"
                                    VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabel}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                               Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabel}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <StackPanel Grid.Column="4">
+                        <ComboBox
+                            ItemsSource="{Binding $parent[components:OobeQuickSetup].Languages}"
+                            SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedLanguage,Mode=TwoWay}"
+                            MinWidth="160">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:LanguageModel">
+                                    <Grid ColumnDefinitions="*,4,Auto">
+                                        <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
+                                        <husk:Tag Grid.Column="2" Classes="Small" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Id}" />
+                                        </husk:Tag>
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <TextBlock Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}"
                                    FontSize="{StaticResource SmallFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
-                    <ComboBox Grid.Column="4"
-                              ItemsSource="{Binding $parent[components:OobeQuickSetup].Languages}"
-                              SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedLanguage,Mode=TwoWay}"
-                              MinWidth="160">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="models:LanguageModel">
-                                <Grid ColumnDefinitions="*,4,Auto">
-                                    <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
-                                    <husk:Tag Grid.Column="2" Classes="Small" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Id}" />
-                                    </husk:Tag>
-                                </Grid>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
                 </Grid>
             </Border>
 
@@ -89,7 +90,8 @@
                                 <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
                                                       Height="{StaticResource SmallFontSize}"
                                                       Width="{StaticResource SmallFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" FontSize="{StaticResource SmallFontSize}" />
+                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}"
+                                           FontSize="{StaticResource SmallFontSize}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
@@ -97,7 +99,8 @@
                                 <icons:PackIconLucide Kind="Sun" VerticalAlignment="Center"
                                                       Height="{StaticResource SmallFontSize}"
                                                       Width="{StaticResource SmallFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" FontSize="{StaticResource SmallFontSize}" />
+                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}"
+                                           FontSize="{StaticResource SmallFontSize}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
@@ -105,7 +108,8 @@
                                 <icons:PackIconLucide Kind="Moon" VerticalAlignment="Center"
                                                       Height="{StaticResource SmallFontSize}"
                                                       Width="{StaticResource SmallFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" FontSize="{StaticResource SmallFontSize}" />
+                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}"
+                                           FontSize="{StaticResource SmallFontSize}" />
                             </StackPanel>
                         </TabStripItem>
                     </TabStrip>

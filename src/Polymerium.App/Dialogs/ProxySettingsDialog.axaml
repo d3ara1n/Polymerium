@@ -211,7 +211,8 @@
             <StackPanel Orientation="Horizontal" Spacing="6">
                 <icons:PackIconLucide Kind="Info" Height="{StaticResource SmallFontSize}"
                                       Width="{StaticResource SmallFontSize}" VerticalAlignment="Center" />
-                <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}" />
+                <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}"
+                           TextWrapping="Wrap" />
             </StackPanel>
         </husk:InfoBar>
     </StackPanel>
