@@ -1750,13 +1750,13 @@
     <data name="OobeQuickSetup_Subtitle" xml:space="preserve">
         <value>Get started with your preferences</value>
     </data>
-    <data name="OobeQuickSetup_LanguageLabel" xml:space="preserve">
+    <data name="OobeQuickSetup_LanguageLabelText" xml:space="preserve">
         <value>Language</value>
     </data>
-    <data name="OobeQuickSetup_ThemeLabel" xml:space="preserve">
+    <data name="OobeQuickSetup_ThemeLabelText" xml:space="preserve">
         <value>Theme</value>
     </data>
-    <data name="OobeQuickSetup_AccentColorLabel" xml:space="preserve">
+    <data name="OobeQuickSetup_AccentColorLabelText" xml:space="preserve">
         <value>Accent Color</value>
     </data>
     <data name="OobeQuickSetup_ProxyLabel" xml:space="preserve">
@@ -1801,9 +1801,6 @@
     <data name="OobePrivilege_OpenSettingsButtonText" xml:space="preserve">
         <value>Open Developer Settings</value>
     </data>
-    <data name="OobePrivilege_RecheckButtonText" xml:space="preserve">
-        <value>Recheck</value>
-    </data>
     <data name="OobePrivilege_SafetyNote" xml:space="preserve">
         <value>Is Developer Mode Safe?</value>
     </data>
@@ -1831,24 +1828,6 @@
     </data>
     <data name="OobePrivilege_GrantedBenefitsTitle" xml:space="preserve">
         <value>What You Get</value>
-    </data>
-    <data name="OobePrivilege_Benefit1Title" xml:space="preserve">
-        <value>Zero File Duplication</value>
-    </data>
-    <data name="OobePrivilege_Benefit1Description" xml:space="preserve">
-        <value>Game assets are stored once and linked to each instance, saving gigabytes of disk space.</value>
-    </data>
-    <data name="OobePrivilege_Benefit2Title" xml:space="preserve">
-        <value>Instant Deployment</value>
-    </data>
-    <data name="OobePrivilege_Benefit2Description" xml:space="preserve">
-        <value>Creating links is nearly instant compared to copying large mod files.</value>
-    </data>
-    <data name="OobePrivilege_Benefit3Title" xml:space="preserve">
-        <value>Centralized Updates</value>
-    </data>
-    <data name="OobePrivilege_Benefit3Description" xml:space="preserve">
-        <value>Update a mod once, and all linked instances get the update automatically.</value>
     </data>
     <!-- OOBE Privacy Panel -->
     <data name="OobePrivacy_Title" xml:space="preserve">

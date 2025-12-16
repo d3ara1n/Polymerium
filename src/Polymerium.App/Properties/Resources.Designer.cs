@@ -4083,60 +4083,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game assets are stored once and linked to each instance, saving gigabytes of disk space..
-        /// </summary>
-        public static string OobePrivilege_Benefit1Description {
-            get {
-                return ResourceManager.GetString("OobePrivilege_Benefit1Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Zero File Duplication.
-        /// </summary>
-        public static string OobePrivilege_Benefit1Title {
-            get {
-                return ResourceManager.GetString("OobePrivilege_Benefit1Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Creating links is nearly instant compared to copying large mod files..
-        /// </summary>
-        public static string OobePrivilege_Benefit2Description {
-            get {
-                return ResourceManager.GetString("OobePrivilege_Benefit2Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Instant Deployment.
-        /// </summary>
-        public static string OobePrivilege_Benefit2Title {
-            get {
-                return ResourceManager.GetString("OobePrivilege_Benefit2Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update a mod once, and all linked instances get the update automatically..
-        /// </summary>
-        public static string OobePrivilege_Benefit3Description {
-            get {
-                return ResourceManager.GetString("OobePrivilege_Benefit3Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Centralized Updates.
-        /// </summary>
-        public static string OobePrivilege_Benefit3Title {
-            get {
-                return ResourceManager.GetString("OobePrivilege_Benefit3Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to What You Get.
         /// </summary>
         public static string OobePrivilege_GrantedBenefitsTitle {
@@ -4190,15 +4136,6 @@ namespace Polymerium.App.Properties {
         public static string OobePrivilege_OpenSettingsButtonText {
             get {
                 return ResourceManager.GetString("OobePrivilege_OpenSettingsButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recheck.
-        /// </summary>
-        public static string OobePrivilege_RecheckButtonText {
-            get {
-                return ResourceManager.GetString("OobePrivilege_RecheckButtonText", resourceCulture);
             }
         }
         
@@ -4277,18 +4214,18 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Accent Color.
         /// </summary>
-        public static string OobeQuickSetup_AccentColorLabel {
+        public static string OobeQuickSetup_AccentColorLabelText {
             get {
-                return ResourceManager.GetString("OobeQuickSetup_AccentColorLabel", resourceCulture);
+                return ResourceManager.GetString("OobeQuickSetup_AccentColorLabelText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
-        public static string OobeQuickSetup_LanguageLabel {
+        public static string OobeQuickSetup_LanguageLabelText {
             get {
-                return ResourceManager.GetString("OobeQuickSetup_LanguageLabel", resourceCulture);
+                return ResourceManager.GetString("OobeQuickSetup_LanguageLabelText", resourceCulture);
             }
         }
         
@@ -4313,9 +4250,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
-        public static string OobeQuickSetup_ThemeLabel {
+        public static string OobeQuickSetup_ThemeLabelText {
             get {
-                return ResourceManager.GetString("OobeQuickSetup_ThemeLabel", resourceCulture);
+                return ResourceManager.GetString("OobeQuickSetup_ThemeLabelText", resourceCulture);
             }
         }
         
