@@ -1866,4 +1866,38 @@
     <data name="OobePrivacy_AgreementNote" xml:space="preserve">
         <value>By continuing, you acknowledge and agree to the privacy terms above.</value>
     </data>
+    <!-- Maintenance Storage View -->
+    <data name="MaintenanceStorageView_Title" xml:space="preserve">
+        <value>Storage Maintenance</value>
+    </data>
+    <data name="MaintenanceStorageView_TotalLabelText" xml:space="preserve">
+        <value>Total</value>
+    </data>
+    <data name="MaintenanceStorageView_CacheLabelText" xml:space="preserve">
+        <value>Cache</value>
+    </data>
+    <data name="MaintenanceStorageView_InstancesLabelText" xml:space="preserve">
+        <value>Instances</value>
+    </data>
+    <data name="MaintenanceStorageView_CacheTitle" xml:space="preserve">
+        <value>Cache</value>
+    </data>
+    <data name="MaintenanceStorageView_PurgeButtonText" xml:space="preserve">
+        <value>Purge</value>
+    </data>
+    <data name="MaintenanceStorageView_PackagesLabelText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="MaintenanceStorageView_LibrariesLabelText" xml:space="preserve">
+        <value>Libraries</value>
+    </data>
+    <data name="MaintenanceStorageView_AssetsLabelText" xml:space="preserve">
+        <value>Assets</value>
+    </data>
+    <data name="MaintenanceStorageView_RuntimesLabelText" xml:space="preserve">
+        <value>Runtimes</value>
+    </data>
+    <data name="MaintenanceStorageView_InstancesTitle" xml:space="preserve">
+        <value>Instances</value>
+    </data>
 </root>

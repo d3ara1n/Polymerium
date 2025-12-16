@@ -1857,4 +1857,38 @@
     <data name="OobePrivacy_AgreementNote" xml:space="preserve">
         <value>继续即表示您已阅读并同意上述隐私条款。</value>
     </data>
+    <!-- Maintenance Storage View -->
+    <data name="MaintenanceStorageView_Title" xml:space="preserve">
+        <value>储存维护</value>
+    </data>
+    <data name="MaintenanceStorageView_TotalLabelText" xml:space="preserve">
+        <value>总计</value>
+    </data>
+    <data name="MaintenanceStorageView_CacheLabelText" xml:space="preserve">
+        <value>缓存</value>
+    </data>
+    <data name="MaintenanceStorageView_InstancesLabelText" xml:space="preserve">
+        <value>实例</value>
+    </data>
+    <data name="MaintenanceStorageView_CacheTitle" xml:space="preserve">
+        <value>缓存</value>
+    </data>
+    <data name="MaintenanceStorageView_PurgeButtonText" xml:space="preserve">
+        <value>清除</value>
+    </data>
+    <data name="MaintenanceStorageView_PackagesLabelText" xml:space="preserve">
+        <value>包</value>
+    </data>
+    <data name="MaintenanceStorageView_LibrariesLabelText" xml:space="preserve">
+        <value>库</value>
+    </data>
+    <data name="MaintenanceStorageView_AssetsLabelText" xml:space="preserve">
+        <value>资产</value>
+    </data>
+    <data name="MaintenanceStorageView_RuntimesLabelText" xml:space="preserve">
+        <value>运行时</value>
+    </data>
+    <data name="MaintenanceStorageView_InstancesTitle" xml:space="preserve">
+        <value>实例</value>
+    </data>
 </root>

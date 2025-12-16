@@ -3246,6 +3246,105 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assets.
+        /// </summary>
+        public static string MaintenanceStorageView_AssetsLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_AssetsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cache.
+        /// </summary>
+        public static string MaintenanceStorageView_CacheLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_CacheLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cache.
+        /// </summary>
+        public static string MaintenanceStorageView_CacheTitle {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_CacheTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instances.
+        /// </summary>
+        public static string MaintenanceStorageView_InstancesLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_InstancesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instances.
+        /// </summary>
+        public static string MaintenanceStorageView_InstancesTitle {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_InstancesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Libraries.
+        /// </summary>
+        public static string MaintenanceStorageView_LibrariesLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_LibrariesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string MaintenanceStorageView_PackagesLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_PackagesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purge.
+        /// </summary>
+        public static string MaintenanceStorageView_PurgeButtonText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_PurgeButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runtimes.
+        /// </summary>
+        public static string MaintenanceStorageView_RuntimesLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_RuntimesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storage Maintenance.
+        /// </summary>
+        public static string MaintenanceStorageView_Title {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string MaintenanceStorageView_TotalLabelText {
+            get {
+                return ResourceManager.GetString("MaintenanceStorageView_TotalLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string MainWindow_AccountButtonText {
