@@ -1,0 +1,213 @@
+<controls:OobeStep xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                    xmlns:components="clr-namespace:Polymerium.App.Components"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
+                    x:Class="Polymerium.App.Components.OobePrivilege">
+    <husk:SwitchPresenter Value="{Binding $parent[components:OobePrivilege].IsPrivilegeGranted}"
+                          TargetType="x:Boolean">
+        <!-- Privilege Granted - Success View -->
+        <husk:SwitchCase Value="{x:True}">
+            <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
+                <!-- Success Header -->
+                <StackPanel Spacing="8" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource SuccessBackgroundBrush}"
+                            CornerRadius="32"
+                            Width="64" Height="64"
+                            HorizontalAlignment="Center">
+                        <fi:SymbolIcon Symbol="CheckmarkCircle"
+                                       FontSize="32"
+                                       Foreground="{StaticResource SuccessForegroundBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedTitle}"
+                               HorizontalAlignment="Center"
+                               FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                </StackPanel>
+
+                <!-- Permission Explanation Card -->
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}"
+                        Padding="16,12">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_GrantedWhatTitle}"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_GrantedWhatDescription}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       FontSize="{StaticResource SmallFontSize}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Benefits Card -->
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}"
+                        Padding="16,12">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="{x:Static lang:Resources.OobePrivilege_GrantedBenefitsTitle}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <StackPanel Spacing="8">
+                            <!-- Benefit 1: No Duplication -->
+                            <Grid ColumnDefinitions="Auto,8,*">
+                                <fi:SymbolIcon Grid.Column="0" Symbol="DocumentCopy"
+                                               FontSize="16"
+                                               Foreground="{StaticResource SuccessForegroundBrush}"
+                                               VerticalAlignment="Top" />
+                                <StackPanel Grid.Column="2" Spacing="2">
+                                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Benefit1Title}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               FontSize="{StaticResource SmallFontSize}" />
+                                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Benefit1Description}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                            <!-- Benefit 2: Fast Deployment -->
+                            <Grid ColumnDefinitions="Auto,8,*">
+                                <fi:SymbolIcon Grid.Column="0" Symbol="Flash"
+                                               FontSize="16"
+                                               Foreground="{StaticResource SuccessForegroundBrush}"
+                                               VerticalAlignment="Top" />
+                                <StackPanel Grid.Column="2" Spacing="2">
+                                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Benefit2Title}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               FontSize="{StaticResource SmallFontSize}" />
+                                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Benefit2Description}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                            <!-- Benefit 3: Easy Management -->
+                            <Grid ColumnDefinitions="Auto,8,*">
+                                <fi:SymbolIcon Grid.Column="0" Symbol="FolderLink"
+                                               FontSize="16"
+                                               Foreground="{StaticResource SuccessForegroundBrush}"
+                                               VerticalAlignment="Top" />
+                                <StackPanel Grid.Column="2" Spacing="2">
+                                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Benefit3Title}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               FontSize="{StaticResource SmallFontSize}" />
+                                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Benefit3Description}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Ready Message -->
+                <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedMessage}"
+                           HorizontalAlignment="Center"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                           FontSize="{StaticResource SmallFontSize}"
+                           TextAlignment="Center" />
+            </StackPanel>
+        </husk:SwitchCase>
+
+        <!-- Privilege Required - Action Required View -->
+        <husk:SwitchCase Value="{x:False}">
+            <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
+                <!-- Title -->
+                <StackPanel Spacing="4" HorizontalAlignment="Center">
+                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Title}"
+                               HorizontalAlignment="Center"
+                               FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Subtitle}"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                </StackPanel>
+
+                <!-- Warning Icon Display -->
+                <Border Background="{StaticResource WarningBackgroundBrush}"
+                        CornerRadius="{StaticResource LargeCornerRadius}"
+                        Padding="24"
+                        HorizontalAlignment="Center">
+                    <Grid ColumnDefinitions="Auto,Auto,Auto" HorizontalAlignment="Center" VerticalAlignment="Center"
+                          ColumnSpacing="24">
+                        <fi:SymbolIcon Grid.Column="0" Symbol="Wrench" FontSize="32"
+                                       Foreground="{StaticResource WarningForegroundBrush}" />
+                        <fi:SymbolIcon Grid.Column="1" Symbol="ArrowRight" FontSize="20"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource WarningForegroundBrush}" />
+                        <fi:SymbolIcon Grid.Column="2" Symbol="LockOpen" FontSize="32"
+                                       Foreground="{StaticResource WarningForegroundBrush}" />
+                    </Grid>
+                </Border>
+
+                <!-- Status Card -->
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}"
+                        Padding="12,10">
+                    <Grid ColumnDefinitions="Auto,8,*,Auto">
+                        <fi:SymbolIcon Grid.Column="0"
+                                       Symbol="Warning"
+                                       Foreground="{StaticResource WarningForegroundBrush}"
+                                       FontSize="20"
+                                       VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredTitle}"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredMessage}"
+                                       FontSize="{StaticResource SmallFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                        <Button Grid.Column="3"
+                                Theme="{StaticResource GhostButtonTheme}"
+                                Classes="Small"
+                                Command="{Binding $parent[components:OobePrivilege].CheckPrivilegeCommand}">
+                            <fi:SymbolIcon Symbol="ArrowClockwise" FontSize="{StaticResource SmallFontSize}" />
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- Instructions Card -->
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}"
+                        Padding="12,10">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="{x:Static lang:Resources.OobePrivilege_InstructionsTitle}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.OobePrivilege_InstructionsDescription}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   FontSize="{StaticResource SmallFontSize}" />
+                        <HyperlinkButton NavigateUri="ms-settings:developers"
+                                         HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource SmallFontSize}" />
+                                <TextBlock Text="{x:Static lang:Resources.OobePrivilege_OpenSettingsButtonText}" />
+                            </StackPanel>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </Border>
+
+                <!-- Safety Note -->
+                <TextBlock HorizontalAlignment="Center"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           FontSize="{StaticResource SmallFontSize}"
+                           MaxWidth="400">
+                    <Run Text="{x:Static lang:Resources.OobePrivilege_SafetyNote}" TextDecorations="Underline" />
+                    <LineBreak />
+                    <Run Text="{x:Static lang:Resources.OobePrivilege_SafetyDescription}" />
+                </TextBlock>
+            </StackPanel>
+        </husk:SwitchCase>
+    </husk:SwitchPresenter>
+</controls:OobeStep>

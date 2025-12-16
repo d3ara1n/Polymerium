@@ -319,11 +319,9 @@ public partial class SettingsViewModel : ViewModelBase
 
     #region Language
 
-    private static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
-
     public LanguageModel[] Languages { get; } =
     [
-        .. SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x))
+        .. Configuration.SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x))
     ];
 
     [ObservableProperty]

@@ -11,4 +11,7 @@ public class LanguageModel(CultureInfo info) : ModelBase
     public string Display => info.DisplayName;
 
     #endregion
+
+    public override int GetHashCode() => Id.GetHashCode();
+    public override bool Equals(object? obj) => obj is LanguageModel other && other.Id == Id;
 }
