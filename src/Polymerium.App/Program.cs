@@ -44,6 +44,13 @@ internal static class Program
             }
         }
 
+        var firstRunFile = Path.Combine(PathDef.Default.PrivateDirectory(Brand), "first_run");
+        if (!File.Exists(firstRunFile))
+        {
+            FirstRun = true;
+            File.WriteAllText(firstRunFile, MagicWords);
+        }
+
         #endregion
 
         var builder = Host.CreateApplicationBuilder(args);
