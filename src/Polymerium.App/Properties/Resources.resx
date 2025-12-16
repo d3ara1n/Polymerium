@@ -1396,7 +1396,7 @@
         <value>Pick a mod loader</value>
     </data>
     <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
-        <value>Restart required</value>
+        <value>Restart is required to take effect.</value>
     </data>
     <data name="InstanceStorageView_OpenFolderButtonText" xml:space="preserve">
         <value>Open Folder</value>

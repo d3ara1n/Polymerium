@@ -5193,7 +5193,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart required.
+        ///   Looks up a localized string similar to Restart is required to take effect..
         /// </summary>
         public static string SettingsView_RestartRequiredLabelText {
             get {
