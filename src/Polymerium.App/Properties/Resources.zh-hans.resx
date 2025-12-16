@@ -1387,7 +1387,7 @@
         <value>挑选一个加载器</value>
     </data>
     <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
-        <value>需要重启</value>
+        <value>需要重启生效。</value>
     </data>
     <data name="InstanceStorageView_OpenFolderButtonText" xml:space="preserve">
         <value>打开目录</value>
