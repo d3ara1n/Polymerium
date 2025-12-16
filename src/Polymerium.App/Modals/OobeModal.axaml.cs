@@ -102,6 +102,7 @@ public partial class OobeModal : Modal
         }
 
         _steps.Add(new OobeQuickSetup { ConfigurationService = ConfigurationService, OverlayService = OverlayService });
+        _steps.Add(new OobePrivacy());
         _steps.Add(new OobeFinish());
 
         // Set step count for UI

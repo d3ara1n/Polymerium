@@ -1695,6 +1695,9 @@
     <data name="OobeFeatures_Title" xml:space="preserve">
         <value>与众不同之处</value>
     </data>
+    <data name="OobeFeatures_Subtitle" xml:space="preserve">
+        <value>探索让我们脱颖而出的核心特性</value>
+    </data>
     <data name="OobeFeatures_GitIntegration_Title" xml:space="preserve">
         <value>Git 集成</value>
     </data>
@@ -1837,5 +1840,42 @@
     </data>
     <data name="OobePrivilege_Benefit3Description" xml:space="preserve">
         <value>只需更新一次模组，所有链接的实例都会自动获得更新。</value>
+    </data>
+    <!-- OOBE Privacy Panel -->
+    <data name="OobePrivacy_Title" xml:space="preserve">
+        <value>隐私声明</value>
+    </data>
+    <data name="OobePrivacy_Subtitle" xml:space="preserve">
+        <value>您的数据，由您掌控</value>
+    </data>
+    <data name="OobePrivacy_WhatWeCollectTitle" xml:space="preserve">
+        <value>我们可能收集的信息</value>
+    </data>
+    <data name="OobePrivacy_WhatWeCollectDescription" xml:space="preserve">
+        <value>当应用程序崩溃或遇到错误时，我们可能会收集错误信息和诊断数据，以帮助改进未来版本的用户体验。</value>
+    </data>
+    <data name="OobePrivacy_OurPromiseTitle" xml:space="preserve">
+        <value>我们的承诺</value>
+    </data>
+    <data name="OobePrivacy_Promise1Title" xml:space="preserve">
+        <value>不收集个人数据</value>
+    </data>
+    <data name="OobePrivacy_Promise1Description" xml:space="preserve">
+        <value>我们绝不会收集您的个人信息、账户凭据或游戏内容。</value>
+    </data>
+    <data name="OobePrivacy_Promise2Title" xml:space="preserve">
+        <value>本地优先</value>
+    </data>
+    <data name="OobePrivacy_Promise2Description" xml:space="preserve">
+        <value>您所有的游戏数据都保存在本地计算机上。未经明确操作，不会上传任何内容。</value>
+    </data>
+    <data name="OobePrivacy_Promise3Title" xml:space="preserve">
+        <value>透明开源</value>
+    </data>
+    <data name="OobePrivacy_Promise3Description" xml:space="preserve">
+        <value>这是一个开源项目，您可以在 GitHub 上查阅我们的全部代码。</value>
+    </data>
+    <data name="OobePrivacy_AgreementNote" xml:space="preserve">
+        <value>继续即表示您已阅读并同意上述隐私条款。</value>
     </data>
 </root>

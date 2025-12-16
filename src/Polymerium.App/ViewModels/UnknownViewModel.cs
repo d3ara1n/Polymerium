@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
+using Polymerium.App.Modals;
 using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels;
@@ -14,7 +15,8 @@ namespace Polymerium.App.ViewModels;
 public partial class UnknownViewModel(
     ViewBag bag,
     NotificationService notificationService,
-    OverlayService overlayService) : ViewModelBase
+    OverlayService overlayService,
+    ConfigurationService configurationService) : ViewModelBase
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
@@ -153,6 +155,17 @@ public partial class UnknownViewModel(
 
     [RelayCommand]
     private void Debug() => throw new NotImplementedException("The sun is leaking...");
+
+    [RelayCommand]
+    private void ShowIntro()
+    {
+        overlayService.PopModal(new OobeModal
+        {
+            ConfigurationService = configurationService,
+            OverlayService = overlayService,
+            NotificationService = notificationService
+        });
+    }
 
     #endregion
 }

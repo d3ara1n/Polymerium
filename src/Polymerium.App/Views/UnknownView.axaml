@@ -12,6 +12,9 @@
     <husk:Page.Header>
         <DockPanel HorizontalSpacing="8">
             <StackPanel DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
+                <Button Command="{Binding ShowIntroCommand}">
+                    <icons:PackIconLucide Kind="Film" Width="12" Height="12" />
+                </Button>
                 <Button Command="{Binding DebugCommand}">
                     <icons:PackIconLucide Kind="Bug" Width="12" Height="12" />
                 </Button>
