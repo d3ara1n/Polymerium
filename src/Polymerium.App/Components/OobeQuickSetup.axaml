@@ -44,7 +44,7 @@
                                    Symbol="LocalLanguage" FontSize="20"
                                    VerticalAlignment="Center" />
                     <TextBlock Grid.Column="2" VerticalAlignment="Center"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabel}"
+                               Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabelText}"
                                FontWeight="{StaticResource ControlStrongFontWeight}" />
                     <StackPanel Grid.Column="4">
                         <ComboBox
@@ -78,7 +78,7 @@
                                    Symbol="DarkTheme" FontSize="20"
                                    VerticalAlignment="Center" />
                     <TextBlock Grid.Column="2"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_ThemeLabel}"
+                               Text="{x:Static lang:Resources.OobeQuickSetup_ThemeLabelText}"
                                FontWeight="{StaticResource ControlStrongFontWeight}"
                                VerticalAlignment="Center" />
                     <TabStrip Grid.Column="4"
@@ -125,7 +125,7 @@
                                    Symbol="Color" FontSize="20"
                                    VerticalAlignment="Center" />
                     <TextBlock Grid.Column="2"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_AccentColorLabel}"
+                               Text="{x:Static lang:Resources.OobeQuickSetup_AccentColorLabelText}"
                                FontWeight="{StaticResource ControlStrongFontWeight}"
                                VerticalAlignment="Center" />
                     <ComboBox Grid.Column="4"

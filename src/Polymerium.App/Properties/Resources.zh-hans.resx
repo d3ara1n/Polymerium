@@ -1741,13 +1741,13 @@
     <data name="OobeQuickSetup_Subtitle" xml:space="preserve">
         <value>根据你的偏好开始配置</value>
     </data>
-    <data name="OobeQuickSetup_LanguageLabel" xml:space="preserve">
+    <data name="OobeQuickSetup_LanguageLabelText" xml:space="preserve">
         <value>语言</value>
     </data>
-    <data name="OobeQuickSetup_ThemeLabel" xml:space="preserve">
+    <data name="OobeQuickSetup_ThemeLabelText" xml:space="preserve">
         <value>主题</value>
     </data>
-    <data name="OobeQuickSetup_AccentColorLabel" xml:space="preserve">
+    <data name="OobeQuickSetup_AccentColorLabelText" xml:space="preserve">
         <value>强调色</value>
     </data>
     <data name="OobeQuickSetup_ProxyLabel" xml:space="preserve">
@@ -1792,9 +1792,6 @@
     <data name="OobePrivilege_OpenSettingsButtonText" xml:space="preserve">
         <value>打开开发者设置</value>
     </data>
-    <data name="OobePrivilege_RecheckButtonText" xml:space="preserve">
-        <value>重新检查</value>
-    </data>
     <data name="OobePrivilege_SafetyNote" xml:space="preserve">
         <value>开发者模式安全吗？</value>
     </data>
@@ -1822,24 +1819,6 @@
     </data>
     <data name="OobePrivilege_GrantedBenefitsTitle" xml:space="preserve">
         <value>你将获得</value>
-    </data>
-    <data name="OobePrivilege_Benefit1Title" xml:space="preserve">
-        <value>零文件重复</value>
-    </data>
-    <data name="OobePrivilege_Benefit1Description" xml:space="preserve">
-        <value>游戏资源只存储一份，通过链接分发到各个实例，可节省数 GB 的磁盘空间。</value>
-    </data>
-    <data name="OobePrivilege_Benefit2Title" xml:space="preserve">
-        <value>极速部署</value>
-    </data>
-    <data name="OobePrivilege_Benefit2Description" xml:space="preserve">
-        <value>创建链接几乎是瞬时完成的，比复制大型模组文件快得多。</value>
-    </data>
-    <data name="OobePrivilege_Benefit3Title" xml:space="preserve">
-        <value>集中更新</value>
-    </data>
-    <data name="OobePrivilege_Benefit3Description" xml:space="preserve">
-        <value>只需更新一次模组，所有链接的实例都会自动获得更新。</value>
     </data>
     <!-- OOBE Privacy Panel -->
     <data name="OobePrivacy_Title" xml:space="preserve">
