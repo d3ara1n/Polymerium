@@ -66,18 +66,6 @@ jobs:
             -   name: Install Velopack CLI
                 run: dotnet tool install -g vpk
 
-            -   name: Fix for dotnet publish
-                run: |
-                    if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
-                        echo "Renamed zh-hans folder to zh-Hans"
-                        mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
-                           "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
-                    else
-                        echo "Created zh-Hans folder"
-                        mkdir -p "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
-                    fi
-                shell: bash
-
             -   name: Publish Application
                 run: |
                     dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
@@ -108,7 +96,7 @@ jobs:
                 id: changelog
                 run: |
                     version="${{ steps.gitversion.outputs.semVer }}"
-                    pwsh scripts/Update-Changelog.ps1 -Version "$version"
+                    pwsh scripts/Workflow_Update-Changelog.ps1 -Version "$version"
                 shell: bash
 
             -   name: Push Changelog Changes

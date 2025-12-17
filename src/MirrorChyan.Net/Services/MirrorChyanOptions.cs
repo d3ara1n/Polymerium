@@ -5,6 +5,11 @@ namespace MirrorChyan.Net.Services;
 public class MirrorChyanOptions
 {
     /// <summary>
+    /// 服务器终结点
+    /// </summary>
+    public Uri BaseAddress { get; set; } = new("https://mirrorchyan.com");
+
+    /// <summary>
     /// 产品资源名，例如 MAA
     /// </summary>
     public required string ProductId { get; set; }

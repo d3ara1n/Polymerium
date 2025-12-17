@@ -4,7 +4,7 @@ public record GetLatestVersionResponseBody(
     string VersionName,
     int VersionNumber,
     Uri? Url,
-    int? FileSize,
+    int? Filesize,
     string? Sha256,
     UpdateKind? UpdateType,
     string Os,

@@ -17,7 +17,7 @@ namespace VelopackExtension.MirrorChyan.Sources;
 /// </summary>
 public class MirrorChyanSource(
     MirrorChyanService mirrorChyanService,
-    IOptionsMonitor<MirrorChyanSourceOptions> sourceOptions,
+    IOptions<MirrorChyanSourceOptions> sourceOptions,
     IOptions<MirrorChyanOptions> mirrorChyanOptions,
     IHttpClientFactory httpClientFactory) : IUpdateSource
 {
@@ -33,14 +33,16 @@ public class MirrorChyanSource(
         Guid? stagingId = null,
         VelopackAsset? latestLocalRelease = null)
     {
-        var currentSourceOptions = sourceOptions.CurrentValue;
+        var currentSourceOptions = sourceOptions.Value;
         var currentMirrorChyanOptions = mirrorChyanOptions.Value;
 
         try
         {
-            var version = await mirrorChyanService.GetLatestVersionAsync(currentSourceOptions.Cdk, currentSourceOptions.Channel);
+            var version =
+                await mirrorChyanService.GetLatestVersionAsync(currentSourceOptions.Cdk, currentSourceOptions.Channel);
 
-            if (version.Artifact is null) throw new ResourceNotDownloadableException("Resource is not available. Maybe cdk is not provided.");
+            if (version.Artifact is null)
+                throw new ResourceNotDownloadableException("Resource is not available. Maybe cdk is not provided.");
 
             // 文件名 包名+版本+os+arch.nupkg 拼接
             var packageId = appId ?? currentMirrorChyanOptions.ProductId;
@@ -54,7 +56,10 @@ public class MirrorChyanSource(
             var asset = new VelopackAsset
             {
                 PackageId = packageId,
-                Version = SemanticVersion.Parse(version.Version),
+                Version =
+                    SemanticVersion.Parse(version.Version.StartsWith("v", StringComparison.OrdinalIgnoreCase)
+                                              ? version.Version[1..]
+                                              : version.Version),
                 Type = version.Artifact.Kind == UpdateKind.Full ? VelopackAssetType.Full : VelopackAssetType.Delta,
                 FileName = fileName,
                 SHA256 = version.Artifact.Sha256,

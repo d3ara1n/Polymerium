@@ -7,6 +7,8 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
+using Microsoft.Extensions.Options;
+using MirrorChyan.Net.Services;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
@@ -14,6 +16,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Velopack;
+using VelopackExtension.MirrorChyan.Sources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -25,7 +28,8 @@ public partial class SettingsViewModel : ViewModelBase
         NavigationService navigationService,
         NotificationService notificationService,
         PersistenceService persistenceService,
-        UpdateManager updateManager)
+        UpdateManager updateManager,
+        IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
@@ -33,6 +37,7 @@ public partial class SettingsViewModel : ViewModelBase
         _notificationService = notificationService;
         _persistenceService = persistenceService;
         _updateManager = updateManager;
+        _mirrorChyanSourceOptions = mirrorChyanSourceOptions;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -79,6 +84,7 @@ public partial class SettingsViewModel : ViewModelBase
         UpdateProxyStatusText();
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
+        UpdateState = updateManager.IsInstalled || Program.Debug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
     }
 
     #region Service Export
@@ -94,6 +100,7 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly NotificationService _notificationService;
     private readonly PersistenceService _persistenceService;
     private readonly UpdateManager _updateManager;
+    private readonly IOptions<MirrorChyanSourceOptions> _mirrorChyanSourceOptions;
 
     #endregion
 
@@ -197,8 +204,7 @@ public partial class SettingsViewModel : ViewModelBase
     #region Updates
 
     [ObservableProperty]
-    public partial AppUpdateState UpdateState { get; set; } =
-        Program.Debug ? AppUpdateState.Unavailable : AppUpdateState.Idle;
+    public partial AppUpdateState UpdateState { get; set; }
 
     [ObservableProperty]
     public partial AppUpdateModel? UpdateTarget { get; set; }
@@ -211,7 +217,11 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string MirrorChyanCdk { get; set; }
 
-    partial void OnMirrorChyanCdkChanged(string value) => _configurationService.Value.UpdateMirrorChyanCdk = value;
+    partial void OnMirrorChyanCdkChanged(string value)
+    {
+        _configurationService.Value.UpdateMirrorChyanCdk = value;
+        _mirrorChyanSourceOptions.Value.Cdk = value;
+    }
 
     #endregion
 
@@ -497,7 +507,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     #endregion
 
-    #region
+    #region SafeCode
 
     [ObservableProperty]
     public partial string SafeCode { get; set; }

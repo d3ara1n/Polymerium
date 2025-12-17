@@ -78,7 +78,9 @@ public class App : Application
         var path = Path.Combine(AppContext.BaseDirectory, "dumps", $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
         var sb = new StringBuilder($"""
                                     // {DateTimeOffset.Now.ToString()}
-                                    // {Assembly.GetEntryAssembly()?.GetName().Version}
+                                    // Polymerium: {typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                                                                  ?.InformationalVersion.Split('+')[0] ?? Program.Version}
+                                    // Avalonia: {Assembly.GetEntryAssembly()?.GetName().Version}
 
                                     """);
         sb.AppendLine();

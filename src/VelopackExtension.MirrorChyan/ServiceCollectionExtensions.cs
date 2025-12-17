@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">服务集合</param>
     /// <param name="configureOptions">配置 MirrorChyanSourceOptions 的委托</param>
     /// <returns>服务集合</returns>
-    public static IServiceCollection AddVelopackMirrorChyan(
+    public static IServiceCollection AddVelopackMirrorChyanSource(
         this IServiceCollection services,
         Action<MirrorChyanSourceOptions>? configureOptions = null)
     {
@@ -25,14 +25,7 @@ public static class ServiceCollectionExtensions
 
         // 注册 MirrorChyanSource
         services.AddSingleton<MirrorChyanSource>();
-        services.AddSingleton<IUpdateSource>(sp => sp.GetRequiredService<MirrorChyanSource>());
-
-        // 注册 UpdateManager
-        services.AddSingleton<UpdateManager>(sp =>
-        {
-            var source = sp.GetRequiredService<MirrorChyanSource>();
-            return new UpdateManager(source);
-        });
+        services.AddSingleton<IUpdateSource, MirrorChyanSource>(sp => sp.GetRequiredService<MirrorChyanSource>());
 
         return services;
     }
