@@ -16,7 +16,7 @@ namespace VelopackExtension.MirrorChyan.Sources;
 /// Remark: 由于 Velopack 的增量包要求每个版本都有增量+最新版本有全量文件，而 MirrorChyan 无法实现最新版本没有获取相邻版本之间的增量版本集合能力，因此无法实现增量更新。
 /// </summary>
 public class MirrorChyanSource(
-    MirrorChyanService mirrorChyanService,
+    IMirrorChyanService mirrorChyanService,
     IOptions<MirrorChyanSourceOptions> sourceOptions,
     IOptions<MirrorChyanOptions> mirrorChyanOptions,
     IHttpClientFactory httpClientFactory) : IUpdateSource

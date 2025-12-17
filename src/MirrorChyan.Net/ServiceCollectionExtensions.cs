@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
                 client.BaseAddress = o.CurrentValue.BaseAddress;
             });
         services
-           .AddSingleton<MirrorChyanService>()
+           .AddSingleton<IMirrorChyanService, MirrorChyanService>()
            .Configure<MirrorChyanOptions>(o =>
             {
                 o.ProductId = productId;

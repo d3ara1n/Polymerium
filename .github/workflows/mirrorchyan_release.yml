@@ -20,10 +20,23 @@ jobs:
         os: [win, linux]
         arch: [x86_64]
     steps:
+      - name: Get version from tag
+        id: version
+        run: |
+          # 优先使用 inputs.tag，否则从 release 事件获取
+          TAG="${{ inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+          fi
+
+          VERSION="${TAG#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+        shell: bash
+
       - uses: MirrorChyan/uploading-action@v1
         with:
           filetype: latest-release
-          filename: ${{ fromJson('{"win":"Polymerium-win-Setup.exe","linux":"Polymerium.AppImage"}')[matrix.os] }}
+          filename: ${{ format(fromJson('{"win":"Polymerium-{0}-full.nupkg","linux":"Polymerium-{0}-linux-full.nupkg"}')[matrix.os], steps.version.outputs.version) }}
           mirrorchyan_rid: Polymerium
           tag: ${{ inputs.tag }}
 

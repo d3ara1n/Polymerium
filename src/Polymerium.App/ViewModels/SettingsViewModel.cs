@@ -66,12 +66,10 @@ public partial class SettingsViewModel : ViewModelBase
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
-
-        // Initialize update source settings
         UpdateSource = configurationService.Value.UpdateSource;
         MirrorChyanCdk = configurationService.Value.UpdateMirrorChyanCdk;
 
-        // Initialize proxy settings
+
         ProxyMode = (ProxyMode)configurationService.Value.NetworkProxyMode;
         ProxyProtocol = (ProxyProtocol)configurationService.Value.NetworkProxyProtocol;
         ProxyEnabled = configurationService.Value.NetworkProxyEnabled;
@@ -80,11 +78,15 @@ public partial class SettingsViewModel : ViewModelBase
         ProxyUsername = configurationService.Value.NetworkProxyUsername;
         ProxyPassword = configurationService.Value.NetworkProxyPassword;
 
-        // Initialize proxy status text
+
         UpdateProxyStatusText();
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
         UpdateState = updateManager.IsInstalled || Program.Debug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
+        // MOTE: 由于只有 SettingsView 有触发更新的过程，所以在这个地方赋值 Cdk 是安全的
+        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(configurationService.Value.UpdateMirrorChyanCdk)
+                                                 ? configurationService.Value.UpdateMirrorChyanCdk
+                                                 : Program.MirrorChyanCdk;
     }
 
     #region Service Export
@@ -220,7 +222,7 @@ public partial class SettingsViewModel : ViewModelBase
     partial void OnMirrorChyanCdkChanged(string value)
     {
         _configurationService.Value.UpdateMirrorChyanCdk = value;
-        _mirrorChyanSourceOptions.Value.Cdk = value;
+        _mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(value) ? value : Program.MirrorChyanCdk;
     }
 
     #endregion
