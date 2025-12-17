@@ -5,7 +5,7 @@ using MirrorChyan.Net.Models;
 
 namespace MirrorChyan.Net.Services;
 
-public class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanOptions> options)
+internal class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanOptions> options) : IMirrorChyanService
 {
     public async Task<VersionModel> GetLatestVersionAsync(string? cdk, ChannelKind? channel)
     {
