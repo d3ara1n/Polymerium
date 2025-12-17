@@ -370,45 +370,45 @@
                     </Grid>
                 </controls:Plaque>
             </controls:SettingsEntryItem>
-            <!-- <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}"> -->
-            <!--     <TabStrip SelectedIndex="{Binding UpdateSource,Mode=TwoWay}"> -->
-            <!--         <TabStripItem> -->
-            <!--             <StackPanel Orientation="Horizontal" Spacing="8"> -->
-            <!--                 <icons:PackIconLucide Kind="Github" Height="{StaticResource MediumFontSize}" -->
-            <!--                                       Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" /> -->
-            <!--                 <husk:Divider Orientation="Vertical" /> -->
-            <!--                 <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdateSourceGithubText}" -->
-            <!--                            VerticalAlignment="Center" /> -->
-            <!--             </StackPanel> -->
-            <!--         </TabStripItem> -->
-            <!--         <TabStripItem> -->
-            <!--             <StackPanel Orientation="Horizontal" Spacing="8"> -->
-            <!--                 <icons:PackIconLucide Kind="Cloud" Height="{StaticResource MediumFontSize}" -->
-            <!--                                       Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" /> -->
-            <!--                 <husk:Divider Orientation="Vertical" /> -->
-            <!--                 <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdateSourceMirrorChyanText}" -->
-            <!--                            VerticalAlignment="Center" /> -->
-            <!--             </StackPanel> -->
-            <!--         </TabStripItem> -->
-            <!--     </TabStrip> -->
-            <!-- </controls:SettingsEntryItem> -->
-            <!-- <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_MirrorChyanCdkLabelText}" -->
-            <!--                             IsVisible="{Binding UpdateSource,Converter={x:Static husk:ObjectConverters.Match},ConverterParameter=1}"> -->
-            <!--     <StackPanel Spacing="4"> -->
-            <!--         <TextBox Watermark="{x:Static lang:Resources.SettingsView_MirrorChyanCdkPlaceholder}" -->
-            <!--                  Text="{Binding MirrorChyanCdk,Mode=TwoWay}" PasswordChar="*" /> -->
-            <!--         <TextBlock FontSize="{StaticResource SmallFontSize}" -->
-            <!--                    TextWrapping="Wrap" -->
-            <!--                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"> -->
-            <!--             <Run Text="☕" /> -->
-            <!--             <Run Text="{x:Static lang:Resources.SettingsView_MirrorChyanCdkHint}" /> -->
-            <!--             <Run Text=" " /> -->
-            <!--             <HyperlinkButton Content="mirrorchyan.com" NavigateUri="https://mirrorchyan.com" -->
-            <!--                              Padding="0" VerticalAlignment="Bottom" -->
-            <!--                              FontSize="{StaticResource SmallFontSize}" /> -->
-            <!--         </TextBlock> -->
-            <!--     </StackPanel> -->
-            <!-- </controls:SettingsEntryItem> -->
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}">
+                <TabStrip SelectedIndex="{Binding UpdateSource,Mode=TwoWay}">
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <icons:PackIconLucide Kind="Github" Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                            <husk:Divider Orientation="Vertical" />
+                            <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdateSourceGithubText}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabStripItem>
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <icons:PackIconLucide Kind="Cloud" Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                            <husk:Divider Orientation="Vertical" />
+                            <TextBlock Text="{x:Static lang:Resources.SettingsView_UpdateSourceMirrorChyanText}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabStripItem>
+                </TabStrip>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_MirrorChyanCdkLabelText}"
+                                        IsVisible="{Binding UpdateSource,Converter={x:Static husk:ObjectConverters.Match},ConverterParameter=1}">
+                <StackPanel Spacing="4">
+                    <TextBox Watermark="{x:Static lang:Resources.SettingsView_MirrorChyanCdkPlaceholder}"
+                             Text="{Binding MirrorChyanCdk,Mode=TwoWay}" PasswordChar="*" />
+                    <TextBlock FontSize="{StaticResource SmallFontSize}"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <Run Text="☕" />
+                        <Run Text="{x:Static lang:Resources.SettingsView_MirrorChyanCdkHint}" />
+                        <Run Text=" " />
+                        <HyperlinkButton Content="mirrorchyan.com" NavigateUri="https://mirrorchyan.com"
+                                         Padding="0" VerticalAlignment="Bottom"
+                                         FontSize="{StaticResource SmallFontSize}" />
+                    </TextBlock>
+                </StackPanel>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
                 <Button Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}"
                         HorizontalAlignment="Left" Command="{Binding NavigateCommand}"

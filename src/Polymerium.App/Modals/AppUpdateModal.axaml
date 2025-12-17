@@ -49,7 +49,14 @@
                 <TextBlock Text="{Binding $parent[modals:AppUpdateModal].DownloadProgress, StringFormat={}{0}%}"
                            FontSize="{StaticResource SmallFontSize}"
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <ProgressBar Value="{Binding $parent[modals:AppUpdateModal].DownloadProgress}" />
+                <ProgressBar Value="{Binding $parent[modals:AppUpdateModal].DownloadProgress}">
+                    <ProgressBar.Transitions>
+                        <Transitions>
+                            <DoubleTransition Property="Value" Easing="SineEaseOut"
+                                              Duration="{StaticResource ControlNormalAnimationDuration}" />
+                        </Transitions>
+                    </ProgressBar.Transitions>
+                </ProgressBar>
             </StackPanel>
 
             <Button Grid.Column="1" Classes="Primary"

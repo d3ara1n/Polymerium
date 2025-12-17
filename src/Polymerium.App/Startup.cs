@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
+using MirrorChyan.Net;
 using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Models;
@@ -21,6 +22,7 @@ using Trident.Core.Importers;
 using Trident.Core.Services;
 using Velopack;
 using Velopack.Sources;
+using VelopackExtension.MirrorChyan;
 
 namespace Polymerium.App;
 
@@ -166,6 +168,10 @@ public static class Startup
         services
            .AddViewFacilities()
            .AddFreeSql()
+           .AddMirrorChyan()
+           .AddVelopackGithubSource()
+           .AddVelopackMirrorChyanSource()
+           .AddVelopack()
            .AddTransient<IRepositoryProviderAccessor, BuiltinRepositoryProviderAccessor>()
            .AddTransient<IRepositoryProviderAccessor, UserRepositoryProviderAccessor>()
            .AddSingleton<ConfigurationService>()
@@ -176,9 +182,6 @@ public static class Startup
            .AddSingleton<PersistenceService>()
            .AddSingleton<ScrapService>()
            .AddSingleton<InstanceService>()
-           .AddSingleton<WidgetHostService>()
-           .AddSingleton<UpdateManager>(_ => new(new GithubSource("https://github.com/d3ara1n/Polymerium",
-                                                                  null,
-                                                                  true)));
+           .AddSingleton<WidgetHostService>();
     }
 }

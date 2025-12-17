@@ -11,7 +11,9 @@ public class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanO
     {
         var response = await client
                             .GetLatestVersionAsync(options.Value.ProductId,
-                                                   options.Value.IsIncrementalEnabled ? options.Value.VersionString : null,
+                                                   options.Value.IsIncrementalEnabled
+                                                       ? options.Value.VersionString
+                                                       : null,
                                                    cdk,
                                                    options.Value.ClientName,
                                                    options.Value.Os,
@@ -31,11 +33,14 @@ public class MirrorChyanService(IMirrorChyanClient client, IOptions<MirrorChyanO
         return new(Channels.ToKind(response.Data.Channel),
                    response.Data.VersionName,
                    response.Data.VersionNumber,
-                   response.Data.ReleaseNote, response.Data.Url is not null && response.Data.FileSize.HasValue && response.Data.Sha256 is not null && response.Data.UpdateType.HasValue ? new(response.Data.UpdateType.Value, response.Data.Url,
-                       response.Data.Sha256,
-                       response.Data.FileSize.Value,
-                       response.Data.Os,
-                       response.Data.Arch) : null
-                   );
+                   response.Data.ReleaseNote,
+                   response.Data is { Url: not null, Filesize: not null, Sha256: not null, UpdateType: not null }
+                       ? new(response.Data.UpdateType.Value,
+                             response.Data.Url,
+                             response.Data.Sha256,
+                             response.Data.Filesize.Value,
+                             response.Data.Os,
+                             response.Data.Arch)
+                       : null);
     }
 }

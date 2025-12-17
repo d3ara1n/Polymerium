@@ -5,7 +5,7 @@ namespace MirrorChyan.Net.Clients;
 
 public interface IMirrorChyanClient
 {
-    [Get("/api/resources/{rid}/latest}")]
+    [Get("/api/resources/{rid}/latest")]
     Task<ObjectResponse<GetLatestVersionResponseBody>> GetLatestVersionAsync(
         string rid,
         string? currentVersion,
