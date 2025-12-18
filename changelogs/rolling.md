@@ -2,11 +2,13 @@
 
 ### ✨ Highlights ✨
 
--
+- 添加 Mirror酱 更新源支持
+- 更改版本号的变更规则
 
 ### Added
 
--
+- 添加 Mirror酱 更新源支持(#POLY29)
+- 更改版本号的变更规则
 
 ### Changed
 
