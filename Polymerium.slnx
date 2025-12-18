@@ -17,5 +17,7 @@
         <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" />
     </Folder>
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" />
+    <Project
+        Path="submodules/VelopackExtension.MirrorChyan/src/VelopackExtension.MirrorChyan/VelopackExtension.MirrorChyan.csproj"/>
     <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
 </Solution>

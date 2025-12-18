@@ -4,3 +4,6 @@
 [submodule "submodules/Trident.Net"]
 	path = submodules/Trident.Net
 	url = git@github.com:TridentCore/Trident.Net.git
+[submodule "submodules/VelopackExtension.MirrorChyan"]
+	path = submodules/VelopackExtension.MirrorChyan
+	url = git@github.com:d3ara1n/VelopackExtension.MirrorChyan
