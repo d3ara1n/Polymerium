@@ -50,6 +50,7 @@
         <PackageReference Include="Sentry.Profiling" Version="6.0.0"/>
         <PackageReference Include="Tomlyn" Version="0.19.0"/>
         <PackageReference Include="Velopack" Version="0.0.1298"/>
+        <PackageReference Include="VelopackExtension.MirrorChyan" Version="1.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -77,6 +78,5 @@
     <ItemGroup>
         <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj"/>
         <ProjectReference Include="..\..\submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj"/>
-        <ProjectReference Include="..\VelopackExtension.MirrorChyan\VelopackExtension.MirrorChyan.csproj" />
-    </ItemGroup>
+            </ItemGroup>
 </Project>
