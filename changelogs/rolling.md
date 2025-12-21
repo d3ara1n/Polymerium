@@ -2,11 +2,11 @@
 
 ### ✨ Highlights ✨
 
-- 
+-
 
 ### Added
 
--
+- 添加更多本地化资源
 
 ### Changed
 

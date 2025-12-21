@@ -133,11 +133,14 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         #region Update Overrides & Perferences
 
         JavaHomeOverride = AccessOverrideString<string>(Profile.OVERRIDE_JAVA_HOME);
-        JavaHomeWatermark = "Auto decide if unset";
+        JavaHomeWatermark = Resources.InstancePropertiesView_JavaHomePlaceholder;
         JavaMaxMemoryOverride = AccessOverrideString<uint>(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
         JavaAdditionalArgumentsOverride = AccessOverrideString<string>(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
-        JavaAdditionalArgumentsWatermark = _configurationService.Value.GameJavaAdditionalArguments;
+        JavaAdditionalArgumentsWatermark =
+            !string.IsNullOrEmpty(_configurationService.Value.GameJavaAdditionalArguments)
+                ? _configurationService.Value.GameJavaAdditionalArguments
+                : Resources.InstancePropertiesView_JavaAdditionalArgumentsPlaceholder;
         WindowInitialHeightOverride = AccessOverrideString<uint>(Profile.OVERRIDE_WINDOW_HEIGHT);
         WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
         WindowInitialWidthOverride = AccessOverrideString<uint>(Profile.OVERRIDE_WINDOW_WIDTH);
@@ -145,7 +148,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
         BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
         QuickConnectAddressOverride = AccessOverrideString<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
-        QuickConnectAddressWatermark = "Disabled if unset";
+        QuickConnectAddressWatermark = Resources.InstancePropertiesView_QuickConnectPlaceholder;
 
         #endregion
 
