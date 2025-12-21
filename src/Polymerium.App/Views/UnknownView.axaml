@@ -111,11 +111,11 @@
                             Command="{Binding ShowDrawerCommand}" />
                     <Button Theme="{StaticResource GhostButtonTheme}" Content="Toast"
                             Command="{Binding ShowToastCommand}" />
-                    <HyperlinkButton Content="Notification" Command="{Binding ShowNotificationCommand}" />
+                    <HyperlinkButton Content="Hyperlink" NavigateUri="https://github.com/d3ara1n/Polymerium" />
 
-                    <husk:GrowlItem x:Name="Notification" Actions="{Binding $parent[v:UnknownView].Actions}"
-                                    Title="Downloading file..." Progress="54"
-                                    IsProgressBarVisible="True">
+                    <husk:GrowlItem x:Name="Notification"
+                                    Title="Downloading file..." Progress="58"
+                                    IsProgressBarVisible="True" Actions="{Binding NotificationActions}">
                         <StackPanel Spacing="4">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />

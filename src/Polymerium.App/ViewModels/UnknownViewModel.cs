@@ -1,11 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Services;
@@ -33,6 +35,13 @@ public partial class UnknownViewModel(
             Accent1Brush = new SolidColorBrush(accent1);
         }
 
+        NotificationActions.AddRange([
+            new("Information", ShowInformationCommand),
+            new("Success", ShowSuccessCommand),
+            new("Warning", ShowWarningCommand),
+            new("Danger", ShowDangerCommand)
+        ]);
+
         await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
     }
 
@@ -49,12 +58,24 @@ public partial class UnknownViewModel(
     [ObservableProperty]
     public partial IBrush Accent3Brush { get; set; } = Brushes.Black;
 
+    [ObservableProperty]
+    public partial AvaloniaList<GrowlAction> NotificationActions { get; set; } = [];
+
     #endregion
 
     #region Commands
 
     [RelayCommand]
-    private void ShowNotification() => notificationService.PopMessage("Hello", "Hi there!");
+    private void ShowInformation() => notificationService.PopMessage("Hello", "Hi there!");
+
+    [RelayCommand]
+    private void ShowSuccess() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Success);
+
+    [RelayCommand]
+    private void ShowWarning() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Warning);
+
+    [RelayCommand]
+    private void ShowDanger() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Danger);
 
     [RelayCommand]
     private void ShowToast()
