@@ -11,47 +11,9 @@ namespace Polymerium.App.Views;
 
 public partial class UnknownView : Page
 {
-    public static readonly DirectProperty<UnknownView, AvaloniaList<GrowlAction>> ActionsProperty =
-        AvaloniaProperty.RegisterDirect<UnknownView, AvaloniaList<GrowlAction>>(nameof(Actions),
-                                                                                    o => o.Actions,
-                                                                                    (o, v) => o.Actions = v);
-
     public UnknownView()
     {
         InitializeComponent();
-        Actions =
-        [
-            new("Information",
-                new RelayCommand<GrowlItem>(x =>
-                {
-                    x?.Level = GrowlLevel.Information;
-                }),
-                Notification),
-            new("Success",
-                new RelayCommand<GrowlItem>(x =>
-                {
-                    x?.Level = GrowlLevel.Success;
-                }),
-                Notification),
-            new("Warning",
-                new RelayCommand<GrowlItem>(x =>
-                {
-                    x?.Level = GrowlLevel.Warning;
-                }),
-                Notification),
-            new("Danger",
-                new RelayCommand<GrowlItem>(x =>
-                {
-                    x?.Level = GrowlLevel.Danger;
-                }),
-                Notification)
-        ];
-    }
-
-    public AvaloniaList<GrowlAction> Actions
-    {
-        get;
-        set => SetAndRaise(ActionsProperty, ref field, value);
     }
 
 
