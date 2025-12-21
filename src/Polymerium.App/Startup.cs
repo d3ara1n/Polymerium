@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
-using MirrorChyan.Net;
 using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Models;
@@ -20,8 +19,6 @@ using Trident.Core.Exporters;
 using Trident.Core.Extensions;
 using Trident.Core.Importers;
 using Trident.Core.Services;
-using Velopack;
-using Velopack.Sources;
 using VelopackExtension.MirrorChyan;
 
 namespace Polymerium.App;
@@ -30,8 +27,11 @@ public static class Startup
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
+        #if !DEBUG
+                services.AddSentry()
+        #endif
+
         services
-           .AddSentry()
            .AddAvalonia()
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder
