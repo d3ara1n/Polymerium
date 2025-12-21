@@ -144,7 +144,7 @@
     <data name="InstancePropertiesView_NavigateToGlobalButtonSubtitle" xml:space="preserve">
         <value>此处的项目会覆盖全局游戏设置</value>
     </data>
-    <data name="InstancePropertiesView_JavaLabelText" xml:space="preserve">
+    <data name="InstancePropertiesView_JavaHomeLabelText" xml:space="preserve">
         <value>Java 主目录</value>
     </data>
     <data name="InstancePropertiesView_JavaMaxMemoryLabelText" xml:space="preserve">
@@ -1206,9 +1206,6 @@
     <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
         <value>自动连接到服务器</value>
     </data>
-    <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
-        <value>地址</value>
-    </data>
     <data name="AssetKind_Mod" xml:space="preserve">
         <value>模组</value>
     </data>
@@ -1890,5 +1887,14 @@
     </data>
     <data name="MaintenanceStorageView_InstancesTitle" xml:space="preserve">
         <value>实例</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectPlaceholder" xml:space="preserve">
+        <value>（未设置则禁用）</value>
+    </data>
+    <data name="InstancePropertiesView_JavaHomePlaceholder" xml:space="preserve">
+        <value>（未设置则自动选择）</value>
+    </data>
+    <data name="InstancePropertiesView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+        <value>（空）</value>
     </data>
 </root>

@@ -88,7 +88,7 @@
                     </StackPanel>
                 </Grid>
             </Button>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaLabelText}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaHomeLabelText}">
                 <TextBox Watermark="{Binding JavaHomeWatermark}"
                          Text="{Binding JavaHomeOverride,Mode=TwoWay,FallbackValue={x:Null}}">
                     <TextBox.InnerRightContent>

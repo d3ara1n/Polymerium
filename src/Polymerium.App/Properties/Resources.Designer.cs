@@ -2436,11 +2436,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (Empty).
+        /// </summary>
+        public static string InstancePropertiesView_JavaAdditionalArgumentsPlaceholder {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_JavaAdditionalArgumentsPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Java Home.
         /// </summary>
-        public static string InstancePropertiesView_JavaLabelText {
+        public static string InstancePropertiesView_JavaHomeLabelText {
             get {
-                return ResourceManager.GetString("InstancePropertiesView_JavaLabelText", resourceCulture);
+                return ResourceManager.GetString("InstancePropertiesView_JavaHomeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Auto decide if unset).
+        /// </summary>
+        public static string InstancePropertiesView_JavaHomePlaceholder {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_JavaHomePlaceholder", resourceCulture);
             }
         }
         
@@ -2517,20 +2535,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
-        /// </summary>
-        public static string InstancePropertiesView_QuickConnectAddressLabelText {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_QuickConnectAddressLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connect At Startup.
         /// </summary>
         public static string InstancePropertiesView_QuickConnectLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_QuickConnectLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Disabled if unset).
+        /// </summary>
+        public static string InstancePropertiesView_QuickConnectPlaceholder {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_QuickConnectPlaceholder", resourceCulture);
             }
         }
         

@@ -153,7 +153,7 @@
     <data name="InstancePropertiesView_NavigateToGlobalButtonSubtitle" xml:space="preserve">
         <value>Entries here will overwrite the global settings</value>
     </data>
-    <data name="InstancePropertiesView_JavaLabelText" xml:space="preserve">
+    <data name="InstancePropertiesView_JavaHomeLabelText" xml:space="preserve">
         <value>Java Home</value>
     </data>
     <data name="InstancePropertiesView_JavaMaxMemoryLabelText" xml:space="preserve">
@@ -1215,9 +1215,6 @@
     <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
         <value>Connect At Startup</value>
     </data>
-    <data name="InstancePropertiesView_QuickConnectAddressLabelText" xml:space="preserve">
-        <value>Address</value>
-    </data>
     <data name="AssetKind_Mod" xml:space="preserve">
         <value>Mods</value>
     </data>
@@ -1899,5 +1896,14 @@
     </data>
     <data name="MaintenanceStorageView_InstancesTitle" xml:space="preserve">
         <value>Instances</value>
+    </data>
+    <data name="InstancePropertiesView_QuickConnectPlaceholder" xml:space="preserve">
+        <value>(Disabled if unset)</value>
+    </data>
+    <data name="InstancePropertiesView_JavaHomePlaceholder" xml:space="preserve">
+        <value>(Auto decide if unset)</value>
+    </data>
+    <data name="InstancePropertiesView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+        <value>(Empty)</value>
     </data>
 </root>
