@@ -6,12 +6,14 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:fi="using:FluentIcons.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
-           xmlns:v="using:Polymerium.App.Views"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
         <DockPanel HorizontalSpacing="8">
             <StackPanel DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
+                <Button Command="{Binding ShowDiagnosisCommand}">
+                    <icons:PackIconLucide Kind="HandHelping" Width="12" Height="12" />
+                </Button>
                 <Button Command="{Binding ShowIntroCommand}">
                     <icons:PackIconLucide Kind="Film" Width="12" Height="12" />
                 </Button>

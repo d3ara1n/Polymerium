@@ -1414,7 +1414,7 @@
         <value>杂项</value>
     </data>
     <data name="GameCrashReportModal_Title" xml:space="preserve">
-        <value>游戏崩溃</value>
+        <value>💥 坠毁！</value>
     </data>
     <data name="GameCrashReportModal_ExitCodeLabelText" xml:space="preserve">
         <value>退出代码</value>

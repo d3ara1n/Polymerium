@@ -1410,7 +1410,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GAME CRASHED.
+        ///   Looks up a localized string similar to 💥 CRASHED!.
         /// </summary>
         public static string GameCrashReportModal_Title {
             get {
