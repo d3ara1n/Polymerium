@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Humanizer;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
@@ -198,17 +199,19 @@ public partial class UnknownViewModel(
                 CrashReportPath =
                     "C:\\Users\\HuskyT\\Desktop\\crash-2023-09-19_17.17.57-client.txt",
                 GameDirectory = "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft",
-                InstanceKey = "HuskyT",
-                InstanceName = "HuskyT",
+                InstanceKey = "cherry_picks",
+                InstanceName = "Cherry Picks",
                 LaunchTime = DateTimeOffset.Now.AddHours(-1),
                 CrashTime = DateTimeOffset.Now,
                 ExceptionMessage = "I USED TO RULE THE WORLD",
                 MinecraftVersion = "1.19.2",
                 LoaderLabel = "Fabric 0.14.12",
                 OperatingSystem = "Windows 10",
+                InstalledMemory =
+                    $"{double.Round((double)GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024 / 1024)} GB",
                 JavaVersion = "17",
                 JavaPath = "C:\\Program Files\\Java\\jdk-17.0.8",
-                AllocatedMemory = "8GB",
+                AllocatedMemory = "8 GB",
                 LogFilePath =
                     "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft\\logs\\latest.log",
                 LastLogLines = "ALIVE OR DEAD VERY LONG LOG THAT DONT TRIM",

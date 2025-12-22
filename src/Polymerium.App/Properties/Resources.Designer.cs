@@ -1275,6 +1275,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installed Memory:.
+        /// </summary>
+        public static string GameCrashReportModal_InstalledMemoryLabelText {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_InstalledMemoryLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed Mods:.
         /// </summary>
         public static string GameCrashReportModal_InstalledModsLabelText {
@@ -1401,6 +1410,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 💥 CRASHED!.
+        /// </summary>
+        public static string GameCrashReportModal_Subtitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System Environment.
         /// </summary>
         public static string GameCrashReportModal_SystemEnvironmentTitle {
@@ -1410,7 +1428,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 💥 CRASHED!.
+        ///   Looks up a localized string similar to CRASH REPORT.
         /// </summary>
         public static string GameCrashReportModal_Title {
             get {
