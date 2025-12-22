@@ -188,5 +188,36 @@ public partial class UnknownViewModel(
         });
     }
 
+    [RelayCommand]
+    private void ShowDiagnosis()
+    {
+        overlayService.PopModal(new GameCrashReportModal
+        {
+            Report = new()
+            {
+                CrashReportPath =
+                    "C:\\Users\\HuskyT\\Desktop\\crash-2023-09-19_17.17.57-client.txt",
+                GameDirectory = "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft",
+                InstanceKey = "HuskyT",
+                InstanceName = "HuskyT",
+                LaunchTime = DateTimeOffset.Now.AddHours(-1),
+                CrashTime = DateTimeOffset.Now,
+                ExceptionMessage = "I USED TO RULE THE WORLD",
+                MinecraftVersion = "1.19.2",
+                LoaderLabel = "Fabric 0.14.12",
+                OperatingSystem = "Windows 10",
+                JavaVersion = "17",
+                JavaPath = "C:\\Program Files\\Java\\jdk-17.0.8",
+                AllocatedMemory = "8GB",
+                LogFilePath =
+                    "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft\\logs\\latest.log",
+                LastLogLines = "ALIVE OR DEAD VERY LONG LOG THAT DONT TRIM",
+                ModCount = 10,
+                CommandLine = "java -jar fabric-loader-0.14.12.jar",
+                ExitCode = 1
+            }
+        });
+    }
+
     #endregion
 }

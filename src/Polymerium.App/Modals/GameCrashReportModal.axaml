@@ -6,45 +6,49 @@
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-            MaxWidth="750"
+            MaxWidth="880"
+            BorderThickness="0,7,0,0"
+            Padding="0"
+            BorderBrush="{StaticResource ControlDangerBorderBrush}"
             mc:Ignorable="d" Background="{StaticResource GrowlDangerBackgroundBrush}"
             x:Class="Polymerium.App.Modals.GameCrashReportModal">
     <DockPanel>
         <!-- Action Buttons at Bottom -->
-        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,Auto,Auto,Auto"
-              Margin="{StaticResource ModalContentMargin}" ColumnSpacing="8">
-            <Button Grid.Column="1" Classes="Primary"
-                    Command="{Binding $parent[modals:GameCrashReportModal].ExportDiagnosticPackageCommand}">
-                <husk:IconLabel Icon="Box"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_ExportDiagnosticPackageButtonText}" />
-            </Button>
-            <Button Grid.Column="2"
-                    Command="{Binding $parent[modals:GameCrashReportModal].CopyToClipboardCommand}">
-                <husk:IconLabel Icon="Box"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_CopyReportButtonText}" />
-            </Button>
-            <Button Grid.Column="3" IsCancel="True"
-                    Command="{Binding $parent[modals:GameCrashReportModal].Dismiss}">
-                <TextBlock Text="{x:Static lang:Resources.GameCrashReportModal_CloseButtonText}" />
-            </Button>
-        </Grid>
+        <StackPanel DockPanel.Dock="Bottom">
+            <husk:Divider
+                Margin="{Binding Source={StaticResource ModalContentMargin},Converter={x:Static husk:ThicknessConverters.Horizontal}}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                        Margin="{StaticResource ModalContentMargin}" Spacing="8">
+                <Button Classes="Primary"
+                        Command="{Binding $parent[modals:GameCrashReportModal].ExportDiagnosticPackageCommand}">
+                    <husk:IconLabel Icon="Box"
+                                    Text="{x:Static lang:Resources.GameCrashReportModal_ExportDiagnosticPackageButtonText}" />
+                </Button>
+                <Button Command="{Binding $parent[modals:GameCrashReportModal].CopyToClipboardCommand}">
+                    <husk:IconLabel Icon="Box"
+                                    Text="{x:Static lang:Resources.GameCrashReportModal_CopyReportButtonText}" />
+                </Button>
+                <Button IsCancel="True"
+                        Command="{Binding $parent[modals:GameCrashReportModal].Dismiss}">
+                    <TextBlock Text="{x:Static lang:Resources.GameCrashReportModal_CloseButtonText}" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
 
-        <ScrollViewer DockPanel.Dock="Top" MaxHeight="650">
-            <StackPanel Spacing="0">
+        <ScrollViewer DockPanel.Dock="Top">
+            <StackPanel Margin="{StaticResource ModalContentMargin}">
                 <!-- Critical Error Banner -->
                 <StackPanel Spacing="6">
-                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
-                               FontSize="{StaticResource ExtraLargeFontSize}">
-                        <Run Text="⚠ " />
-                        <Run Text="{x:Static lang:Resources.GameCrashReportModal_Title}" />
-                    </TextBlock>
+                    <TextBlock Text="{x:Static lang:Resources.GameCrashReportModal_Title}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                               FontSize="{StaticResource ExtraLargeFontSize}" />
                     <TextBlock
                         Text="{Binding $parent[modals:GameCrashReportModal].Report.ExceptionMessage,FallbackValue={x:Null}}"
                         TextWrapping="Wrap" />
                 </StackPanel>
 
                 <!-- Content Area -->
-                <StackPanel Margin="{StaticResource ModalContentMargin}" Spacing="20">
+                <StackPanel Spacing="20">
                     <!-- Key Information Cards -->
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
                         <!-- Exit Code Card -->
