@@ -28,7 +28,7 @@ public static class Startup
     public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
         #if !DEBUG
-                services.AddSentry()
+                services.AddSentry();
         #endif
 
         services
