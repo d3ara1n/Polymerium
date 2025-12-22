@@ -775,6 +775,9 @@ public partial class MainWindowContext : ObservableObject
             osDescription = $"Windows {Environment.OSVersion.Version}";
         }
 
+        var installedMemory =
+            $"{double.Round((double)GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024 / 1024)} GB";
+
         // Extract exit code and exception message
         var exitCode = tracker.FailureReason is ProcessFaultedException pfe ? pfe.ExitCode : -1;
         var exceptionMessage = tracker.FailureReason?.Message ?? "Unknown error";
@@ -799,6 +802,7 @@ public partial class MainWindowContext : ObservableObject
             LoaderLabel = loaderLabel,
             GameDirectory = gameDir,
             OperatingSystem = osDescription,
+            InstalledMemory = installedMemory,
             JavaVersion = javaVersion ?? "Unknown",
             JavaPath = javaPath ?? "Unknown",
             AllocatedMemory = allocatedMemory,

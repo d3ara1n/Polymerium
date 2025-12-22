@@ -1423,7 +1423,7 @@
         <value>Other Files</value>
     </data>
     <data name="GameCrashReportModal_Title" xml:space="preserve">
-        <value>💥 CRASHED!</value>
+        <value>CRASH REPORT</value>
     </data>
     <data name="GameCrashReportModal_ExitCodeLabelText" xml:space="preserve">
         <value>Exit Code</value>
@@ -1905,5 +1905,11 @@
     </data>
     <data name="InstancePropertiesView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>(Empty)</value>
+    </data>
+    <data name="GameCrashReportModal_InstalledMemoryLabelText" xml:space="preserve">
+        <value>Installed Memory:</value>
+    </data>
+    <data name="GameCrashReportModal_Subtitle" xml:space="preserve">
+        <value>💥 CRASHED!</value>
     </data>
 </root>

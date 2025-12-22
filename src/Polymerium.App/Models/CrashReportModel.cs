@@ -21,6 +21,7 @@ public class CrashReportModel
 
     // System info
     public required string OperatingSystem { get; init; }
+    public required string? InstalledMemory { get; init; }
     public required string JavaVersion { get; init; }
     public required string JavaPath { get; init; }
     public string? AllocatedMemory { get; init; }
@@ -29,9 +30,6 @@ public class CrashReportModel
     public string? LogFilePath { get; init; }
     public string? CrashReportPath { get; init; }
     public string? LastLogLines { get; init; }
-
-    // Mods info (if applicable)
-    public List<string>? InstalledMods { get; init; }
     public int ModCount { get; init; }
 
     // Process
