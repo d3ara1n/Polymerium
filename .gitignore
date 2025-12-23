@@ -367,6 +367,8 @@ FodyWeavers.xsd
 .roo/
 .kilocode/
 .kiro/
+.claude/
+.crush/
 
 appsettings.*.json
 build/
