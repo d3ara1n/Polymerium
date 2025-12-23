@@ -37,9 +37,15 @@
 
 > **Traditional Minecraft launchers manage files. Polymerium manages experiences.**
 
-Instead of copying and storing thousands of mod files for each instance, Polymerium describes your game setup as
-lightweight metadata and builds the actual game files on-demand. This revolutionary approach brings several
-game-changing benefits:
+### 🚀 The Evolution of Minecraft Launchers
+
+| Generation | Management Focus | Representative Approach |
+|------------|------------------|------------------------|
+| **1st Gen** | 📁 Files | Directly manipulate game files and folders |
+| **2nd Gen** | 📦 Instances | Isolated game environments with copied resources |
+| **3rd Gen** | 🧬 Metadata | Declarative configuration with on-demand deployment |
+
+**Polymerium is a third-generation launcher.** Instead of copying and storing thousands of mod files for each instance, Polymerium describes your game setup as lightweight metadata and builds the actual game files on-demand. This revolutionary approach brings several game-changing benefits:
 
 ### 🎯 **Smart Resource Management**
 
