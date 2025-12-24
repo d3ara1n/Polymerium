@@ -58,7 +58,11 @@ internal static class Program
 
         #endregion
 
-        var builder = Host.CreateApplicationBuilder(args);
+        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings()
+        {
+            Args = args,
+            EnvironmentName = Debug ? "Development" : "Production"
+        });
         Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
         Debug = Debug || builder.Environment.EnvironmentName == "Development";
         AppHost = builder.Build();
