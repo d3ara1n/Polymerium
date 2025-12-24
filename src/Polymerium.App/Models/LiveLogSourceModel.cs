@@ -12,10 +12,4 @@ public partial class LiveLogSourceModel : LogSourceModelBase
     public partial bool IsOnAir { get; set; }
 
     #endregion
-
-    #region Direct
-
-    public required ReadOnlyObservableCollection<ScrapModel> Logs { get; init; }
-
-    #endregion
 }

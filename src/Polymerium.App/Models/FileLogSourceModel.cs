@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace Polymerium.App.Models;
+﻿namespace Polymerium.App.Models;
 
 public class FileLogSourceModel : LogSourceModelBase
 {
     #region Direct
 
-    public required IReadOnlyList<ScrapModel> Logs { get; init; }
+    public required string Path { get; init; }
+    public string Name => System.IO.Path.GetFileName(Path);
 
     #endregion
 }
