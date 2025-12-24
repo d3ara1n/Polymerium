@@ -50,6 +50,11 @@ internal static class Program
         if (!File.Exists(firstRunFile))
         {
             FirstRun = true;
+            var dir = Path.GetDirectoryName(firstRunFile);
+            if (dir != null && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+
             File.WriteAllText(firstRunFile, MagicWords);
         }
 
