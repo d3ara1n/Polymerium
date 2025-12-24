@@ -53,8 +53,6 @@ internal static class Program
             var dir = Path.GetDirectoryName(firstRunFile);
             if (dir != null && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
-
-
             File.WriteAllText(firstRunFile, MagicWords);
         }
 

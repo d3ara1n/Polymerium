@@ -46,7 +46,7 @@ if ($Rid -like "win-*") {
     $IconPath = "./src/Polymerium.App/Assets/Icon.png"
 }
 
-$PackDir = "src/Polymerium.App/bin/Release/$DotnetFramework/$Rid/publish"
+$PackDir = "Publish/$Rid"
 
 Write-Host "Packing Polymerium with Velopack..."
 Write-Host "Version: $Version"
