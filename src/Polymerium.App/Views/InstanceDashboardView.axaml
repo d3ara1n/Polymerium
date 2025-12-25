@@ -17,6 +17,27 @@
                   x:DataType="vm:InstanceDashboardViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <controls:Subpage.Resources>
+        <husk:RelayDataTemplate x:Key="LogSourceTemplate" x:DataType="m:LogSourceModelBase">
+            <DataTemplate DataType="m:LiveLogSourceModel">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                    <icons:PackIconLucide Grid.Column="0" Kind="Radio"
+                                          Width="{StaticResource MediumFontSize}"
+                                          Height="{StaticResource MediumFontSize}"
+                                          VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="实时日志" />
+                    <husk:Tag Grid.Column="2" IsVisible="{Binding IsOnAir}" Classes="Small Success" Content="Live" />
+                </Grid>
+            </DataTemplate>
+            <DataTemplate DataType="m:FileLogSourceModel">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                    <icons:PackIconLucide Grid.Column="0" Kind="File"
+                                          Width="{StaticResource MediumFontSize}"
+                                          Height="{StaticResource MediumFontSize}"
+                                          VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                </Grid>
+            </DataTemplate>
+        </husk:RelayDataTemplate>
         <!-- 日志条目内容模板 -->
         <DataTemplate x:Key="LogEntryContentTemplate" x:DataType="m:ScrapModel">
             <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="4">
@@ -194,28 +215,10 @@
                 <!-- 控制区域 -->
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,12,*,12,Auto,12,Auto" Margin="8">
                     <!-- 数据源选择 -->
-                    <ComboBox Grid.Column="0" MinWidth="180" SelectedIndex="0">
-                        <ComboBoxItem>
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <icons:PackIconLucide Grid.Column="0" Kind="Radio"
-                                                      Width="{StaticResource MediumFontSize}"
-                                                      Height="{StaticResource MediumFontSize}"
-                                                      VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="实时日志" />
-                                <husk:Tag Grid.Column="2" Classes="Small Success" Content="Live" />
-                            </Grid>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <icons:PackIconLucide Grid.Column="0" Kind="File"
-                                                      Width="{StaticResource MediumFontSize}"
-                                                      Height="{StaticResource MediumFontSize}"
-                                                      VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="latest.log" />
-                                <husk:Tag Grid.Column="2" Classes="Small" Content="Live" />
-                            </Grid>
-                        </ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox Grid.Column="0" MinWidth="180" SelectedIndex="0"
+                              SelectedItem="{Binding SelectedSource,Mode=TwoWay}"
+                              ItemsSource="{Binding Sources}"
+                              ItemTemplate="{StaticResource LogSourceTemplate}" />
 
                     <!-- 搜索框 -->
                     <TextBox Grid.Column="2"
