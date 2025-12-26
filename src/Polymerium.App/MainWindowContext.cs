@@ -192,7 +192,7 @@ public partial class MainWindowContext : ObservableObject
                         {
                             try
                             {
-                                var notification = _notificationService.PopProgress("...", "Exporting...");
+                                var notification = _notificationService.PopProgress(name, "Exporting...");
                                 var container = await _exporterAgent.ExportAsync(model.SelectedExporterLabel,
                                                     key,
                                                     name,
