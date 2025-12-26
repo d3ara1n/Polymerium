@@ -165,8 +165,10 @@ public partial class UnknownViewModel(
             pop.Click += (_, __) => PopDialog();
             overlayService.PopDialog(new()
             {
+                IsPrimaryButtonVisible = true,
                 Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
                 Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
+                Result = Program.MagicWords,
                 Content = new StackPanel
                 {
                     Spacing = 8d, Children = { new TextBox(), pop }

@@ -1,13 +1,15 @@
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
+using Polymerium.App.Modals;
 using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class MarketplacePortalViewModel(
     ConfigurationService configurationService,
-    NavigationService navigationService) : ViewModelBase
+    NavigationService navigationService,
+    OverlayService overlayService) : ViewModelBase
 {
     #region Commands
 
@@ -19,6 +21,12 @@ public partial class MarketplacePortalViewModel(
             if (query == "/gamemode 1")
             {
                 navigationService.Navigate<UnknownView>();
+                return;
+            }
+
+            if (query == "Polymerium")
+            {
+                overlayService.PopModal(new TrophyModal());
                 return;
             }
         }
