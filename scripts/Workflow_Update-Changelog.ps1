@@ -129,6 +129,10 @@ $unreleasedSection
 
 -
 
+### Fixed
+
+-
+
 ### Added
 
 -
@@ -138,10 +142,6 @@ $unreleasedSection
 -
 
 ### Removed
-
--
-
-### Fixed
 
 -
 
