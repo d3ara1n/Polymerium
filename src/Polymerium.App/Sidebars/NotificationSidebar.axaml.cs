@@ -8,5 +8,5 @@ public partial class NotificationSidebar : Sidebar
     public NotificationSidebar() => InitializeComponent();
 
     private void DimissButton_OnClick(object? sender, RoutedEventArgs e) =>
-        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+        RaiseEvent(new OverlayHost.DismissRequestedEventArgs(this));
 }
