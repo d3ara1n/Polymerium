@@ -283,10 +283,10 @@ public partial class InstancePackageModal : Modal
         IsFilterEnabled = true;
         LazyDependencies = ConstructDependencies();
         LazyDependants = ConstructDependants();
-        AddHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
+        AddHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
     }
 
-    private void DismissRequestedHandler(object? sender, OverlayItem.DismissRequestedEventArgs e)
+    private void DismissRequestedHandler(object? sender, OverlayHost.DismissRequestedEventArgs e)
     {
         if (Model.Version is InstancePackageVersionModel v)
         {
@@ -305,7 +305,7 @@ public partial class InstancePackageModal : Modal
                                                 Model.Owner.Entry.Purl));
         }
 
-        RemoveHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
+        RemoveHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
         await Guard.DisposeAsync();
     }
 
