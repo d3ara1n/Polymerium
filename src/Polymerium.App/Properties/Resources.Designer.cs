@@ -5067,6 +5067,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Java 25 Home.
+        /// </summary>
+        public static string SettingsView_Java25LabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_Java25LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Java 8 Home.
         /// </summary>
         public static string SettingsView_Java8LabelText {

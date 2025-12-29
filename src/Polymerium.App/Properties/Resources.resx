@@ -1912,4 +1912,7 @@
     <data name="GameCrashReportModal_Subtitle" xml:space="preserve">
         <value>💥 CRASHED!</value>
     </data>
+    <data name="SettingsView_Java25LabelText" xml:space="preserve">
+        <value>Java 25 Home</value>
+    </data>
 </root>
