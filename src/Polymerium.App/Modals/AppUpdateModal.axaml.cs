@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Velopack;
@@ -78,7 +79,7 @@ public partial class AppUpdateModal : Modal
             await UpdateManager.DownloadUpdatesAsync(Model.Update, Report);
 
             // 下载完成后直接重启应用更新
-            UpdateManager.ApplyUpdatesAndRestart(Model.Update);
+            Program.Terminate(() => UpdateManager.ApplyUpdatesAndRestart(Model.Update));
         }
         catch (Exception ex)
         {
