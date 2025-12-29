@@ -25,6 +25,7 @@ public static class JavaHelper
                                          11 => secondary.RuntimeJavaHome11,
                                          16 or 17 => secondary.RuntimeJavaHome17,
                                          21 => secondary.RuntimeJavaHome21,
+                                         24 or 25 => secondary.RuntimeJavaHome25,
                                          _ => throw new ArgumentOutOfRangeException(nameof(major),
                                                   major,
                                                   $"Unsupported java version: {major}")

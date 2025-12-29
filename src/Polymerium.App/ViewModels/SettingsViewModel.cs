@@ -62,6 +62,9 @@ public partial class SettingsViewModel : ViewModelBase
         JavaHome21 = configurationService.Value.RuntimeJavaHome21 != string.Empty
                          ? configurationService.Value.RuntimeJavaHome21
                          : null;
+        JavaHome25 = configurationService.Value.RuntimeJavaHome25 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome25
+                         : null;
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
@@ -368,6 +371,12 @@ public partial class SettingsViewModel : ViewModelBase
 
     partial void OnJavaHome21Changed(string? value) =>
         _configurationService.Value.RuntimeJavaHome21 = value ?? string.Empty;
+
+    [ObservableProperty]
+    public partial string? JavaHome25 { get; set; }
+
+    partial void OnJavaHome25Changed(string? value) =>
+        _configurationService.Value.RuntimeJavaHome25 = value ?? string.Empty;
 
     #endregion
 

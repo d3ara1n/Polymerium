@@ -168,6 +168,9 @@
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java21LabelText}">
                 <cp:JavaHomeContainer Home="{Binding JavaHome21,Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java25LabelText}">
+                <cp:JavaHomeContainer Home="{Binding JavaHome25,Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
+            </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
         <!-- Game Defaults -->
