@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Extensions.Hosting;
 using Trident.Abstractions;
 using Velopack;
@@ -28,6 +29,8 @@ internal static class Program
 
     public static bool Debug { get; private set; } = Debugger.IsAttached;
     public static bool FirstRun { get; private set; }
+
+    private static Action? exitAction;
 
     public static void Main(string[] args)
     {
@@ -67,6 +70,17 @@ internal static class Program
         Debug = Debug || builder.Environment.EnvironmentName == "Development";
         AppHost = builder.Build();
         AppHost.Run();
+
+        exitAction?.Invoke();
+    }
+
+    public static void Terminate(Action? beforeDie)
+    {
+        exitAction = beforeDie;
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
