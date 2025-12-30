@@ -634,7 +634,6 @@ public partial class InstanceSetupViewModel(
     [RelayCommand]
     private async Task UpdateBatchAsync()
     {
-        var cts = new CancellationTokenSource();
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             var total = _stageSource.Items.Count;
@@ -668,7 +667,7 @@ public partial class InstanceSetupViewModel(
                 var semaphore = new SemaphoreSlim(2);
                 // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
                 // ReSharper disable once AccessToDisposedClosure
-                var tasks = _stageSource.Items.Select(x => UpdateAsync(x, semaphore, cts.Token));
+                var tasks = _stageSource.Items.Select(x => UpdateAsync(x, semaphore, notification.Token));
                 await Task.WhenAll(tasks);
                 semaphore.Dispose();
             }
@@ -678,7 +677,7 @@ public partial class InstanceSetupViewModel(
                 notificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
             }
 
-            if (cts.IsCancellationRequested)
+            if (notification.Token.IsCancellationRequested)
             {
                 return;
             }
@@ -766,7 +765,6 @@ public partial class InstanceSetupViewModel(
 
             void Cancel()
             {
-                cts.Cancel();
                 notification.Dismiss();
             }
 
@@ -809,6 +807,9 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
+    private async Task ImportListAsync() { }
+
+    [RelayCommand]
     private async Task ExportListAsync()
     {
         var profile = ProfileManager.GetImmutable(Basic.Key);
@@ -823,6 +824,8 @@ public partial class InstanceSetupViewModel(
             // 这里用单个解析也没关系，能进入这个页面就说明所有数据都被缓存过了
             foreach (var entry in list)
             {
+                if (notification.Token.IsCancellationRequested)
+                    return;
                 string? label = null;
                 string? @namespace = null;
                 string? projectId = null;
@@ -837,7 +840,7 @@ public partial class InstanceSetupViewModel(
                     versionId = result.Vid;
                     try
                     {
-                        await Task.Delay(TimeSpan.FromMilliseconds(50));
+                        await Task.Delay(TimeSpan.FromMilliseconds(25));
                         var package = await dataService.ResolvePackageAsync(result.Label,
                                                                             result.Namespace,
                                                                             result.Pid,
@@ -897,18 +900,6 @@ public partial class InstanceSetupViewModel(
             }
         }
     }
-
-    private record ExportedEntry(
-        string Purl,
-        string? Label,
-        string? Namespace,
-        string? ProjectId,
-        string? VersionId,
-        bool Enabled,
-        string? Source,
-        string[] Tags,
-        string? Name,
-        string? Version);
 
     [RelayCommand]
     private async Task CheckUpdateAsync()
@@ -1050,6 +1041,23 @@ public partial class InstanceSetupViewModel(
 
     [ObservableProperty]
     public partial bool IsFilterActive { get; set; }
+
+    #endregion
+
+
+    #region Nested type: ExportedEntry
+
+    private record ExportedEntry(
+        string Purl,
+        string? Label,
+        string? Namespace,
+        string? ProjectId,
+        string? VersionId,
+        bool Enabled,
+        string? Source,
+        string[] Tags,
+        string? Name,
+        string? Version);
 
     #endregion
 }
