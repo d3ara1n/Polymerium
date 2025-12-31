@@ -35,7 +35,7 @@
             <Setter Property="ClipToBounds" Value="False" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="Padding" Value="16,0" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
@@ -109,19 +109,19 @@
             </Style>
         </ControlTheme>
     </controls:Subpage.Resources>
-    <Grid RowDefinitions="*,*,100" ColumnSpacing="24" RowSpacing="24">
+    <Grid ShowGridLines="True" RowDefinitions="*,*,Auto" ColumnSpacing="24" RowSpacing="24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" MinWidth="230" />
         </Grid.ColumnDefinitions>
-        <husk:Card
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Padding="0"
-            Background="{StaticResource OverlaySolidBackgroundBrush}"
-            BorderThickness="0">
+        <!-- Overview -->
+        <husk:Card Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Padding="0"
+                   Background="{StaticResource OverlaySolidBackgroundBrush}"
+                   BorderThickness="0">
             <Panel>
                 <Border CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
@@ -171,6 +171,7 @@
                 </Grid>
             </Panel>
         </husk:Card>
+        <!-- Setup -->
         <husk:BusyContainer
             Grid.Row="0"
             Grid.Column="2"
@@ -258,11 +259,11 @@
                     IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </husk:BusyContainer.PendingContent>
         </husk:BusyContainer>
-        <Grid
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            Grid.Column="0"
-            RowDefinitions="Auto,*" RowSpacing="12">
+        <!-- Activities -->
+        <Grid Grid.Row="1"
+              Grid.RowSpan="2"
+              Grid.Column="0"
+              RowDefinitions="Auto,*" RowSpacing="12">
             <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <TextBlock
                     Grid.Column="0"
@@ -412,32 +413,30 @@
                 </ScrollViewer>
             </Panel>
         </Grid>
-        <Grid
-            Grid.Row="2"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            ColumnDefinitions="*,Auto" ColumnSpacing="8"
-            RowDefinitions="Auto,*" RowSpacing="12">
-            <TextBlock
-                Grid.Row="0"
-                FontSize="{StaticResource LargeFontSize}"
-                FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.InstanceHomeView_LaunchPadTitle}" />
-            <husk:Card
-                Grid.Row="1"
-                Grid.Column="0"
-                Padding="0">
+        <!-- Launch Pad -->
+        <Grid Grid.Row="2"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   ColumnDefinitions="*,Auto" ColumnSpacing="8"
+                   RowDefinitions="Auto,*" RowSpacing="12">
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       FontSize="{StaticResource LargeFontSize}"
+                       FontWeight="{StaticResource ControlStrongFontWeight}"
+                       Text="{x:Static lang:Resources.InstanceHomeView_LaunchPadTitle}" />
+            <husk:Card Grid.Row="1"
+                       Grid.Column="0"
+                       Padding="0">
                 <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <husk:SwitchPresenter
                             Value="{Binding SelectedAccount,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay,FallbackValue={x:False}}"
                             TargetType="x:Boolean">
                             <husk:SwitchCase Value="{x:True}">
-                                <StackPanel
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="8">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
                                     <fi:SymbolIcon
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource MediumFontSize}"
@@ -449,17 +448,15 @@
                                 </StackPanel>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="{x:False}">
-                                <StackPanel
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="8">
-                                    <fi:SymbolIcon
-                                        VerticalAlignment="Center"
-                                        FontSize="{StaticResource MediumFontSize}"
-                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                        IconVariant="Filled"
-                                        Symbol="DismissCircle" />
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                    <fi:SymbolIcon VerticalAlignment="Center"
+                                                   FontSize="{StaticResource MediumFontSize}"
+                                                   Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                   IconVariant="Filled"
+                                                   Symbol="DismissCircle" />
                                     <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
                                 </StackPanel>
@@ -482,9 +479,8 @@
                                     </Transitions>
                                 </ProgressBar.Transitions>
                             </ProgressBar>
-                            <StackPanel
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
                                 <TextBlock TextAlignment="Center"
                                            Text="{Binding DeployingMessage, Mode=OneWay}" />
                                 <TextBlock TextAlignment="Center"
@@ -541,23 +537,21 @@
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>
-            <husk:Card
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="1"
-                Padding="0">
+            <husk:Card Grid.Column="1"
+                       Grid.Row="0"
+                       Grid.RowSpan="2"
+                       Padding="0">
                 <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
-                        <Grid ColumnDefinitions="Auto,0,Auto">
-                            <Button
-                                Grid.Column="0"
-                                Margin="4"
-                                Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
-                                BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
-                                Foreground="{StaticResource ControlBlackForegroundBrush}"
-                                Command="{Binding PlayCommand}"
-                                IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
-                                Theme="{StaticResource LaunchButtonTheme}">
+                        <DockPanel>
+                            <Button DockPanel.Dock="Left"
+                                    Margin="4"
+                                    Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                                    BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                                    Foreground="{StaticResource ControlBlackForegroundBrush}"
+                                    Command="{Binding PlayCommand}"
+                                    IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
+                                    Theme="{StaticResource LaunchButtonTheme}">
                                 <Button.CornerRadius>
                                     <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                         <Binding
@@ -569,17 +563,15 @@
                                     </MultiBinding>
                                 </Button.CornerRadius>
                                 <StackPanel VerticalAlignment="Center" Spacing="6">
-                                    <fi:SymbolIcon
-                                        HorizontalAlignment="Center"
-                                        FontSize="20"
-                                        Symbol="Rocket" />
+                                    <fi:SymbolIcon HorizontalAlignment="Center"
+                                                   FontSize="20"
+                                                   Symbol="Rocket" />
                                     <TextBlock HorizontalAlignment="Center"
                                                Text="{x:Static lang:Resources.InstanceHomeView_LaunchButtonText}" />
                                 </StackPanel>
                             </Button>
-                            <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
-                                <Button Grid.Row="0"
-                                        Command="{Binding SwitchModeCommand}"
+                            <DockPanel Grid.Column="1">
+                                <Button DockPanel.Dock="Top" Command="{Binding SwitchModeCommand}"
                                         Margin="0,0,8,0"
                                         HorizontalAlignment="Center"
                                         CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
@@ -587,42 +579,36 @@
                                     <TextBlock
                                         Text="{Binding Mode,Converter={x:Static converters:InternalConverters.LocalizedLaunchModeConverter},FallbackValue=Mode}" />
                                 </Button>
-                                <Button
-                                    Grid.Row="2"
-                                    Margin="0,8,8,8"
-                                    Padding="12,6"
-                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                    BorderThickness="1"
-                                    Command="{Binding SwitchAccountCommand}"
-                                    CornerRadius="{StaticResource MediumCornerRadius}"
-                                    Theme="{StaticResource GhostButtonTheme}">
+                                <Button Margin="0,8,8,8"
+                                        Padding="12,6"
+                                        Command="{Binding SwitchAccountCommand}"
+                                        CornerRadius="{StaticResource MediumCornerRadius}"
+                                        Theme="{StaticResource OutlineButtonTheme}">
                                     <husk:PlaceholderPresenter Source="{Binding SelectedAccount}">
                                         <husk:PlaceholderPresenter.Placeholder>
-                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*,Auto"
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
                                                   ColumnSpacing="8">
                                                 <icons:PackIconLucide Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
                                                                       Width="28"
                                                                       Height="28" Kind="UserRound"
                                                                       VerticalAlignment="Center" />
-                                                <TextBlock
-                                                    Grid.Row="0"
-                                                    Grid.Column="1"
-                                                    FontSize="{StaticResource MediumFontSize}"
-                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonTitle}" />
-                                                <TextBlock
-                                                    Grid.Row="2"
-                                                    Grid.Column="1"
-                                                    FontSize="{StaticResource SmallFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonSubtitle}" />
+                                                <TextBlock Grid.Row="0"
+                                                           Grid.Column="1"
+                                                           FontSize="{StaticResource MediumFontSize}"
+                                                           FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                           Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonTitle}" />
+                                                <TextBlock Grid.Row="1"
+                                                           Grid.Column="1"
+                                                           FontSize="{StaticResource SmallFontSize}"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                           Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonSubtitle}" />
                                             </Grid>
                                         </husk:PlaceholderPresenter.Placeholder>
                                         <husk:PlaceholderPresenter.SourceTemplate>
                                             <DataTemplate x:DataType="m:AccountModel">
-                                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*,Auto"
+                                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
                                                       ColumnSpacing="8">
-                                                    <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+                                                    <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
                                                             Width="28"
                                                             Height="28"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
@@ -631,25 +617,23 @@
                                                                 async:ImageBrushLoader.Source="{Binding FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
                                                         </Border.Background>
                                                     </Border>
-                                                    <TextBlock
-                                                        Grid.Row="0"
-                                                        Grid.Column="1"
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{Binding UserName,FallbackValue=Steve}" />
-                                                    <TextBlock
-                                                        Grid.Row="2"
-                                                        Grid.Column="1"
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding TypeName,FallbackValue=Legacy}" />
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="1"
+                                                               FontSize="{StaticResource MediumFontSize}"
+                                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                               Text="{Binding UserName,FallbackValue=Steve}" />
+                                                    <TextBlock Grid.Row="1"
+                                                               Grid.Column="1"
+                                                               FontSize="{StaticResource SmallFontSize}"
+                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                               Text="{Binding TypeName,FallbackValue=Legacy}" />
                                                 </Grid>
                                             </DataTemplate>
                                         </husk:PlaceholderPresenter.SourceTemplate>
                                     </husk:PlaceholderPresenter>
                                 </Button>
-                            </Grid>
-                        </Grid>
+                            </DockPanel>
+                        </DockPanel>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Deploying">
                         <Button
@@ -727,6 +711,6 @@
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>
-        </Grid>
+    </Grid>
     </Grid>
 </controls:Subpage>
