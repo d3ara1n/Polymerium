@@ -72,7 +72,7 @@
                     </husk:LazyContainer.SourceTemplate>
                     <husk:LazyContainer.FaultContent>
                         <ComboBox IsEnabled="False" SelectedIndex="0">
-                            <ComboBoxItem Content="(Network unreachable)" />
+                            <ComboBoxItem Content="{x:Static lang:Resources.Error_BadNetwork}" />
                         </ComboBox>
                     </husk:LazyContainer.FaultContent>
                 </husk:LazyContainer>

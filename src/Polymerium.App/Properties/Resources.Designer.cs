@@ -879,6 +879,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network Error.
+        /// </summary>
+        public static string Error_BadNetwork {
+            get {
+                return ResourceManager.GetString("Error_BadNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It seems something went wrong....
         /// </summary>
         public static string ExceptionView_Subtitle {
@@ -5229,7 +5238,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Proxy.
+        ///   Looks up a localized string similar to Network Proxy.
         /// </summary>
         public static string SettingsView_ProxyEnabledLabelText {
             get {
