@@ -15,26 +15,6 @@
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
     <StackPanel Spacing="24">
-        <husk:ConstrainedBox AspectRatio="1.78"
-                             IsVisible="{Binding Gallery,Converter={x:Static husk:CollectionConverters.IsNotEmpty}}">
-            <Panel>
-                <Carousel Name="GalleryCarousel"
-                          CornerRadius="{Binding Source={StaticResource LargeCornerRadius}}"
-                          ItemsSource="{Binding Gallery}">
-                    <Carousel.ItemTemplate>
-                        <DataTemplate x:DataType="x:Uri">
-                            <Image RenderOptions.BitmapInterpolationMode="HighQuality"
-                                   async:ImageLoader.Source="{Binding}" Stretch="UniformToFill" />
-                        </DataTemplate>
-                    </Carousel.ItemTemplate>
-                </Carousel>
-                <Border Background="Transparent" HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
-                    <husk:PipsPager SelectedIndex="{Binding #GalleryCarousel.SelectedIndex,Mode=TwoWay}"
-                                    ItemCount="{Binding #GalleryCarousel.ItemCount}" />
-                </Border>
-            </Panel>
-        </husk:ConstrainedBox>
         <Border Padding="12" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                 CornerRadius="{StaticResource MediumCornerRadius}" BorderThickness="1"
                 BorderBrush="{StaticResource ControlBorderBrush}">
@@ -44,8 +24,20 @@
                     <DataTemplate DataType="m:ExhibitVersionCollection">
                         <StackPanel Spacing="12">
                             <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-                                <TextBlock Grid.Column="0" FontWeight="Bold" FontSize="{StaticResource LargeFontSize}"
-                                           Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).ProjectName,FallbackValue=Display}" />
+                                <ItemsControl Grid.Column="0"
+                                              ItemsSource="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Tags,FallbackValue={x:Null}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <husk:Tag Content="{Binding}"
+                                                      FontSize="{StaticResource MediumFontSize}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
                                 <TextBlock Grid.Column="1"
                                            Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).AuthorName,StringFormat={}@{0},FallbackValue=Author}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -73,22 +65,8 @@
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>
-                            <ItemsControl
-                                ItemsSource="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Tags,FallbackValue={x:Null}}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <husk:Tag Content="{Binding}"
-                                                  FontSize="{StaticResource MediumFontSize}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                            <TextBlock
-                                Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Summary,FallbackValue=Display}" />
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Summary,FallbackValue=Display}" />
                             <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
                                 <Button Grid.Column="0" Classes="Primary"
                                         Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
@@ -100,7 +78,7 @@
                                             Text="{x:Static lang:Resources.ExhibitModpackToast_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
-                                <Button Grid.Column="1">
+                                <Button Grid.Column="1" IsVisible="False">
                                     <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
                                 </Button>
                                 <ComboBox Grid.Column="2" Name="VersionBox" ItemsSource="{Binding }"
@@ -202,8 +180,27 @@
                 </husk:LazyContainer.SourceTemplate>
             </husk:LazyContainer>
         </Border>
-        <husk:LazyContainer MinHeight="360"
-                            Source="{Binding $parent[local:ExhibitModpackToast].LazyDescription,Mode=OneWay}">
+        <husk:ConstrainedBox AspectRatio="16:9"
+                             IsVisible="{Binding Gallery,Converter={x:Static husk:CollectionConverters.IsNotEmpty}}">
+            <Panel>
+                <Carousel Name="GalleryCarousel"
+                          CornerRadius="{Binding Source={StaticResource LargeCornerRadius}}"
+                          ItemsSource="{Binding Gallery}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate x:DataType="x:Uri">
+                            <Image RenderOptions.BitmapInterpolationMode="HighQuality"
+                                   async:ImageLoader.Source="{Binding}" Stretch="UniformToFill" />
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+                <Border Background="Transparent" HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom">
+                    <husk:PipsPager SelectedIndex="{Binding #GalleryCarousel.SelectedIndex,Mode=TwoWay}"
+                                    ItemCount="{Binding #GalleryCarousel.ItemCount}" />
+                </Border>
+            </Panel>
+        </husk:ConstrainedBox>
+        <husk:LazyContainer Source="{Binding $parent[local:ExhibitModpackToast].LazyDescription,Mode=OneWay}">
             <husk:LazyContainer.SourceTemplate>
                 <DataTemplate DataType="x:String">
                     <mdxaml:MarkdownScrollViewer Markdown="{Binding}">
