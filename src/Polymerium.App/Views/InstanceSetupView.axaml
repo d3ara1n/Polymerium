@@ -459,6 +459,9 @@
                                         Header="{x:Static lang:Resources.InstanceSetupView_DependencyGraphMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowSplit,FontSize={StaticResource MediumFontSize}}"
                                         IsEnabled="False" />
+                                    <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ImportListMenuText}"
+                                              Icon="{fie:SymbolIcon Symbol=ArrowImport,FontSize={StaticResource MediumFontSize}}"
+                                              Command="{Binding ImportListCommand}" />
                                     <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ExportListMenuText}"
                                               Icon="{fie:SymbolIcon Symbol=ArrowExport,FontSize={StaticResource MediumFontSize}}"
                                               Command="{Binding ExportListCommand}" />

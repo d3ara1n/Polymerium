@@ -1909,4 +1909,7 @@
     <data name="Error_BadNetwork" xml:space="preserve">
         <value>网络错误</value>
     </data>
+    <data name="InstanceSetupView_ImportListMenuText" xml:space="preserve">
+        <value>导入列表</value>
+    </data>
 </root>
