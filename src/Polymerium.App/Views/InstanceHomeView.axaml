@@ -109,7 +109,7 @@
             </Style>
         </ControlTheme>
     </controls:Subpage.Resources>
-    <Grid MaxWidth="1024" MaxHeight="750" RowDefinitions="*,*,100" ColumnSpacing="24" RowSpacing="24">
+    <Grid RowDefinitions="*,*,100" ColumnSpacing="24" RowSpacing="24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230" />
             <ColumnDefinition Width="*" />

@@ -46,7 +46,7 @@
                                               Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding InstanceCount}"
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding InstanceCount,FallbackValue=12}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Grid.Row="1" Grid.Column="1"
@@ -62,7 +62,7 @@
                                               Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding AccountCount}"
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding AccountCount,FallbackValue=1}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Grid.Row="1" Grid.Column="1"
