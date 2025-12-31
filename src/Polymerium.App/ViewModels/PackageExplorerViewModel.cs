@@ -255,7 +255,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex, "Network unreachable", GrowlLevel.Warning);
+                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -265,7 +265,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage("Network unreachable", level: GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, level: GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }

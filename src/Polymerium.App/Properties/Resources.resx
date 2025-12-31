@@ -439,7 +439,7 @@
         <value>Network settings</value>
     </data>
     <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
-        <value>Enable Proxy</value>
+        <value>Network Proxy</value>
     </data>
     <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>Leave empty if not required</value>
@@ -1914,5 +1914,8 @@
     </data>
     <data name="SettingsView_Java25LabelText" xml:space="preserve">
         <value>Java 25 Home</value>
+    </data>
+    <data name="Error_BadNetwork" xml:space="preserve">
+        <value>Network Error</value>
     </data>
 </root>

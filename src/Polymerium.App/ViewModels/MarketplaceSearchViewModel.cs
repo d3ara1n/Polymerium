@@ -206,7 +206,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex, "Network unreachable", GrowlLevel.Warning);
+                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -216,7 +216,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage(ex, "Network unreachable", GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }

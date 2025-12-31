@@ -430,7 +430,7 @@
         <value>网络设置</value>
     </data>
     <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
-        <value>启用代理</value>
+        <value>网络代理</value>
     </data>
     <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>如不需要请留空</value>
@@ -1905,5 +1905,8 @@
     </data>
     <data name="SettingsView_Java25LabelText" xml:space="preserve">
         <value>Java 25 主目录</value>
+    </data>
+    <data name="Error_BadNetwork" xml:space="preserve">
+        <value>网络错误</value>
     </data>
 </root>
