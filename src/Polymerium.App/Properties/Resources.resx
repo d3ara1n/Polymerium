@@ -1918,4 +1918,7 @@
     <data name="Error_BadNetwork" xml:space="preserve">
         <value>Network Error</value>
     </data>
+    <data name="InstanceSetupView_ImportListMenuText" xml:space="preserve">
+        <value>Import List</value>
+    </data>
 </root>

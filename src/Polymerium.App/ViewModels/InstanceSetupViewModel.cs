@@ -16,6 +16,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CsvHelper;
+using CsvHelper.Configuration;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Controls;
@@ -807,7 +808,110 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
-    private async Task ImportListAsync() { }
+    private async Task ImportListAsync()
+    {
+        var filePath = await overlayService.RequestFileAsync();
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                var importedEntries = new List<ExportedEntry>();
+
+                // 读取 CSV 文件
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    await foreach (var record in csv.GetRecordsAsync<ExportedEntry>())
+                    {
+                        importedEntries.Add(record);
+                    }
+                }
+
+                if (importedEntries.Count == 0)
+                {
+                    notificationService.PopMessage("No packages found in the file",
+                                                   "Import package list",
+                                                   GrowlLevel.Warning);
+                    return;
+                }
+
+                var addedCount = 0;
+                var updatedCount = 0;
+                var failedCount = 0;
+
+                if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+                {
+                    await using (guard)
+                    {
+                        foreach (var importedEntry in importedEntries)
+                        {
+                            try
+                            {
+                                if (string.IsNullOrEmpty(importedEntry.Purl))
+                                {
+                                    failedCount++;
+                                    continue;
+                                }
+
+                                // 查找是否已存在相同的包（基于 Label, Namespace, ProjectId）
+                                Profile.Rice.Entry? existingEntry = null;
+                                if (PackageHelper.TryParse(importedEntry.Purl, out var importedPurl))
+                                {
+                                    existingEntry = guard.Value.Setup.Packages.FirstOrDefault(x => PackageHelper.IsMatched(x.Purl,
+                                                                                                       importedPurl.Label,
+                                                                                                       importedPurl.Namespace,
+                                                                                                       importedPurl.Pid));
+                                }
+
+                                if (existingEntry != null)
+                                {
+                                    // 更新现有包的版本
+                                    var oldPurl = existingEntry.Purl;
+                                    existingEntry.Purl = importedEntry.Purl;
+                                    existingEntry.Enabled = importedEntry.Enabled;
+
+                                    persistenceService.AppendAction(new(Basic.Key,
+                                                                        PersistenceService.ActionKind.EditPackage,
+                                                                        oldPurl,
+                                                                        importedEntry.Purl));
+                                    updatedCount++;
+                                }
+                                else
+                                {
+                                    // 添加新包
+                                    var newEntry = new Profile.Rice.Entry(importedEntry.Purl,
+                                                                          importedEntry.Enabled,
+                                                                          importedEntry.Source,
+                                                                          []);
+                                    guard.Value.Setup.Packages.Add(newEntry);
+                                    persistenceService.AppendAction(new(Basic.Key,
+                                                                        PersistenceService.ActionKind.EditPackage,
+                                                                        null,
+                                                                        importedEntry.Purl));
+                                    addedCount++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.LogError(ex, "Failed to import package: {purl}", importedEntry.Purl);
+                                failedCount++;
+                            }
+                        }
+                    }
+                }
+
+                // 显示结果通知
+                var resultMessage = $"Added: {addedCount}, Updated: {updatedCount}, Failed: {failedCount}";
+                var level = failedCount > 0 ? GrowlLevel.Warning : GrowlLevel.Success;
+                notificationService.PopMessage(resultMessage, "Import package list completed", level);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to import package list from file: {path}", filePath);
+                notificationService.PopMessage(ex, "Import package list");
+            }
+        }
+    }
 
     [RelayCommand]
     private async Task ExportListAsync()
@@ -865,7 +969,6 @@ public partial class InstanceSetupViewModel(
                                versionId,
                                entry.Enabled,
                                entry.Source,
-                               [.. entry.Tags],
                                name,
                                version));
                 notification.Progress = output.Count;
@@ -883,7 +986,7 @@ public partial class InstanceSetupViewModel(
                 }
 
                 await using (var writer = new StreamWriter(path))
-                await using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                await using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
                 {
                     await csv.WriteRecordsAsync(output);
                 }
@@ -1055,7 +1158,6 @@ public partial class InstanceSetupViewModel(
         string? VersionId,
         bool Enabled,
         string? Source,
-        string[] Tags,
         string? Name,
         string? Version);
 

@@ -2841,6 +2841,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import List.
+        /// </summary>
+        public static string InstanceSetupView_ImportListMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ImportListMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operating In Progress.
         /// </summary>
         public static string InstanceSetupView_InoperableLabelText {
