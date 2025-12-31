@@ -104,7 +104,7 @@
                                     <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
                                 </Button>
                                 <ComboBox Grid.Column="2" Name="VersionBox" ItemsSource="{Binding }"
-                                          SelectedItem="{Binding [0],FallbackValue={x:Null}}">
+                                          SelectedItem="{Binding [0],Mode=OneTime,FallbackValue={x:Null}}">
                                     <ComboBox.SelectionBoxItemTemplate>
                                         <DataTemplate DataType="m:ExhibitVersionModel">
                                             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
