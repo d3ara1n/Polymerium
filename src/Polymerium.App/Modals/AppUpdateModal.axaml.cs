@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
-using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Velopack;
@@ -29,35 +28,6 @@ public partial class AppUpdateModal : Modal
                                                              (o, v) => o.DownloadProgress = v);
 
     public AppUpdateModal() => InitializeComponent();
-
-    #region Properties
-
-    public AppUpdateModel? Model
-    {
-        get;
-        set => SetAndRaise(ModelProperty, ref field, value);
-    }
-
-    public bool IsDownloading
-    {
-        get;
-        set => SetAndRaise(IsDownloadingProperty, ref field, value);
-    }
-
-    public int DownloadProgress
-    {
-        get;
-        set => SetAndRaise(DownloadProgressProperty, ref field, value);
-    }
-
-    #endregion
-
-    #region Services
-
-    public required UpdateManager UpdateManager { get; init; }
-    public required NotificationService NotificationService { get; init; }
-
-    #endregion
 
     #region Commands
 
@@ -87,6 +57,35 @@ public partial class AppUpdateModal : Modal
             NotificationService.PopMessage(ex, "Failed to download update");
         }
     }
+
+    #endregion
+
+    #region Properties
+
+    public AppUpdateModel? Model
+    {
+        get;
+        set => SetAndRaise(ModelProperty, ref field, value);
+    }
+
+    public bool IsDownloading
+    {
+        get;
+        set => SetAndRaise(IsDownloadingProperty, ref field, value);
+    }
+
+    public int DownloadProgress
+    {
+        get;
+        set => SetAndRaise(DownloadProgressProperty, ref field, value);
+    }
+
+    #endregion
+
+    #region Services
+
+    public required UpdateManager UpdateManager { get; init; }
+    public required NotificationService NotificationService { get; init; }
 
     #endregion
 }

@@ -7,10 +7,11 @@ namespace Polymerium.App.Modals;
 
 public partial class TrophyModal : Modal, IPageTransitionOverride
 {
-    public TrophyModal()
-    {
-        InitializeComponent();
-    }
+    public TrophyModal() => InitializeComponent();
+
+    #region IPageTransitionOverride Members
 
     public IPageTransition TransitionOverride { get; } = new TrophyTransition();
+
+    #endregion
 }

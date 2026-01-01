@@ -11,10 +11,9 @@ namespace Polymerium.App.Components;
 public partial class OobePrivilege : OobeStep
 {
     public static readonly DirectProperty<OobePrivilege, bool> IsPrivilegeGrantedProperty =
-        AvaloniaProperty.RegisterDirect<OobePrivilege, bool>(
-            nameof(IsPrivilegeGranted),
-            o => o.IsPrivilegeGranted,
-            (o, v) => o.IsPrivilegeGranted = v);
+        AvaloniaProperty.RegisterDirect<OobePrivilege, bool>(nameof(IsPrivilegeGranted),
+                                                             o => o.IsPrivilegeGranted,
+                                                             (o, v) => o.IsPrivilegeGranted = v);
 
     public OobePrivilege()
     {
@@ -32,7 +31,7 @@ public partial class OobePrivilege : OobeStep
     }
 
     /// <summary>
-    /// Checks if the application has the privilege to create symbolic links.
+    ///     Checks if the application has the privilege to create symbolic links.
     /// </summary>
     /// <returns>True if symlink creation is allowed, false otherwise.</returns>
     private bool Check()
@@ -88,8 +87,5 @@ public partial class OobePrivilege : OobeStep
     }
 
     [RelayCommand]
-    private void CheckPrivilege()
-    {
-        IsPrivilegeGranted = Check();
-    }
+    private void CheckPrivilege() => IsPrivilegeGranted = Check();
 }

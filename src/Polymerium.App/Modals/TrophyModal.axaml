@@ -9,9 +9,13 @@
             x:Class="Polymerium.App.Modals.TrophyModal">
     <StackPanel Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
         <fi:SymbolIcon Symbol="Trophy" FontSize="64" Foreground="#FFD700" HorizontalAlignment="Center" />
-        <TextBlock Text="ACHIEVEMENT UNLOCKED!" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" TextAlignment="Center" />
-        <TextBlock Text="You found the secret code!" FontSize="14" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" />
-        <Button Classes="Primary" HorizontalAlignment="Center" Margin="0,16,0,0" Command="{Binding $parent[modals:TrophyModal].Dismiss}">
+        <TextBlock Text="ACHIEVEMENT UNLOCKED!" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"
+                   TextAlignment="Center" />
+        <TextBlock Text="You found the secret code!" FontSize="14"
+                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center"
+                   TextAlignment="Center" />
+        <Button Classes="Primary" HorizontalAlignment="Center" Margin="0,16,0,0"
+                Command="{Binding $parent[modals:TrophyModal].Dismiss}">
             <TextBlock Text="Awesome!" />
         </Button>
     </StackPanel>

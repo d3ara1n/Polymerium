@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
 using Microsoft.Extensions.Options;
-using MirrorChyan.Net.Services;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
@@ -95,6 +94,13 @@ public partial class SettingsViewModel : ViewModelBase
     #region Service Export
 
     public OverlayService OverlayService { get; }
+
+    #endregion
+
+    #region SafeCode
+
+    [ObservableProperty]
+    public partial string SafeCode { get; set; }
 
     #endregion
 
@@ -474,8 +480,7 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string ProxyStatusText { get; set; } = string.Empty;
 
-    private void UpdateProxyStatusText()
-    {
+    private void UpdateProxyStatusText() =>
         ProxyStatusText = ProxyMode switch
         {
             ProxyMode.Auto => Resources.SettingsView_ProxyStatusAutoText,
@@ -486,7 +491,6 @@ public partial class SettingsViewModel : ViewModelBase
                                .Replace("{2}", ProxyPort.ToString()),
             _ => string.Empty
         };
-    }
 
     [RelayCommand]
     private async Task OpenProxySettingsAsync()
@@ -515,13 +519,6 @@ public partial class SettingsViewModel : ViewModelBase
             ProxyPassword = newSettings.Password;
         }
     }
-
-    #endregion
-
-    #region SafeCode
-
-    [ObservableProperty]
-    public partial string SafeCode { get; set; }
 
     #endregion
 }

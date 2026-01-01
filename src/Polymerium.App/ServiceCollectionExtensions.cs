@@ -14,6 +14,8 @@ public static class ServiceCollectionExtensions
 {
     private const string MIRRORCHYAN_PRODUCT_ID = "Polymerium";
 
+    #region Nested type: $extension
+
     extension(IServiceCollection services)
     {
         public IServiceCollection AddAvalonia()
@@ -74,4 +76,6 @@ public static class ServiceCollectionExtensions
             return services;
         }
     }
+
+    #endregion
 }

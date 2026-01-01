@@ -50,7 +50,6 @@ public partial class MaintenanceStorageViewModel(
     }
 
 
-
     private static void PurgeDirectory(string path)
     {
         if (Directory.Exists(path))

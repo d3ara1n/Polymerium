@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
-using Polymerium.App.Services;
 using Polymerium.App.Modals;
+using Polymerium.App.Services;
 using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;

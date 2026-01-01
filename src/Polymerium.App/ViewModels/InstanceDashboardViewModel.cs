@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Trident.Abstractions;
 using Trident.Core.Services;
-using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
@@ -20,7 +16,13 @@ public partial class InstanceDashboardViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Fields
+    #region Overrides
+
+    protected override Task OnInitializeAsync()
+    {
+        InitializeLogSources();
+        return Task.CompletedTask;
+    }
 
     #endregion
 
@@ -34,24 +36,7 @@ public partial class InstanceDashboardViewModel(
     [ObservableProperty]
     public partial ICollection<ScrapModel>? LogCollection { get; set; }
 
-    partial void OnSelectedSourceChanged(LogSourceModelBase value)
-    {
-        UpdateLogSource(value);
-    }
-
-    #endregion
-
-    #region Overrides
-
-    protected override Task OnInitializeAsync()
-    {
-        InitializeLogSources();
-        return Task.CompletedTask;
-    }
-
-    #endregion
-
-    #region Commands
+    partial void OnSelectedSourceChanged(LogSourceModelBase value) => UpdateLogSource(value);
 
     #endregion
 
@@ -63,7 +48,7 @@ public partial class InstanceDashboardViewModel(
         // 这里不在乎是否是哪个实际目录，因为最终都会出现在 build/logs 中
         Sources.Clear();
         var files = new[] { "latest.log", "debug.log" }
-                   .Select(x => new FileLogSourceModel()
+                   .Select(x => new FileLogSourceModel
                     {
                         Path = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs", x)
                     })
@@ -88,10 +73,6 @@ public partial class InstanceDashboardViewModel(
                 break;
         }
     }
-
-    #endregion
-
-    #region Instance State
 
     #endregion
 }

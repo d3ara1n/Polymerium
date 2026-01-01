@@ -3,7 +3,7 @@ using FluentIcons.Common;
 namespace Polymerium.App.Models;
 
 /// <summary>
-/// Represents a feature item displayed in the OOBE features panel.
+///     Represents a feature item displayed in the OOBE features panel.
 /// </summary>
 public class OobeFeatureModel
 {

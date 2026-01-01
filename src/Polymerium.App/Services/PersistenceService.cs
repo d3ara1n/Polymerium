@@ -216,7 +216,7 @@ public class PersistenceService(IFreeSql freeSql)
 
     public TimeSpan GetWeekPlayTime(string key, int weeksAgo)
     {
-        var weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - (weeksAgo * 7));
+        var weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - weeksAgo * 7);
         var weekEnd = weekStart.AddDays(7);
         var totalSeconds = freeSql
                           .Select<Activity>()

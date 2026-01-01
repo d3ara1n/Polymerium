@@ -89,7 +89,7 @@ public partial class AssetImporterDialog : Dialog
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {
         e.Handled = true;
-			if (e.Data.Contains(DataFormat.File))
+        if (e.Data.Contains(DataFormat.File))
         {
             e.Accepted = true;
         }
@@ -97,10 +97,10 @@ public partial class AssetImporterDialog : Dialog
 
     private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
     {
-			if (e.Data.Contains(DataFormat.File))
+        if (e.Data.Contains(DataFormat.File))
         {
             e.Handled = true;
-				var file = e.Data.TryGetFile();
+            var file = e.Data.TryGetFile();
             if (file != null)
             {
                 e.Model = file.TryGetLocalPath();
