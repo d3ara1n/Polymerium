@@ -56,6 +56,12 @@ public class App : Application
 
     private static void ShowOrDump(object core, bool critical = false)
     {
+        // 只接受致命错误的 dump，避免 TaskCancellationException 等在 Task 中发生触发 UnobservedTaskException 转发把 Dump 吃满
+        if (!critical)
+        {
+            return;
+        }
+
         if (core is Exception rec)
         {
             SentrySdk.CaptureException(rec);
