@@ -6,8 +6,7 @@ namespace Polymerium.App.Assets;
 
 public static class AssetUriIndex
 {
-    public static readonly Uri Icon =
-        new("avares://Polymerium.App/Assets/Icon.png", UriKind.Absolute);
+    public static readonly Uri Icon = new("avares://Polymerium.App/Assets/Icon.png", UriKind.Absolute);
 
     public static readonly Uri RepositoryHeaderCurseforge =
         new("avares://Polymerium.App/Assets/Images/Repositories/Header_CurseForge.png", UriKind.Absolute);

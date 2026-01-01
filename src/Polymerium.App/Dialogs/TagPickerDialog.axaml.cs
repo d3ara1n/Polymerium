@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Input;
 using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -16,10 +15,7 @@ public partial class TagPickerDialog : Dialog
     public static readonly DirectProperty<TagPickerDialog, bool> HasExistingTagsProperty =
         AvaloniaProperty.RegisterDirect<TagPickerDialog, bool>(nameof(HasExistingTags), o => o.HasExistingTags);
 
-    public TagPickerDialog()
-    {
-        InitializeComponent();
-    }
+    public TagPickerDialog() => InitializeComponent();
 
     public IReadOnlyList<string>? ExistingTags
     {

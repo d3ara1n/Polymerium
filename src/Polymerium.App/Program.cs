@@ -25,12 +25,12 @@ internal static class Program
 
     public static readonly string MirrorChyanCdk = "0001bf520b5a75eb3e61f458";
 
+    private static Action? exitAction;
+
     internal static IHost? AppHost { get; private set; }
 
     public static bool Debug { get; private set; } = Debugger.IsAttached;
     public static bool FirstRun { get; private set; }
-
-    private static Action? exitAction;
 
     public static void Main(string[] args)
     {
@@ -55,13 +55,16 @@ internal static class Program
             FirstRun = true;
             var dir = Path.GetDirectoryName(firstRunFile);
             if (dir != null && !Directory.Exists(dir))
+            {
                 Directory.CreateDirectory(dir);
+            }
+
             File.WriteAllText(firstRunFile, MagicWords);
         }
 
         #endregion
 
-        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings()
+        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
         {
             Args = args,
             EnvironmentName = Debug ? "Development" : "Production"

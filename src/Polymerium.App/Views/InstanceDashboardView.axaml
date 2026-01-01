@@ -10,7 +10,6 @@
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:trident="using:Trident.Core"
                   xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
-                  xmlns:local="clr-namespace:Polymerium.App.Views"
                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
                   x:Class="Polymerium.App.Views.InstanceDashboardView"

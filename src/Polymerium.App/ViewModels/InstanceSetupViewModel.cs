@@ -55,6 +55,21 @@ public partial class InstanceSetupViewModel(
     PersistenceService persistenceService,
     ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    #region Nested type: ExportedEntry
+
+    private record ExportedEntry(
+        string Purl,
+        string? Label,
+        string? Namespace,
+        string? ProjectId,
+        string? VersionId,
+        bool Enabled,
+        string? Source,
+        string? Name,
+        string? Version);
+
+    #endregion
+
     #region Nested type: RefreshIntermediateData
 
     private class RefreshIntermediateData(InstancePackageModel model)
@@ -764,10 +779,7 @@ public partial class InstanceSetupViewModel(
                 });
             }
 
-            void Cancel()
-            {
-                notification.Dismiss();
-            }
+            void Cancel() => notification.Dismiss();
 
             bool CanReview() => !updates.IsEmpty;
 
@@ -857,10 +869,11 @@ public partial class InstanceSetupViewModel(
                                 Profile.Rice.Entry? existingEntry = null;
                                 if (PackageHelper.TryParse(importedEntry.Purl, out var importedPurl))
                                 {
-                                    existingEntry = guard.Value.Setup.Packages.FirstOrDefault(x => PackageHelper.IsMatched(x.Purl,
-                                                                                                       importedPurl.Label,
-                                                                                                       importedPurl.Namespace,
-                                                                                                       importedPurl.Pid));
+                                    existingEntry =
+                                        guard.Value.Setup.Packages.FirstOrDefault(x => PackageHelper.IsMatched(x.Purl,
+                                            importedPurl.Label,
+                                            importedPurl.Namespace,
+                                            importedPurl.Pid));
                                 }
 
                                 if (existingEntry != null)
@@ -929,7 +942,10 @@ public partial class InstanceSetupViewModel(
             foreach (var entry in list)
             {
                 if (notification.Token.IsCancellationRequested)
+                {
                     return;
+                }
+
                 string? label = null;
                 string? @namespace = null;
                 string? projectId = null;
@@ -1144,22 +1160,6 @@ public partial class InstanceSetupViewModel(
 
     [ObservableProperty]
     public partial bool IsFilterActive { get; set; }
-
-    #endregion
-
-
-    #region Nested type: ExportedEntry
-
-    private record ExportedEntry(
-        string Purl,
-        string? Label,
-        string? Namespace,
-        string? ProjectId,
-        string? VersionId,
-        bool Enabled,
-        string? Source,
-        string? Name,
-        string? Version);
 
     #endregion
 }

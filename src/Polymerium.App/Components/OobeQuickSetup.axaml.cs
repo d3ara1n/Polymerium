@@ -39,10 +39,7 @@ public partial class OobeQuickSetup : OobeStep
     public static readonly DirectProperty<OobeQuickSetup, string> ProxyStatusTextProperty =
         AvaloniaProperty.RegisterDirect<OobeQuickSetup, string>(nameof(ProxyStatusText), o => o.ProxyStatusText);
 
-    public OobeQuickSetup()
-    {
-        InitializeComponent();
-    }
+    public OobeQuickSetup() => InitializeComponent();
 
     public required ConfigurationService ConfigurationService { get; init; }
     public required OverlayService OverlayService { get; init; }

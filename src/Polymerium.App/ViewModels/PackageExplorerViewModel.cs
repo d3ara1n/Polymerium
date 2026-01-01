@@ -265,7 +265,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, level: GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }

@@ -17,6 +17,12 @@ public partial class InstanceStorageViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    #region Overrides
+
+    protected override async Task OnInitializeAsync() => await Task.Run(Calculate);
+
+    #endregion
+
     #region Reactive
 
     [ObservableProperty]
@@ -75,12 +81,6 @@ public partial class InstanceStorageViewModel(
 
     [ObservableProperty]
     public partial ulong OtherCount { get; set; }
-
-    #endregion
-
-    #region Overrides
-
-    protected override async Task OnInitializeAsync() => await Task.Run(Calculate);
 
     #endregion
 

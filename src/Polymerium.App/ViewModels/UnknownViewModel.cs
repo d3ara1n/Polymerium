@@ -6,7 +6,6 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Humanizer;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
@@ -181,19 +180,16 @@ public partial class UnknownViewModel(
     private void Debug() => throw new NotImplementedException("The sun is leaking...");
 
     [RelayCommand]
-    private void ShowIntro()
-    {
+    private void ShowIntro() =>
         overlayService.PopModal(new OobeModal
         {
             ConfigurationService = configurationService,
             OverlayService = overlayService,
             NotificationService = notificationService
         });
-    }
 
     [RelayCommand]
-    private void ShowDiagnosis()
-    {
+    private void ShowDiagnosis() =>
         overlayService.PopModal(new GameCrashReportModal
         {
             Report = new()
@@ -222,7 +218,6 @@ public partial class UnknownViewModel(
                 ExitCode = 1
             }
         });
-    }
 
     #endregion
 }

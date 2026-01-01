@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
@@ -22,8 +21,8 @@ public partial class InstanceView : ScopedPage
         ContextProperty =
             AvaloniaProperty
                .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter?>(nameof(Context),
-                    o => o.Context,
-                    (o, v) => o.Context = v);
+                                                                        o => o.Context,
+                                                                        (o, v) => o.Context = v);
 
 
     public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
@@ -107,9 +106,9 @@ public partial class InstanceView : ScopedPage
 
     private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)
     {
-			if (e.Data.Contains(DataFormat.File))
+        if (e.Data.Contains(DataFormat.File))
         {
-				var path = e.Data.TryGetFile()?.TryGetLocalPath();
+            var path = e.Data.TryGetFile()?.TryGetLocalPath();
             if (path != null && File.Exists(path))
             {
                 e.IsValid = true;
@@ -119,9 +118,9 @@ public partial class InstanceView : ScopedPage
 
     private async void DropContainer_OnDrop(object? sender, DropContainer.DropEventArgs e)
     {
-			if (e.Data.Contains(DataFormat.File))
+        if (e.Data.Contains(DataFormat.File))
         {
-				var path = e.Data.TryGetFile()?.TryGetLocalPath();
+            var path = e.Data.TryGetFile()?.TryGetLocalPath();
             if (path != null && File.Exists(path) && DataContext is InstanceViewModel viewModel)
             {
                 await viewModel.ImportFromFileAsync(path);

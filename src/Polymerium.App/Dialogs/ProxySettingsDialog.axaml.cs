@@ -12,6 +12,49 @@ namespace Polymerium.App.Dialogs;
 
 public partial class ProxySettingsDialog : Dialog
 {
+    public ProxySettingsDialog() => InitializeComponent();
+
+    #region Overrides
+
+    protected override bool ValidateResult(object? result) => true;
+
+    #endregion
+
+    #region Other
+
+    private HttpClientHandler CreateHttpClientHandler()
+    {
+        var handler = new HttpClientHandler();
+
+        if (!uint.TryParse(ProxyPort, out var port))
+        {
+            port = 7890;
+        }
+
+        var protocol = (ProxyProtocol)SelectedProtocolIndex;
+        var proxyUri = protocol switch
+        {
+            ProxyProtocol.Socks4 => new($"socks4://{ProxyAddress}:{port}"),
+            ProxyProtocol.Socks5 => new($"socks5://{ProxyAddress}:{port}"),
+            _ => new Uri($"http://{ProxyAddress}:{port}")
+        };
+
+        var proxy = new WebProxy(proxyUri);
+
+        // Set credentials if provided
+        if (!string.IsNullOrEmpty(ProxyUsername))
+        {
+            proxy.Credentials = new NetworkCredential(ProxyUsername, ProxyPassword);
+        }
+
+        handler.Proxy = proxy;
+        handler.UseProxy = true;
+
+        return handler;
+    }
+
+    #endregion
+
     #region Avalonia Properties
 
     public static readonly DirectProperty<ProxySettingsDialog, int> SelectedModeIndexProperty =
@@ -152,21 +195,10 @@ public partial class ProxySettingsDialog : Dialog
 
     #endregion
 
-    #region Overrides
-
-    protected override bool ValidateResult(object? result) => true;
-
-    #endregion
-
-    public ProxySettingsDialog()
-    {
-        InitializeComponent();
-    }
-
     #region Exposed Methods
 
     /// <summary>
-    /// Initializes the dialog with the current proxy settings.
+    ///     Initializes the dialog with the current proxy settings.
     /// </summary>
     public void Initialize(ProxySettingsModel settings)
     {
@@ -180,7 +212,7 @@ public partial class ProxySettingsDialog : Dialog
     }
 
     /// <summary>
-    /// Gets the current settings from the dialog.
+    ///     Gets the current settings from the dialog.
     /// </summary>
     public ProxySettingsModel GenerateSettings()
     {
@@ -200,10 +232,7 @@ public partial class ProxySettingsDialog : Dialog
 
     #region Commands
 
-    private void UpdateResult()
-    {
-        Result = GenerateSettings();
-    }
+    private void UpdateResult() => Result = GenerateSettings();
 
     [RelayCommand]
     private async Task TestConnectionAsync()
@@ -253,41 +282,6 @@ public partial class ProxySettingsDialog : Dialog
         {
             IsTesting = false;
         }
-    }
-
-    #endregion
-
-    #region Other
-
-    private HttpClientHandler CreateHttpClientHandler()
-    {
-        var handler = new HttpClientHandler();
-
-        if (!uint.TryParse(ProxyPort, out var port))
-        {
-            port = 7890;
-        }
-
-        var protocol = (ProxyProtocol)SelectedProtocolIndex;
-        var proxyUri = protocol switch
-        {
-            ProxyProtocol.Socks4 => new Uri($"socks4://{ProxyAddress}:{port}"),
-            ProxyProtocol.Socks5 => new Uri($"socks5://{ProxyAddress}:{port}"),
-            _ => new Uri($"http://{ProxyAddress}:{port}")
-        };
-
-        var proxy = new WebProxy(proxyUri);
-
-        // Set credentials if provided
-        if (!string.IsNullOrEmpty(ProxyUsername))
-        {
-            proxy.Credentials = new NetworkCredential(ProxyUsername, ProxyPassword);
-        }
-
-        handler.Proxy = proxy;
-        handler.UseProxy = true;
-
-        return handler;
     }
 
     #endregion

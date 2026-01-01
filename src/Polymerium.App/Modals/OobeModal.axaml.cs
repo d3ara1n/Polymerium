@@ -28,19 +28,13 @@ public partial class OobeModal : Modal
                                                          (o, v) => o.IsBackAvailable = v);
 
     public static readonly DirectProperty<OobeModal, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(nameof(IsLast),
-                                                         o => o.IsLast,
-                                                         (o, v) => o.IsLast = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, bool>(nameof(IsLast), o => o.IsLast, (o, v) => o.IsLast = v);
 
     public static readonly DirectProperty<OobeModal, int> StepIndexProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepIndex),
-                                                        o => o.StepIndex,
-                                                        (o, v) => o.StepIndex = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepIndex), o => o.StepIndex, (o, v) => o.StepIndex = v);
 
     public static readonly DirectProperty<OobeModal, int> StepCountProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepCount),
-                                                        o => o.StepCount,
-                                                        (o, v) => o.StepCount = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepCount), o => o.StepCount, (o, v) => o.StepCount = v);
 
     private readonly List<OobeStep> _steps = [];
 

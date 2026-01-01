@@ -37,8 +37,6 @@ public class Configuration
     public const string UPDATE_SOURCE = "Update.Source";
     public const string UPDATE_MIRRORCHYAN_CDK = "Update.MirrorChyan.Cdk";
 
-    public static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
-
     private static readonly Dictionary<string, object?> Defaults = new()
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
@@ -70,6 +68,8 @@ public class Configuration
         { UPDATE_SOURCE, 1 },
         { UPDATE_MIRRORCHYAN_CDK, string.Empty }
     };
+
+    public static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
 
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
 

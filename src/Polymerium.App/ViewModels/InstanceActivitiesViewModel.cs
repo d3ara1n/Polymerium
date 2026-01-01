@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -14,7 +13,6 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
-using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using SkiaSharp;
 using Trident.Abstractions.Repositories;
@@ -278,8 +276,11 @@ public partial class InstanceActivitiesViewModel(
     // 周对比变化率（计算属性）
     public double WeekChangePercentage =>
         LastWeekPlayTimeRaw.TotalHours > 0
-            ? (ThisWeekPlayTimeRaw.TotalHours - LastWeekPlayTimeRaw.TotalHours) / LastWeekPlayTimeRaw.TotalHours * 100
-            : (ThisWeekPlayTimeRaw.TotalHours > 0 ? 100 : 0);
+            ?
+            (ThisWeekPlayTimeRaw.TotalHours - LastWeekPlayTimeRaw.TotalHours) / LastWeekPlayTimeRaw.TotalHours * 100
+            : ThisWeekPlayTimeRaw.TotalHours > 0
+                ? 100
+                : 0;
 
     #endregion
 }

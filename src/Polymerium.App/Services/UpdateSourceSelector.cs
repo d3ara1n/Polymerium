@@ -14,19 +14,7 @@ public class UpdateSourceSelector(
     IEnumerable<IUpdateSource> sources,
     ConfigurationService configurationService) : IUpdateSource
 {
-    private IUpdateSource Select()
-    {
-        // 0 => Github
-        // 1 => MirrorChyan
-        if (configurationService.Value.UpdateSource == 0)
-        {
-            return sources.OfType<GithubSource>().First();
-        }
-        else
-        {
-            return sources.OfType<MirrorChyanSource>().First();
-        }
-    }
+    #region IUpdateSource Members
 
     public Task<VelopackAssetFeed> GetReleaseFeed(
         IVelopackLogger logger,
@@ -43,4 +31,20 @@ public class UpdateSourceSelector(
         Action<int> progress,
         CancellationToken cancelToken = new()) =>
         Select().DownloadReleaseEntry(logger, releaseEntry, localFile, progress, cancelToken);
+
+    #endregion
+
+    private IUpdateSource Select()
+    {
+        // 0 => Github
+        // 1 => MirrorChyan
+        if (configurationService.Value.UpdateSource == 0)
+        {
+            return sources.OfType<GithubSource>().First();
+        }
+        else
+        {
+            return sources.OfType<MirrorChyanSource>().First();
+        }
+    }
 }

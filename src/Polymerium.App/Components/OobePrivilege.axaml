@@ -1,14 +1,14 @@
 <controls:OobeStep xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                    xmlns:components="clr-namespace:Polymerium.App.Components"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
-                    x:Class="Polymerium.App.Components.OobePrivilege">
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                   xmlns:components="clr-namespace:Polymerium.App.Components"
+                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                   mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
+                   x:Class="Polymerium.App.Components.OobePrivilege">
     <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
         <!-- Unified Header -->
         <StackPanel Spacing="8" HorizontalAlignment="Center">

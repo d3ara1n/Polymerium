@@ -10,7 +10,6 @@ using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
-using Polymerium.App.Properties;
 
 namespace Polymerium.App.Modals;
 
@@ -19,10 +18,7 @@ public partial class GameCrashReportModal : Modal
     public static readonly StyledProperty<CrashReportModel?> ReportProperty =
         AvaloniaProperty.Register<GameCrashReportModal, CrashReportModel?>(nameof(Report));
 
-    public GameCrashReportModal()
-    {
-        InitializeComponent();
-    }
+    public GameCrashReportModal() => InitializeComponent();
 
     public CrashReportModel? Report
     {
@@ -34,7 +30,9 @@ public partial class GameCrashReportModal : Modal
     private void CopyToClipboard()
     {
         if (Report == null)
+        {
             return;
+        }
 
         var text = GenerateCrashReportText();
         TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(text);
@@ -45,7 +43,7 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.LogFilePath != null && File.Exists(Report.LogFilePath))
         {
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchFileInfoAsync(new FileInfo(Report.LogFilePath));
+            TopLevel.GetTopLevel(this)?.Launcher.LaunchFileInfoAsync(new(Report.LogFilePath));
         }
     }
 
@@ -54,7 +52,7 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.CrashReportPath != null && File.Exists(Report.CrashReportPath))
         {
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchFileInfoAsync(new FileInfo(Report.CrashReportPath));
+            TopLevel.GetTopLevel(this)?.Launcher.LaunchFileInfoAsync(new(Report.CrashReportPath));
         }
     }
 
@@ -63,7 +61,7 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.GameDirectory != null && Directory.Exists(Report.GameDirectory))
         {
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(Report.GameDirectory));
+            TopLevel.GetTopLevel(this)?.Launcher.LaunchDirectoryInfoAsync(new(Report.GameDirectory));
         }
     }
 
@@ -71,11 +69,15 @@ public partial class GameCrashReportModal : Modal
     private async Task ExportDiagnosticPackageAsync()
     {
         if (Report == null)
+        {
             return;
+        }
 
         var top = TopLevel.GetTopLevel(this);
         if (top?.StorageProvider == null)
+        {
             return;
+        }
 
         try
         {
@@ -96,7 +98,9 @@ public partial class GameCrashReportModal : Modal
             });
 
             if (file == null)
+            {
                 return;
+            }
 
             await using var zipStream = await file.OpenWriteAsync();
             await using var archive = new ZipArchive(zipStream, ZipArchiveMode.Create);
@@ -181,7 +185,9 @@ public partial class GameCrashReportModal : Modal
     private string GenerateCrashReportText()
     {
         if (Report == null)
+        {
             return string.Empty;
+        }
 
         var sb = new StringBuilder();
         sb.AppendLine("=== GAME CRASH DIAGNOSTIC REPORT ===");

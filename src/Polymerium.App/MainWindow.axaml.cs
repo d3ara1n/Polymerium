@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
@@ -115,6 +114,14 @@ public partial class MainWindow : AppWindow
         }
     }
 
+    private void Control_OnLoaded(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainWindowContext context)
+        {
+            context.OnInitialize();
+        }
+    }
+
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
@@ -191,12 +198,4 @@ public partial class MainWindow : AppWindow
     }
 
     #endregion
-
-    private void Control_OnLoaded(object? sender, RoutedEventArgs e)
-    {
-        if (DataContext is MainWindowContext context)
-        {
-            context.OnInitialize();
-        }
-    }
 }

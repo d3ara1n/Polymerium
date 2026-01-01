@@ -40,7 +40,8 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
                 <StackPanel Spacing="4">
-                    <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_CacheLabelText}" Background="#FFD19A" Foreground="#CC4E00" />
+                    <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_CacheLabelText}"
+                              Background="#FFD19A" Foreground="#CC4E00" />
                     <TextBlock>
                         <Run
                             Text="{Binding CacheSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
@@ -50,7 +51,8 @@
                 </StackPanel>
                 <husk:Divider Orientation="Vertical" Margin="6" />
                 <StackPanel Spacing="4">
-                    <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_InstancesLabelText}" Background="#F2D1F3" Foreground="#953EA3" />
+                    <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_InstancesLabelText}"
+                              Background="#F2D1F3" Foreground="#953EA3" />
                     <TextBlock>
                         <Run
                             Text="{Binding InstanceSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
@@ -62,10 +64,12 @@
         </Grid>
         <StackPanel Grid.Row="1" Spacing="4">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <TextBlock Grid.Column="0" Text="{x:Static lang:Resources.MaintenanceStorageView_CacheTitle}" FontSize="{StaticResource LargeFontSize}" />
+                <TextBlock Grid.Column="0" Text="{x:Static lang:Resources.MaintenanceStorageView_CacheTitle}"
+                           FontSize="{StaticResource LargeFontSize}" />
                 <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
                         Command="{Binding PurgeCacheCommand}">
-                    <husk:IconLabel Icon="DeleteLines" Text="{x:Static lang:Resources.MaintenanceStorageView_PurgeButtonText}" />
+                    <husk:IconLabel Icon="DeleteLines"
+                                    Text="{x:Static lang:Resources.MaintenanceStorageView_PurgeButtonText}" />
                 </Button>
             </Grid>
             <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
@@ -73,7 +77,8 @@
                     <StackPanel Spacing="4">
                         <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
                                 Text="{Binding PackageSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
@@ -92,7 +97,8 @@
                     <StackPanel Spacing="4">
                         <icons:PackIconLucide Kind="Library" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
                                 Text="{Binding LibrarySize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
@@ -108,7 +114,8 @@
                     <StackPanel Spacing="4">
                         <icons:PackIconLucide Kind="CassetteTape" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
                                 Text="{Binding AssetSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
@@ -123,7 +130,8 @@
                     <StackPanel Spacing="4">
                         <icons:PackIconLucide Kind="ShipWheel" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}" FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run
                                 Text="{Binding RuntimeSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
@@ -143,7 +151,8 @@
                     <Run Text="/" />
                     <Run Text="{Binding Instances.Count,Mode=OneWay,FallbackValue=0}" />
                 </TextBlock>
-                <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_InstancesTitle}" FontSize="{StaticResource LargeFontSize}" />
+                <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_InstancesTitle}"
+                           FontSize="{StaticResource LargeFontSize}" />
             </DockPanel>
             <ItemsControl ItemsSource="{Binding Instances}">
                 <ItemsControl.ItemTemplate>

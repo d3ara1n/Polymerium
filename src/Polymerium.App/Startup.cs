@@ -68,11 +68,9 @@ public static class Startup
                                                                            var proxyUri = protocol switch
                                                                            {
                                                                                ProxyProtocol.Socks4 =>
-                                                                                   new
-                                                                                       Uri($"socks4://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
+                                                                                   new($"socks4://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
                                                                                ProxyProtocol.Socks5 =>
-                                                                                   new
-                                                                                       Uri($"socks5://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
+                                                                                   new($"socks5://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
                                                                                _ => new
                                                                                    Uri($"http://{config.NetworkProxyAddress}:{config.NetworkProxyPort}")
                                                                            };
