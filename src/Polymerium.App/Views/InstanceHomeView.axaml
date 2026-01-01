@@ -17,8 +17,8 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
-    d:DesignHeight="566"
-    d:DesignWidth="780"
+    d:DesignHeight="660"
+    d:DesignWidth="880"
     x:DataType="vm:InstanceHomeViewModel"
     mc:Ignorable="d">
     <controls:Subpage.Resources>
@@ -35,7 +35,7 @@
             <Setter Property="ClipToBounds" Value="False" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="Padding" Value="16,8" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
@@ -343,11 +343,11 @@
                 </Grid>
             </husk:Card>
         </Grid>
-        <Grid
-            Grid.Row="1"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            RowDefinitions="Auto,*" RowSpacing="12">
+        <!-- Widgets -->
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Grid.ColumnSpan="2"
+              RowDefinitions="Auto,*" RowSpacing="12">
             <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <TextBlock
                     Grid.Column="0"
@@ -417,131 +417,132 @@
         <Grid Grid.Row="2"
               Grid.Column="1"
               Grid.ColumnSpan="2"
-              ColumnDefinitions="*,Auto" ColumnSpacing="8"
-              RowDefinitions="Auto,Auto" RowSpacing="12">
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0"
-                       FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                       Text="{x:Static lang:Resources.InstanceHomeView_LaunchPadTitle}" />
-            <husk:Card Grid.Row="1"
-                       Grid.Column="0"
-                       Padding="0">
-                <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
-                    <husk:SwitchCase Value="Idle">
-                        <husk:SwitchPresenter
-                            Value="{Binding SelectedAccount,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay,FallbackValue={x:False}}"
-                            TargetType="x:Boolean">
-                            <husk:SwitchCase Value="{x:True}">
-                                <StackPanel HorizontalAlignment="Center"
+              Height="100"
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="8">
+            <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="12">
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           FontSize="{StaticResource LargeFontSize}"
+                           FontWeight="{StaticResource ControlStrongFontWeight}"
+                           Text="{x:Static lang:Resources.InstanceHomeView_LaunchPadTitle}" />
+                <husk:Card Grid.Row="1"
+                           Grid.Column="0"
+                           Padding="0">
+                    <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
+                        <husk:SwitchCase Value="Idle">
+                            <husk:SwitchPresenter
+                                Value="{Binding SelectedAccount,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay,FallbackValue={x:False}}"
+                                TargetType="x:Boolean">
+                                <husk:SwitchCase Value="{x:True}">
+                                    <StackPanel HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                        <fi:SymbolIcon
                                             VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                    <fi:SymbolIcon
-                                        VerticalAlignment="Center"
-                                        FontSize="{StaticResource MediumFontSize}"
-                                        Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                        IconVariant="Filled"
-                                        Symbol="CheckmarkCircle" />
-                                    <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                               Text="{x:Static lang:Resources.InstanceHomeView_ReadyLabelText}" />
-                                </StackPanel>
-                            </husk:SwitchCase>
-                            <husk:SwitchCase Value="{x:False}">
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                            IconVariant="Filled"
+                                            Symbol="CheckmarkCircle" />
+                                        <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                   Text="{x:Static lang:Resources.InstanceHomeView_ReadyLabelText}" />
+                                    </StackPanel>
+                                </husk:SwitchCase>
+                                <husk:SwitchCase Value="{x:False}">
+                                    <StackPanel HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                        <fi:SymbolIcon VerticalAlignment="Center"
+                                                       FontSize="{StaticResource MediumFontSize}"
+                                                       Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                       IconVariant="Filled"
+                                                       Symbol="DismissCircle" />
+                                        <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                   Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
+                                    </StackPanel>
+                                </husk:SwitchCase>
+                            </husk:SwitchPresenter>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Deploying">
+                            <Panel Margin="8">
+                                <ProgressBar Theme="{StaticResource LaunchProgressBarTheme}"
+                                             CornerRadius="{StaticResource MediumCornerRadius}"
+                                             IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
+                                             Value="{Binding DeployingProgressCurrent, Mode=OneWay}"
+                                             Maximum="{Binding DeployingProgressTotal, Mode=OneWay}">
+                                    <ProgressBar.Transitions>
+                                        <Transitions>
+                                            <DoubleTransition
+                                                Easing="SineEaseOut"
+                                                Property="Value"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </ProgressBar.Transitions>
+                                </ProgressBar>
                                 <StackPanel HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                    <fi:SymbolIcon VerticalAlignment="Center"
-                                                   FontSize="{StaticResource MediumFontSize}"
-                                                   Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                   IconVariant="Filled"
-                                                   Symbol="DismissCircle" />
-                                    <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                               Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
+                                            VerticalAlignment="Center">
+                                    <TextBlock TextAlignment="Center"
+                                               Text="{Binding DeployingMessage, Mode=OneWay}" />
+                                    <TextBlock TextAlignment="Center"
+                                               IsVisible="{Binding DeployingPending, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}">
+                                        <Run Text="{Binding DeployingProgressCurrent,Mode=OneWay}" />
+                                        <Run Text="/" />
+                                        <Run Text="{Binding DeployingProgressTotal,Mode=OneWay}" />
+                                    </TextBlock>
                                 </StackPanel>
-                            </husk:SwitchCase>
-                        </husk:SwitchPresenter>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Deploying">
-                        <Panel Margin="8">
-                            <ProgressBar Theme="{StaticResource LaunchProgressBarTheme}"
-                                         CornerRadius="{StaticResource MediumCornerRadius}"
-                                         IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
-                                         Value="{Binding DeployingProgressCurrent, Mode=OneWay}"
-                                         Maximum="{Binding DeployingProgressTotal, Mode=OneWay}">
-                                <ProgressBar.Transitions>
-                                    <Transitions>
-                                        <DoubleTransition
-                                            Easing="SineEaseOut"
-                                            Property="Value"
-                                            Duration="{StaticResource ControlNormalAnimationDuration}" />
-                                    </Transitions>
-                                </ProgressBar.Transitions>
-                            </ProgressBar>
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                <TextBlock TextAlignment="Center"
-                                           Text="{Binding DeployingMessage, Mode=OneWay}" />
-                                <TextBlock TextAlignment="Center"
-                                           IsVisible="{Binding DeployingPending, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           FontSize="{StaticResource SmallFontSize}">
-                                    <Run Text="{Binding DeployingProgressCurrent,Mode=OneWay}" />
-                                    <Run Text="/" />
-                                    <Run Text="{Binding DeployingProgressTotal,Mode=OneWay}" />
-                                </TextBlock>
-                            </StackPanel>
 
-                        </Panel>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Running">
-                        <Panel>
-                            <Border
-                                CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}}"
-                                ClipToBounds="True">
-                                <Rectangle Margin="-250" Opacity="0.2">
-                                    <Rectangle.Fill>
-                                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250"
-                                                     TileMode="Tile"
-                                                     Stretch="Fill">
-                                            <VisualBrush.Visual>
-                                                <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill"
-                                                       Height="250"
-                                                       Width="250" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                    </Rectangle.Fill>
-                                    <Rectangle.Styles>
-                                        <Style Selector="Rectangle">
-                                            <Style.Animations>
-                                                <Animation Duration="0:0:5" IterationCount="Infinite">
-                                                    <KeyFrame Cue="0%">
-                                                        <Setter Property="TranslateTransform.X" Value="250" />
-                                                    </KeyFrame>
-                                                    <KeyFrame Cue="100%">
-                                                        <Setter Property="TranslateTransform.X" Value="0" />
-                                                    </KeyFrame>
-                                                </Animation>
-                                            </Style.Animations>
-                                        </Style>
-                                    </Rectangle.Styles>
-                                </Rectangle>
-                            </Border>
-                            <TextBlock Loaded="Timer_OnLoaded" Unloaded="Timer_OnUnloaded"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontSize="{StaticResource ExtraLargeFontSize}"
-                                       Text="{Binding TimerCount,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay,FallbackValue=0:0:24}" />
-                        </Panel>
-                    </husk:SwitchCase>
-                </husk:SwitchPresenter>
-            </husk:Card>
+                            </Panel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Running">
+                            <Panel>
+                                <Border
+                                    CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}}"
+                                    ClipToBounds="True">
+                                    <Rectangle Margin="-250" Opacity="0.2">
+                                        <Rectangle.Fill>
+                                            <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250"
+                                                         TileMode="Tile"
+                                                         Stretch="Fill">
+                                                <VisualBrush.Visual>
+                                                    <Image Source="/Assets/Images/Patterns/Green_Icons.png"
+                                                           Stretch="Fill"
+                                                           Height="250"
+                                                           Width="250" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Rectangle.Fill>
+                                        <Rectangle.Styles>
+                                            <Style Selector="Rectangle">
+                                                <Style.Animations>
+                                                    <Animation Duration="0:0:5" IterationCount="Infinite">
+                                                        <KeyFrame Cue="0%">
+                                                            <Setter Property="TranslateTransform.X" Value="250" />
+                                                        </KeyFrame>
+                                                        <KeyFrame Cue="100%">
+                                                            <Setter Property="TranslateTransform.X" Value="0" />
+                                                        </KeyFrame>
+                                                    </Animation>
+                                                </Style.Animations>
+                                            </Style>
+                                        </Rectangle.Styles>
+                                    </Rectangle>
+                                </Border>
+                                <TextBlock Loaded="Timer_OnLoaded" Unloaded="Timer_OnUnloaded"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="{StaticResource ExtraLargeFontSize}"
+                                           Text="{Binding TimerCount,StringFormat={}{0:hh\\:mm\\:ss}, Mode=OneWay,FallbackValue=0:0:24}" />
+                            </Panel>
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
+                </husk:Card>
+
+            </Grid>
             <husk:Card Grid.Column="1"
-                       Grid.Row="0"
-                       Grid.RowSpan="2"
-                       Padding="0"
-                       MinWidth="120">
+                       Padding="0">
                 <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <DockPanel>
@@ -554,7 +555,8 @@
                                     IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                     Theme="{StaticResource LaunchButtonTheme}">
                                 <Button.CornerRadius>
-                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                    <MultiBinding
+                                        Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                         <Binding
                                             RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}"
                                             Path="CornerRadius" />
@@ -652,7 +654,7 @@
                         </Button>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Running">
-                        <Grid ColumnDefinitions="Auto,0,Auto">
+                        <Grid ColumnDefinitions="Auto,Auto">
                             <Button
                                 Grid.Column="0"
                                 Margin="8"
@@ -669,7 +671,7 @@
                                                Text="{x:Static lang:Resources.InstanceHomeView_KillButtonText}" />
                                 </StackPanel>
                             </Button>
-                            <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
+                            <Grid Grid.Column="1" RowDefinitions="Auto,*">
                                 <Button
                                     Grid.Row="0"
                                     Command="{Binding EjectCommand}"
@@ -678,7 +680,7 @@
                                     <TextBlock Text="{x:Static lang:Resources.InstanceHomeView_DetachButtonText}" />
                                 </Button>
                                 <Button
-                                    Grid.Row="2"
+                                    Grid.Row="1"
                                     Margin="0,8,8,8"
                                     Padding="12,6"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
