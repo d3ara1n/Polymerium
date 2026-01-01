@@ -258,12 +258,6 @@
     <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
-    <data name="MarketplaceSearchView_ResultCountLabelText" xml:space="preserve">
-        <value>Results:</value>
-    </data>
-    <data name="MarketplaceSearchView_ResetFilterButtonText" xml:space="preserve">
-        <value>Clear Filter</value>
-    </data>
     <data name="Shared_FetchingLabelText" xml:space="preserve">
         <value>Fetching...</value>
     </data>
@@ -1920,5 +1914,8 @@
     </data>
     <data name="InstanceSetupView_ImportListMenuText" xml:space="preserve">
         <value>Import List</value>
+    </data>
+    <data name="MarketplaceSearchView_Message" xml:space="preserve">
+        <value>View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install.</value>
     </data>
 </root>

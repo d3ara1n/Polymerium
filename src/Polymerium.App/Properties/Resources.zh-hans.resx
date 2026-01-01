@@ -249,12 +249,6 @@
     <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
-    <data name="MarketplaceSearchView_ResultCountLabelText" xml:space="preserve">
-        <value>结果：</value>
-    </data>
-    <data name="MarketplaceSearchView_ResetFilterButtonText" xml:space="preserve">
-        <value>清除筛选</value>
-    </data>
     <data name="Shared_FetchingLabelText" xml:space="preserve">
         <value>拉取中...</value>
     </data>
@@ -1911,5 +1905,8 @@
     </data>
     <data name="InstanceSetupView_ImportListMenuText" xml:space="preserve">
         <value>导入列表</value>
+    </data>
+    <data name="MarketplaceSearchView_Message" xml:space="preserve">
+        <value>查看并下载来自各个资源提供方的整合包。如果需要更精确的搜索过滤选项，请在对应资源网站上完成整合包查找，然后在这里输入名字即可安装。</value>
     </data>
 </root>

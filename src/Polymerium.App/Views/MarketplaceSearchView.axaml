@@ -15,7 +15,7 @@
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
-           x:Class="Polymerium.App.Views.MarketplaceSearchView" x:Name="Exhibition">
+           x:Class="Polymerium.App.Views.MarketplaceSearchView" x:Name="Exhibition" Background="{x:Null}">
     <husk:Page.Resources>
         <MenuFlyout x:Key="ExhibitModpackButtonFlyout" x:DataType="m:ExhibitModel">
             <MenuItem Header="{x:Static lang:Resources.MarketplaceSearchView_OpenWebsiteMenuText}"
@@ -38,77 +38,31 @@
         </MenuFlyout>
     </husk:Page.Resources>
     <Panel>
-        <Grid RowDefinitions="Auto,0,*">
-            <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="6">
-                <Border CornerRadius="{OnPlatform Default=3,Windows=5}" Padding="{StaticResource CardContentMargin}"
-                        Margin="-10,-10,-10,0">
+        <Grid RowDefinitions="Auto,*">
+            <StackPanel Grid.Row="0" Margin="8,8,8,0">
+                <Border CornerRadius="6,6,0,0" Padding="24">
                     <Border.Background>
-                        <ImageBrush Source="{Binding HeaderImage}" Stretch="Fill" />
+                        <ImageBrush Source="{Binding HeaderImage}" Stretch="Fill" Opacity="0.6" />
                     </Border.Background>
-                    <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Button Theme="{StaticResource GhostButtonTheme}"
-                                    Command="{Binding $parent[husk:Frame].GoBackCommand}">
-                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
-                            </Button>
-                            <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Title}"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       VerticalAlignment="Center" />
+                    <Panel>
+                        <StackPanel Spacing="12">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Theme="{StaticResource GhostButtonTheme}"
+                                        Command="{Binding $parent[husk:Frame].GoBackCommand}">
+                                    <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
+                                <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Title}"
+                                           FontSize="{StaticResource LargeFontSize}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                            <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Message}"
+                                       TextWrapping="Wrap" Opacity="0.8" />
                         </StackPanel>
-                        <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
-                              Margin="64,0,64,0">
-                            <TextBox Grid.Column="0"
-                                     Watermark="{x:Static lang:Resources.MarketplaceSearchView_SearchBarPlaceholder}"
-                                     BorderBrush="{StaticResource OverlayInteractiveBackgroundBrush}"
-                                     Text="{Binding QueryText,Mode=TwoWay}">
-                                <TextBox.InnerRightContent>
-                                    <Button
-                                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                        Command="{Binding $parent[TextBox].Clear}"
-                                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                </TextBox.InnerRightContent>
-                            </TextBox>
-                            <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
-                                      BorderBrush="{StaticResource OverlayInteractiveBackgroundBrush}"
-                                      SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate DataType="m:RepositoryBasicModel">
-                                        <TextBlock Text="{Binding Name}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button Grid.Column="4" Classes="Primary" IsDefault="True"
-                                    Command="{Binding SearchCommand}"
-                                    IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=False}">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <husk:SwitchPresenter VerticalAlignment="Center"
-                                                          Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
-                                                          TargetType="x:Boolean"
-                                                          Height="{StaticResource MediumFontSize}"
-                                                          Width="{StaticResource MediumFontSize}">
-                                        <husk:SwitchCase Value="True">
-                                            <husk:ProgressRing
-                                                Theme="{StaticResource SolidProgressRingTheme}"
-                                                IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
-                                                StrokeWidth="2"
-                                                TrackStrokeWidth="2"
-                                                Background="{Binding  $parent[Button].Foreground}" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <icons:PackIconLucide Kind="Search" />
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                    <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_SearchButtonText}"
-                                               VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button>
-                        </Grid>
-                    </StackPanel>
+                    </Panel>
                 </Border>
-                <Grid ColumnDefinitions="*,Auto" Name="FilterBar">
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
-                        <ComboBox ItemsSource="{Binding SelectedRepository.Versions}"
+                <Border CornerRadius="0,0,6,6" Background="{StaticResource LayerBackgroundBrush}">
+                    <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto" ColumnSpacing="6" Margin="8">
+                        <ComboBox Grid.Column="0" ItemsSource="{Binding SelectedRepository.Versions}"
                                   SelectedItem="{Binding FilteredVersion,Mode=TwoWay}" PlaceholderText="Version">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="x:String">
@@ -116,7 +70,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox ItemsSource="{Binding SelectedRepository.Loaders}"
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding SelectedRepository.Loaders}"
                                   SelectedItem="{Binding FilteredLoader,Mode=TwoWay}" PlaceholderText="Loader">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="m:LoaderBasicModel">
@@ -124,20 +78,59 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <fi:SymbolIcon Symbol="FilterDismiss" FontSize="{StaticResource MediumFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_ResetFilterButtonText}" />
+                        <Button Grid.Column="2" Theme="{StaticResource OutlineButtonTheme}"
+                                Command="{Binding ClearFiltersCommand}" Padding="12,0">
+                            <fi:SymbolIcon Symbol="FilterDismiss" FontSize="{StaticResource MediumFontSize}" />
+                        </Button>
+                        <TextBox Grid.Column="3"
+                                 Watermark="{x:Static lang:Resources.MarketplaceSearchView_SearchBarPlaceholder}"
+                                 Text="{Binding QueryText,Mode=TwoWay}">
+                            <TextBox.InnerRightContent>
+                                <Button
+                                    IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    Command="{Binding $parent[TextBox].Clear}"
+                                    Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                        <ComboBox Grid.Column="4" ItemsSource="{Binding Repositories}"
+                                  SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="m:RepositoryBasicModel">
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="5" Classes="Primary" IsDefault="True" Padding="12,0"
+                                Command="{Binding SearchCommand}"
+                                IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=False}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <husk:SwitchPresenter VerticalAlignment="Center"
+                                                      Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
+                                                      TargetType="x:Boolean"
+                                                      Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}">
+                                    <husk:SwitchCase Value="True">
+                                        <husk:ProgressRing
+                                            Theme="{StaticResource SolidProgressRingTheme}"
+                                            IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
+                                            StrokeWidth="2"
+                                            TrackStrokeWidth="2"
+                                            Background="{Binding  $parent[Button].Foreground}" />
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="False">
+                                        <icons:PackIconLucide Kind="Search" />
+                                    </husk:SwitchCase>
+                                </husk:SwitchPresenter>
+                                <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_SearchButtonText}"
+                                           VerticalAlignment="Center" />
+                                <husk:Tag Classes="Status" Content="{Binding Exhibits.Count,FallbackValue=0}"
+                                          Background="{StaticResource LayerBackgroundBrush}"
+                                          Foreground="{StaticResource ControlForegroundBrush}" />
                             </StackPanel>
-                        </HyperlinkButton>
-                        <TextBlock VerticalAlignment="Center">
-                            <Run Text="{x:Static lang:Resources.MarketplaceSearchView_ResultCountLabelText}"
-                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
-                        <TabStrip Name="LayoutSelector" SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}"
+                        </Button>
+                        <TabStrip Grid.Column="6" Name="LayoutSelector"
+                                  SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}"
                                   Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <collection:List x:TypeArguments="m:ListTemplateCombinationModel">
@@ -154,7 +147,7 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <StackPanel Margin="16,0" Spacing="8" />
+                                                <StackPanel Margin="8" Spacing="6" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                     </m:ListTemplateCombinationModel>
@@ -171,7 +164,7 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="16,0" />
+                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="8" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                         <m:ListTemplateCombinationModel.ItemContainerTheme>
@@ -194,31 +187,11 @@
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>
-                    </StackPanel>
-                </Grid>
+                    </Grid>
+                </Border>
             </StackPanel>
-            <Panel Grid.Row="2">
-                <StackPanel VerticalAlignment="Center"
-                            Spacing="8">
-                    <StackPanel.IsVisible>
-                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                            <Binding Path="Exhibits.IsFetching" Mode="OneWay" Converter="{x:Static BoolConverters.Not}"
-                                     FallbackValue="{x:True}" />
-                            <Binding Path="Exhibits.Count" Mode="OneWay"
-                                     Converter="{x:Static husk:NumberConverters.IsZero}"
-                                     FallbackValue="{x:True}" />
-                        </MultiBinding>
-                    </StackPanel.IsVisible>
-                    <icons:PackIconLucide Kind="Package2" Height="{StaticResource ExtraLargeFontSize}"
-                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                          Width="{StaticResource ExtraLargeFontSize}"
-                                          HorizontalAlignment="Center" />
-                    <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                               FontSize="{StaticResource LargeFontSize}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-                <husk:InfiniteScrollView Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}"
+            <Panel Grid.Row="1">
+                <husk:InfiniteScrollView ItemsSource="{Binding Exhibits}"
                                          ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
                                          ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"
                                          ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme,FallbackValue={x:Null}}">

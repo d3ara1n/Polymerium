@@ -3669,6 +3669,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install..
+        /// </summary>
+        public static string MarketplaceSearchView_Message {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has been added to the queue.
         /// </summary>
         public static string MarketplaceSearchView_ModpackInstallingNotificationMessage {
@@ -3692,24 +3701,6 @@ namespace Polymerium.App.Properties {
         public static string MarketplaceSearchView_OpenWebsiteMenuText {
             get {
                 return ResourceManager.GetString("MarketplaceSearchView_OpenWebsiteMenuText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear Filter.
-        /// </summary>
-        public static string MarketplaceSearchView_ResetFilterButtonText {
-            get {
-                return ResourceManager.GetString("MarketplaceSearchView_ResetFilterButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results:.
-        /// </summary>
-        public static string MarketplaceSearchView_ResultCountLabelText {
-            get {
-                return ResourceManager.GetString("MarketplaceSearchView_ResultCountLabelText", resourceCulture);
             }
         }
         
