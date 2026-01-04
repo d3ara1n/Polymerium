@@ -38,45 +38,35 @@
             </DataTemplate>
         </husk:RelayDataTemplate>
         <!-- 日志条目内容模板 -->
-        <DataTemplate x:Key="LogEntryContentTemplate" x:DataType="m:ScrapModel">
-            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="4">
-                <!-- 时间戳 -->
-                <TextBlock Grid.Column="0"
-                           Text="{Binding Time, StringFormat=HH:mm:ss}"
-                           FontFamily="Cascadia Code, Consolas, monospace"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                           VerticalAlignment="Center" />
-
-                <!-- 来源标签 -->
-                <Border Grid.Column="1"
-                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                        CornerRadius="2"
-                        Padding="4,1"
-                        VerticalAlignment="Center">
-                    <Border.IsVisible>
-                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding Path="Thread" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
-                            <Binding Path="Sender" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
-                        </MultiBinding>
-                    </Border.IsVisible>
-                    <TextBlock FontFamily="Cascadia Code, Consolas, monospace"
-                               FontSize="{StaticResource ExtraSmallFontSize}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                        <Run Text="[" />
-                        <Run Text="{Binding Thread, FallbackValue=?}" />
-                        <Run Text="/" />
-                        <Run Text="{Binding Sender, FallbackValue=?}" />
-                        <Run Text="]" />
-                    </TextBlock>
-                </Border>
-
-                <!-- 消息内容 -->
-                <TextBlock Grid.Column="2"
-                           Text="{Binding Message}"
-                           TextTrimming="CharacterEllipsis"
-                           ToolTip.Tip="{Binding Message}"
-                           VerticalAlignment="Center" />
-            </Grid>
+        <DataTemplate x:Key="ScrapTemplate" DataType="m:ScrapModel">
+            <TextBlock TextTrimming="CharacterEllipsis"
+                       ToolTip.Tip="{Binding Message}">
+                <Run Text="{Binding Time, StringFormat=HH:mm:ss}"
+                     FontFamily="Cascadia Code, Consolas, monospace"
+                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <InlineUIContainer BaselineAlignment="Center">
+                    <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                            CornerRadius="2"
+                            Padding="4,2">
+                        <Border.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                <Binding Path="Thread" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                                <Binding Path="Sender" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                            </MultiBinding>
+                        </Border.IsVisible>
+                        <TextBlock FontFamily="Cascadia Code, Consolas, monospace"
+                                   FontSize="{StaticResource ExtraSmallFontSize}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run Text="[" />
+                            <Run Text="{Binding Thread, FallbackValue=?}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding Sender, FallbackValue=?}" />
+                            <Run Text="]" />
+                        </TextBlock>
+                    </Border>
+                </InlineUIContainer>
+                <Run Text="{Binding Message}" />
+            </TextBlock>
         </DataTemplate>
     </controls:Subpage.Resources>
 
@@ -347,7 +337,7 @@
                                             <Border BorderBrush="{StaticResource ControlBorderBrush}"
                                                     BorderThickness="3,0,0,0"
                                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                                    Padding="8,4">
+                                                    Padding="8,0">
                                                 <ContentControl Content="{Binding}"
                                                                 ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
@@ -357,7 +347,7 @@
                                             <Border BorderBrush="{StaticResource ControlWarningBorderBrush}"
                                                     BorderThickness="3,0,0,0"
                                                     Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
-                                                    Padding="8,4">
+                                                    Padding="8,0">
                                                 <ContentControl Content="{Binding}"
                                                                 ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
@@ -367,7 +357,7 @@
                                             <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
                                                     BorderThickness="3,0,0,0"
                                                     Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
-                                                    Padding="8,4">
+                                                    Padding="8,0">
                                                 <ContentControl Content="{Binding}"
                                                                 ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
