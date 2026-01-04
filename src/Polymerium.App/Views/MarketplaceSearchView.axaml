@@ -44,21 +44,21 @@
                     <Border.Background>
                         <ImageBrush Source="{Binding HeaderImage}" Stretch="Fill" Opacity="0.6" />
                     </Border.Background>
-                    <Panel>
-                        <StackPanel Spacing="12">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Theme="{StaticResource GhostButtonTheme}"
-                                        Command="{Binding $parent[husk:Frame].GoBackCommand}">
-                                    <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Title}"
-                                           FontSize="{StaticResource LargeFontSize}"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
+                    <DockPanel HorizontalSpacing="12">
+                        <Button DockPanel.Dock="Left" Theme="{StaticResource GhostButtonTheme}"
+                                Command="{Binding $parent[husk:Frame].GoBackCommand}" VerticalAlignment="Top">
+                            <fi:SymbolIcon Symbol="ArrowLeft"
+                                           FontSize="{StaticResource MediumFontSize}"
+                                           HorizontalAlignment="Left" />
+                        </Button>
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Title}"
+                                       FontSize="{StaticResource LargeFontSize}"
+                                       VerticalAlignment="Center" />
                             <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Message}"
                                        TextWrapping="Wrap" Opacity="0.8" />
                         </StackPanel>
-                    </Panel>
+                    </DockPanel>
                 </Border>
                 <Border CornerRadius="0,0,6,6" Background="{StaticResource LayerBackgroundBrush}">
                     <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto" ColumnSpacing="6" Margin="8">

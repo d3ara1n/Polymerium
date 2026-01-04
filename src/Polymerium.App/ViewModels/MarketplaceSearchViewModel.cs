@@ -79,21 +79,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                 var status = await _dataService.CheckStatusAsync(repository.Label);
                 repository.Loaders =
                 [
-                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x,
-                                                                                    x switch
-                                                                                    {
-                                                                                        LoaderHelper.LOADERID_FORGE =>
-                                                                                            "Forge",
-                                                                                        LoaderHelper.LOADERID_NEOFORGE
-                                                                                            => "NeoForge",
-                                                                                        LoaderHelper.LOADERID_FABRIC =>
-                                                                                            "Fabric",
-                                                                                        LoaderHelper.LOADERID_QUILT =>
-                                                                                            "QUILT",
-                                                                                        LoaderHelper.LOADERID_FLINT =>
-                                                                                            "Flint Loader",
-                                                                                        _ => x
-                                                                                    }))
+                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x, LoaderHelper.ToDisplayName(x)))
                 ];
                 repository.Versions =
                 [
