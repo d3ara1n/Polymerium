@@ -1374,7 +1374,6 @@
                                             <Grid RowDefinitions="Auto,*" RowSpacing="12">
                                                 <!-- 玩家头像列表 -->
                                                 <TabStrip Grid.Row="0"
-                                                          AutoScrollToSelectedItem="False"
                                                           ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers,FallbackValue={x:Null}}"
                                                           SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer,Mode=TwoWay,FallbackValue={x:Null}}">
                                                     <TabStrip.ItemTemplate>

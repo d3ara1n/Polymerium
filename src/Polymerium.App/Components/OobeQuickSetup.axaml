@@ -83,8 +83,7 @@
                                VerticalAlignment="Center" />
                     <TabStrip Grid.Column="4"
                               Theme="{StaticResource SegmentedTabStripTheme}"
-                              SelectedIndex="{Binding $parent[components:OobeQuickSetup].DarkModeIndex,Mode=TwoWay}"
-                              AutoScrollToSelectedItem="False">
+                              SelectedIndex="{Binding $parent[components:OobeQuickSetup].DarkModeIndex,Mode=TwoWay}">
                         <TabStripItem>
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
