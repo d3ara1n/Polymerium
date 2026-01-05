@@ -9,6 +9,8 @@
         <husk:HuskuiTheme />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />
+        <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.InlineUIContainerAlignment.axaml" />
+        <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.NoAutoScrollToSelectedItem.axaml" />
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>

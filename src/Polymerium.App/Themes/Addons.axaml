@@ -28,8 +28,4 @@
         </Setter>
     </Style>
 
-    <Style Selector="InlineUIContainer">
-        <Setter Property="BaselineAlignment" Value="TextBottom" />
-    </Style>
-
 </Styles>

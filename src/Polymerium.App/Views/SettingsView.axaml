@@ -59,7 +59,7 @@
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ThemeVariantLabelText}"
                                         HorizontalContentAlignment="Left">
                 <TabStrip Theme="{StaticResource SegmentedTabStripTheme}"
-                          SelectedIndex="{Binding DarkMode,Mode=TwoWay}" AutoScrollToSelectedItem="False">
+                          SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
                     <TabStripItem>
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
@@ -374,7 +374,7 @@
                 </controls:Plaque>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}">
-                <TabStrip SelectedIndex="{Binding UpdateSource,Mode=TwoWay}" AutoScrollToSelectedItem="False">
+                <TabStrip SelectedIndex="{Binding UpdateSource,Mode=TwoWay}">
                     <TabStripItem>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide Kind="Github" Height="{StaticResource MediumFontSize}"
