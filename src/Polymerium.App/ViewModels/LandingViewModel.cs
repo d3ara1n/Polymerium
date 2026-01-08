@@ -107,7 +107,8 @@ public partial class LandingViewModel(
                         ? LoaderHelper.ToDisplayName(loader.Identity)
                         : Resources.Enum_Vanilla,
                 Thumbnail = icon,
-                LastPlayedRaw = last.End
+                LastPlayedRaw = last.End,
+                LastPlayTimeRaw = last.End - last.Begin
             };
             var screenshots = ProfileHelper.PickScreenshotsNewest(last.Key, 3);
             foreach (var screenshot in screenshots)

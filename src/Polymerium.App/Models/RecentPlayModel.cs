@@ -25,7 +25,14 @@ public partial class RecentPlayModel : ModelBase
     public partial AccountModel? Account { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LastPlayed))]
     public required partial DateTimeOffset LastPlayedRaw { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LastPlayTime))]
+    public required partial TimeSpan LastPlayTimeRaw { get; set; }
+
+    public string LastPlayTime => LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
 
     public string LastPlayed => LastPlayedRaw.Humanize();
 
