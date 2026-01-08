@@ -1,7 +1,9 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -107,6 +109,13 @@ public partial class LandingViewModel(
                 Thumbnail = icon,
                 LastPlayedRaw = last.End
             };
+            var screenshots = ProfileHelper.PickScreenshotsNewest(last.Key, 3);
+            foreach (var screenshot in screenshots)
+            {
+                using var stream = new FileStream(screenshot, FileMode.Open, FileAccess.Read);
+                RecentPlay.Screenshots.Add(new() { FilePath = screenshot, Image = Bitmap.DecodeToWidth(stream, 128) });
+            }
+
             if (persistenceService.GetAccountSelector(last.Key) is { } selector
              && persistenceService.GetAccount(selector.Uuid) is { } account)
             {

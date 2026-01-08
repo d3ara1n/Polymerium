@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
@@ -27,6 +28,8 @@ public partial class RecentPlayModel : ModelBase
     public required partial DateTimeOffset LastPlayedRaw { get; set; }
 
     public string LastPlayed => LastPlayedRaw.Humanize();
+
+    public ObservableCollection<RecentPlayScreenshotModel> Screenshots { get; } = [];
 
     #endregion
 }

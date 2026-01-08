@@ -58,8 +58,7 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ThemeVariantLabelText}"
                                         HorizontalContentAlignment="Left">
-                <TabStrip Theme="{StaticResource SegmentedTabStripTheme}"
-                          SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
+                <TabStrip SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
                     <TabStripItem>
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
