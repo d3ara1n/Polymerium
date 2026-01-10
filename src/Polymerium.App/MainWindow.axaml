@@ -155,7 +155,7 @@
                             Width="18"
                             Height="18"
                             VerticalAlignment="Center"
-                            Kind="Ghost" />
+                            Kind="House" />
                         <TextBlock VerticalAlignment="Center"
                                    Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
                     </StackPanel>

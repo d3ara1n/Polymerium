@@ -305,6 +305,47 @@
                             <TabItem Header="Versions" />
                         </TabControl>
                     </husk:Card>
+                    <Expander Header="Modules">
+                        <StackPanel Orientation="Horizontal" Spacing="12" Margin="12">
+                            <DockPanel>
+                                <Button DockPanel.Dock="Bottom" Classes="Small Primary"
+                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                    <husk:IconLabel Icon="HandPoint" Text="Install" />
+                                </Button>
+                                <Border Padding="24,18" Background="{StaticResource OverlayBackgroundBrush}"
+                                        BorderBrush="{StaticResource ControlBorderBrush}"
+                                        BorderThickness="1,1,1,0"
+                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                    <StackPanel VerticalAlignment="Center" Spacing="8">
+                                        <icons:PackIconLucide Kind="Dock" Height="{StaticResource ExtraLargeFontSize}"
+                                                              Width="{StaticResource ExtraLargeFontSize}"
+                                                              HorizontalAlignment="Center" />
+                                        <TextBlock Text="Dock Operator" HorizontalAlignment="Center"
+                                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    </StackPanel>
+                                </Border>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button DockPanel.Dock="Bottom" Classes="Small" BorderThickness="1,0,1,1"
+                                        BorderBrush="{StaticResource ControlBorderBrush}"
+                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                    <husk:IconLabel Icon="HandPoint" Text="Installed" />
+                                </Button>
+                                <Border Padding="24,18" Background="{StaticResource OverlayBackgroundBrush}"
+                                        BorderBrush="{StaticResource ControlBorderBrush}"
+                                        BorderThickness="1,1,1,0"
+                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                    <StackPanel VerticalAlignment="Center" Spacing="8">
+                                        <icons:PackIconLucide Kind="Scan" Height="{StaticResource ExtraLargeFontSize}"
+                                                              Width="{StaticResource ExtraLargeFontSize}"
+                                                              HorizontalAlignment="Center" />
+                                        <TextBlock Text="Virus Scanner" HorizontalAlignment="Center"
+                                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                    </StackPanel>
+                                </Border>
+                            </DockPanel>
+                        </StackPanel>
+                    </Expander>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Drag">
