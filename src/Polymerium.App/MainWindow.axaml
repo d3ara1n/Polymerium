@@ -131,7 +131,7 @@
                     </StackPanel.Effect>
                     <icons:PackIconLucide Height="{StaticResource MediumFontSize}"
                                           Width="{StaticResource MediumFontSize}" Kind="Squirrel"
-                                          VerticalAlignment="Center" HasMirrorTransform="True" />
+                                          VerticalAlignment="Center" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"
