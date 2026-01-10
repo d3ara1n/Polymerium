@@ -11,8 +11,11 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
+using Polymerium.App.Toasts;
 using Polymerium.App.Views;
 using Trident.Abstractions;
+using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
@@ -28,7 +31,9 @@ public partial class LandingViewModel(
     ProfileManager profileManager,
     InstanceService instanceService,
     OverlayService overlayService,
-    NotificationService notificationService) : ViewModelBase
+    NotificationService notificationService,
+    RepositoryAgent repositoryAgent,
+    InstanceManager instanceManager) : ViewModelBase
 {
     #region Reactive
 
@@ -53,6 +58,9 @@ public partial class LandingViewModel(
     [ObservableProperty]
     public partial RecentPlayModel? RecentPlay { get; set; }
 
+    [ObservableProperty]
+    public partial LazyObject? FeaturedModpacks { get; set; }
+
     #endregion
 
     #region Overrides
@@ -62,21 +70,8 @@ public partial class LandingViewModel(
         // This page is always the root page
         navigationService.ClearHistory();
 
-
-        MinecraftNews = new(async _ =>
-        {
-            var news = await dataService.GetMinecraftReleasePatchesAsync();
-            var models = news
-                        .Entries.Take(24)
-                        .Select((x, i) =>
-                         {
-                             var url = mojangServuce.GetAbsoluteImageUrl(x.Image.Url);
-
-                             return new MinecraftReleasePatchModel(url, x.Type, x.Title, x.ShortText, x.Date);
-                         })
-                        .ToList();
-            return models;
-        });
+        LoadMinecraftNews();
+        LoadFeaturedModpacks();
 
         TotalPlayHours = persistenceService.GetTotalPlayTime().TotalHours;
         ActiveDays = persistenceService.GetActiveDays();
@@ -128,6 +123,41 @@ public partial class LandingViewModel(
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount++;
 
+    private void LoadMinecraftNews() =>
+        MinecraftNews = new(async _ =>
+        {
+            var news = await dataService.GetMinecraftReleasePatchesAsync();
+            var models = news
+                        .Entries.Take(24)
+                        .Select((x, i) =>
+                         {
+                             var url = mojangServuce.GetAbsoluteImageUrl(x.Image.Url);
+
+                             return new MinecraftReleasePatchModel(url, x.Type, x.Title, x.ShortText, x.Date);
+                         })
+                        .ToList();
+            return models;
+        });
+
+    private void LoadFeaturedModpacks() =>
+        FeaturedModpacks = new(async _ =>
+        {
+            var filter = new Filter(null, null, ResourceKind.Modpack);
+            var handle = await repositoryAgent.SearchAsync(CurseForgeHelper.LABEL, string.Empty, filter);
+            var exhibits = await handle.FetchAsync(default);
+            var models = exhibits
+                        .Take(5)
+                        .Select(x => new FeaturedModpackModel(x.Label,
+                                                              x.Namespace,
+                                                              x.Pid,
+                                                              x.Name,
+                                                              x.Author,
+                                                              x.Thumbnail ?? AssetUriIndex.DirtImage,
+                                                              x.Tags))
+                        .ToList();
+            return models;
+        });
+
     #endregion
 
     #region Commands
@@ -159,6 +189,9 @@ public partial class LandingViewModel(
     }
 
     [RelayCommand]
+    private void GotoMarketplace() => navigationService.Navigate<MarketplacePortalView>();
+
+    [RelayCommand]
     private void TryOne()
     {
         var keys = profileManager.Profiles.Select(x => x.Item1).ToArray();
@@ -173,6 +206,12 @@ public partial class LandingViewModel(
     private void OpenAccountsView() => navigationService.Navigate<AccountsView>();
 
     [RelayCommand]
+    private void RefreshMinecraftNews() => LoadMinecraftNews();
+
+    [RelayCommand]
+    private void RefreshFeaturedModpacks() => LoadFeaturedModpacks();
+
+    [RelayCommand]
     private async Task PlayAsync(string key)
     {
         try
@@ -182,6 +221,55 @@ public partial class LandingViewModel(
         catch (Exception ex)
         {
             notificationService.PopMessage(ex, "Failed to launch instance");
+        }
+    }
+
+    [RelayCommand]
+    private async Task ViewFeaturedModpackAsync(FeaturedModpackModel? modpack)
+    {
+        if (modpack is not null)
+        {
+            try
+            {
+                var project = await dataService.QueryProjectAsync(modpack.Label, modpack.Namespace, modpack.ProjectId);
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
+                                                    project.Author,
+                                                    project.Reference,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.UpdatedAt,
+                                                    [.. project.Gallery.Select(x => x.Url)]);
+                overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataService = dataService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand
+                });
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to load modpack details");
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void InstallVersion(ExhibitVersionModel? version)
+    {
+        if (version is not null)
+        {
+            instanceManager.Install(version.ProjectName,
+                                    version.Label,
+                                    version.Namespace,
+                                    version.ProjectId,
+                                    version.VersionId);
+            notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage
+                                                    .Replace("{0}", version.VersionName),
+                                           version.ProjectName);
         }
     }
 

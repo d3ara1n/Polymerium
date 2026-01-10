@@ -3147,6 +3147,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load featured modpacks.
+        /// </summary>
+        public static string LandingView_FeaturedModpacksErrorText {
+            get {
+                return ResourceManager.GetString("LandingView_FeaturedModpacksErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Featured Modpacks.
+        /// </summary>
+        public static string LandingView_FeaturedModpacksLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_FeaturedModpacksLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load Minecraft news.
+        /// </summary>
+        public static string LandingView_MinecraftNewsErrorText {
+            get {
+                return ResourceManager.GetString("LandingView_MinecraftNewsErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
+        /// </summary>
+        public static string LandingView_MoreButtonText {
+            get {
+                return ResourceManager.GetString("LandingView_MoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string LandingView_OverviewAccountsLabelText {
@@ -3165,6 +3201,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I&apos;m Feeling Lucky.
+        /// </summary>
+        public static string LandingView_RandomPlayButtonText {
+            get {
+                return ResourceManager.GetString("LandingView_RandomPlayButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick one randomly!.
+        /// </summary>
+        public static string LandingView_RandomPlaySubtitle {
+            get {
+                return ResourceManager.GetString("LandingView_RandomPlaySubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t know what to play?.
+        /// </summary>
+        public static string LandingView_RandomPlayTitle {
+            get {
+                return ResourceManager.GetString("LandingView_RandomPlayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
         public static string LandingView_RecentPlayButtonText {
@@ -3179,6 +3242,15 @@ namespace Polymerium.App.Properties {
         public static string LandingView_RecentReleasesLabelText {
             get {
                 return ResourceManager.GetString("LandingView_RecentReleasesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retry.
+        /// </summary>
+        public static string LandingView_RetryButtonText {
+            get {
+                return ResourceManager.GetString("LandingView_RetryButtonText", resourceCulture);
             }
         }
         

@@ -29,7 +29,18 @@ public partial class ExhibitModpackToast : Toast
                                                                           o => o.LazyVersions,
                                                                           (o, v) => o.LazyVersions = v);
 
+    public static readonly DirectProperty<ExhibitModpackToast, ExhibitVersionModel?> SelectedVersionProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, ExhibitVersionModel?>(nameof(SelectedVersion),
+            o => o.SelectedVersion,
+            (o, v) => o.SelectedVersion = v);
+
     public ExhibitModpackToast() => InitializeComponent();
+
+    public ExhibitVersionModel? SelectedVersion
+    {
+        get;
+        set => SetAndRaise(SelectedVersionProperty, ref field, value);
+    }
 
     public IRelayCommand<ExhibitVersionModel>? InstallCommand
     {
@@ -70,26 +81,28 @@ public partial class ExhibitModpackToast : Toast
                                                                   project.Namespace,
                                                                   project.ProjectId,
                                                                   Filter.None with { Kind = ResourceKind.Modpack });
-            return new ExhibitVersionCollection([
-                .. versions.Select(x => new ExhibitVersionModel(project.Label,
-                                                                project.Namespace,
-                                                                project.ProjectName,
-                                                                project.ProjectId,
-                                                                x.VersionName,
-                                                                x.VersionId,
-                                                                string.Join(",",
-                                                                            x.Requirements.AnyOfLoaders
-                                                                             .Select(LoaderHelper.ToDisplayName)),
-                                                                string.Join(",", x.Requirements.AnyOfVersions),
-                                                                string.Empty,
-                                                                x.PublishedAt,
-                                                                x.DownloadCount,
-                                                                x.ReleaseType,
-                                                                PackageHelper.ToPurl(x.Label,
-                                                                    x.Namespace,
-                                                                    x.ProjectId,
-                                                                    x.VersionId)))
-            ]);
+            var rv = versions
+                    .Select(x => new ExhibitVersionModel(project.Label,
+                                                         project.Namespace,
+                                                         project.ProjectName,
+                                                         project.ProjectId,
+                                                         x.VersionName,
+                                                         x.VersionId,
+                                                         string.Join(",",
+                                                                     x.Requirements.AnyOfLoaders.Select(LoaderHelper
+                                                                        .ToDisplayName)),
+                                                         string.Join(",", x.Requirements.AnyOfVersions),
+                                                         string.Empty,
+                                                         x.PublishedAt,
+                                                         x.DownloadCount,
+                                                         x.ReleaseType,
+                                                         PackageHelper.ToPurl(x.Label,
+                                                                              x.Namespace,
+                                                                              x.ProjectId,
+                                                                              x.VersionId)))
+                    .ToList();
+            SelectedVersion = rv.FirstOrDefault();
+            return new ExhibitVersionCollection(rv);
         });
 
     private void LoadDescription() =>
