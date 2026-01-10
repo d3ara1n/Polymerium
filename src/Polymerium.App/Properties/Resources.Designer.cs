@@ -3165,24 +3165,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose.
-        /// </summary>
-        public static string LandingView_RecentAccountChooseButtonText {
-            get {
-                return ResourceManager.GetString("LandingView_RecentAccountChooseButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Switch.
-        /// </summary>
-        public static string LandingView_RecentAccountSwitchButtonText {
-            get {
-                return ResourceManager.GetString("LandingView_RecentAccountSwitchButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
         public static string LandingView_RecentPlayButtonText {
@@ -3224,6 +3206,24 @@ namespace Polymerium.App.Properties {
         public static string LandingView_StatisticsSessionsLabelText {
             get {
                 return ResourceManager.GetString("LandingView_StatisticsSessionsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick access to your game world.
+        /// </summary>
+        public static string LandingView_Subtitle {
+            get {
+                return ResourceManager.GetString("LandingView_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome Back.
+        /// </summary>
+        public static string LandingView_Title {
+            get {
+                return ResourceManager.GetString("LandingView_Title", resourceCulture);
             }
         }
         

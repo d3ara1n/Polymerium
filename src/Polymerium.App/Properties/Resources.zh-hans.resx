@@ -1335,12 +1335,6 @@
     <data name="Account_Trial" xml:space="preserve">
         <value>试用</value>
     </data>
-    <data name="LandingView_RecentAccountSwitchButtonText" xml:space="preserve">
-        <value>切换</value>
-    </data>
-    <data name="LandingView_RecentAccountChooseButtonText" xml:space="preserve">
-        <value>选择</value>
-    </data>
     <data name="LandingView_RecentPlayButtonText" xml:space="preserve">
         <value>开始</value>
     </data>
@@ -1908,5 +1902,11 @@
     </data>
     <data name="MarketplaceSearchView_Message" xml:space="preserve">
         <value>查看并下载来自各个资源提供方的整合包。如果需要更精确的搜索过滤选项，请在对应资源网站上完成整合包查找，然后在这里输入名字即可安装。</value>
+    </data>
+    <data name="LandingView_Title" xml:space="preserve">
+        <value>欢迎回来</value>
+    </data>
+    <data name="LandingView_Subtitle" xml:space="preserve">
+        <value>今天玩点什么呢</value>
     </data>
 </root>

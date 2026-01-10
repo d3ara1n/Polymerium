@@ -1344,12 +1344,6 @@
     <data name="Account_Trial" xml:space="preserve">
         <value>Trial</value>
     </data>
-    <data name="LandingView_RecentAccountSwitchButtonText" xml:space="preserve">
-        <value>Switch</value>
-    </data>
-    <data name="LandingView_RecentAccountChooseButtonText" xml:space="preserve">
-        <value>Choose</value>
-    </data>
     <data name="LandingView_RecentPlayButtonText" xml:space="preserve">
         <value>Play</value>
     </data>
@@ -1917,5 +1911,11 @@
     </data>
     <data name="MarketplaceSearchView_Message" xml:space="preserve">
         <value>View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install.</value>
+    </data>
+    <data name="LandingView_Title" xml:space="preserve">
+        <value>Welcome Back</value>
+    </data>
+    <data name="LandingView_Subtitle" xml:space="preserve">
+        <value>Quick access to your game world</value>
     </data>
 </root>
