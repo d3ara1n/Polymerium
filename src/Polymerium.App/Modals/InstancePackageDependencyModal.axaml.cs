@@ -94,7 +94,8 @@ public partial class InstancePackageDependencyModal : Modal
                                                                  x.VersionName,
                                                                  string.Join(",",
                                                                              x.Requirements.AnyOfLoaders
-                                                                              .Select(LoaderHelper.ToDisplayName)),
+                                                                              .Select(LoaderHelper
+                                                                                  .ToDisplayName)),
                                                                  string.Join(",", x.Requirements.AnyOfVersions),
                                                                  x.PublishedAt,
                                                                  x.ReleaseType,
