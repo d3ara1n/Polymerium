@@ -111,12 +111,12 @@ public partial class InstancePackageModal : Modal
                        .Dependencies.Select(async x =>
                         {
                             var count = (uint)Collection.Items.Count(y => y.Info is
-                                                                          {
-                                                                              Version: InstancePackageVersionModel
-                                                                              version
-                                                                          }
-                                                                       && version.Dependencies.Any(z => z.Label
-                                                                           == x.Label
+                                                                              {
+                                                                                  Version: InstancePackageVersionModel
+                                                                                  version
+                                                                              }
+                                                                       && version.Dependencies.Any(z =>
+                                                                              z.Label == x.Label
                                                                            && z.Namespace == x.Namespace
                                                                            && z.ProjectId == x.ProjectId));
                             var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Label

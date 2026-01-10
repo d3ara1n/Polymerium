@@ -86,7 +86,7 @@ public partial class MaintenanceStorageViewModel(
         if (model != null)
         {
             navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
-                                                                            typeof(InstanceStorageView)));
+                                                         typeof(InstanceStorageView)));
         }
     }
 

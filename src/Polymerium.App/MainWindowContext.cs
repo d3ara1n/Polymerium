@@ -288,7 +288,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstancePropertiesView)));
+                                                          typeof(InstancePropertiesView)));
         }
     }
 
@@ -298,7 +298,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                                             typeof(InstanceSetupView)));
+                                                          typeof(InstanceSetupView)));
         }
     }
 
