@@ -1,20 +1,16 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
-using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
-using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Trident.Abstractions;
 using Trident.Abstractions.Utilities;
@@ -110,23 +106,6 @@ public partial class LandingViewModel(
                 LastPlayedRaw = last.End,
                 LastPlayTimeRaw = last.End - last.Begin
             };
-            var screenshots = ProfileHelper.PickScreenshotsNewest(last.Key, 3);
-            foreach (var screenshot in screenshots)
-            {
-                using var stream = new FileStream(screenshot, FileMode.Open, FileAccess.Read);
-                RecentPlay.Screenshots.Add(new() { FilePath = screenshot, Image = Bitmap.DecodeToWidth(stream, 128) });
-            }
-
-            if (persistenceService.GetAccountSelector(last.Key) is { } selector
-             && persistenceService.GetAccount(selector.Uuid) is { } account)
-            {
-                var cooked = AccountHelper.ToCooked(account);
-                RecentPlay.Account = new(cooked.GetType(),
-                                         cooked.Uuid,
-                                         cooked.Username,
-                                         account.EnrolledAt,
-                                         account.LastUsedAt);
-            }
         }
 
         return Task.CompletedTask;
@@ -180,35 +159,13 @@ public partial class LandingViewModel(
     }
 
     [RelayCommand]
-    private async Task PickAccountAsync()
+    private void TryOne()
     {
-        if (RecentPlay is not null)
+        var keys = profileManager.Profiles.Select(x => x.Item1).ToArray();
+        if (keys.Length > 0)
         {
-            var accounts = persistenceService
-                          .GetAccounts()
-                          .Select(x =>
-                           {
-                               var cooked = AccountHelper.ToCooked(x);
-                               return RecentPlay.Account?.Uuid == cooked.Uuid
-                                          ? RecentPlay.Account
-                                          : new(cooked.GetType(),
-                                                cooked.Uuid,
-                                                cooked.Username,
-                                                x.EnrolledAt,
-                                                x.LastUsedAt);
-                           })
-                          .ToList();
-            var dialog = new AccountPickerDialog
-            {
-                GotoManagerViewCommand = OpenAccountsViewCommand,
-                AccountsSource = accounts,
-                Result = accounts.FirstOrDefault(x => x.Uuid == RecentPlay.Account?.Uuid)
-            };
-            if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
-            {
-                RecentPlay.Account = account;
-                persistenceService.SetAccountSelector(RecentPlay.Key, account.Uuid);
-            }
+            var key = keys.ElementAt(Random.Shared.Next(keys.Length));
+            navigationService.Navigate<InstanceView>(key);
         }
     }
 

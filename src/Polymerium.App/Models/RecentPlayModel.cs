@@ -22,9 +22,6 @@ public partial class RecentPlayModel : ModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial AccountModel? Account { get; set; }
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LastPlayed))]
     public required partial DateTimeOffset LastPlayedRaw { get; set; }
 
@@ -35,8 +32,6 @@ public partial class RecentPlayModel : ModelBase
     public string LastPlayTime => LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
 
     public string LastPlayed => LastPlayedRaw.Humanize();
-
-    public ObservableCollection<RecentPlayScreenshotModel> Screenshots { get; } = [];
 
     #endregion
 }
