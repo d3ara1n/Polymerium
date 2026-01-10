@@ -1918,4 +1918,28 @@
     <data name="LandingView_Subtitle" xml:space="preserve">
         <value>Quick access to your game world</value>
     </data>
+    <data name="LandingView_FeaturedModpacksLabelText" xml:space="preserve">
+        <value>Featured Modpacks</value>
+    </data>
+    <data name="LandingView_MoreButtonText" xml:space="preserve">
+        <value>More</value>
+    </data>
+    <data name="LandingView_RandomPlayTitle" xml:space="preserve">
+        <value>Don't know what to play?</value>
+    </data>
+    <data name="LandingView_RandomPlaySubtitle" xml:space="preserve">
+        <value>Pick one randomly!</value>
+    </data>
+    <data name="LandingView_RandomPlayButtonText" xml:space="preserve">
+        <value>I'm Feeling Lucky</value>
+    </data>
+    <data name="LandingView_FeaturedModpacksErrorText" xml:space="preserve">
+        <value>Failed to load featured modpacks</value>
+    </data>
+    <data name="LandingView_MinecraftNewsErrorText" xml:space="preserve">
+        <value>Failed to load Minecraft news</value>
+    </data>
+    <data name="LandingView_RetryButtonText" xml:space="preserve">
+        <value>Retry</value>
+    </data>
 </root>

@@ -1909,4 +1909,28 @@
     <data name="LandingView_Subtitle" xml:space="preserve">
         <value>今天玩点什么呢</value>
     </data>
+    <data name="LandingView_FeaturedModpacksLabelText" xml:space="preserve">
+        <value>热门整合包</value>
+    </data>
+    <data name="LandingView_MoreButtonText" xml:space="preserve">
+        <value>更多</value>
+    </data>
+    <data name="LandingView_RandomPlayTitle" xml:space="preserve">
+        <value>不知道玩什么？</value>
+    </data>
+    <data name="LandingView_RandomPlaySubtitle" xml:space="preserve">
+        <value>随机挑选一个！</value>
+    </data>
+    <data name="LandingView_RandomPlayButtonText" xml:space="preserve">
+        <value>手气不错</value>
+    </data>
+    <data name="LandingView_FeaturedModpacksErrorText" xml:space="preserve">
+        <value>加载热门整合包失败</value>
+    </data>
+    <data name="LandingView_MinecraftNewsErrorText" xml:space="preserve">
+        <value>加载 Minecraft 新闻失败</value>
+    </data>
+    <data name="LandingView_RetryButtonText" xml:space="preserve">
+        <value>重试</value>
+    </data>
 </root>

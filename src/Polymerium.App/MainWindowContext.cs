@@ -464,7 +464,10 @@ public partial class MainWindowContext : ObservableObject
                                                             e.Key),
                                                         forceExpire: true);
                     });
-                    _persistenceService.AppendAction(new(e.Key, PersistenceService.ActionKind.Install, null, e.Source));
+                    _persistenceService.AppendAction(new(e.Key,
+                                                         PersistenceService.ActionKind.Install,
+                                                         null,
+                                                         e.Reference));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

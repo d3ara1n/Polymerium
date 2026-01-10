@@ -70,7 +70,7 @@
                             <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
                                 <Button Grid.Column="0" Classes="Primary"
                                         Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
-                                        CommandParameter="{Binding #VersionBox.SelectedItem,FallbackValue={x:Null}}">
+                                        CommandParameter="{Binding $parent[local:ExhibitModpackToast].SelectedVersion,Mode=OneWay,FallbackValue={x:Null}}">
                                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="6,0">
                                         <fi:SymbolIcon Symbol="ArrowDownload"
                                                        FontSize="{StaticResource MediumFontSize}" />
@@ -82,7 +82,7 @@
                                     <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
                                 </Button>
                                 <ComboBox Grid.Column="2" Name="VersionBox" ItemsSource="{Binding }"
-                                          SelectedItem="{Binding [0],Mode=OneTime,FallbackValue={x:Null}}">
+                                          SelectedItem="{Binding  $parent[local:ExhibitModpackToast].SelectedVersion,Mode=TwoWay,FallbackValue={x:Null}}">
                                     <ComboBox.SelectionBoxItemTemplate>
                                         <DataTemplate DataType="m:ExhibitVersionModel">
                                             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
