@@ -5,6 +5,7 @@
                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
                    x:Class="Polymerium.App.Components.OobePrivacy">
     <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
@@ -43,10 +44,15 @@
                 <StackPanel Grid.Column="2" Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectTitle}"
                                FontWeight="{StaticResource ControlStrongFontWeight}" />
-                    <TextBlock Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectDescription}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                FontSize="{StaticResource SmallFontSize}"
-                               TextWrapping="Wrap" />
+                               TextWrapping="Wrap">
+                        <Run Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectDescription}" />
+                        <HyperlinkButton FontSize="{StaticResource SmallFontSize}"
+                                         NavigateUri="https://sentry.io/privacy">
+                            <husk:IconLabel Icon="Open" Text="Sentry.io Privacy Policy" />
+                        </HyperlinkButton>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
         </Border>
