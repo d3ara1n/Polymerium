@@ -29,7 +29,7 @@
                       CommandParameter="{Binding Info.ProjectName,FallbackValue=Project Name}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="项目名" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectNameMenuText}" />
                         <TextBlock Text="{Binding Info.ProjectName,FallbackValue=Project Name}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
@@ -40,7 +40,7 @@
                       CommandParameter="{Binding Info.ProjectId,FallbackValue=Pid}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="项目 Id" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectIdMenuText}" />
                         <TextBlock Text="{Binding Info.ProjectId,FallbackValue=Pid}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
@@ -52,7 +52,7 @@
                       IsVisible="{Binding Info.Version,Converter={x:Static husk:ObjectConverters.Is},ConverterParameter={x:Type m:InstancePackageVersionModel},FallbackValue={x:False}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="版本名" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionNameMenuText}" />
                         <TextBlock
                             Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name,FallbackValue=Version Name}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -65,7 +65,7 @@
                       IsVisible="{Binding Info.Version,Converter={x:Static husk:ObjectConverters.Is},ConverterParameter={x:Type m:InstancePackageVersionModel},FallbackValue={x:False}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="版本 Id" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionIdMenuText}" />
                         <TextBlock Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id,FallbackValue=Vid}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
@@ -82,6 +82,7 @@
             <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
             <MenuItem Header="-" />
             <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
+                      Foreground="{StaticResource ControlDangerForegroundBrush}"
                       Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).RemovePackageCommand,FallbackValue={x:Null}}"
                       CommandParameter="{Binding }"
                       IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"

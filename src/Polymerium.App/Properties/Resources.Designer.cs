@@ -2931,6 +2931,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Id.
+        /// </summary>
+        public static string InstanceSetupView_ProjectIdMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ProjectIdMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Name.
+        /// </summary>
+        public static string InstanceSetupView_ProjectNameMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ProjectNameMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Something went wrong.
         /// </summary>
         public static string InstanceSetupView_ReferenceUnavailableLabelText {
@@ -3030,11 +3048,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Version Id.
+        /// </summary>
+        public static string InstanceSetupView_VersionIdMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_VersionIdMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Version.
         /// </summary>
         public static string InstanceSetupView_VersionLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version Name.
+        /// </summary>
+        public static string InstanceSetupView_VersionNameMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_VersionNameMenuText", resourceCulture);
             }
         }
         
