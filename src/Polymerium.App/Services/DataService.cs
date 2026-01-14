@@ -6,12 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
+using Polymerium.App.Assets;
+using Polymerium.App.Models;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Models.MojangLauncherApi;
 using Trident.Core.Models.PrismLauncherApi;
 using Trident.Core.Services;
+using Trident.Core.Utilities;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Services;
@@ -153,6 +156,19 @@ public class DataService(
 
     public ValueTask<MinecraftReleasePatchesResponse> GetMinecraftReleasePatchesAsync() =>
         GetOrCreate("minecraft:news", mojangService.GetMinecraftNewsAsync);
+
+    public ValueTask<IEnumerable<Exhibit>> GetFeaturedModpacksAsync() =>
+        GetOrCreate("repository:featured",
+                    async () =>
+                    {
+                        var handle = await agent.SearchAsync(CurseForgeHelper.LABEL,
+                                                             string.Empty,
+                                                             new(null, null, ResourceKind.Modpack));
+                        var exhibits = await handle.FetchAsync(CancellationToken.None);
+                        var models = exhibits
+                                    .Take(5);
+                        return models;
+                    });
 
 
     public ValueTask<RepositoryStatus> CheckStatusAsync(string label) =>

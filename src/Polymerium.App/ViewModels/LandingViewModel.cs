@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -142,11 +143,8 @@ public partial class LandingViewModel(
     private void LoadFeaturedModpacks() =>
         FeaturedModpacks = new(async _ =>
         {
-            var filter = new Filter(null, null, ResourceKind.Modpack);
-            var handle = await repositoryAgent.SearchAsync(CurseForgeHelper.LABEL, string.Empty, filter);
-            var exhibits = await handle.FetchAsync(default);
+            var exhibits = await dataService.GetFeaturedModpacksAsync();
             var models = exhibits
-                        .Take(5)
                         .Select(x => new FeaturedModpackModel(x.Label,
                                                               x.Namespace,
                                                               x.Pid,

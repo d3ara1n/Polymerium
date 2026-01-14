@@ -24,4 +24,12 @@ public static class InternalCommands
             TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(path));
         }
     });
+
+    public static ICommand CopyToClipboardCommand { get; } = new RelayCommand<string>(text =>
+    {
+        if (text != null)
+        {
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Clipboard?.SetTextAsync(text);
+        }
+    });
 }
