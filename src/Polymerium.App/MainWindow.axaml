@@ -39,32 +39,32 @@
         </Grid.ColumnDefinitions>
         <DockPanel x:Name="Main" Grid.Column="0">
             <Panel>
-                <StackPanel VerticalAlignment="Center"
-                            Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}">
-                    <StackPanel.Transitions>
-                        <Transitions>
-                            <DoubleTransition
-                                Easing="CubicEaseInOut"
-                                Property="Opacity"
-                                Duration="{StaticResource ControlFasterAnimationDuration}" />
-                        </Transitions>
-                    </StackPanel.Transitions>
-                    <StackPanel.Effect>
-                        <DropShadowEffect BlurRadius="6" Opacity="0.1" />
-                    </StackPanel.Effect>
-                    <Image
-                        Width="128"
-                        Height="128"
-                        HorizontalAlignment="Center"
-                        Source="/Assets/Icons/Bird.png" />
-                    <TextBlock
-                        Margin="48,12,48,12"
-                        FontSize="24"
-                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.MainWindow_BackgroundText}"
-                        TextAlignment="Center"
-                        TextWrapping="WrapWithOverflow" />
-                </StackPanel>
+                <!-- <StackPanel VerticalAlignment="Center" -->
+                <!--             Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}"> -->
+                <!--     <StackPanel.Transitions> -->
+                <!--         <Transitions> -->
+                <!--             <DoubleTransition -->
+                <!--                 Easing="CubicEaseInOut" -->
+                <!--                 Property="Opacity" -->
+                <!--                 Duration="{StaticResource ControlFasterAnimationDuration}" /> -->
+                <!--         </Transitions> -->
+                <!--     </StackPanel.Transitions> -->
+                <!--     <StackPanel.Effect> -->
+                <!--         <DropShadowEffect BlurRadius="6" Opacity="0.1" /> -->
+                <!--     </StackPanel.Effect> -->
+                <!--     <Image -->
+                <!--         Width="128" -->
+                <!--         Height="128" -->
+                <!--         HorizontalAlignment="Center" -->
+                <!--         Source="/Assets/Icons/Bird.png" /> -->
+                <!--     <TextBlock -->
+                <!--         Margin="48,12,48,12" -->
+                <!--         FontSize="24" -->
+                <!--         FontWeight="{StaticResource ControlStrongFontWeight}" -->
+                <!--         Text="{x:Static lang:Resources.MainWindow_BackgroundText}" -->
+                <!--         TextAlignment="Center" -->
+                <!--         TextWrapping="WrapWithOverflow" /> -->
+                <!-- </StackPanel> -->
                 <husk:Frame x:Name="Root" />
             </Panel>
         </DockPanel>
