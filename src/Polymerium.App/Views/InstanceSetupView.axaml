@@ -24,6 +24,54 @@
                       ToggleType="CheckBox"
                       Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
+            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
+                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                      CommandParameter="{Binding Info.ProjectName,FallbackValue=Project Name}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="项目名" />
+                        <TextBlock Text="{Binding Info.ProjectName,FallbackValue=Project Name}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
+                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                      CommandParameter="{Binding Info.ProjectId,FallbackValue=Pid}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="项目 Id" />
+                        <TextBlock Text="{Binding Info.ProjectId,FallbackValue=Pid}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
+                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                      CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Name,FallbackValue=Version Name}"
+                      IsVisible="{Binding Info.Version,Converter={x:Static husk:ObjectConverters.Is},ConverterParameter={x:Type m:InstancePackageVersionModel},FallbackValue={x:False}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="版本名" />
+                        <TextBlock
+                            Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name,FallbackValue=Version Name}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
+                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                      CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Id,FallbackValue=Vid}"
+                      IsVisible="{Binding Info.Version,Converter={x:Static husk:ObjectConverters.Is},ConverterParameter={x:Type m:InstancePackageVersionModel},FallbackValue={x:False}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="版本 Id" />
+                        <TextBlock Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id,FallbackValue=Vid}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Header="-" />
             <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_OpenWebsiteMenuText}"
                       Command="{x:Static m:InternalCommands.OpenUriCommand}"
                       CommandParameter="{Binding Info.Reference,FallbackValue={x:Null}}"
