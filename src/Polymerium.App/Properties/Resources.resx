@@ -1942,4 +1942,16 @@
     <data name="LandingView_RetryButtonText" xml:space="preserve">
         <value>Retry</value>
     </data>
+    <data name="InstanceSetupView_ProjectIdMenuText" xml:space="preserve">
+        <value>Project Id</value>
+    </data>
+    <data name="InstanceSetupView_VersionIdMenuText" xml:space="preserve">
+        <value>Version Id</value>
+    </data>
+    <data name="InstanceSetupView_ProjectNameMenuText" xml:space="preserve">
+        <value>Project Name</value>
+    </data>
+    <data name="InstanceSetupView_VersionNameMenuText" xml:space="preserve">
+        <value>Version Name</value>
+    </data>
 </root>
