@@ -24,11 +24,11 @@
                                 CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                                 <!-- Grab Handle: Avalonia 没有 Grab 指针，而且本来就没法 ReOrder 所以这个图标仅供装饰 -->
-                                <Border Grid.Column="0" Cursor="SizeAll">
-                                    <fi:SymbolIcon Symbol="ReOrderDotsVertical"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                   FontSize="{StaticResource MediumFontSize}" />
-                                </Border>
+                                <!-- <Border Grid.Column="0" Cursor="SizeAll"> -->
+                                <!--     <fi:SymbolIcon Symbol="ReOrderDotsVertical" -->
+                                <!--                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" -->
+                                <!--                    FontSize="{StaticResource MediumFontSize}" /> -->
+                                <!-- </Border> -->
                                 <husk:IconLabel Grid.Column="1" Icon="{Binding Icon}" Text="{Binding Title}"
                                                 VerticalAlignment="Center" Spacing="8" />
                                 <ToggleButton Grid.Column="2" Theme="{StaticResource GhostToggleButtonTheme}"
@@ -51,10 +51,10 @@
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerTheme>
                 <ControlTheme TargetType="ContentPresenter">
-                    <Setter Property="MaxWidth" Value="512" />
-                    <Setter Property="MinWidth" Value="256" />
-                    <Setter Property="MaxHeight" Value="512" />
-                    <Setter Property="MinHeight" Value="256" />
+                    <Setter Property="MaxWidth" Value="460" />
+                    <Setter Property="MinWidth" Value="156" />
+                    <Setter Property="MaxHeight" Value="380" />
+                    <Setter Property="MinHeight" Value="98" />
                 </ControlTheme>
             </ItemsControl.ItemContainerTheme>
             <ItemsControl.ItemsPanel>

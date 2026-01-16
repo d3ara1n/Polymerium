@@ -215,8 +215,8 @@ git cliff
 | 🔥 **现代 C#** | 利用最新的语言功能和模式        |
 | ✨ **代码风格**   | 遵循 .editorconfig 指南 |
 
-> [!TIP]
-> 查看我们的[指导文档](.kiro/steering/)了解详细的项目指南和架构模式。
+我们使用 `.resx` 文件进行本地化。如果您想贡献翻译，可以编辑 `src/Polymerium.App/Properties` 目录下的 `Resources.resx` 文件，并在
+同一目录下添加您的语言文件。Rider 和 Visual Studio 都内置了 resx 文件的编辑器。
 
 ---
 
