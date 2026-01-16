@@ -218,8 +218,9 @@ We welcome contributions! Please ensure your code follows the established patter
 | 🔥 **Modern C#**            | Leverage latest language features and patterns |
 | ✨ **Code Style**            | Follow the .editorconfig guidelines            |
 
-> [!TIP]
-> Check out our [steering documents](.kiro/steering/) for detailed project guidelines and architecture patterns.
+We use `resx` for localization. If you want to contribute to the translation, you can edit the `Resources.resx` file in
+`src/Polymerium.App/Properties` and add your language file in the same directory. Rider and Visual Studio have built-in
+editors for resx files.
 
 ---
 
