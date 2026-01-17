@@ -186,7 +186,7 @@ public partial class MainWindowContext : ObservableObject
                                    .TryGetWellKnownFolderAsync(WellKnownFolder
                                                                   .Downloads),
                             SuggestedFileName = name,
-                            DefaultExtension = "zip"
+                            DefaultExtension = ".zip"
                         });
                         if (storageItem is not null)
                         {
