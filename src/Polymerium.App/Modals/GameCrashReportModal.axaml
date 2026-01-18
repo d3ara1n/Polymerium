@@ -6,7 +6,7 @@
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-            Width="420"
+            Width="520"
             BorderThickness="0,4,0,0"
             Padding="0"
             BorderBrush="{StaticResource ControlDangerBorderBrush}"
