@@ -41,7 +41,7 @@
 
 | Generation  | Management Focus | Representative Approach                             |
 |-------------|------------------|-----------------------------------------------------|
-| **1st Gen** | 📁 Files         | Directly manipulate game files and folders          |
+| **1st Gen** | 📁 Versions      | "Version Isolation" mechanism                       |
 | **2nd Gen** | 📦 Instances     | Isolated game environments with copied resources    |
 | **3rd Gen** | 🧬 Metadata      | Declarative configuration with on-demand deployment |
 
