@@ -524,10 +524,6 @@
                                                       VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabText}"
                                            VerticalAlignment="Center" />
-                                <husk:Tag Classes="Status">
-                                    <TextBlock
-                                        Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Mode=OneWay,FallbackValue=N/A}" />
-                                </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
                         <Grid RowDefinitions="Auto,*">
