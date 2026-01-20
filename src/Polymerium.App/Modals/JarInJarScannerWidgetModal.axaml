@@ -1,0 +1,43 @@
+﻿<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="Polymerium.App.Modals.JarInJarScannerWidgetModal">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}"
+                    Classes="Small" IsCancel="True"
+                    Command="{Binding $parent[modals:JarInJarScannerWidgetModal].Dismiss}">
+                <fi:SymbolIcon Symbol="Dismiss" Height="{StaticResource MediumFontSize}"
+                               Width="{StaticResource MediumFontSize}" FontSize="{StaticResource MediumFontSize}" />
+            </Button>
+            <TextBlock Text="Jar In Jar Scanner" FontSize="{StaticResource LargeFontSize}"
+                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+        </DockPanel>
+        <husk:PlaceholderPresenter Margin="16">
+            <husk:PlaceholderPresenter.Placeholder>
+                <DockPanel VerticalAlignment="Center" VerticalSpacing="12">
+                    <Button DockPanel.Dock="Top" HorizontalAlignment="Center">
+                        <DockPanel HorizontalSpacing="8">
+                            <fi:SymbolIcon DockPanel.Dock="Left" Symbol="FolderSearch"
+                                           FontSize="{StaticResource MediumFontSize}"
+                                           Height="{StaticResource MediumFontSize}"
+                                           Width="{StaticResource MediumFontSize}" />
+                            <TextBlock Text="Scan" />
+                        </DockPanel>
+                    </Button>
+                    <DockPanel HorizontalAlignment="Center" HorizontalSpacing="8">
+                        <husk:ProgressRing DockPanel.Dock="Left" IsIndeterminate="True"
+                                           Width="{StaticResource MediumFontSize}"
+                                           Height="{StaticResource MediumFontSize}" />
+                        <TextBlock Text="Scanning jar files...(0/0)" />
+                    </DockPanel>
+                </DockPanel>
+            </husk:PlaceholderPresenter.Placeholder>
+        </husk:PlaceholderPresenter>
+    </DockPanel>
+</husk:Modal>
