@@ -5,7 +5,7 @@ using Polymerium.App.Widgets;
 namespace Polymerium.App.Services;
 
 // 这不是什么插件化的模块，所有小工具都是一次性集中封装的，因此后端共用同一个服务，后缀 Host 表示一对多
-public class WidgetHostService(PersistenceService persistenceService)
+public class WidgetHostService(PersistenceService persistenceService, IServiceProvider provider)
 {
     #region Indicator Constants
 
@@ -37,7 +37,7 @@ public class WidgetHostService(PersistenceService persistenceService)
             return context;
         }
 
-        context = new(widgetId, this) { Key = key };
+        context = new(widgetId, provider, this) { Key = key };
         _cachedContexts.Add(widgetId, context);
         return context;
     }

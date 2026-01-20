@@ -1,11 +1,13 @@
+using System;
 using Polymerium.App.Services;
 
 namespace Polymerium.App.Widgets;
 
-public class WidgetContext(string id, WidgetHostService service)
+public class WidgetContext(string id, IServiceProvider provider, WidgetHostService service)
 {
     public required string Key { get; set; }
     public string Id => id;
+    public IServiceProvider Provider => provider;
 
     // 代理到 WidgetHostService 中
     public bool IsPinned
