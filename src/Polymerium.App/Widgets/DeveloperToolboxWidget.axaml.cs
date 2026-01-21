@@ -16,7 +16,10 @@ public partial class DeveloperToolboxWidget : WidgetBase
     private void OpenJarInJarScanner()
     {
         var service = Context.Provider.GetRequiredService<OverlayService>();
-        var modal = new JarInJarScannerWidgetModal();
+        var modal = new JarInJarScannerWidgetModal()
+        {
+            Key = Context.Key
+        };
         service.PopModal(modal);
     }
 }
