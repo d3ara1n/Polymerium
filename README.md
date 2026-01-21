@@ -226,11 +226,11 @@ editors for resx files.
 
 ## 🖥️ Platform Support
 
-| Platform                                                                                                   | Status             | Notes                                      |
-|------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------|
-| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **Stable**       | Primary platform with full feature support |
-| ![Linux](https://img.shields.io/badge/Linux-WIP-FCC624?style=flat-square&logo=linux&logoColor=black)       | 🚧 **In Progress** | Core functionality working                 |
-| ![macOS](https://img.shields.io/badge/macOS-Planned-000000?style=flat-square&logo=apple&logoColor=white)   | 📋 **Planned**     | Future release target                      |
+| Platform                                                                                                   | Status         |
+|------------------------------------------------------------------------------------------------------------|----------------|
+| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **Stable**   |
+| ![Linux](https://img.shields.io/badge/Linux-WIP-FCC624?style=flat-square&logo=linux&logoColor=black)       | 🚧 **Stable**  |
+| ![macOS](https://img.shields.io/badge/macOS-Planned-000000?style=flat-square&logo=apple&logoColor=white)   | 📋 **Planned** |
 
 ---
 
