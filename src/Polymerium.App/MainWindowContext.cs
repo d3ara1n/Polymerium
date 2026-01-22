@@ -185,8 +185,15 @@ public partial class MainWindowContext : ObservableObject
                                 await storage
                                    .TryGetWellKnownFolderAsync(WellKnownFolder
                                                                   .Downloads),
-                            SuggestedFileName = name,
-                            DefaultExtension = ".zip"
+                            SuggestedFileName = $"{name}.{version}",
+                            DefaultExtension = "zip",
+                            FileTypeChoices =
+                            [
+                                new("Zip Archive")
+                                {
+                                    Patterns = ["*.zip"]
+                                }
+                            ]
                         });
                         if (storageItem is not null)
                         {
