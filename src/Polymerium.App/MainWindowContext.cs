@@ -24,6 +24,7 @@ using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
 using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
+using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Tasks;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Exceptions;
@@ -150,6 +151,10 @@ public partial class MainWindowContext : ObservableObject
                 loaderLabel = LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version);
             }
 
+            var overrideName = profile.GetOverride<string>(Profile.OVERRIDE_MODPACK_NAME);
+            var overrideAuthor = profile.GetOverride<string>(Profile.OVERRIDE_MODPACK_AUTHOR);
+            var overrideVersion = profile.GetOverride<string>(Profile.OVERRIDE_MODPACK_VERSION);
+
             var user = string.Empty;
             var account = _persistenceService.GetAccounts().FirstOrDefault(x => x.IsDefault);
             if (account != null)
@@ -159,11 +164,11 @@ public partial class MainWindowContext : ObservableObject
 
             var dialog = new ModpackExporterDialog
             {
-                NameOriginal = profile.Name,
+                NameOriginal = !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
                 LoaderLabel = loaderLabel,
                 PackageCount = profile.Setup.Packages.Count,
-                AuthorOriginal = user,
-                VersionOriginal = "1.0.0",
+                AuthorOriginal = !string.IsNullOrEmpty(overrideAuthor) ? overrideAuthor : user,
+                VersionOriginal = !string.IsNullOrEmpty(overrideVersion) ? overrideVersion : "1.0.0",
                 Result = new ModpackExporterModel(key)
             };
 
@@ -176,16 +181,21 @@ public partial class MainWindowContext : ObservableObject
                     var storage = top.StorageProvider;
                     if (storage.CanOpen)
                     {
-                        var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : profile.Name;
-                        var author = !string.IsNullOrEmpty(model.AuthorOverride) ? model.AuthorOverride : user;
-                        var version = !string.IsNullOrEmpty(model.VersionOverride) ? model.VersionOverride : "1.0.0";
+                        var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : dialog.NameOriginal;
+                        var author = !string.IsNullOrEmpty(model.AuthorOverride)
+                                         ? model.AuthorOverride
+                                         : dialog.AuthorOriginal;
+                        var version = !string.IsNullOrEmpty(model.VersionOverride)
+                                          ? model.VersionOverride
+                                          : dialog.VersionOriginal;
                         var storageItem = await storage.SaveFilePickerAsync(new()
                         {
                             SuggestedStartLocation =
                                 await storage
                                    .TryGetWellKnownFolderAsync(WellKnownFolder
                                                                   .Downloads),
-                            SuggestedFileName = $"{name}.{version}",
+                            SuggestedFileName =
+                                $"{name}.{version}",
                             DefaultExtension = "zip",
                             FileTypeChoices =
                             [
@@ -197,6 +207,9 @@ public partial class MainWindowContext : ObservableObject
                         });
                         if (storageItem is not null)
                         {
+                            profile.SetOverride(Profile.OVERRIDE_MODPACK_NAME, name);
+                            profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
+                            profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
                             try
                             {
                                 var notification = _notificationService.PopProgress(name, "Exporting...");
