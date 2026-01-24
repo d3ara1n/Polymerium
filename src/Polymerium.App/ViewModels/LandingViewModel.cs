@@ -187,7 +187,7 @@ public partial class LandingViewModel(
     }
 
     [RelayCommand]
-    private void GotoMarketplace() => navigationService.Navigate<MarketplacePortalView>();
+    private void GotoMarketplace() => navigationService.Navigate<MarketplaceSearchView>();
 
     [RelayCommand]
     private void TryOne()
