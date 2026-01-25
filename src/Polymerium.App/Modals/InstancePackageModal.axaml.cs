@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -13,6 +14,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services.Profiles;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -48,6 +50,11 @@ public partial class InstancePackageModal : Modal
                                                                            o => o.LazyDependants,
                                                                            (o, v) => o.LazyDependants = v);
 
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyHistoryProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyHistory),
+                                                                           o => o.LazyHistory,
+                                                                           (o, v) => o.LazyHistory = v);
+
     private string? _old;
 
 
@@ -70,6 +77,12 @@ public partial class InstancePackageModal : Modal
     {
         get;
         set => SetAndRaise(LazyDependantsProperty, ref field, value);
+    }
+
+    public LazyObject? LazyHistory
+    {
+        get;
+        set => SetAndRaise(LazyHistoryProperty, ref field, value);
     }
 
     private InstancePackageInfoModel Model => (InstancePackageInfoModel)DataContext!;
@@ -111,10 +124,10 @@ public partial class InstancePackageModal : Modal
                        .Dependencies.Select(async x =>
                         {
                             var count = (uint)Collection.Items.Count(y => y.Info is
-                                                                              {
-                                                                                  Version: InstancePackageVersionModel
+                            {
+                                Version: InstancePackageVersionModel
                                                                                   version
-                                                                              }
+                            }
                                                                        && version.Dependencies.Any(z =>
                                                                               z.Label == x.Label
                                                                            && z.Namespace == x.Namespace
@@ -132,7 +145,8 @@ public partial class InstancePackageModal : Modal
                                            found.Info!.Thumbnail,
                                            found.Info!.Reference,
                                            count,
-                                           x.IsRequired) { Installed = found };
+                                           x.IsRequired)
+                                { Installed = found };
                             }
 
                             var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.ProjectId);
@@ -169,11 +183,11 @@ public partial class InstancePackageModal : Modal
             var dependants = await DataService.ResolvePackagesAsync(Collection
                                                                    .Items
                                                                    .Where(x => x.Info is
-                                                                               {
-                                                                                   Version:
+                                                                   {
+                                                                       Version:
                                                                                    InstancePackageVersionModel
                                                                                    version
-                                                                               }
+                                                                   }
                                                                             && version.Dependencies.Any(y => y.Label
                                                                                 == Model.Label
                                                                                 && y.Namespace
@@ -213,7 +227,8 @@ public partial class InstancePackageModal : Modal
                                                                          && y.Namespace == Model.Namespace
                                                                          && y.ProjectId == Model.ProjectId)
                                                                       ?.IsRequired
-                                                                   ?? false) { Installed = found };
+                                                                   ?? false)
+                            { Installed = found };
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
@@ -271,6 +286,62 @@ public partial class InstancePackageModal : Modal
         return lazy;
     }
 
+    private LazyObject ConstructHistory()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            // 获取当前包的所有历史记录
+            var actions = PersistenceService.GetLatestActions(Guard.Key, DateTimeOffset.MinValue);
+
+            // 过滤出与当前包相关的记录
+            var filteredActions = actions.Where(x => (x.Old is not null && PackageHelper.IsMatched(x.Old, Model.Label, Model.Namespace, Model.ProjectId))
+                                                     || (x.New is not null && PackageHelper.IsMatched(x.New, Model.Label, Model.Namespace, Model.ProjectId))).ToArray();
+
+            // 解析包信息并创建 InstanceActionModel
+            var tasks = filteredActions.Select(async x =>
+            {
+                Package? oldPackage = null;
+                Package? newPackage = null;
+
+                if (x.Old != null && PackageHelper.TryParse(x.Old, out var old))
+                {
+                    oldPackage = await DataService.ResolvePackageAsync(old.Label, old.Namespace, old.Pid, old.Vid, Filter.None);
+                }
+
+                if (x.New != null && PackageHelper.TryParse(x.New, out var @new))
+                {
+                    newPackage = await DataService.ResolvePackageAsync(@new.Label, @new.Namespace, @new.Pid, @new.Vid, Filter.None);
+                }
+
+                var thumbnail = newPackage?.Thumbnail != null || oldPackage?.Thumbnail != null
+                    ? await DataService.GetBitmapAsync(newPackage?.Thumbnail ?? oldPackage?.Thumbnail ?? throw new System.NotImplementedException())
+                    : AssetUriIndex.DirtImageBitmap;
+
+                return new InstanceActionModel(
+                    newPackage?.ProjectId ?? oldPackage?.ProjectId ?? string.Empty,
+                    newPackage?.ProjectName ?? oldPackage?.ProjectName ?? string.Empty,
+                    oldPackage?.VersionId,
+                    oldPackage?.VersionName,
+                    newPackage?.VersionId,
+                    newPackage?.VersionName,
+                    thumbnail,
+                    x.At,
+                    false);
+            }).ToArray();
+
+            await Task.WhenAll(tasks);
+            var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
+            return new InstanceActionCollection(results);
+        });
+
+        return lazy;
+    }
+
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
@@ -283,6 +354,7 @@ public partial class InstancePackageModal : Modal
         IsFilterEnabled = true;
         LazyDependencies = ConstructDependencies();
         LazyDependants = ConstructDependants();
+        LazyHistory = ConstructHistory();
         AddHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
     }
 
