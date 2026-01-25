@@ -421,6 +421,64 @@
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
                 </TabItem>
+                <TabItem Header="历史">
+                    <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyHistory}">
+                        <husk:LazyContainer.SourceTemplate>
+                            <DataTemplate DataType="m:InstanceActionCollection">
+                                <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                                    <Border Grid.Row="0" Padding="4"
+                                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static lang:Resources.InstancePackageModal_OverviewLabelText}"
+                                                       Margin="8,0"
+                                                       VerticalAlignment="Center" />
+                                            <Border Grid.Column="1" Padding="8,4"
+                                                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock FontSize="{StaticResource LargeFontSize}" FontWeight="Bold"
+                                                           VerticalAlignment="Center">
+                                                    <Run Text="{Binding Count}" />
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                    <Panel Grid.Row="1">
+                                        <StackPanel VerticalAlignment="Center"
+                                                    Spacing="8"
+                                                    IsVisible="{Binding Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:True}}">
+                                            <icons:PackIconLucide Kind="History"
+                                                                  Height="{StaticResource ExtraLargeFontSize}"
+                                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                  Width="{StaticResource ExtraLargeFontSize}"
+                                                                  HorizontalAlignment="Center" />
+                                            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                                       FontSize="{StaticResource LargeFontSize}"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                       HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                        <ScrollViewer>
+                                            <ItemsControl Margin="{StaticResource CardContentMargin}"
+                                                      ItemsSource="{Binding}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Spacing="6" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="m:InstanceActionModel">
+                                                        <controls:InstanceActionCard />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Panel>
+                                </Grid>
+                            </DataTemplate>
+                        </husk:LazyContainer.SourceTemplate>
+                    </husk:LazyContainer>
+                </TabItem>
             </TabControl>
             <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <ToggleSwitch Grid.Column="0"
