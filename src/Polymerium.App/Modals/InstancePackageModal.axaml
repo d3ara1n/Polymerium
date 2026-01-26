@@ -424,7 +424,7 @@
                 <TabItem Header="历史">
                     <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyHistory}">
                         <husk:LazyContainer.SourceTemplate>
-                            <DataTemplate DataType="m:InstanceActionCollection">
+                            <DataTemplate DataType="m:InstancePackageModificationCollection">
                                 <Panel>
                                     <StackPanel VerticalAlignment="Center"
                                                 Spacing="8"
@@ -440,116 +440,146 @@
                                                    HorizontalAlignment="Center" />
                                     </StackPanel>
                                     <ScrollViewer>
-                                        <ItemsControl Margin="{StaticResource CardContentMargin}"
-                                                      ItemsSource="{Binding}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate DataType="m:InstanceActionModel">
-                                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                                        <!-- Timeline indicator column -->
-                                                        <Grid Grid.Column="0" RowDefinitions="*,Auto,*">
-                                                            <!-- Top connector line -->
-                                                            <Rectangle Grid.Row="0" Width="2"
-                                                                       Fill="{StaticResource ControlBorderBrush}"
-                                                                       HorizontalAlignment="Center"
-                                                                       IsVisible="{Binding $parent[ItemsControl].((m:InstanceActionCollection)ItemsSource)[0],Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter={Binding}}" />
+                                        <StackPanel Margin="{StaticResource CardContentMargin}">
+                                            <husk:Tag Content="现在" />
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="m:InstancePackageModificationModel">
+                                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                                            <!-- Timeline indicator column -->
+                                                            <Grid Grid.Column="0" RowDefinitions="*,Auto,*">
+                                                                <!-- Top connector line -->
+                                                                <Rectangle Grid.Row="0" Width="2"
+                                                                           Fill="{StaticResource ControlBorderBrush}"
+                                                                           HorizontalAlignment="Center" />
 
-                                                            <!-- Action icon with colored background -->
-                                                            <husk:SwitchPresenter Grid.Row="1" Value="{Binding Kind}"
-                                                                    TargetType="m:InstanceActionKind">
-                                                                <husk:SwitchCase Value="Add">
-                                                                    <Border Width="32" Height="32"
-                                                                            CornerRadius="16"
-                                                                            VerticalAlignment="Top"
-                                                                            Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}">
-                                                                        <fi:SymbolIcon Symbol="Add"
-                                                                                FontSize="{StaticResource MediumFontSize}"
-                                                                                Foreground="{StaticResource ControlSuccessForegroundBrush}" />
-                                                                    </Border>
-                                                                </husk:SwitchCase>
-                                                                <husk:SwitchCase Value="Remove">
-                                                                    <Border Width="32" Height="32"
-                                                                            CornerRadius="16"
-                                                                            VerticalAlignment="Top"
-                                                                            Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}">
-                                                                        <fi:SymbolIcon Symbol="Subtract"
-                                                                                FontSize="{StaticResource MediumFontSize}"
-                                                                                Foreground="{StaticResource ControlDangerForegroundBrush}" />
-                                                                    </Border>
-                                                                </husk:SwitchCase>
-                                                                <husk:SwitchCase Value="Update">
-                                                                    <Border Width="32" Height="32"
-                                                                            CornerRadius="16"
-                                                                            VerticalAlignment="Top"
-                                                                            Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}">
-                                                                        <fi:SymbolIcon Symbol="ArrowSync"
-                                                                                FontSize="{StaticResource MediumFontSize}"
-                                                                                Foreground="{StaticResource ControlWarningForegroundBrush}" />
-                                                                    </Border>
-                                                                </husk:SwitchCase>
-                                                            </husk:SwitchPresenter>
-
-                                                            <!-- Bottom connector line -->
-                                                            <Rectangle Grid.Row="2" Width="2"
-                                                                       Fill="{StaticResource ControlBorderBrush}"
-                                                                       HorizontalAlignment="Center" />
-                                                        </Grid>
-
-                                                        <!-- Content column -->
-                                                        <Border Grid.Column="1"
-                                                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                                                CornerRadius="{StaticResource MediumCornerRadius}"
-                                                                Padding="12,8"
-                                                                Margin="0,0,0,6">
-                                                            <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
-                                                                <!-- Action description -->
-                                                                <husk:SwitchPresenter Grid.Row="0"
+                                                                <!-- Action icon with colored background -->
+                                                                <husk:SwitchPresenter Grid.Row="1"
                                                                         Value="{Binding Kind}"
-                                                                        TargetType="m:InstanceActionKind">
+                                                                        TargetType="m:InstancePackageModificationKind">
                                                                     <husk:SwitchCase Value="Add">
-                                                                        <TextBlock
-                                                                            FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                            <Run Text="添加了" />
-                                                                            <Run Text="{Binding NewVersionName}"
-                                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                                                                        </TextBlock>
+                                                                        <Border Width="32" Height="32"
+                                                                                CornerRadius="16"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}">
+                                                                            <fi:SymbolIcon Symbol="Add"
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                                                        </Border>
                                                                     </husk:SwitchCase>
                                                                     <husk:SwitchCase Value="Remove">
-                                                                        <TextBlock
-                                                                            FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                            <Run Text="移除了" />
-                                                                            <Run Text="{Binding OldVersionName}"
+                                                                        <Border Width="32" Height="32"
+                                                                                CornerRadius="16"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}">
+                                                                            <fi:SymbolIcon Symbol="Subtract"
+                                                                                    FontSize="{StaticResource MediumFontSize}"
                                                                                     Foreground="{StaticResource ControlDangerForegroundBrush}" />
-                                                                        </TextBlock>
+                                                                        </Border>
                                                                     </husk:SwitchCase>
                                                                     <husk:SwitchCase Value="Update">
-                                                                        <TextBlock
-                                                                            FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                            <Run Text="更新到" />
-                                                                            <Run Text="{Binding NewVersionName}"
-                                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                                                                        </TextBlock>
+                                                                        <Border Width="32" Height="32"
+                                                                                CornerRadius="16"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}">
+                                                                            <fi:SymbolIcon Symbol="ArrowSync"
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlWarningForegroundBrush}" />
+                                                                        </Border>
+                                                                    </husk:SwitchCase>
+                                                                    <husk:SwitchCase Value="Unset">
+                                                                        <Border Width="32" Height="32"
+                                                                                CornerRadius="16"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
+                                                                            <fi:SymbolIcon Symbol="Sparkle"
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlWarningForegroundBrush}" />
+                                                                        </Border>
                                                                     </husk:SwitchCase>
                                                                 </husk:SwitchPresenter>
 
-                                                                <!-- Timestamp -->
-                                                                <Grid Grid.Row="1" ColumnDefinitions="Auto,*"
-                                                                      ColumnSpacing="6">
-                                                                    <fi:SymbolIcon Grid.Column="0" Symbol="Clock"
-                                                                            FontSize="{StaticResource SmallFontSize}"
-                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                            VerticalAlignment="Center" />
-                                                                    <TextBlock Grid.Column="1"
-                                                                               Text="{Binding ModifiedAt}"
-                                                                               FontSize="{StaticResource SmallFontSize}"
-                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                               VerticalAlignment="Center" />
-                                                                </Grid>
+                                                                <!-- Bottom connector line -->
+                                                                <Rectangle Grid.Row="2" Width="2"
+                                                                           Fill="{StaticResource ControlBorderBrush}"
+                                                                           HorizontalAlignment="Center" />
                                                             </Grid>
-                                                        </Border>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
+
+                                                            <!-- Content column -->
+                                                            <Border Grid.Column="1"
+                                                                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MediumCornerRadius}"
+                                                                    Padding="12,8"
+                                                                    Margin="0,0,0,6">
+                                                                <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
+                                                                    <!-- Action description -->
+                                                                    <husk:SwitchPresenter Grid.Row="0"
+                                                                            Value="{Binding Kind}"
+                                                                            TargetType="m:InstancePackageModificationKind">
+                                                                        <husk:SwitchCase Value="Add">
+                                                                            <TextBlock
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                <Run Text="添加了" />
+                                                                                <Run Text="{Binding VersionName}"
+                                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                                                            </TextBlock>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="Remove">
+                                                                            <TextBlock
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                <Run Text="移除了包" />
+                                                                            </TextBlock>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="Update">
+                                                                            <TextBlock
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                <Run Text="更新到" />
+                                                                                <Run Text="{Binding VersionName}"
+                                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                                                            </TextBlock>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="Unset">
+                                                                            <TextBlock
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                <Run Text="设置为" />
+                                                                                <InlineUIContainer
+                                                                                    BaselineAlignment="Bottom">
+                                                                                    <Panel>
+                                                                                        <Rectangle RadiusX="4"
+                                                                                            RadiusY="4"
+                                                                                            Stroke="{StaticResource ControlBorderBrush}"
+                                                                                            StrokeThickness="1"
+                                                                                            StrokeDashArray="4,2" />
+                                                                                        <TextBlock Text="自动版本"
+                                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                            Margin="6,2" FontSize="{StaticResource ExtraSmallFontSize}"/>
+                                                                                    </Panel>
+                                                                                </InlineUIContainer>
+                                                                            </TextBlock>
+                                                                        </husk:SwitchCase>
+                                                                    </husk:SwitchPresenter>
+
+                                                                    <!-- Timestamp -->
+                                                                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*"
+                                                                          ColumnSpacing="6">
+                                                                        <fi:SymbolIcon Grid.Column="0" Symbol="Clock"
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                VerticalAlignment="Center" />
+                                                                        <TextBlock Grid.Column="1"
+                                                                                Text="{Binding ModifiedAt}"
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                VerticalAlignment="Center" />
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                            <husk:Tag Content="过去" />
+                                        </StackPanel>
                                     </ScrollViewer>
                                 </Panel>
                             </DataTemplate>
