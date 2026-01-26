@@ -124,10 +124,10 @@ public partial class InstancePackageModal : Modal
                        .Dependencies.Select(async x =>
                         {
                             var count = (uint)Collection.Items.Count(y => y.Info is
-                            {
-                                Version: InstancePackageVersionModel
+                                                                              {
+                                                                                  Version: InstancePackageVersionModel
                                                                                   version
-                            }
+                                                                              }
                                                                        && version.Dependencies.Any(z =>
                                                                               z.Label == x.Label
                                                                            && z.Namespace == x.Namespace
@@ -145,8 +145,7 @@ public partial class InstancePackageModal : Modal
                                            found.Info!.Thumbnail,
                                            found.Info!.Reference,
                                            count,
-                                           x.IsRequired)
-                                { Installed = found };
+                                           x.IsRequired) { Installed = found };
                             }
 
                             var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.ProjectId);
@@ -183,11 +182,11 @@ public partial class InstancePackageModal : Modal
             var dependants = await DataService.ResolvePackagesAsync(Collection
                                                                    .Items
                                                                    .Where(x => x.Info is
-                                                                   {
-                                                                       Version:
+                                                                               {
+                                                                                   Version:
                                                                                    InstancePackageVersionModel
                                                                                    version
-                                                                   }
+                                                                               }
                                                                             && version.Dependencies.Any(y => y.Label
                                                                                 == Model.Label
                                                                                 && y.Namespace
@@ -227,8 +226,7 @@ public partial class InstancePackageModal : Modal
                                                                          && y.Namespace == Model.Namespace
                                                                          && y.ProjectId == Model.ProjectId)
                                                                       ?.IsRequired
-                                                                   ?? false)
-                            { Installed = found };
+                                                                   ?? false) { Installed = found };
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
@@ -299,44 +297,79 @@ public partial class InstancePackageModal : Modal
             var actions = PersistenceService.GetLatestActions(Guard.Key, DateTimeOffset.MinValue);
 
             // 过滤出与当前包相关的记录
-            var filteredActions = actions.Where(x => (x.Old is not null && PackageHelper.IsMatched(x.Old, Model.Label, Model.Namespace, Model.ProjectId))
-                                                     || (x.New is not null && PackageHelper.IsMatched(x.New, Model.Label, Model.Namespace, Model.ProjectId))).ToArray();
+            var filteredActions = actions
+                                 .Where(x => (x.Old is not null
+                                           && PackageHelper.IsMatched(x.Old,
+                                                                      Model.Label,
+                                                                      Model.Namespace,
+                                                                      Model.ProjectId))
+                                          || (x.New is not null
+                                           && PackageHelper.IsMatched(x.New,
+                                                                      Model.Label,
+                                                                      Model.Namespace,
+                                                                      Model.ProjectId)))
+                                 .ToArray();
 
             // 解析包信息并创建 InstanceActionModel
-            var tasks = filteredActions.Select(async x =>
-            {
-                Package? oldPackage = null;
-                Package? newPackage = null;
-
-                if (x.Old != null && PackageHelper.TryParse(x.Old, out var old))
-                {
-                    oldPackage = await DataService.ResolvePackageAsync(old.Label, old.Namespace, old.Pid, old.Vid, Filter.None);
-                }
-
-                if (x.New != null && PackageHelper.TryParse(x.New, out var @new))
-                {
-                    newPackage = await DataService.ResolvePackageAsync(@new.Label, @new.Namespace, @new.Pid, @new.Vid, Filter.None);
-                }
-
-                var thumbnail = newPackage?.Thumbnail != null || oldPackage?.Thumbnail != null
-                    ? await DataService.GetBitmapAsync(newPackage?.Thumbnail ?? oldPackage?.Thumbnail ?? throw new System.NotImplementedException())
-                    : AssetUriIndex.DirtImageBitmap;
-
-                return new InstanceActionModel(
-                    newPackage?.ProjectId ?? oldPackage?.ProjectId ?? string.Empty,
-                    newPackage?.ProjectName ?? oldPackage?.ProjectName ?? string.Empty,
-                    oldPackage?.VersionId,
-                    oldPackage?.VersionName,
-                    newPackage?.VersionId,
-                    newPackage?.VersionName,
-                    thumbnail,
-                    x.At,
-                    false);
-            }).ToArray();
+            var tasks = filteredActions
+                       .Select(async x =>
+                        {
+                            if (x.New != null && PackageHelper.TryParse(x.New, out var result))
+                            {
+                                if (result.Vid is null)
+                                {
+                                    // -> Project: Unset
+                                    return new InstancePackageModificationModel()
+                                    {
+                                        Kind = InstancePackageModificationKind.Unset,
+                                        VersionName = null,
+                                        ModifiedAtRaw = x.At
+                                    };
+                                }
+                                else
+                                {
+                                    var package = await DataService.ResolvePackageAsync(result.Label,
+                                                      result.Namespace,
+                                                      result.Pid,
+                                                      result.Vid,
+                                                      Filter);
+                                    if (x.Old is null)
+                                    {
+                                        // null -> Package: Add
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.Add,
+                                            VersionName = package.VersionName,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                    else
+                                    {
+                                        // Package -> Package: Update
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.Update,
+                                            VersionName = package.VersionName,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                return new InstancePackageModificationModel()
+                                {
+                                    Kind = InstancePackageModificationKind.Remove,
+                                    VersionName = null,
+                                    ModifiedAtRaw = x.At
+                                };
+                            }
+                        })
+                       .ToArray();
 
             await Task.WhenAll(tasks);
             var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
-            return new InstanceActionCollection(results);
+            return new InstancePackageModificationCollection(results);
         });
 
         return lazy;
