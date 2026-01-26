@@ -317,7 +317,9 @@
                                     Grid.Column="0"
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="HourglassHalf" />
-                                <TextBlock Grid.Column="2" Text="{Binding LastPlayTime,FallbackValue=52 mins}" />
+                                <TextBlock Grid.Column="2"
+                                           Background="Transparent"
+                                           ToolTip.Tip="{Binding LastPlayTimeRaw}" Text="{Binding LastPlayTime,FallbackValue=52 mins}" />
                             </Grid>
                         </husk:Card>
                         <husk:Card Background="Transparent">
@@ -336,7 +338,8 @@
                                     Grid.Column="0"
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Clock" />
-                                <TextBlock Grid.Column="2" Text="{Binding LastPlayedAt,FallbackValue=one day ago}" />
+                                <TextBlock Grid.Column="2" Text="{Binding LastPlayedAt,FallbackValue=one day ago}"
+                                           Background="Transparent" ToolTip.Tip="{Binding LastPlayedAtRaw}" />
                             </Grid>
                         </husk:Card>
                     </StackPanel>

@@ -115,6 +115,8 @@
                                                            Text="{Binding VersionName,FallbackValue=Display}" />
                                                 <TextBlock Grid.Column="2"
                                                            FontSize="{StaticResource SmallFontSize}"
+                                                           Background="Transparent"
+                                                           ToolTip.Tip="{Binding PublishedAtRaw}"
                                                            Text="{Binding PublishedAt}" VerticalAlignment="Center" />
                                             </Grid>
                                         </DataTemplate>
@@ -157,6 +159,8 @@
                                                     <husk:IconLabel Grid.Column="0"
                                                                     FontSize="{StaticResource SmallFontSize}"
                                                                     Icon="Calendar"
+                                                                    Background="Transparent"
+                                                                    ToolTip.Tip="{Binding PublishedAtRaw}"
                                                                     Text="{Binding PublishedAt}" />
                                                     <husk:IconLabel Grid.Column="1"
                                                                     FontSize="{StaticResource SmallFontSize}"

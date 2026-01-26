@@ -99,6 +99,8 @@
                                                             <husk:IconLabel Grid.Column="0"
                                                                             FontSize="{StaticResource SmallFontSize}"
                                                                             Icon="Calendar"
+                                                                            Background="Transparent"
+                                                                            ToolTip.Tip="{Binding PublishedAtRaw}"
                                                                             Text="{Binding PublishedAt}" />
                                                             <husk:IconLabel Grid.Column="1"
                                                                             FontSize="{StaticResource SmallFontSize}"

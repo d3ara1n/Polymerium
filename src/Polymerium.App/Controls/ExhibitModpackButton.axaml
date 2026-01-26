@@ -76,6 +76,7 @@
                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Text="{Binding UpdatedAt}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           Background="Transparent"
                                            ToolTip.Tip="{Binding UpdatedAtRaw}" />
                             </StackPanel>
                         </StackPanel>
