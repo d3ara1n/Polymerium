@@ -9,7 +9,7 @@
             <ControlTemplate x:DataType="m:InstanceActionModel">
                 <DockPanel HorizontalSpacing="6">
                     <Button DockPanel.Dock="Right" Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
-                            IsEnabled="{Binding CanUndo}">
+                            IsEnabled="{Binding CanUndo}" IsVisible="False">
                         <StackPanel VerticalAlignment="Center">
                             <fi:SymbolIcon Symbol="ArrowUndo" HorizontalAlignment="Center"
                                            FontSize="{StaticResource LargeFontSize}" />
@@ -73,7 +73,10 @@
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
                             <StackPanel Grid.Column="3">
-                                <TextBlock HorizontalAlignment="Right" Text="{Binding ModifiedAt}"
+                                <TextBlock HorizontalAlignment="Right"
+                                           Background="Transparent"
+                                           ToolTip.Tip="{Binding ModifiedAtRaw}"
+                                           Text="{Binding ModifiedAt}"
                                            FontSize="{StaticResource SmallFontSize}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             </StackPanel>

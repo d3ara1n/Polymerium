@@ -286,6 +286,8 @@
                                                                                TextTrimming="CharacterEllipsis"
                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                                     <TextBlock Grid.Column="4"
+                                                                               Background="Transparent"
+                                                                               ToolTip.Tip="{Binding PublishedAtRaw}"
                                                                                FontSize="{StaticResource SmallFontSize}"
                                                                                Text="{Binding PublishedAt}" />
                                                                 </Grid>
@@ -441,7 +443,8 @@
                                     </StackPanel>
                                     <ScrollViewer>
                                         <StackPanel Margin="{StaticResource CardContentMargin}">
-                                            <husk:Tag Content="{x:Static lang:Resources.InstancePackageModal_NowTagText}" />
+                                            <husk:Tag
+                                                Content="{x:Static lang:Resources.InstancePackageModal_NowTagText}" />
                                             <ItemsControl ItemsSource="{Binding}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate DataType="m:InstancePackageModificationModel">
@@ -519,7 +522,8 @@
                                                                         <husk:SwitchCase Value="Add">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                                <Run
+                                                                                    Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
                                                                                 <Run Text="{Binding VersionName}"
                                                                                     Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                                                             </TextBlock>
@@ -527,13 +531,15 @@
                                                                         <husk:SwitchCase Value="Remove">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
+                                                                                <Run
+                                                                                    Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
                                                                             </TextBlock>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Update">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
+                                                                                <Run
+                                                                                    Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
                                                                                 <Run Text="{Binding VersionName}"
                                                                                     Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                                                             </TextBlock>
@@ -541,7 +547,8 @@
                                                                         <husk:SwitchCase Value="Unset">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
+                                                                                <Run
+                                                                                    Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
                                                                                 <InlineUIContainer
                                                                                     BaselineAlignment="Bottom">
                                                                                     <Panel>
@@ -550,9 +557,11 @@
                                                                                             Stroke="{StaticResource ControlBorderBrush}"
                                                                                             StrokeThickness="1"
                                                                                             StrokeDashArray="4,2" />
-                                                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}"
+                                                                                        <TextBlock
+                                                                                            Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}"
                                                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                                            Margin="6,2" FontSize="{StaticResource ExtraSmallFontSize}"/>
+                                                                                            Margin="6,2"
+                                                                                            FontSize="{StaticResource ExtraSmallFontSize}" />
                                                                                     </Panel>
                                                                                 </InlineUIContainer>
                                                                             </TextBlock>
@@ -567,6 +576,8 @@
                                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                                 VerticalAlignment="Center" />
                                                                         <TextBlock Grid.Column="1"
+                                                                                Background="Transparent"
+                                                                                ToolTip.Tip="{Binding ModifiedAtRaw}"
                                                                                 Text="{Binding ModifiedAt}"
                                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -578,7 +589,8 @@
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
-                                            <husk:Tag Content="{x:Static lang:Resources.InstancePackageModal_PastTagText}" />
+                                            <husk:Tag
+                                                Content="{x:Static lang:Resources.InstancePackageModal_PastTagText}" />
                                         </StackPanel>
                                     </ScrollViewer>
                                 </Panel>
