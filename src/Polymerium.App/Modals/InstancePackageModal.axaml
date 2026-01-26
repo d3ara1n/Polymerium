@@ -421,7 +421,7 @@
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
                 </TabItem>
-                <TabItem Header="历史">
+                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_HistoryTabText}">
                     <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyHistory}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="m:InstancePackageModificationCollection">
@@ -441,7 +441,7 @@
                                     </StackPanel>
                                     <ScrollViewer>
                                         <StackPanel Margin="{StaticResource CardContentMargin}">
-                                            <husk:Tag Content="现在" />
+                                            <husk:Tag Content="{x:Static lang:Resources.InstancePackageModal_NowTagText}" />
                                             <ItemsControl ItemsSource="{Binding}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate DataType="m:InstancePackageModificationModel">
@@ -519,7 +519,7 @@
                                                                         <husk:SwitchCase Value="Add">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="添加了" />
+                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
                                                                                 <Run Text="{Binding VersionName}"
                                                                                     Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                                                             </TextBlock>
@@ -527,13 +527,13 @@
                                                                         <husk:SwitchCase Value="Remove">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="移除了包" />
+                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
                                                                             </TextBlock>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Update">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="更新到" />
+                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
                                                                                 <Run Text="{Binding VersionName}"
                                                                                     Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                                                             </TextBlock>
@@ -541,7 +541,7 @@
                                                                         <husk:SwitchCase Value="Unset">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                                <Run Text="设置为" />
+                                                                                <Run Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
                                                                                 <InlineUIContainer
                                                                                     BaselineAlignment="Bottom">
                                                                                     <Panel>
@@ -550,7 +550,7 @@
                                                                                             Stroke="{StaticResource ControlBorderBrush}"
                                                                                             StrokeThickness="1"
                                                                                             StrokeDashArray="4,2" />
-                                                                                        <TextBlock Text="自动版本"
+                                                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}"
                                                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                                             Margin="6,2" FontSize="{StaticResource ExtraSmallFontSize}"/>
                                                                                     </Panel>
@@ -578,7 +578,7 @@
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
-                                            <husk:Tag Content="过去" />
+                                            <husk:Tag Content="{x:Static lang:Resources.InstancePackageModal_PastTagText}" />
                                         </StackPanel>
                                     </ScrollViewer>
                                 </Panel>
