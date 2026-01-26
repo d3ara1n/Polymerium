@@ -2220,11 +2220,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added.
+        /// </summary>
+        public static string InstancePackageModal_AddedLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_AddedLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string InstancePackageModal_AddTagButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_AddTagButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Version.
+        /// </summary>
+        public static string InstancePackageModal_AutoVersionLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_AutoVersionLabelText", resourceCulture);
             }
         }
         
@@ -2265,11 +2283,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string InstancePackageModal_HistoryTabText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_HistoryTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Editable.
         /// </summary>
         public static string InstancePackageModal_LockedVersionLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_LockedVersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now.
+        /// </summary>
+        public static string InstancePackageModal_NowTagText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_NowTagText", resourceCulture);
             }
         }
         
@@ -2283,11 +2319,47 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Past.
+        /// </summary>
+        public static string InstancePackageModal_PastTagText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_PastTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed package.
+        /// </summary>
+        public static string InstancePackageModal_RemovedPackageText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_RemovedPackageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set to.
+        /// </summary>
+        public static string InstancePackageModal_SetToLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_SetToLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string InstancePackageModal_TagsTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_TagsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated to.
+        /// </summary>
+        public static string InstancePackageModal_UpdatedToLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_UpdatedToLabelText", resourceCulture);
             }
         }
         

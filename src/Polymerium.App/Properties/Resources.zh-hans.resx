@@ -1945,4 +1945,28 @@
     <data name="InstanceSetupView_VersionNameMenuText" xml:space="preserve">
         <value>版本名</value>
     </data>
+    <data name="InstancePackageModal_HistoryTabText" xml:space="preserve">
+        <value>历史</value>
+    </data>
+    <data name="InstancePackageModal_NowTagText" xml:space="preserve">
+        <value>现在</value>
+    </data>
+    <data name="InstancePackageModal_AddedLabelText" xml:space="preserve">
+        <value>添加了</value>
+    </data>
+    <data name="InstancePackageModal_RemovedPackageText" xml:space="preserve">
+        <value>移除了包</value>
+    </data>
+    <data name="InstancePackageModal_UpdatedToLabelText" xml:space="preserve">
+        <value>更新到</value>
+    </data>
+    <data name="InstancePackageModal_SetToLabelText" xml:space="preserve">
+        <value>设置为</value>
+    </data>
+    <data name="InstancePackageModal_AutoVersionLabelText" xml:space="preserve">
+        <value>自动版本</value>
+    </data>
+    <data name="InstancePackageModal_PastTagText" xml:space="preserve">
+        <value>过去</value>
+    </data>
 </root>
