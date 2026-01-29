@@ -21,7 +21,8 @@
                     SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel,Mode=TwoWay,FallbackValue={x:Null}}">
                     <TabStrip.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <TextBlock Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
+                            <husk:IconLabel Icon="FolderZip"
+                                            Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
                         </DataTemplate>
                     </TabStrip.ItemTemplate>
                 </TabStrip>
