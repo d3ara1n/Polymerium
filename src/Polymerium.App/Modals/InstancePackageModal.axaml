@@ -441,7 +441,8 @@
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    HorizontalAlignment="Center" />
                                     </StackPanel>
-                                    <ScrollViewer>
+                                    <ScrollViewer
+                                        IsVisible="{Binding Count,Converter={x:Static husk:NumberConverters.IsNonZero},FallbackValue={x:False}}">
                                         <StackPanel Margin="{StaticResource CardContentMargin}">
                                             <husk:Tag
                                                 Content="{x:Static lang:Resources.InstancePackageModal_NowTagText}" />
@@ -460,7 +461,17 @@
                                                                 <husk:SwitchPresenter Grid.Row="1"
                                                                         Value="{Binding Kind}"
                                                                         TargetType="m:InstancePackageModificationKind">
-                                                                    <husk:SwitchCase Value="Add">
+                                                                    <husk:SwitchCase Value="AddUnversioned">
+                                                                        <Border Width="32" Height="32"
+                                                                                CornerRadius="16"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}">
+                                                                            <fi:SymbolIcon Symbol="Add"
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                                                        </Border>
+                                                                    </husk:SwitchCase>
+                                                                    <husk:SwitchCase Value="AddVersioned">
                                                                         <Border Width="32" Height="32"
                                                                                 CornerRadius="16"
                                                                                 VerticalAlignment="Top"
@@ -475,7 +486,7 @@
                                                                                 CornerRadius="16"
                                                                                 VerticalAlignment="Top"
                                                                                 Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}">
-                                                                            <fi:SymbolIcon Symbol="Subtract"
+                                                                            <fi:SymbolIcon Symbol="Dismiss"
                                                                                     FontSize="{StaticResource MediumFontSize}"
                                                                                     Foreground="{StaticResource ControlDangerForegroundBrush}" />
                                                                         </Border>
@@ -485,7 +496,7 @@
                                                                                 CornerRadius="16"
                                                                                 VerticalAlignment="Top"
                                                                                 Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}">
-                                                                            <fi:SymbolIcon Symbol="ArrowSync"
+                                                                            <fi:SymbolIcon Symbol="ArrowSort"
                                                                                     FontSize="{StaticResource MediumFontSize}"
                                                                                     Foreground="{StaticResource ControlWarningForegroundBrush}" />
                                                                         </Border>
@@ -519,7 +530,29 @@
                                                                     <husk:SwitchPresenter Grid.Row="0"
                                                                             Value="{Binding Kind}"
                                                                             TargetType="m:InstancePackageModificationKind">
-                                                                        <husk:SwitchCase Value="Add">
+                                                                        <husk:SwitchCase Value="AddUnversioned">
+                                                                            <TextBlock
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                <Run
+                                                                                    Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                                <InlineUIContainer
+                                                                                    BaselineAlignment="Bottom">
+                                                                                    <Panel>
+                                                                                        <Rectangle RadiusX="4"
+                                                                                            RadiusY="4"
+                                                                                            Stroke="{StaticResource ControlBorderBrush}"
+                                                                                            StrokeThickness="1"
+                                                                                            StrokeDashArray="4,2" />
+                                                                                        <TextBlock
+                                                                                            Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}"
+                                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                            Margin="6,2"
+                                                                                            FontSize="{StaticResource ExtraSmallFontSize}" />
+                                                                                    </Panel>
+                                                                                </InlineUIContainer>
+                                                                            </TextBlock>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="AddVersioned">
                                                                             <TextBlock
                                                                                 FontWeight="{StaticResource ControlStrongFontWeight}">
                                                                                 <Run

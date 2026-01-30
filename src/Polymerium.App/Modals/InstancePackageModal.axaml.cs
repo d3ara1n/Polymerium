@@ -318,13 +318,26 @@ public partial class InstancePackageModal : Modal
                             {
                                 if (result.Vid is null)
                                 {
-                                    // -> Project: Unset
-                                    return new InstancePackageModificationModel()
+                                    if (x.Old is null)
                                     {
-                                        Kind = InstancePackageModificationKind.Unset,
-                                        VersionName = null,
-                                        ModifiedAtRaw = x.At
-                                    };
+                                        // null -> Project
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.AddUnversioned,
+                                            VersionName = null,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                    else
+                                    {
+                                        // -> Project: Unset
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.Unset,
+                                            VersionName = null,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
                                 }
                                 else
                                 {
@@ -338,7 +351,7 @@ public partial class InstancePackageModal : Modal
                                         // null -> Package: Add
                                         return new InstancePackageModificationModel()
                                         {
-                                            Kind = InstancePackageModificationKind.Add,
+                                            Kind = InstancePackageModificationKind.AddVersioned,
                                             VersionName = package.VersionName,
                                             ModifiedAtRaw = x.At
                                         };
