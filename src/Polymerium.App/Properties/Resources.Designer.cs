@@ -3291,6 +3291,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not Played Yet.
+        /// </summary>
+        public static string LandingView_NoRecentPlayLabelText {
+            get {
+                return ResourceManager.GetString("LandingView_NoRecentPlayLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string LandingView_OverviewAccountsLabelText {
