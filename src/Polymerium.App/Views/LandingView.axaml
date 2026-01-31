@@ -142,7 +142,7 @@
                                                   Height="{StaticResource ExtraLargeFontSize}"
                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                   HorizontalAlignment="Center" />
-                            <TextBlock Text="暂无最近游戏"
+                            <TextBlock Text="{x:Static lang:Resources.LandingView_NoRecentPlayLabelText}"
                                        FontSize="{StaticResource LargeFontSize}"
                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                        HorizontalAlignment="Center" />

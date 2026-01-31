@@ -1978,4 +1978,7 @@
     <data name="InstancePackageModal_PastTagText" xml:space="preserve">
         <value>Past</value>
     </data>
+    <data name="LandingView_NoRecentPlayLabelText" xml:space="preserve">
+        <value>Not Played Yet</value>
+    </data>
 </root>

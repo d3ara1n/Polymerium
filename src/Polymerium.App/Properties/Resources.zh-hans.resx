@@ -1969,4 +1969,7 @@
     <data name="InstancePackageModal_PastTagText" xml:space="preserve">
         <value>过去</value>
     </data>
+    <data name="LandingView_NoRecentPlayLabelText" xml:space="preserve">
+        <value>暂无最近游戏</value>
+    </data>
 </root>
