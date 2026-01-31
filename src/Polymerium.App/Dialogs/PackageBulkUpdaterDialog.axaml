@@ -46,14 +46,19 @@
                                     <TextBlock Text="{Binding NewVersionTime}"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}"
-                                               TextTrimming="CharacterEllipsis" />
+                                               TextTrimming="CharacterEllipsis"
+                                               Background="Transparent"
+                                               ToolTip.Tip="{Binding NewVersionTimeRaw}" />
                                     <TextBlock Text="{Binding OldVersionName}"
                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                TextTrimming="CharacterEllipsis" />
                                     <TextBlock Text="{Binding OldVersionTime}"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{StaticResource SmallFontSize}"
-                                               TextTrimming="CharacterEllipsis" />
+                                               TextTrimming="CharacterEllipsis"
+                                               Background="Transparent"
+                                               ToolTip.Tip="{Binding OldVersionTimeRaw}" />
                                 </StackPanel>
                                 <Grid Grid.Column="2" RowDefinitions="*,*">
                                     <CheckBox Grid.Row="0" VerticalAlignment="Center"
