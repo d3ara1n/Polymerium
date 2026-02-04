@@ -55,8 +55,18 @@ public partial class InstancePackageModal : Modal
                                                                            o => o.LazyHistory,
                                                                            (o, v) => o.LazyHistory = v);
 
-    private string? _old;
+    public static readonly DirectProperty<InstancePackageModal, bool> IsDeletingProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(nameof(IsDeleting),
+                                                                    o => o.IsDeleting,
+                                                                    (o, v) => o.IsDeleting = v);
 
+    public bool IsDeleting
+    {
+        get;
+        set => SetAndRaise(IsDeletingProperty, ref field, value);
+    }
+
+    private string? _old;
 
     public InstancePackageModal() => InitializeComponent();
 
@@ -531,6 +541,22 @@ public partial class InstancePackageModal : Modal
             });
         }
     }
+
+    [RelayCommand]
+    private void Delete()
+    {
+        IsDeleting = true;
+    }
+
+    [RelayCommand]
+    private void Undelete()
+    {
+        IsDeleting = false;
+    }
+
+    #endregion
+
+    #region Other
 
     private void OnDependencyInstalled(InstancePackageModel newPackage)
     {
