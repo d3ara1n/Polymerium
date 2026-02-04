@@ -57,7 +57,8 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <TabControl Grid.Row="1" BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="0,1,0,0">
+            <TabControl Grid.Row="1" BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="0,1,0,0"
+                        Padding="0,12">
                 <TabControl.Styles>
                     <Style Selector="TabItem">
                         <Setter Property="Margin" Value="0" />
@@ -180,6 +181,7 @@
                                             </Border>
                                             <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
                                                     Margin="4,0,0,0"
+                                                    Padding="6"
                                                     Classes="Small"
                                                     IsVisible="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageInfoModel)DataContext).Owner.IsLocked,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
                                                     Command="{Binding $parent[modals:InstancePackageModal].RemoveVersionCommand}">
@@ -632,12 +634,35 @@
                     </husk:LazyContainer>
                 </TabItem>
             </TabControl>
-            <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <ToggleSwitch Grid.Column="0"
-                              IsChecked="{Binding Owner.IsEnabled,Mode=TwoWay}"
-                              OnContent="{x:Static lang:Resources.Enum_Enabled}"
-                              OffContent="{x:Static lang:Resources.Enum_Disabled}" />
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+            <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                <Border Grid.Column="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}" Padding="8,6">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="操作: " VerticalAlignment="Center" />
+                        <husk:SwitchPresenter
+                            Value="{Binding $parent[modals:InstancePackageModal].IsDeleting,Mode=OneWay}"
+                            TargetType="x:Boolean" IsVisible="False">
+                            <husk:SwitchCase Value="{x:False}">
+                                <Button Classes="Danger Small" Theme="{StaticResource OutlineButtonTheme}"
+                                        Command="{Binding $parent[modals:InstancePackageModal].DeleteCommand}">
+                                    <fi:SymbolIcon Symbol="Delete"
+                                                   FontSize="{StaticResource SmallFontSize}" />
+                                </Button>
+                            </husk:SwitchCase>
+                            <husk:SwitchCase Value="{x:True}">
+                                <Button Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
+                                        Command="{Binding $parent[modals:InstancePackageModal].UndeleteCommand}">
+                                    <fi:SymbolIcon Symbol="ArrowReset"
+                                                   FontSize="{StaticResource SmallFontSize}" />
+                                </Button>
+                            </husk:SwitchCase>
+                        </husk:SwitchPresenter>
+                        <ToggleSwitch IsChecked="{Binding Owner.IsEnabled,Mode=TwoWay}"
+                                      OnContent="{x:Static lang:Resources.Enum_Enabled}"
+                                      OffContent="{x:Static lang:Resources.Enum_Disabled}" />
+                    </StackPanel>
+                </Border>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6">
                     <Button Content="{x:Static lang:Resources.Dialog_DismissButtonText}" IsCancel="True"
                             Command="{Binding $parent[modals:InstancePackageModal].Dismiss}" />
                 </StackPanel>
