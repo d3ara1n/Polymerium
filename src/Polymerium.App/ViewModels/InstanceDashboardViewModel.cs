@@ -7,7 +7,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Trident.Abstractions;
+using Trident.Abstractions.Tasks;
 using Trident.Core.Services;
+using Trident.Core.Services.Instances;
 
 namespace Polymerium.App.ViewModels;
 
@@ -38,6 +40,9 @@ public partial class InstanceDashboardViewModel(
 
     partial void OnSelectedSourceChanged(LogSourceModelBase value) => UpdateLogSource(value);
 
+    [ObservableProperty]
+    public partial bool IsOnAir { get; set; }
+
     #endregion
 
     #region Other
@@ -67,10 +72,51 @@ public partial class InstanceDashboardViewModel(
         {
             case LiveLogSourceModel:
                 // 使用 ObservableCollections
+                if (IsOnAir)
+                {
+                    // Attach
+                    // Bind
+                }
                 break;
             case FileLogSourceModel:
                 // 使用 DynamicData
+                if (IsOnAir)
+                {
+                    // Detach
+                }
+                // Set
                 break;
+        }
+    }
+
+    #endregion
+
+    #region State
+
+    protected override void OnInstanceLaunching(LaunchTracker tracker)
+    {
+        tracker.StateUpdated += OnStateUpdated;
+        IsOnAir = true;
+        if (SelectedSource is LiveLogSourceModel)
+        {
+            // Attach
+            // Bind
+        }
+
+        return;
+
+        void OnStateUpdated(TrackerBase _, TrackerState state)
+        {
+            if (state is TrackerState.Faulted or TrackerState.Finished)
+            {
+                tracker.StateUpdated -= OnStateUpdated;
+                if (SelectedSource is LiveLogSourceModel)
+                {
+                    // Detach
+                    // Leave Behind
+                }
+                IsOnAir = false;
+            }
         }
     }
 
