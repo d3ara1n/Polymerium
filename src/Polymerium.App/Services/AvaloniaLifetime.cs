@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -10,15 +11,18 @@ namespace Polymerium.App.Services;
 
 public class AvaloniaLifetime : IHostedService
 {
+    private readonly ConfigurationService _configuration;
     private readonly IHostApplicationLifetime _lifetime;
     private readonly Thread _thread;
 
     public AvaloniaLifetime(
         IHostApplicationLifetime lifetime,
         ILogger<AvaloniaLifetime> logger,
-        IHostEnvironment environment)
+        IHostEnvironment environment,
+        ConfigurationService configuration)
     {
         _lifetime = lifetime;
+        _configuration = configuration;
 
         logger.LogInformation("""
                               {app}({env}):{root}
@@ -61,8 +65,28 @@ public class AvaloniaLifetime : IHostedService
 
     #endregion
 
+    private static CultureInfo GetSafeCultureInfo(string cultureName)
+    {
+        try
+        {
+            return CultureInfo.GetCultureInfo(cultureName);
+        }
+        catch (CultureNotFoundException)
+        {
+            // 回退到英语（美国）
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+        catch (ArgumentException)
+        {
+            // 处理无效的文化名称参数
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+    }
+
     private void Serve()
     {
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(_configuration.Value.ApplicationLanguage);
+        Properties.Resources.Culture = CultureInfo.CurrentUICulture;
         Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
         _lifetime.StopApplication();
     }
