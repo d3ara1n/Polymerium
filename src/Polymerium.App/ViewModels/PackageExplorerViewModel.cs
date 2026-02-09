@@ -395,6 +395,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
                 _overlayService.PopModal(new ExhibitPackageModal
                 {
+                    Key = Basic.Key,
+                    PersistenceService = _persistenceService,
                     DataContext = model,
                     Exhibit = exhibit,
                     DataService = _dataService,

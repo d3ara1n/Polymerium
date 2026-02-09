@@ -1014,6 +1014,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string ExhibitPackageModal_HistoryTabText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_HistoryTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed:.
         /// </summary>
         public static string ExhibitPackageModal_InstalledVersionTagText {
