@@ -1,13 +1,17 @@
-﻿<husk:Toast xmlns="https://github.com/avaloniaui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-            xmlns:async="using:AsyncImageLoader"
-            xmlns:local="clr-namespace:Polymerium.App.Toasts"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Image Viewer"
-            x:Class="Polymerium.App.Toasts.ImageViewerToast" ClipToBounds="True"
-            ScrollViewer.VerticalScrollBarVisibility="Disabled">
-    <Image async:ImageLoader.Source="{Binding $parent[local:ImageViewerToast].ImageSource}"
-           RenderOptions.BitmapInterpolationMode="HighQuality" />
+﻿<husk:Toast
+    x:Class="Polymerium.App.Toasts.ImageViewerToast"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="using:AsyncImageLoader"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:local="clr-namespace:Polymerium.App.Toasts"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ClipToBounds="True"
+    Header="Image Viewer"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
+    <Image async:ImageLoader.Source="{Binding $parent[local:ImageViewerToast].ImageSource}" RenderOptions.BitmapInterpolationMode="HighQuality" />
 </husk:Toast>

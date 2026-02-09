@@ -1,50 +1,61 @@
-<controls:OobeStep xmlns="https://github.com/avaloniaui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                   xmlns:assets="clr-namespace:Polymerium.App.Assets"
-                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                   xmlns:app="clr-namespace:Polymerium.App"
-                   mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
-                   x:Class="Polymerium.App.Components.OobeWelcome">
-    <StackPanel Spacing="24" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <!-- Logo -->
-        <Border Width="96" Height="96"
-                HorizontalAlignment="Center"
-                CornerRadius="{StaticResource LargeCornerRadius}"
-                ClipToBounds="True">
-            <Image Source="{x:Static assets:AssetUriIndex.IconBitmap}"
-                   Stretch="UniformToFill" />
+﻿<controls:OobeStep
+    x:Class="Polymerium.App.Components.OobeWelcome"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="clr-namespace:Polymerium.App"
+    xmlns:assets="clr-namespace:Polymerium.App.Assets"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="400"
+    d:DesignWidth="480"
+    mc:Ignorable="d">
+    <StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="24">
+        <!--  Logo  -->
+        <Border
+            Width="96"
+            Height="96"
+            HorizontalAlignment="Center"
+            ClipToBounds="True"
+            CornerRadius="{StaticResource LargeCornerRadius}">
+            <Image Source="{x:Static assets:AssetUriIndex.IconBitmap}" Stretch="UniformToFill" />
         </Border>
 
-        <!-- App Name -->
-        <TextBlock Text="{x:Static app:Program.Brand}"
-                   HorizontalAlignment="Center"
-                   FontSize="32"
-                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+        <!--  App Name  -->
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="32"
+            FontWeight="{StaticResource ControlStrongFontWeight}"
+            Text="{x:Static app:Program.Brand}" />
 
-        <!-- Welcome Message -->
-        <StackPanel Spacing="8" HorizontalAlignment="Center">
-            <TextBlock Text="{x:Static lang:Resources.OobeWelcome_Title}"
-                       HorizontalAlignment="Center"
-                       FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-            <TextBlock Text="{x:Static lang:Resources.OobeWelcome_Subtitle}"
-                       HorizontalAlignment="Center"
-                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"
-                       MaxWidth="360" />
+        <!--  Welcome Message  -->
+        <StackPanel HorizontalAlignment="Center" Spacing="8">
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.OobeWelcome_Title}" />
+            <TextBlock
+                MaxWidth="360"
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.OobeWelcome_Subtitle}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
         </StackPanel>
 
-        <!-- Description -->
-        <TextBlock Text="{x:Static lang:Resources.OobeWelcome_Description}"
-                   HorizontalAlignment="Center"
-                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   MaxWidth="400"
-                   FontSize="{StaticResource SmallFontSize}" />
+        <!--  Description  -->
+        <TextBlock
+            MaxWidth="400"
+            HorizontalAlignment="Center"
+            FontSize="{StaticResource SmallFontSize}"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            Text="{x:Static lang:Resources.OobeWelcome_Description}"
+            TextAlignment="Center"
+            TextWrapping="Wrap" />
     </StackPanel>
 </controls:OobeStep>

@@ -1,19 +1,25 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:local="using:Polymerium.App.Controls"
-                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
-    <!-- 当前页面包含上下文，例如展示某条数据而非某些数据，或者展示某个模型的数据，则该数据或模型为上下文，用 ScopedPage -->
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:local="using:Polymerium.App.Controls">
+    <!--  当前页面包含上下文，例如展示某条数据而非某些数据，或者展示某个模型的数据，则该数据或模型为上下文，用 ScopedPage  -->
     <Design.PreviewWith>
         <local:ScopedPage Width="128" Height="128">
             <Button HorizontalAlignment="Center" VerticalAlignment="Center">
-                <icons:PackIconLucide Kind="ArrowLeft" Width="12" Height="12" />
+                <icons:PackIconLucide
+                    Width="12"
+                    Height="12"
+                    Kind="ArrowLeft" />
             </Button>
         </local:ScopedPage>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type local:ScopedPage}" TargetType="local:ScopedPage"
-                  BasedOn="{StaticResource {x:Type husk:Page}}">
+    <ControlTheme
+        x:Key="{x:Type local:ScopedPage}"
+        BasedOn="{StaticResource {x:Type husk:Page}}"
+        TargetType="local:ScopedPage">
         <Setter Property="Background" Value="{StaticResource LayerBackgroundBrush}" />
         <Setter Property="IsMaximized" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />

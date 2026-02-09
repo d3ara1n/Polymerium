@@ -1,21 +1,26 @@
-﻿<widgets:WidgetBase xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                    x:Class="Polymerium.App.Widgets.DeveloperToolboxWidget" Title="Developer Toolbox" Icon="Toolbox">
+﻿<widgets:WidgetBase
+    x:Class="Polymerium.App.Widgets.DeveloperToolboxWidget"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
+    Title="Developer Toolbox"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Icon="Toolbox"
+    mc:Ignorable="d">
     <widgets:WidgetBase.FullTemplate>
         <DataTemplate DataType="widgets:DeveloperToolboxWidget">
             <WrapPanel ItemSpacing="8" LineSpacing="8">
-                <!-- 明明没有添加这个模组游戏里却出现了，有可能是 JarInJar！ -->
+                <!--  明明没有添加这个模组游戏里却出现了，有可能是 JarInJar！  -->
                 <Button Command="{Binding OpenJarInJarScannerCommand}">
-                    <husk:IconLabel Text="JarInJar Dependency Scanner" Icon="DrinkBottle" />
+                    <husk:IconLabel Icon="DrinkBottle" Text="JarInJar Dependency Scanner" />
                 </Button>
-                <!-- 根据 Workspace Diff 生成 Commit Message -->
+                <!--  根据 Workspace Diff 生成 Commit Message  -->
                 <Button IsVisible="False">
-                    <husk:IconLabel Text="Git Commit Message Generator" Icon="Branch" />
+                    <husk:IconLabel Icon="Branch" Text="Git Commit Message Generator" />
                 </Button>
             </WrapPanel>
         </DataTemplate>

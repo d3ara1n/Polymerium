@@ -1,62 +1,74 @@
-﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:controls="using:Polymerium.App.Controls"
-                  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                  xmlns:m="clr-namespace:Polymerium.App.Models"
-                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:trident="using:Trident.Core"
-                  xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
-                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
-                  x:Class="Polymerium.App.Views.InstanceDashboardView"
-                  x:DataType="vm:InstanceDashboardViewModel"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Views.InstanceDashboardView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:trident="using:Trident.Core"
+    xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    x:DataType="vm:InstanceDashboardViewModel"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
     <controls:Subpage.Resources>
         <husk:RelayDataTemplate x:Key="LogSourceTemplate" x:DataType="m:LogSourceModelBase">
             <DataTemplate DataType="m:LiveLogSourceModel">
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
-                    <icons:PackIconLucide Grid.Column="0" Kind="Radio"
-                                          Width="{StaticResource MediumFontSize}"
-                                          Height="{StaticResource MediumFontSize}"
-                                          VerticalAlignment="Center" />
+                    <icons:PackIconLucide
+                        Grid.Column="0"
+                        Width="{StaticResource MediumFontSize}"
+                        Height="{StaticResource MediumFontSize}"
+                        VerticalAlignment="Center"
+                        Kind="Radio" />
                     <TextBlock Grid.Column="1" Text="实时日志" />
-                    <husk:Tag Grid.Column="2" Classes="Small Success" Content="Live" />
+                    <husk:Tag
+                        Grid.Column="2"
+                        Classes="Small Success"
+                        Content="Live" />
                 </Grid>
             </DataTemplate>
             <DataTemplate DataType="m:FileLogSourceModel">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                    <icons:PackIconLucide Grid.Column="0" Kind="File"
-                                          Width="{StaticResource MediumFontSize}"
-                                          Height="{StaticResource MediumFontSize}"
-                                          VerticalAlignment="Center" />
+                    <icons:PackIconLucide
+                        Grid.Column="0"
+                        Width="{StaticResource MediumFontSize}"
+                        Height="{StaticResource MediumFontSize}"
+                        VerticalAlignment="Center"
+                        Kind="File" />
                     <TextBlock Grid.Column="1" Text="{Binding Name}" />
                 </Grid>
             </DataTemplate>
         </husk:RelayDataTemplate>
-        <!-- 日志条目内容模板 -->
+        <!--  日志条目内容模板  -->
         <DataTemplate x:Key="ScrapTemplate" DataType="m:ScrapModel">
-            <TextBlock TextTrimming="CharacterEllipsis"
-                       ToolTip.Tip="{Binding Message}">
-                <Run Text="{Binding Time, StringFormat=HH:mm:ss}"
-                     FontFamily="Cascadia Code, Consolas, monospace"
-                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            <TextBlock TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Message}">
+                <Run
+                    FontFamily="Cascadia Code, Consolas, monospace"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Binding Time, StringFormat=HH:mm:ss}" />
                 <InlineUIContainer BaselineAlignment="Center">
-                    <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                            CornerRadius="2"
-                            Padding="4,2">
+                    <Border
+                        Padding="4,2"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="2">
                         <Border.IsVisible>
                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                <Binding Path="Thread" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
-                                <Binding Path="Sender" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                                <Binding Converter="{x:Static StringConverters.IsNotNullOrEmpty}" Path="Thread" />
+                                <Binding Converter="{x:Static StringConverters.IsNotNullOrEmpty}" Path="Sender" />
                             </MultiBinding>
                         </Border.IsVisible>
-                        <TextBlock FontFamily="Cascadia Code, Consolas, monospace"
-                                   FontSize="{StaticResource ExtraSmallFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <TextBlock
+                            FontFamily="Cascadia Code, Consolas, monospace"
+                            FontSize="{StaticResource ExtraSmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="[" />
                             <Run Text="{Binding Thread, FallbackValue=?}" />
                             <Run Text="/" />
@@ -71,167 +83,226 @@
     </controls:Subpage.Resources>
 
     <Grid RowDefinitions="Auto,*" RowSpacing="12">
-        <!-- 顶部统计卡片区域 -->
-        <UniformGrid Grid.Row="0" Rows="1" Columns="4" HorizontalAlignment="Stretch" ColumnSpacing="12">
-            <!-- 运行状态卡片 -->
+        <!--  顶部统计卡片区域  -->
+        <UniformGrid
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            ColumnSpacing="12"
+            Columns="4"
+            Rows="1">
+            <!--  运行状态卡片  -->
             <husk:Card Padding="0">
-                <husk:SwitchPresenter Value="{Binding State}" TargetType="trident:InstanceState">
-                    <!-- Running 状态 -->
+                <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
+                    <!--  Running 状态  -->
                     <husk:SwitchCase Value="Running">
-                        <Border Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                Padding="12">
+                        <Border
+                            Padding="12"
+                            Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <StackPanel VerticalAlignment="Center" Spacing="8">
-                                <icons:PackIconLucide Kind="Play"
-                                                      Width="32" Height="32"
-                                                      Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                                      HorizontalAlignment="Center" />
-                                <TextBlock Text="运行中"
-                                           FontSize="{StaticResource LargeFontSize}"
-                                           FontWeight="{StaticResource ControlStrongFontWeight}"
-                                           Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                           HorizontalAlignment="Center" />
+                                <icons:PackIconLucide
+                                    Width="32"
+                                    Height="32"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Kind="Play" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Text="运行中" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
-                    <!-- Deploying 状态 -->
+                    <!--  Deploying 状态  -->
                     <husk:SwitchCase Value="Deploying">
-                        <StackPanel VerticalAlignment="Center" Spacing="8" Margin="{StaticResource CardContentMargin}">
-                            <husk:ProgressRing Width="32" Height="32"
-                                               IsIndeterminate="True"
-                                               HorizontalAlignment="Center" />
-                            <TextBlock Text="部署中"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <husk:ProgressRing
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="部署中" />
                         </StackPanel>
                     </husk:SwitchCase>
-                    <!-- Updating 状态 -->
+                    <!--  Updating 状态  -->
                     <husk:SwitchCase Value="Updating">
-                        <StackPanel VerticalAlignment="Center" Spacing="8" Margin="{StaticResource CardContentMargin}">
-                            <husk:ProgressRing Width="32" Height="32"
-                                               IsIndeterminate="True"
-                                               HorizontalAlignment="Center" />
-                            <TextBlock Text="更新中"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <husk:ProgressRing
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="更新中" />
                         </StackPanel>
                     </husk:SwitchCase>
-                    <!-- Idle 状态 -->
+                    <!--  Idle 状态  -->
                     <husk:SwitchCase Value="Idle">
-                        <StackPanel VerticalAlignment="Center" Spacing="8" Margin="{StaticResource CardContentMargin}">
-                            <icons:PackIconLucide Kind="CirclePause"
-                                                  Width="32" Height="32"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                  HorizontalAlignment="Center" />
-                            <TextBlock Text="空闲"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <icons:PackIconLucide
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="CirclePause" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="空闲" />
                         </StackPanel>
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>
 
-            <!-- 游戏次数卡片 -->
+            <!--  游戏次数卡片  -->
             <husk:Card>
                 <Grid RowDefinitions="*,Auto" RowSpacing="8">
-                    <StackPanel Grid.Row="0" VerticalAlignment="Center" Spacing="4">
-                        <TextBlock Text="114"
-                                   FontSize="{StaticResource ExtraLargeFontSize}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                   HorizontalAlignment="Center" />
-                        <TextBlock Text="游戏次数"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
+                    <StackPanel
+                        Grid.Row="0"
+                        VerticalAlignment="Center"
+                        Spacing="4">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="114" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="游戏次数" />
                     </StackPanel>
-                    <Button Grid.Row="1"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Classes="Small">
+                    <Button
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Classes="Small">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <icons:PackIconLucide Kind="FolderOpen" Width="{StaticResource MediumFontSize}"
-                                                  Height="{StaticResource MediumFontSize}" />
+                            <icons:PackIconLucide
+                                Width="{StaticResource MediumFontSize}"
+                                Height="{StaticResource MediumFontSize}"
+                                Kind="FolderOpen" />
                             <TextBlock Text="日志目录" />
                         </StackPanel>
                     </Button>
                 </Grid>
             </husk:Card>
 
-            <!-- 崩溃次数卡片 -->
+            <!--  崩溃次数卡片  -->
             <husk:Card>
                 <Grid RowDefinitions="*,Auto" RowSpacing="8">
-                    <StackPanel Grid.Row="0" VerticalAlignment="Center" Spacing="4">
-                        <TextBlock Text="514"
-                                   FontSize="{StaticResource ExtraLargeFontSize}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                   HorizontalAlignment="Center" />
-                        <TextBlock Text="崩溃次数"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
+                    <StackPanel
+                        Grid.Row="0"
+                        VerticalAlignment="Center"
+                        Spacing="4">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="514" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="崩溃次数" />
                     </StackPanel>
-                    <Button Grid.Row="1"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Classes="Small">
+                    <Button
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Classes="Small">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <icons:PackIconLucide Kind="FolderOpen" Width="{StaticResource MediumFontSize}"
-                                                  Height="{StaticResource MediumFontSize}" />
+                            <icons:PackIconLucide
+                                Width="{StaticResource MediumFontSize}"
+                                Height="{StaticResource MediumFontSize}"
+                                Kind="FolderOpen" />
                             <TextBlock Text="崩溃报告" />
                         </StackPanel>
                     </Button>
                 </Grid>
             </husk:Card>
 
-            <!-- 待添加卡片 -->
+            <!--  待添加卡片  -->
             <husk:Card>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
-                    <icons:PackIconLucide Kind="Plus"
-                                          Width="32" Height="32"
-                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                          HorizontalAlignment="Center" />
-                    <TextBlock Text="WIP"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               HorizontalAlignment="Center" />
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="8">
+                    <icons:PackIconLucide
+                        Width="32"
+                        Height="32"
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Kind="Plus" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="WIP" />
                 </StackPanel>
             </husk:Card>
         </UniformGrid>
 
-        <!-- 日志查看器区域 -->
-        <husk:Card Grid.Row="1" Padding="0" ClipToBounds="True">
+        <!--  日志查看器区域  -->
+        <husk:Card
+            Grid.Row="1"
+            Padding="0"
+            ClipToBounds="True">
             <Grid RowDefinitions="Auto,Auto,*">
-                <!-- 控制区域 -->
-                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Margin="8">
-                    <!-- 数据源选择 -->
-                    <ComboBox Grid.Column="0" MinWidth="180" SelectedIndex="0"
-                              SelectedItem="{Binding SelectedSource,Mode=TwoWay}"
-                              ItemsSource="{Binding Sources}"
-                              ItemTemplate="{StaticResource LogSourceTemplate}" />
+                <!--  控制区域  -->
+                <Grid
+                    Grid.Row="0"
+                    Margin="8"
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="8">
+                    <!--  数据源选择  -->
+                    <ComboBox
+                        Grid.Column="0"
+                        MinWidth="180"
+                        ItemTemplate="{StaticResource LogSourceTemplate}"
+                        ItemsSource="{Binding Sources}"
+                        SelectedIndex="0"
+                        SelectedItem="{Binding SelectedSource, Mode=TwoWay}" />
 
-                    <!-- 搜索框 -->
-                    <TextBox Grid.Column="1"
-                             Watermark="搜索日志内容...">
+                    <!--  搜索框  -->
+                    <TextBox Grid.Column="1" Watermark="搜索日志内容...">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <icons:PackIconLucide Kind="Search"
-                                                      Margin="12,0"
-                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                      Width="{StaticResource MediumFontSize}"
-                                                      Height="{StaticResource MediumFontSize}"
-                                                      VerticalAlignment="Center" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Margin="12,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Kind="Search" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
                         </TextBox.InnerLeftContent>
                         <TextBox.InnerRightContent>
                             <StackPanel Orientation="Horizontal">
-                                <Button
-                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                    Command="{Binding $parent[TextBox].Clear}">
-                                    <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource SmallFontSize}" />
+                                <Button Command="{Binding $parent[TextBox].Clear}" IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                    <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Dismiss" />
                                 </Button>
-                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           VerticalAlignment="Center" Margin="0,0,8,0">
+                                <TextBlock
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                     <Run Text="214" />
                                     <Run Text="/" />
                                     <Run Text="214" />
@@ -240,59 +311,59 @@
                         </TextBox.InnerRightContent>
                     </TextBox>
 
-                    <!-- 日志级别过滤器 -->
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
-                        <!-- Error 过滤 -->
+                    <!--  日志级别过滤器  -->
+                    <StackPanel
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <!--  Error 过滤  -->
                         <ToggleButton Classes="Small">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked">
-                                    <Setter Property="Background"
-                                            Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
-                                    <Setter Property="Foreground"
-                                            Value="{StaticResource ControlDangerForegroundBrush}" />
+                                    <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
                                 </Style>
                             </ToggleButton.Styles>
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <Ellipse Width="{StaticResource SmallFontSize}" Height="{StaticResource SmallFontSize}"
-                                         Fill="{StaticResource ControlDangerBackgroundBrush}" />
-                                <TextBlock Text="8"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <Ellipse
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    Fill="{StaticResource ControlDangerBackgroundBrush}" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="8" />
                             </StackPanel>
                         </ToggleButton>
 
-                        <!-- Warning 过滤 -->
+                        <!--  Warning 过滤  -->
                         <ToggleButton Classes="Small">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked">
-                                    <Setter Property="Background"
-                                            Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
-                                    <Setter Property="Foreground"
-                                            Value="{StaticResource ControlWarningForegroundBrush}" />
+                                    <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
                                 </Style>
                             </ToggleButton.Styles>
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <Ellipse Width="{StaticResource SmallFontSize}" Height="{StaticResource SmallFontSize}"
-                                         Fill="{StaticResource ControlWarningBackgroundBrush}" />
-                                <TextBlock Text="111"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <Ellipse
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    Fill="{StaticResource ControlWarningBackgroundBrush}" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="111" />
                             </StackPanel>
                         </ToggleButton>
 
-                        <!-- Information 过滤 -->
+                        <!--  Information 过滤  -->
                         <ToggleButton Classes="Small">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked">
-                                    <Setter Property="Background"
-                                            Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
-                                    <Setter Property="Foreground"
-                                            Value="{StaticResource ControlAccentForegroundBrush}" />
+                                    <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
                                 </Style>
                             </ToggleButton.Styles>
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <Ellipse Width="{StaticResource SmallFontSize}" Height="{StaticResource SmallFontSize}"
-                                         Fill="{StaticResource ControlBackgroundBrush}" />
-                                <TextBlock Text="1021"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <Ellipse
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    Fill="{StaticResource ControlBackgroundBrush}" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="1021" />
                             </StackPanel>
                         </ToggleButton>
                     </StackPanel>
@@ -300,23 +371,27 @@
 
                 <husk:Divider Grid.Row="1" />
 
-                <!-- 日志内容区域 -->
+                <!--  日志内容区域  -->
                 <Panel Grid.Row="2">
-                    <!-- 空状态提示 -->
-                    <StackPanel VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Spacing="8">
-                        <icons:PackIconLucide Kind="FileText"
-                                              Width="48" Height="48"
-                                              Opacity="0.3"
-                                              HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                   FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
+                    <!--  空状态提示  -->
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="8">
+                        <icons:PackIconLucide
+                            Width="48"
+                            Height="48"
+                            HorizontalAlignment="Center"
+                            Kind="FileText"
+                            Opacity="0.3" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource LargeFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                     </StackPanel>
 
-                    <!-- 日志列表 -->
+                    <!--  日志列表  -->
                     <ScrollViewer>
                         <ItemsControl>
                             <ItemsControl.ItemsPanel>
@@ -326,36 +401,35 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="m:ScrapModel">
-                                    <husk:SwitchPresenter
-                                        TargetType="launching:ScrapLevel">
-                                        <!-- Information 级别 -->
+                                    <husk:SwitchPresenter TargetType="launching:ScrapLevel">
+                                        <!--  Information 级别  -->
                                         <husk:SwitchCase Value="Information">
-                                            <Border BorderBrush="{StaticResource ControlBorderBrush}"
-                                                    BorderThickness="3,0,0,0"
-                                                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                                    Padding="8,0">
-                                                <ContentControl Content="{Binding}"
-                                                                ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                            <Border
+                                                Padding="8,0"
+                                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="3,0,0,0">
+                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
                                         </husk:SwitchCase>
-                                        <!-- Warning 级别 -->
+                                        <!--  Warning 级别  -->
                                         <husk:SwitchCase Value="Warning">
-                                            <Border BorderBrush="{StaticResource ControlWarningBorderBrush}"
-                                                    BorderThickness="3,0,0,0"
-                                                    Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
-                                                    Padding="8,0">
-                                                <ContentControl Content="{Binding}"
-                                                                ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                            <Border
+                                                Padding="8,0"
+                                                Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                                                BorderThickness="3,0,0,0">
+                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
                                         </husk:SwitchCase>
-                                        <!-- Error 级别 -->
+                                        <!--  Error 级别  -->
                                         <husk:SwitchCase Value="Error">
-                                            <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
-                                                    BorderThickness="3,0,0,0"
-                                                    Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
-                                                    Padding="8,0">
-                                                <ContentControl Content="{Binding}"
-                                                                ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                            <Border
+                                                Padding="8,0"
+                                                Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlDangerBorderBrush}"
+                                                BorderThickness="3,0,0,0">
+                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
                                         </husk:SwitchCase>
                                     </husk:SwitchPresenter>

@@ -1,55 +1,68 @@
-<controls:OobeStep xmlns="https://github.com/avaloniaui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                   mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
-                   x:Class="Polymerium.App.Components.OobePrivacy">
-    <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
-        <!-- Header -->
-        <StackPanel Spacing="8" HorizontalAlignment="Center">
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="32"
-                    Width="64" Height="64"
-                    HorizontalAlignment="Center">
-                <fi:SymbolIcon Symbol="Shield"
-                               FontSize="32"
-                               Foreground="{StaticResource AccentFillColorDefaultBrush}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
+﻿<controls:OobeStep
+    x:Class="Polymerium.App.Components.OobePrivacy"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="400"
+    d:DesignWidth="480"
+    mc:Ignorable="d">
+    <StackPanel
+        Margin="24,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <!--  Header  -->
+        <StackPanel HorizontalAlignment="Center" Spacing="8">
+            <Border
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="32">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="Shield" />
             </Border>
-            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Title}"
-                       HorizontalAlignment="Center"
-                       FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Subtitle}"
-                       HorizontalAlignment="Center"
-                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.OobePrivacy_Title}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.OobePrivacy_Subtitle}" />
         </StackPanel>
 
-        <!-- What We Collect Card -->
-        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                CornerRadius="{StaticResource MediumCornerRadius}"
-                Padding="16,12">
+        <!--  What We Collect Card  -->
+        <Border
+            Padding="16,12"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
             <Grid ColumnDefinitions="Auto,12,*">
-                <fi:SymbolIcon Grid.Column="0"
-                               Symbol="Info"
-                               FontSize="20"
-                               Foreground="{StaticResource AccentFillColorDefaultBrush}"
-                               VerticalAlignment="Top"
-                               Margin="0,2,0,0" />
+                <fi:SymbolIcon
+                    Grid.Column="0"
+                    Margin="0,2,0,0"
+                    VerticalAlignment="Top"
+                    FontSize="20"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="Info" />
                 <StackPanel Grid.Column="2" Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectTitle}"
-                               FontWeight="{StaticResource ControlStrongFontWeight}" />
-                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               FontSize="{StaticResource SmallFontSize}"
-                               TextWrapping="Wrap">
+                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectTitle}" />
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        TextWrapping="Wrap">
                         <Run Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectDescription}" />
-                        <HyperlinkButton FontSize="{StaticResource SmallFontSize}"
-                                         NavigateUri="https://sentry.io/privacy">
+                        <HyperlinkButton FontSize="{StaticResource SmallFontSize}" NavigateUri="https://sentry.io/privacy">
                             <husk:IconLabel Icon="Open" Text="Sentry.io Privacy Policy" />
                         </HyperlinkButton>
                     </TextBlock>
@@ -57,73 +70,86 @@
             </Grid>
         </Border>
 
-        <!-- Our Promise Card -->
-        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                CornerRadius="{StaticResource MediumCornerRadius}"
-                Padding="16,12">
+        <!--  Our Promise Card  -->
+        <Border
+            Padding="16,12"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
             <StackPanel Spacing="12">
-                <TextBlock Text="{x:Static lang:Resources.OobePrivacy_OurPromiseTitle}"
-                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivacy_OurPromiseTitle}" />
                 <StackPanel Spacing="8">
-                    <!-- Promise 1: No Personal Data -->
+                    <!--  Promise 1: No Personal Data  -->
                     <Grid ColumnDefinitions="Auto,8,*">
-                        <fi:SymbolIcon Grid.Column="0" Symbol="LockClosed"
-                                       FontSize="16"
-                                       Foreground="{StaticResource SuccessForegroundBrush}"
-                                       VerticalAlignment="Top" />
+                        <fi:SymbolIcon
+                            Grid.Column="0"
+                            VerticalAlignment="Top"
+                            FontSize="16"
+                            Foreground="{StaticResource SuccessForegroundBrush}"
+                            Symbol="LockClosed" />
                         <StackPanel Grid.Column="2" Spacing="2">
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Promise1Title}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                       FontSize="{StaticResource SmallFontSize}" />
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Promise1Description}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       TextWrapping="Wrap" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.OobePrivacy_Promise1Title}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.OobePrivacy_Promise1Description}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
-                    <!-- Promise 2: Local First -->
+                    <!--  Promise 2: Local First  -->
                     <Grid ColumnDefinitions="Auto,8,*">
-                        <fi:SymbolIcon Grid.Column="0" Symbol="Database"
-                                       FontSize="16"
-                                       Foreground="{StaticResource SuccessForegroundBrush}"
-                                       VerticalAlignment="Top" />
+                        <fi:SymbolIcon
+                            Grid.Column="0"
+                            VerticalAlignment="Top"
+                            FontSize="16"
+                            Foreground="{StaticResource SuccessForegroundBrush}"
+                            Symbol="Database" />
                         <StackPanel Grid.Column="2" Spacing="2">
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Promise2Title}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                       FontSize="{StaticResource SmallFontSize}" />
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Promise2Description}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       TextWrapping="Wrap" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.OobePrivacy_Promise2Title}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.OobePrivacy_Promise2Description}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
-                    <!-- Promise 3: Open Source -->
+                    <!--  Promise 3: Open Source  -->
                     <Grid ColumnDefinitions="Auto,8,*">
-                        <fi:SymbolIcon Grid.Column="0" Symbol="Code"
-                                       FontSize="16"
-                                       Foreground="{StaticResource SuccessForegroundBrush}"
-                                       VerticalAlignment="Top" />
+                        <fi:SymbolIcon
+                            Grid.Column="0"
+                            VerticalAlignment="Top"
+                            FontSize="16"
+                            Foreground="{StaticResource SuccessForegroundBrush}"
+                            Symbol="Code" />
                         <StackPanel Grid.Column="2" Spacing="2">
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Promise3Title}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                       FontSize="{StaticResource SmallFontSize}" />
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivacy_Promise3Description}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       TextWrapping="Wrap" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.OobePrivacy_Promise3Title}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.OobePrivacy_Promise3Description}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </StackPanel>
         </Border>
 
-        <!-- Agreement Note -->
-        <TextBlock Text="{x:Static lang:Resources.OobePrivacy_AgreementNote}"
-                   HorizontalAlignment="Center"
-                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                   FontSize="{StaticResource SmallFontSize}"
-                   TextAlignment="Center"
-                   TextWrapping="Wrap"
-                   MaxWidth="400" />
+        <!--  Agreement Note  -->
+        <TextBlock
+            MaxWidth="400"
+            HorizontalAlignment="Center"
+            FontSize="{StaticResource SmallFontSize}"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            Text="{x:Static lang:Resources.OobePrivacy_AgreementNote}"
+            TextAlignment="Center"
+            TextWrapping="Wrap" />
     </StackPanel>
 </controls:OobeStep>

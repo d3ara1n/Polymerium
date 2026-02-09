@@ -1,183 +1,222 @@
-<husk:Dialog xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:local="clr-namespace:Polymerium.App.Dialogs"
-             mc:Ignorable="d" Width="420"
-             Title="{x:Static lang:Resources.ProxySettingsDialog_Title}"
-             x:Class="Polymerium.App.Dialogs.ProxySettingsDialog"
-             IsPrimaryButtonVisible="True">
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.ProxySettingsDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.ProxySettingsDialog_Title}"
+    Width="420"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
     <StackPanel Spacing="12">
-        <!-- Mode Selection TabStrip -->
+        <!--  Mode Selection TabStrip  -->
         <TabStrip SelectedIndex="{Binding $parent[local:ProxySettingsDialog].SelectedModeIndex, Mode=TwoWay}">
             <TabStripItem>
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon Symbol="Globe" FontSize="{StaticResource MediumFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_ModeAutoTitle}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Globe" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ProxySettingsDialog_ModeAutoTitle}" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon Symbol="Settings" FontSize="{StaticResource MediumFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_ModeManualTitle}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ProxySettingsDialog_ModeManualTitle}" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon Symbol="Prohibited" FontSize="{StaticResource MediumFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_ModeDisabledTitle}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Prohibited" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ProxySettingsDialog_ModeDisabledTitle}" />
                 </StackPanel>
             </TabStripItem>
         </TabStrip>
 
-        <!-- Content Area with SwitchPresenter -->
-        <husk:SwitchPresenter Value="{Binding $parent[local:ProxySettingsDialog].SelectedModeIndex}"
-                              TargetType="x:Int32">
-            <!-- Auto Mode -->
+        <!--  Content Area with SwitchPresenter  -->
+        <husk:SwitchPresenter TargetType="x:Int32" Value="{Binding $parent[local:ProxySettingsDialog].SelectedModeIndex}">
+            <!--  Auto Mode  -->
             <husk:SwitchCase Value="0">
-                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}"
-                        Padding="16" MinHeight="120">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
-                        <fi:SymbolIcon Symbol="Globe" FontSize="32"
-                                       Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                        <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_AutoDescription}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                   HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_AutoSubtitle}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   FontSize="{StaticResource SmallFontSize}"
-                                   HorizontalAlignment="Center" />
+                <Border
+                    MinHeight="120"
+                    Padding="16"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="8">
+                        <fi:SymbolIcon
+                            FontSize="32"
+                            Foreground="{StaticResource ControlAccentForegroundBrush}"
+                            Symbol="Globe" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.ProxySettingsDialog_AutoDescription}" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.ProxySettingsDialog_AutoSubtitle}" />
                     </StackPanel>
                 </Border>
             </husk:SwitchCase>
 
-            <!-- Manual Mode -->
+            <!--  Manual Mode  -->
             <husk:SwitchCase Value="1">
-                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}"
-                        Padding="16">
+                <Border
+                    Padding="16"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <StackPanel Spacing="12">
-                        <!-- Main Settings Grid -->
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto"
-                              ColumnSpacing="12" RowSpacing="8">
-                            <!-- Protocol -->
-                            <TextBlock Grid.Row="0" Grid.Column="0"
-                                       Text="{x:Static lang:Resources.ProxySettingsDialog_ProtocolLabelText}"
-                                       VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="0" Grid.Column="1"
-                                      SelectedIndex="{Binding $parent[local:ProxySettingsDialog].SelectedProtocolIndex, Mode=TwoWay}"
-                                      HorizontalAlignment="Stretch">
+                        <!--  Main Settings Grid  -->
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="12"
+                            RowDefinitions="Auto,Auto,Auto"
+                            RowSpacing="8">
+                            <!--  Protocol  -->
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.ProxySettingsDialog_ProtocolLabelText}" />
+                            <ComboBox
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                SelectedIndex="{Binding $parent[local:ProxySettingsDialog].SelectedProtocolIndex, Mode=TwoWay}">
                                 <ComboBoxItem Content="HTTP" />
                                 <ComboBoxItem Content="SOCKS4" />
                                 <ComboBoxItem Content="SOCKS5" />
                             </ComboBox>
 
-                            <!-- Address -->
-                            <TextBlock Grid.Row="1" Grid.Column="0"
-                                       Text="{x:Static lang:Resources.ProxySettingsDialog_AddressLabelText}"
-                                       VerticalAlignment="Center" />
-                            <TextBox Grid.Row="1" Grid.Column="1"
-                                     Text="{Binding $parent[local:ProxySettingsDialog].ProxyAddress, Mode=TwoWay}"
-                                     Watermark="127.0.0.1" />
+                            <!--  Address  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.ProxySettingsDialog_AddressLabelText}" />
+                            <TextBox
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyAddress, Mode=TwoWay}"
+                                Watermark="127.0.0.1" />
 
-                            <!-- Port -->
-                            <TextBlock Grid.Row="2" Grid.Column="0"
-                                       Text="{x:Static lang:Resources.ProxySettingsDialog_PortLabelText}"
-                                       VerticalAlignment="Center" />
-                            <TextBox Grid.Row="2" Grid.Column="1"
-                                     Text="{Binding $parent[local:ProxySettingsDialog].ProxyPort, Mode=TwoWay}"
-                                     Watermark="7890" />
+                            <!--  Port  -->
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.ProxySettingsDialog_PortLabelText}" />
+                            <TextBox
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPort, Mode=TwoWay}"
+                                Watermark="7890" />
                         </Grid>
 
-                        <!-- Authentication Section -->
+                        <!--  Authentication Section  -->
                         <husk:Divider />
-                        <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_AuthenticationTitle}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   FontSize="{StaticResource SmallFontSize}" />
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.ProxySettingsDialog_AuthenticationTitle}" />
 
-                        <!-- Authentication Grid -->
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
-                              ColumnSpacing="12" RowSpacing="8">
-                            <!-- Username -->
-                            <TextBlock Grid.Row="0" Grid.Column="0"
-                                       Text="{x:Static lang:Resources.ProxySettingsDialog_UsernameLabelText}"
-                                       VerticalAlignment="Center" />
-                            <TextBox Grid.Row="0" Grid.Column="1"
-                                     Text="{Binding $parent[local:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}"
-                                     Watermark="{x:Static lang:Resources.ProxySettingsDialog_UsernamePlaceholder}" />
+                        <!--  Authentication Grid  -->
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="12"
+                            RowDefinitions="Auto,Auto"
+                            RowSpacing="8">
+                            <!--  Username  -->
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.ProxySettingsDialog_UsernameLabelText}" />
+                            <TextBox
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}"
+                                Watermark="{x:Static lang:Resources.ProxySettingsDialog_UsernamePlaceholder}" />
 
-                            <!-- Password -->
-                            <TextBlock Grid.Row="1" Grid.Column="0"
-                                       Text="{x:Static lang:Resources.ProxySettingsDialog_PasswordLabelText}"
-                                       VerticalAlignment="Center" />
-                            <TextBox Grid.Row="1" Grid.Column="1"
-                                     Text="{Binding $parent[local:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}"
-                                     PasswordChar="●"
-                                     Watermark="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}" />
+                            <!--  Password  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.ProxySettingsDialog_PasswordLabelText}" />
+                            <TextBox
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                PasswordChar="●"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}"
+                                Watermark="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}" />
                         </Grid>
 
-                        <!-- Test Connection -->
+                        <!--  Test Connection  -->
                         <husk:Divider />
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                            <Button Grid.Column="0"
-                                    Command="{Binding $parent[local:ProxySettingsDialog].TestConnectionCommand}"
-                                    IsEnabled="{Binding $parent[local:ProxySettingsDialog].IsTesting, Converter={x:Static BoolConverters.Not}}"
-                                    Classes="Small">
-                                <husk:IconLabel Icon="PlugConnected"
-                                                Text="{x:Static lang:Resources.ProxySettingsDialog_TestConnectionButtonText}" />
+                            <Button
+                                Grid.Column="0"
+                                Classes="Small"
+                                Command="{Binding $parent[local:ProxySettingsDialog].TestConnectionCommand}"
+                                IsEnabled="{Binding $parent[local:ProxySettingsDialog].IsTesting, Converter={x:Static BoolConverters.Not}}">
+                                <husk:IconLabel Icon="PlugConnected" Text="{x:Static lang:Resources.ProxySettingsDialog_TestConnectionButtonText}" />
                             </Button>
 
-                            <!-- Test Result Display -->
-                            <husk:SwitchPresenter Grid.Column="1"
-                                                  Value="{Binding $parent[local:ProxySettingsDialog].TestState}"
-                                                  TargetType="x:Int32"
-                                                  VerticalAlignment="Center">
-                                <!-- Idle (0) -->
+                            <!--  Test Result Display  -->
+                            <husk:SwitchPresenter
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                TargetType="x:Int32"
+                                Value="{Binding $parent[local:ProxySettingsDialog].TestState}">
+                                <!--  Idle (0)  -->
                                 <husk:SwitchCase Value="0">
                                     <TextBlock />
                                 </husk:SwitchCase>
 
-                                <!-- Testing (1) -->
+                                <!--  Testing (1)  -->
                                 <husk:SwitchCase Value="1">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <husk:ProgressRing IsIndeterminate="True" Height="16" Width="16" />
-                                        <TextBlock
-                                            Text="{x:Static lang:Resources.ProxySettingsDialog_TestingLabelText}"
-                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        <husk:ProgressRing
+                                            Width="16"
+                                            Height="16"
+                                            IsIndeterminate="True" />
+                                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ProxySettingsDialog_TestingLabelText}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
 
-                                <!-- Success (2) -->
+                                <!--  Success (2)  -->
                                 <husk:SwitchCase Value="2">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <fi:SymbolIcon Symbol="CheckmarkCircle" IconVariant="Filled"
-                                                       Foreground="{StaticResource SuccessForegroundBrush}"
-                                                       FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock
-                                            Text="{Binding $parent[local:ProxySettingsDialog].TestResultMessage}"
-                                            Foreground="{StaticResource SuccessForegroundBrush}" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Foreground="{StaticResource SuccessForegroundBrush}"
+                                            IconVariant="Filled"
+                                            Symbol="CheckmarkCircle" />
+                                        <TextBlock Foreground="{StaticResource SuccessForegroundBrush}" Text="{Binding $parent[local:ProxySettingsDialog].TestResultMessage}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
 
-                                <!-- Failed (3) -->
+                                <!--  Failed (3)  -->
                                 <husk:SwitchCase Value="3">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <fi:SymbolIcon Symbol="DismissCircle" IconVariant="Filled"
-                                                       Foreground="{StaticResource DangerForegroundBrush}"
-                                                       FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock
-                                            Text="{Binding $parent[local:ProxySettingsDialog].TestResultMessage}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Foreground="{StaticResource DangerForegroundBrush}"
-                                            TextTrimming="CharacterEllipsis"
-                                            MaxWidth="200" />
+                                            IconVariant="Filled"
+                                            Symbol="DismissCircle" />
+                                        <TextBlock
+                                            MaxWidth="200"
+                                            Foreground="{StaticResource DangerForegroundBrush}"
+                                            Text="{Binding $parent[local:ProxySettingsDialog].TestResultMessage}"
+                                            TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
@@ -186,33 +225,44 @@
                 </Border>
             </husk:SwitchCase>
 
-            <!-- Disabled Mode -->
+            <!--  Disabled Mode  -->
             <husk:SwitchCase Value="2">
-                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}"
-                        Padding="16" MinHeight="120">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
-                        <fi:SymbolIcon Symbol="Prohibited" FontSize="32"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                        <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_DisabledDescription}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                   HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_DisabledSubtitle}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   FontSize="{StaticResource SmallFontSize}"
-                                   HorizontalAlignment="Center" />
+                <Border
+                    MinHeight="120"
+                    Padding="16"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="8">
+                        <fi:SymbolIcon
+                            FontSize="32"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Symbol="Prohibited" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.ProxySettingsDialog_DisabledDescription}" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.ProxySettingsDialog_DisabledSubtitle}" />
                     </StackPanel>
                 </Border>
             </husk:SwitchCase>
         </husk:SwitchPresenter>
 
-        <!-- Restart Required Notice -->
+        <!--  Restart Required Notice  -->
         <husk:InfoBar>
             <StackPanel Orientation="Horizontal" Spacing="6">
-                <icons:PackIconLucide Kind="Info" Height="{StaticResource SmallFontSize}"
-                                      Width="{StaticResource SmallFontSize}" VerticalAlignment="Center" />
-                <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}"
-                           TextWrapping="Wrap" />
+                <icons:PackIconLucide
+                    Width="{StaticResource SmallFontSize}"
+                    Height="{StaticResource SmallFontSize}"
+                    VerticalAlignment="Center"
+                    Kind="Info" />
+                <TextBlock Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}" TextWrapping="Wrap" />
             </StackPanel>
         </husk:InfoBar>
     </StackPanel>

@@ -14,7 +14,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services.Profiles;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -60,15 +59,15 @@ public partial class InstancePackageModal : Modal
                                                                     o => o.IsDeleting,
                                                                     (o, v) => o.IsDeleting = v);
 
+    private string? _old;
+
+    public InstancePackageModal() => InitializeComponent();
+
     public bool IsDeleting
     {
         get;
         set => SetAndRaise(IsDeletingProperty, ref field, value);
     }
-
-    private string? _old;
-
-    public InstancePackageModal() => InitializeComponent();
 
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
@@ -331,62 +330,52 @@ public partial class InstancePackageModal : Modal
                                     if (x.Old is null)
                                     {
                                         // null -> Project
-                                        return new InstancePackageModificationModel()
+                                        return new()
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
                                             VersionName = null,
                                             ModifiedAtRaw = x.At
                                         };
                                     }
-                                    else
+
+                                    // -> Project: Unset
+                                    return new()
                                     {
-                                        // -> Project: Unset
-                                        return new InstancePackageModificationModel()
-                                        {
-                                            Kind = InstancePackageModificationKind.Unset,
-                                            VersionName = null,
-                                            ModifiedAtRaw = x.At
-                                        };
-                                    }
+                                        Kind = InstancePackageModificationKind.Unset,
+                                        VersionName = null,
+                                        ModifiedAtRaw = x.At
+                                    };
                                 }
-                                else
+
+                                var package = await DataService.ResolvePackageAsync(result.Label,
+                                                  result.Namespace,
+                                                  result.Pid,
+                                                  result.Vid,
+                                                  Filter);
+                                if (x.Old is null)
                                 {
-                                    var package = await DataService.ResolvePackageAsync(result.Label,
-                                                      result.Namespace,
-                                                      result.Pid,
-                                                      result.Vid,
-                                                      Filter);
-                                    if (x.Old is null)
+                                    // null -> Package: Add
+                                    return new()
                                     {
-                                        // null -> Package: Add
-                                        return new InstancePackageModificationModel()
-                                        {
-                                            Kind = InstancePackageModificationKind.AddVersioned,
-                                            VersionName = package.VersionName,
-                                            ModifiedAtRaw = x.At
-                                        };
-                                    }
-                                    else
-                                    {
-                                        // Package -> Package: Update
-                                        return new InstancePackageModificationModel()
-                                        {
-                                            Kind = InstancePackageModificationKind.Update,
-                                            VersionName = package.VersionName,
-                                            ModifiedAtRaw = x.At
-                                        };
-                                    }
+                                        Kind = InstancePackageModificationKind.AddVersioned,
+                                        VersionName = package.VersionName,
+                                        ModifiedAtRaw = x.At
+                                    };
                                 }
-                            }
-                            else
-                            {
-                                return new InstancePackageModificationModel()
+
+                                // Package -> Package: Update
+                                return new()
                                 {
-                                    Kind = InstancePackageModificationKind.Remove,
-                                    VersionName = null,
+                                    Kind = InstancePackageModificationKind.Update,
+                                    VersionName = package.VersionName,
                                     ModifiedAtRaw = x.At
                                 };
                             }
+
+                            return new InstancePackageModificationModel
+                            {
+                                Kind = InstancePackageModificationKind.Remove, VersionName = null, ModifiedAtRaw = x.At
+                            };
                         })
                        .ToArray();
 
@@ -453,6 +442,24 @@ public partial class InstancePackageModal : Modal
             Model.Version = v;
         }
     }
+
+    #region Other
+
+    private void OnDependencyInstalled(InstancePackageModel newPackage)
+    {
+        // 当依赖安装完成后，更新对应的 InstancePackageDependencyModel.Installed
+        // 由于 LazyDependencies 已经加载完成，我们需要找到对应的依赖并更新其 Installed 属性
+        if (LazyDependencies?.Value is InstancePackageDependencyCollection dependencies)
+        {
+            var dependency = dependencies.FirstOrDefault(x => PackageHelper.IsMatched(newPackage.Entry.Purl,
+                                                             x.Label,
+                                                             x.Namespace,
+                                                             x.ProjectId));
+            dependency?.Installed = newPackage;
+        }
+    }
+
+    #endregion
 
 
     #region Commands
@@ -543,34 +550,10 @@ public partial class InstancePackageModal : Modal
     }
 
     [RelayCommand]
-    private void Delete()
-    {
-        IsDeleting = true;
-    }
+    private void Delete() => IsDeleting = true;
 
     [RelayCommand]
-    private void Undelete()
-    {
-        IsDeleting = false;
-    }
-
-    #endregion
-
-    #region Other
-
-    private void OnDependencyInstalled(InstancePackageModel newPackage)
-    {
-        // 当依赖安装完成后，更新对应的 InstancePackageDependencyModel.Installed
-        // 由于 LazyDependencies 已经加载完成，我们需要找到对应的依赖并更新其 Installed 属性
-        if (LazyDependencies?.Value is InstancePackageDependencyCollection dependencies)
-        {
-            var dependency = dependencies.FirstOrDefault(x => PackageHelper.IsMatched(newPackage.Entry.Purl,
-                                                             x.Label,
-                                                             x.Namespace,
-                                                             x.ProjectId));
-            dependency?.Installed = newPackage;
-        }
-    }
+    private void Undelete() => IsDeleting = false;
 
     #endregion
 }

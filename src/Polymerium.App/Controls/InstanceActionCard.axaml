@@ -1,37 +1,52 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Polymerium.App.Controls"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:m="clr-namespace:Polymerium.App.Models"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:local="clr-namespace:Polymerium.App.Controls"
+    xmlns:m="clr-namespace:Polymerium.App.Models">
     <ControlTheme x:Key="{x:Type local:InstanceActionCard}" TargetType="local:InstanceActionCard">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstanceActionModel">
                 <DockPanel HorizontalSpacing="6">
-                    <Button DockPanel.Dock="Right" Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
-                            IsEnabled="{Binding CanUndo}" IsVisible="False">
+                    <Button
+                        Classes="Small"
+                        DockPanel.Dock="Right"
+                        IsEnabled="{Binding CanUndo}"
+                        IsVisible="False"
+                        Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel VerticalAlignment="Center">
-                            <fi:SymbolIcon Symbol="ArrowUndo" HorizontalAlignment="Center"
-                                           FontSize="{StaticResource LargeFontSize}" />
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Symbol="ArrowUndo" />
                             <TextBlock Text="Undo" />
                         </StackPanel>
                     </Button>
-                    <Border BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
-                            CornerRadius="{StaticResource SmallCornerRadius}" Padding="8,6">
+                    <Border
+                        Padding="8,6"
+                        BorderBrush="{StaticResource ControlBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
                         <Grid ColumnDefinitions="Auto,*,*,Auto" ColumnSpacing="8">
-                            <Border Grid.Column="0" Height="38"
-                                    Width="38"
-                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                            <Border
+                                Grid.Column="0"
+                                Width="38"
+                                Height="38"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
                                 <Border.Background>
                                     <ImageBrush Source="{Binding Thumbnail}" />
                                 </Border.Background>
                             </Border>
                             <Grid Grid.Column="1" RowDefinitions="*,*">
-                                <TextBlock Grid.Row="0" Text="{Binding ProjectName}"
-                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                <husk:SwitchPresenter Grid.Row="1"
-                                                      Value="{Binding Kind}"
-                                                      TargetType="m:InstanceActionKind">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding ProjectName}" />
+                                <husk:SwitchPresenter
+                                    Grid.Row="1"
+                                    TargetType="m:InstanceActionKind"
+                                    Value="{Binding Kind}">
                                     <husk:SwitchCase Value="Add">
                                         <husk:Tag Classes="Status Small Success">
                                             <husk:IconLabel Icon="Add" Text="Add" />
@@ -52,33 +67,32 @@
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
                             </Grid>
-                            <husk:SwitchPresenter Grid.Column="2" Value="{Binding Kind}"
-                                                  TargetType="m:InstanceActionKind"
-                                                  VerticalAlignment="Center">
+                            <husk:SwitchPresenter
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                TargetType="m:InstanceActionKind"
+                                Value="{Binding Kind}">
                                 <husk:SwitchCase Value="Add">
-                                    <TextBlock Text="{Binding NewVersionName}"
-                                               Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                    <TextBlock Foreground="{StaticResource ControlAccentForegroundBrush}" Text="{Binding NewVersionName}" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Remove">
-                                    <TextBlock Text="{Binding OldVersionName}"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding OldVersionName}" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Update">
                                     <StackPanel>
-                                        <TextBlock Text="{Binding NewVersionName}"
-                                                   Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                                        <TextBlock Text="{Binding OldVersionName}"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Foreground="{StaticResource ControlAccentForegroundBrush}" Text="{Binding NewVersionName}" />
+                                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding OldVersionName}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
                             <StackPanel Grid.Column="3">
-                                <TextBlock HorizontalAlignment="Right"
-                                           Background="Transparent"
-                                           ToolTip.Tip="{Binding ModifiedAtRaw}"
-                                           Text="{Binding ModifiedAt}"
-                                           FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Background="Transparent"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding ModifiedAt}"
+                                    ToolTip.Tip="{Binding ModifiedAtRaw}" />
                             </StackPanel>
                         </Grid>
                     </Border>

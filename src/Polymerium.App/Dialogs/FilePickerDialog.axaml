@@ -1,36 +1,48 @@
-﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:fi="using:FluentIcons.Avalonia"
-             xmlns:local="using:Polymerium.App.Dialogs"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             mc:Ignorable="d" Title="{x:Static lang:Resources.FilePickerDialog_Title}"
-             IsPrimaryButtonVisible="True" Width="300"
-             x:Class="Polymerium.App.Dialogs.FilePickerDialog">
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.FilePickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.FilePickerDialog_Title}"
+    Width="300"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
     <StackPanel Spacing="12">
-        <husk:DropZone Padding="16" Model="{Binding $parent[local:FilePickerDialog].Result,Mode=OneWayToSource}"
-                       DragOver="DropZone_OnDragOver" Drop="DropZone_OnDrop">
+        <husk:DropZone
+            Padding="16"
+            DragOver="DropZone_OnDragOver"
+            Drop="DropZone_OnDrop"
+            Model="{Binding $parent[local:FilePickerDialog].Result, Mode=OneWayToSource}">
             <StackPanel HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" IsHitTestVisible="False" />
+                    <fi:SymbolIcon
+                        FontSize="14"
+                        IconVariant="Filled"
+                        IsHitTestVisible="False"
+                        Symbol="Attach" />
                     <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
                         <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
-                        <HyperlinkButton Name="BrowseButton"
-                                         Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
-                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                         Click="BrowseButton_OnClick"
-                                         Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                        <HyperlinkButton
+                            Name="BrowseButton"
+                            Click="BrowseButton_OnClick"
+                            Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Foreground="{StaticResource ControlAccentForegroundBrush}" />
                     </TextBlock>
 
                 </StackPanel>
-                <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
-                           HorizontalAlignment="Center" IsHitTestVisible="False"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    IsHitTestVisible="False"
+                    Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
             </StackPanel>
         </husk:DropZone>
-        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result,Mode=TwoWay}"
-                 Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />
+        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result, Mode=TwoWay}" Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />
     </StackPanel>
 </husk:Dialog>

@@ -1,12 +1,14 @@
-﻿<controls:AccountCreationStep xmlns="https://github.com/avaloniaui"
-                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                              xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                              mc:Ignorable="d"
-                              x:Class="Polymerium.App.Components.AccountCreationTrial"
-                              Header="{x:Static lang:Resources.AccountCreationTrial_Title}" IsNextAvailable="True">
+﻿<controls:AccountCreationStep
+    x:Class="Polymerium.App.Components.AccountCreationTrial"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Header="{x:Static lang:Resources.AccountCreationTrial_Title}"
+    IsNextAvailable="True"
+    mc:Ignorable="d">
     <TabStrip Name="RoleSelectBox">
         <TabStrip.ItemsPanel>
             <ItemsPanelTemplate>
@@ -15,51 +17,81 @@
         </TabStrip.ItemsPanel>
         <TabStripItem>
             <DockPanel HorizontalSpacing="8">
-                <TextBlock DockPanel.Dock="Left" Text="👶" FontSize="24" VerticalAlignment="Center" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontSize="24"
+                    Text="👶" />
                 <StackPanel>
-                    <TextBlock Text="Stewie" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="A baby" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Stewie" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="A baby"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </DockPanel>
         </TabStripItem>
         <TabStripItem>
             <DockPanel HorizontalSpacing="8">
-                <TextBlock DockPanel.Dock="Left" Text="🐶" FontSize="24" VerticalAlignment="Center" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontSize="24"
+                    Text="🐶" />
                 <StackPanel>
-                    <TextBlock Text="Brian" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="A dog" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Brian" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="A dog"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </DockPanel>
         </TabStripItem>
         <TabStripItem>
             <DockPanel HorizontalSpacing="8">
-                <TextBlock DockPanel.Dock="Left" Text="👦" FontSize="24" VerticalAlignment="Center" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontSize="24"
+                    Text="👦" />
                 <StackPanel>
-                    <TextBlock Text="Chris" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="A boy" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Chris" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="A boy"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </DockPanel>
         </TabStripItem>
         <TabStripItem>
             <DockPanel HorizontalSpacing="8">
-                <TextBlock DockPanel.Dock="Left" Text="👨" FontSize="24" VerticalAlignment="Center" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontSize="24"
+                    Text="👨" />
                 <StackPanel>
-                    <TextBlock Text="Peter" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="A retard" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Peter" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="A retard"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </DockPanel>
         </TabStripItem>
         <TabStripItem>
             <DockPanel HorizontalSpacing="8">
-                <TextBlock DockPanel.Dock="Left" Text="👩" FontSize="24" VerticalAlignment="Center" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontSize="24"
+                    Text="👩" />
                 <StackPanel>
-                    <TextBlock Text="Lois" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="A lady" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Lois" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="A lady"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </DockPanel>
         </TabStripItem>

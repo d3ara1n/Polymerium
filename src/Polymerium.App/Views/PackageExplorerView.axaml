@@ -1,36 +1,48 @@
-﻿<controls:ScopedPage xmlns="https://github.com/avaloniaui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                     xmlns:controls="using:Polymerium.App.Controls"
-                     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
-                     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                     xmlns:m="clr-namespace:Polymerium.App.Models"
-                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                     xmlns:v="clr-namespace:Polymerium.App.Views"
-                     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                     xmlns:converters="clr-namespace:Polymerium.App.Converters"
-                     xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
-                     mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
-                     x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
-                     Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+﻿<controls:ScopedPage
+    x:Class="Polymerium.App.Views.PackageExplorerView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+    xmlns:v="clr-namespace:Polymerium.App.Views"
+    xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+    Padding="0"
+    d:DesignHeight="450"
+    d:DesignWidth="600"
+    x:DataType="vm:PackageExplorerViewModel"
+    IsHeaderVisible="False"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
     <controls:ScopedPage.Resources>
         <DataTemplate x:Key="ExhibitModelTemplate" x:DataType="m:ExhibitModel">
-            <controls:ExhibitPendingPackageButton
-                Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
-                CommandParameter="{Binding}" />
+            <controls:ExhibitPendingPackageButton Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}" />
         </DataTemplate>
     </controls:ScopedPage.Resources>
-    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
-        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*,Auto" RowSpacing="12">
-            <Border Grid.Row="0" Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
-                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Margin="12">
+    <Grid ColumnDefinitions="Auto,Auto,*" RowDefinitions="Auto,Auto,*">
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="12">
+            <Border
+                Grid.Row="0"
+                Margin="12"
+                Padding="12,6"
+                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon Symbol="Drawer" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_PendingLabelText}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="Drawer" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.PackageExplorerView_PendingLabelText}" />
                 </StackPanel>
             </Border>
             <ScrollViewer Grid.Row="1" Padding="12,0">
@@ -41,11 +53,16 @@
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
-                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
-                                   HorizontalAlignment="Center" Margin="8"
-                                   IsVisible="{Binding AddingPackagesView.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=False}" />
-                        <ItemsControl ItemsSource="{Binding AddingPackagesView}"
-                                      ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
+                        <TextBlock
+                            Margin="8"
+                            HorizontalAlignment="Center"
+                            IsVisible="{Binding AddingPackagesView.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}"
+                            Opacity="0.5"
+                            Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" />
+                        <ItemsControl
+                            ClipToBounds="False"
+                            ItemTemplate="{StaticResource ExhibitModelTemplate}"
+                            ItemsSource="{Binding AddingPackagesView}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Spacing="8" />
@@ -59,11 +76,16 @@
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
-                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
-                                   HorizontalAlignment="Center" Margin="8"
-                                   IsVisible="{Binding ModifyingPackagesView.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=False}" />
-                        <ItemsControl ItemsSource="{Binding ModifyingPackagesView}"
-                                      ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
+                        <TextBlock
+                            Margin="8"
+                            HorizontalAlignment="Center"
+                            IsVisible="{Binding ModifyingPackagesView.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}"
+                            Opacity="0.5"
+                            Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" />
+                        <ItemsControl
+                            ClipToBounds="False"
+                            ItemTemplate="{StaticResource ExhibitModelTemplate}"
+                            ItemsSource="{Binding ModifyingPackagesView}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Spacing="8" />
@@ -77,11 +99,16 @@
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
-                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
-                                   HorizontalAlignment="Center" Margin="8"
-                                   IsVisible="{Binding RemovingPackagesView.Count,Mode=OneWay,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=False}" />
-                        <ItemsControl ItemsSource="{Binding RemovingPackagesView}"
-                                      ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
+                        <TextBlock
+                            Margin="8"
+                            HorizontalAlignment="Center"
+                            IsVisible="{Binding RemovingPackagesView.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}"
+                            Opacity="0.5"
+                            Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" />
+                        <ItemsControl
+                            ClipToBounds="False"
+                            ItemTemplate="{StaticResource ExhibitModelTemplate}"
+                            ItemsSource="{Binding RemovingPackagesView}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Spacing="8" />
@@ -91,47 +118,60 @@
                     </Panel>
                 </StackPanel>
             </ScrollViewer>
-            <StackPanel Grid.Row="2" Spacing="10" Margin="12">
-                <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}" Classes="Primary"
-                        Command="{Binding CollectPendingCommand}">
+            <StackPanel
+                Grid.Row="2"
+                Margin="12"
+                Spacing="10">
+                <Button
+                    Padding="12,6"
+                    Classes="Primary"
+                    Command="{Binding CollectPendingCommand}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding Path="AddingPackagesView.Count"
-                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
-                            <Binding Path="ModifyingPackagesView.Count"
-                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
-                            <Binding Path="RemovingPackagesView.Count"
-                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
+                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="AddingPackagesView.Count" />
+                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="ModifyingPackagesView.Count" />
+                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="RemovingPackagesView.Count" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
-                        <fi:SymbolIcon Symbol="BoxMultipleArrowLeft" FontSize="{StaticResource LargeFontSize}" />
+                        <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="BoxMultipleArrowLeft" />
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_CollectButtonText}" />
                     </StackPanel>
                 </Button>
-                <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
-                        Command="{Binding DismissPendingCommand}">
+                <Button
+                    Padding="12,6"
+                    Command="{Binding DismissPendingCommand}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding Path="AddingPackagesView.Count"
-                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
-                            <Binding Path="ModifyingPackagesView.Count"
-                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
-                            <Binding Path="RemovingPackagesView.Count"
-                                     Converter="{x:Static husk:NumberConverters.IsNonZero}" />
+                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="AddingPackagesView.Count" />
+                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="ModifyingPackagesView.Count" />
+                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="RemovingPackagesView.Count" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
-                        <fi:SymbolIcon Symbol="DrawerDismiss" FontSize="{StaticResource LargeFontSize}" />
+                        <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="DrawerDismiss" />
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_DismissButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
         </Grid>
-        <husk:Divider Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical" />
-        <Panel Grid.Column="2" Grid.Row="0" ClipToBounds="True">
-            <Image Source="{Binding Basic.Thumbnail}" Height="{Binding #ContentPanel.Bounds.Height}" Stretch="Fill"
-                   Opacity="0.2" RenderTransform="scale(1.1)">
+        <husk:Divider
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            Orientation="Vertical" />
+        <Panel
+            Grid.Row="0"
+            Grid.Column="2"
+            ClipToBounds="True">
+            <Image
+                Height="{Binding #ContentPanel.Bounds.Height}"
+                Opacity="0.2"
+                RenderTransform="scale(1.1)"
+                Source="{Binding Basic.Thumbnail}"
+                Stretch="Fill">
                 <Image.Effect>
                     <BlurEffect Radius="32" />
                 </Image.Effect>
@@ -139,82 +179,95 @@
             <Panel x:Name="ContentPanel">
                 <StackPanel Margin="12" Spacing="12">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Button Grid.Column="0" Command="{Binding $parent[husk:Frame].GoBackCommand}"
-                                Theme="{StaticResource OutlineButtonTheme}">
-                            <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
+                        <Button
+                            Grid.Column="0"
+                            Command="{Binding $parent[husk:Frame].GoBackCommand}"
+                            Theme="{StaticResource OutlineButtonTheme}">
+                            <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowLeft" />
                         </Button>
-                        <TextBlock Grid.Column="1" Text="{Binding Basic.Name,FallbackValue=Name}"
-                                   TextTrimming="CharacterEllipsis"
-                                   FontSize="{StaticResource ExtraLargeFontSize}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Text="{Binding Basic.Name, FallbackValue=Name}"
+                            TextTrimming="CharacterEllipsis" />
                     </Grid>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                        <TextBox Grid.Column="0"
-                                 Watermark="{x:Static lang:Resources.PackageExplorerView_SearchBarPlaceholder}"
-                                 Text="{Binding QueryText}">
+                        <TextBox
+                            Grid.Column="0"
+                            Text="{Binding QueryText}"
+                            Watermark="{x:Static lang:Resources.PackageExplorerView_SearchBarPlaceholder}">
                             <TextBox.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
                                     <Button
-                                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                         Command="{Binding $parent[TextBox].Clear}"
-                                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        Content="{fie:SymbolIcon Symbol=Dismiss,
+                                                                 FontSize={StaticResource MediumFontSize}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                                     <husk:Divider Orientation="Vertical" />
-                                    <CheckBox Margin="6,0" IsChecked="{Binding IsFilterEnabled,Mode=TwoWay}">
-                                        <StackPanel Spacing="4" Orientation="Horizontal">
-                                            <husk:Tag Content="{Binding Basic.LoaderLabel,FallbackValue=Type}"
-                                                      FontSize="{StaticResource MediumFontSize}" />
-                                            <husk:Tag Content="{Binding Basic.Version,FallbackValue=Version}"
-                                                      FontSize="{StaticResource MediumFontSize}" />
+                                    <CheckBox Margin="6,0" IsChecked="{Binding IsFilterEnabled, Mode=TwoWay}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <husk:Tag Content="{Binding Basic.LoaderLabel, FallbackValue=Type}" FontSize="{StaticResource MediumFontSize}" />
+                                            <husk:Tag Content="{Binding Basic.Version, FallbackValue=Version}" FontSize="{StaticResource MediumFontSize}" />
                                         </StackPanel>
                                     </CheckBox>
                                 </StackPanel>
                             </TextBox.InnerRightContent>
                         </TextBox>
-                        <Button Grid.Column="1" Classes="Primary" IsDefault="True"
-                                Command="{Binding SearchCommand}"
-                                Theme="{StaticResource OutlineButtonTheme}">
+                        <Button
+                            Grid.Column="1"
+                            Classes="Primary"
+                            Command="{Binding SearchCommand}"
+                            IsDefault="True"
+                            Theme="{StaticResource OutlineButtonTheme}">
                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                <husk:SwitchPresenter VerticalAlignment="Center"
-                                                      Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
-                                                      TargetType="x:Boolean"
-                                                      Height="{StaticResource MediumFontSize}"
-                                                      Width="{StaticResource MediumFontSize}">
+                                <husk:SwitchPresenter
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    VerticalAlignment="Center"
+                                    TargetType="x:Boolean"
+                                    Value="{Binding Exhibits.IsFetching, Mode=OneWay, FallbackValue=True}">
                                     <husk:SwitchCase Value="True">
                                         <husk:ProgressRing
+                                            IsIndeterminate="{Binding Exhibits.IsFetching, Mode=OneWay, FallbackValue=True}"
+                                            StrokeWidth="2"
                                             Theme="{StaticResource SolidProgressRingTheme}"
-                                            IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
-                                            StrokeWidth="2" TrackStrokeWidth="2" />
+                                            TrackStrokeWidth="2" />
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="False">
                                         <icons:PackIconLucide Kind="Search" />
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
-                                <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_SearchButtonText}"
-                                           VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.PackageExplorerView_SearchButtonText}" />
                             </StackPanel>
                         </Button>
                     </Grid>
                     <Grid ColumnDefinitions="*,Auto">
-                        <husk:SkeletonContainer Grid.Column="1" MinHeight="33" MinWidth="128"
-                                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                                IsLoading="{Binding SelectedRepository.Kinds,Converter={x:Static ObjectConverters.IsNull}}">
+                        <husk:SkeletonContainer
+                            Grid.Column="1"
+                            MinWidth="128"
+                            MinHeight="33"
+                            CornerRadius="{StaticResource SmallCornerRadius}"
+                            IsLoading="{Binding SelectedRepository.Kinds, Converter={x:Static ObjectConverters.IsNull}}">
                             <TabStrip
-                                Theme="{StaticResource SegmentedTabStripTheme}"
-                                SelectedItem="{Binding SelectedKind,Mode=TwoWay}"
-                                ItemsSource="{Binding SelectedRepository.Kinds,Mode=OneWay}">
+                                ItemsSource="{Binding SelectedRepository.Kinds, Mode=OneWay}"
+                                SelectedItem="{Binding SelectedKind, Mode=TwoWay}"
+                                Theme="{StaticResource SegmentedTabStripTheme}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate x:DataType="resources:ResourceKind">
-                                        <TextBlock
-                                            Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                        <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
                                     </DataTemplate>
                                 </TabStrip.ItemTemplate>
                             </TabStrip>
                         </husk:SkeletonContainer>
                     </Grid>
                 </StackPanel>
-                <TabStrip HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedRepository}" ItemsSource="{Binding Repositories}"
-                          Theme="{StaticResource PivotTabStripTheme}">
+                <TabStrip
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    ItemsSource="{Binding Repositories}"
+                    SelectedItem="{Binding SelectedRepository}"
+                    Theme="{StaticResource PivotTabStripTheme}">
                     <TabStrip.Styles>
                         <Style Selector="TabStripItem">
                             <Setter Property="Margin" Value="0" />
@@ -228,27 +281,34 @@
                 </TabStrip>
             </Panel>
         </Panel>
-        <husk:Divider Grid.Column="2" Grid.Row="1" />
-        <Panel Grid.Column="2" Grid.Row="2">
-            <StackPanel VerticalAlignment="Center"
-                        Spacing="8">
+        <husk:Divider Grid.Row="1" Grid.Column="2" />
+        <Panel Grid.Row="2" Grid.Column="2">
+            <StackPanel VerticalAlignment="Center" Spacing="8">
                 <StackPanel.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
-                        <Binding Path="Exhibits.IsFetching" Mode="OneWay"
-                                 Converter="{x:Static BoolConverters.Not}"
-                                 FallbackValue="{x:True}" />
-                        <Binding Path="Exhibits.Count" Mode="OneWay"
-                                 Converter="{x:Static husk:NumberConverters.IsZero}"
-                                 FallbackValue="{x:True}" />
+                        <Binding
+                            Converter="{x:Static BoolConverters.Not}"
+                            FallbackValue="{x:True}"
+                            Mode="OneWay"
+                            Path="Exhibits.IsFetching" />
+                        <Binding
+                            Converter="{x:Static husk:NumberConverters.IsZero}"
+                            FallbackValue="{x:True}"
+                            Mode="OneWay"
+                            Path="Exhibits.Count" />
                     </MultiBinding>
                 </StackPanel.IsVisible>
-                <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
-                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                           FontSize="{StaticResource LargeFontSize}"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                           HorizontalAlignment="Center" />
+                <icons:PackIconLucide
+                    Width="{StaticResource ExtraLargeFontSize}"
+                    Height="{StaticResource ExtraLargeFontSize}"
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Kind="Package" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="{StaticResource LargeFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
             </StackPanel>
             <husk:InfiniteScrollView Padding="12" ItemsSource="{Binding Exhibits}">
                 <ItemsControl.ItemsPanel>
@@ -258,18 +318,18 @@
                 </ItemsControl.ItemsPanel>
                 <husk:InfiniteScrollView.PendingContent>
                     <StackPanel Margin="36" Spacing="6">
-                        <husk:ProgressRing Width="20" Height="20"
-                                           IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
-                                           HorizontalAlignment="Center" ShowProgressText="False" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}"
-                                   HorizontalAlignment="Center" />
+                        <husk:ProgressRing
+                            Width="20"
+                            Height="20"
+                            HorizontalAlignment="Center"
+                            IsIndeterminate="{Binding Exhibits.IsFetching, Mode=OneWay, FallbackValue=False}"
+                            ShowProgressText="False" />
+                        <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Resources.Shared_FetchingLabelText}" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
-                        <controls:ExhibitPackageButton
-                            Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
-                            CommandParameter="{Binding}" />
+                        <controls:ExhibitPackageButton Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}" />
                     </DataTemplate>
                 </husk:InfiniteScrollView.ItemTemplate>
                 <husk:InfiniteScrollView.ItemContainerTheme>

@@ -1,44 +1,58 @@
-﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                  xmlns:controls="using:Polymerium.App.Controls"
-                  xmlns:vm="using:Polymerium.App.ViewModels"
-                  xmlns:components="using:Polymerium.App.Components"
-                  xmlns:fi="using:FluentIcons.Avalonia"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Views.InstancePropertiesView" x:DataType="vm:InstancePropertiesViewModel">
-    <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
-        <controls:SettingsEntry Icon="AppTitle" Title="{x:Static lang:Resources.InstancePropertiesView_TitleTitle}"
-                                Summary="{x:Static lang:Resources.InstancePropertiesView_TitleSubtitle}">
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Views.InstancePropertiesView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="using:Polymerium.App.Components"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:InstancePropertiesViewModel"
+    mc:Ignorable="d">
+    <StackPanel
+        MaxWidth="1440"
+        Margin="24"
+        Spacing="12">
+        <controls:SettingsEntry
+            Title="{x:Static lang:Resources.InstancePropertiesView_TitleTitle}"
+            Icon="AppTitle"
+            Summary="{x:Static lang:Resources.InstancePropertiesView_TitleSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_DisplayNameLabelText}">
-                <Border Background="{StaticResource ControlBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}">
+                <Border Background="{StaticResource ControlBackgroundBrush}" CornerRadius="{StaticResource MediumCornerRadius}">
                     <StackPanel Margin="3" Spacing="3">
-                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                CornerRadius="{StaticResource SmallCornerRadius}">
-                            <TextBlock Text="{Binding NameOverwrite,FallbackValue=Name}" Margin="8"
-                                       FontSize="{StaticResource LargeFontSize}" TextAlignment="Center"
-                                       TextWrapping="Wrap" />
+                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}" CornerRadius="{StaticResource SmallCornerRadius}">
+                            <TextBlock
+                                Margin="8"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="{Binding NameOverwrite, FallbackValue=Name}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
                         </Border>
-                        <Button Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
-                                Command="{Binding RenameInstanceCommand}"
-                                Content="{x:Static lang:Resources.InstancePropertiesView_RenameButtonText}" />
+                        <Button
+                            Classes="Small"
+                            Command="{Binding RenameInstanceCommand}"
+                            Content="{x:Static lang:Resources.InstancePropertiesView_RenameButtonText}"
+                            Theme="{StaticResource OutlineButtonTheme}" />
                     </StackPanel>
                 </Border>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_ThumbnailLabelText}">
                 <Grid ColumnDefinitions="Auto,12,*">
-                    <Border Grid.Column="0" Padding="8"
-                            Width="72"
-                            Height="72"
-                            HorizontalAlignment="Center"
-                            Background="{StaticResource LayerBackgroundBrush}"
-                            BorderBrush="{x:Null}"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Border
+                        Grid.Column="0"
+                        Width="72"
+                        Height="72"
+                        Padding="8"
+                        HorizontalAlignment="Center"
+                        Background="{StaticResource LayerBackgroundBrush}"
+                        BorderBrush="{x:Null}"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
                         <Border.Effect>
                             <DropShadowEffect Opacity="0.1" />
                         </Border.Effect>
@@ -49,22 +63,27 @@
                         </Border>
 
                     </Border>
-                    <StackPanel Grid.Column="2" Spacing="12" VerticalAlignment="Center">
+                    <StackPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Spacing="12">
                         <Button Classes="Small" Command="{Binding SelectThumbnailCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="File"
-                                                      Height="{StaticResource SmallFontSize}"
-                                                      Width="{StaticResource SmallFontSize}"
-                                                      VerticalAlignment="Center" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    VerticalAlignment="Center"
+                                    Kind="File" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_SelectButtonText}" />
                             </StackPanel>
                         </Button>
                         <Button Classes="Small" Command="{Binding RemoveThumbnailCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="Trash2"
-                                                      Height="{StaticResource SmallFontSize}"
-                                                      Width="{StaticResource SmallFontSize}"
-                                                      VerticalAlignment="Center" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    VerticalAlignment="Center"
+                                    Kind="Trash2" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_RemoveButtonText}" />
                             </StackPanel>
                         </Button>
@@ -73,89 +92,89 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Title="{x:Static lang:Resources.InstancePropertiesView_OverridesTitle}"
-                                Summary="{x:Static lang:Resources.InstancePropertiesView_OverridesSubtitle}"
-                                Icon="Games">
+        <controls:SettingsEntry
+            Title="{x:Static lang:Resources.InstancePropertiesView_OverridesTitle}"
+            Icon="Games"
+            Summary="{x:Static lang:Resources.InstancePropertiesView_OverridesSubtitle}">
             <Button Command="{Binding GotoSettingsCommand}">
                 <Grid ColumnDefinitions="Auto,8,*">
                     <fi:SymbolIcon Grid.Column="0" Symbol="DocumentOnePage" />
                     <StackPanel Grid.Column="2" VerticalAlignment="Center">
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_NavigateToGlobalButtonTitle}" />
                         <TextBlock
-                            Text="{x:Static lang:Resources.InstancePropertiesView_NavigateToGlobalButtonSubtitle}"
                             FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.InstancePropertiesView_NavigateToGlobalButtonSubtitle}" />
                     </StackPanel>
                 </Grid>
             </Button>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaHomeLabelText}">
-                <TextBox Watermark="{Binding JavaHomeWatermark}"
-                         Text="{Binding JavaHomeOverride,Mode=TwoWay,FallbackValue={x:Null}}">
+                <TextBox Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding JavaHomeWatermark}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding $parent[TextBox].Clear}">
-                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                                <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Delete" />
                             </Button>
-                            <Button Command="{Binding PickFileCommand}"
-                                    CommandParameter="{Binding $parent[TextBox]}">
-                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            <Button Command="{Binding PickFileCommand}" CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Height="{StaticResource MediumFontSize}" Kind="FileOutput" />
                             </Button>
                         </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
-                Header="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryLabelText}">
-                <TextBox
-                    Text="{Binding JavaMaxMemoryOverride,Mode=TwoWay}"
-                    Watermark="{Binding JavaMaxMemoryWatermark}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryLabelText}">
+                <TextBox Text="{Binding JavaMaxMemoryOverride, Mode=TwoWay}" Watermark="{Binding JavaMaxMemoryWatermark}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
-                            <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryUnitText}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       Margin="8,0" VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="8,0"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryUnitText}" />
                         </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
-                Header="{x:Static lang:Resources.InstancePropertiesView_JavaAdditionalArgumentsLabelText}">
-                <TextBox Text="{Binding JavaAdditionalArgumentsOverride,Mode=TwoWay}"
-                         Watermark="{Binding JavaAdditionalArgumentsWatermark}" />
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaAdditionalArgumentsLabelText}">
+                <TextBox Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" Watermark="{Binding JavaAdditionalArgumentsWatermark}" />
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
-                Header="{x:Static lang:Resources.InstancePropertiesView_WindowInitialSizeLabelText}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
-                    <TextBox Grid.Column="0" Text="{Binding WindowInitialWidthOverride,Mode=TwoWay}"
-                             Watermark="{Binding WindowInitialWidthWatermark}">
+                    <TextBox
+                        Grid.Column="0"
+                        Text="{Binding WindowInitialWidthOverride, Mode=TwoWay}"
+                        Watermark="{Binding WindowInitialWidthWatermark}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_WindowWidthLabelText}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           Margin="8,0" VerticalAlignment="Center" />
+                                <TextBlock
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstancePropertiesView_WindowWidthLabelText}" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
                         </TextBox.InnerLeftContent>
                     </TextBox>
-                    <TextBox Grid.Column="2" Text="{Binding WindowInitialHeightOverride,Mode=TwoWay}"
-                             Watermark="{Binding WindowInitialHeightWatermark}">
+                    <TextBox
+                        Grid.Column="2"
+                        Text="{Binding WindowInitialHeightOverride, Mode=TwoWay}"
+                        Watermark="{Binding WindowInitialHeightWatermark}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
-                                    Text="{x:Static lang:Resources.InstancePropertiesView_WindowHeightLabelText}"
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Margin="8,0" VerticalAlignment="Center" />
+                                    Text="{x:Static lang:Resources.InstancePropertiesView_WindowHeightLabelText}" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
                         </TextBox.InnerLeftContent>
                     </TextBox>
                 </Grid>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
-                Header="{x:Static lang:Resources.InstancePropertiesView_QuickConnectLabelText}">
-                <TextBox Text="{Binding QuickConnectAddressOverride,Mode=TwoWay}"
-                         Watermark="{Binding QuickConnectAddressWatermark}" />
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_QuickConnectLabelText}">
+                <TextBox Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}" Watermark="{Binding QuickConnectAddressWatermark}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
@@ -174,9 +193,10 @@
         <!--     </controls:SettingsEntryItem> -->
         <!-- </controls:SettingsEntry> -->
         <!-- <husk:Divider /> -->
-        <controls:SettingsEntry Icon="Handshake"
-                                Title="{x:Static lang:Resources.InstancePropertiesView_BehaviorsTitle}"
-                                Summary="{x:Static lang:Resources.InstancePropertiesView_BehaviorsSubtitle}">
+        <controls:SettingsEntry
+            Title="{x:Static lang:Resources.InstancePropertiesView_BehaviorsTitle}"
+            Icon="Handshake"
+            Summary="{x:Static lang:Resources.InstancePropertiesView_BehaviorsSubtitle}">
             <!-- <controls:SettingsEntryItem Header="[Experimental] Deployment Method"> -->
             <!--     <StackPanel Spacing="8"> -->
             <!--         <ComboBox SelectedIndex="0" IsEnabled="False"> -->
@@ -186,34 +206,37 @@
             <!-- </controls:SettingsEntryItem> -->
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_FastLaunchLabelText}">
                 <StackPanel Spacing="8">
-                    <husk:InfoBar
-                        Content="{x:Static lang:Resources.InstancePropertiesView_FastLaunchPrompt}" />
-                    <ToggleSwitch OnContent="{x:Static lang:Resources.InstancePropertiesView_FastLaunchOnText}"
-                                  OffContent="{x:Static lang:Resources.Enum_Off}"
-                                  IsChecked="{Binding BehaviorDeployFastMode,Mode=TwoWay}" />
+                    <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesView_FastLaunchPrompt}" />
+                    <ToggleSwitch
+                        IsChecked="{Binding BehaviorDeployFastMode, Mode=TwoWay}"
+                        OffContent="{x:Static lang:Resources.Enum_Off}"
+                        OnContent="{x:Static lang:Resources.InstancePropertiesView_FastLaunchOnText}" />
                 </StackPanel>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <husk:BusyContainer
-            Background="Transparent"
-            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=False}">
-            <controls:SettingsEntry Icon="Bug" Title="{x:Static lang:Resources.InstancePropertiesView_DebugTitle}"
-                                    Summary="{x:Static lang:Resources.InstancePropertiesView_DebugSubtitle}">
-                <controls:SettingsEntryItem
-                    Header="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityLabelText}">
+        <husk:BusyContainer Background="Transparent" IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
+            <controls:SettingsEntry
+                Title="{x:Static lang:Resources.InstancePropertiesView_DebugTitle}"
+                Icon="Bug"
+                Summary="{x:Static lang:Resources.InstancePropertiesView_DebugSubtitle}">
+                <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityLabelText}">
                     <Button Command="{Binding CheckIntegrityCommand}">
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityButtonText}" />
                     </Button>
                 </controls:SettingsEntryItem>
             </controls:SettingsEntry>
             <husk:BusyContainer.PendingContent>
-                <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Background="{StaticResource OverlaySolidBackgroundBrush}">
+                <husk:Card
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
-                        <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}"
-                                              HorizontalAlignment="Center" />
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            HorizontalAlignment="Center"
+                            Kind="Info" />
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
                     </StackPanel>
                 </husk:Card>
@@ -221,45 +244,45 @@
         </husk:BusyContainer>
         <husk:Divider>
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
+                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Warning" />
                 <TextBlock Text="猫脑过载" />
-                <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
+                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Warning" />
             </StackPanel>
         </husk:Divider>
-        <husk:BusyContainer
-            Background="Transparent"
-            IsBusy="{Binding State,Converter={x:Static husk:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=False}">
-            <controls:SettingsEntry Icon="WarningShield"
-                                    Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
-                                    Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">
+        <husk:BusyContainer Background="Transparent" IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
+            <controls:SettingsEntry
+                Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
+                Icon="WarningShield"
+                Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">
                 <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
-                <controls:SettingsEntryItem
-                    Header="{x:Static lang:Resources.InstancePropertiesView_SacrificeLabelText}"
-                    IsEnabled="{Binding #Lock.IsUnlocked }">
+                <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_SacrificeLabelText}" IsEnabled="{Binding #Lock.IsUnlocked}">
                     <Grid ColumnDefinitions="*,8,*">
                         <Button Grid.Column="0" Command="{Binding ResetInstanceCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
+                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowReset" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_ResetButtonText}" />
                             </StackPanel>
                         </Button>
-                        <Button Grid.Column="2" Classes="Danger" Command="{Binding DeleteInstanceCommand}">
+                        <Button
+                            Grid.Column="2"
+                            Classes="Danger"
+                            Command="{Binding DeleteInstanceCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
+                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Delete" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_DeleteButtonText}" />
                             </StackPanel>
                         </Button>
                     </Grid>
                 </controls:SettingsEntryItem>
-                <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_LinkerLabelText}"
-                                            IsEnabled="{Binding #Lock.IsUnlocked}"
-                                            IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}">
+                <controls:SettingsEntryItem
+                    Header="{x:Static lang:Resources.InstancePropertiesView_LinkerLabelText}"
+                    IsEnabled="{Binding #Lock.IsUnlocked}"
+                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}}">
                     <StackPanel Spacing="8">
-                        <husk:InfoBar
-                            Content="{x:Static lang:Resources.InstancePropertiesView_LinkerPrompt}" />
+                        <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesView_LinkerPrompt}" />
                         <Button Command="{Binding UnlockInstanceCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <fi:SymbolIcon Symbol="WarningLockOpen" FontSize="{StaticResource MediumFontSize}" />
+                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="WarningLockOpen" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_UnlockButtonText}" />
                             </StackPanel>
                         </Button>
@@ -267,12 +290,16 @@
                 </controls:SettingsEntryItem>
             </controls:SettingsEntry>
             <husk:BusyContainer.PendingContent>
-                <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Background="{StaticResource OverlaySolidBackgroundBrush}">
+                <husk:Card
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
-                        <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}"
-                                              HorizontalAlignment="Center" />
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            HorizontalAlignment="Center"
+                            Kind="Info" />
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
                     </StackPanel>
                 </husk:Card>

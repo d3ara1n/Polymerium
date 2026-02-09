@@ -1,27 +1,30 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Polymerium.App.Controls">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Polymerium.App.Controls">
     <ControlTheme x:Key="{x:Type local:AccountCreationStep}" TargetType="local:AccountCreationStep">
         <Setter Property="Template">
             <ControlTemplate>
                 <DockPanel VerticalSpacing="12">
-                    <ContentPresenter DockPanel.Dock="Top" Content="{TemplateBinding Header}">
+                    <ContentPresenter Content="{TemplateBinding Header}" DockPanel.Dock="Top">
                         <ContentPresenter.Styles>
-                            <Style Selector="ContentPresenter > TextBlock">
+                            <Style Selector="ContentPresenter &gt; TextBlock">
                                 <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
-                                <Setter Property="FontWeight"
-                                        Value="{StaticResource ControlStrongFontWeight}" />
+                                <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
                             </Style>
                         </ContentPresenter.Styles>
                     </ContentPresenter>
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <ContentPresenter Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <ContentPresenter
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
                 </DockPanel>
             </ControlTemplate>

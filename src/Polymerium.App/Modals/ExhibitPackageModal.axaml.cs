@@ -391,62 +391,52 @@ public partial class ExhibitPackageModal : Modal
                                     if (x.Old is null)
                                     {
                                         // null -> Project
-                                        return new InstancePackageModificationModel()
+                                        return new()
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
                                             VersionName = null,
                                             ModifiedAtRaw = x.At
                                         };
                                     }
-                                    else
+
+                                    // -> Project: Unset
+                                    return new()
                                     {
-                                        // -> Project: Unset
-                                        return new InstancePackageModificationModel()
-                                        {
-                                            Kind = InstancePackageModificationKind.Unset,
-                                            VersionName = null,
-                                            ModifiedAtRaw = x.At
-                                        };
-                                    }
+                                        Kind = InstancePackageModificationKind.Unset,
+                                        VersionName = null,
+                                        ModifiedAtRaw = x.At
+                                    };
                                 }
-                                else
+
+                                var package = await DataService.ResolvePackageAsync(result.Label,
+                                                  result.Namespace,
+                                                  result.Pid,
+                                                  result.Vid,
+                                                  Filter);
+                                if (x.Old is null)
                                 {
-                                    var package = await DataService.ResolvePackageAsync(result.Label,
-                                                      result.Namespace,
-                                                      result.Pid,
-                                                      result.Vid,
-                                                      Filter);
-                                    if (x.Old is null)
+                                    // null -> Package: Add
+                                    return new()
                                     {
-                                        // null -> Package: Add
-                                        return new InstancePackageModificationModel()
-                                        {
-                                            Kind = InstancePackageModificationKind.AddVersioned,
-                                            VersionName = package.VersionName,
-                                            ModifiedAtRaw = x.At
-                                        };
-                                    }
-                                    else
-                                    {
-                                        // Package -> Package: Update
-                                        return new InstancePackageModificationModel()
-                                        {
-                                            Kind = InstancePackageModificationKind.Update,
-                                            VersionName = package.VersionName,
-                                            ModifiedAtRaw = x.At
-                                        };
-                                    }
+                                        Kind = InstancePackageModificationKind.AddVersioned,
+                                        VersionName = package.VersionName,
+                                        ModifiedAtRaw = x.At
+                                    };
                                 }
-                            }
-                            else
-                            {
-                                return new InstancePackageModificationModel()
+
+                                // Package -> Package: Update
+                                return new()
                                 {
-                                    Kind = InstancePackageModificationKind.Remove,
-                                    VersionName = null,
+                                    Kind = InstancePackageModificationKind.Update,
+                                    VersionName = package.VersionName,
                                     ModifiedAtRaw = x.At
                                 };
                             }
+
+                            return new InstancePackageModificationModel
+                            {
+                                Kind = InstancePackageModificationKind.Remove, VersionName = null, ModifiedAtRaw = x.At
+                            };
                         })
                        .ToArray();
 

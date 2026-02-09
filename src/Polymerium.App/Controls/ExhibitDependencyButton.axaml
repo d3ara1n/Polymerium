@@ -1,11 +1,12 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                    xmlns:m="clr-namespace:Polymerium.App.Models"
-                    xmlns:local="clr-namespace:Polymerium.App.Controls"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:components="clr-namespace:Polymerium.App.Components"
-                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:components="clr-namespace:Polymerium.App.Components"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Controls"
+    xmlns:m="clr-namespace:Polymerium.App.Models">
     <ControlTheme x:Key="{x:Type local:ExhibitDependencyButton}" TargetType="local:ExhibitDependencyButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -18,65 +19,99 @@
             <ControlTemplate x:DataType="m:ExhibitDependencyModel">
                 <Panel Name="Container">
                     <Panel Margin="4,2">
-                        <Border Name="Background"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border
+                            Name="Background"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.Transitions>
                                 <Transitions>
-                                    <BrushTransition Property="Background" Easing="SineEaseOut"
-                                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                    <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
-                                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <BrushTransition
+                                        Easing="SineEaseOut"
+                                        Property="Background"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <BrushTransition
+                                        Easing="SineEaseOut"
+                                        Property="BorderBrush"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 </Transitions>
                             </Border.Transitions>
                         </Border>
-                        <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*,Auto"
-                              ColumnSpacing="12">
-                            <Border Grid.Column="0"
-                                    CornerRadius="{StaticResource SmallCornerRadius}"
-                                    Height="24" Width="24">
+                        <Grid
+                            Margin="{TemplateBinding Padding}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="12">
+                            <Border
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
                                 <Border.Background>
-                                    <ImageBrush
-                                        async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
                                 </Border.Background>
                             </Border>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                                       Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}" />
-                            <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal" Spacing="4">
-                                <husk:Tag Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}"
-                                          VerticalAlignment="Center" IsVisible="{Binding IsRequired}" />
-                                <components:ExhibitStatePresenter IsVisible="{TemplateBinding IsChecked}"
-                                                                  State="{Binding Exhibit.State}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="{Binding ProjectName}"
+                                TextTrimming="CharacterEllipsis" />
+                            <StackPanel
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <husk:Tag
+                                    VerticalAlignment="Center"
+                                    Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}"
+                                    IsVisible="{Binding IsRequired}" />
+                                <components:ExhibitStatePresenter IsVisible="{TemplateBinding IsChecked}" State="{Binding Exhibit.State}" />
                             </StackPanel>
                         </Grid>
-                        <Border Name="Overlay" CornerRadius="{TemplateBinding CornerRadius}"
-                                Background="{StaticResource OverlayHalfBackgroundBrush}"
-                                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}" Opacity="0">
+                        <Border
+                            Name="Overlay"
+                            Background="{StaticResource OverlayHalfBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Opacity="0">
                             <Border.Transitions>
                                 <Transitions>
-                                    <BrushTransition Property="Background" Easing="SineEaseOut"
-                                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                    <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <BrushTransition
+                                        Easing="SineEaseOut"
+                                        Property="Background"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <DoubleTransition
+                                        Easing="SineEaseOut"
+                                        Property="Opacity"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 </Transitions>
                             </Border.Transitions>
                         </Border>
                     </Panel>
-                    <Border Name="Indicator" Width="3" Opacity="0" HorizontalAlignment="Left"
-                            RenderTransform="translateX(-4px)" BorderThickness="1"
-                            BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
-                            Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
-                            CornerRadius="{StaticResource SmallCornerRadius}" Margin="0,4"
-                            IsVisible="{Binding Exhibit.Installed.Enabled,Mode=OneTime,FallbackValue={x:False}}">
+                    <Border
+                        Name="Indicator"
+                        Width="3"
+                        Margin="0,4"
+                        HorizontalAlignment="Left"
+                        Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                        BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource SmallCornerRadius}"
+                        IsVisible="{Binding Exhibit.Installed.Enabled, Mode=OneTime, FallbackValue={x:False}}"
+                        Opacity="0"
+                        RenderTransform="translateX(-4px)">
                         <Border.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
-                                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <DoubleTransition
+                                    Easing="SineEaseOut"
+                                    Property="Opacity"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <TransformOperationsTransition
+                                    Easing="SineEaseOut"
+                                    Property="RenderTransform"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -85,8 +120,7 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#Overlay">
-            <Setter Property="Opacity"
-                    Value="1" />
+            <Setter Property="Opacity" Value="1" />
         </Style>
         <Style Selector="^:pressed /template/ Border#Overlay">
             <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />

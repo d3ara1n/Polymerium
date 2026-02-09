@@ -1,27 +1,46 @@
-﻿<husk:Page xmlns="https://github.com/avaloniaui"
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-           xmlns:fi="using:FluentIcons.Avalonia"
-           xmlns:vm="using:Polymerium.App.ViewModels"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
+﻿<husk:Page
+    x:Class="Polymerium.App.Views.UnknownView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:UnknownViewModel"
+    mc:Ignorable="d">
     <husk:Page.Header>
         <DockPanel HorizontalSpacing="8">
-            <StackPanel DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
+            <StackPanel
+                DockPanel.Dock="Right"
+                Orientation="Horizontal"
+                Spacing="4">
                 <Button Command="{Binding ShowDiagnosisCommand}">
-                    <icons:PackIconLucide Kind="HandHelping" Width="12" Height="12" />
+                    <icons:PackIconLucide
+                        Width="12"
+                        Height="12"
+                        Kind="HandHelping" />
                 </Button>
                 <Button Command="{Binding ShowIntroCommand}">
-                    <icons:PackIconLucide Kind="Film" Width="12" Height="12" />
+                    <icons:PackIconLucide
+                        Width="12"
+                        Height="12"
+                        Kind="Film" />
                 </Button>
                 <Button Command="{Binding DebugCommand}">
-                    <icons:PackIconLucide Kind="Bug" Width="12" Height="12" />
+                    <icons:PackIconLucide
+                        Width="12"
+                        Height="12"
+                        Kind="Bug" />
                 </Button>
                 <Button Click="ThemeSwitchButton_OnClick">
-                    <icons:PackIconLucide Kind="Lightbulb" Width="12" Height="12" />
+                    <icons:PackIconLucide
+                        Width="12"
+                        Height="12"
+                        Kind="Lightbulb" />
                 </Button>
             </StackPanel>
             <TextBlock Text="我能吞下玻璃而不伤身体" Theme="{StaticResource PageHeaderTextBlockTheme}" />
@@ -65,33 +84,41 @@
         <TabStrip>
             <TabStripItem>
                 <TextBlock>
-                    <Run Text="Hub" FontSize="{StaticResource LargeFontSize}" />
+                    <Run FontSize="{StaticResource LargeFontSize}" Text="Hub" />
                     <LineBreak />
-                    <Run Text="Design Center" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="Design Center" />
                 </TextBlock>
             </TabStripItem>
             <TabStripItem IsEnabled="False">
                 <TextBlock>
-                    <Run Text="Dock" FontSize="{StaticResource LargeFontSize}" />
+                    <Run FontSize="{StaticResource LargeFontSize}" Text="Dock" />
                     <LineBreak />
-                    <Run Text="Machine Assembler" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="Machine Assembler" />
                 </TextBlock>
             </TabStripItem>
             <TabStripItem>
                 <TextBlock>
-                    <Run Text="Socket" FontSize="{StaticResource LargeFontSize}" />
+                    <Run FontSize="{StaticResource LargeFontSize}" Text="Socket" />
                     <LineBreak />
-                    <Run Text="Power Supply" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="Power Supply" />
                 </TextBlock>
             </TabStripItem>
         </TabStrip>
-        <TabStrip Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Right"
-                  Background="{StaticResource OverlayBackgroundBrush}">
+        <TabStrip
+            HorizontalAlignment="Right"
+            Background="{StaticResource OverlayBackgroundBrush}"
+            Theme="{StaticResource SegmentedTabStripTheme}">
             <TabStripItem>
-                <icons:PackIconLucide Kind="Menu" Height="12" Width="12" />
+                <icons:PackIconLucide
+                    Width="12"
+                    Height="12"
+                    Kind="Menu" />
             </TabStripItem>
             <TabStripItem>
-                <icons:PackIconLucide Kind="Folder" Height="12" Width="12" />
+                <icons:PackIconLucide
+                    Width="12"
+                    Height="12"
+                    Kind="Folder" />
             </TabStripItem>
         </TabStrip>
         <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
@@ -101,26 +128,40 @@
             <TabStripItem Content="Thursday" />
             <TabStripItem Content="Friday" />
         </TabStrip>
-        <TabControl BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
-                    Background="{StaticResource CardBackgroundBrush}"
-                    CornerRadius="{StaticResource MediumCornerRadius}">
+        <TabControl
+            Background="{StaticResource CardBackgroundBrush}"
+            BorderBrush="{StaticResource ControlBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource MediumCornerRadius}">
             <TabItem Header="Foo">
                 <StackPanel Spacing="8">
-                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Dialog"
-                            Command="{Binding ShowDialogCommand}" />
-                    <Button Classes="Primary" Content="Modal" Command="{Binding ShowModalCommand}" />
-                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Sidebar"
-                            Command="{Binding ShowDrawerCommand}" />
-                    <Button Theme="{StaticResource GhostButtonTheme}" Content="Toast"
-                            Command="{Binding ShowToastCommand}" />
+                    <Button
+                        Command="{Binding ShowDialogCommand}"
+                        Content="Dialog"
+                        Theme="{StaticResource OutlineButtonTheme}" />
+                    <Button
+                        Classes="Primary"
+                        Command="{Binding ShowModalCommand}"
+                        Content="Modal" />
+                    <Button
+                        Command="{Binding ShowDrawerCommand}"
+                        Content="Sidebar"
+                        Theme="{StaticResource OutlineButtonTheme}" />
+                    <Button
+                        Command="{Binding ShowToastCommand}"
+                        Content="Toast"
+                        Theme="{StaticResource GhostButtonTheme}" />
                     <HyperlinkButton Content="Hyperlink" NavigateUri="https://github.com/d3ara1n/Polymerium" />
 
-                    <husk:GrowlItem x:Name="Notification"
-                                    Title="Downloading file..." Progress="58"
-                                    IsProgressBarVisible="True" Actions="{Binding NotificationActions}">
+                    <husk:GrowlItem
+                        x:Name="Notification"
+                        Title="Downloading file..."
+                        Actions="{Binding NotificationActions}"
+                        IsProgressBarVisible="True"
+                        Progress="58">
                         <StackPanel Spacing="4">
                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
+                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="FolderZip" />
                                 <TextBlock Text="四大名著.zip" />
                             </StackPanel>
                             <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -132,7 +173,10 @@
                     </husk:GrowlItem>
                     <Slider Value="{Binding #Notification.Progress, Mode=TwoWay}" />
                     <DockPanel>
-                        <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
+                        <ComboBox
+                            Name="ComboBox"
+                            DockPanel.Dock="Right"
+                            PlaceholderText="这是一个一个">
                             <ComboBoxItem Content="这是一个 1" />
                             <ComboBoxItem Content="这是一个 2" />
                             <ComboBoxItem Content="这是一个 3" />
@@ -145,35 +189,38 @@
                             <ComboBoxItem Content="这是一个 0" />
                         </ComboBox>
                         <StackPanel Orientation="Horizontal" Spacing="4">
-                            <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
-                                          IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
-                            <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                            <ToggleSwitch
+                                IsChecked="{Binding IsEnabled, ElementName=ComboBox}"
+                                OffContent="这是 OFF"
+                                OnContent="这是 ON" />
+                            <CheckBox IsChecked="{Binding IsEnabled, ElementName=ComboBox}" IsThreeState="True">
                                 <TextBlock Text="Make it REAL" />
                             </CheckBox>
-                            <CheckBox Theme="{StaticResource AlternativeCheckBoxTheme}" IsThreeState="True"
-                                      IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                            <CheckBox
+                                IsChecked="{Binding IsEnabled, ElementName=ComboBox}"
+                                IsThreeState="True"
+                                Theme="{StaticResource AlternativeCheckBoxTheme}">
                                 <TextBlock Text="Make it HARD" />
                             </CheckBox>
-                            <RadioButton IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                            <RadioButton IsChecked="{Binding IsEnabled, ElementName=ComboBox}">
                                 <TextBlock Text="On" />
                             </RadioButton>
-                            <RadioButton Theme="{StaticResource AlternativeRadioButtonTheme}"
-                                         IsChecked="{Binding IsEnabled,ElementName=ComboBox,Converter={x:Static BoolConverters.Not}}"
-                                         Content="Off" />
+                            <RadioButton
+                                Content="Off"
+                                IsChecked="{Binding IsEnabled, ElementName=ComboBox, Converter={x:Static BoolConverters.Not}}"
+                                Theme="{StaticResource AlternativeRadioButtonTheme}" />
                         </StackPanel>
                     </DockPanel>
                     <husk:InfoBar Header="You know what?">
                         <TextBlock TextWrapping="WrapWithOverflow">
-                            <Run
-                                Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
-                            <husk:HighlightInline Text="Ctrl+V" Classes="Shortcut" />
+                            <Run Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
+                            <husk:HighlightInline Classes="Shortcut" Text="Ctrl+V" />
                             <Run Text="Then" />
-                            <husk:HighlightInline Text="✨ git push -f" Classes="Primary" />
+                            <husk:HighlightInline Classes="Primary" Text="✨ git push -f" />
                             <Run Text="If ruined," />
                             <HyperlinkButton Content="Undo" />
                             <HyperlinkButton Content="Redo" IsEnabled="False" />
-                            <Run
-                                Text=".Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed di." />
+                            <Run Text=".Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed di." />
                         </TextBlock>
                     </husk:InfoBar>
                 </StackPanel>
@@ -184,7 +231,10 @@
                         <ProgressBar.Styles>
                             <Style Selector="ProgressBar">
                                 <Style.Animations>
-                                    <Animation Duration="0:0:3" IterationCount="Infinite" Easing="QuadraticEaseOut">
+                                    <Animation
+                                        Easing="QuadraticEaseOut"
+                                        IterationCount="Infinite"
+                                        Duration="0:0:3">
                                         <KeyFrame Cue="0%">
                                             <Setter Property="Value" Value="0" />
                                         </KeyFrame>
@@ -199,15 +249,24 @@
                             </Style>
                         </ProgressBar.Styles>
                     </ProgressBar>
-                    <ProgressBar x:Name="Baz" Theme="{StaticResource BorderedProgressBarTheme}" Value="50" />
+                    <ProgressBar
+                        x:Name="Baz"
+                        Theme="{StaticResource BorderedProgressBarTheme}"
+                        Value="50" />
                     <TextBlock x:Name="Block" FontSize="13" />
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <husk:ProgressRing x:Name="Ring" Value="50" Height="64" Width="64">
+                        <husk:ProgressRing
+                            x:Name="Ring"
+                            Width="64"
+                            Height="64"
+                            Value="50">
                             <husk:ProgressRing.Styles>
                                 <Style Selector="husk|ProgressRing">
                                     <Style.Animations>
-                                        <Animation Duration="0:0:3" IterationCount="Infinite"
-                                                   Easing="QuadraticEaseOut">
+                                        <Animation
+                                            Easing="QuadraticEaseOut"
+                                            IterationCount="Infinite"
+                                            Duration="0:0:3">
                                             <KeyFrame Cue="0%">
                                                 <Setter Property="Value" Value="0" />
                                             </KeyFrame>
@@ -222,15 +281,25 @@
                                 </Style>
                             </husk:ProgressRing.Styles>
                         </husk:ProgressRing>
-                        <husk:ProgressRing x:Name="Zing" Value="50" Height="64" Width="64" />
-                        <husk:ProgressRing TrackPadding="6" TrackStrokeWidth="4"
-                                           Theme="{StaticResource SolidProgressRingTheme}" Value="50" Height="64"
-                                           Width="64">
+                        <husk:ProgressRing
+                            x:Name="Zing"
+                            Width="64"
+                            Height="64"
+                            Value="50" />
+                        <husk:ProgressRing
+                            Width="64"
+                            Height="64"
+                            Theme="{StaticResource SolidProgressRingTheme}"
+                            TrackPadding="6"
+                            TrackStrokeWidth="4"
+                            Value="50">
                             <husk:ProgressRing.Styles>
                                 <Style Selector="husk|ProgressRing">
                                     <Style.Animations>
-                                        <Animation Duration="0:0:3" IterationCount="Infinite"
-                                                   Easing="QuadraticEaseOut">
+                                        <Animation
+                                            Easing="QuadraticEaseOut"
+                                            IterationCount="Infinite"
+                                            Duration="0:0:3">
                                             <KeyFrame Cue="0%">
                                                 <Setter Property="Value" Value="0" />
                                             </KeyFrame>
@@ -245,10 +314,20 @@
                                 </Style>
                             </husk:ProgressRing.Styles>
                         </husk:ProgressRing>
-                        <husk:ProgressRing TrackPadding="6" TrackStrokeWidth="4"
-                                           Theme="{StaticResource SolidProgressRingTheme}" Value="50" Height="64"
-                                           Width="64" IsIndeterminate="True" />
-                        <Arc Height="64" Width="64" Fill="Yellow" SweepAngle="270" StartAngle="-90" />
+                        <husk:ProgressRing
+                            Width="64"
+                            Height="64"
+                            IsIndeterminate="True"
+                            Theme="{StaticResource SolidProgressRingTheme}"
+                            TrackPadding="6"
+                            TrackStrokeWidth="4"
+                            Value="50" />
+                        <Arc
+                            Width="64"
+                            Height="64"
+                            Fill="Yellow"
+                            StartAngle="-90"
+                            SweepAngle="270" />
                     </StackPanel>
                     <ListBox>
                         <ListBoxItem Content="这是一个 1" />
@@ -275,26 +354,32 @@
                             </TabControl.Styles>
                             <TabItem Header="Description">
                                 <StackPanel>
-                                    <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                                            HorizontalAlignment="Left"
-                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Border
+                                        HorizontalAlignment="Left"
+                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
                                         <Grid ColumnDefinitions="Auto,0,Auto,0,Auto">
-                                            <Button Grid.Column="0" Theme="{StaticResource GhostButtonTheme}"
-                                                    Classes="Small"
-                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Left}}">
+                                            <Button
+                                                Grid.Column="0"
+                                                Classes="Small"
+                                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Left}}"
+                                                Theme="{StaticResource GhostButtonTheme}">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="Calendar"
-                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Calendar" />
                                                     <TextBlock Text="November 10, 2023" />
                                                 </StackPanel>
                                             </Button>
-                                            <husk:Divider Grid.Column="2" Margin="0,4" Orientation="Vertical" />
-                                            <Button Grid.Column="4" Theme="{StaticResource GhostButtonTheme}"
-                                                    Classes="Small"
-                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Right}}">
+                                            <husk:Divider
+                                                Grid.Column="2"
+                                                Margin="0,4"
+                                                Orientation="Vertical" />
+                                            <Button
+                                                Grid.Column="4"
+                                                Classes="Small"
+                                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                                Theme="{StaticResource GhostButtonTheme}">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="Clock"
-                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Clock" />
                                                     <TextBlock Text="18:13 PM" />
                                                 </StackPanel>
                                             </Button>
@@ -306,41 +391,61 @@
                         </TabControl>
                     </husk:Card>
                     <Expander Header="Modules">
-                        <StackPanel Orientation="Horizontal" Spacing="12" Margin="12">
+                        <StackPanel
+                            Margin="12"
+                            Orientation="Horizontal"
+                            Spacing="12">
                             <DockPanel>
-                                <Button DockPanel.Dock="Bottom" Classes="Small Primary"
-                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                <Button
+                                    Classes="Small Primary"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                    DockPanel.Dock="Bottom">
                                     <husk:IconLabel Icon="HandPoint" Text="Install" />
                                 </Button>
-                                <Border Padding="24,18" Background="{StaticResource OverlayBackgroundBrush}"
-                                        BorderBrush="{StaticResource ControlBorderBrush}"
-                                        BorderThickness="1,1,1,0"
-                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                <Border
+                                    Padding="24,18"
+                                    Background="{StaticResource OverlayBackgroundBrush}"
+                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                    BorderThickness="1,1,1,0"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                                     <StackPanel VerticalAlignment="Center" Spacing="8">
-                                        <icons:PackIconLucide Kind="Dock" Height="{StaticResource ExtraLargeFontSize}"
-                                                              Width="{StaticResource ExtraLargeFontSize}"
-                                                              HorizontalAlignment="Center" />
-                                        <TextBlock Text="Dock Operator" HorizontalAlignment="Center"
-                                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                        <icons:PackIconLucide
+                                            Width="{StaticResource ExtraLargeFontSize}"
+                                            Height="{StaticResource ExtraLargeFontSize}"
+                                            HorizontalAlignment="Center"
+                                            Kind="Dock" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="Dock Operator" />
                                     </StackPanel>
                                 </Border>
                             </DockPanel>
                             <DockPanel>
-                                <Button DockPanel.Dock="Bottom" Classes="Small" BorderThickness="1,0,1,1"
-                                        BorderBrush="{StaticResource ControlBorderBrush}"
-                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                <Button
+                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                    BorderThickness="1,0,1,1"
+                                    Classes="Small"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                    DockPanel.Dock="Bottom">
                                     <husk:IconLabel Icon="HandPoint" Text="Installed" />
                                 </Button>
-                                <Border Padding="24,18" Background="{StaticResource OverlayBackgroundBrush}"
-                                        BorderBrush="{StaticResource ControlBorderBrush}"
-                                        BorderThickness="1,1,1,0"
-                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                <Border
+                                    Padding="24,18"
+                                    Background="{StaticResource OverlayBackgroundBrush}"
+                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                    BorderThickness="1,1,1,0"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                                     <StackPanel VerticalAlignment="Center" Spacing="8">
-                                        <icons:PackIconLucide Kind="Scan" Height="{StaticResource ExtraLargeFontSize}"
-                                                              Width="{StaticResource ExtraLargeFontSize}"
-                                                              HorizontalAlignment="Center" />
-                                        <TextBlock Text="Virus Scanner" HorizontalAlignment="Center"
-                                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                        <icons:PackIconLucide
+                                            Width="{StaticResource ExtraLargeFontSize}"
+                                            Height="{StaticResource ExtraLargeFontSize}"
+                                            HorizontalAlignment="Center"
+                                            Kind="Scan" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="Virus Scanner" />
                                     </StackPanel>
                                 </Border>
                             </DockPanel>
@@ -351,9 +456,16 @@
             <TabItem Header="Drag">
                 <husk:DropContainer DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
                     <husk:DropContainer.Overlay>
-                        <StackPanel Opacity="0.7" Margin="64,48" Spacing="12">
-                            <icons:PackIconLucide Kind="FilePlus" Height="36" Width="36" HorizontalAlignment="Center"
-                                                  Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                        <StackPanel
+                            Margin="64,48"
+                            Opacity="0.7"
+                            Spacing="12">
+                            <icons:PackIconLucide
+                                Width="36"
+                                Height="36"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlWhiteForegroundBrush}"
+                                Kind="FilePlus" />
                         </StackPanel>
                     </husk:DropContainer.Overlay>
                     <husk:Card Padding="64,48">
@@ -362,10 +474,19 @@
                 </husk:DropContainer>
             </TabItem>
             <TabItem Header="Colors">
-                <WrapPanel LineSpacing="8" ItemSpacing="8">
-                    <Border Height="64" Width="64" Background="{Binding Accent1Brush}" />
-                    <Border Height="64" Width="64" Background="{Binding Accent2Brush}" />
-                    <Border Height="64" Width="64" Background="{Binding Accent3Brush}" />
+                <WrapPanel ItemSpacing="8" LineSpacing="8">
+                    <Border
+                        Width="64"
+                        Height="64"
+                        Background="{Binding Accent1Brush}" />
+                    <Border
+                        Width="64"
+                        Height="64"
+                        Background="{Binding Accent2Brush}" />
+                    <Border
+                        Width="64"
+                        Height="64"
+                        Background="{Binding Accent3Brush}" />
                 </WrapPanel>
             </TabItem>
         </TabControl>

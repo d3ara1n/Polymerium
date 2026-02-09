@@ -1,21 +1,29 @@
-﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:local="using:Polymerium.App.Dialogs"
-             xmlns:m="clr-namespace:Polymerium.App.Models"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             mc:Ignorable="d" Title="{x:Static lang:Resources.LoaderPickerDialog_Title}" IsPrimaryButtonVisible="True"
-             x:Class="Polymerium.App.Dialogs.LoaderPickerDialog">
-    <TabStrip ItemsSource="{Binding $parent[local:LoaderPickerDialog].Candidates}"
-              SelectedItem="{Binding $parent[local:LoaderPickerDialog].Result,Mode=TwoWay}">
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.LoaderPickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Dialogs"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.LoaderPickerDialog_Title}"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
+    <TabStrip ItemsSource="{Binding $parent[local:LoaderPickerDialog].Candidates}" SelectedItem="{Binding $parent[local:LoaderPickerDialog].Result, Mode=TwoWay}">
         <TabStrip.ItemTemplate>
             <DataTemplate DataType="m:LoaderCandidateModel">
                 <StackPanel>
-                    <Image Source="{Binding Thumbnail}" Height="48" Width="48" Margin="12" />
-                    <TextBlock Text="{Binding Display}" HorizontalAlignment="Center"
-                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <Image
+                        Width="48"
+                        Height="48"
+                        Margin="12"
+                        Source="{Binding Thumbnail}" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Binding Display}" />
                 </StackPanel>
             </DataTemplate>
         </TabStrip.ItemTemplate>

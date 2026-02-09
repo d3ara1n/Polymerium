@@ -1,17 +1,29 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:local="using:Polymerium.App.Components"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Polymerium.App.Components.PageHeaderBar">
+﻿<UserControl
+    x:Class="Polymerium.App.Components.PageHeaderBar"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:local="using:Polymerium.App.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <DockPanel>
-        <Button DockPanel.Dock="Left" Margin="8" CornerRadius="4" Command="{Binding $parent[husk:Frame].GoBackCommand}">
-            <icons:PackIconLucide Kind="ArrowLeft" Width="12" Height="12" />
+        <Button
+            Margin="8"
+            Command="{Binding $parent[husk:Frame].GoBackCommand}"
+            CornerRadius="4"
+            DockPanel.Dock="Left">
+            <icons:PackIconLucide
+                Width="12"
+                Height="12"
+                Kind="ArrowLeft" />
         </Button>
-        <TextBlock Text="{Binding $parent[local:PageHeaderBar].Title}" VerticalAlignment="Center"
-                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+        <TextBlock
+            VerticalAlignment="Center"
+            FontWeight="{StaticResource ControlStrongFontWeight}"
+            Text="{Binding $parent[local:PageHeaderBar].Title}" />
     </DockPanel>
 </UserControl>

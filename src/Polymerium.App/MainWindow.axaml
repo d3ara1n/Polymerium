@@ -4,17 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:local="using:Polymerium.App"
     xmlns:m="using:Polymerium.App.Models"
-    xmlns:v="using:Polymerium.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    ExtendClientAreaChromeHints="NoChrome"
-    ExtendClientAreaToDecorationsHint="True"
+    xmlns:v="using:Polymerium.App.Views"
     Title="{x:Static local:Program.Brand}"
     Width="1111"
     Height="666"
@@ -22,8 +20,12 @@
     MinHeight="460"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    x:DataType="local:MainWindowContext"
+    ExtendClientAreaChromeHints="NoChrome"
+    ExtendClientAreaToDecorationsHint="True"
+    Icon="/Assets/Icon.ico"
     Loaded="Control_OnLoaded"
-    mc:Ignorable="d" x:DataType="local:MainWindowContext" Icon="/Assets/Icon.ico">
+    mc:Ignorable="d">
     <husk:AppWindow.Styles>
         <Style Selector="husk|Dialog">
             <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
@@ -33,44 +35,47 @@
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />
-            <ColumnDefinition Width="27*"
-                              MinWidth="200"
-                              MaxWidth="400" />
+            <ColumnDefinition
+                Width="27*"
+                MinWidth="200"
+                MaxWidth="400" />
         </Grid.ColumnDefinitions>
         <DockPanel x:Name="Main" Grid.Column="0">
             <Panel>
-                <!-- <StackPanel VerticalAlignment="Center" -->
-                <!--             Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}"> -->
+                <!--  <StackPanel VerticalAlignment="Center"  -->
+                <!--  Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}">  -->
                 <!--     <StackPanel.Transitions> -->
                 <!--         <Transitions> -->
-                <!--             <DoubleTransition -->
-                <!--                 Easing="CubicEaseInOut" -->
-                <!--                 Property="Opacity" -->
-                <!--                 Duration="{StaticResource ControlFasterAnimationDuration}" /> -->
+                <!--  <DoubleTransition  -->
+                <!--  Easing="CubicEaseInOut"  -->
+                <!--  Property="Opacity"  -->
+                <!--  Duration="{StaticResource ControlFasterAnimationDuration}" />  -->
                 <!--         </Transitions> -->
                 <!--     </StackPanel.Transitions> -->
                 <!--     <StackPanel.Effect> -->
                 <!--         <DropShadowEffect BlurRadius="6" Opacity="0.1" /> -->
                 <!--     </StackPanel.Effect> -->
-                <!--     <Image -->
-                <!--         Width="128" -->
-                <!--         Height="128" -->
-                <!--         HorizontalAlignment="Center" -->
-                <!--         Source="/Assets/Icons/Bird.png" /> -->
-                <!--     <TextBlock -->
-                <!--         Margin="48,12,48,12" -->
-                <!--         FontSize="24" -->
-                <!--         FontWeight="{StaticResource ControlStrongFontWeight}" -->
-                <!--         Text="{x:Static lang:Resources.MainWindow_BackgroundText}" -->
-                <!--         TextAlignment="Center" -->
-                <!--         TextWrapping="WrapWithOverflow" /> -->
+                <!--  <Image  -->
+                <!--  Width="128"  -->
+                <!--  Height="128"  -->
+                <!--  HorizontalAlignment="Center"  -->
+                <!--  Source="/Assets/Icons/Bird.png" />  -->
+                <!--  <TextBlock  -->
+                <!--  Margin="48,12,48,12"  -->
+                <!--  FontSize="24"  -->
+                <!--  FontWeight="{StaticResource ControlStrongFontWeight}"  -->
+                <!--  Text="{x:Static lang:Resources.MainWindow_BackgroundText}"  -->
+                <!--  TextAlignment="Center"  -->
+                <!--  TextWrapping="WrapWithOverflow" />  -->
                 <!-- </StackPanel> -->
                 <husk:Frame x:Name="Root" />
             </Panel>
         </DockPanel>
         <DockPanel x:Name="Sidebar" Grid.Column="1">
-            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top"
-                       IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
+            <DockPanel
+                x:Name="TitleBar"
+                DockPanel.Dock="Top"
+                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
                 <StackPanel DockPanel.Dock="Right">
                     <husk:ButtonGroup BorderThickness="0">
                         <husk:ButtonGroup.Styles>
@@ -85,16 +90,14 @@
                                 <Setter Property="Width" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button IsVisible="{x:Static local:Program.Debug}"
-                                Command="{Binding OpenNotificationSidebarCommand}">
+                        <Button Command="{Binding OpenNotificationSidebarCommand}" IsVisible="{x:Static local:Program.Debug}">
                             <icons:PackIconLucide Kind="Bell" />
                         </Button>
                         <Button Click="MinimizeButton_OnClick">
                             <icons:PackIconLucide Kind="Minus" />
                         </Button>
                         <Button Click="ToggleMaximizeButton_OnClick">
-                            <husk:SwitchPresenter Value="{Binding $parent[husk:AppWindow].IsMaximized,Mode=OneWay}"
-                                                  TargetType="x:Boolean">
+                            <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}">
                                 <husk:SwitchCase Value="True">
                                     <icons:PackIconLucide Kind="SquareSquare" />
                                 </husk:SwitchCase>
@@ -112,8 +115,10 @@
                             <icons:PackIconLucide Kind="X">
                                 <icons:PackIconLucide.Transitions>
                                     <Transitions>
-                                        <BrushTransition Property="Foreground" Easing="SineEaseOut"
-                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <BrushTransition
+                                            Easing="SineEaseOut"
+                                            Property="Foreground"
+                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Transitions>
                                 </icons:PackIconLucide.Transitions>
                             </icons:PackIconLucide>
@@ -122,16 +127,18 @@
                 </StackPanel>
                 <StackPanel
                     Margin="12,0,0,-9"
-                    IsHitTestVisible="False"
                     VerticalAlignment="Center"
+                    IsHitTestVisible="False"
                     Orientation="Horizontal"
                     Spacing="6">
                     <StackPanel.Effect>
                         <DropShadowEffect BlurRadius="6" Opacity="0.1" />
                     </StackPanel.Effect>
-                    <icons:PackIconLucide Height="{StaticResource MediumFontSize}"
-                                          Width="{StaticResource MediumFontSize}" Kind="Squirrel"
-                                          VerticalAlignment="Center" />
+                    <icons:PackIconLucide
+                        Width="{StaticResource MediumFontSize}"
+                        Height="{StaticResource MediumFontSize}"
+                        VerticalAlignment="Center"
+                        Kind="Squirrel" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"
@@ -141,7 +148,9 @@
             <Grid
                 Margin="9"
                 ColumnDefinitions="Auto,*,Auto"
-                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto" RowSpacing="8" ColumnSpacing="8">
+                ColumnSpacing="8"
+                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto"
+                RowSpacing="8">
                 <Button
                     Grid.Row="0"
                     Grid.Column="0"
@@ -156,8 +165,7 @@
                             Height="18"
                             VerticalAlignment="Center"
                             Kind="House" />
-                        <TextBlock VerticalAlignment="Center"
-                                   Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -186,8 +194,7 @@
                             Width="18"
                             Height="18"
                             Kind="Store" />
-                        <TextBlock VerticalAlignment="Center"
-                                   Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
                     </StackPanel>
                 </Button>
                 <husk:Divider
@@ -202,86 +209,111 @@
                     Watermark="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}">
                     <TextBox.InnerRightContent>
                         <Button
-                            IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding $parent[TextBox].Clear}"
-                            Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            Content="{fie:SymbolIcon Symbol=Dismiss,
+                                                     FontSize={StaticResource MediumFontSize}}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <husk:DropContainer
                     Grid.Row="4"
                     Grid.Column="0"
-                    Grid.ColumnSpan="3" DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
+                    Grid.ColumnSpan="3"
+                    DragOver="DropContainer_OnDragOver"
+                    Drop="DropContainer_OnDrop">
                     <husk:DropContainer.Overlay>
                         <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Rectangle RadiusX="6" RadiusY="6"
-                                       Fill="{StaticResource ControlInteractiveBackgroundBrush}"
-                                       Stroke="{StaticResource ControlInteractiveBorderBrush}" StrokeThickness="2"
-                                       StrokeDashArray="6,2" StrokeJoin="Round" StrokeLineCap="Round" />
-                            <StackPanel Opacity="{StaticResource Overlay1Opacity}" Margin="24,18" Spacing="12">
-                                <icons:PackIconLucide Kind="PackagePlus" Height="36" Width="36"
-                                                      HorizontalAlignment="Center"
-                                                      Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                            <Rectangle
+                                Fill="{StaticResource ControlInteractiveBackgroundBrush}"
+                                RadiusX="6"
+                                RadiusY="6"
+                                Stroke="{StaticResource ControlInteractiveBorderBrush}"
+                                StrokeDashArray="6,2"
+                                StrokeJoin="Round"
+                                StrokeLineCap="Round"
+                                StrokeThickness="2" />
+                            <StackPanel
+                                Margin="24,18"
+                                Opacity="{StaticResource Overlay1Opacity}"
+                                Spacing="12">
+                                <icons:PackIconLucide
+                                    Width="36"
+                                    Height="36"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlWhiteForegroundBrush}"
+                                    Kind="PackagePlus" />
                             </StackPanel>
                         </Panel>
                     </husk:DropContainer.Overlay>
                     <Panel>
-                        <StackPanel VerticalAlignment="Center"
-                                    IsVisible="{Binding View.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
-                                    Spacing="8">
-                            <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                  Width="{StaticResource ExtraLargeFontSize}"
-                                                  HorizontalAlignment="Center" />
-                            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            IsVisible="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                            Spacing="8">
+                            <icons:PackIconLucide
+                                Width="{StaticResource ExtraLargeFontSize}"
+                                Height="{StaticResource ExtraLargeFontSize}"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="Box" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                         </StackPanel>
-                        <ScrollViewer
-                            Margin="0,0,-8,0">
-                            <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
-                                          ClipToBounds="False">
+                        <ScrollViewer Margin="0,0,-8,0">
+                            <ItemsControl
+                                Margin="0,0,8,0"
+                                ClipToBounds="False"
+                                ItemsSource="{Binding View}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="m:InstanceEntryModel">
                                         <controls:InstanceEntryButton
-                                            Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Basic.Key}"
-                                            State="{Binding State,Mode=OneWay}">
+                                            State="{Binding State, Mode=OneWay}">
                                             <controls:InstanceEntryButton.ContextFlyout>
                                                 <MenuFlyout>
                                                     <MenuItem
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).PlayCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
-                                                        Icon="{fie:SymbolIcon Symbol=Rocket,FontSize={StaticResource MediumFontSize}}"
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).PlayCommand,FallbackValue={x:Null}}"
-                                                        CommandParameter="{Binding Basic.Key}" />
+                                                        Icon="{fie:SymbolIcon Symbol=Rocket,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
-                                                        Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,FontSize={StaticResource MediumFontSize}}"
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand,FallbackValue={x:Null}}"
-                                                        CommandParameter="{Binding Basic.Key}" />
+                                                        Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem Header="-" />
                                                     <MenuItem
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
-                                                        Icon="{fie:SymbolIcon Symbol=FolderZip,FontSize={StaticResource MediumFontSize}}"
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ExportInstanceCommand,FallbackValue={x:Null}}"
-                                                        CommandParameter="{Binding Basic.Key}" />
+                                                        Icon="{fie:SymbolIcon Symbol=FolderZip,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
-                                                        Icon="{fie:SymbolIcon Symbol=FolderOpen,FontSize={StaticResource MediumFontSize}}"
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
-                                                        CommandParameter="{Binding Basic.Key}" />
+                                                        Icon="{fie:SymbolIcon Symbol=FolderOpen,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem Header="-" />
                                                     <MenuItem
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
-                                                        Icon="{fie:SymbolIcon Symbol=BoxMultiple,FontSize={StaticResource MediumFontSize}}"
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand,FallbackValue={x:Null}}"
-                                                        CommandParameter="{Binding Basic.Key}" />
+                                                        Icon="{fie:SymbolIcon Symbol=BoxMultiple,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem
+                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
-                                                        Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,FontSize={StaticResource MediumFontSize}}"
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand,FallbackValue={x:Null}}"
-                                                        CommandParameter="{Binding Basic.Key}" />
+                                                        Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
                                                 </MenuFlyout>
                                             </controls:InstanceEntryButton.ContextFlyout>
                                         </controls:InstanceEntryButton>
@@ -304,8 +336,8 @@
                     Grid.Row="6"
                     Grid.Column="0"
                     Command="{Binding NavigateCommand}"
-                    DockPanel.Dock="Left"
                     CommandParameter="{x:Type v:SettingsView}"
+                    DockPanel.Dock="Left"
                     Theme="{StaticResource GhostButtonTheme}">
                     <icons:PackIconLucide Height="18" Kind="Settings" />
                 </Button>

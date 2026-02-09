@@ -1,21 +1,41 @@
-<husk:Modal xmlns="https://github.com/avaloniaui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-            xmlns:modals="clr-namespace:Polymerium.App.Modals"
-            mc:Ignorable="d" Width="320"
-            x:Class="Polymerium.App.Modals.TrophyModal">
-    <StackPanel Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24">
-        <fi:SymbolIcon Symbol="Trophy" FontSize="64" Foreground="#FFD700" HorizontalAlignment="Center" />
-        <TextBlock Text="ACHIEVEMENT UNLOCKED!" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"
-                   TextAlignment="Center" />
-        <TextBlock Text="You found the secret code!" FontSize="14"
-                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center"
-                   TextAlignment="Center" />
-        <Button Classes="Primary" HorizontalAlignment="Center" Margin="0,16,0,0"
-                Command="{Binding $parent[modals:TrophyModal].Dismiss}">
+﻿<husk:Modal
+    x:Class="Polymerium.App.Modals.TrophyModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:modals="clr-namespace:Polymerium.App.Modals"
+    Width="320"
+    mc:Ignorable="d">
+    <StackPanel
+        Margin="24"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <fi:SymbolIcon
+            HorizontalAlignment="Center"
+            FontSize="64"
+            Foreground="#FFD700"
+            Symbol="Trophy" />
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="20"
+            FontWeight="Bold"
+            Text="ACHIEVEMENT UNLOCKED!"
+            TextAlignment="Center" />
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="14"
+            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+            Text="You found the secret code!"
+            TextAlignment="Center" />
+        <Button
+            Margin="0,16,0,0"
+            HorizontalAlignment="Center"
+            Classes="Primary"
+            Command="{Binding $parent[modals:TrophyModal].Dismiss}">
             <TextBlock Text="Awesome!" />
         </Button>
     </StackPanel>

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -15,8 +14,6 @@ using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Views;
 using Trident.Abstractions;
-using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Igniters;
 using Trident.Core.Services;

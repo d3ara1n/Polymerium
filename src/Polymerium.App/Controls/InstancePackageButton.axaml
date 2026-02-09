@@ -1,11 +1,12 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:Polymerium.App.Controls"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:m="using:Polymerium.App.Models"
-                    xmlns:converters="using:Polymerium.App.Converters"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Controls"
+    xmlns:m="using:Polymerium.App.Models">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24" Spacing="12">
@@ -17,91 +18,131 @@
         <Setter Property="Cursor" Value="Hand" />
     </ControlTheme>
 
-    <ControlTheme x:Key="ListPackageEntryButtonTheme" TargetType="local:InstancePackageButton"
-                  BasedOn="{StaticResource BasePackageEntryButtonTheme}">
+    <ControlTheme
+        x:Key="ListPackageEntryButtonTheme"
+        BasedOn="{StaticResource BasePackageEntryButtonTheme}"
+        TargetType="local:InstancePackageButton">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
-                <husk:Card Name="Background" Height="68" Background="{StaticResource LayerBackgroundBrush}"
-                           CornerRadius="{StaticResource MediumCornerRadius}" Padding="0">
+                <husk:Card
+                    Name="Background"
+                    Height="68"
+                    Padding="0"
+                    Background="{StaticResource LayerBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
-                            <Binding Path="IsEnabled" Mode="OneWay" />
+                            <Binding Mode="OneWay" Path="IsEnabled" />
                             <Binding Source="{StaticResource ControlDimOpacity}" />
                         </MultiBinding>
                     </husk:Card.Opacity>
                     <husk:Card.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <DoubleTransition
+                                Easing="SineEaseOut"
+                                Property="Opacity"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </husk:Card.Transitions>
                     <Panel>
-                        <TextBlock Text="{x:Static lang:Resources.InstancePackageButton_DisabledLabelText}"
-                                   FontSize="36" HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   RenderTransform="scaleX(1.2)"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="36"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            RenderTransform="scaleX(1.2)"
+                            Text="{x:Static lang:Resources.InstancePackageButton_DisabledLabelText}">
                             <TextBlock.Opacity>
                                 <MultiBinding Converter="{x:Static converters:InternalConverters.ZeroOr}">
-                                    <Binding Path="IsEnabled" Mode="OneWay" />
+                                    <Binding Mode="OneWay" Path="IsEnabled" />
                                     <Binding Source="{StaticResource Overlay2Opacity}" />
                                 </MultiBinding>
                             </TextBlock.Opacity>
                             <TextBlock.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <DoubleTransition
+                                        Easing="SineEaseOut"
+                                        Property="Opacity"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 </Transitions>
                             </TextBlock.Transitions>
                         </TextBlock>
                         <husk:PlaceholderPresenter Source="{Binding Info}">
                             <husk:PlaceholderPresenter.SourceTemplate>
                                 <DataTemplate DataType="m:InstancePackageInfoModel">
-                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*" ColumnSpacing="8"
-                                          Margin="{StaticResource CardContentMargin}">
-                                        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-                                                CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
-                                                Width="{Binding $self.Bounds.Height}">
+                                    <Grid
+                                        Margin="{StaticResource CardContentMargin}"
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="8"
+                                        RowDefinitions="Auto,*">
+                                        <Border
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Width="{Binding $self.Bounds.Height}"
+                                            ClipToBounds="True"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                             <Border.Background>
                                                 <ImageBrush Source="{Binding Thumbnail}" />
                                             </Border.Background>
                                         </Border>
-                                        <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*,Auto"
-                                              ColumnSpacing="6">
-                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
-                                                <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
-                                                          Classes="Primary" IsVisible="{Binding Owner.IsLocked}">
-                                                    <husk:IconLabel Icon="LockClosed"
-                                                                    Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                        <Grid
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            ColumnDefinitions="Auto,*,Auto"
+                                            ColumnSpacing="6">
+                                            <StackPanel
+                                                Grid.Column="0"
+                                                Orientation="Horizontal"
+                                                Spacing="4">
+                                                <husk:Tag
+                                                    Classes="Primary"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    IsVisible="{Binding Owner.IsLocked}">
+                                                    <husk:IconLabel Icon="LockClosed" Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock
-                                                        Text="{Binding Kind,Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter},FallbackValue=Kind}" />
+                                                    <TextBlock Text="{Binding Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}, FallbackValue=Kind}" />
                                                 </husk:Tag>
                                             </StackPanel>
-                                            <TextBlock Grid.Column="1"
-                                                       TextTrimming="CharacterEllipsis"
-                                                       Text="{Binding ProjectName,FallbackValue=Name}"
-                                                       FontSize="{StaticResource LargeFontSize}"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       VerticalAlignment="Center" />
-                                            <ToggleSwitch Grid.Column="2" OnContent="{x:Null}" OffContent="{x:Null}"
-                                                          IsChecked="{Binding Owner.IsEnabled,Mode=TwoWay}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding ProjectName, FallbackValue=Name}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <ToggleSwitch
+                                                Grid.Column="2"
+                                                IsChecked="{Binding Owner.IsEnabled, Mode=TwoWay}"
+                                                OffContent="{x:Null}"
+                                                OnContent="{x:Null}" />
                                         </Grid>
-                                        <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,Auto,*,Auto"
-                                              ColumnSpacing="8">
-                                            <TextBlock Grid.Column="0" VerticalAlignment="Center"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                       Text="{Binding Author,StringFormat={}@{0},FallbackValue=Author}" />
-                                            <husk:Divider Grid.Column="1" Orientation="Vertical" Margin="0,4"
-                                                          IsVisible="{Binding Owner.Tags.Count,Converter={x:Static husk:NumberConverters.IsNonZero}}" />
-                                            <ItemsControl Grid.Column="2"
-                                                          ItemsSource="{Binding Owner.Tags}">
+                                        <Grid
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            ColumnDefinitions="Auto,Auto,*,Auto"
+                                            ColumnSpacing="8">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding Author, StringFormat={}@{0}, FallbackValue=Author}" />
+                                            <husk:Divider
+                                                Grid.Column="1"
+                                                Margin="0,4"
+                                                IsVisible="{Binding Owner.Tags.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                                Orientation="Vertical" />
+                                            <ItemsControl Grid.Column="2" ItemsSource="{Binding Owner.Tags}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="x:String">
                                                         <husk:Tag>
@@ -115,21 +156,22 @@
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                             </ItemsControl>
-                                            <ContentControl Grid.Column="3" Content="{Binding Version}"
-                                                            VerticalAlignment="Center">
+                                            <ContentControl
+                                                Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Content="{Binding Version}">
                                                 <ContentControl.DataTemplates>
                                                     <DataTemplate DataType="m:InstancePackageVersionModel">
-                                                        <TextBlock Text="{Binding Name,FallbackValue=Version}"
-                                                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{Binding Name, FallbackValue=Version}" />
                                                     </DataTemplate>
                                                     <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
                                                         <husk:Tag Classes="Primary Small">
                                                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                                                <TextBlock
-                                                                    Text="{x:Static lang:Resources.InstancePackageButton_AutoVersionTagText}" />
-                                                                <fi:SymbolIcon Symbol="Sparkle"
-                                                                               FontSize="{StaticResource SmallFontSize}"
-                                                                               VerticalAlignment="Center" />
+                                                                <TextBlock Text="{x:Static lang:Resources.InstancePackageButton_AutoVersionTagText}" />
+                                                                <fi:SymbolIcon
+                                                                    VerticalAlignment="Center"
+                                                                    FontSize="{StaticResource SmallFontSize}"
+                                                                    Symbol="Sparkle" />
                                                             </StackPanel>
                                                         </husk:Tag>
                                                     </DataTemplate>
@@ -141,9 +183,9 @@
                             </husk:PlaceholderPresenter.SourceTemplate>
                             <husk:PlaceholderPresenter.Placeholder>
                                 <husk:SkeletonContainer
-                                    IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
+                                    CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}"
                                     IsAnimated="{TemplateBinding IsRefreshing}"
-                                    CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}" />
+                                    IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
                             </husk:PlaceholderPresenter.Placeholder>
                         </husk:PlaceholderPresenter>
                     </Panel>
@@ -152,13 +194,11 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ husk|Card#Background">
-            <Setter Property="BorderBrush"
-                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ husk|Card#Background">
-            <Setter Property="Background"
-                    Value="{StaticResource OverlayFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ husk|Card#Background">
@@ -166,33 +206,48 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="GridPackageEntryButtonTheme" TargetType="local:InstancePackageButton"
-                  BasedOn="{StaticResource BasePackageEntryButtonTheme}">
+    <ControlTheme
+        x:Key="GridPackageEntryButtonTheme"
+        BasedOn="{StaticResource BasePackageEntryButtonTheme}"
+        TargetType="local:InstancePackageButton">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
-                <husk:Card Name="Background" Background="{StaticResource LayerBackgroundBrush}"
-                           CornerRadius="{StaticResource MediumCornerRadius}" Padding="0">
+                <husk:Card
+                    Name="Background"
+                    Padding="0"
+                    Background="{StaticResource LayerBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
-                            <Binding Path="IsEnabled" Mode="OneWay" />
+                            <Binding Mode="OneWay" Path="IsEnabled" />
                             <Binding Source="{StaticResource ControlDimOpacity}" />
                         </MultiBinding>
                     </husk:Card.Opacity>
                     <husk:Card.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <DoubleTransition
+                                Easing="SineEaseOut"
+                                Property="Opacity"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </husk:Card.Transitions>
                     <husk:PlaceholderPresenter Source="{Binding Info}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate x:DataType="m:InstancePackageInfoModel">
-                                <Border CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
-                                        Width="64" Height="64" Margin="{StaticResource CardContentMargin}">
+                                <Border
+                                    Width="64"
+                                    Height="64"
+                                    Margin="{StaticResource CardContentMargin}"
+                                    ClipToBounds="True"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                     <Border.Background>
                                         <ImageBrush Source="{Binding Thumbnail}" />
                                     </Border.Background>
@@ -201,22 +256,20 @@
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:PlaceholderPresenter.Placeholder>
                             <husk:SkeletonContainer
-                                IsLoading="{Binding Info,Converter={x:Static ObjectConverters.IsNull}}"
+                                CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}"
                                 IsAnimated="{TemplateBinding IsRefreshing}"
-                                CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}" />
+                                IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
                         </husk:PlaceholderPresenter.Placeholder>
                     </husk:PlaceholderPresenter>
                 </husk:Card>
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover /template/ husk|Card#Background">
-            <Setter Property="BorderBrush"
-                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ husk|Card#Background">
-            <Setter Property="Background"
-                    Value="{StaticResource OverlayFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ husk|Card#Background">

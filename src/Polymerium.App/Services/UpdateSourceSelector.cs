@@ -42,9 +42,7 @@ public class UpdateSourceSelector(
         {
             return sources.OfType<GithubSource>().First();
         }
-        else
-        {
-            return sources.OfType<MirrorChyanSource>().First();
-        }
+
+        return sources.OfType<MirrorChyanSource>().First();
     }
 }

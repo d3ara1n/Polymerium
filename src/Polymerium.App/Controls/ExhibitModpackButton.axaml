@@ -1,18 +1,19 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                    xmlns:m="clr-namespace:Polymerium.App.Models"
-                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                    xmlns:v="clr-namespace:Polymerium.App.Views"
-                    xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:v="clr-namespace:Polymerium.App.Views"
+    xmlns:vm="clr-namespace:Polymerium.App.ViewModels">
     <Design.PreviewWith>
         <Panel Background="White">
             <StackPanel Margin="24">
-                <controls:ExhibitModpackButton Theme="{StaticResource GridExhibitModpackButtonTheme}" MaxWidth="256" />
+                <controls:ExhibitModpackButton MaxWidth="256" Theme="{StaticResource GridExhibitModpackButtonTheme}" />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
@@ -21,78 +22,126 @@
         <Setter Property="Cursor" Value="Hand" />
     </ControlTheme>
 
-    <ControlTheme x:Key="ListExhibitModpackButtonTheme" TargetType="controls:ExhibitModpackButton"
-                  BasedOn="{StaticResource BaseExhibitModpackButtonTheme}">
+    <ControlTheme
+        x:Key="ListExhibitModpackButtonTheme"
+        BasedOn="{StaticResource BaseExhibitModpackButtonTheme}"
+        TargetType="controls:ExhibitModpackButton">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:ExhibitModel">
-                <husk:Card Name="Background"
-                           CornerRadius="{StaticResource MediumCornerRadius}"
-                           Background="{StaticResource LayerBackgroundBrush}">
+                <husk:Card
+                    Name="Background"
+                    Background="{StaticResource LayerBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <DoubleTransition
+                                Easing="SineEaseOut"
+                                Property="Opacity"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </husk:Card.Transitions>
-                    <Grid RowDefinitions="*,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="12"
-                          ColumnSpacing="8">
-                        <Border Grid.Row="0" Grid.Column="0"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                Width="{Binding $self.Bounds.Height}">
+                    <Grid
+                        ColumnDefinitions="Auto,*,Auto"
+                        ColumnSpacing="8"
+                        RowDefinitions="*,Auto,Auto"
+                        RowSpacing="12">
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Width="{Binding $self.Bounds.Height}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <Border.Background>
-                                <ImageBrush Stretch="UniformToFill"
-                                            async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
                             </Border.Background>
                         </Border>
                         <StackPanel Grid.Row="0" Grid.Column="1">
-                            <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="{Binding Summary}" MaxLines="2" TextWrapping="Wrap"
-                                       TextTrimming="CharacterEllipsis" />
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{Binding ProjectName}" />
+                            <TextBlock
+                                MaxLines="2"
+                                Text="{Binding Summary}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4">
-                            <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
-                                <icons:PackIconLucide Kind="CircleUser" Height="12" VerticalAlignment="Center"
-                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Text="{Binding Author}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           ToolTip.Tip="{Binding Author}" />
+                        <StackPanel
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Spacing="4">
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <icons:PackIconLucide
+                                    Height="12"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Kind="CircleUser" />
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Author}"
+                                    ToolTip.Tip="{Binding Author}" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
-                                <icons:PackIconLucide Kind="CircleArrowDown" Height="12"
-                                                      VerticalAlignment="Center"
-                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Text="{Binding Downloads}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           ToolTip.Tip="{Binding DownloadsRaw}" />
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <icons:PackIconLucide
+                                    Height="12"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Kind="CircleArrowDown" />
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Downloads}"
+                                    ToolTip.Tip="{Binding DownloadsRaw}" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
-                                <icons:PackIconLucide Kind="Clock"
-                                                      Height="12" VerticalAlignment="Center"
-                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Text="{Binding UpdatedAt}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           Background="Transparent"
-                                           ToolTip.Tip="{Binding UpdatedAtRaw}" />
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <icons:PackIconLucide
+                                    Height="12"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Kind="Clock" />
+                                <TextBlock
+                                    Background="Transparent"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding UpdatedAt}"
+                                    ToolTip.Tip="{Binding UpdatedAtRaw}" />
                             </StackPanel>
                         </StackPanel>
-                        <husk:Divider Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
-                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
-                                <Button Classes="Primary Small"
-                                        Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
-                                        CommandParameter="{Binding}">
+                        <husk:Divider
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3" />
+                        <DockPanel
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                            <StackPanel
+                                DockPanel.Dock="Right"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <Button
+                                    Classes="Primary Small"
+                                    Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    CommandParameter="{Binding}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <!-- <icons:PackIconLucide Kind="Download" -->
-                                        <!--                       Height="10" Width="10" VerticalAlignment="Center" /> -->
-                                        <fi:SymbolIcon Symbol="ArrowDownload"
-                                                       FontSize="{StaticResource SmallFontSize}" />
-                                        <TextBlock
-                                            Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
+                                        <!--  <icons:PackIconLucide Kind="Download"  -->
+                                        <!--  Height="10" Width="10" VerticalAlignment="Center" />  -->
+                                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowDownload" />
+                                        <TextBlock Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
@@ -105,8 +154,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
                                         <husk:Tag>
-                                            <TextBlock Text="{Binding}"
-                                                       FontSize="{StaticResource SmallFontSize}" />
+                                            <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{Binding}" />
                                         </husk:Tag>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -118,13 +166,11 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ husk|Card#Background">
-            <Setter Property="BorderBrush"
-                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ husk|Card#Background">
-            <Setter Property="Background"
-                    Value="{StaticResource OverlayFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ husk|Card#Background">
@@ -132,65 +178,91 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="GridExhibitModpackButtonTheme" TargetType="controls:ExhibitModpackButton"
-                  BasedOn="{StaticResource BaseExhibitModpackButtonTheme}">
+    <ControlTheme
+        x:Key="GridExhibitModpackButtonTheme"
+        BasedOn="{StaticResource BaseExhibitModpackButtonTheme}"
+        TargetType="controls:ExhibitModpackButton">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:ExhibitModel">
-                <husk:Card Name="Background"
-                           CornerRadius="{StaticResource MediumCornerRadius}" Padding="0"
-                           Background="{StaticResource LayerBackgroundBrush}"
-                           BackgroundSizing="InnerBorderEdge">
+                <husk:Card
+                    Name="Background"
+                    Padding="0"
+                    Background="{StaticResource LayerBackgroundBrush}"
+                    BackgroundSizing="InnerBorderEdge"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <DoubleTransition
+                                Easing="SineEaseOut"
+                                Property="Opacity"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </husk:Card.Transitions>
                     <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
-                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*"
-                              Margin="12" ColumnSpacing="8">
-                            <Border Grid.Column="0" Height="80" Width="80"
-                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Grid
+                            Grid.Row="0"
+                            Margin="12"
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="8">
+                            <Border
+                                Grid.Column="0"
+                                Width="80"
+                                Height="80"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
                                 <Border.Background>
-                                    <ImageBrush Stretch="UniformToFill"
-                                                async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
                                 </Border.Background>
                             </Border>
-                            <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="4">
-                                <TextBlock Grid.Row="0"
-                                           Text="{Binding ProjectName,FallbackValue=Name}"
-                                           FontWeight="{StaticResource ControlStrongFontWeight}"
-                                           FontSize="{StaticResource LargeFontSize}"
-                                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ProjectName}"
-                                           TextWrapping="Wrap" MaxLines="2" />
-                                <Button Grid.Row="1"
-                                        Classes="Primary Small"
-                                        Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
-                                        CommandParameter="{Binding}"
-                                        BackgroundSizing="InnerBorderEdge">
+                            <Grid
+                                Grid.Column="1"
+                                RowDefinitions="*,Auto"
+                                RowSpacing="4">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    MaxLines="2"
+                                    Text="{Binding ProjectName, FallbackValue=Name}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="Wrap"
+                                    ToolTip.Tip="{Binding ProjectName}" />
+                                <Button
+                                    Grid.Row="1"
+                                    BackgroundSizing="InnerBorderEdge"
+                                    Classes="Primary Small"
+                                    Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    CommandParameter="{Binding}">
                                     <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon Symbol="ArrowDownload"
-                                                       FontSize="{StaticResource SmallFontSize}" />
-                                        <TextBlock
-                                            Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
+                                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowDownload" />
+                                        <TextBlock Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
                             </Grid>
                         </Grid>
                         <Border Grid.Row="1" ToolTip.Tip="{Binding Summary}">
-                            <TextBlock Text="{Binding Summary,FallbackValue=Summmmmmmmmmmmmmmmmmmmmmmmmmary}"
-                                       MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                                       Margin="12,0" />
+                            <TextBlock
+                                Margin="12,0"
+                                MaxLines="2"
+                                Text="{Binding Summary, FallbackValue=Summmmmmmmmmmmmmmmmmmmmmmmmmary}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
                         </Border>
                         <Border Grid.Row="2">
-                            <!-- Filling Spare Space -->
+                            <!--  Filling Spare Space  -->
                         </Border>
-                        <ItemsControl Grid.Row="3" ItemsSource="{Binding Tags}" Margin="12"
-                                      Background="Transparent">
+                        <ItemsControl
+                            Grid.Row="3"
+                            Margin="12"
+                            Background="Transparent"
+                            ItemsSource="{Binding Tags}">
                             <ToolTip.Tip>
                                 <ItemsControl ItemsSource="{Binding Tags}">
                                     <ItemsControl.ItemsPanel>
@@ -207,39 +279,60 @@
                             </ToolTip.Tip>
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4" />
+                                    <WrapPanel
+                                        ItemSpacing="4"
+                                        LineSpacing="4"
+                                        Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <husk:Tag>
-                                        <TextBlock Text="{Binding}"
-                                                   FontSize="{StaticResource SmallFontSize}" />
+                                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{Binding}" />
                                     </husk:Tag>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <husk:Divider Grid.Row="4" />
-                        <Grid Grid.Row="5" Margin="12,8" ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto"
-                              ColumnSpacing="4">
-                            <icons:PackIconLucide Grid.Column="0" Kind="CircleUser" Height="12"
-                                                  VerticalAlignment="Center"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Author}" TextTrimming="CharacterEllipsis"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       ToolTip.Tip="{Binding Author}" />
-                            <icons:PackIconLucide Grid.Column="2" Kind="CircleArrowDown" Height="12"
-                                                  VerticalAlignment="Center"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Grid.Column="3" Text="{Binding Downloads}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       ToolTip.Tip="{Binding DownloadsRaw}" />
-                            <icons:PackIconLucide Grid.Column="4" Kind="Clock"
-                                                  Height="12" VerticalAlignment="Center"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Grid.Column="5" Text="{Binding UpdatedAt}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       ToolTip.Tip="{Binding UpdatedAtRaw}" />
+                        <Grid
+                            Grid.Row="5"
+                            Margin="12,8"
+                            ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto"
+                            ColumnSpacing="4">
+                            <icons:PackIconLucide
+                                Grid.Column="0"
+                                Height="12"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="CircleUser" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding Author}"
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip.Tip="{Binding Author}" />
+                            <icons:PackIconLucide
+                                Grid.Column="2"
+                                Height="12"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="CircleArrowDown" />
+                            <TextBlock
+                                Grid.Column="3"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding Downloads}"
+                                ToolTip.Tip="{Binding DownloadsRaw}" />
+                            <icons:PackIconLucide
+                                Grid.Column="4"
+                                Height="12"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="Clock" />
+                            <TextBlock
+                                Grid.Column="5"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding UpdatedAt}"
+                                ToolTip.Tip="{Binding UpdatedAtRaw}" />
                         </Grid>
                     </Grid>
                 </husk:Card>
@@ -247,13 +340,11 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ husk|Card#Background">
-            <Setter Property="BorderBrush"
-                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ husk|Card#Background">
-            <Setter Property="Background"
-                    Value="{StaticResource OverlayFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ husk|Card#Background">
