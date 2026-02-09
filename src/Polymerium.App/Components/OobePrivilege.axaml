@@ -1,120 +1,137 @@
-<controls:OobeStep xmlns="https://github.com/avaloniaui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                   xmlns:components="clr-namespace:Polymerium.App.Components"
-                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                   mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
-                   x:Class="Polymerium.App.Components.OobePrivilege">
-    <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
-        <!-- Unified Header -->
-        <StackPanel Spacing="8" HorizontalAlignment="Center">
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="32"
-                    Width="64" Height="64"
-                    HorizontalAlignment="Center">
-                <fi:SymbolIcon Symbol="Key"
-                               FontSize="32"
-                               Foreground="{StaticResource AccentFillColorDefaultBrush}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
+﻿<controls:OobeStep
+    x:Class="Polymerium.App.Components.OobePrivilege"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:Polymerium.App.Components"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="400"
+    d:DesignWidth="480"
+    mc:Ignorable="d">
+    <StackPanel
+        Margin="24,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <!--  Unified Header  -->
+        <StackPanel HorizontalAlignment="Center" Spacing="8">
+            <Border
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="32">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="Key" />
             </Border>
-            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Title}"
-                       HorizontalAlignment="Center"
-                       FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_Subtitle}"
-                       HorizontalAlignment="Center"
-                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.OobePrivilege_Title}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.OobePrivilege_Subtitle}" />
         </StackPanel>
 
-        <!-- Status Card - Changes based on privilege state -->
-        <husk:SwitchPresenter Value="{Binding $parent[components:OobePrivilege].IsPrivilegeGranted}"
-                              TargetType="x:Boolean">
-            <!-- Privilege Granted - Success Card -->
+        <!--  Status Card - Changes based on privilege state  -->
+        <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[components:OobePrivilege].IsPrivilegeGranted}">
+            <!--  Privilege Granted - Success Card  -->
             <husk:SwitchCase Value="{x:True}">
-                <Border Background="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}"
-                        Padding="12,10">
+                <Border
+                    Padding="12,10"
+                    Background="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="Auto,12,*">
-                        <fi:SymbolIcon Grid.Column="0"
-                                       Symbol="CheckmarkCircle"
-                                       Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                       FontSize="24"
-                                       VerticalAlignment="Center" />
+                        <fi:SymbolIcon
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                            Symbol="CheckmarkCircle" />
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedTitle}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedMessage}"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       TextWrapping="Wrap" />
+                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedTitle}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedMessage}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
                 </Border>
             </husk:SwitchCase>
 
-            <!-- Privilege Required - Warning Card -->
+            <!--  Privilege Required - Warning Card  -->
             <husk:SwitchCase Value="{x:False}">
-                <Border Background="{StaticResource ControlWarningTranslucentFullBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}"
-                        Padding="12,10">
+                <Border
+                    Padding="12,10"
+                    Background="{StaticResource ControlWarningTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="Auto,12,*,Auto">
-                        <fi:SymbolIcon Grid.Column="0"
-                                       Symbol="Warning"
-                                       Foreground="{StaticResource ControlWarningForegroundBrush}"
-                                       FontSize="24"
-                                       VerticalAlignment="Center" />
+                        <fi:SymbolIcon
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Foreground="{StaticResource ControlWarningForegroundBrush}"
+                            Symbol="Warning" />
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredTitle}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredMessage}"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       TextWrapping="Wrap" />
+                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredTitle}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredMessage}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
-                        <Button Grid.Column="3"
-                                Theme="{StaticResource GhostButtonTheme}"
-                                Classes="Small"
-                                Command="{Binding $parent[components:OobePrivilege].CheckPrivilegeCommand}">
-                            <fi:SymbolIcon Symbol="ArrowClockwise" FontSize="{StaticResource SmallFontSize}" />
+                        <Button
+                            Grid.Column="3"
+                            Classes="Small"
+                            Command="{Binding $parent[components:OobePrivilege].CheckPrivilegeCommand}"
+                            Theme="{StaticResource GhostButtonTheme}">
+                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowClockwise" />
                         </Button>
                     </Grid>
                 </Border>
             </husk:SwitchCase>
         </husk:SwitchPresenter>
 
-        <!-- Instructions Card (always visible) -->
-        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                CornerRadius="{StaticResource MediumCornerRadius}"
-                Padding="12,10">
+        <!--  Instructions Card (always visible)  -->
+        <Border
+            Padding="12,10"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
             <StackPanel Spacing="8">
-                <TextBlock Text="{x:Static lang:Resources.OobePrivilege_InstructionsTitle}"
-                           FontWeight="{StaticResource ControlStrongFontWeight}" />
-                <TextBlock Text="{x:Static lang:Resources.OobePrivilege_InstructionsDescription}"
-                           TextWrapping="Wrap"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                           FontSize="{StaticResource SmallFontSize}" />
-                <HyperlinkButton NavigateUri="ms-settings:developers"
-                                 HorizontalAlignment="Left">
+                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivilege_InstructionsTitle}" />
+                <TextBlock
+                    FontSize="{StaticResource SmallFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.OobePrivilege_InstructionsDescription}"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton HorizontalAlignment="Left" NavigateUri="ms-settings:developers">
                     <StackPanel Orientation="Horizontal" Spacing="4">
-                        <fi:SymbolIcon Symbol="Open" FontSize="{StaticResource SmallFontSize}" />
+                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Open" />
                         <TextBlock Text="{x:Static lang:Resources.OobePrivilege_OpenSettingsButtonText}" />
                     </StackPanel>
                 </HyperlinkButton>
             </StackPanel>
         </Border>
 
-        <!-- Safety Note -->
-        <TextBlock HorizontalAlignment="Center"
-                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   FontSize="{StaticResource SmallFontSize}"
-                   MaxWidth="400">
+        <!--  Safety Note  -->
+        <TextBlock
+            MaxWidth="400"
+            HorizontalAlignment="Center"
+            FontSize="{StaticResource SmallFontSize}"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            TextAlignment="Center"
+            TextWrapping="Wrap">
             <Run Text="{x:Static lang:Resources.OobePrivilege_SafetyNote}" TextDecorations="Underline" />
             <LineBreak />
             <Run Text="{x:Static lang:Resources.OobePrivilege_SafetyDescription}" />

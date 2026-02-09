@@ -1,7 +1,3 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿namespace Polymerium.App.Models;
 
-namespace Polymerium.App.Models;
-
-public partial class LiveLogSourceModel : LogSourceModelBase
-{
-}
+public class LiveLogSourceModel : LogSourceModelBase { }

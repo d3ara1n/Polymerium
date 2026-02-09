@@ -1,15 +1,18 @@
-﻿<controls:AccountCreationStep xmlns="https://github.com/avaloniaui"
-                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                              xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                              xmlns:local="clr-namespace:Polymerium.App.Components"
-                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                              mc:Ignorable="d" d:DesignHeight="320" d:DesignWidth="256"
-                              x:Class="Polymerium.App.Components.AccountCreationPortal"
-                              Header="{x:Static lang:Resources.AccountCreationPortal_Title}"
-                              IsNextAvailable="True">
+﻿<controls:AccountCreationStep
+    x:Class="Polymerium.App.Components.AccountCreationPortal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="320"
+    d:DesignWidth="256"
+    Header="{x:Static lang:Resources.AccountCreationPortal_Title}"
+    IsNextAvailable="True"
+    mc:Ignorable="d">
     <StackPanel Spacing="12">
         <TabStrip Name="AccountTypeSelectBox">
             <TabStrip.ItemsPanel>
@@ -19,32 +22,32 @@
             </TabStrip.ItemsPanel>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftTitle}"
-                               FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftSubtitle}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftTitle}" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftSubtitle}"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}"
-                               FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_TrialSubtitle}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_TrialSubtitle}"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
-            <TabStripItem
-                IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,FallbackValue=False}">
+            <TabStripItem IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, FallbackValue=False}">
                 <StackPanel>
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_OfflineTitle}"
-                               FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_OfflineSubtitle}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.AccountCreationPortal_OfflineTitle}" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_OfflineSubtitle}"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
         </TabStrip>
-        <husk:InfoBar
-            IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,Converter={x:Static BoolConverters.Not},FallbackValue=True}"
-            Content="{x:Static lang:Resources.AccountCreationPortal_Prompt}" />
+        <husk:InfoBar Content="{x:Static lang:Resources.AccountCreationPortal_Prompt}" IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, Converter={x:Static BoolConverters.Not}, FallbackValue=True}" />
     </StackPanel>
 </controls:AccountCreationStep>

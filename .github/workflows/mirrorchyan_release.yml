@@ -1,49 +1,49 @@
 name: MirrorChyan Release Upload
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        default: ''
-        required: false
-  release:
-    types: [released]
+    workflow_dispatch:
+        inputs:
+            tag:
+                default: ''
+                required: false
+    release:
+        types: [ released ]
 
 jobs:
-  mirrorchyan:
-    runs-on: macos-latest
-    if: ${{ github.repository_owner == 'd3ara1n' }}
+    mirrorchyan:
+        runs-on: macos-latest
+        if: ${{ github.repository_owner == 'd3ara1n' }}
 
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [win, linux]
-        arch: [x86_64]
-    steps:
-      - name: Get version from tag
-        id: version
-        run: |
-          # 优先使用 inputs.tag，否则从 release 事件获取
-          TAG="${{ inputs.tag }}"
-          if [ -z "$TAG" ]; then
-            TAG="${{ github.event.release.tag_name }}"
-          fi
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [ win, linux ]
+                arch: [ x86_64 ]
+        steps:
+            -   name: Get version from tag
+                id: version
+                run: |
+                    # 优先使用 inputs.tag，否则从 release 事件获取
+                    TAG="${{ inputs.tag }}"
+                    if [ -z "$TAG" ]; then
+                      TAG="${{ github.event.release.tag_name }}"
+                    fi
 
-          VERSION="${TAG#v}"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-        shell: bash
+                    VERSION="${TAG#v}"
+                    echo "version=$VERSION" >> $GITHUB_OUTPUT
+                shell: bash
 
-      - uses: MirrorChyan/uploading-action@v1
-        with:
-          filetype: latest-release
-          filename: ${{ format(fromJson('{"win":"Polymerium-{0}-full.nupkg","linux":"Polymerium-{0}-linux-full.nupkg"}')[matrix.os], steps.version.outputs.version) }}
-          mirrorchyan_rid: Polymerium
-          tag: ${{ inputs.tag }}
+            -   uses: MirrorChyan/uploading-action@v1
+                with:
+                    filetype: latest-release
+                    filename: ${{ format(fromJson('{"win":"Polymerium-{0}-full.nupkg","linux":"Polymerium-{0}-linux-full.nupkg"}')[matrix.os], steps.version.outputs.version) }}
+                    mirrorchyan_rid: Polymerium
+                    tag: ${{ inputs.tag }}
 
-          os: ${{ matrix.os }}
-          arch: ${{ matrix.arch }}
+                    os: ${{ matrix.os }}
+                    arch: ${{ matrix.arch }}
 
-          owner: d3ara1n
-          repo: Polymerium
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          upload_token: ${{ secrets.MirrorChyanUploadToken }}
+                    owner: d3ara1n
+                    repo: Polymerium
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    upload_token: ${{ secrets.MirrorChyanUploadToken }}

@@ -6,8 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
-using Polymerium.App.Assets;
-using Polymerium.App.Models;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -165,8 +163,7 @@ public class DataService(
                                                              string.Empty,
                                                              new(null, null, ResourceKind.Modpack));
                         var exhibits = await handle.FetchAsync(CancellationToken.None);
-                        var models = exhibits
-                                    .Take(5);
+                        var models = exhibits.Take(5);
                         return models;
                     });
 

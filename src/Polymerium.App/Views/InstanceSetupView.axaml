@@ -1,248 +1,307 @@
-﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                  xmlns:vm="using:Polymerium.App.ViewModels"
-                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                  xmlns:m="using:Polymerium.App.Models"
-                  xmlns:controls="using:Polymerium.App.Controls"
-                  xmlns:v="clr-namespace:Polymerium.App.Views"
-                  xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
-                  xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
-                  xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
-                  x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Views.InstanceSetupView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="using:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+    xmlns:v="clr-namespace:Polymerium.App.Views"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    Padding="0"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    x:DataType="vm:InstanceSetupViewModel"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
     <controls:Subpage.Resources>
         <MenuFlyout x:Key="InstancePackageButtonFlyout" x:DataType="m:InstancePackageModel">
-            <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ActiveMenuText}"
-                      IsChecked="{Binding IsEnabled,Mode=TwoWay}"
-                      ToggleType="CheckBox"
-                      Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                Header="{x:Static lang:Resources.InstanceSetupView_ActiveMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Star,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsChecked="{Binding IsEnabled, Mode=TwoWay}"
+                ToggleType="CheckBox" />
             <MenuItem Header="-" />
-            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
-                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
-                      CommandParameter="{Binding Info.ProjectName,FallbackValue=Project Name}">
+            <MenuItem
+                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Info.ProjectName, FallbackValue=Project Name}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectNameMenuText}" />
-                        <TextBlock Text="{Binding Info.ProjectName,FallbackValue=Project Name}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.ProjectName, FallbackValue=Project Name}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
-                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
-                      CommandParameter="{Binding Info.ProjectId,FallbackValue=Pid}">
+            <MenuItem
+                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Info.ProjectId, FallbackValue=Pid}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectIdMenuText}" />
-                        <TextBlock Text="{Binding Info.ProjectId,FallbackValue=Pid}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.ProjectId, FallbackValue=Pid}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
-                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
-                      CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Name,FallbackValue=Version Name}"
-                      IsVisible="{Binding Info.Version,Converter={x:Static husk:ObjectConverters.Is},ConverterParameter={x:Type m:InstancePackageVersionModel},FallbackValue={x:False}}">
+            <MenuItem
+                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}">
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionNameMenuText}" />
-                        <TextBlock
-                            Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name,FallbackValue=Version Name}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
-                      Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
-                      CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Id,FallbackValue=Vid}"
-                      IsVisible="{Binding Info.Version,Converter={x:Static husk:ObjectConverters.Is},ConverterParameter={x:Type m:InstancePackageVersionModel},FallbackValue={x:False}}">
+            <MenuItem
+                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}">
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionIdMenuText}" />
-                        <TextBlock Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id,FallbackValue=Vid}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem Header="-" />
-            <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_OpenWebsiteMenuText}"
-                      Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                      CommandParameter="{Binding Info.Reference,FallbackValue={x:Null}}"
-                      Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-            <!-- <MenuItem Header="Add to Favorites" -->
-            <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
-            <!-- <MenuItem Header="Remove from Favorite" -->
-            <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
+            <MenuItem
+                Command="{x:Static m:InternalCommands.OpenUriCommand}"
+                CommandParameter="{Binding Info.Reference, FallbackValue={x:Null}}"
+                Header="{x:Static lang:Resources.InstanceSetupView_OpenWebsiteMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Open,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <!--  <MenuItem Header="Add to Favorites"  -->
+            <!--  Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />  -->
+            <!--  <MenuItem Header="Remove from Favorite"  -->
+            <!--  Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />  -->
             <MenuItem Header="-" />
-            <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
-                      Foreground="{StaticResource ControlDangerForegroundBrush}"
-                      Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).RemovePackageCommand,FallbackValue={x:Null}}"
-                      CommandParameter="{Binding }"
-                      IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
-                      Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Delete,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsEnabled="{Binding IsLocked, Converter={x:Static BoolConverters.Not}}" />
         </MenuFlyout>
     </controls:Subpage.Resources>
     <husk:BusyContainer>
         <husk:BusyContainer.IsBusy>
             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                <Binding Path="State" Converter="{x:Static husk:ObjectConverters.Match}" ConverterParameter="Updating" />
-                <Binding Path="State" Converter="{x:Static husk:ObjectConverters.Match}"
-                         ConverterParameter="Deploying" />
+                <Binding
+                    Converter="{x:Static husk:ObjectConverters.Match}"
+                    ConverterParameter="Updating"
+                    Path="State" />
+                <Binding
+                    Converter="{x:Static husk:ObjectConverters.Match}"
+                    ConverterParameter="Deploying"
+                    Path="State" />
             </MultiBinding>
         </husk:BusyContainer.IsBusy>
         <husk:BusyContainer.PendingContent>
-            <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Background="{StaticResource OverlaySolidBackgroundBrush}">
-                <StackPanel Spacing="8" Margin="24">
-                    <husk:ProgressRing HorizontalAlignment="Center" Height="56" Width="56"
-                                       Value="{Binding UpdatingProgress,Mode=OneWay}">
+            <husk:Card
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{StaticResource OverlaySolidBackgroundBrush}">
+                <StackPanel Margin="24" Spacing="8">
+                    <husk:ProgressRing
+                        Width="56"
+                        Height="56"
+                        HorizontalAlignment="Center"
+                        Value="{Binding UpdatingProgress, Mode=OneWay}">
                         <husk:ProgressRing.IsIndeterminate>
                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
                                 <Binding Path="UpdatingPending" />
-                                <Binding Path="State" Converter="{x:Static husk:ObjectConverters.Match}"
-                                         ConverterParameter="Deploying" />
+                                <Binding
+                                    Converter="{x:Static husk:ObjectConverters.Match}"
+                                    ConverterParameter="Deploying"
+                                    Path="State" />
                             </MultiBinding>
                         </husk:ProgressRing.IsIndeterminate>
                         <husk:ProgressRing.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Value" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <DoubleTransition
+                                    Easing="SineEaseOut"
+                                    Property="Value"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
                             </Transitions>
                         </husk:ProgressRing.Transitions>
                     </husk:ProgressRing>
-                    <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_InoperableLabelText}"
-                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                               HorizontalAlignment="Center" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.InstanceSetupView_InoperableLabelText}" />
                 </StackPanel>
             </husk:Card>
         </husk:BusyContainer.PendingContent>
         <Grid RowDefinitions="Auto,0,*">
-            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12"
-                  Margin="{StaticResource PageHeaderlessContentMargin}">
+            <Grid
+                Grid.Row="0"
+                Margin="{StaticResource PageHeaderlessContentMargin}"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="12">
                 <Grid Grid.Column="0" RowDefinitions="*,4,Auto">
-                    <TextBlock Grid.Row="0" Text="{Binding Basic.Name,FallbackValue=Name}"
-                               FontSize="{StaticResource ExtraLargeFontSize}" TextWrapping="Wrap" MaxLines="2"
-                               TextTrimming="CharacterEllipsis" />
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
-                        <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
-                                BorderBrush="{StaticResource ControlAccentBackgroundBrush}"
-                                Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}">
+                    <TextBlock
+                        Grid.Row="0"
+                        FontSize="{StaticResource ExtraLargeFontSize}"
+                        MaxLines="2"
+                        Text="{Binding Basic.Name, FallbackValue=Name}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Grid.Row="2"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <Border
+                            Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlAccentBackgroundBrush}"
+                            BorderThickness="3,0,0,0"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <StackPanel Margin="12,6">
-                                <TextBlock
-                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
-                                <TextBlock FontSize="{StaticResource LargeFontSize}"
-                                           Text="{Binding Basic.Version, FallbackValue=Version}" />
+                                <TextBlock Foreground="{StaticResource ControlAccentForegroundBrush}" Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
+                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding Basic.Version, FallbackValue=Version}" />
 
                             </StackPanel>
                         </Border>
-                        <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
-                                BorderBrush="{StaticResource ControlBackgroundBrush}"
-                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
+                        <Border
+                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlBackgroundBrush}"
+                            BorderThickness="3,0,0,0"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <DockPanel>
-                                <Button DockPanel.Dock="Right" Padding="8,4" Command="{Binding EditLoaderCommand}"
-                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                                        IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
-                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Right}}">
-                                    <icons:PackIconLucide Kind="ArrowRightLeft" Height="{StaticResource LargeFontSize}"
-                                                          Width="{StaticResource LargeFontSize}" />
+                                <Button
+                                    Padding="8,4"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    Command="{Binding EditLoaderCommand}"
+                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                    DockPanel.Dock="Right"
+                                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNull}}">
+                                    <icons:PackIconLucide
+                                        Width="{StaticResource LargeFontSize}"
+                                        Height="{StaticResource LargeFontSize}"
+                                        Kind="ArrowRightLeft" />
                                 </Button>
                                 <StackPanel Margin="12,6">
-                                    <TextBlock
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceSetupView_LoaderLabelText}" />
-                                    <TextBlock FontSize="{StaticResource LargeFontSize}"
-                                               Text="{Binding LoaderLabel, FallbackValue=None}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceSetupView_LoaderLabelText}" />
+                                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding LoaderLabel, FallbackValue=None}" />
                                 </StackPanel>
                             </DockPanel>
                         </Border>
                     </StackPanel>
                 </Grid>
-                <husk:LazyContainer Grid.Column="1" MinWidth="198"
-                                    Source="{Binding Reference,FallbackValue={x:Null}}"
-                                    IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
+                <husk:LazyContainer
+                    Grid.Column="1"
+                    MinWidth="198"
+                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=True}"
+                    Source="{Binding Reference, FallbackValue={x:Null}}">
                     <husk:LazyContainer.FaultContent>
-                        <husk:Card BorderThickness="2"
-                                   BorderBrush="{StaticResource ControlBorderBrush}">
+                        <husk:Card BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock
-                                    Text="{x:Static lang:Resources.InstanceSetupView_ReferenceUnavailableLabelText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ReferenceUnavailableLabelText}" />
                                 <Button Content="Retry" IsVisible="False" />
                             </StackPanel>
                         </husk:Card>
                     </husk:LazyContainer.FaultContent>
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
-                            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                                    CornerRadius="{StaticResource MediumCornerRadius}" MaxWidth="320">
+                            <Border
+                                MaxWidth="320"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
                                 <controls:Plaque>
                                     <controls:Plaque.Header>
-                                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto"
-                                              ColumnSpacing="4">
-                                            <fi:SymbolIcon Grid.Column="0" Symbol="Info" Margin="6,0,0,0"
-                                                           FontSize="{StaticResource SmallFontSize}" />
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding VersionName,FallbackValue=Version}"
-                                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                                                       ToolTip.Tip="{Binding VersionName}" />
-                                            <Button Grid.Column="2"
-                                                    Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
-                                                    Classes="Small"
-                                                    Theme="{StaticResource OutlineButtonTheme}"
-                                                    Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}" />
+                                        <Grid
+                                            Grid.Row="1"
+                                            ColumnDefinitions="Auto,*,Auto"
+                                            ColumnSpacing="4">
+                                            <fi:SymbolIcon
+                                                Grid.Column="0"
+                                                Margin="6,0,0,0"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="Info" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding VersionName, FallbackValue=Version}"
+                                                TextTrimming="CharacterEllipsis"
+                                                ToolTip.Tip="{Binding VersionName}" />
+                                            <Button
+                                                Grid.Column="2"
+                                                Classes="Small"
+                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
+                                                Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
+                                                Theme="{StaticResource OutlineButtonTheme}" />
                                         </Grid>
                                     </controls:Plaque.Header>
                                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
-                                        <Border Grid.Column="0" Height="42" Width="42"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="42"
+                                            Height="42"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                             <Border.Background>
-                                                <ImageBrush
-                                                    async:ImageBrushLoader.Source="{Binding Thumbnail,FallbackValue={x:Null}}"
-                                                    Stretch="UniformToFill" />
+                                                <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail, FallbackValue={x:Null}}" Stretch="UniformToFill" />
                                             </Border.Background>
                                         </Border>
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                                            <TextBlock Text="{Binding ProjectName,FallbackValue=Display}"
-                                                       FontSize="{StaticResource LargeFontSize}"
-                                                       TextTrimming="CharacterEllipsis"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Spacing="2">
+                                            <TextBlock
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding ProjectName, FallbackValue=Display}"
+                                                TextTrimming="CharacterEllipsis"
+                                                ToolTip.Tip="{Binding ProjectName, FallbackValue=Name}" />
                                             <HyperlinkButton NavigateUri="{Binding SourceUrl}">
                                                 <ToolTip.Tip>
                                                     <StackPanel Spacing="2">
                                                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
-                                                            <TextBlock Grid.Column="0"
-                                                                       Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}"
-                                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                       FontSize="{StaticResource SmallFontSize}" />
-                                                            <fi:SymbolIcon Grid.Column="1" Symbol="Open"
-                                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                           FontSize="{StaticResource SmallFontSize}" />
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                                            <fi:SymbolIcon
+                                                                Grid.Column="1"
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Symbol="Open" />
                                                         </Grid>
-                                                        <TextBlock
-                                                            Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                                        <TextBlock Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
                                                     </StackPanel>
                                                 </ToolTip.Tip>
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <TextBlock
-                                                        Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                                    <fi:SymbolIcon Symbol="Open"
-                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                    <TextBlock Text="{Binding Label, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Open" />
                                                 </StackPanel>
                                             </HyperlinkButton>
                                         </StackPanel>
-                                        <Button Grid.Column="2" CornerRadius="{StaticResource FullCornerRadius}"
-                                                VerticalAlignment="Center" Padding="8"
-                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}">
-                                            <fi:SymbolIcon Symbol="ArrowRight"
-                                                           FontSize="{StaticResource LargeFontSize}" />
+                                        <Button
+                                            Grid.Column="2"
+                                            Padding="8"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
+                                            CornerRadius="{StaticResource FullCornerRadius}">
+                                            <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="ArrowRight" />
                                         </Button>
                                     </Grid>
                                 </controls:Plaque>
@@ -252,136 +311,129 @@
                 </husk:LazyContainer>
             </Grid>
             <Grid Grid.Row="2" RowDefinitions="Auto,*">
-                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="16,8"
-                      ColumnSpacing="12">
+                <Grid
+                    Grid.Row="0"
+                    Margin="16,8"
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="12">
 
-                    <!-- 搜索栏 -->
-                    <TextBox Grid.Column="0"
-                             Watermark="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}"
-                             MinWidth="168"
-                             Text="{Binding FilterText,Mode=OneWayToSource}"
-                             ToolTip.Tip="@Author #Summary !Id Names">
+                    <!--  搜索栏  -->
+                    <TextBox
+                        Grid.Column="0"
+                        MinWidth="168"
+                        Text="{Binding FilterText, Mode=OneWayToSource}"
+                        ToolTip.Tip="@Author #Summary !Id Names"
+                        Watermark="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}">
                         <TextBox.InnerRightContent>
                             <StackPanel Orientation="Horizontal">
                                 <Button
-                                    IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     Command="{Binding $parent[TextBox].Clear}"
-                                    Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <Button
-                                    Classes.Primary="{Binding IsFilterActive,Mode=OneWay}">
+                                    Content="{fie:SymbolIcon Symbol=Dismiss,
+                                                             FontSize={StaticResource MediumFontSize}}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                <Button Classes.Primary="{Binding IsFilterActive, Mode=OneWay}">
                                     <Button.Flyout>
                                         <Flyout>
-                                            <StackPanel Spacing="8" MinWidth="320" MaxWidth="520" MaxHeight="360"
-                                                        Margin="12">
+                                            <StackPanel
+                                                MinWidth="320"
+                                                MaxWidth="520"
+                                                MaxHeight="360"
+                                                Margin="12"
+                                                Spacing="8">
                                                 <TextBlock
-                                                    Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}"
+                                                    VerticalAlignment="Center"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    VerticalAlignment="Center" />
+                                                    Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}" />
                                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_StatusFilterText}"
-                                                               VerticalAlignment="Bottom" />
-                                                    <TabStrip Grid.Column="1"
-                                                              Theme="{StaticResource SegmentedTabStripTheme}"
-                                                              SelectedItem="{Binding FilterEnability,Mode=TwoWay}">
-                                                        <TabStrip.ItemTemplate>
-                                                            <DataTemplate
-                                                                DataType="m:FilterModel">
-                                                                <TextBlock Text="{Binding Label}" />
-                                                            </DataTemplate>
-                                                        </TabStrip.ItemTemplate>
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_All}"
-                                                            Value="{x:Null}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_Enabled}"
-                                                            Value="{x:True}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_Disabled}"
-                                                            Value="{x:False}" />
-                                                    </TabStrip>
-                                                </Grid>
-                                                <husk:Divider />
-                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_SourceFilterText}"
-                                                               VerticalAlignment="Bottom" />
-                                                    <TabStrip Grid.Column="1"
-                                                              Theme="{StaticResource SegmentedTabStripTheme}"
-                                                              SelectedItem="{Binding FilterLockility,Mode=TwoWay}">
-                                                        <TabStrip.ItemTemplate>
-                                                            <DataTemplate
-                                                                DataType="m:FilterModel">
-                                                                <TextBlock Text="{Binding Label}" />
-                                                            </DataTemplate>
-                                                        </TabStrip.ItemTemplate>
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_All}"
-                                                            Value="{x:Null}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
-                                                            Value="{x:True}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
-                                                            Value="{x:False}" />
-                                                    </TabStrip>
-                                                </Grid>
-                                                <husk:Divider />
-                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_TypeFilterText}"
-                                                               VerticalAlignment="Bottom" />
-                                                    <TabStrip Grid.Column=" 1"
-                                                              Theme="{StaticResource SegmentedTabStripTheme}"
-                                                              SelectedItem="{Binding FilterKind,Mode=TwoWay}">
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Bottom"
+                                                        Text="{x:Static lang:Resources.InstanceSetupView_StatusFilterText}" />
+                                                    <TabStrip
+                                                        Grid.Column="1"
+                                                        SelectedItem="{Binding FilterEnability, Mode=TwoWay}"
+                                                        Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate DataType="m:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_Mod}"
-                                                            Value="{x:Static resources:ResourceKind.Mod}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
-                                                            Value="{x:Static resources:ResourceKind.ResourcePack}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
-                                                            Value="{x:Static resources:ResourceKind.ShaderPack}" />
-                                                        <m:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_DataPack}"
-                                                            Value="{x:Static resources:ResourceKind.DataPack}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_Enabled}" Value="{x:True}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_Disabled}" Value="{x:False}" />
+                                                    </TabStrip>
+                                                </Grid>
+                                                <husk:Divider />
+                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Bottom"
+                                                        Text="{x:Static lang:Resources.InstanceSetupView_SourceFilterText}" />
+                                                    <TabStrip
+                                                        Grid.Column="1"
+                                                        SelectedItem="{Binding FilterLockility, Mode=TwoWay}"
+                                                        Theme="{StaticResource SegmentedTabStripTheme}">
+                                                        <TabStrip.ItemTemplate>
+                                                            <DataTemplate DataType="m:FilterModel">
+                                                                <TextBlock Text="{Binding Label}" />
+                                                            </DataTemplate>
+                                                        </TabStrip.ItemTemplate>
+                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}" Value="{x:True}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}" Value="{x:False}" />
+                                                    </TabStrip>
+                                                </Grid>
+                                                <husk:Divider />
+                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Bottom"
+                                                        Text="{x:Static lang:Resources.InstanceSetupView_TypeFilterText}" />
+                                                    <TabStrip
+                                                        Grid.Column=" 1"
+                                                        SelectedItem="{Binding FilterKind, Mode=TwoWay}"
+                                                        Theme="{StaticResource SegmentedTabStripTheme}">
+                                                        <TabStrip.ItemTemplate>
+                                                            <DataTemplate DataType="m:FilterModel">
+                                                                <TextBlock Text="{Binding Label}" />
+                                                            </DataTemplate>
+                                                        </TabStrip.ItemTemplate>
+                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_Mod}" Value="{x:Static resources:ResourceKind.Mod}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_ResourcePack}" Value="{x:Static resources:ResourceKind.ResourcePack}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_ShaderPack}" Value="{x:Static resources:ResourceKind.ShaderPack}" />
+                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_DataPack}" Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
                                                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceSetupView_TagFilterText}"
-                                                               VerticalAlignment="Center"
-                                                               FontSize="{StaticResource SmallFontSize}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.InstanceSetupView_TagFilterText}" />
                                                 </Grid>
                                                 <Panel MinHeight="120">
-                                                    <StackPanel VerticalAlignment="Center"
-                                                                Spacing="8"
-                                                                IsVisible="{Binding TagsView.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
-                                                        <icons:PackIconLucide Kind="Tags"
-                                                                              Height="{StaticResource ExtraLargeFontSize}"
-                                                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                              Width="{StaticResource ExtraLargeFontSize}"
-                                                                              HorizontalAlignment="Center" />
+                                                    <StackPanel
+                                                        VerticalAlignment="Center"
+                                                        IsVisible="{Binding TagsView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                                                        Spacing="8">
+                                                        <icons:PackIconLucide
+                                                            Width="{StaticResource ExtraLargeFontSize}"
+                                                            Height="{StaticResource ExtraLargeFontSize}"
+                                                            HorizontalAlignment="Center"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Kind="Tags" />
                                                         <TextBlock
-                                                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                                            HorizontalAlignment="Center"
                                                             FontSize="{StaticResource LargeFontSize}"
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            HorizontalAlignment="Center" />
+                                                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                                                     </StackPanel>
-                                                    <ItemsControl
-                                                        ItemsSource="{Binding TagsView}">
+                                                    <ItemsControl ItemsSource="{Binding TagsView}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <WrapPanel ItemSpacing="8" LineSpacing="8" />
@@ -390,19 +442,16 @@
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate x:DataType="m:InstancePackageFilterTagModel">
                                                                 <Border
-                                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                                    Padding="8"
                                                                     BorderBrush="{StaticResource ControlBorderBrush}"
-                                                                    BorderThickness="1" Padding="8">
-                                                                    <CheckBox
-                                                                        IsChecked="{Binding IsSelected,Mode=TwoWay}">
-                                                                        <StackPanel Orientation="Horizontal"
-                                                                                Spacing="4">
+                                                                    BorderThickness="1"
+                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                                                        <StackPanel Orientation="Horizontal" Spacing="4">
                                                                             <TextBlock Text="{Binding Content}" />
-                                                                            <TextBlock
-                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                                                                 <Run Text="(" />
-                                                                                <Run
-                                                                                    Text="{Binding RefCount,Mode=OneWay}" />
+                                                                                <Run Text="{Binding RefCount, Mode=OneWay}" />
                                                                                 <Run Text=")" />
                                                                             </TextBlock>
                                                                         </StackPanel>
@@ -415,41 +464,49 @@
                                             </StackPanel>
                                         </Flyout>
                                     </Button.Flyout>
-                                    <icons:PackIconLucide Kind="ListFilter" Height="{StaticResource MediumFontSize}"
-                                                          Width="{StaticResource MediumFontSize}" />
+                                    <icons:PackIconLucide
+                                        Width="{StaticResource MediumFontSize}"
+                                        Height="{StaticResource MediumFontSize}"
+                                        Kind="ListFilter" />
                                 </Button>
                             </StackPanel>
                         </TextBox.InnerRightContent>
                     </TextBox>
                     <TextBlock Grid.Column="1">
-                        <Run Text="{x:Static lang:Resources.InstanceSetupView_ResultCountLabelText}"
-                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceSetupView_ResultCountLabelText}" />
                         <LineBreak />
-                        <Run Text="{Binding StageView.Count,Mode=OneWay,FallbackValue=0}" />
-                        <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                        <Run Text="{Binding StageCount,Mode=OneWay,FallbackValue=0}" />
+                        <Run Text="{Binding StageView.Count, Mode=OneWay, FallbackValue=0}" />
+                        <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="/" />
+                        <Run Text="{Binding StageCount, Mode=OneWay, FallbackValue=0}" />
                     </TextBlock>
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12">
+                    <StackPanel
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        Spacing="12">
                         <StackPanel IsVisible="{Binding IsRefreshing}">
-                            <husk:ProgressRing IsIndeterminate="{Binding IsRefreshing}" HorizontalAlignment="Center"
-                                               Height="16" Width="16" />
+                            <husk:ProgressRing
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="{Binding IsRefreshing}" />
                             <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_RefreshingLabelText}" />
                         </StackPanel>
-                        <TabStrip Name="LayoutSelector" Theme="{StaticResource SegmentedTabStripTheme}"
-                                  SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}">
+                        <TabStrip
+                            Name="LayoutSelector"
+                            SelectedIndex="{Binding LayoutIndex, Mode=TwoWay}"
+                            Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <generic:List x:TypeArguments="m:ListTemplateCombinationModel">
-                                    <m:ListTemplateCombinationModel
-                                        Icon="LayoutList">
+                                    <m:ListTemplateCombinationModel Icon="LayoutList">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
                                                     Margin="0,3"
-                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing,Mode=OneWay,FallbackValue={x:False}}"
-                                                    ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    Theme="{StaticResource ListPackageEntryButtonTheme}"
                                                     Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding Info}" />
+                                                    CommandParameter="{Binding Info}"
+                                                    ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
+                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
+                                                    Theme="{StaticResource ListPackageEntryButtonTheme}" />
                                             </DataTemplate>
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
@@ -458,17 +515,16 @@
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                     </m:ListTemplateCombinationModel>
-                                    <m:ListTemplateCombinationModel
-                                        Icon="LayoutGrid">
+                                    <m:ListTemplateCombinationModel Icon="LayoutGrid">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
-                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing,Mode=OneWay,FallbackValue={x:False}}"
-                                                    ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    ToolTip.Tip="{Binding Info.ProjectName,FallbackValue=Name}"
-                                                    Theme="{StaticResource GridPackageEntryButtonTheme}"
                                                     Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding Info}" />
+                                                    CommandParameter="{Binding Info}"
+                                                    ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
+                                                    IsRefreshing="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
+                                                    Theme="{StaticResource GridPackageEntryButtonTheme}"
+                                                    ToolTip.Tip="{Binding Info.ProjectName, FallbackValue=Name}" />
                                             </DataTemplate>
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
@@ -489,59 +545,77 @@
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
                                 <DataTemplate x:DataType="m:ListTemplateCombinationModel">
-                                    <icons:PackIconLucide Kind="{Binding Icon}"
-                                                          Height="{StaticResource MediumFontSize}"
-                                                          Width="{StaticResource MediumFontSize}"
-                                                          VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                    <icons:PackIconLucide
+                                        Width="{StaticResource MediumFontSize}"
+                                        Height="{StaticResource MediumFontSize}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Kind="{Binding Icon}" />
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>
-                        <SplitButton Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
-                                     Foreground="{StaticResource ControlBlackForegroundBrush}"
-                                     Command="{Binding GotoPackageExplorerViewCommand}">
+                        <SplitButton
+                            Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                            Command="{Binding GotoPackageExplorerViewCommand}"
+                            Foreground="{StaticResource ControlBlackForegroundBrush}">
                             <SplitButton.Flyout>
                                 <MenuFlyout>
-                                    <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_BatchUpdateMenuText}"
-                                              Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,FontSize={StaticResource MediumFontSize}}"
-                                              Command="{Binding UpdateBatchCommand}" />
+                                    <MenuItem
+                                        Command="{Binding UpdateBatchCommand}"
+                                        Header="{x:Static lang:Resources.InstanceSetupView_BatchUpdateMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,
+                                                              FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Header="{x:Static lang:Resources.InstanceSetupView_DependencyGraphMenuText}"
-                                        Icon="{fie:SymbolIcon Symbol=ArrowSplit,FontSize={StaticResource MediumFontSize}}"
+                                        Icon="{fie:SymbolIcon Symbol=ArrowSplit,
+                                                              FontSize={StaticResource MediumFontSize}}"
                                         IsEnabled="False" />
-                                    <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ImportListMenuText}"
-                                              Icon="{fie:SymbolIcon Symbol=ArrowImport,FontSize={StaticResource MediumFontSize}}"
-                                              Command="{Binding ImportListCommand}" />
-                                    <MenuItem Header="{x:Static lang:Resources.InstanceSetupView_ExportListMenuText}"
-                                              Icon="{fie:SymbolIcon Symbol=ArrowExport,FontSize={StaticResource MediumFontSize}}"
-                                              Command="{Binding ExportListCommand}" />
+                                    <MenuItem
+                                        Command="{Binding ImportListCommand}"
+                                        Header="{x:Static lang:Resources.InstanceSetupView_ImportListMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=ArrowImport,
+                                                              FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem
+                                        Command="{Binding ExportListCommand}"
+                                        Header="{x:Static lang:Resources.InstanceSetupView_ExportListMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=ArrowExport,
+                                                              FontSize={StaticResource MediumFontSize}}" />
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <icons:PackIconLucide Kind="WandSparkles" Height="{StaticResource MediumFontSize}"
-                                                      VerticalAlignment="Center" />
+                                <icons:PackIconLucide
+                                    Height="{StaticResource MediumFontSize}"
+                                    VerticalAlignment="Center"
+                                    Kind="WandSparkles" />
                                 <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_GetMoreButtonText}" />
                             </StackPanel>
                         </SplitButton>
                     </StackPanel>
                 </Grid>
-                <Panel Grid.Column="0" Grid.Row="1">
-                    <StackPanel VerticalAlignment="Center"
-                                IsVisible="{Binding StageView.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
-                                Spacing="8">
-                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
-                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                                   FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
+                <Panel Grid.Row="1" Grid.Column="0">
+                    <StackPanel
+                        VerticalAlignment="Center"
+                        IsVisible="{Binding StageView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                        Spacing="8">
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Kind="Package" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource LargeFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                     </StackPanel>
                     <ScrollViewer>
-                        <ItemsControl Margin="{StaticResource PageToplessContentMargin}"
-                                      ItemsSource="{Binding StageView}"
-                                      ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
-                                      ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"
-                                      ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme,FallbackValue={x:Null}}" />
+                        <ItemsControl
+                            Margin="{StaticResource PageToplessContentMargin}"
+                            ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme, FallbackValue={x:Null}}"
+                            ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate, FallbackValue={x:Null}}"
+                            ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate, FallbackValue={x:Null}}"
+                            ItemsSource="{Binding StageView}" />
                     </ScrollViewer>
                 </Panel>
             </Grid>

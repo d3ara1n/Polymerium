@@ -1,122 +1,127 @@
-﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-             xmlns:local="clr-namespace:Polymerium.App.Dialogs"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             mc:Ignorable="d" Width="450" d:DesignHeight="600"
-             x:Class="Polymerium.App.Dialogs.ModpackExporterDialog"
-             Title="{x:Static lang:Resources.ModpackExporterDialog_Title}"
-             IsPrimaryButtonVisible="True">
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.ModpackExporterDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.ModpackExporterDialog_Title}"
+    Width="450"
+    d:DesignHeight="600"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Spacing="24">
             <StackPanel Spacing="8">
-                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <TabStrip
-                    ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels,Mode=OneWay,FallbackValue={x:Null}}"
-                    SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel,Mode=TwoWay,FallbackValue={x:Null}}">
+                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}" />
+                <TabStrip ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}" SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
                     <TabStrip.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <husk:IconLabel Icon="FolderZip"
-                                            Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
+                            <husk:IconLabel Icon="FolderZip" Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
                         </DataTemplate>
                     </TabStrip.ItemTemplate>
                 </TabStrip>
             </StackPanel>
             <StackPanel Spacing="8">
-                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <TextBox
-                    Text="{Binding $parent[local:ModpackExporterDialog].NameOverride,Mode=TwoWay,FallbackValue={x:Null}}"
-                    Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal,FallbackValue=Unknown}">
+                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}" />
+                <TextBox Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
                                 Height="{StaticResource MediumFontSize}"
+                                Margin="12,0"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Tag" Margin="12,0" />
+                                Kind="Tag" />
                             <husk:Divider Orientation="Vertical" />
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <TextBox
-                    Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride,Mode=TwoWay,FallbackValue={x:Null}}"
-                    Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal,FallbackValue=Unknown}">
+                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}" />
+                <TextBox Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
                                 Height="{StaticResource MediumFontSize}"
+                                Margin="12,0"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="User" Margin="12,0" />
+                                Kind="User" />
                             <husk:Divider Orientation="Vertical" />
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <TextBox
-                    Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride,Mode=TwoWay,FallbackValue={x:Null}}"
-                    Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal,FallbackValue=Unknown}">
+                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}" />
+                <TextBox Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
                                 Height="{StaticResource MediumFontSize}"
+                                Margin="12,0"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="GitBranch" Margin="12,0" />
+                                Kind="GitBranch" />
                             <husk:Divider Orientation="Vertical" />
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsLabelText}"
-                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
-                        CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Border Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8">
+                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsLabelText}" />
+                <Border
+                    Padding="3"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border Padding="8" Background="{StaticResource OverlaySolidBackgroundBrush}">
                         <Border.CornerRadius>
                             <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                <Binding Path="CornerRadius"
-                                         RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
-                                <Binding Path="Padding"
-                                         RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                <Binding Path="Padding" RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
                             </MultiBinding>
                         </Border.CornerRadius>
-                        <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="*,Auto" ColumnSpacing="8" RowSpacing="8">
-                            <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
+                        <Grid
+                            ColumnDefinitions="*,Auto,*"
+                            ColumnSpacing="8"
+                            RowDefinitions="*,Auto"
+                            RowSpacing="8">
+                            <Grid
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="8">
+                                <Image
+                                    Grid.Column="0"
+                                    Width="36"
+                                    Height="36"
+                                    Source="/Assets/Icons/Package.png" />
                                 <StackPanel Grid.Column="1">
-                                    <TextBlock
-                                        Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                    <TextBlock
-                                        Text="{Binding $parent[local:ModpackExporterDialog].PackageCount,FallbackValue=Unknown}"
-                                        FontSize="{StaticResource LargeFontSize}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}" />
+                                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding $parent[local:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
                                 </StackPanel>
                             </Grid>
-                            <husk:Divider Grid.Row="0" Grid.Column="1" Orientation="Vertical" />
+                            <husk:Divider
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Orientation="Vertical" />
                             <StackPanel Grid.Row="0" Grid.Column="2">
-                                <TextBlock Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock
-                                    Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel,FallbackValue=Unknown}"
-                                    FontSize="{StaticResource LargeFontSize}" />
+                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}" />
+                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
                             </StackPanel>
-                            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
-                                        Spacing="6">
-                                <fi:SymbolIcon Symbol="Info" FontSize="{StaticResource MediumFontSize}"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Symbol="Info" />
                                 <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                     <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
-                                    <HyperlinkButton
-                                        Command="{Binding $parent[local:ModpackExporterDialog].OpenImportFolderCommand}">
+                                    <HyperlinkButton Command="{Binding $parent[local:ModpackExporterDialog].OpenImportFolderCommand}">
                                         <TextBlock Text="./import" />
                                     </HyperlinkButton>
                                 </TextBlock>

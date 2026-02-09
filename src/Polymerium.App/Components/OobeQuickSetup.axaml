@@ -1,136 +1,173 @@
-<controls:OobeStep xmlns="https://github.com/avaloniaui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                   xmlns:components="clr-namespace:Polymerium.App.Components"
-                   xmlns:models="clr-namespace:Polymerium.App.Models"
-                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                   mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="380"
-                   x:Class="Polymerium.App.Components.OobeQuickSetup">
-    <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
-        <!-- Header -->
-        <StackPanel Spacing="8" HorizontalAlignment="Center">
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="32"
-                    Width="64" Height="64"
-                    HorizontalAlignment="Center">
-                <fi:SymbolIcon Symbol="Settings"
-                               FontSize="32"
-                               Foreground="{StaticResource AccentFillColorDefaultBrush}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
+﻿<controls:OobeStep
+    x:Class="Polymerium.App.Components.OobeQuickSetup"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:Polymerium.App.Components"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Polymerium.App.Models"
+    d:DesignHeight="380"
+    d:DesignWidth="520"
+    mc:Ignorable="d">
+    <StackPanel
+        Margin="24,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <!--  Header  -->
+        <StackPanel HorizontalAlignment="Center" Spacing="8">
+            <Border
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="32">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="Settings" />
             </Border>
-            <TextBlock Text="{x:Static lang:Resources.OobeQuickSetup_Title}"
-                       HorizontalAlignment="Center"
-                       FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-            <TextBlock Text="{x:Static lang:Resources.OobeQuickSetup_Subtitle}"
-                       HorizontalAlignment="Center"
-                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.OobeQuickSetup_Title}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.OobeQuickSetup_Subtitle}" />
         </StackPanel>
 
-        <!-- Settings Cards - Horizontal Layout -->
+        <!--  Settings Cards - Horizontal Layout  -->
         <StackPanel Spacing="6">
-            <!-- Language Card - Left/Right Layout -->
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="{StaticResource MediumCornerRadius}"
-                    Padding="12,10">
+            <!--  Language Card - Left/Right Layout  -->
+            <Border
+                Padding="12,10"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid ColumnDefinitions="Auto,8,Auto,*,Auto">
-                    <fi:SymbolIcon Grid.Column="0"
-                                   Symbol="LocalLanguage" FontSize="20"
-                                   VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2" VerticalAlignment="Center"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabelText}"
-                               FontWeight="{StaticResource ControlStrongFontWeight}" />
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Symbol="LocalLanguage" />
+                    <TextBlock
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabelText}" />
                     <StackPanel Grid.Column="4">
                         <ComboBox
+                            MinWidth="160"
                             ItemsSource="{Binding $parent[components:OobeQuickSetup].Languages}"
-                            SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedLanguage,Mode=TwoWay}"
-                            MinWidth="160">
+                            SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedLanguage, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="models:LanguageModel">
                                     <Grid ColumnDefinitions="*,4,Auto">
-                                        <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
-                                        <husk:Tag Grid.Column="2" Classes="Small" VerticalAlignment="Center">
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Display}" />
+                                        <husk:Tag
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            Classes="Small">
                                             <TextBlock Text="{Binding Id}" />
                                         </husk:Tag>
                                     </Grid>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}"
-                                   FontSize="{StaticResource SmallFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}" />
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- Theme Card - Left/Right Layout -->
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="{StaticResource MediumCornerRadius}"
-                    Padding="12,10">
+            <!--  Theme Card - Left/Right Layout  -->
+            <Border
+                Padding="12,10"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid ColumnDefinitions="Auto,8,Auto,*,Auto">
-                    <fi:SymbolIcon Grid.Column="0"
-                                   Symbol="DarkTheme" FontSize="20"
-                                   VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_ThemeLabelText}"
-                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                               VerticalAlignment="Center" />
-                    <TabStrip Grid.Column="4"
-                              Theme="{StaticResource SegmentedTabStripTheme}"
-                              SelectedIndex="{Binding $parent[components:OobeQuickSetup].DarkModeIndex,Mode=TwoWay}">
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Symbol="DarkTheme" />
+                    <TextBlock
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.OobeQuickSetup_ThemeLabelText}" />
+                    <TabStrip
+                        Grid.Column="4"
+                        SelectedIndex="{Binding $parent[components:OobeQuickSetup].DarkModeIndex, Mode=TwoWay}"
+                        Theme="{StaticResource SegmentedTabStripTheme}">
                         <TabStripItem>
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
-                                                      Height="{StaticResource SmallFontSize}"
-                                                      Width="{StaticResource SmallFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    VerticalAlignment="Center"
+                                    Kind="SunMoon" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="Sun" VerticalAlignment="Center"
-                                                      Height="{StaticResource SmallFontSize}"
-                                                      Width="{StaticResource SmallFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    VerticalAlignment="Center"
+                                    Kind="Sun" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="Moon" VerticalAlignment="Center"
-                                                      Height="{StaticResource SmallFontSize}"
-                                                      Width="{StaticResource SmallFontSize}" />
-                                <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}"
-                                           FontSize="{StaticResource SmallFontSize}" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource SmallFontSize}"
+                                    Height="{StaticResource SmallFontSize}"
+                                    VerticalAlignment="Center"
+                                    Kind="Moon" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" />
                             </StackPanel>
                         </TabStripItem>
                     </TabStrip>
                 </Grid>
             </Border>
 
-            <!-- Accent Color Card - Left/Right Layout -->
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="{StaticResource MediumCornerRadius}"
-                    Padding="12,10">
+            <!--  Accent Color Card - Left/Right Layout  -->
+            <Border
+                Padding="12,10"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid ColumnDefinitions="Auto,8,Auto,*,Auto">
-                    <fi:SymbolIcon Grid.Column="0"
-                                   Symbol="Color" FontSize="20"
-                                   VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_AccentColorLabelText}"
-                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                               VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="4"
-                              ItemsSource="{Binding $parent[components:OobeQuickSetup].AccentColors}"
-                              SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedAccentColor,Mode=TwoWay}"
-                              MinWidth="120">
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Symbol="Color" />
+                    <TextBlock
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.OobeQuickSetup_AccentColorLabelText}" />
+                    <ComboBox
+                        Grid.Column="4"
+                        MinWidth="120"
+                        ItemsSource="{Binding $parent[components:OobeQuickSetup].AccentColors}"
+                        SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedAccentColor, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="husk:AccentColor">
                                 <TextBlock Text="{Binding}" />
@@ -140,28 +177,34 @@
                 </Grid>
             </Border>
 
-            <!-- Proxy Card - Left/Right Layout -->
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="{StaticResource MediumCornerRadius}"
-                    Padding="12,10">
+            <!--  Proxy Card - Left/Right Layout  -->
+            <Border
+                Padding="12,10"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid ColumnDefinitions="Auto,8,Auto,*,Auto,8,Auto">
-                    <fi:SymbolIcon Grid.Column="0"
-                                   Symbol="Globe" FontSize="20"
-                                   VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2"
-                               Text="{x:Static lang:Resources.OobeQuickSetup_ProxyLabel}"
-                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                               VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="4"
-                               Text="{Binding $parent[components:OobeQuickSetup].ProxyStatusText}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right" />
-                    <Button Grid.Column="6"
-                            Theme="{StaticResource GhostButtonTheme}"
-                            Classes="Small"
-                            Command="{Binding $parent[components:OobeQuickSetup].OpenProxySettingsCommand}">
-                        <fi:SymbolIcon Symbol="Settings" FontSize="{StaticResource SmallFontSize}" />
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Symbol="Globe" />
+                    <TextBlock
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.OobeQuickSetup_ProxyLabel}" />
+                    <TextBlock
+                        Grid.Column="4"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{Binding $parent[components:OobeQuickSetup].ProxyStatusText}" />
+                    <Button
+                        Grid.Column="6"
+                        Classes="Small"
+                        Command="{Binding $parent[components:OobeQuickSetup].OpenProxySettingsCommand}"
+                        Theme="{StaticResource GhostButtonTheme}">
+                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Settings" />
                     </Button>
                 </Grid>
             </Border>

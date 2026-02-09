@@ -1,8 +1,9 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Polymerium.App.Controls"
-                    xmlns:m="clr-namespace:Polymerium.App.Models"
-                    xmlns:converters="clr-namespace:Polymerium.App.Converters">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:local="clr-namespace:Polymerium.App.Controls"
+    xmlns:m="clr-namespace:Polymerium.App.Models">
     <ControlTheme x:Key="{x:Type local:StorageInstanceButton}" TargetType="local:StorageInstanceButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
@@ -12,28 +13,47 @@
         <Setter Property="Padding" Value="12" />
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:StorageInstanceModel">
-                <Border x:Name="Background" CornerRadius="{TemplateBinding CornerRadius}"
-                        BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                <Border
+                    x:Name="Background"
+                    Padding="{TemplateBinding Padding}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
                     <Border.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </Border.Transitions>
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,Auto" RowSpacing="4">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run
-                                Text="{Binding Size,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter},FallbackValue=12.4}" />
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        RowDefinitions="*,Auto"
+                        RowSpacing="4">
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding Name}" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run Text="{Binding Size, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=12.4}" />
                             <Run Text="MiB" />
                         </TextBlock>
-                        <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Value="{Binding Size}"
-                                     Maximum="{TemplateBinding TotalSize}" />
+                        <ProgressBar
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Maximum="{TemplateBinding TotalSize}"
+                            Value="{Binding Size}" />
                     </Grid>
                 </Border>
             </ControlTemplate>

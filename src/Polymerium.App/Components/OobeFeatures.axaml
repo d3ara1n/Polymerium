@@ -1,37 +1,49 @@
-<controls:OobeStep xmlns="https://github.com/avaloniaui"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                   xmlns:components="clr-namespace:Polymerium.App.Components"
-                   xmlns:models="clr-namespace:Polymerium.App.Models"
-                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                   xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                   mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
-                   x:Class="Polymerium.App.Components.OobeFeatures">
-    <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="24,0">
-        <!-- Header -->
-        <StackPanel Spacing="8" HorizontalAlignment="Center">
-            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="32"
-                    Width="64" Height="64"
-                    HorizontalAlignment="Center">
-                <fi:SymbolIcon Symbol="Sparkle"
-                               FontSize="32"
-                               Foreground="{StaticResource AccentFillColorDefaultBrush}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
+﻿<controls:OobeStep
+    x:Class="Polymerium.App.Components.OobeFeatures"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:Polymerium.App.Components"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Polymerium.App.Models"
+    d:DesignHeight="400"
+    d:DesignWidth="480"
+    mc:Ignorable="d">
+    <StackPanel
+        Margin="24,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <!--  Header  -->
+        <StackPanel HorizontalAlignment="Center" Spacing="8">
+            <Border
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="32">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="Sparkle" />
             </Border>
-            <TextBlock Text="{x:Static lang:Resources.OobeFeatures_Title}"
-                       HorizontalAlignment="Center"
-                       FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-            <TextBlock Text="{x:Static lang:Resources.OobeFeatures_Subtitle}"
-                       HorizontalAlignment="Center"
-                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.OobeFeatures_Title}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.OobeFeatures_Subtitle}" />
         </StackPanel>
 
-        <!-- Feature Cards Grid -->
+        <!--  Feature Cards Grid  -->
         <ItemsControl ItemsSource="{Binding $parent[components:OobeFeatures].Features}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -40,22 +52,26 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="models:OobeFeatureModel">
-                    <Border Margin="4"
-                            Padding="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                    <Border
+                        Margin="4"
+                        Padding="12"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
                         <StackPanel Spacing="8">
-                            <fi:SymbolIcon Symbol="{Binding Icon}"
-                                           FontSize="24"
-                                           HorizontalAlignment="Left"
-                                           Foreground="{StaticResource ControlAccentForegroundBrush}" />
-                            <TextBlock Text="{Binding Title}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding Description}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       FontSize="{StaticResource SmallFontSize}"
-                                       TextWrapping="Wrap" />
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Left"
+                                FontSize="24"
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Symbol="{Binding Icon}" />
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{Binding Title}"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding Description}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </Border>
                 </DataTemplate>

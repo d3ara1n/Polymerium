@@ -1,137 +1,149 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:Polymerium.App.Controls"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:m="clr-namespace:Polymerium.App.Models"
-                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Controls"
+    xmlns:m="clr-namespace:Polymerium.App.Models">
 
     <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="CornerRadius"
-                Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="Background"
-                Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstanceEntryModel">
-                <Border Name="Container"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        ClipToBounds="True"
-                        Background="{TemplateBinding Background}">
+                <Border
+                    Name="Container"
+                    Background="{TemplateBinding Background}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}">
                     <Border.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background"
-                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition Property="Background" Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </Border.Transitions>
                     <Panel>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}" />
-                        <Rectangle HorizontalAlignment="Right" Opacity="0.5"
-                                   Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                        <Border
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                        <Rectangle
+                            Width="{Binding Bounds.Height, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            HorizontalAlignment="Right"
+                            Opacity="0.5">
                             <Rectangle.Fill>
-                                <ImageBrush Stretch="Fill"
-                                            Source="{Binding Basic.Thumbnail,FallbackValue={x:Null}}" />
+                                <ImageBrush Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}" Stretch="Fill" />
                             </Rectangle.Fill>
                             <Rectangle.OpacityMask>
-                                <LinearGradientBrush StartPoint="0%,50%"
-                                                     EndPoint="100%,50%">
-                                    <GradientStop Offset="0"
-                                                  Color="Transparent" />
+                                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                    <GradientStop Offset="0" Color="Transparent" />
                                     <GradientStop Offset="1" Color="Black" />
                                 </LinearGradientBrush>
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <ProgressBar Name="Progress" CornerRadius="0" Height="2"
-                                     VerticalAlignment="Bottom" IsVisible="False"
-                                     IsIndeterminate="{Binding IsPending}"
-                                     Value="{Binding Progress}">
+                        <ProgressBar
+                            Name="Progress"
+                            Height="2"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="0"
+                            IsIndeterminate="{Binding IsPending}"
+                            IsVisible="False"
+                            Value="{Binding Progress}">
                             <ProgressBar.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Value" Easing="SineEaseOut"
-                                                      Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                    <DoubleTransition
+                                        Easing="SineEaseOut"
+                                        Property="Value"
+                                        Duration="{StaticResource ControlNormalAnimationDuration}" />
                                 </Transitions>
                             </ProgressBar.Transitions>
                         </ProgressBar>
-                        <StackPanel Spacing="4" Margin="12">
+                        <StackPanel Margin="12" Spacing="4">
                             <Grid ColumnDefinitions="Auto,Auto,*">
-                                <TextBlock Grid.Column="0"
-                                           Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,Mode=OneWay,Converter={x:Static husk:StringConverters.ToUpper}}"
-                                           FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Grid.Column="1" Text="#" FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Grid.Column="2"
-                                           Text="{Binding Basic.Key,FallbackValue=KEY}"
-                                           FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                           TextTrimming="CharacterEllipsis" />
+                                <TextBlock
+                                    Grid.Column="0"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Basic.SourceLabel, FallbackValue=LABEL, Mode=OneWay, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="#" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Basic.Key, FallbackValue=KEY}"
+                                    TextTrimming="CharacterEllipsis" />
                             </Grid>
                             <TextBlock
-                                Text="{Binding Basic.Name,FallbackValue=NAME}"
                                 FontSize="{StaticResource LargeFontSize}"
-                                MaxLines="4" TextWrapping="Wrap"
-                                TextTrimming="CharacterEllipsis" />
+                                MaxLines="4"
+                                Text="{Binding Basic.Name, FallbackValue=NAME}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
                             <Border Name="SpacingPlaceholder" />
                             <WrapPanel DockPanel.Dock="Bottom">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <husk:Tag Name="InstallingTag" Classes="Status Warning">
-                                        <StackPanel Orientation="Horizontal"
-                                                    Spacing="4">
-                                            <Ellipse Width="6" Height="6"
-                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceEntryButton_InstallTagText}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <Ellipse
+                                                Width="6"
+                                                Height="6"
+                                                Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_InstallTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag Name="UpdatingTag" Classes="Status Warning">
-                                        <StackPanel Orientation="Horizontal"
-                                                    Spacing="4">
-                                            <Ellipse Width="6" Height="6"
-                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceEntryButton_UpdatingTagText}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <Ellipse
+                                                Width="6"
+                                                Height="6"
+                                                Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_UpdatingTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag Name="PreparingTag" Classes="Status Warning">
-                                        <StackPanel Orientation="Horizontal"
-                                                    Spacing="4">
-                                            <Ellipse Width="6" Height="6"
-                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceEntryButton_PreparingTagText}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <Ellipse
+                                                Width="6"
+                                                Height="6"
+                                                Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_PreparingTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag Name="RunningTag" Classes="Status Success">
-                                        <StackPanel Orientation="Horizontal"
-                                                    Spacing="4">
-                                            <Ellipse Width="6" Height="6"
-                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceEntryButton_RunningTagText}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <Ellipse
+                                                Width="6"
+                                                Height="6"
+                                                Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_RunningTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <StackPanel Name="InfoTags" Orientation="Horizontal" Spacing="8">
-                                        <husk:Tag Classes="Status"
-                                                  Content="{Binding Basic.LoaderLabel,FallbackValue=Unknown}" />
-                                        <husk:Tag Classes="Status"
-                                                  Content="{Binding Basic.Version,FallbackValue=Unknown}" />
-                                        <husk:Tag Classes="Status"
-                                                  Content="{Binding LastPlayedAt,FallbackValue=Unknown}" />
+                                    <StackPanel
+                                        Name="InfoTags"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <husk:Tag Classes="Status" Content="{Binding Basic.LoaderLabel, FallbackValue=Unknown}" />
+                                        <husk:Tag Classes="Status" Content="{Binding Basic.Version, FallbackValue=Unknown}" />
+                                        <husk:Tag Classes="Status" Content="{Binding LastPlayedAt, FallbackValue=Unknown}" />
                                     </StackPanel>
                                 </StackPanel>
                             </WrapPanel>
                         </StackPanel>
-                        <Border Name="Border" Opacity="0"
-                                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border
+                            Name="Border"
+                            BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                            BorderThickness="2"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Opacity="0">
                             <Border.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Opacity"
-                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <DoubleTransition Property="Opacity" Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 </Transitions>
                             </Border.Transitions>
                         </Border>
@@ -141,12 +153,10 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#Border">
-            <Setter Property="Opacity"
-                    Value="1.0" />
+            <Setter Property="Opacity" Value="1.0" />
         </Style>
         <Style Selector="^:pressed /template/ Border#Container">
-            <Setter Property="Background"
-                    Value="{StaticResource ControlBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
         </Style>
 
         <Style Selector="^[State=Idle]">
@@ -185,8 +195,7 @@
             </Style>
 
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ControlBorderBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
             </Style>
         </Style>
 
@@ -211,8 +220,7 @@
             </Style>
 
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ControlBorderBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
             </Style>
         </Style>
 
@@ -249,8 +257,7 @@
             </Style>
 
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ControlSuccessBorderBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlSuccessBorderBrush}" />
             </Style>
         </Style>
     </ControlTheme>

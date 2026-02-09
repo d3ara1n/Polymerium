@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:Polymerium.App.Controls"
-                    xmlns:fi="using:FluentIcons.Avalonia">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:local="using:Polymerium.App.Controls">
     <ControlTheme x:Key="{x:Type local:SettingsEntry}" TargetType="local:SettingsEntry">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
@@ -13,14 +14,19 @@
             <ControlTemplate>
                 <Grid ColumnDefinitions="55*,12,45*">
                     <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
-                        <fi:SymbolIcon Grid.Column="0" Symbol="{TemplateBinding Icon}"
-                                       FontSize="26" VerticalAlignment="Top" Margin="3" IconVariant="Regular" />
+                        <fi:SymbolIcon
+                            Grid.Column="0"
+                            Margin="3"
+                            VerticalAlignment="Top"
+                            FontSize="26"
+                            IconVariant="Regular"
+                            Symbol="{TemplateBinding Icon}" />
                         <StackPanel Grid.Column="2" Spacing="4">
-                            <TextBlock Text="{TemplateBinding Title}"
-                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
-                            <TextBlock Text="{TemplateBinding Summary}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       TextWrapping="Wrap" />
+                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{TemplateBinding Title}" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{TemplateBinding Summary}"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
                     <ItemsPresenter Grid.Column="2" ItemsPanel="{TemplateBinding ItemsPanel}" />

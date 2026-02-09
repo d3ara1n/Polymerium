@@ -1,65 +1,57 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-             xmlns:local="clr-namespace:Polymerium.App.Components"
-             xmlns:m="clr-namespace:Polymerium.App.Models"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Polymerium.App.Components.ExhibitStatePresenter" ClipToBounds="False">
-    <husk:SwitchPresenter
-        Value="{Binding  $parent[local:ExhibitStatePresenter].State}"
-        TargetType="m:ExhibitState">
+﻿<UserControl
+    x:Class="Polymerium.App.Components.ExhibitStatePresenter"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Components"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ClipToBounds="False"
+    mc:Ignorable="d">
+    <husk:SwitchPresenter TargetType="m:ExhibitState" Value="{Binding $parent[local:ExhibitStatePresenter].State}">
         <husk:SwitchCase Value="{x:Null}" />
         <husk:SwitchCase Value="Editable">
             <husk:Tag Classes="Success">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon Symbol="Checkmark"
-                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_EditableTagText}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="Checkmark" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_EditableTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Locked">
             <husk:Tag>
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon Symbol="LockClosed"
-                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_LockedTagText}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="LockClosed" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_LockedTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Adding">
             <husk:Tag Classes="Warning">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon Symbol="AddCircle"
-                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_AddingTagText}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="AddCircle" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_AddingTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Modifying">
             <husk:Tag Classes="Warning">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon Symbol="Pen"
-                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_ModifyingTagText}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="Pen" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_ModifyingTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Removing">
             <husk:Tag Classes="Danger">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon Symbol="Dismiss"
-                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_RemovingTagText}"
-                               VerticalAlignment="Center" />
+                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="Dismiss" />
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_RemovingTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>

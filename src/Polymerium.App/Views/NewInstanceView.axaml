@@ -7,9 +7,9 @@
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Polymerium.App.ViewModels"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     Padding="0"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
@@ -25,11 +25,20 @@
             Margin="8"
             CornerRadius="{StaticResource MediumCornerRadius}">
             <Border.Background>
-                <ImageBrush Source="/Assets/Images/Wallpaper.png" Stretch="UniformToFill" Opacity="0.9" />
+                <ImageBrush
+                    Opacity="0.9"
+                    Source="/Assets/Images/Wallpaper.png"
+                    Stretch="UniformToFill" />
             </Border.Background>
         </Border>
-        <Grid Grid.Column="1" RowDefinitions="Auto,0,*" MinWidth="328">
-            <Grid Grid.Row="0" Margin="12" ColumnDefinitions="Auto,12,*,12,Auto">
+        <Grid
+            Grid.Column="1"
+            MinWidth="328"
+            RowDefinitions="Auto,0,*">
+            <Grid
+                Grid.Row="0"
+                Margin="12"
+                ColumnDefinitions="Auto,12,*,12,Auto">
                 <Button Grid.Column="0" Command="{Binding $parent[husk:Frame].GoBackCommand}">
                     <fi:SymbolIcon
                         Width="12"
@@ -48,15 +57,16 @@
                 VerticalAlignment="Center"
                 Spacing="12">
                 <Grid ColumnDefinitions="Auto,12,*">
-                    <husk:DropZone Grid.Column="0"
-                                   Width="108"
-                                   Height="108"
-                                   Padding="8"
-                                   Background="{StaticResource LayerBackgroundBrush}"
-                                   BorderBrush="{x:Null}"
-                                   DragOver="DropZone_OnDragOver"
-                                   Drop="DropZone_OnDrop"
-                                   Model="{Binding Thumbnail, Mode=OneWayToSource}">
+                    <husk:DropZone
+                        Grid.Column="0"
+                        Width="108"
+                        Height="108"
+                        Padding="8"
+                        Background="{StaticResource LayerBackgroundBrush}"
+                        BorderBrush="{x:Null}"
+                        DragOver="DropZone_OnDragOver"
+                        Drop="DropZone_OnDrop"
+                        Model="{Binding Thumbnail, Mode=OneWayToSource}">
                         <husk:DropZone.Effect>
                             <DropShadowEffect Opacity="0.1" />
                         </husk:DropZone.Effect>
@@ -65,8 +75,7 @@
                             <Panel Name="DropPanel" IsHitTestVisible="False">
                                 <Panel.Transitions>
                                     <Transitions>
-                                        <DoubleTransition Property="Opacity"
-                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <DoubleTransition Property="Opacity" Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Transitions>
                                 </Panel.Transitions>
                                 <Rectangle
@@ -122,10 +131,8 @@
                         </StackPanel>
                         <StackPanel>
                             <TextBlock Text="{x:Static lang:Resources.NewInstanceView_VersionLabelText}" />
-                            <husk:SkeletonContainer CornerRadius="{StaticResource SmallCornerRadius}"
-                                                    IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
-                                <TextBox Text="{Binding VersionName, Mode=TwoWay}"
-                                         IsEnabled="{Binding ImportedPack,Converter={x:Static ObjectConverters.IsNull}}">
+                            <husk:SkeletonContainer CornerRadius="{StaticResource SmallCornerRadius}" IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
+                                <TextBox IsEnabled="{Binding ImportedPack, Converter={x:Static ObjectConverters.IsNull}}" Text="{Binding VersionName, Mode=TwoWay}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <icons:PackIconLucide
@@ -148,77 +155,85 @@
                     </StackPanel>
                 </Grid>
                 <Border
-                    IsVisible="{Binding ImportedPack,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}"
-                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
-                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    Padding="3"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}"
+                    IsVisible="{Binding ImportedPack, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=True}">
                     <Grid ColumnDefinitions="*,4,Auto">
-                        <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}"
-                                Theme="{StaticResource GhostButtonTheme}">
-                            <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
+                        <Button
+                            Grid.Column="2"
+                            Classes="Small"
+                            Command="{Binding ClearImportedPackCommand}"
+                            Theme="{StaticResource GhostButtonTheme}">
+                            <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Dismiss" />
                         </Button>
-                        <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8"
-                                CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Border
+                            Grid.Column="0"
+                            Padding="8"
+                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
-                                <Grid Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                    <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
+                                <Grid
+                                    Grid.Column="0"
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="8">
+                                    <Image
+                                        Grid.Column="0"
+                                        Width="36"
+                                        Height="36"
+                                        Source="/Assets/Icons/Package.png" />
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock
-                                            Text="{x:Static lang:Resources.NewInstanceView_PackageCountLabelText}"
-                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                        <TextBlock Text="{Binding ImportedPack.PackageCount,FallbackValue=114514}"
-                                                   FontSize="{StaticResource LargeFontSize}" />
+                                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.NewInstanceView_PackageCountLabelText}" />
+                                        <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding ImportedPack.PackageCount, FallbackValue=114514}" />
                                     </StackPanel>
                                 </Grid>
                                 <husk:Divider Grid.Column="1" Orientation="Vertical" />
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="{x:Static lang:Resources.NewInstanceView_ModLoaderLabelText}"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                    <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"
-                                               FontSize="{StaticResource LargeFontSize}" />
+                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.NewInstanceView_ModLoaderLabelText}" />
+                                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding ImportedPack.LoaderLabel, FallbackValue=None}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
                     </Grid>
                 </Border>
                 <Button
-                    Height="42" Command="{Binding CreateCommand}"
-                    Classes="Primary">
+                    Height="42"
+                    Classes="Primary"
+                    Command="{Binding CreateCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide
                             Width="18"
                             Height="18"
                             Kind="SquarePlus" />
-                        <TextBlock Text="{x:Static lang:Resources.NewInstanceView_CreateButtonText}"
-                                   VerticalAlignment="Center" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.NewInstanceView_CreateButtonText}" />
                     </StackPanel>
                 </Button>
                 <husk:Divider Content="{x:Static lang:Resources.NewInstanceView_SeparatorLabelText}" />
                 <Grid ColumnDefinitions="*,12,*">
                     <Button
                         Grid.Column="0"
-                        Height="42" Command="{Binding OpenImportDialogCommand}"
+                        Height="42"
+                        Command="{Binding OpenImportDialogCommand}"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide
                                 Width="18"
                                 Height="18"
                                 Kind="Import" />
-                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_ImportButtonText}"
-                                       VerticalAlignment="Center" />
+                            <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.NewInstanceView_ImportButtonText}" />
                         </StackPanel>
                     </Button>
                     <Button
                         Grid.Column="2"
-                        Command="{Binding GotoMarketplaceCommand}"
                         Height="42"
+                        Command="{Binding GotoMarketplaceCommand}"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide
                                 Width="18"
                                 Height="18"
                                 Kind="Store" />
-                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_DownloadButtonText}"
-                                       VerticalAlignment="Center" />
+                            <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.NewInstanceView_DownloadButtonText}" />
                         </StackPanel>
                     </Button>
                 </Grid>

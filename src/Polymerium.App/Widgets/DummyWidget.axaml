@@ -1,20 +1,30 @@
-﻿<local:WidgetBase xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:local="clr-namespace:Polymerium.App.Widgets"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Widgets.DummyWidget" Title="Dummy">
+﻿<local:WidgetBase
+    x:Class="Polymerium.App.Widgets.DummyWidget"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Polymerium.App.Widgets"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Dummy"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <local:WidgetBase.FullTemplate>
         <DataTemplate x:DataType="local:DummyWidget">
-            <TextBlock Text="This is Dummy Widget" Opacity="0.7" VerticalAlignment="Center"
-                       HorizontalAlignment="Center" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Opacity="0.7"
+                Text="This is Dummy Widget" />
         </DataTemplate>
     </local:WidgetBase.FullTemplate>
     <local:WidgetBase.SlimTemplate>
         <DataTemplate x:DataType="local:DummyWidget">
-            <TextBlock Text="This is Dummy Widget" Opacity="0.7" VerticalAlignment="Center"
-                       HorizontalAlignment="Center" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Opacity="0.7"
+                Text="This is Dummy Widget" />
         </DataTemplate>
     </local:WidgetBase.SlimTemplate>
 </local:WidgetBase>

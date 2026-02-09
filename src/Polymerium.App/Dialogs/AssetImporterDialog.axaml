@@ -1,148 +1,186 @@
-﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-             xmlns:local="clr-namespace:Polymerium.App.Modals"
-             xmlns:m="clr-namespace:Polymerium.App.Models"
-             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-             xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
-             xmlns:converters="clr-namespace:Polymerium.App.Converters"
-             mc:Ignorable="d" Width="400" Title="{x:Static lang:Resources.AssetImporterDialog_Title}"
-             x:Class="Polymerium.App.Modals.AssetImporterDialog" IsPrimaryButtonVisible="True">
-    <husk:PlaceholderPresenter Source="{Binding $parent[local:AssetImporterDialog].Model,Mode=OneWay}">
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Modals.AssetImporterDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Modals"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+    Title="{x:Static lang:Resources.AssetImporterDialog_Title}"
+    Width="400"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
+    <husk:PlaceholderPresenter Source="{Binding $parent[local:AssetImporterDialog].Model, Mode=OneWay}">
         <husk:PlaceholderPresenter.SourceTemplate>
             <DataTemplate DataType="m:AssetIdentificationModel">
-                <Grid RowDefinitions="*,*,Auto" ColumnDefinitions="*,*" RowSpacing="8" ColumnSpacing="8">
-                    <husk:PlaceholderPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                               Source="{Binding Package}">
+                <Grid
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="8"
+                    RowDefinitions="*,*,Auto"
+                    RowSpacing="8">
+                    <husk:PlaceholderPresenter
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Source="{Binding Package}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate DataType="m:AssetIdentificationPackageModel">
-                                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="4"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Border
+                                    Padding="4"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
                                     <Grid RowDefinitions="Auto,*">
                                         <DockPanel Grid.Row="0" Margin="12,8">
-                                            <HyperlinkButton DockPanel.Dock="Right"
-                                                             NavigateUri="{Binding Reference}"
-                                                             Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
-                                                             FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                            <RadioButton
-                                                IsChecked="{Binding $parent[local:AssetImporterDialog].IsPackageSelected,Mode=TwoWay}">
-                                                <TextBlock
-                                                    Text="{x:Static lang:Resources.AssetImporterDialog_AsPackageLabelText}" />
+                                            <HyperlinkButton
+                                                Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
+                                                DockPanel.Dock="Right"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                NavigateUri="{Binding Reference}" />
+                                            <RadioButton IsChecked="{Binding $parent[local:AssetImporterDialog].IsPackageSelected, Mode=TwoWay}">
+                                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsPackageLabelText}" />
                                             </RadioButton>
                                         </DockPanel>
-                                        <Border Grid.Row="1" Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                Padding="16"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
-                                                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="36"
-                                                        Width="36"
-                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Border
+                                            Grid.Row="1"
+                                            Padding="16"
+                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <Grid
+                                                ColumnDefinitions="Auto,*"
+                                                ColumnSpacing="12"
+                                                RowDefinitions="*,*">
+                                                <Border
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="0"
+                                                    Width="36"
+                                                    Height="36"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <Border.Background>
-                                                        <ImageBrush
-                                                            async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
                                                     </Border.Background>
                                                 </Border>
-                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ProjectName}" />
-                                                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                                                           Text="{Binding VersionName}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Text="{Binding ProjectName}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Grid.ColumnSpan="2"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding VersionName}" />
                                             </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
-                        <Border CornerRadius="{StaticResource MediumCornerRadius}"
-                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12">
+                        <Border
+                            Padding="12"
+                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
                             <StackPanel>
-                                <icons:PackIconLucide Kind="MessageSquareWarning"
-                                                      Height="{StaticResource LargeFontSize}" />
-                                <TextBlock
-                                    Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}" />
+                                <icons:PackIconLucide Height="{StaticResource LargeFontSize}" Kind="MessageSquareWarning" />
+                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}" />
                             </StackPanel>
                         </Border>
                     </husk:PlaceholderPresenter>
-                    <husk:Card Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                               CornerRadius="{StaticResource MediumCornerRadius}"
-                               Padding="16">
+                    <husk:Card
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Padding="16"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
                         <StackPanel Spacing="8">
                             <DockPanel>
-                                <CheckBox DockPanel.Dock="Right"
-                                          IsChecked="{Binding Persist.IsInImportMode,Mode=TwoWay}">
+                                <CheckBox DockPanel.Dock="Right" IsChecked="{Binding Persist.IsInImportMode, Mode=TwoWay}">
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PortableLabelText}" />
                                 </CheckBox>
-                                <RadioButton
-                                    IsChecked="{Binding $parent[local:AssetImporterDialog].IsAssetSelected,Mode=TwoWay}">
+                                <RadioButton IsChecked="{Binding $parent[local:AssetImporterDialog].IsAssetSelected, Mode=TwoWay}">
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
                                 </RadioButton>
                             </DockPanel>
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AssetTypeLabelText}"
-                                           VerticalAlignment="Bottom" />
-                                <TabStrip ItemsSource="{Binding Persist.Kinds}"
-                                          SelectedItem="{Binding Persist.Kind,Mode=TwoWay}">
+                                <TextBlock VerticalAlignment="Bottom" Text="{x:Static lang:Resources.AssetImporterDialog_AssetTypeLabelText}" />
+                                <TabStrip ItemsSource="{Binding Persist.Kinds}" SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
                                     <TabStrip.ItemTemplate>
                                         <DataTemplate DataType="resources:ResourceKind">
-                                            <TextBlock
-                                                Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                            <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
                                         </DataTemplate>
                                     </TabStrip.ItemTemplate>
                                 </TabStrip>
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}"
-                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}" TextWrapping="Wrap" />
                                 <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetPrompt}"
-                                    TextWrapping="Wrap"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    TextWrapping="Wrap" />
                             </StackPanel>
                         </StackPanel>
                     </husk:Card>
-                    <husk:InfoBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                  Content="{x:Static lang:Resources.AssetImporterDialog_Prompt}" />
+                    <husk:InfoBar
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Content="{x:Static lang:Resources.AssetImporterDialog_Prompt}" />
                 </Grid>
             </DataTemplate>
         </husk:PlaceholderPresenter.SourceTemplate>
         <husk:ConstrainedBox AspectRatio="16:9">
-            <husk:DropZone VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                           Model="{Binding $parent[local:AssetImporterDialog].PathAccepted,Mode=OneWayToSource}"
-                           DragOver="DropZone_OnDragOver"
-                           Drop="DropZone_OnDrop"
-                           IsEnabled="{Binding $parent[local:AssetImporterDialog].PathAccepted,Mode=OneWay,Converter={x:Static ObjectConverters.IsNull}}">
-                <husk:SwitchPresenter
-                    Value="{Binding $parent[local:AssetImporterDialog].PathAccepted,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay}"
-                    TargetType="x:Boolean">
+            <husk:DropZone
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                DragOver="DropZone_OnDragOver"
+                Drop="DropZone_OnDrop"
+                IsEnabled="{Binding $parent[local:AssetImporterDialog].PathAccepted, Mode=OneWay, Converter={x:Static ObjectConverters.IsNull}}"
+                Model="{Binding $parent[local:AssetImporterDialog].PathAccepted, Mode=OneWayToSource}">
+                <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[local:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
                     <husk:SwitchCase Value="{x:True}">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
-                            <husk:ProgressRing IsIndeterminate="True" Height="32" Width="32"
-                                               HorizontalAlignment="Center" />
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="12">
+                            <husk:ProgressRing
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True" />
                             <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_IdentifyingLabelText}" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
                         <StackPanel HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled"
-                                               IsHitTestVisible="False" />
+                                <fi:SymbolIcon
+                                    FontSize="14"
+                                    IconVariant="Filled"
+                                    IsHitTestVisible="False"
+                                    Symbol="Attach" />
                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
                                     <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
-                                    <HyperlinkButton Name="BrowseButton"
-                                                     Click="BrowseButton_OnClick"
-                                                     Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
-                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                     Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                    <HyperlinkButton
+                                        Name="BrowseButton"
+                                        Click="BrowseButton_OnClick"
+                                        Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                 </TextBlock>
 
                             </StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
-                                       HorizontalAlignment="Center" IsHitTestVisible="False"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                IsHitTestVisible="False"
+                                Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
                         </StackPanel>
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>

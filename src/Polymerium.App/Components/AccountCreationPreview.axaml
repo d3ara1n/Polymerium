@@ -1,37 +1,46 @@
-﻿<controls:AccountCreationStep xmlns="https://github.com/avaloniaui"
-                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                              xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                              xmlns:local="clr-namespace:Polymerium.App.Components"
-                              xmlns:assets="clr-namespace:Polymerium.App.Assets"
-                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                              mc:Ignorable="d"
-                              x:Class="Polymerium.App.Components.AccountCreationPreview" IsNextAvailable="False"
-                              Header="{x:Static lang:Resources.AccountCreationPreview_Title}">
+﻿<controls:AccountCreationStep
+    x:Class="Polymerium.App.Components.AccountCreationPreview"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:assets="clr-namespace:Polymerium.App.Assets"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.App.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Header="{x:Static lang:Resources.AccountCreationPreview_Title}"
+    IsNextAvailable="False"
+    mc:Ignorable="d">
     <StackPanel Spacing="24">
-        <TextBlock Text="{x:Static lang:Resources.AccountCreationPreview_Subtitle}"
-                   FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center" />
-        <ContentControl Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}" HorizontalContentAlignment="Center"
-                        Padding="24" VerticalAlignment="Center">
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="{StaticResource LargeFontSize}"
+            Text="{x:Static lang:Resources.AccountCreationPreview_Subtitle}" />
+        <ContentControl
+            Padding="24"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
             <DockPanel VerticalSpacing="12">
-                <Border Height="64" Width="64" DockPanel.Dock="Top" BoxShadow="0 0 4 0 #3F000000"
-                        CornerRadius="{StaticResource SmallCornerRadius}">
+                <Border
+                    Width="64"
+                    Height="64"
+                    BoxShadow="0 0 4 0 #3F000000"
+                    CornerRadius="{StaticResource SmallCornerRadius}"
+                    DockPanel.Dock="Top">
                     <Border.Background>
-                        <ImageBrush
-                            async:ImageBrushLoader.Source="{Binding $parent[local:AccountCreationPreview].Model.FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
+                        <ImageBrush async:ImageBrushLoader.Source="{Binding $parent[local:AccountCreationPreview].Model.FaceUrl, FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
                     </Border.Background>
                 </Border>
                 <StackPanel>
                     <TextBlock
-                        Text="{Binding $parent[local:AccountCreationPreview].Account.Username,FallbackValue=Steve}"
-                        FontSize="{StaticResource LargeFontSize}" FontWeight="{StaticResource ControlStrongFontWeight}"
-                        HorizontalAlignment="Center" />
-                    <TextBlock
-                        Text="{Binding $parent[local:AccountCreationPreview].Model.TypeName,FallbackValue=Microsoft}"
-                        HorizontalAlignment="Center" />
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Binding $parent[local:AccountCreationPreview].Account.Username, FallbackValue=Steve}" />
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding $parent[local:AccountCreationPreview].Model.TypeName, FallbackValue=Microsoft}" />
                 </StackPanel>
             </DockPanel>
         </ContentControl>

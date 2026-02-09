@@ -1,24 +1,35 @@
-﻿<husk:Page xmlns="https://github.com/avaloniaui"
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-           xmlns:vm="using:Polymerium.App.ViewModels"
-           xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           Header="{x:Static lang:Resources.MarketplacePortalView_Title}" Padding="0"
-           x:Class="Polymerium.App.Views.MarketplacePortalView" x:DataType="vm:MarketplacePortalViewModel">
+﻿<husk:Page
+    x:Class="Polymerium.App.Views.MarketplacePortalView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    Padding="0"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MarketplacePortalViewModel"
+    Header="{x:Static lang:Resources.MarketplacePortalView_Title}"
+    mc:Ignorable="d">
     <Grid RowDefinitions="Auto,0">
-        <Panel Grid.Row="0" Height="{Binding $parent[husk:Page].Bounds.Height,Mode=OneWay}"
-               Margin="{StaticResource PageToplessBottomlessContentMargin}">
-            <StackPanel Spacing="24" VerticalAlignment="Center" MaxWidth="1270">
-                <TextBlock Text="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterTitle}"
-                           TextAlignment="Center"
-                           FontSize="{StaticResource ExtraLargeFontSize}"
-                           FontWeight="{StaticResource ControlStrongFontWeight}">
+        <Panel
+            Grid.Row="0"
+            Height="{Binding $parent[husk:Page].Bounds.Height, Mode=OneWay}"
+            Margin="{StaticResource PageToplessBottomlessContentMargin}">
+            <StackPanel
+                MaxWidth="1270"
+                VerticalAlignment="Center"
+                Spacing="24">
+                <TextBlock
+                    FontSize="{StaticResource ExtraLargeFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterTitle}"
+                    TextAlignment="Center">
                     <TextBlock.Effect>
-                        <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                        <DropShadowEffect BlurRadius="6" Opacity="0.1" />
                     </TextBlock.Effect>
                     <TextBlock.Foreground>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
@@ -29,20 +40,32 @@
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBox Name="QueryBox"
-                         Watermark="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}"
-                         HorizontalAlignment="Stretch"
-                         HorizontalContentAlignment="Center"
-                         Foreground="{StaticResource ControlAccentForegroundBrush}" Margin="36,0"
-                         Theme="{StaticResource UnderlineTextBoxTheme}" BorderThickness="0,0,0,2" />
-                <Button Command="{Binding GotoSearchViewCommand}" IsDefault="True"
-                        CommandParameter="{Binding #QueryBox.Text}" Classes="Primary"
-                        Theme="{StaticResource OutlineButtonTheme}" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Margin="8,4" Spacing="8">
-                        <icons:PackIconLucide Kind="Search" Height="{StaticResource MediumFontSize}"
-                                              Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}"
-                                   VerticalAlignment="Center" />
+                <TextBox
+                    Name="QueryBox"
+                    Margin="36,0"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    BorderThickness="0,0,0,2"
+                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                    Theme="{StaticResource UnderlineTextBoxTheme}"
+                    Watermark="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}" />
+                <Button
+                    HorizontalAlignment="Center"
+                    Classes="Primary"
+                    Command="{Binding GotoSearchViewCommand}"
+                    CommandParameter="{Binding #QueryBox.Text}"
+                    IsDefault="True"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    <StackPanel
+                        Margin="8,4"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <icons:PackIconLucide
+                            Width="{StaticResource MediumFontSize}"
+                            Height="{StaticResource MediumFontSize}"
+                            VerticalAlignment="Center"
+                            Kind="Search" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>

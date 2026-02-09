@@ -1,27 +1,31 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-        xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia">
+﻿<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
 
     <Style Selector="TextBox">
         <Setter Property="ContextFlyout">
             <MenuFlyout>
                 <MenuItem
                     Command="{Binding $parent[TextBox].Cut}"
-                    Icon="{fie:SymbolIcon Symbol=Cut,FontSize={StaticResource MediumFontSize}}"
                     Header="{x:Static lang:Resources.Shared_Cut}"
+                    Icon="{fie:SymbolIcon Symbol=Cut,
+                                          FontSize={StaticResource MediumFontSize}}"
                     InputGesture="{x:Static TextBox.CutGesture}"
                     IsEnabled="{Binding $parent[TextBox].CanCut}" />
                 <MenuItem
                     Command="{Binding $parent[TextBox].Copy}"
-                    Icon="{fie:SymbolIcon Symbol=Copy,FontSize={StaticResource MediumFontSize}}"
                     Header="{x:Static lang:Resources.Shared_Copy}"
+                    Icon="{fie:SymbolIcon Symbol=Copy,
+                                          FontSize={StaticResource MediumFontSize}}"
                     InputGesture="{x:Static TextBox.CopyGesture}"
                     IsEnabled="{Binding $parent[TextBox].CanCopy}" />
                 <MenuItem
                     Command="{Binding $parent[TextBox].Paste}"
-                    Icon="{fie:SymbolIcon Symbol=ClipboardPaste,FontSize={StaticResource MediumFontSize}}"
                     Header="{x:Static lang:Resources.Shared_Paste}"
+                    Icon="{fie:SymbolIcon Symbol=ClipboardPaste,
+                                          FontSize={StaticResource MediumFontSize}}"
                     InputGesture="{x:Static TextBox.PasteGesture}"
                     IsEnabled="{Binding $parent[TextBox].CanPaste}" />
             </MenuFlyout>

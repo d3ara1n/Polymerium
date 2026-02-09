@@ -1,56 +1,52 @@
-﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:local="using:Polymerium.App.Dialogs"
-             xmlns:m="using:Polymerium.App.Models"
-             xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             Title="{x:Static lang:Resources.ReferenceVersionPickerDialog_Title}"
-             Message="{x:Static lang:Resources.ReferenceVersionPickerDialog_Prompt}"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsPrimaryButtonVisible="True"
-             x:Class="Polymerium.App.Dialogs.ReferenceVersionPickerDialog">
-    <ListBox MinHeight="64" ItemsSource="{Binding $parent[local:ReferenceVersionPickerDialog].Versions}"
-             SelectedItem="{Binding $parent[local:ReferenceVersionPickerDialog].Result,Mode=OneWayToSource}">
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.ReferenceVersionPickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Dialogs"
+    xmlns:m="using:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
+    Title="{x:Static lang:Resources.ReferenceVersionPickerDialog_Title}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    IsPrimaryButtonVisible="True"
+    Message="{x:Static lang:Resources.ReferenceVersionPickerDialog_Prompt}"
+    mc:Ignorable="d">
+    <ListBox
+        MinHeight="64"
+        ItemsSource="{Binding $parent[local:ReferenceVersionPickerDialog].Versions}"
+        SelectedItem="{Binding $parent[local:ReferenceVersionPickerDialog].Result, Mode=OneWayToSource}">
         <ListBox.ItemTemplate>
             <DataTemplate DataType="m:InstanceReferenceVersionModel">
                 <StackPanel>
-                    <husk:SwitchPresenter
-                        Value="{Binding IsCurrent,FallbackValue=False}"
-                        TargetType="x:Boolean">
+                    <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding IsCurrent, FallbackValue=False}">
                         <husk:SwitchCase Value="True">
-                            <TextBlock
-                                Text="{Binding Display,FallbackValue=Display}"
-                                Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                            <TextBlock Foreground="{StaticResource ControlAccentForegroundBrush}" Text="{Binding Display, FallbackValue=Display}" />
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="False">
-                            <TextBlock
-                                Text="{Binding Display,FallbackValue=Display}" />
+                            <TextBlock Text="{Binding Display, FallbackValue=Display}" />
                         </husk:SwitchCase>
                     </husk:SwitchPresenter>
                     <DockPanel>
-                        <StackPanel Orientation="Horizontal"
-                                    DockPanel.Dock="Right">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                             <TextBlock Text="{Binding UpdatedAt}" />
                         </StackPanel>
-                        <husk:SwitchPresenter TargetType="trident:ReleaseType"
-                                              Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
+                        <husk:SwitchPresenter TargetType="trident:ReleaseType" Value="{Binding ReleaseTypeRaw, FallbackValue=Release}">
                             <husk:SwitchCase Value="Release">
-                                <husk:Tag Classes="Success"
-                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag Classes="Success" CornerRadius="{StaticResource SmallCornerRadius}">
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="Beta">
-                                <husk:Tag Classes="Warning"
-                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag Classes="Warning" CornerRadius="{StaticResource SmallCornerRadius}">
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="Alpha">
-                                <husk:Tag Classes="Danger"
-                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag Classes="Danger" CornerRadius="{StaticResource SmallCornerRadius}">
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                 </husk:Tag>
                             </husk:SwitchCase>

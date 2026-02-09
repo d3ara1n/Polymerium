@@ -1,21 +1,25 @@
-﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                  xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                  xmlns:m="clr-namespace:Polymerium.App.Models"
-                  xmlns:v="clr-namespace:Polymerium.App.Views"
-                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-                  xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
-                  xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
-                  xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Views.InstanceAssetsView" x:DataType="vm:InstanceAssetsViewModel"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Views.InstanceAssetsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="clr-namespace:Polymerium.App.Views"
+    xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:InstanceAssetsViewModel"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
     <TabControl Padding="0">
         <TabItem>
             <TabItem.Header>
@@ -26,243 +30,253 @@
                             <DataTemplate DataType="collections:IList">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="(" />
-                                    <TextBlock
-                                        Text="{Binding Count,FallbackValue=(0)}" />
-                                    <TextBlock Text="+"
-                                               IsVisible="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).PackageCount,Converter={x:Static husk:NumberConverters.IsNonZero},FallbackValue=False}" />
+                                    <TextBlock Text="{Binding Count, FallbackValue=(0)}" />
+                                    <TextBlock IsVisible="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).PackageCount, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}" Text="+" />
                                     <TextBlock Text=")" />
                                 </StackPanel>
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:ProgressRing
-                            IsIndeterminate="{Binding Mods,Converter={x:Static ObjectConverters.IsNull}}"
-                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                            Width="{Binding $parent[TabItem].FontSize}"
+                            Height="{Binding $parent[TabItem].FontSize}"
+                            IsIndeterminate="{Binding Mods, Converter={x:Static ObjectConverters.IsNull}}" />
                     </husk:PlaceholderPresenter>
                 </StackPanel>
             </TabItem.Header>
             <Grid RowDefinitions="Auto,*" RowSpacing="12">
-                <husk:InfoBar Grid.Row="0"
-                              IsVisible="{Binding PackageCount,Converter={x:Static husk:NumberConverters.IsNonZero}}">
+                <husk:InfoBar Grid.Row="0" IsVisible="{Binding PackageCount, Converter={x:Static husk:NumberConverters.IsNonZero}}">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Border Grid.Column="0"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                VerticalAlignment="Center">
-                            <icons:PackIconLucide Kind="Info"
-                                                  Height="{StaticResource ExtraLargeFontSize}"
-                                                  Width="{StaticResource ExtraLargeFontSize}"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center" />
+                        <Border
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <icons:PackIconLucide
+                                Width="{StaticResource ExtraLargeFontSize}"
+                                Height="{StaticResource ExtraLargeFontSize}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Kind="Info" />
                         </Border>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock Text="{x:Static lang:Resources.InstanceAssetsView_ModInfoBarTitle}" />
-                            <TextBlock
-                                Text="{x:Static lang:Resources.InstanceAssetsView_ModInfoBarText}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceAssetsView_ModInfoBarText}" />
                         </StackPanel>
-                        <Button Grid.Column="2"
-                                Classes="Primary"
-                                Padding="12,6" Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                                CommandParameter="{x:Type v:InstanceSetupView}"
-                                VerticalAlignment="Center">
-                            <husk:IconLabel Icon="Box" Text="{Binding PackageCount}"
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <Button
+                            Grid.Column="2"
+                            Padding="12,6"
+                            VerticalAlignment="Center"
+                            Classes="Primary"
+                            Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                            CommandParameter="{x:Type v:InstanceSetupView}">
+                            <husk:IconLabel
+                                FontSize="{StaticResource MediumFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Icon="Box"
+                                Text="{Binding PackageCount}" />
                         </Button>
                     </Grid>
                 </husk:InfoBar>
-                <Grid Grid.Row="1" ColumnDefinitions="*,4,*" ColumnSpacing="12">
-                    <!-- 左侧：Mod 列表 -->
-                    <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="8">
-                        <!-- 搜索和过滤栏 -->
-                        <TextBox Grid.Row="0"
-                                 Watermark="Search mods..."
-                                 Text="{Binding ModSearchText,Mode=TwoWay}">
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="*,4,*"
+                    ColumnSpacing="12">
+                    <!--  左侧：Mod 列表  -->
+                    <Grid
+                        Grid.Column="0"
+                        RowDefinitions="Auto,*"
+                        RowSpacing="8">
+                        <!--  搜索和过滤栏  -->
+                        <TextBox
+                            Grid.Row="0"
+                            Text="{Binding ModSearchText, Mode=TwoWay}"
+                            Watermark="Search mods...">
                             <TextBox.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
                                     <Button
-                                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                         Command="{Binding $parent[TextBox].Clear}"
-                                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        Content="{fie:SymbolIcon Symbol=Dismiss,
+                                                                 FontSize={StaticResource MediumFontSize}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
 
-                                    <!-- 过滤器面板 -->
-                                    <Button Classes.Primary="{Binding IsModFilterActive,Mode=OneWay}">
+                                    <!--  过滤器面板  -->
+                                    <Button Classes.Primary="{Binding IsModFilterActive, Mode=OneWay}">
                                         <Button.Flyout>
                                             <Flyout>
-                                                <StackPanel Spacing="8" MinWidth="320" MaxWidth="420" Margin="12">
+                                                <StackPanel
+                                                    MinWidth="320"
+                                                    MaxWidth="420"
+                                                    Margin="12"
+                                                    Spacing="8">
                                                     <TextBlock
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_FilterLabelText}"
+                                                        VerticalAlignment="Center"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        VerticalAlignment="Center" />
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_FilterLabelText}" />
 
-                                                    <!-- 启用与禁用 -->
+                                                    <!--  启用与禁用  -->
                                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                                        <TextBlock Grid.Column="0"
-                                                                   Text="{x:Static lang:Resources.InstanceAssetsView_StatusFilterText}"
-                                                                   VerticalAlignment="Bottom" />
-                                                        <TabStrip Grid.Column="1"
-                                                                  Theme="{StaticResource SegmentedTabStripTheme}"
-                                                                  SelectedItem="{Binding ModFilterEnability,Mode=TwoWay}">
+                                                        <TextBlock
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Bottom"
+                                                            Text="{x:Static lang:Resources.InstanceAssetsView_StatusFilterText}" />
+                                                        <TabStrip
+                                                            Grid.Column="1"
+                                                            SelectedItem="{Binding ModFilterEnability, Mode=TwoWay}"
+                                                            Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
                                                                 <DataTemplate DataType="m:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_All}"
-                                                                Value="{x:Null}" />
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_Enabled}"
-                                                                Value="{x:True}" />
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_Disabled}"
-                                                                Value="{x:False}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.Enum_Enabled}" Value="{x:True}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.Enum_Disabled}" Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
 
                                                     <husk:Divider />
 
-                                                    <!-- 是否上锁 -->
+                                                    <!--  是否上锁  -->
                                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                                        <TextBlock Grid.Column="0"
-                                                                   Text="{x:Static lang:Resources.InstanceAssetsView_SourceFilterText}"
-                                                                   VerticalAlignment="Bottom" />
-                                                        <TabStrip Grid.Column="1"
-                                                                  Theme="{StaticResource SegmentedTabStripTheme}"
-                                                                  SelectedItem="{Binding ModFilterLockility,Mode=TwoWay}">
+                                                        <TextBlock
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Bottom"
+                                                            Text="{x:Static lang:Resources.InstanceAssetsView_SourceFilterText}" />
+                                                        <TabStrip
+                                                            Grid.Column="1"
+                                                            SelectedItem="{Binding ModFilterLockility, Mode=TwoWay}"
+                                                            Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
                                                                 <DataTemplate DataType="m:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_All}"
-                                                                Value="{x:Null}" />
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceAssetsView_SourceImportText}"
-                                                                Value="{x:True}" />
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceAssetsView_SourceLocalText}"
-                                                                Value="{x:False}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.InstanceAssetsView_SourceImportText}" Value="{x:True}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.InstanceAssetsView_SourceLocalText}" Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
 
                                                     <husk:Divider />
 
-                                                    <!-- 加载器类型 -->
+                                                    <!--  加载器类型  -->
                                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
-                                                        <TextBlock Grid.Column="0"
-                                                                   Text="{x:Static lang:Resources.InstanceAssetsView_LoaderFilterText}"
-                                                                   VerticalAlignment="Bottom" />
-                                                        <TabStrip Grid.Column="1"
-                                                                  Theme="{StaticResource SegmentedTabStripTheme}"
-                                                                  SelectedItem="{Binding ModFilterLoader,Mode=TwoWay}">
+                                                        <TextBlock
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Bottom"
+                                                            Text="{x:Static lang:Resources.InstanceAssetsView_LoaderFilterText}" />
+                                                        <TabStrip
+                                                            Grid.Column="1"
+                                                            SelectedItem="{Binding ModFilterLoader, Mode=TwoWay}"
+                                                            Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
                                                                 <DataTemplate DataType="m:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_All}"
-                                                                Value="{x:Null}" />
-                                                            <m:FilterModel Label="Fabric"
-                                                                           Value="{x:Static m:ModLoaderKind.Fabric}" />
-                                                            <m:FilterModel Label="Forge"
-                                                                           Value="{x:Static m:ModLoaderKind.Forge}" />
-                                                            <m:FilterModel Label="Quilt"
-                                                                           Value="{x:Static m:ModLoaderKind.Quilt}" />
-                                                            <m:FilterModel Label="NeoForge"
-                                                                           Value="{x:Static m:ModLoaderKind.NeoForge}" />
+                                                            <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
+                                                            <m:FilterModel Label="Fabric" Value="{x:Static m:ModLoaderKind.Fabric}" />
+                                                            <m:FilterModel Label="Forge" Value="{x:Static m:ModLoaderKind.Forge}" />
+                                                            <m:FilterModel Label="Quilt" Value="{x:Static m:ModLoaderKind.Quilt}" />
+                                                            <m:FilterModel Label="NeoForge" Value="{x:Static m:ModLoaderKind.NeoForge}" />
                                                         </TabStrip>
                                                     </Grid>
                                                 </StackPanel>
                                             </Flyout>
                                         </Button.Flyout>
-                                        <icons:PackIconLucide Kind="ListFilter"
-                                                              Height="{StaticResource MediumFontSize}"
-                                                              Width="{StaticResource MediumFontSize}" />
+                                        <icons:PackIconLucide
+                                            Width="{StaticResource MediumFontSize}"
+                                            Height="{StaticResource MediumFontSize}"
+                                            Kind="ListFilter" />
                                     </Button>
                                 </StackPanel>
                             </TextBox.InnerRightContent>
                         </TextBox>
 
-                        <!-- Mod 列表 -->
+                        <!--  Mod 列表  -->
                         <ScrollViewer Grid.Row="1">
 
-                            <controls:EmptyContainer
-                                IsEmpty="{Binding Mods.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                            <controls:EmptyContainer IsEmpty="{Binding Mods.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
 
-                                <!-- Mod 列表 -->
-                                <ListBox Theme="{StaticResource CleanListBoxTheme}" ItemsSource="{Binding Mods}"
-                                         SelectionMode="Single"
-                                         SelectedItem="{Binding SelectedMod,Mode=TwoWay}">
+                                <!--  Mod 列表  -->
+                                <ListBox
+                                    ItemsSource="{Binding Mods}"
+                                    SelectedItem="{Binding SelectedMod, Mode=TwoWay}"
+                                    SelectionMode="Single"
+                                    Theme="{StaticResource CleanListBoxTheme}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate DataType="m:AssetModModel">
                                             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                                <!-- Mod 图标 -->
-                                                <Border Grid.Column="0" Width="48" Height="48"
-                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <!--  Mod 图标  -->
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Width="48"
+                                                    Height="48"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <Border.Background>
                                                         <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                                     </Border.Background>
                                                 </Border>
 
-                                                <!-- Mod 信息 -->
+                                                <!--  Mod 信息  -->
                                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                                     <DockPanel>
 
-                                                        <!-- 状态指示器 -->
-                                                        <husk:SwitchPresenter DockPanel.Dock="Right"
-                                                                              Value="{Binding IsLocked}"
-                                                                              TargetType="x:Boolean"
-                                                                              Width="8" Height="8"
-                                                                              VerticalAlignment="Top">
+                                                        <!--  状态指示器  -->
+                                                        <husk:SwitchPresenter
+                                                            Width="8"
+                                                            Height="8"
+                                                            VerticalAlignment="Top"
+                                                            DockPanel.Dock="Right"
+                                                            TargetType="x:Boolean"
+                                                            Value="{Binding IsLocked}">
                                                             <husk:SwitchCase Value="{x:False}">
-                                                                <husk:SwitchPresenter Value="{Binding IsEnabled}"
-                                                                        TargetType="x:Boolean"
-                                                                        Width="8" Height="8">
+                                                                <husk:SwitchPresenter
+                                                                    Width="8"
+                                                                    Height="8"
+                                                                    TargetType="x:Boolean"
+                                                                    Value="{Binding IsEnabled}">
                                                                     <husk:SwitchCase Value="{x:True}">
-                                                                        <Border
-                                                                            CornerRadius="4"
-                                                                            Background="{StaticResource ControlSuccessBackgroundBrush}" />
+                                                                        <Border Background="{StaticResource ControlSuccessBackgroundBrush}" CornerRadius="4" />
                                                                     </husk:SwitchCase>
                                                                     <husk:SwitchCase Value="{x:False}">
-                                                                        <Border
-                                                                            CornerRadius="4"
-                                                                            Background="{StaticResource ControlDangerBackgroundBrush}" />
+                                                                        <Border Background="{StaticResource ControlDangerBackgroundBrush}" CornerRadius="4" />
                                                                     </husk:SwitchCase>
                                                                 </husk:SwitchPresenter>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="{x:True}">
-                                                                <Border
-                                                                    CornerRadius="4"
-                                                                    Background="{StaticResource ControlWarningBackgroundBrush}" />
+                                                                <Border Background="{StaticResource ControlWarningBackgroundBrush}" CornerRadius="4" />
                                                             </husk:SwitchCase>
                                                         </husk:SwitchPresenter>
 
-                                                        <!-- 模组名 -->
-                                                        <TextBlock Text="{Binding DisplayName}"
-                                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                   TextTrimming="CharacterEllipsis" />
+                                                        <!--  模组名  -->
+                                                        <TextBlock
+                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                            Text="{Binding DisplayName}"
+                                                            TextTrimming="CharacterEllipsis" />
                                                     </DockPanel>
 
-                                                    <!-- 描述 -->
-                                                    <TextBlock Text="{Binding Description}"
-                                                               MaxLines="1"
-                                                               TextTrimming="CharacterEllipsis"
-                                                               FontSize="{StaticResource SmallFontSize}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                    <!--  描述  -->
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        MaxLines="1"
+                                                        Text="{Binding Description}"
+                                                        TextTrimming="CharacterEllipsis" />
                                                     <DockPanel>
 
-                                                        <!-- 版本 -->
-                                                        <husk:Tag DockPanel.Dock="Right" Classes="Small"
-                                                                  Content="{Binding Version}" />
+                                                        <!--  版本  -->
+                                                        <husk:Tag
+                                                            Classes="Small"
+                                                            Content="{Binding Version}"
+                                                            DockPanel.Dock="Right" />
 
-                                                        <!-- 文件大小 -->
-                                                        <TextBlock Text="{Binding FileSize}"
-                                                                   FontSize="{StaticResource SmallFontSize}"
-                                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                        <!--  文件大小  -->
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{Binding FileSize}" />
                                                     </DockPanel>
                                                 </StackPanel>
 
@@ -275,163 +289,170 @@
                         </ScrollViewer>
                     </Grid>
 
-                    <!-- 分隔线 -->
+                    <!--  分隔线  -->
                     <GridSplitter Grid.Column="1" Width="2" />
 
-                    <!-- 右侧：详细信息面板 -->
+                    <!--  右侧：详细信息面板  -->
                     <ScrollViewer Grid.Column="2">
                         <husk:PlaceholderPresenter Source="{Binding SelectedMod}">
                             <husk:PlaceholderPresenter.SourceTemplate>
                                 <DataTemplate DataType="m:AssetModModel">
                                     <StackPanel Spacing="8">
-                                        <!-- Mod 头部 -->
+                                        <!--  Mod 头部  -->
                                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                            <Border Grid.Column="0" Width="82" Height="82"
-                                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                            <Border
+                                                Grid.Column="0"
+                                                Width="82"
+                                                Height="82"
+                                                CornerRadius="{StaticResource MediumCornerRadius}">
                                                 <Border.Background>
-                                                    <ImageBrush
-                                                        Source="{Binding Icon}"
-                                                        Stretch="Uniform" />
+                                                    <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                                 </Border.Background>
                                             </Border>
-                                            <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
-                                                <TextBlock Text="{Binding DisplayName}"
-                                                           FontSize="{StaticResource ExtraLargeFontSize}"
-                                                           FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                           TextTrimming="CharacterEllipsis" />
-                                                <TextBlock Text="{Binding Author}" TextTrimming="CharacterEllipsis"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Spacing="4">
+                                                <TextBlock
+                                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                    Text="{Binding DisplayName}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding Author}"
+                                                    TextTrimming="CharacterEllipsis" />
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <husk:Tag
-                                                        Classes="Primary"
-                                                        IsVisible="{Binding IsLocked}">
-                                                        <husk:IconLabel Icon="LockClosed"
-                                                                        Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                    <husk:Tag Classes="Primary" IsVisible="{Binding IsLocked}">
+                                                        <husk:IconLabel Icon="LockClosed" Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                     </husk:Tag>
-                                                    <husk:Tag
-                                                        Content="{Binding Metadata.LoaderType}"
-                                                        IsVisible="{Binding Metadata.LoaderType,Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                    <husk:Tag Content="{Binding Metadata.LoaderType}" IsVisible="{Binding Metadata.LoaderType, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                                                     <husk:Tag Content="{Binding Version}" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </Grid>
 
-                                        <!-- 操作按钮 -->
+                                        <!--  操作按钮  -->
                                         <husk:ButtonGroup>
-                                            <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleModCommand,FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding}">
-                                                <husk:SwitchPresenter Value="{Binding IsEnabled}"
-                                                                      TargetType="x:Boolean">
+                                            <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleModCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                                                <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding IsEnabled}">
                                                     <husk:SwitchCase Value="{x:True}">
-                                                        <husk:IconLabel Icon="Power"
-                                                                        Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                        <husk:IconLabel Icon="Power" Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
-                                                        <husk:IconLabel Icon="Power"
-                                                                        Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                        <husk:IconLabel Icon="Power" Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
                                             </Button>
-                                            <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding FilePath}">
-                                                <fi:SymbolIcon Symbol="FolderOpen"
-                                                               FontSize="{StaticResource MediumFontSize}" />
+                                            <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}" CommandParameter="{Binding FilePath}">
+                                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="FolderOpen" />
                                             </Button>
-                                            <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteModCommand,FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding}">
-                                                <fi:SymbolIcon Symbol="Delete"
-                                                               Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                               FontSize="{StaticResource MediumFontSize}" />
+                                            <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteModCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                    Symbol="Delete" />
                                             </Button>
                                         </husk:ButtonGroup>
 
-                                        <!-- Mod 描述 -->
-                                        <husk:Card BorderThickness="0"
-                                                   IsVisible="{Binding Metadata.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                        <!--  Mod 描述  -->
+                                        <husk:Card BorderThickness="0" IsVisible="{Binding Metadata.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                             <StackPanel Spacing="8">
-                                                <TextBlock
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_DescriptionLabelText}"
-                                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                                <TextBlock
-                                                    Text="{Binding Metadata.Description, FallbackValue=No description available}"
-                                                    TextWrapping="Wrap" />
+                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.InstanceAssetsView_DescriptionLabelText}" />
+                                                <TextBlock Text="{Binding Metadata.Description, FallbackValue=No description available}" TextWrapping="Wrap" />
                                             </StackPanel>
                                         </husk:Card>
 
-                                        <!-- 详细信息 -->
+                                        <!--  详细信息  -->
                                         <husk:Card BorderThickness="0">
                                             <StackPanel Spacing="12">
-                                                <TextBlock
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}"
-                                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                                <Grid ColumnDefinitions="Auto,*"
-                                                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
-                                                      ColumnSpacing="16" RowSpacing="8">
-                                                    <TextBlock Grid.Row="0" Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileNameLabelText}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                    <TextBlock Grid.Row="0" Grid.Column="1"
-                                                               Text="{Binding FileName,Mode=OneWay}"
-                                                               TextWrapping="Wrap" />
+                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}" />
+                                                <Grid
+                                                    ColumnDefinitions="Auto,*"
+                                                    ColumnSpacing="16"
+                                                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                                                    RowSpacing="8">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileNameLabelText}" />
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        Text="{Binding FileName, Mode=OneWay}"
+                                                        TextWrapping="Wrap" />
 
-                                                    <TextBlock Grid.Row="1" Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceAssetsView_AssetModIdLabelText}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                               IsVisible="{Binding Metadata.ModId, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
-                                                    <TextBlock Grid.Row="1" Grid.Column="1"
-                                                               Text="{Binding Metadata.ModId, FallbackValue=Unknown}"
-                                                               IsVisible="{Binding Metadata.ModId, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        IsVisible="{Binding Metadata.ModId, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetModIdLabelText}" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        IsVisible="{Binding Metadata.ModId, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                        Text="{Binding Metadata.ModId, FallbackValue=Unknown}" />
 
-                                                    <TextBlock Grid.Row="2" Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceAssetsView_AssetLicenseLabelText}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                               IsVisible="{Binding Metadata.License, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
-                                                    <TextBlock Grid.Row="2" Grid.Column="1"
-                                                               Text="{Binding Metadata.License, FallbackValue=Unknown}"
-                                                               IsVisible="{Binding Metadata.License, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                    <TextBlock
+                                                        Grid.Row="2"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        IsVisible="{Binding Metadata.License, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetLicenseLabelText}" />
+                                                    <TextBlock
+                                                        Grid.Row="2"
+                                                        Grid.Column="1"
+                                                        IsVisible="{Binding Metadata.License, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                        Text="{Binding Metadata.License, FallbackValue=Unknown}" />
 
-                                                    <TextBlock Grid.Row="3" Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileSizeLabelText}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                    <TextBlock Grid.Row="3" Grid.Column="1"
-                                                               Text="{Binding FileSize}" />
+                                                    <TextBlock
+                                                        Grid.Row="3"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileSizeLabelText}" />
+                                                    <TextBlock
+                                                        Grid.Row="3"
+                                                        Grid.Column="1"
+                                                        Text="{Binding FileSize}" />
 
-                                                    <TextBlock Grid.Row="4" Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceAssetsView_AssetLastModifiedLabelText}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                    <TextBlock Grid.Row="4" Grid.Column="1"
-                                                               Text="{Binding LastModifiedFormatted}" />
+                                                    <TextBlock
+                                                        Grid.Row="4"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetLastModifiedLabelText}" />
+                                                    <TextBlock
+                                                        Grid.Row="4"
+                                                        Grid.Column="1"
+                                                        Text="{Binding LastModifiedFormatted}" />
 
-                                                    <TextBlock Grid.Row="5" Grid.Column="0"
-                                                               Text="{x:Static lang:Resources.InstanceAssetsView_AssetStatusLabelText}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                    <husk:SwitchPresenter Grid.Row="5" Grid.Column="1"
-                                                                          Value="{Binding IsEnabled}"
-                                                                          TargetType="x:Boolean">
+                                                    <TextBlock
+                                                        Grid.Row="5"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetStatusLabelText}" />
+                                                    <husk:SwitchPresenter
+                                                        Grid.Row="5"
+                                                        Grid.Column="1"
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding IsEnabled}">
                                                         <husk:SwitchCase Value="{x:True}">
-                                                            <TextBlock Text="{x:Static lang:Resources.Enum_Enabled}"
-                                                                       Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                                            <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}" Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="{x:False}">
-                                                            <TextBlock Text="{x:Static lang:Resources.Enum_Disabled}"
-                                                                       Foreground="{StaticResource ControlDangerForegroundBrush}" />
+                                                            <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}" Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                         </husk:SwitchCase>
                                                     </husk:SwitchPresenter>
                                                 </Grid>
                                             </StackPanel>
                                         </husk:Card>
 
-                                        <!-- 链接 -->
-                                        <husk:Card BorderThickness="0"
-                                                   IsVisible="{Binding Metadata.Homepage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                                            <Button Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                                                    CommandParameter="{Binding Metadata.Homepage}">
+                                        <!--  链接  -->
+                                        <husk:Card BorderThickness="0" IsVisible="{Binding Metadata.Homepage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                            <Button Command="{x:Static m:InternalCommands.OpenUriCommand}" CommandParameter="{Binding Metadata.Homepage}">
                                                 <StackPanel Orientation="Horizontal" Spacing="8">
-                                                    <husk:IconLabel Icon="Open"
-                                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetVisitWebsiteButtonText}" />
+                                                    <husk:IconLabel Icon="Open" Text="{x:Static lang:Resources.InstanceAssetsView_AssetVisitWebsiteButtonText}" />
                                                 </StackPanel>
                                             </Button>
                                         </husk:Card>
@@ -439,14 +460,21 @@
                                 </DataTemplate>
                             </husk:PlaceholderPresenter.SourceTemplate>
 
-                            <!-- 空状态 -->
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
-                                <icons:PackIconLucide Kind="Boxes"
-                                                      Height="32" Width="32" HorizontalAlignment="Center"
-                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}"
-                                           FontSize="{StaticResource LargeFontSize}"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <!--  空状态  -->
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="12">
+                                <icons:PackIconLucide
+                                    Width="32"
+                                    Height="32"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Kind="Boxes" />
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}" />
                             </StackPanel>
                         </husk:PlaceholderPresenter>
                     </ScrollViewer>
@@ -460,107 +488,123 @@
                     <husk:PlaceholderPresenter Source="{Binding ResourcePacks}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
-                                <TextBlock Text="{Binding Count,StringFormat={}({0}),FallbackValue=(0)}" />
+                                <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:ProgressRing
-                            IsIndeterminate="{Binding ResourcePacks,Converter={x:Static ObjectConverters.IsNull}}"
-                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                            Width="{Binding $parent[TabItem].FontSize}"
+                            Height="{Binding $parent[TabItem].FontSize}"
+                            IsIndeterminate="{Binding ResourcePacks, Converter={x:Static ObjectConverters.IsNull}}" />
                     </husk:PlaceholderPresenter>
                 </StackPanel>
             </TabItem.Header>
-            <Grid RowDefinitions="*" ColumnDefinitions="*,4,*" ColumnSpacing="12">
-                <!-- 左侧：资源包列表 -->
-                <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="8">
-                    <!-- 搜索栏 -->
-                    <TextBox Grid.Row="0"
-                             Watermark="Search resource packs..."
-                             Text="{Binding ResourcePackSearchText,Mode=TwoWay}">
+            <Grid
+                ColumnDefinitions="*,4,*"
+                ColumnSpacing="12"
+                RowDefinitions="*">
+                <!--  左侧：资源包列表  -->
+                <Grid
+                    Grid.Column="0"
+                    RowDefinitions="Auto,*"
+                    RowSpacing="8">
+                    <!--  搜索栏  -->
+                    <TextBox
+                        Grid.Row="0"
+                        Text="{Binding ResourcePackSearchText, Mode=TwoWay}"
+                        Watermark="Search resource packs...">
                         <TextBox.InnerRightContent>
                             <Button
-                                IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                 Command="{Binding $parent[TextBox].Clear}"
-                                Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                Content="{fie:SymbolIcon Symbol=Dismiss,
+                                                         FontSize={StaticResource MediumFontSize}}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                         </TextBox.InnerRightContent>
                     </TextBox>
 
-                    <!-- 资源包列表 -->
+                    <!--  资源包列表  -->
                     <ScrollViewer Grid.Row="1">
-                        <controls:EmptyContainer
-                            IsEmpty="{Binding ResourcePacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">
+                        <controls:EmptyContainer IsEmpty="{Binding ResourcePacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
 
-                            <!-- 资源包列表 -->
-                            <ListBox Theme="{StaticResource CleanListBoxTheme}" ItemsSource="{Binding ResourcePacks}"
-                                     SelectionMode="Single"
-                                     SelectedItem="{Binding SelectedResourcePack,Mode=TwoWay}">
+                            <!--  资源包列表  -->
+                            <ListBox
+                                ItemsSource="{Binding ResourcePacks}"
+                                SelectedItem="{Binding SelectedResourcePack, Mode=TwoWay}"
+                                SelectionMode="Single"
+                                Theme="{StaticResource CleanListBoxTheme}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="m:AssetResourcePackModel">
                                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                            <!-- 资源包图标 -->
-                                            <Border Grid.Column="0" Width="48" Height="48"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <!--  资源包图标  -->
+                                            <Border
+                                                Grid.Column="0"
+                                                Width="48"
+                                                Height="48"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
                                                 <Border.Background>
                                                     <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                                 </Border.Background>
                                             </Border>
 
-                                            <!-- 资源包信息 -->
+                                            <!--  资源包信息  -->
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                                 <DockPanel>
 
-                                                    <!-- 状态指示器 -->
-                                                    <husk:SwitchPresenter DockPanel.Dock="Right"
-                                                                          Value="{Binding IsLocked}"
-                                                                          TargetType="x:Boolean"
-                                                                          Width="8" Height="8"
-                                                                          VerticalAlignment="Top">
+                                                    <!--  状态指示器  -->
+                                                    <husk:SwitchPresenter
+                                                        Width="8"
+                                                        Height="8"
+                                                        VerticalAlignment="Top"
+                                                        DockPanel.Dock="Right"
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding IsLocked}">
                                                         <husk:SwitchCase Value="{x:False}">
-                                                            <husk:SwitchPresenter Value="{Binding IsEnabled}"
-                                                                    TargetType="x:Boolean"
-                                                                    Width="8" Height="8">
+                                                            <husk:SwitchPresenter
+                                                                Width="8"
+                                                                Height="8"
+                                                                TargetType="x:Boolean"
+                                                                Value="{Binding IsEnabled}">
                                                                 <husk:SwitchCase Value="{x:True}">
-                                                                    <Border
-                                                                        CornerRadius="4"
-                                                                        Background="{StaticResource ControlSuccessBackgroundBrush}" />
+                                                                    <Border Background="{StaticResource ControlSuccessBackgroundBrush}" CornerRadius="4" />
                                                                 </husk:SwitchCase>
                                                                 <husk:SwitchCase Value="{x:False}">
-                                                                    <Border
-                                                                        CornerRadius="4"
-                                                                        Background="{StaticResource ControlDangerBackgroundBrush}" />
+                                                                    <Border Background="{StaticResource ControlDangerBackgroundBrush}" CornerRadius="4" />
                                                                 </husk:SwitchCase>
                                                             </husk:SwitchPresenter>
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="{x:True}">
-                                                            <Border
-                                                                CornerRadius="4"
-                                                                Background="{StaticResource ControlWarningBackgroundBrush}" />
+                                                            <Border Background="{StaticResource ControlWarningBackgroundBrush}" CornerRadius="4" />
                                                         </husk:SwitchCase>
                                                     </husk:SwitchPresenter>
 
-                                                    <!-- 资源包名 -->
-                                                    <TextBlock Text="{Binding DisplayName}"
-                                                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                               TextTrimming="CharacterEllipsis" />
+                                                    <!--  资源包名  -->
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{Binding DisplayName}"
+                                                        TextTrimming="CharacterEllipsis" />
                                                 </DockPanel>
 
-                                                <!-- 描述 -->
-                                                <TextBlock Text="{Binding Description}"
-                                                           MaxLines="1"
-                                                           TextTrimming="CharacterEllipsis"
-                                                           FontSize="{StaticResource SmallFontSize}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <!--  描述  -->
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    MaxLines="1"
+                                                    Text="{Binding Description}"
+                                                    TextTrimming="CharacterEllipsis" />
 
                                                 <DockPanel>
 
-                                                    <!-- 包格式版本 -->
-                                                    <husk:Tag DockPanel.Dock="Right" Classes="Small"
-                                                              Content="{Binding PackFormat,StringFormat='Pack Format: {0}'}" />
+                                                    <!--  包格式版本  -->
+                                                    <husk:Tag
+                                                        Classes="Small"
+                                                        Content="{Binding PackFormat, StringFormat='Pack Format: {0}'}"
+                                                        DockPanel.Dock="Right" />
 
-                                                    <!-- 文件大小 -->
-                                                    <TextBlock Text="{Binding FileSize}"
-                                                               FontSize="{StaticResource SmallFontSize}"
-                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                    <!--  文件大小  -->
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{Binding FileSize}" />
                                                 </DockPanel>
                                             </StackPanel>
                                         </Grid>
@@ -571,134 +615,140 @@
                     </ScrollViewer>
                 </Grid>
 
-                <!-- 分隔线 -->
+                <!--  分隔线  -->
                 <GridSplitter Grid.Column="1" Width="2" />
 
-                <!-- 右侧：详细信息面板 -->
+                <!--  右侧：详细信息面板  -->
                 <ScrollViewer Grid.Column="2">
                     <husk:PlaceholderPresenter Source="{Binding SelectedResourcePack}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate DataType="m:AssetResourcePackModel">
                                 <StackPanel Spacing="8">
-                                    <!-- 资源包头部 -->
+                                    <!--  资源包头部  -->
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                        <Border Grid.Column="0" Width="82" Height="82"
-                                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="82"
+                                            Height="82"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
                                             <Border.Background>
-                                                <ImageBrush
-                                                    Source="{Binding Icon}"
-                                                    Stretch="Uniform" />
+                                                <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                             </Border.Background>
                                         </Border>
-                                        <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding DisplayName}"
-                                                       FontSize="{StaticResource ExtraLargeFontSize}"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                       TextTrimming="CharacterEllipsis" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Spacing="4">
+                                            <TextBlock
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding DisplayName}"
+                                                TextTrimming="CharacterEllipsis" />
                                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                                <husk:Tag
-                                                    Classes="Primary"
-                                                    IsVisible="{Binding IsLocked}">
-                                                    <husk:IconLabel Icon="LockClosed"
-                                                                    Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                <husk:Tag Classes="Primary" IsVisible="{Binding IsLocked}">
+                                                    <husk:IconLabel Icon="LockClosed" Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
-                                                <husk:Tag Content="{Binding PackFormat,StringFormat='Format {0}'}" />
+                                                <husk:Tag Content="{Binding PackFormat, StringFormat='Format {0}'}" />
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
 
-                                    <!-- 操作按钮 -->
+                                    <!--  操作按钮  -->
                                     <husk:ButtonGroup>
-                                        <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleResourcePackCommand,FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding}">
-                                            <husk:SwitchPresenter Value="{Binding IsEnabled}"
-                                                                  TargetType="x:Boolean">
+                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleResourcePackCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                                            <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding IsEnabled}">
                                                 <husk:SwitchCase Value="{x:True}">
-                                                    <husk:IconLabel Icon="Power"
-                                                                    Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                    <husk:IconLabel Icon="Power" Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="{x:False}">
-                                                    <husk:IconLabel Icon="Power"
-                                                                    Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                    <husk:IconLabel Icon="Power" Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchPresenter>
                                         </Button>
-                                        <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding FilePath}">
-                                            <fi:SymbolIcon Symbol="FolderOpen"
-                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}" CommandParameter="{Binding FilePath}">
+                                            <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="FolderOpen" />
                                         </Button>
-                                        <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteResourcePackCommand,FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding}">
-                                            <fi:SymbolIcon Symbol="Delete"
-                                                           Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteResourcePackCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                Symbol="Delete" />
                                         </Button>
                                     </husk:ButtonGroup>
 
-                                    <!-- 资源包描述 -->
-                                    <husk:Card BorderThickness="0"
-                                               IsVisible="{Binding Metadata.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                    <!--  资源包描述  -->
+                                    <husk:Card BorderThickness="0" IsVisible="{Binding Metadata.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                         <StackPanel Spacing="8">
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceAssetsView_DescriptionLabelText}"
-                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                            <TextBlock
-                                                Text="{Binding Metadata.Description, FallbackValue=No description available}"
-                                                TextWrapping="Wrap" />
+                                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.InstanceAssetsView_DescriptionLabelText}" />
+                                            <TextBlock Text="{Binding Metadata.Description, FallbackValue=No description available}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </husk:Card>
 
-                                    <!-- 详细信息 -->
+                                    <!--  详细信息  -->
                                     <husk:Card BorderThickness="0">
                                         <StackPanel Spacing="12">
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}"
-                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                            <Grid ColumnDefinitions="Auto,*"
-                                                  RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                                                  ColumnSpacing="16" RowSpacing="8">
-                                                <TextBlock Grid.Row="0" Grid.Column="0"
-                                                           Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileNameLabelText}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="0" Grid.Column="1"
-                                                           Text="{Binding FileName,Mode=OneWay}"
-                                                           TextWrapping="Wrap" />
+                                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}" />
+                                            <Grid
+                                                ColumnDefinitions="Auto,*"
+                                                ColumnSpacing="16"
+                                                RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                                RowSpacing="8">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileNameLabelText}" />
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Text="{Binding FileName, Mode=OneWay}"
+                                                    TextWrapping="Wrap" />
 
-                                                <TextBlock Grid.Row="1" Grid.Column="0"
-                                                           Text="{x:Static lang:Resources.InstanceAssetsView_AssetPackFormatLabelText}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="1" Grid.Column="1"
-                                                           Text="{Binding PackFormat}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetPackFormatLabelText}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Text="{Binding PackFormat}" />
 
-                                                <TextBlock Grid.Row="2" Grid.Column="0"
-                                                           Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileSizeLabelText}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="2" Grid.Column="1"
-                                                           Text="{Binding FileSize}" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileSizeLabelText}" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Text="{Binding FileSize}" />
 
-                                                <TextBlock Grid.Row="3" Grid.Column="0"
-                                                           Text="{x:Static lang:Resources.InstanceAssetsView_AssetLastModifiedLabelText}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="3" Grid.Column="1"
-                                                           Text="{Binding LastModifiedFormatted}" />
+                                                <TextBlock
+                                                    Grid.Row="3"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetLastModifiedLabelText}" />
+                                                <TextBlock
+                                                    Grid.Row="3"
+                                                    Grid.Column="1"
+                                                    Text="{Binding LastModifiedFormatted}" />
 
-                                                <TextBlock Grid.Row="4" Grid.Column="0"
-                                                           Text="{x:Static lang:Resources.InstanceAssetsView_AssetStatusLabelText}"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <husk:SwitchPresenter Grid.Row="4" Grid.Column="1"
-                                                                      Value="{Binding IsEnabled}"
-                                                                      TargetType="x:Boolean">
+                                                <TextBlock
+                                                    Grid.Row="4"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetStatusLabelText}" />
+                                                <husk:SwitchPresenter
+                                                    Grid.Row="4"
+                                                    Grid.Column="1"
+                                                    TargetType="x:Boolean"
+                                                    Value="{Binding IsEnabled}">
                                                     <husk:SwitchCase Value="{x:True}">
-                                                        <TextBlock Text="{x:Static lang:Resources.Enum_Enabled}"
-                                                                   Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                                        <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}" Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
-                                                        <TextBlock Text="{x:Static lang:Resources.Enum_Disabled}"
-                                                                   Foreground="{StaticResource ControlDangerForegroundBrush}" />
+                                                        <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}" Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
                                             </Grid>
@@ -708,14 +758,21 @@
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
 
-                        <!-- 空状态 -->
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
-                            <icons:PackIconLucide Kind="Boxes"
-                                                  Height="32" Width="32" HorizontalAlignment="Center"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <!--  空状态  -->
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="12">
+                            <icons:PackIconLucide
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="Boxes" />
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}" />
                         </StackPanel>
                     </husk:PlaceholderPresenter>
                 </ScrollViewer>
@@ -731,105 +788,105 @@
         <!--                         <TextBlock Text="{Binding Count,StringFormat={}({0}),FallbackValue=(0)}" /> -->
         <!--                     </DataTemplate> -->
         <!--                 </husk:PlaceholderPresenter.SourceTemplate> -->
-        <!--                 <husk:ProgressRing -->
-        <!--                     IsIndeterminate="{Binding DataPacks,Converter={x:Static ObjectConverters.IsNull}}" -->
-        <!--                     Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" /> -->
+        <!--  <husk:ProgressRing  -->
+        <!--  IsIndeterminate="{Binding DataPacks,Converter={x:Static ObjectConverters.IsNull}}"  -->
+        <!--  Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />  -->
         <!--             </husk:PlaceholderPresenter> -->
         <!--         </StackPanel> -->
         <!--     </TabItem.Header> -->
         <!--     <Grid RowDefinitions="*" ColumnDefinitions="*,4,*" ColumnSpacing="12"> -->
-        <!--         ~1~ 左侧：数据包列表 @1@ -->
+        <!--  ~1~ 左侧：数据包列表 @1@  -->
         <!--         <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="8"> -->
-        <!--             ~1~ 搜索栏 @1@ -->
-        <!--             <TextBox Grid.Row="0" -->
-        <!--                      Watermark="Search data packs..." -->
-        <!--                      Text="{Binding DataPackSearchText,Mode=TwoWay}"> -->
+        <!--  ~1~ 搜索栏 @1@  -->
+        <!--  <TextBox Grid.Row="0"  -->
+        <!--  Watermark="Search data packs..."  -->
+        <!--  Text="{Binding DataPackSearchText,Mode=TwoWay}">  -->
         <!--                 <TextBox.InnerRightContent> -->
-        <!--                     <Button -->
-        <!--                         IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}" -->
-        <!--                         Command="{Binding $parent[TextBox].Clear}" -->
-        <!--                         Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}" -->
-        <!--                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
+        <!--  <Button  -->
+        <!--  IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"  -->
+        <!--  Command="{Binding $parent[TextBox].Clear}"  -->
+        <!--  Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
         <!--                 </TextBox.InnerRightContent> -->
         <!--             </TextBox> -->
-        <!-- -->
-        <!--             ~1~ 数据包列表 @1@ -->
+        <!--    -->
+        <!--  ~1~ 数据包列表 @1@  -->
         <!--             <ScrollViewer Grid.Row="1"> -->
-        <!--                 <controls:EmptyContainer -->
-        <!--                     IsEmpty="{Binding DataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"> -->
-        <!-- -->
-        <!--                     ~1~ 数据包列表 @1@ -->
-        <!--                     <ListBox Theme="{StaticResource CleanListBoxTheme}" ItemsSource="{Binding DataPacks}" -->
-        <!--                              SelectionMode="Single" -->
-        <!--                              SelectedItem="{Binding SelectedDataPack,Mode=TwoWay}"> -->
+        <!--  <controls:EmptyContainer  -->
+        <!--  IsEmpty="{Binding DataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}">  -->
+        <!--    -->
+        <!--  ~1~ 数据包列表 @1@  -->
+        <!--  <ListBox Theme="{StaticResource CleanListBoxTheme}" ItemsSource="{Binding DataPacks}"  -->
+        <!--  SelectionMode="Single"  -->
+        <!--  SelectedItem="{Binding SelectedDataPack,Mode=TwoWay}">  -->
         <!--                         <ListBox.ItemTemplate> -->
         <!--                             <DataTemplate DataType="m:AssetDataPackModel"> -->
         <!--                                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12"> -->
-        <!--                                     ~1~ 数据包图标 @1@ -->
-        <!--                                     <Border Grid.Column="0" Width="48" Height="48" -->
-        <!--                                             CornerRadius="{StaticResource SmallCornerRadius}"> -->
+        <!--  ~1~ 数据包图标 @1@  -->
+        <!--  <Border Grid.Column="0" Width="48" Height="48"  -->
+        <!--  CornerRadius="{StaticResource SmallCornerRadius}">  -->
         <!--                                         <Border.Background> -->
         <!--                                             <ImageBrush Source="{Binding Icon}" Stretch="Uniform" /> -->
         <!--                                         </Border.Background> -->
         <!--                                     </Border> -->
-        <!-- -->
-        <!--                                     ~1~ 数据包信息 @1@ -->
+        <!--    -->
+        <!--  ~1~ 数据包信息 @1@  -->
         <!--                                     <StackPanel Grid.Column="1" VerticalAlignment="Center"> -->
-        <!-- -->
+        <!--    -->
         <!--                                         <DockPanel> -->
-        <!-- -->
-        <!--                                             ~1~ 状态指示器 @1@ -->
-        <!--                                             <husk:SwitchPresenter DockPanel.Dock="Right" -->
-        <!--                                                                   Value="{Binding IsLocked}" -->
-        <!--                                                                   TargetType="x:Boolean" -->
-        <!--                                                                   Width="8" Height="8" -->
-        <!--                                                                   VerticalAlignment="Top"> -->
+        <!--    -->
+        <!--  ~1~ 状态指示器 @1@  -->
+        <!--  <husk:SwitchPresenter DockPanel.Dock="Right"  -->
+        <!--  Value="{Binding IsLocked}"  -->
+        <!--  TargetType="x:Boolean"  -->
+        <!--  Width="8" Height="8"  -->
+        <!--  VerticalAlignment="Top">  -->
         <!--                                                 <husk:SwitchCase Value="{x:False}"> -->
-        <!--                                                     <husk:SwitchPresenter Value="{Binding IsEnabled}" -->
-        <!--                                                             TargetType="x:Boolean" -->
-        <!--                                                             Width="8" Height="8"> -->
+        <!--  <husk:SwitchPresenter Value="{Binding IsEnabled}"  -->
+        <!--  TargetType="x:Boolean"  -->
+        <!--  Width="8" Height="8">  -->
         <!--                                                         <husk:SwitchCase Value="{x:True}"> -->
-        <!--                                                             <Border -->
-        <!--                                                                 CornerRadius="4" -->
-        <!--                                                                 Background="{StaticResource ControlSuccessBackgroundBrush}" /> -->
+        <!--  <Border  -->
+        <!--  CornerRadius="4"  -->
+        <!--  Background="{StaticResource ControlSuccessBackgroundBrush}" />  -->
         <!--                                                         </husk:SwitchCase> -->
         <!--                                                         <husk:SwitchCase Value="{x:False}"> -->
-        <!--                                                             <Border -->
-        <!--                                                                 CornerRadius="4" -->
-        <!--                                                                 Background="{StaticResource ControlDangerBackgroundBrush}" /> -->
+        <!--  <Border  -->
+        <!--  CornerRadius="4"  -->
+        <!--  Background="{StaticResource ControlDangerBackgroundBrush}" />  -->
         <!--                                                         </husk:SwitchCase> -->
         <!--                                                     </husk:SwitchPresenter> -->
         <!--                                                 </husk:SwitchCase> -->
         <!--                                                 <husk:SwitchCase Value="{x:True}"> -->
-        <!--                                                     <Border -->
-        <!--                                                         CornerRadius="4" -->
-        <!--                                                         Background="{StaticResource ControlWarningBackgroundBrush}" /> -->
+        <!--  <Border  -->
+        <!--  CornerRadius="4"  -->
+        <!--  Background="{StaticResource ControlWarningBackgroundBrush}" />  -->
         <!--                                                 </husk:SwitchCase> -->
         <!--                                             </husk:SwitchPresenter> -->
-        <!-- -->
-        <!--                                             ~1~ 数据包名称 @1@ -->
-        <!--                                             <TextBlock Text="{Binding DisplayName}" -->
-        <!--                                                        FontWeight="{StaticResource ControlStrongFontWeight}" -->
-        <!--                                                        TextTrimming="CharacterEllipsis" /> -->
+        <!--    -->
+        <!--  ~1~ 数据包名称 @1@  -->
+        <!--  <TextBlock Text="{Binding DisplayName}"  -->
+        <!--  FontWeight="{StaticResource ControlStrongFontWeight}"  -->
+        <!--  TextTrimming="CharacterEllipsis" />  -->
         <!--                                         </DockPanel> -->
-        <!-- -->
-        <!--                                         ~1~ 描述 @1@ -->
-        <!--                                         <TextBlock Text="{Binding Description}" -->
-        <!--                                                    MaxLines="1" -->
-        <!--                                                    TextTrimming="CharacterEllipsis" -->
-        <!--                                                    FontSize="{StaticResource SmallFontSize}" -->
-        <!--                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!-- -->
+        <!--    -->
+        <!--  ~1~ 描述 @1@  -->
+        <!--  <TextBlock Text="{Binding Description}"  -->
+        <!--  MaxLines="1"  -->
+        <!--  TextTrimming="CharacterEllipsis"  -->
+        <!--  FontSize="{StaticResource SmallFontSize}"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--    -->
         <!--                                         <DockPanel> -->
-        <!-- -->
-        <!--                                             ~1~ 包格式版本 @1@ -->
-        <!--                                             <husk:Tag DockPanel.Dock="Right" Classes="Small" -->
-        <!--                                                       Content="{Binding PackFormat,StringFormat='Pack Format: {0}'}" /> -->
-        <!-- -->
-        <!--                                             ~1~ 文件大小 @1@ -->
-        <!--                                             <TextBlock Text="{Binding FileSize}" -->
-        <!--                                                        FontSize="{StaticResource SmallFontSize}" -->
-        <!--                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
+        <!--    -->
+        <!--  ~1~ 包格式版本 @1@  -->
+        <!--  <husk:Tag DockPanel.Dock="Right" Classes="Small"  -->
+        <!--  Content="{Binding PackFormat,StringFormat='Pack Format: {0}'}" />  -->
+        <!--    -->
+        <!--  ~1~ 文件大小 @1@  -->
+        <!--  <TextBlock Text="{Binding FileSize}"  -->
+        <!--  FontSize="{StaticResource SmallFontSize}"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
         <!--                                         </DockPanel> -->
         <!--                                     </StackPanel> -->
         <!--                                 </Grid> -->
@@ -839,132 +896,132 @@
         <!--                 </controls:EmptyContainer> -->
         <!--             </ScrollViewer> -->
         <!--         </Grid> -->
-        <!-- -->
-        <!--         ~1~ 分隔线 @1@ -->
+        <!--    -->
+        <!--  ~1~ 分隔线 @1@  -->
         <!--         <GridSplitter Grid.Column="1" Width="2" /> -->
-        <!-- -->
-        <!--         ~1~ 右侧：详细信息面板 @1@ -->
+        <!--    -->
+        <!--  ~1~ 右侧：详细信息面板 @1@  -->
         <!--         <ScrollViewer Grid.Column="2"> -->
         <!--             <husk:PlaceholderPresenter Source="{Binding SelectedDataPack}"> -->
         <!--                 <husk:PlaceholderPresenter.SourceTemplate> -->
         <!--                     <DataTemplate DataType="m:AssetDataPackModel"> -->
         <!--                         <StackPanel Spacing="8"> -->
-        <!--                             ~1~ 数据包头部 @1@ -->
+        <!--  ~1~ 数据包头部 @1@  -->
         <!--                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8"> -->
-        <!--                                 <Border Grid.Column="0" Width="82" Height="82" -->
-        <!--                                         CornerRadius="{StaticResource MediumCornerRadius}"> -->
+        <!--  <Border Grid.Column="0" Width="82" Height="82"  -->
+        <!--  CornerRadius="{StaticResource MediumCornerRadius}">  -->
         <!--                                     <Border.Background> -->
-        <!--                                         <ImageBrush -->
-        <!--                                             Source="{Binding Icon}" -->
-        <!--                                             Stretch="Uniform" /> -->
+        <!--  <ImageBrush  -->
+        <!--  Source="{Binding Icon}"  -->
+        <!--  Stretch="Uniform" />  -->
         <!--                                     </Border.Background> -->
         <!--                                 </Border> -->
         <!--                                 <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center"> -->
-        <!--                                     <TextBlock Text="{Binding DisplayName}" -->
-        <!--                                                FontSize="{StaticResource ExtraLargeFontSize}" -->
-        <!--                                                FontWeight="{StaticResource ControlStrongFontWeight}" -->
-        <!--                                                TextTrimming="CharacterEllipsis" /> -->
+        <!--  <TextBlock Text="{Binding DisplayName}"  -->
+        <!--  FontSize="{StaticResource ExtraLargeFontSize}"  -->
+        <!--  FontWeight="{StaticResource ControlStrongFontWeight}"  -->
+        <!--  TextTrimming="CharacterEllipsis" />  -->
         <!--                                     <StackPanel Orientation="Horizontal" Spacing="4"> -->
-        <!--                                         <husk:Tag -->
-        <!--                                             Classes="Primary" -->
-        <!--                                             IsVisible="{Binding IsLocked}"> -->
-        <!--                                             <husk:IconLabel Icon="LockClosed" -->
-        <!--                                                             Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" /> -->
+        <!--  <husk:Tag  -->
+        <!--  Classes="Primary"  -->
+        <!--  IsVisible="{Binding IsLocked}">  -->
+        <!--  <husk:IconLabel Icon="LockClosed"  -->
+        <!--  Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />  -->
         <!--                                         </husk:Tag> -->
         <!--                                         <husk:Tag Content="{Binding PackFormat,StringFormat='Format {0}'}" /> -->
         <!--                                     </StackPanel> -->
         <!--                                 </StackPanel> -->
         <!--                             </Grid> -->
-        <!-- -->
-        <!--                             ~1~ 操作按钮 @1@ -->
+        <!--    -->
+        <!--  ~1~ 操作按钮 @1@  -->
         <!--                             <husk:ButtonGroup> -->
-        <!--                                 <Button -->
-        <!--                                     Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleDataPackCommand,FallbackValue={x:Null}}" -->
-        <!--                                     CommandParameter="{Binding}"> -->
-        <!--                                     <husk:SwitchPresenter Value="{Binding IsEnabled}" -->
-        <!--                                                           TargetType="x:Boolean"> -->
+        <!--  <Button  -->
+        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleDataPackCommand,FallbackValue={x:Null}}"  -->
+        <!--  CommandParameter="{Binding}">  -->
+        <!--  <husk:SwitchPresenter Value="{Binding IsEnabled}"  -->
+        <!--  TargetType="x:Boolean">  -->
         <!--                                         <husk:SwitchCase Value="{x:True}"> -->
-        <!--                                             <husk:IconLabel Icon="Power" -->
-        <!--                                                             Text="{x:Static lang:Resources.Enum_Disabled}" /> -->
+        <!--  <husk:IconLabel Icon="Power"  -->
+        <!--  Text="{x:Static lang:Resources.Enum_Disabled}" />  -->
         <!--                                         </husk:SwitchCase> -->
         <!--                                         <husk:SwitchCase Value="{x:False}"> -->
-        <!--                                             <husk:IconLabel Icon="Power" -->
-        <!--                                                             Text="{x:Static lang:Resources.Enum_Enabled}" /> -->
+        <!--  <husk:IconLabel Icon="Power"  -->
+        <!--  Text="{x:Static lang:Resources.Enum_Enabled}" />  -->
         <!--                                         </husk:SwitchCase> -->
         <!--                                     </husk:SwitchPresenter> -->
         <!--                                 </Button> -->
-        <!--                                 <Button -->
-        <!--                                     Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}" -->
-        <!--                                     CommandParameter="{Binding FilePath}"> -->
-        <!--                                     <fi:SymbolIcon Symbol="FolderOpen" -->
-        <!--                                                    FontSize="{StaticResource MediumFontSize}" /> -->
+        <!--  <Button  -->
+        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
+        <!--  CommandParameter="{Binding FilePath}">  -->
+        <!--  <fi:SymbolIcon Symbol="FolderOpen"  -->
+        <!--  FontSize="{StaticResource MediumFontSize}" />  -->
         <!--                                 </Button> -->
-        <!--                                 <Button -->
-        <!--                                     Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteDataPackCommand,FallbackValue={x:Null}}" -->
-        <!--                                     CommandParameter="{Binding}"> -->
-        <!--                                     <fi:SymbolIcon Symbol="Delete" -->
-        <!--                                                    Foreground="{StaticResource ControlDangerForegroundBrush}" -->
-        <!--                                                    FontSize="{StaticResource MediumFontSize}" /> -->
+        <!--  <Button  -->
+        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteDataPackCommand,FallbackValue={x:Null}}"  -->
+        <!--  CommandParameter="{Binding}">  -->
+        <!--  <fi:SymbolIcon Symbol="Delete"  -->
+        <!--  Foreground="{StaticResource ControlDangerForegroundBrush}"  -->
+        <!--  FontSize="{StaticResource MediumFontSize}" />  -->
         <!--                                 </Button> -->
         <!--                             </husk:ButtonGroup> -->
-        <!-- -->
-        <!--                             ~1~ 数据包描述 @1@ -->
-        <!--                             <Border Background="{StaticResource CardBackgroundBrush}" -->
-        <!--                                     CornerRadius="{StaticResource MediumCornerRadius}" -->
-        <!--                                     Padding="16" -->
-        <!--                                     IsVisible="{Binding Metadata.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"> -->
+        <!--    -->
+        <!--  ~1~ 数据包描述 @1@  -->
+        <!--  <Border Background="{StaticResource CardBackgroundBrush}"  -->
+        <!--  CornerRadius="{StaticResource MediumCornerRadius}"  -->
+        <!--  Padding="16"  -->
+        <!--  IsVisible="{Binding Metadata.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">  -->
         <!--                                 <StackPanel Spacing="8"> -->
-        <!--                                     <TextBlock Text="Description" -->
-        <!--                                                FontWeight="{StaticResource ControlStrongFontWeight}" /> -->
-        <!--                                     <TextBlock -->
-        <!--                                         Text="{Binding Metadata.Description, FallbackValue=No description available}" -->
-        <!--                                         TextWrapping="Wrap" /> -->
+        <!--  <TextBlock Text="Description"  -->
+        <!--  FontWeight="{StaticResource ControlStrongFontWeight}" />  -->
+        <!--  <TextBlock  -->
+        <!--  Text="{Binding Metadata.Description, FallbackValue=No description available}"  -->
+        <!--  TextWrapping="Wrap" />  -->
         <!--                                 </StackPanel> -->
         <!--                             </Border> -->
-        <!-- -->
-        <!--                             ~1~ 详细信息 @1@ -->
-        <!--                             <Border Background="{StaticResource CardBackgroundBrush}" -->
-        <!--                                     CornerRadius="{StaticResource MediumCornerRadius}" -->
-        <!--                                     Padding="16"> -->
+        <!--    -->
+        <!--  ~1~ 详细信息 @1@  -->
+        <!--  <Border Background="{StaticResource CardBackgroundBrush}"  -->
+        <!--  CornerRadius="{StaticResource MediumCornerRadius}"  -->
+        <!--  Padding="16">  -->
         <!--                                 <StackPanel Spacing="12"> -->
-        <!--                                     <TextBlock Text="Details" -->
-        <!--                                                FontWeight="{StaticResource ControlStrongFontWeight}" /> -->
-        <!--                                     <Grid ColumnDefinitions="Auto,*" -->
-        <!--                                           RowDefinitions="Auto,Auto,Auto,Auto,Auto" -->
-        <!--                                           ColumnSpacing="16" RowSpacing="8"> -->
-        <!--                                         <TextBlock Grid.Row="0" Grid.Column="0" Text="File Name:" -->
-        <!--                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!--                                         <TextBlock Grid.Row="0" Grid.Column="1" -->
-        <!--                                                    Text="{Binding FileName,Mode=OneWay}" -->
-        <!--                                                    TextWrapping="Wrap" /> -->
-        <!-- -->
-        <!--                                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Pack Format:" -->
-        <!--                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!--                                         <TextBlock Grid.Row="1" Grid.Column="1" -->
-        <!--                                                    Text="{Binding PackFormat}" /> -->
-        <!-- -->
-        <!--                                         <TextBlock Grid.Row="2" Grid.Column="0" Text="File Size:" -->
-        <!--                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!--                                         <TextBlock Grid.Row="2" Grid.Column="1" -->
-        <!--                                                    Text="{Binding FileSize}" /> -->
-        <!-- -->
-        <!--                                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Modified:" -->
-        <!--                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!--                                         <TextBlock Grid.Row="3" Grid.Column="1" -->
-        <!--                                                    Text="{Binding LastModifiedFormatted}" /> -->
-        <!-- -->
-        <!--                                         <TextBlock Grid.Row="4" Grid.Column="0" Text="Status:" -->
-        <!--                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!--                                         <husk:SwitchPresenter Grid.Row="4" Grid.Column="1" -->
-        <!--                                                               Value="{Binding IsEnabled}" -->
-        <!--                                                               TargetType="x:Boolean"> -->
+        <!--  <TextBlock Text="Details"  -->
+        <!--  FontWeight="{StaticResource ControlStrongFontWeight}" />  -->
+        <!--  <Grid ColumnDefinitions="Auto,*"  -->
+        <!--  RowDefinitions="Auto,Auto,Auto,Auto,Auto"  -->
+        <!--  ColumnSpacing="16" RowSpacing="8">  -->
+        <!--  <TextBlock Grid.Row="0" Grid.Column="0" Text="File Name:"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--  <TextBlock Grid.Row="0" Grid.Column="1"  -->
+        <!--  Text="{Binding FileName,Mode=OneWay}"  -->
+        <!--  TextWrapping="Wrap" />  -->
+        <!--    -->
+        <!--  <TextBlock Grid.Row="1" Grid.Column="0" Text="Pack Format:"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--  <TextBlock Grid.Row="1" Grid.Column="1"  -->
+        <!--  Text="{Binding PackFormat}" />  -->
+        <!--    -->
+        <!--  <TextBlock Grid.Row="2" Grid.Column="0" Text="File Size:"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--  <TextBlock Grid.Row="2" Grid.Column="1"  -->
+        <!--  Text="{Binding FileSize}" />  -->
+        <!--    -->
+        <!--  <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Modified:"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--  <TextBlock Grid.Row="3" Grid.Column="1"  -->
+        <!--  Text="{Binding LastModifiedFormatted}" />  -->
+        <!--    -->
+        <!--  <TextBlock Grid.Row="4" Grid.Column="0" Text="Status:"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--  <husk:SwitchPresenter Grid.Row="4" Grid.Column="1"  -->
+        <!--  Value="{Binding IsEnabled}"  -->
+        <!--  TargetType="x:Boolean">  -->
         <!--                                             <husk:SwitchCase Value="{x:True}"> -->
-        <!--                                                 <TextBlock Text="{x:Static lang:Resources.Enum_Enabled}" -->
-        <!--                                                            Foreground="{StaticResource ControlSuccessForegroundBrush}" /> -->
+        <!--  <TextBlock Text="{x:Static lang:Resources.Enum_Enabled}"  -->
+        <!--  Foreground="{StaticResource ControlSuccessForegroundBrush}" />  -->
         <!--                                             </husk:SwitchCase> -->
         <!--                                             <husk:SwitchCase Value="{x:False}"> -->
-        <!--                                                 <TextBlock Text="{x:Static lang:Resources.Enum_Disabled}" -->
-        <!--                                                            Foreground="{StaticResource ControlDangerForegroundBrush}" /> -->
+        <!--  <TextBlock Text="{x:Static lang:Resources.Enum_Disabled}"  -->
+        <!--  Foreground="{StaticResource ControlDangerForegroundBrush}" />  -->
         <!--                                             </husk:SwitchCase> -->
         <!--                                         </husk:SwitchPresenter> -->
         <!--                                     </Grid> -->
@@ -973,15 +1030,15 @@
         <!--                         </StackPanel> -->
         <!--                     </DataTemplate> -->
         <!--                 </husk:PlaceholderPresenter.SourceTemplate> -->
-        <!-- -->
-        <!--                 ~1~ 空状态 @1@ -->
+        <!--    -->
+        <!--  ~1~ 空状态 @1@  -->
         <!--                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12"> -->
-        <!--                     <icons:PackIconLucide Kind="Boxes" -->
-        <!--                                           Height="32" Width="32" HorizontalAlignment="Center" -->
-        <!--                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
-        <!--                     <TextBlock Text="Select a data pack to view details" -->
-        <!--                                FontSize="{StaticResource LargeFontSize}" -->
-        <!--                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" /> -->
+        <!--  <icons:PackIconLucide Kind="Boxes"  -->
+        <!--  Height="32" Width="32" HorizontalAlignment="Center"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
+        <!--  <TextBlock Text="Select a data pack to view details"  -->
+        <!--  FontSize="{StaticResource LargeFontSize}"  -->
+        <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />  -->
         <!--                 </StackPanel> -->
         <!--             </husk:PlaceholderPresenter> -->
         <!--         </ScrollViewer> -->
@@ -994,27 +1051,32 @@
                     <husk:PlaceholderPresenter Source="{Binding ScreenshotGroups}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate DataType="m:AssetScreenshotCollection">
-                                <TextBlock
-                                    Text="{Binding ScreenshotCount,StringFormat={}({0}),FallbackValue=(0)}" />
+                                <TextBlock Text="{Binding ScreenshotCount, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:ProgressRing
-                            IsIndeterminate="{Binding ScreenshotGroups,Converter={x:Static ObjectConverters.IsNull}}"
-                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                            Width="{Binding $parent[TabItem].FontSize}"
+                            Height="{Binding $parent[TabItem].FontSize}"
+                            IsIndeterminate="{Binding ScreenshotGroups, Converter={x:Static ObjectConverters.IsNull}}" />
                     </husk:PlaceholderPresenter>
                 </StackPanel>
             </TabItem.Header>
             <Panel>
-                <StackPanel VerticalAlignment="Center"
-                            IsVisible="{Binding ScreenshotGroups.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue=True}"
-                            Spacing="8">
-                    <icons:PackIconLucide Kind="Image" Height="{StaticResource ExtraLargeFontSize}"
-                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                          Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                    <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
-                               FontSize="{StaticResource LargeFontSize}"
-                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                               HorizontalAlignment="Center" />
+                <StackPanel
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding ScreenshotGroups.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                    Spacing="8">
+                    <icons:PackIconLucide
+                        Width="{StaticResource ExtraLargeFontSize}"
+                        Height="{StaticResource ExtraLargeFontSize}"
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Kind="Image" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource LargeFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                 </StackPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                     <ItemsControl ItemsSource="{Binding ScreenshotGroups}">
@@ -1025,13 +1087,19 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="m:AssetScreenshotGroupModel">
-                                <Border Background="{StaticResource CardBackgroundBrush}" BoxShadow="0 0 4 0 #3F000000"
-                                        Margin="2" CornerRadius="{StaticResource MediumCornerRadius}" Width="256"
-                                        VerticalAlignment="Top">
+                                <Border
+                                    Width="256"
+                                    Margin="2"
+                                    VerticalAlignment="Top"
+                                    Background="{StaticResource CardBackgroundBrush}"
+                                    BoxShadow="0 0 4 0 #3F000000"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
                                     <DockPanel>
-                                        <TextBlock Text="{Binding Date}" DockPanel.Dock="Top"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                   Margin="12,12,12,0" />
+                                        <TextBlock
+                                            Margin="12,12,12,0"
+                                            DockPanel.Dock="Top"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="{Binding Date}" />
                                         <ScrollViewer>
                                             <ItemsControl Margin="12" ItemsSource="{Binding Screenshots}">
                                                 <ItemsControl.ItemsPanel>
@@ -1041,93 +1109,86 @@
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate DataType="m:AssetScreenshotModel">
-                                                        <Border Padding="8"
-                                                                Height="178"
-                                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                                BorderThickness="1"
-                                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                                        <Border
+                                                            Height="178"
+                                                            Padding="8"
+                                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                            BorderBrush="{StaticResource ControlBorderBrush}"
+                                                            BorderThickness="1"
+                                                            CornerRadius="{StaticResource MediumCornerRadius}">
                                                             <Grid RowDefinitions="*,Auto" RowSpacing="8">
-                                                                <Button Grid.Row="0"
-                                                                        RenderOptions.BitmapInterpolationMode="LowQuality"
-                                                                        Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ViewImageCommand,FallbackValue={x:Null}}"
-                                                                        CommandParameter="{Binding}">
+                                                                <Button
+                                                                    Grid.Row="0"
+                                                                    Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ViewImageCommand, FallbackValue={x:Null}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    RenderOptions.BitmapInterpolationMode="LowQuality">
                                                                     <Button.Theme>
                                                                         <ControlTheme TargetType="Button">
                                                                             <Setter Property="Cursor" Value="Hand" />
-                                                                            <Setter Property="CornerRadius"
-                                                                                    Value="{StaticResource SmallCornerRadius}" />
+                                                                            <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
                                                                             <Setter Property="Template">
                                                                                 <ControlTemplate>
                                                                                     <Panel>
+                                                                                        <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" />
                                                                                         <Border
-                                                                                            CornerRadius="{TemplateBinding CornerRadius}"
-                                                                                            Background="{TemplateBinding Background}" />
-                                                                                        <Border Name="Mask" Opacity="0"
+                                                                                            Name="Mask"
                                                                                             Background="{StaticResource OverlaySmokeBackgroundBrush}"
-                                                                                            CornerRadius="{TemplateBinding CornerRadius}">
+                                                                                            CornerRadius="{TemplateBinding CornerRadius}"
+                                                                                            Opacity="0">
                                                                                             <Border.Transitions>
                                                                                                 <Transitions>
                                                                                                     <DoubleTransition
-                                                                                                        Property="Opacity"
                                                                                                         Easing="SineEaseOut"
+                                                                                                        Property="Opacity"
                                                                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                                                                 </Transitions>
                                                                                             </Border.Transitions>
                                                                                             <icons:PackIconLucide
-                                                                                                Kind="View"
+                                                                                                Width="36"
+                                                                                                Height="36"
                                                                                                 HorizontalAlignment="Center"
                                                                                                 VerticalAlignment="Center"
-                                                                                                Height="36"
-                                                                                                Width="36"
-                                                                                                Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                                                                                                Foreground="{StaticResource ControlWhiteForegroundBrush}"
+                                                                                                Kind="View" />
                                                                                         </Border>
                                                                                     </Panel>
                                                                                 </ControlTemplate>
                                                                             </Setter>
 
-                                                                            <Style
-                                                                                Selector="^:pointerover /template/ Border#Mask">
+                                                                            <Style Selector="^:pointerover /template/ Border#Mask">
                                                                                 <Setter Property="Opacity" Value="0.88" />
                                                                             </Style>
                                                                         </ControlTheme>
                                                                     </Button.Theme>
                                                                     <Button.Background>
-                                                                        <ImageBrush Source="{Binding Thumbnail}"
-                                                                                Stretch="UniformToFill" />
+                                                                        <ImageBrush Source="{Binding Thumbnail}" Stretch="UniformToFill" />
                                                                     </Button.Background>
                                                                 </Button>
                                                                 <DockPanel Grid.Row="1">
                                                                     <husk:ButtonGroup DockPanel.Dock="Right">
-                                                                        <Button
-                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenScreenshotFileCommand,FallbackValue={x:Null}}"
-                                                                            CommandParameter="{Binding}">
-                                                                            <icons:PackIconLucide Kind="ImagePlay"
-                                                                                    Height="{StaticResource SmallFontSize}"
-                                                                                    Width="{StaticResource SmallFontSize}" />
+                                                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenScreenshotFileCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                                                                            <icons:PackIconLucide
+                                                                                Width="{StaticResource SmallFontSize}"
+                                                                                Height="{StaticResource SmallFontSize}"
+                                                                                Kind="ImagePlay" />
                                                                         </Button>
-                                                                        <Button
-                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
-                                                                            CommandParameter="{Binding Image.LocalPath}">
-                                                                            <icons:PackIconLucide Kind="FolderOpen"
-                                                                                    Height="{StaticResource SmallFontSize}"
-                                                                                    Width="{StaticResource SmallFontSize}" />
+                                                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}" CommandParameter="{Binding Image.LocalPath}">
+                                                                            <icons:PackIconLucide
+                                                                                Width="{StaticResource SmallFontSize}"
+                                                                                Height="{StaticResource SmallFontSize}"
+                                                                                Kind="FolderOpen" />
                                                                         </Button>
-                                                                        <Button
-                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteScreenshotCommand,FallbackValue={x:Null}}"
-                                                                            CommandParameter="{Binding}">
-                                                                            <icons:PackIconLucide Kind="Trash2"
-                                                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                                    Height="{StaticResource SmallFontSize}"
-                                                                                    Width="{StaticResource SmallFontSize}" />
+                                                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteScreenshotCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                                                                            <icons:PackIconLucide
+                                                                                Width="{StaticResource SmallFontSize}"
+                                                                                Height="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                                                Kind="Trash2" />
                                                                         </Button>
                                                                     </husk:ButtonGroup>
                                                                     <StackPanel Orientation="Horizontal" Spacing="4">
-                                                                        <husk:Tag
-                                                                            Classes="Primary"
-                                                                            IsVisible="{Binding IsLocked}">
-                                                                            <husk:IconLabel Icon="LockClosed"
-                                                                                    Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                                        <husk:Tag Classes="Primary" IsVisible="{Binding IsLocked}">
+                                                                            <husk:IconLabel Icon="LockClosed" Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                                         </husk:Tag>
                                                                         <husk:Tag Content="{Binding Time}" />
                                                                     </StackPanel>
@@ -1153,35 +1214,42 @@
                     <husk:PlaceholderPresenter Source="{Binding Worlds}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
-                                <TextBlock Text="{Binding Count,StringFormat={}({0}),FallbackValue=(0)}" />
+                                <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
                         <husk:ProgressRing
-                            IsIndeterminate="{Binding Worlds,Converter={x:Static ObjectConverters.IsNull}}"
-                            Height="{Binding $parent[TabItem].FontSize}" Width="{Binding $parent[TabItem].FontSize}" />
+                            Width="{Binding $parent[TabItem].FontSize}"
+                            Height="{Binding $parent[TabItem].FontSize}"
+                            IsIndeterminate="{Binding Worlds, Converter={x:Static ObjectConverters.IsNull}}" />
                     </husk:PlaceholderPresenter>
                 </StackPanel>
             </TabItem.Header>
             <Grid RowDefinitions="Auto,*" RowSpacing="12">
-                <!-- 存档列表 -->
-                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                    <TabStrip ItemsSource="{Binding Worlds}" SelectedItem="{Binding SelectedWorld,Mode=TwoWay}">
+                <!--  存档列表  -->
+                <ScrollViewer
+                    Grid.Row="0"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled">
+                    <TabStrip ItemsSource="{Binding Worlds}" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}">
                         <TabStrip.ItemTemplate>
                             <DataTemplate DataType="m:AssetWorldModel">
                                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
-                                    <Border Grid.Column="0" Width="42" Height="42"
-                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Border
+                                        Grid.Column="0"
+                                        Width="42"
+                                        Height="42"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
                                         <Border.Background>
                                             <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                         </Border.Background>
                                     </Border>
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Text="{Binding DisplayName}"
-                                                   FontSize="{StaticResource LargeFontSize}"
-                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                   TextTrimming="CharacterEllipsis" />
-                                        <TextBlock Text="{Binding LastPlayed}"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding DisplayName}"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding LastPlayed}" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -1189,106 +1257,137 @@
                     </TabStrip>
                 </ScrollViewer>
 
-                <!-- 存档详情 -->
+                <!--  存档详情  -->
                 <ScrollViewer Grid.Row="1">
                     <husk:PlaceholderPresenter Source="{Binding SelectedWorld}">
                         <husk:PlaceholderPresenter.SourceTemplate>
                             <DataTemplate DataType="m:AssetWorldModel">
                                 <StackPanel Spacing="12">
-                                    <!-- 存档头部 -->
+                                    <!--  存档头部  -->
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                        <Border Grid.Column="0" Width="82" Height="82"
-                                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="82"
+                                            Height="82"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
                                             <Border.Background>
                                                 <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                             </Border.Background>
                                         </Border>
-                                        <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding DisplayName}"
-                                                       FontSize="{StaticResource ExtraLargeFontSize}"
-                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Spacing="6">
+                                            <TextBlock
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding DisplayName}" />
                                             <StackPanel Orientation="Horizontal" Spacing="4">
                                                 <husk:Tag Content="{Binding Version}" />
                                                 <husk:Tag Content="{Binding GameMode}" />
                                                 <husk:Tag Content="{Binding Difficulty}" />
-                                                <husk:Tag Content="Hardcore" IsVisible="{Binding Hardcore}"
-                                                          Classes="Danger" />
+                                                <husk:Tag
+                                                    Classes="Danger"
+                                                    Content="Hardcore"
+                                                    IsVisible="{Binding Hardcore}" />
                                             </StackPanel>
                                             <TextBlock>
-                                                <Run Text="Last Played:"
-                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="Last Played:" />
                                                 <Run Text="{Binding LastPlayedFormatted}" />
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
 
-                                    <!-- 操作按钮 -->
+                                    <!--  操作按钮  -->
                                     <husk:ButtonGroup>
-                                        <!-- <Button -->
-                                        <!--     Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}" -->
-                                        <!--     CommandParameter="{Binding WorldPath}"> -->
+                                        <!--  <Button  -->
+                                        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
+                                        <!--  CommandParameter="{Binding WorldPath}">  -->
                                         <!--     <husk:IconLabel Icon="Archive" Text="Export" /> -->
                                         <!-- </Button> -->
-                                        <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding WorldPath}">
-                                            <fi:SymbolIcon Symbol="FolderOpen"
-                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        <Button Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}" CommandParameter="{Binding WorldPath}">
+                                            <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="FolderOpen" />
                                         </Button>
-                                        <!-- <Button -->
-                                        <!--     Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}" -->
-                                        <!--     CommandParameter="{Binding WorldPath}"> -->
-                                        <!--     <fi:SymbolIcon Symbol="Delete" -->
-                                        <!--                    Foreground="{StaticResource ControlDangerForegroundBrush}" -->
-                                        <!--                    FontSize="{StaticResource MediumFontSize}" /> -->
+                                        <!--  <Button  -->
+                                        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
+                                        <!--  CommandParameter="{Binding WorldPath}">  -->
+                                        <!--  <fi:SymbolIcon Symbol="Delete"  -->
+                                        <!--  Foreground="{StaticResource ControlDangerForegroundBrush}"  -->
+                                        <!--  FontSize="{StaticResource MediumFontSize}" />  -->
                                         <!-- </Button> -->
                                     </husk:ButtonGroup>
 
-                                    <!-- 基本信息 -->
+                                    <!--  基本信息  -->
                                     <husk:Card BorderThickness="0">
                                         <StackPanel Spacing="12">
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}"
-                                                FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                                                  ColumnSpacing="16" RowSpacing="8">
-                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Game Time:"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}" />
+                                            <Grid
+                                                ColumnDefinitions="Auto,*"
+                                                ColumnSpacing="16"
+                                                RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                                RowSpacing="8">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="Game Time:" />
                                                 <TextBlock Grid.Row="0" Grid.Column="1">
                                                     <Run Text="{Binding GameTime}" />
-                                                    <Run Text="ticks"
-                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                    <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="ticks" />
                                                 </TextBlock>
 
-                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Day:"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DayCount}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="Day:" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Text="{Binding DayCount}" />
 
-                                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Day Time:"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DayTime}" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="Day Time:" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Text="{Binding DayTime}" />
 
-                                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Commands:"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="3" Grid.Column="1"
-                                                           Text="{Binding AllowCommands}" />
+                                                <TextBlock
+                                                    Grid.Row="3"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="Commands:" />
+                                                <TextBlock
+                                                    Grid.Row="3"
+                                                    Grid.Column="1"
+                                                    Text="{Binding AllowCommands}" />
 
-                                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Folder:"
-                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding FolderName}"
-                                                           TextWrapping="Wrap" />
+                                                <TextBlock
+                                                    Grid.Row="4"
+                                                    Grid.Column="0"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="Folder:" />
+                                                <TextBlock
+                                                    Grid.Row="4"
+                                                    Grid.Column="1"
+                                                    Text="{Binding FolderName}"
+                                                    TextWrapping="Wrap" />
                                             </Grid>
                                         </StackPanel>
                                     </husk:Card>
 
-                                    <!-- 数据包板块 -->
-                                    <Expander Header="{x:Static lang:Resources.InstanceAssetsView_DataPacksLabelText}"
-                                              IsExpanded="True" Padding="0">
-                                        <controls:EmptyContainer
-                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:False}}">
+                                    <!--  数据包板块  -->
+                                    <Expander
+                                        Padding="0"
+                                        Header="{x:Static lang:Resources.InstanceAssetsView_DataPacksLabelText}"
+                                        IsExpanded="True">
+                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <ScrollViewer MaxHeight="320">
-                                                <ItemsControl Margin="{StaticResource ExpanderContentMargin}"
-                                                              ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks,FallbackValue={x:Null}}">
+                                                <ItemsControl Margin="{StaticResource ExpanderContentMargin}" ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks, FallbackValue={x:Null}}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <StackPanel Spacing="8" />
@@ -1297,65 +1396,65 @@
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate DataType="m:AssetWorldDataPackModel">
                                                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                                                <!-- 数据包图标 -->
-                                                                <Border Grid.Column="0" Width="48" Height="48"
-                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <!--  数据包图标  -->
+                                                                <Border
+                                                                    Grid.Column="0"
+                                                                    Width="48"
+                                                                    Height="48"
+                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                                     <Border.Background>
-                                                                        <ImageBrush Source="{Binding Icon}"
-                                                                                Stretch="Uniform" />
+                                                                        <ImageBrush Source="{Binding Icon}" Stretch="Uniform" />
                                                                     </Border.Background>
                                                                 </Border>
 
-                                                                <!-- 数据包信息 -->
-                                                                <StackPanel Grid.Column="1"
-                                                                            VerticalAlignment="Center">
+                                                                <!--  数据包信息  -->
+                                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                                                     <DockPanel>
 
-                                                                        <!-- 状态指示器 -->
+                                                                        <!--  状态指示器  -->
                                                                         <husk:SwitchPresenter
+                                                                            Width="8"
+                                                                            Height="8"
+                                                                            VerticalAlignment="Top"
                                                                             DockPanel.Dock="Right"
-                                                                            Value="{Binding IsEnabled}"
                                                                             TargetType="x:Boolean"
-                                                                            Width="8" Height="8"
-                                                                            VerticalAlignment="Top">
-                                                                            <husk:SwitchCase
-                                                                                Value="{x:True}">
-                                                                                <Border
-                                                                                    CornerRadius="4"
-                                                                                    Background="{StaticResource ControlSuccessBackgroundBrush}" />
+                                                                            Value="{Binding IsEnabled}">
+                                                                            <husk:SwitchCase Value="{x:True}">
+                                                                                <Border Background="{StaticResource ControlSuccessBackgroundBrush}" CornerRadius="4" />
                                                                             </husk:SwitchCase>
-                                                                            <husk:SwitchCase
-                                                                                Value="{x:False}">
-                                                                                <Border
-                                                                                    CornerRadius="4"
-                                                                                    Background="{StaticResource ControlDangerBackgroundBrush}" />
+                                                                            <husk:SwitchCase Value="{x:False}">
+                                                                                <Border Background="{StaticResource ControlDangerBackgroundBrush}" CornerRadius="4" />
                                                                             </husk:SwitchCase>
                                                                         </husk:SwitchPresenter>
 
-                                                                        <!-- 数据包名称 -->
-                                                                        <TextBlock Text="{Binding DisplayName}"
-                                                                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                                TextTrimming="CharacterEllipsis" />
+                                                                        <!--  数据包名称  -->
+                                                                        <TextBlock
+                                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                            Text="{Binding DisplayName}"
+                                                                            TextTrimming="CharacterEllipsis" />
                                                                     </DockPanel>
 
-                                                                    <!-- 描述 -->
-                                                                    <TextBlock Text="{Binding DescriptionText}"
-                                                                               MaxLines="1"
-                                                                               TextTrimming="CharacterEllipsis"
-                                                                               FontSize="{StaticResource SmallFontSize}"
-                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                                    <!--  描述  -->
+                                                                    <TextBlock
+                                                                        FontSize="{StaticResource SmallFontSize}"
+                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                        MaxLines="1"
+                                                                        Text="{Binding DescriptionText}"
+                                                                        TextTrimming="CharacterEllipsis" />
 
                                                                     <DockPanel>
-                                                                        <!-- 包格式版本 -->
-                                                                        <husk:Tag DockPanel.Dock="Right"
-                                                                                Classes="Small"
-                                                                                Content="{Binding PackFormatText,StringFormat='Format {0}'}" />
+                                                                        <!--  包格式版本  -->
+                                                                        <husk:Tag
+                                                                            Classes="Small"
+                                                                            Content="{Binding PackFormatText, StringFormat='Format {0}'}"
+                                                                            DockPanel.Dock="Right" />
 
-                                                                        <!-- 文件名 -->
-                                                                        <TextBlock Text="{Binding FileName}"
-                                                                                FontSize="{StaticResource SmallFontSize}"
-                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                                TextTrimming="CharacterEllipsis" />
+                                                                        <!--  文件名  -->
+                                                                        <TextBlock
+                                                                            FontSize="{StaticResource SmallFontSize}"
+                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                            Text="{Binding FileName}"
+                                                                            TextTrimming="CharacterEllipsis" />
                                                                     </DockPanel>
                                                                 </StackPanel>
                                                             </Grid>
@@ -1366,69 +1465,72 @@
                                         </controls:EmptyContainer>
                                     </Expander>
 
-                                    <!-- 玩家板块 -->
-                                    <Expander Header="{x:Static lang:Resources.InstanceAssetsView_PlayersLabelText}"
-                                              IsExpanded="True">
-                                        <controls:EmptyContainer
-                                            IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers.Count,Converter={x:Static husk:NumberConverters.IsZero},FallbackValue={x:False}}">
+                                    <!--  玩家板块  -->
+                                    <Expander Header="{x:Static lang:Resources.InstanceAssetsView_PlayersLabelText}" IsExpanded="True">
+                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <Grid RowDefinitions="Auto,*" RowSpacing="12">
-                                                <!-- 玩家头像列表 -->
-                                                <TabStrip Grid.Row="0"
-                                                          ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers,FallbackValue={x:Null}}"
-                                                          SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer,Mode=TwoWay,FallbackValue={x:Null}}">
+                                                <!--  玩家头像列表  -->
+                                                <TabStrip
+                                                    Grid.Row="0"
+                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers, FallbackValue={x:Null}}"
+                                                    SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer, Mode=TwoWay, FallbackValue={x:Null}}">
                                                     <TabStrip.ItemTemplate>
                                                         <DataTemplate DataType="m:AssetWorldPlayerModel">
-                                                            <StackPanel Spacing="4" Margin="8,4">
-                                                                <Border Width="48" Height="48"
-                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <StackPanel Margin="8,4" Spacing="4">
+                                                                <Border
+                                                                    Width="48"
+                                                                    Height="48"
+                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                                                     <Border.Background>
-                                                                        <ImageBrush
-                                                                            async:ImageBrushLoader.Source="{Binding FaceUrl}"
-                                                                            Stretch="Uniform" />
+                                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" Stretch="Uniform" />
                                                                     </Border.Background>
                                                                 </Border>
-                                                                <TextBlock Text="{Binding UserName}"
-                                                                           FontSize="{StaticResource SmallFontSize}"
-                                                                           HorizontalAlignment="Center" />
+                                                                <TextBlock
+                                                                    HorizontalAlignment="Center"
+                                                                    FontSize="{StaticResource SmallFontSize}"
+                                                                    Text="{Binding UserName}" />
                                                             </StackPanel>
                                                         </DataTemplate>
                                                     </TabStrip.ItemTemplate>
                                                 </TabStrip>
 
-                                                <!-- 玩家数据 -->
+                                                <!--  玩家数据  -->
                                                 <StackPanel Grid.Row="1" Spacing="16">
-                                                    <!-- 统计数据 -->
+                                                    <!--  统计数据  -->
                                                     <StackPanel Spacing="8">
-                                                        <TextBlock Text="Statistics"
-                                                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                   FontSize="{StaticResource MediumFontSize}" />
-                                                        <ItemsControl
-                                                            ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerStats,FallbackValue={x:Null}}">
+                                                        <TextBlock
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                            Text="Statistics" />
+                                                        <ItemsControl ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerStats, FallbackValue={x:Null}}">
                                                             <ItemsControl.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <WrapPanel Orientation="Horizontal" />
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate
-                                                                    DataType="m:AssetWorldPlayerStatEntryModel">
+                                                                <DataTemplate DataType="m:AssetWorldPlayerStatEntryModel">
                                                                     <Border
-                                                                        Background="{StaticResource CardBackgroundBrush}"
-                                                                        CornerRadius="{StaticResource MediumCornerRadius}"
-                                                                        Padding="12,8"
+                                                                        MinWidth="120"
                                                                         Margin="0,0,8,8"
-                                                                        MinWidth="120">
+                                                                        Padding="12,8"
+                                                                        Background="{StaticResource CardBackgroundBrush}"
+                                                                        CornerRadius="{StaticResource MediumCornerRadius}">
                                                                         <StackPanel Spacing="4">
-                                                                            <icons:PackIconLucide Kind="{Binding Icon}"
-                                                                                    Width="20" Height="20"
-                                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                                                                    HorizontalAlignment="Left" />
-                                                                            <TextBlock Text="{Binding Name}"
-                                                                                    FontSize="{StaticResource SmallFontSize}"
-                                                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                                            <TextBlock Text="{Binding Value}"
-                                                                                    FontSize="{StaticResource MediumFontSize}"
-                                                                                    FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                                                            <icons:PackIconLucide
+                                                                                Width="20"
+                                                                                Height="20"
+                                                                                HorizontalAlignment="Left"
+                                                                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                                                Kind="{Binding Icon}" />
+                                                                            <TextBlock
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                Text="{Binding Name}" />
+                                                                            <TextBlock
+                                                                                FontSize="{StaticResource MediumFontSize}"
+                                                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                                Text="{Binding Value}" />
                                                                         </StackPanel>
                                                                     </Border>
                                                                 </DataTemplate>
@@ -1443,14 +1545,21 @@
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
 
-                        <!-- 空状态 -->
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
-                            <icons:PackIconLucide Kind="Globe"
-                                                  Height="32" Width="32" HorizontalAlignment="Center"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Text="No worlds found"
-                                       FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <!--  空状态  -->
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="12">
+                            <icons:PackIconLucide
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Kind="Globe" />
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="No worlds found" />
                         </StackPanel>
                     </husk:PlaceholderPresenter>
                 </ScrollViewer>

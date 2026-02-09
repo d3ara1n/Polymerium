@@ -1,14 +1,24 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                    xmlns:local="using:Polymerium.App.Controls">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:local="using:Polymerium.App.Controls">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24" Spacing="12">
-                <local:LaunchBar Width="256" Height="96" State="Idle" />
-                <local:LaunchBar Width="256" Height="96" State="Deploying" />
-                <local:LaunchBar Width="256" Height="96" State="Running" />
+                <local:LaunchBar
+                    Width="256"
+                    Height="96"
+                    State="Idle" />
+                <local:LaunchBar
+                    Width="256"
+                    Height="96"
+                    State="Deploying" />
+                <local:LaunchBar
+                    Width="256"
+                    Height="96"
+                    State="Running" />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
@@ -17,129 +27,171 @@
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
             <ControlTemplate>
-                <husk:Card CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="0" Padding="0"
-                           ClipToBounds="{TemplateBinding ClipToBounds}">
+                <husk:Card
+                    Padding="0"
+                    BorderThickness="0"
+                    ClipToBounds="{TemplateBinding ClipToBounds}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
-                        <Border CornerRadius="{TemplateBinding CornerRadius}"
-                                ClipToBounds="{TemplateBinding ClipToBounds}">
-                            <Rectangle Name="PART_Background" Margin="-250" Fill="Transparent" />
+                        <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
+                            <Rectangle
+                                Name="PART_Background"
+                                Margin="-250"
+                                Fill="Transparent" />
                         </Border>
                         <Panel Margin="{StaticResource CardContentMargin}">
                             <Panel>
-                                <!-- Idle State -->
-                                <Button Name="PART_PlayButton" VerticalAlignment="Bottom"
-                                        Command="{TemplateBinding PlayCommand}" HorizontalAlignment="Left"
-                                        Classes="Primary">
+                                <!--  Idle State  -->
+                                <Button
+                                    Name="PART_PlayButton"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Classes="Primary"
+                                    Command="{TemplateBinding PlayCommand}">
                                     <Button.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </Button.Transitions>
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <icons:PackIconLucide Kind="Play"
-                                                              Height="{StaticResource MediumFontSize}"
-                                                              VerticalAlignment="Center" />
+                                        <icons:PackIconLucide
+                                            Height="{StaticResource MediumFontSize}"
+                                            VerticalAlignment="Center"
+                                            Kind="Play" />
                                         <TextBlock Text="PLAY" />
                                     </StackPanel>
                                 </Button>
-                                <icons:PackIconLucide Name="PART_IdleIcon" Kind="Rocket" HorizontalAlignment="Right"
-                                                      Margin="0,-16,-24,0"
-                                                      VerticalAlignment="Top" Width="64"
-                                                      Height="64" Opacity="0.5">
+                                <icons:PackIconLucide
+                                    Name="PART_IdleIcon"
+                                    Width="64"
+                                    Height="64"
+                                    Margin="0,-16,-24,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Kind="Rocket"
+                                    Opacity="0.5">
                                     <icons:PackIconLucide.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </icons:PackIconLucide.Transitions>
                                 </icons:PackIconLucide>
                             </Panel>
                             <Panel>
-                                <!-- Building State -->
-                                <Button Name="PART_AbortButton" VerticalAlignment="Bottom"
-                                        Command="{TemplateBinding AbortCommand}"
-                                        HorizontalAlignment="Left" Classes="Danger">
+                                <!--  Building State  -->
+                                <Button
+                                    Name="PART_AbortButton"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Classes="Danger"
+                                    Command="{TemplateBinding AbortCommand}">
                                     <Button.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </Button.Transitions>
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <icons:PackIconLucide Kind="Square"
-                                                              Height="{StaticResource MediumFontSize}"
-                                                              VerticalAlignment="Center" />
+                                        <icons:PackIconLucide
+                                            Height="{StaticResource MediumFontSize}"
+                                            VerticalAlignment="Center"
+                                            Kind="Square" />
                                         <TextBlock Text="Abort" />
                                     </StackPanel>
                                 </Button>
-                                <TextBlock Name="PART_BuildingText" Text="Building..."
-                                           FontWeight="{StaticResource ControlStrongFontWeight}"
-                                           FontSize="{StaticResource ExtraLargeFontSize}">
+                                <TextBlock
+                                    Name="PART_BuildingText"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="Building...">
                                     <TextBlock.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </TextBlock.Transitions>
                                 </TextBlock>
-                                <icons:PackIconLucide Name="PART_BuildingIcon" Kind="Construction"
-                                                      HorizontalAlignment="Right"
-                                                      Margin="0,-16,-24,0"
-                                                      VerticalAlignment="Top" Width="64"
-                                                      Height="64" Opacity="0.5">
+                                <icons:PackIconLucide
+                                    Name="PART_BuildingIcon"
+                                    Width="64"
+                                    Height="64"
+                                    Margin="0,-16,-24,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Kind="Construction"
+                                    Opacity="0.5">
                                     <icons:PackIconLucide.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </icons:PackIconLucide.Transitions>
                                 </icons:PackIconLucide>
                             </Panel>
                             <Panel>
-                                <!-- Running State -->
-                                <Button Name="PART_DashboardButton" VerticalAlignment="Bottom"
-                                        Command="{TemplateBinding DashboardCommand}"
-                                        HorizontalAlignment="Left">
+                                <!--  Running State  -->
+                                <Button
+                                    Name="PART_DashboardButton"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Command="{TemplateBinding DashboardCommand}">
                                     <Button.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </Button.Transitions>
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <icons:PackIconLucide Kind="Logs"
-                                                              Height="{StaticResource MediumFontSize}"
-                                                              VerticalAlignment="Center" />
+                                        <icons:PackIconLucide
+                                            Height="{StaticResource MediumFontSize}"
+                                            VerticalAlignment="Center"
+                                            Kind="Logs" />
                                         <TextBlock Text="Dashboard" />
                                     </StackPanel>
                                 </Button>
-                                <TextBlock Name="PART_RunningText" Text="Running..."
-                                           FontWeight="{StaticResource ControlStrongFontWeight}"
-                                           FontSize="{StaticResource ExtraLargeFontSize}">
+                                <TextBlock
+                                    Name="PART_RunningText"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="Running...">
                                     <TextBlock.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </TextBlock.Transitions>
                                 </TextBlock>
-                                <icons:PackIconLucide Name="PART_RunningIcon" Kind="Car" HorizontalAlignment="Right"
-                                                      Margin="0,-16,-24,0"
-                                                      VerticalAlignment="Top" Width="64"
-                                                      Height="64" Opacity="0.5">
+                                <icons:PackIconLucide
+                                    Name="PART_RunningIcon"
+                                    Width="64"
+                                    Height="64"
+                                    Margin="0,-16,-24,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Kind="Car"
+                                    Opacity="0.5">
                                     <icons:PackIconLucide.Transitions>
                                         <Transitions>
-                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                           Easing="BackEaseOut"
-                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                            <TransformOperationsTransition
+                                                Easing="BackEaseOut"
+                                                Property="RenderTransform"
+                                                Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </icons:PackIconLucide.Transitions>
                                 </icons:PackIconLucide>
@@ -153,10 +205,17 @@
         <Style Selector="^[State=Idle]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
-                    <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
+                    <VisualBrush
+                        DestinationRect="0,0,250,250"
+                        SourceRect="0,0,250,250"
+                        Stretch="Fill"
+                        TileMode="Tile">
                         <VisualBrush.Visual>
-                            <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250"
-                                   Width="250" />
+                            <Image
+                                Width="250"
+                                Height="250"
+                                Source="/Assets/Images/Patterns/Blue_Icons.png"
+                                Stretch="Fill" />
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Setter>
@@ -198,16 +257,23 @@
         <Style Selector="^[State=Deploying]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
-                    <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
+                    <VisualBrush
+                        DestinationRect="0,0,250,250"
+                        SourceRect="0,0,250,250"
+                        Stretch="Fill"
+                        TileMode="Tile">
                         <VisualBrush.Visual>
-                            <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250"
-                                   Width="250" />
+                            <Image
+                                Width="250"
+                                Height="250"
+                                Source="/Assets/Images/Patterns/Yellow_Icons.png"
+                                Stretch="Fill" />
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Setter>
 
                 <Style.Animations>
-                    <Animation Duration="0:0:5" IterationCount="Infinite">
+                    <Animation IterationCount="Infinite" Duration="0:0:5">
                         <KeyFrame Cue="0%">
                             <Setter Property="TranslateTransform.X" Value="0" />
                             <Setter Property="TranslateTransform.Y" Value="0" />
@@ -256,16 +322,23 @@
         <Style Selector="^[State=Running]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
-                    <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
+                    <VisualBrush
+                        DestinationRect="0,0,250,250"
+                        SourceRect="0,0,250,250"
+                        Stretch="Fill"
+                        TileMode="Tile">
                         <VisualBrush.Visual>
-                            <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250"
-                                   Width="250" />
+                            <Image
+                                Width="250"
+                                Height="250"
+                                Source="/Assets/Images/Patterns/Green_Icons.png"
+                                Stretch="Fill" />
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Setter>
 
                 <Style.Animations>
-                    <Animation Duration="0:0:10" IterationCount="Infinite">
+                    <Animation IterationCount="Infinite" Duration="0:0:10">
                         <KeyFrame Cue="0%">
                             <Setter Property="TranslateTransform.X" Value="0" />
                             <Setter Property="TranslateTransform.Y" Value="0" />

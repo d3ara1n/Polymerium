@@ -1,26 +1,30 @@
-﻿<husk:Page xmlns="https://github.com/avaloniaui"
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-           xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-           xmlns:converters="clr-namespace:Polymerium.App.Converters"
-           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-           xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-           xmlns:controls="clr-namespace:Polymerium.App.Controls"
-           xmlns:models="clr-namespace:Polymerium.App.Models"
-           xmlns:v="clr-namespace:Polymerium.App.Views"
-           xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           x:Class="Polymerium.App.Views.MaintenanceStorageView" x:DataType="vm:MaintenanceStorageViewModel"
-           Header="{x:Static lang:Resources.MaintenanceStorageView_Title}">
+﻿<husk:Page
+    x:Class="Polymerium.App.Views.MaintenanceStorageView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Polymerium.App.Models"
+    xmlns:v="clr-namespace:Polymerium.App.Views"
+    xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MaintenanceStorageViewModel"
+    Header="{x:Static lang:Resources.MaintenanceStorageView_Title}"
+    mc:Ignorable="d">
     <!-- <husk:Card HorizontalAlignment="Left" VerticalAlignment="Top"> -->
     <!--     <StackPanel Spacing="12"> -->
     <!--         <TextBlock Text="Total" /> -->
     <!--         <TextBlock> -->
-    <!--             <Run -->
-    <!--                 Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}" -->
-    <!--                 FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" /> -->
+    <!--  <Run  -->
+    <!--  Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"  -->
+    <!--  FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />  -->
     <!--             <Run Text="GiB" FontSize="18" /> -->
     <!--         </TextBlock> -->
     <!--         <husk:Divider /> -->
@@ -33,114 +37,137 @@
                 <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_TotalLabelText}" />
                 <TextBlock>
                     <Run
-                        Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
-                        FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
-                    <Run Text="GiB" FontSize="18" />
+                        FontSize="36"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Binding TotalSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
+                    <Run FontSize="18" Text="GiB" />
                 </TextBlock>
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Spacing="12">
                 <StackPanel Spacing="4">
-                    <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_CacheLabelText}"
-                              Background="#FFD19A" Foreground="#CC4E00" />
+                    <husk:Tag
+                        Background="#FFD19A"
+                        Content="{x:Static lang:Resources.MaintenanceStorageView_CacheLabelText}"
+                        Foreground="#CC4E00" />
                     <TextBlock>
                         <Run
-                            Text="{Binding CacheSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
-                            FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <Run Text="GiB" FontSize="18" />
+                            FontSize="36"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding CacheSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
+                        <Run FontSize="18" Text="GiB" />
                     </TextBlock>
                 </StackPanel>
-                <husk:Divider Orientation="Vertical" Margin="6" />
+                <husk:Divider Margin="6" Orientation="Vertical" />
                 <StackPanel Spacing="4">
-                    <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_InstancesLabelText}"
-                              Background="#F2D1F3" Foreground="#953EA3" />
+                    <husk:Tag
+                        Background="#F2D1F3"
+                        Content="{x:Static lang:Resources.MaintenanceStorageView_InstancesLabelText}"
+                        Foreground="#953EA3" />
                     <TextBlock>
                         <Run
-                            Text="{Binding InstanceSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"
-                            FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />
-                        <Run Text="GiB" FontSize="18" />
+                            FontSize="36"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding InstanceSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
+                        <Run FontSize="18" Text="GiB" />
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>
         <StackPanel Grid.Row="1" Spacing="4">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <TextBlock Grid.Column="0" Text="{x:Static lang:Resources.MaintenanceStorageView_CacheTitle}"
-                           FontSize="{StaticResource LargeFontSize}" />
-                <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                        Command="{Binding PurgeCacheCommand}">
-                    <husk:IconLabel Icon="DeleteLines"
-                                    Text="{x:Static lang:Resources.MaintenanceStorageView_PurgeButtonText}" />
+                <TextBlock
+                    Grid.Column="0"
+                    FontSize="{StaticResource LargeFontSize}"
+                    Text="{x:Static lang:Resources.MaintenanceStorageView_CacheTitle}" />
+                <Button
+                    Grid.Column="1"
+                    Classes="Small"
+                    Command="{Binding PurgeCacheCommand}"
+                    Theme="{StaticResource GhostButtonTheme}">
+                    <husk:IconLabel Icon="DeleteLines" Text="{x:Static lang:Resources.MaintenanceStorageView_PurgeButtonText}" />
                 </Button>
             </Grid>
             <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
                 <husk:Card Grid.Column="0">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="Boxes" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            Kind="Boxes" />
+                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run
-                                Text="{Binding PackageSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="{Binding PackageSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
-                            <Run Text="{Binding #PackageProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                            <Run Text="{Binding #PackageProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
                             <Run Text="/" />
-                            <Run Text="{Binding PackageCount,FallbackValue=514}" />
-                            <fi:SymbolIcon Symbol="Box" FontSize="{StaticResource SmallFontSize}" />
+                            <Run Text="{Binding PackageCount, FallbackValue=514}" />
+                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Box" />
                         </TextBlock>
-                        <ProgressBar Name="PackageProgressBar" Value="{Binding PackageSize}"
-                                     Maximum="{Binding CacheSize}" />
+                        <ProgressBar
+                            Name="PackageProgressBar"
+                            Maximum="{Binding CacheSize}"
+                            Value="{Binding PackageSize}" />
                     </StackPanel>
                 </husk:Card>
                 <husk:Card Grid.Column="1">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="Library" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            Kind="Library" />
+                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run
-                                Text="{Binding LibrarySize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="{Binding LibrarySize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
-                            <Run Text="{Binding #LibraryProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                            <Run Text="{Binding #LibraryProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="LibraryProgressBar" Value="{Binding LibrarySize}"
-                                     Maximum="{Binding CacheSize}" />
+                        <ProgressBar
+                            Name="LibraryProgressBar"
+                            Maximum="{Binding CacheSize}"
+                            Value="{Binding LibrarySize}" />
                     </StackPanel>
                 </husk:Card>
                 <husk:Card Grid.Column="2">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="CassetteTape" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            Kind="CassetteTape" />
+                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run
-                                Text="{Binding AssetSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="{Binding AssetSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
-                            <Run Text="{Binding #AssetProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                            <Run Text="{Binding #AssetProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="AssetProgressBar" Value="{Binding AssetSize}" Maximum="{Binding CacheSize}" />
+                        <ProgressBar
+                            Name="AssetProgressBar"
+                            Maximum="{Binding CacheSize}"
+                            Value="{Binding AssetSize}" />
                     </StackPanel>
                 </husk:Card>
                 <husk:Card Grid.Column="3">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide Kind="ShipWheel" Height="{StaticResource ExtraLargeFontSize}"
-                                              Width="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+                        <icons:PackIconLucide
+                            Width="{StaticResource ExtraLargeFontSize}"
+                            Height="{StaticResource ExtraLargeFontSize}"
+                            Kind="ShipWheel" />
+                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run
-                                Text="{Binding RuntimeSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},Mode=OneWay,FallbackValue=12.4}" />
+                            <Run Text="{Binding RuntimeSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
-                            <Run Text="{Binding #RuntimeProgressBar.Percentage,StringFormat={}{0:0.0}%}" />
+                            <Run Text="{Binding #RuntimeProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
                         </TextBlock>
-                        <ProgressBar Name="RuntimeProgressBar" Value="{Binding RuntimeSize}"
-                                     Maximum="{Binding CacheSize}" />
+                        <ProgressBar
+                            Name="RuntimeProgressBar"
+                            Maximum="{Binding CacheSize}"
+                            Value="{Binding RuntimeSize}" />
                     </StackPanel>
                 </husk:Card>
             </Grid>
@@ -149,18 +176,17 @@
             <DockPanel>
                 <TextBlock DockPanel.Dock="Right" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                     <Run Text="/" />
-                    <Run Text="{Binding Instances.Count,Mode=OneWay,FallbackValue=0}" />
+                    <Run Text="{Binding Instances.Count, Mode=OneWay, FallbackValue=0}" />
                 </TextBlock>
-                <TextBlock Text="{x:Static lang:Resources.MaintenanceStorageView_InstancesTitle}"
-                           FontSize="{StaticResource LargeFontSize}" />
+                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.MaintenanceStorageView_InstancesTitle}" />
             </DockPanel>
             <ItemsControl ItemsSource="{Binding Instances}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="models:StorageInstanceModel">
                         <controls:StorageInstanceButton
-                            Command="{Binding $parent[v:MaintenanceStorageView].((vm:MaintenanceStorageViewModel)DataContext).GotoInstanceCommand,Mode=OneWay,FallbackValue={x:Null}}"
+                            Command="{Binding $parent[v:MaintenanceStorageView].((vm:MaintenanceStorageViewModel)DataContext).GotoInstanceCommand, Mode=OneWay, FallbackValue={x:Null}}"
                             CommandParameter="{Binding}"
-                            TotalSize="{Binding $parent[v:MaintenanceStorageView].((vm:MaintenanceStorageViewModel)DataContext).InstanceSize,FallbackValue=0}" />
+                            TotalSize="{Binding $parent[v:MaintenanceStorageView].((vm:MaintenanceStorageViewModel)DataContext).InstanceSize, FallbackValue=0}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>

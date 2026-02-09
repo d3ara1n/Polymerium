@@ -1,27 +1,27 @@
 name: MirrorChyan Release Note Upload
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        default: ''
-        required: false
-  release:
-    types: [edited, released]
+    workflow_dispatch:
+        inputs:
+            tag:
+                default: ''
+                required: false
+    release:
+        types: [ edited, released ]
 
 jobs:
-  mirrorchyan:
-    runs-on: macos-latest
-    if: ${{ github.repository_owner == 'd3ara1n' }}
+    mirrorchyan:
+        runs-on: macos-latest
+        if: ${{ github.repository_owner == 'd3ara1n' }}
 
-    steps:
-      - id: uploading
-        uses: MirrorChyan/release-note-action@v1
-        with:
-          mirrorchyan_rid: Polymerium
-          version_name: ${{ inputs.tag }}
+        steps:
+            -   id: uploading
+                uses: MirrorChyan/release-note-action@v1
+                with:
+                    mirrorchyan_rid: Polymerium
+                    version_name: ${{ inputs.tag }}
 
-          owner: d3ara1n
-          repo: Polymerium
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          upload_token: ${{ secrets.MirrorChyanUploadToken }}
+                    owner: d3ara1n
+                    repo: Polymerium
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    upload_token: ${{ secrets.MirrorChyanUploadToken }}

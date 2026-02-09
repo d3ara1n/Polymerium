@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Polymerium.App.Controls"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:local="clr-namespace:Polymerium.App.Controls">
 
     <x:Double x:Key="PlaqueSpacing">5</x:Double>
 
@@ -10,18 +11,22 @@
         <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}">
+                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid
-                        Margin="{Binding Source={StaticResource PlaqueSpacing},Converter={x:Static husk:ThicknessConverters.FromDouble}}"
-                        RowDefinitions="*,Auto" RowSpacing="{StaticResource PlaqueSpacing}">
-                        <Border Grid.Row="0" Background="{TemplateBinding Background}"
-                                Padding="{TemplateBinding Padding}" CornerRadius="{StaticResource SmallCornerRadius}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        Margin="{Binding Source={StaticResource PlaqueSpacing}, Converter={x:Static husk:ThicknessConverters.FromDouble}}"
+                        RowDefinitions="*,Auto"
+                        RowSpacing="{StaticResource PlaqueSpacing}">
+                        <Border
+                            Grid.Row="0"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </Border>
-                        <ContentPresenter Grid.Row="1" Content="{TemplateBinding Header}"
-                                          ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                        <ContentPresenter
+                            Grid.Row="1"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}" />
                     </Grid>
                 </Border>
             </ControlTemplate>

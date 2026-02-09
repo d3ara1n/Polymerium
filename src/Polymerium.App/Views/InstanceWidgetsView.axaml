@@ -1,49 +1,64 @@
-﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:controls="using:Polymerium.App.Controls"
-                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                  xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                  mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
-                  x:Class="Polymerium.App.Views.InstanceWidgetsView" x:DataType="vm:InstanceWidgetsViewModel">
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Views.InstanceWidgetsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
+    d:DesignHeight="400"
+    d:DesignWidth="600"
+    x:DataType="vm:InstanceWidgetsViewModel"
+    mc:Ignorable="d">
     <Grid>
-        <ItemsControl
-            ItemsSource="{Binding Widgets,Mode=OneTime}"
-            VerticalAlignment="Top">
+        <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Widgets, Mode=OneTime}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="widgets:WidgetBase">
                     <Grid RowDefinitions="Auto,*">
-                        <Border Grid.Row="0"
-                                Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
-                                BorderThickness="1" BorderBrush="{StaticResource ControlAccentBorderBrush}"
-                                Padding="12,4"
-                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                        <Border
+                            Grid.Row="0"
+                            Padding="12,4"
+                            Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlAccentBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <!-- Grab Handle: Avalonia 没有 Grab 指针，而且本来就没法 ReOrder 所以这个图标仅供装饰 -->
+                                <!--  Grab Handle: Avalonia 没有 Grab 指针，而且本来就没法 ReOrder 所以这个图标仅供装饰  -->
                                 <!-- <Border Grid.Column="0" Cursor="SizeAll"> -->
-                                <!--     <fi:SymbolIcon Symbol="ReOrderDotsVertical" -->
-                                <!--                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" -->
-                                <!--                    FontSize="{StaticResource MediumFontSize}" /> -->
+                                <!--  <fi:SymbolIcon Symbol="ReOrderDotsVertical"  -->
+                                <!--  Foreground="{StaticResource ControlSecondaryForegroundBrush}"  -->
+                                <!--  FontSize="{StaticResource MediumFontSize}" />  -->
                                 <!-- </Border> -->
-                                <husk:IconLabel Grid.Column="1" Icon="{Binding Icon}" Text="{Binding Title}"
-                                                VerticalAlignment="Center" Spacing="8" />
-                                <ToggleButton Grid.Column="2" Theme="{StaticResource GhostToggleButtonTheme}"
-                                              IsEnabled="{Binding SlimTemplate,Converter={x:Static ObjectConverters.IsNotNull}}"
-                                              IsChecked="{Binding IsPinned}" Classes="Small" Margin="4">
-                                    <icons:PackIconLucide Kind="Pin" Width="{StaticResource SmallFontSize}"
-                                                          Height="{StaticResource SmallFontSize}" />
+                                <husk:IconLabel
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Icon="{Binding Icon}"
+                                    Spacing="8"
+                                    Text="{Binding Title}" />
+                                <ToggleButton
+                                    Grid.Column="2"
+                                    Margin="4"
+                                    Classes="Small"
+                                    IsChecked="{Binding IsPinned}"
+                                    IsEnabled="{Binding SlimTemplate, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                    Theme="{StaticResource GhostToggleButtonTheme}">
+                                    <icons:PackIconLucide
+                                        Width="{StaticResource SmallFontSize}"
+                                        Height="{StaticResource SmallFontSize}"
+                                        Kind="Pin" />
                                 </ToggleButton>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="1" BorderThickness="1,0,1,1"
-                                Background="{StaticResource CardBackgroundBrush}"
-                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                Padding="12"
-                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                        <Border
+                            Grid.Row="1"
+                            Padding="12"
+                            Background="{StaticResource CardBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlBorderBrush}"
+                            BorderThickness="1,0,1,1"
+                            CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
                             <ContentControl Content="{Binding}" ContentTemplate="{Binding FullTemplate}" />
                         </Border>
                     </Grid>

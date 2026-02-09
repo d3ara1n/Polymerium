@@ -1,28 +1,34 @@
-﻿<controls:ScopedPage xmlns="https://github.com/avaloniaui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:vm="using:Polymerium.App.ViewModels"
-                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                     xmlns:m="using:Polymerium.App.Models"
-                     xmlns:controls="using:Polymerium.App.Controls"
-                     xmlns:app="clr-namespace:Polymerium.App"
-                     mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
-                     Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"
-                     Context="{Binding Context,Mode=OneWay}"
-                     x:Class="Polymerium.App.Views.InstanceView">
+﻿<controls:ScopedPage
+    x:Class="Polymerium.App.Views.InstanceView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="clr-namespace:Polymerium.App"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:m="using:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    Padding="0"
+    d:DesignHeight="600"
+    d:DesignWidth="700"
+    x:DataType="vm:InstanceViewModel"
+    Context="{Binding Context, Mode=OneWay}"
+    IsHeaderVisible="False"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
     <Panel>
         <!-- <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState"> -->
         <!--     <husk:SwitchCase Value="Idle" /> -->
         <!--     <husk:SwitchCase Value="Updating"> -->
         <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
         <!--             <Rectangle.Fill> -->
-        <!--                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" -->
-        <!--                              Stretch="Fill"> -->
+        <!--  <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"  -->
+        <!--  Stretch="Fill">  -->
         <!--                     <VisualBrush.Visual> -->
-        <!--                         <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250" -->
-        <!--                                Width="250" /> -->
+        <!--  <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250"  -->
+        <!--  Width="250" />  -->
         <!--                     </VisualBrush.Visual> -->
         <!--                 </VisualBrush> -->
         <!--             </Rectangle.Fill> -->
@@ -45,11 +51,11 @@
         <!--     <husk:SwitchCase Value="Deploying"> -->
         <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
         <!--             <Rectangle.Fill> -->
-        <!--                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" -->
-        <!--                              Stretch="Fill"> -->
+        <!--  <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"  -->
+        <!--  Stretch="Fill">  -->
         <!--                     <VisualBrush.Visual> -->
-        <!--                         <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250" -->
-        <!--                                Width="250" /> -->
+        <!--  <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250"  -->
+        <!--  Width="250" />  -->
         <!--                     </VisualBrush.Visual> -->
         <!--                 </VisualBrush> -->
         <!--             </Rectangle.Fill> -->
@@ -74,11 +80,11 @@
         <!--     <husk:SwitchCase Value="Running"> -->
         <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
         <!--             <Rectangle.Fill> -->
-        <!--                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" -->
-        <!--                              Stretch="Fill"> -->
+        <!--  <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"  -->
+        <!--  Stretch="Fill">  -->
         <!--                     <VisualBrush.Visual> -->
-        <!--                         <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250" -->
-        <!--                                Width="250" /> -->
+        <!--  <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250"  -->
+        <!--  Width="250" />  -->
         <!--                     </VisualBrush.Visual> -->
         <!--                 </VisualBrush> -->
         <!--             </Rectangle.Fill> -->
@@ -102,31 +108,57 @@
         <husk:DropContainer DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
             <husk:DropContainer.Overlay>
                 <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Rectangle RadiusX="6" RadiusY="6" Fill="{StaticResource ControlInteractiveBackgroundBrush}"
-                               Stroke="{StaticResource ControlInteractiveBorderBrush}" StrokeThickness="2"
-                               StrokeDashArray="6,2" StrokeJoin="Round" StrokeLineCap="Round" />
-                    <StackPanel Opacity="{StaticResource Overlay1Opacity}" Margin="48,36" Spacing="12">
-                        <icons:PackIconLucide Kind="FilePlus" Height="42" Width="42" HorizontalAlignment="Center"
-                                              Foreground="{StaticResource ControlWhiteForegroundBrush}" />
+                    <Rectangle
+                        Fill="{StaticResource ControlInteractiveBackgroundBrush}"
+                        RadiusX="6"
+                        RadiusY="6"
+                        Stroke="{StaticResource ControlInteractiveBorderBrush}"
+                        StrokeDashArray="6,2"
+                        StrokeJoin="Round"
+                        StrokeLineCap="Round"
+                        StrokeThickness="2" />
+                    <StackPanel
+                        Margin="48,36"
+                        Opacity="{StaticResource Overlay1Opacity}"
+                        Spacing="12">
+                        <icons:PackIconLucide
+                            Width="42"
+                            Height="42"
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource ControlWhiteForegroundBrush}"
+                            Kind="FilePlus" />
                     </StackPanel>
                 </Panel>
             </husk:DropContainer.Overlay>
             <Grid ColumnDefinitions="Auto,*">
-                <Border Grid.Column="0" Background="{StaticResource LayerBackgroundBrush}"
-                        CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
+                <Border
+                    Grid.Column="0"
+                    Width="64"
+                    Margin="12,12,0,12"
+                    Background="{StaticResource LayerBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="12">
-                        <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
+                        <Button
+                            Grid.Row="0"
+                            Margin="12"
+                            Command="{Binding $parent[husk:Frame].GoBackCommand}">
                             <icons:PackIconLucide Kind="ArrowLeft" />
                         </Button>
-                        <ListBox x:Name="EntryBox" Grid.Row="1" SelectionMode="Single"
-                                 ItemsSource="{Binding PageEntries}"
-                                 SelectedValue="{Binding SelectedPage}"
-                                 Padding="0" SelectionChanged="EntryBox_OnSelectionChanged"
-                                 ClipToBounds="False">
+                        <ListBox
+                            x:Name="EntryBox"
+                            Grid.Row="1"
+                            Padding="0"
+                            ClipToBounds="False"
+                            ItemsSource="{Binding PageEntries}"
+                            SelectedValue="{Binding SelectedPage}"
+                            SelectionChanged="EntryBox_OnSelectionChanged"
+                            SelectionMode="Single">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceSubpageEntryModel">
-                                    <icons:PackIconLucide Kind="{Binding Icon}" Height="18"
-                                                          HorizontalAlignment="Center" />
+                                    <icons:PackIconLucide
+                                        Height="18"
+                                        HorizontalAlignment="Center"
+                                        Kind="{Binding Icon}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.ItemContainerTheme>
@@ -136,35 +168,43 @@
                                     <Setter Property="Template">
                                         <ControlTemplate>
                                             <Panel Background="{StaticResource TransparentBrush}">
-                                                <Border Name="Indicator" Opacity="0"
-                                                        Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
+                                                <Border
+                                                    Name="Indicator"
+                                                    Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                                                    Opacity="0">
                                                     <Border.Transitions>
                                                         <Transitions>
-                                                            <DoubleTransition Property="Opacity" Easing="CubicEaseOut"
-                                                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <DoubleTransition
+                                                                Easing="CubicEaseOut"
+                                                                Property="Opacity"
+                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                         </Transitions>
                                                     </Border.Transitions>
                                                 </Border>
-                                                <Border Name="Lock" Opacity="0" BorderThickness="3,0"
-                                                        BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
-                                                        RenderTransform="scaleX(1.1)">
+                                                <Border
+                                                    Name="Lock"
+                                                    BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                                    BorderThickness="3,0"
+                                                    Opacity="0"
+                                                    RenderTransform="scaleX(1.1)">
                                                     <Border.Transitions>
                                                         <Transitions>
-                                                            <DoubleTransition Property="Opacity"
-                                                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                            <TransformOperationsTransition Property="RenderTransform"
-                                                                    Easing="CubicEaseOut"
-                                                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <DoubleTransition Property="Opacity" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <TransformOperationsTransition
+                                                                Easing="CubicEaseOut"
+                                                                Property="RenderTransform"
+                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                         </Transitions>
                                                     </Border.Transitions>
                                                 </Border>
-                                                <ContentPresenter Name="PART_ContentPresenter" Margin="8"
-                                                                  Content="{TemplateBinding Content}"
-                                                                  ContentTemplate="{TemplateBinding ContentTemplate}">
+                                                <ContentPresenter
+                                                    Name="PART_ContentPresenter"
+                                                    Margin="8"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}">
                                                     <ContentPresenter.Transitions>
                                                         <Transitions>
-                                                            <BrushTransition Property="Foreground"
-                                                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <BrushTransition Property="Foreground" Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                         </Transitions>
                                                     </ContentPresenter.Transitions>
                                                 </ContentPresenter>
@@ -172,8 +212,7 @@
                                         </ControlTemplate>
                                     </Setter>
                                     <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
-                                        <Setter Property="Foreground"
-                                                Value="{StaticResource ControlAccentForegroundBrush}" />
+                                        <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
                                     </Style>
                                     <Style Selector="^:pointerover /template/ Border#Indicator">
                                         <Setter Property="Opacity" Value="1" />
@@ -193,47 +232,72 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>
-                        <StackPanel Grid.Row="2" Spacing="2" Margin="12,0">
-                            <Button ToolTip.Tip="Import asset from file"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Upper}}"
-                                    Command="{Binding ImportFromFileCommand}">
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="12,0"
+                            Spacing="2">
+                            <Button
+                                Command="{Binding ImportFromFileCommand}"
+                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}"
+                                ToolTip.Tip="Import asset from file">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                                 ConverterParameter="Updating" />
-                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                                 ConverterParameter="Deploying" />
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                            ConverterParameter="Updating"
+                                            Path="State" />
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                            ConverterParameter="Deploying"
+                                            Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <icons:PackIconLucide Kind="FilePlus" Height="{StaticResource MediumFontSize}"
-                                                      Width="{StaticResource MediumFontSize}" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Kind="FilePlus" />
                             </Button>
-                            <Button ToolTip.Tip="Export modpack to file"
-                                    CornerRadius="0"
-                                    Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand,FallbackValue={x:Null}}"
-                                    CommandParameter="{Binding Basic.Key}">
+                            <Button
+                                Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                CommandParameter="{Binding Basic.Key}"
+                                CornerRadius="0"
+                                ToolTip.Tip="Export modpack to file">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                                 ConverterParameter="Updating" />
-                                        <Binding Path="State" Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                                 ConverterParameter="Deploying" />
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                            ConverterParameter="Updating"
+                                            Path="State" />
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                            ConverterParameter="Deploying"
+                                            Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <icons:PackIconLucide Kind="FolderArchive" Height="{StaticResource MediumFontSize}"
-                                                      Width="{StaticResource MediumFontSize}" />
+                                <icons:PackIconLucide
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Kind="FolderArchive" />
                             </Button>
-                            <Button ToolTip.Tip="Open instance folder"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                    Command="{Binding OpenFolderCommand}">
-                                <icons:PackIconLucide Kind="FolderOpen" Height="{StaticResource MediumFontSize}"
-                                                      Width="{StaticResource MediumFontSize}" />
+                            <Button
+                                Command="{Binding OpenFolderCommand}"
+                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                ToolTip.Tip="Open instance folder">
+                                <icons:PackIconLucide
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Kind="FolderOpen" />
                             </Button>
                         </StackPanel>
-                        <Border Grid.Row="3" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
-                                BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
-                                Height="{Binding $self.Bounds.Width}"
-                                BackgroundSizing="InnerBorderEdge" ToolTip.Tip="{Binding Basic.Name}">
+                        <Border
+                            Grid.Row="3"
+                            Height="{Binding $self.Bounds.Width}"
+                            Margin="8"
+                            BackgroundSizing="InnerBorderEdge"
+                            BorderBrush="{StaticResource ControlBorderBrush}"
+                            BorderThickness="2"
+                            CornerRadius="{StaticResource SmallCornerRadius}"
+                            ToolTip.Tip="{Binding Basic.Name}">
                             <Border.Background>
                                 <ImageBrush Source="{Binding Basic.Thumbnail}" />
                             </Border.Background>

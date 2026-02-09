@@ -1,15 +1,24 @@
-﻿<local:WidgetBase xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:local="using:Polymerium.App.Widgets"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Widgets.NoteWidget" Title="Note" Icon="Note">
+﻿<local:WidgetBase
+    x:Class="Polymerium.App.Widgets.NoteWidget"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Polymerium.App.Widgets"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Note"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Icon="Note"
+    mc:Ignorable="d">
     <local:WidgetBase.FullTemplate>
         <DataTemplate x:DataType="local:NoteWidget">
-            <TextBox Theme="{StaticResource FieldTextBoxTheme}" Text="{Binding NoteText,Mode=TwoWay}"
-                     AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+            <TextBox
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                Text="{Binding NoteText, Mode=TwoWay}"
+                TextWrapping="Wrap"
+                Theme="{StaticResource FieldTextBoxTheme}" />
         </DataTemplate>
     </local:WidgetBase.FullTemplate>
     <local:WidgetBase.SlimTemplate>

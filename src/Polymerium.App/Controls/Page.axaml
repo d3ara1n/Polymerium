@@ -1,19 +1,25 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
     <Design.PreviewWith>
         <husk:Page Width="128" Height="128">
             <Button HorizontalAlignment="Center" VerticalAlignment="Center">
-                <icons:PackIconLucide Kind="ArrowLeft" Width="12" Height="12" />
+                <icons:PackIconLucide
+                    Width="12"
+                    Height="12"
+                    Kind="ArrowLeft" />
             </Button>
         </husk:Page>
     </Design.PreviewWith>
 
     <BoxShadows x:Key="PageBoxShadow">0 0 8 0 #19000000</BoxShadows>
 
-    <ControlTheme x:Key="{x:Type husk:Page}" TargetType="husk:Page"
-                  BasedOn="{StaticResource {x:Type husk:Page}}">
+    <ControlTheme
+        x:Key="{x:Type husk:Page}"
+        BasedOn="{StaticResource {x:Type husk:Page}}"
+        TargetType="husk:Page">
         <Setter Property="Background" Value="{StaticResource LayerBackgroundBrush}" />
     </ControlTheme>
 </ResourceDictionary>

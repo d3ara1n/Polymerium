@@ -28,6 +28,38 @@ public partial class InstanceDashboardViewModel(
 
     #endregion
 
+    #region State
+
+    protected override void OnInstanceLaunching(LaunchTracker tracker)
+    {
+        tracker.StateUpdated += OnStateUpdated;
+        IsOnAir = true;
+        if (SelectedSource is LiveLogSourceModel)
+        {
+            // Attach
+            // Bind
+        }
+
+        return;
+
+        void OnStateUpdated(TrackerBase _, TrackerState state)
+        {
+            if (state is TrackerState.Faulted or TrackerState.Finished)
+            {
+                tracker.StateUpdated -= OnStateUpdated;
+                if (SelectedSource is LiveLogSourceModel)
+                {
+                    // Detach
+                    // Leave Behind
+                }
+
+                IsOnAir = false;
+            }
+        }
+    }
+
+    #endregion
+
     #region Reactive
 
     public ObservableCollection<LogSourceModelBase> Sources { get; } = [];
@@ -77,6 +109,7 @@ public partial class InstanceDashboardViewModel(
                     // Attach
                     // Bind
                 }
+
                 break;
             case FileLogSourceModel:
                 // 使用 DynamicData
@@ -84,39 +117,9 @@ public partial class InstanceDashboardViewModel(
                 {
                     // Detach
                 }
+
                 // Set
                 break;
-        }
-    }
-
-    #endregion
-
-    #region State
-
-    protected override void OnInstanceLaunching(LaunchTracker tracker)
-    {
-        tracker.StateUpdated += OnStateUpdated;
-        IsOnAir = true;
-        if (SelectedSource is LiveLogSourceModel)
-        {
-            // Attach
-            // Bind
-        }
-
-        return;
-
-        void OnStateUpdated(TrackerBase _, TrackerState state)
-        {
-            if (state is TrackerState.Faulted or TrackerState.Finished)
-            {
-                tracker.StateUpdated -= OnStateUpdated;
-                if (SelectedSource is LiveLogSourceModel)
-                {
-                    // Detach
-                    // Leave Behind
-                }
-                IsOnAir = false;
-            }
         }
     }
 

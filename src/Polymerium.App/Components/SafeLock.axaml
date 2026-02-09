@@ -1,13 +1,16 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="using:Polymerium.App.Controls"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             xmlns:local="using:Polymerium.App.Components"
-             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Polymerium.App.Components.SafeLock">
+﻿<UserControl
+    x:Class="Polymerium.App.Components.SafeLock"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.Styles>
         <Style Selector=":unlocked Border#Indicator">
             <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
@@ -18,34 +21,39 @@
             <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         </Style>
     </UserControl.Styles>
-    <Border Name="Indicator" Padding="12" BorderThickness="2"
-            CornerRadius="{StaticResource MediumCornerRadius}">
+    <Border
+        Name="Indicator"
+        Padding="12"
+        BorderThickness="2"
+        CornerRadius="{StaticResource MediumCornerRadius}">
         <Border.Transitions>
             <Transitions>
-                <BrushTransition Property="Background"
-                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
-                <BrushTransition Property="BorderBrush"
-                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                <BrushTransition Property="Background" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                <BrushTransition Property="BorderBrush" Duration="{StaticResource ControlFasterAnimationDuration}" />
             </Transitions>
         </Border.Transitions>
         <controls:SettingsEntryItem Header="{x:Static lang:Resources.SafeLock_Title}">
             <StackPanel Spacing="8">
-                <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                        CornerRadius="{StaticResource SmallCornerRadius}">
+                <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" CornerRadius="{StaticResource SmallCornerRadius}">
                     <Grid Margin="12,8" ColumnDefinitions="Auto,0,*">
-                        <TextBlock Grid.Column="0"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   Text="{x:Static lang:Resources.SafeLock_CodeLabelText}" />
-                        <TextBlock Grid.Column="2" Text="{Binding $parent[local:SafeLock].SafeCode}"
-                                   HorizontalAlignment="Center" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.SafeLock_CodeLabelText}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            Text="{Binding $parent[local:SafeLock].SafeCode}" />
                     </Grid>
                 </Border>
-                <TextBox Text="{Binding $parent[local:SafeLock].UserInput,Mode=TwoWay}">
+                <TextBox Text="{Binding $parent[local:SafeLock].UserInput, Mode=TwoWay}">
                     <TextBox.InnerLeftContent>
                         <DockPanel>
                             <husk:Divider DockPanel.Dock="Right" Orientation="Vertical" />
-                            <TextBlock Text="{x:Static lang:Resources.SafeLock_RepeatLabelText}" Margin="12,0"
-                                       VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="12,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.SafeLock_RepeatLabelText}" />
                         </DockPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>

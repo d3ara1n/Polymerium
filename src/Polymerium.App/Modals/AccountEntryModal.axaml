@@ -1,100 +1,120 @@
-﻿<husk:Modal xmlns="https://github.com/avaloniaui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-            xmlns:modals="clr-namespace:Polymerium.App.Modals"
-            xmlns:m="clr-namespace:Polymerium.App.Models"
-            xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-            xmlns:assets="clr-namespace:Polymerium.App.Assets"
-            xmlns:accounts="clr-namespace:Trident.Core.Accounts;assembly=Trident.Core"
-            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-            mc:Ignorable="d" Background="Transparent" Width="280"
-            x:Class="Polymerium.App.Modals.AccountEntryModal" x:DataType="m:AccountModel">
-    <Grid RowDefinitions="Auto,Auto,*" ColumnSpacing="12">
-        <Border Grid.Row="1" Grid.RowSpan="2" CornerRadius="{StaticResource MediumCornerRadius}"
-                Background="{StaticResource FlyoutBackgroundBrush}">
+﻿<husk:Modal
+    x:Class="Polymerium.App.Modals.AccountEntryModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:accounts="clr-namespace:Trident.Core.Accounts;assembly=Trident.Core"
+    xmlns:assets="clr-namespace:Polymerium.App.Assets"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:modals="clr-namespace:Polymerium.App.Modals"
+    Width="280"
+    x:DataType="m:AccountModel"
+    Background="Transparent"
+    mc:Ignorable="d">
+    <Grid ColumnSpacing="12" RowDefinitions="Auto,Auto,*">
+        <Border
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Background="{StaticResource FlyoutBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
             <StackPanel Margin="{StaticResource ModalContentMargin}" Spacing="24">
                 <StackPanel Spacing="12">
                     <Panel>
-                        <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}"
-                                HorizontalAlignment="Right" Classes="Small" IsCancel="True"
-                                Command="{Binding $parent[modals:AccountEntryModal].Dismiss}">
-                            <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
+                        <Button
+                            HorizontalAlignment="Right"
+                            Classes="Small"
+                            Command="{Binding $parent[modals:AccountEntryModal].Dismiss}"
+                            CornerRadius="{StaticResource FullCornerRadius}"
+                            DockPanel.Dock="Right"
+                            IsCancel="True">
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="Dismiss" />
                         </Button>
                     </Panel>
-                    <TextBlock Text="{Binding UserName,FallbackValue=Name}" HorizontalAlignment="Center"
-                               FontWeight="{StaticResource ControlStrongFontWeight}"
-                               FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Binding UserName, FallbackValue=Name}" />
                 </StackPanel>
                 <StackPanel Spacing="4">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right"
-                                   Text="{Binding EnrolledAtRaw,StringFormat={}{0:g},FallbackValue=2025/12/13 02:03}" />
-                        <TextBlock Text="{x:Static lang:Resources.AccountEntryModal_EnrolledLabelText}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding EnrolledAtRaw, StringFormat={}{0:g}, FallbackValue=2025/12/13 02:03}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.AccountEntryModal_EnrolledLabelText}" />
 
                     </DockPanel>
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right"
-                                   Text="{Binding LastUsedAt,FallbackValue=never}" />
-                        <TextBlock Text="{x:Static lang:Resources.AccountEntryModal_LastUsedLabelText}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding LastUsedAt, FallbackValue=never}" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.AccountEntryModal_LastUsedLabelText}" />
                     </DockPanel>
                 </StackPanel>
-                <Border CornerRadius="{StaticResource SmallCornerRadius}"
-                        BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="1"
-                        Padding="12,8"
-                        Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
+                <Border
+                    Padding="12,8"
+                    Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                    BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
                     <husk:SwitchPresenter Value="{Binding Type}">
                         <husk:SwitchCase Value="{x:Type accounts:TrialAccount}">
                             <StackPanel Spacing="8">
-                                <TextBlock Text="{Binding TypeName,FallbackValue=Family}"
-                                           FontSize="{StaticResource LargeFontSize}" />
+                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding TypeName, FallbackValue=Family}" />
                                 <StackPanel>
                                     <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{x:Static lang:Resources.AccountEntryModal_TrialPrompt}"
-                                        TextWrapping="Wrap"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
                             </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:OfflineAccount}">
                             <StackPanel Spacing="8">
-                                <TextBlock Text="{Binding TypeName,FallbackValue=Offline}"
-                                           FontSize="{StaticResource LargeFontSize}" />
+                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding TypeName, FallbackValue=Offline}" />
                                 <StackPanel>
                                     <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{x:Static lang:Resources.AccountEntryModal_OfflinePrompt}"
-                                        TextWrapping="Wrap"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
                             </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:MicrosoftAccount}">
                             <StackPanel Spacing="8">
-                                <TextBlock Text="{Binding TypeName,FallbackValue=Microsoft}"
-                                           FontSize="{StaticResource LargeFontSize}" />
+                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding TypeName, FallbackValue=Microsoft}" />
                                 <StackPanel>
                                     <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{x:Static lang:Resources.AccountEntryModal_MicrosoftPrompt}"
-                                        TextWrapping="Wrap"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right"
-                                            IsVisible="False">
+                                <StackPanel
+                                    HorizontalAlignment="Right"
+                                    IsVisible="False"
+                                    Orientation="Horizontal"
+                                    Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="4">
-                                        <fi:SymbolIcon Symbol="CheckmarkCircle"
-                                                       FontSize="{StaticResource MediumFontSize}"
-                                                       IconVariant="Filled" VerticalAlignment="Center"
-                                                       Foreground="{StaticResource ControlSuccessForegroundBrush}" />
-                                        <TextBlock Text="Refreshed" VerticalAlignment="Center"
-                                                   Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                        <fi:SymbolIcon
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                            IconVariant="Filled"
+                                            Symbol="CheckmarkCircle" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                            Text="Refreshed" />
                                     </StackPanel>
-                                    <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
+                                    <Button
+                                        HorizontalAlignment="Right"
+                                        Classes="Primary Small"
+                                        Content="Refresh" />
                                 </StackPanel>
                             </StackPanel>
                         </husk:SwitchCase>
@@ -102,13 +122,20 @@
                 </Border>
             </StackPanel>
         </Border>
-        <Border Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center"
-                CornerRadius="{StaticResource LargeCornerRadius}"
-                Background="{StaticResource FlyoutBackgroundBrush}" Padding="8" BoxShadow="0 0 4 0 #3F000000">
-            <Border Width="64" Height="64" CornerRadius="{StaticResource SmallCornerRadius}">
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Padding="8"
+            HorizontalAlignment="Center"
+            Background="{StaticResource FlyoutBackgroundBrush}"
+            BoxShadow="0 0 4 0 #3F000000"
+            CornerRadius="{StaticResource LargeCornerRadius}">
+            <Border
+                Width="64"
+                Height="64"
+                CornerRadius="{StaticResource SmallCornerRadius}">
                 <Border.Background>
-                    <ImageBrush
-                        async:ImageBrushLoader.Source="{Binding FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
+                    <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
                 </Border.Background>
             </Border>
         </Border>
