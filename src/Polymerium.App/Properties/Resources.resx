@@ -1981,4 +1981,7 @@
     <data name="LandingView_NoRecentPlayLabelText" xml:space="preserve">
         <value>Not Played Yet</value>
     </data>
+    <data name="ExhibitPackageModal_HistoryTabText" xml:space="preserve">
+        <value>History</value>
+    </data>
 </root>

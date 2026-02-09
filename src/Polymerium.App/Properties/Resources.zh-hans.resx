@@ -787,7 +787,7 @@
         <value>正在展示如下版本的依赖：</value>
     </data>
     <data name="ExhibitPackageModal_ChangelogsTabText" xml:space="preserve">
-        <value>变更日志</value>
+        <value>更新日志</value>
     </data>
     <data name="ExhibitPackageModal_ChangelogsTabPrompt" xml:space="preserve">
         <value>正在展示如下版本的日志：</value>
@@ -1971,5 +1971,8 @@
     </data>
     <data name="LandingView_NoRecentPlayLabelText" xml:space="preserve">
         <value>暂无最近游戏</value>
+    </data>
+    <data name="ExhibitPackageModal_HistoryTabText" xml:space="preserve">
+        <value>变更记录</value>
     </data>
 </root>

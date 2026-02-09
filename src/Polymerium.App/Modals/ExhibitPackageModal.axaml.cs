@@ -70,9 +70,13 @@ public partial class ExhibitPackageModal : Modal
                                                                           o => o.LazyChangelog,
                                                                           (o, v) => o.LazyChangelog = v);
 
+    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyHistoryProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyHistory),
+                                                                          o => o.LazyHistory,
+                                                                          (o, v) => o.LazyHistory = v);
+
 
     private static bool isDetailPanelVisible;
-
 
     public ExhibitPackageModal() => InitializeComponent();
 
@@ -89,18 +93,22 @@ public partial class ExhibitPackageModal : Modal
         set => SetAndRaise(ViewPackageCommandProperty, ref field, value);
     }
 
-
     public LazyObject? LazyDependencies
     {
         get;
         set => SetAndRaise(LazyDependenciesProperty, ref field, value);
     }
 
-
     public LazyObject? LazyDescription
     {
         get;
         set => SetAndRaise(LazyDescriptionProperty, ref field, value);
+    }
+
+    public LazyObject? LazyHistory
+    {
+        get;
+        set => SetAndRaise(LazyHistoryProperty, ref field, value);
     }
 
     public bool IsDetailPanelVisible
@@ -143,7 +151,9 @@ public partial class ExhibitPackageModal : Modal
         set => SetAndRaise(SelectedVersionProperty, ref field, value);
     }
 
+    public required string Key { get; init; }
     public required DataService DataService { get; init; }
+    public required PersistenceService PersistenceService { get; init; }
     public required Filter Filter { get; init; }
 
     public required Action<ExhibitModel> ModifyPendingCallback { get; init; }
@@ -161,6 +171,7 @@ public partial class ExhibitPackageModal : Modal
         LazyDescription = ConstructDescription();
         LazyChangelog = ConstructChangelog();
         LazyDependencies = ConstructDependencies();
+        LazyHistory = ConstructHistory();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -339,6 +350,110 @@ public partial class ExhibitPackageModal : Modal
                                           }
                                       }
                                   });
+
+        return lazy;
+    }
+
+    private LazyObject ConstructHistory()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            // 获取当前包的所有历史记录
+            var actions = PersistenceService.GetLatestActions(Key, DateTimeOffset.MinValue);
+
+            // 过滤出与当前包相关的记录
+            var filteredActions = actions
+                                 .Where(x => (x.Old is not null
+                                           && PackageHelper.IsMatched(x.Old,
+                                                                      Package.Label,
+                                                                      Package.Namespace,
+                                                                      Package.ProjectId))
+                                          || (x.New is not null
+                                           && PackageHelper.IsMatched(x.New,
+                                                                      Package.Label,
+                                                                      Package.Namespace,
+                                                                      Package.ProjectId)))
+                                 .ToArray();
+
+            // 解析包信息并创建 InstanceActionModel
+            var tasks = filteredActions
+                       .Select(async x =>
+                        {
+                            if (x.New != null && PackageHelper.TryParse(x.New, out var result))
+                            {
+                                if (result.Vid is null)
+                                {
+                                    if (x.Old is null)
+                                    {
+                                        // null -> Project
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.AddUnversioned,
+                                            VersionName = null,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                    else
+                                    {
+                                        // -> Project: Unset
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.Unset,
+                                            VersionName = null,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                }
+                                else
+                                {
+                                    var package = await DataService.ResolvePackageAsync(result.Label,
+                                                      result.Namespace,
+                                                      result.Pid,
+                                                      result.Vid,
+                                                      Filter);
+                                    if (x.Old is null)
+                                    {
+                                        // null -> Package: Add
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.AddVersioned,
+                                            VersionName = package.VersionName,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                    else
+                                    {
+                                        // Package -> Package: Update
+                                        return new InstancePackageModificationModel()
+                                        {
+                                            Kind = InstancePackageModificationKind.Update,
+                                            VersionName = package.VersionName,
+                                            ModifiedAtRaw = x.At
+                                        };
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                return new InstancePackageModificationModel()
+                                {
+                                    Kind = InstancePackageModificationKind.Remove,
+                                    VersionName = null,
+                                    ModifiedAtRaw = x.At
+                                };
+                            }
+                        })
+                       .ToArray();
+
+            await Task.WhenAll(tasks);
+            var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
+            return new InstancePackageModificationCollection(results);
+        });
 
         return lazy;
     }
