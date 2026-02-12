@@ -38,7 +38,7 @@ public partial class InstanceAssetsViewModel(
     {
         await Task.Run(LoadModAsync);
         await Task.Run(LoadResourcePacksAsync);
-        // await Task.Run(LoadDataPacksAsync);
+        await Task.Run(LoadDataPacksAsync);
         await Task.Run(LoadScreenshotsAsync);
         await Task.Run(LoadWorldsAsync);
     }
