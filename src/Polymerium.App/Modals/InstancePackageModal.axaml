@@ -603,7 +603,7 @@
                                                                             CornerRadius="16">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource MediumFontSize}"
-                                                                                Foreground="{StaticResource ControlWarningForegroundBrush}"
+                                                                                Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                                                 Symbol="Sparkle" />
                                                                         </Border>
                                                                     </husk:SwitchCase>
