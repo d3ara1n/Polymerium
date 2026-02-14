@@ -186,7 +186,8 @@ public class DataService(
         }
 
         var rv = new ValueTask<T>(Task.Run(factory));
-        cache.Set(key, rv, EXPIRED_IN);
+        if (cachedEnabled)
+            cache.Set(key, rv, EXPIRED_IN);
         return rv;
     }
 }

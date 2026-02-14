@@ -23,7 +23,9 @@
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <controls:Subpage.Resources>
-        <MenuFlyout x:Key="InstancePackageButtonFlyout" x:DataType="m:InstancePackageModel">
+        <MenuFlyout
+            x:Key="InstancePackageButtonFlyout"
+            x:DataType="m:InstancePackageModel">
             <MenuItem
                 Header="{x:Static lang:Resources.InstanceSetupView_ActiveMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Star,
@@ -39,7 +41,9 @@
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectNameMenuText}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.ProjectName, FallbackValue=Project Name}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Info.ProjectName, FallbackValue=Project Name}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
@@ -51,33 +55,39 @@
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectIdMenuText}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.ProjectId, FallbackValue=Pid}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Info.ProjectId, FallbackValue=Pid}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem
+                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}"
                 Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
                 CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
-                                      FontSize={StaticResource MediumFontSize}}"
-                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}">
+                                      FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionNameMenuText}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem
+                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}"
                 Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
                 CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
-                                      FontSize={StaticResource MediumFontSize}}"
-                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}">
+                                      FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionIdMenuText}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
@@ -94,13 +104,13 @@
             <!--  Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />  -->
             <MenuItem Header="-" />
             <MenuItem
+                IsEnabled="{Binding IsLocked, Converter={x:Static BoolConverters.Not}}"
                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Foreground="{StaticResource ControlDangerForegroundBrush}"
                 Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Delete,
-                                      FontSize={StaticResource MediumFontSize}}"
-                IsEnabled="{Binding IsLocked, Converter={x:Static BoolConverters.Not}}" />
+                                      FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
     </controls:Subpage.Resources>
     <husk:BusyContainer>
@@ -121,7 +131,9 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Background="{StaticResource OverlaySolidBackgroundBrush}">
-                <StackPanel Margin="24" Spacing="8">
+                <StackPanel
+                    Margin="24"
+                    Spacing="8">
                     <husk:ProgressRing
                         Width="56"
                         Height="56"
@@ -158,7 +170,9 @@
                 Margin="{StaticResource PageHeaderlessContentMargin}"
                 ColumnDefinitions="*,Auto"
                 ColumnSpacing="12">
-                <Grid Grid.Column="0" RowDefinitions="*,4,Auto">
+                <Grid
+                    Grid.Column="0"
+                    RowDefinitions="*,4,Auto">
                     <TextBlock
                         Grid.Row="0"
                         FontSize="{StaticResource ExtraLargeFontSize}"
@@ -176,8 +190,12 @@
                             BorderThickness="3,0,0,0"
                             CornerRadius="{StaticResource SmallCornerRadius}">
                             <StackPanel Margin="12,6">
-                                <TextBlock Foreground="{StaticResource ControlAccentForegroundBrush}" Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
-                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding Basic.Version, FallbackValue=Version}" />
+                                <TextBlock
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding Basic.Version, FallbackValue=Version}" />
 
                             </StackPanel>
                         </Border>
@@ -189,19 +207,23 @@
                             <DockPanel>
                                 <Button
                                     Padding="8,4"
+                                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNull}}"
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     Command="{Binding EditLoaderCommand}"
                                     CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
-                                    DockPanel.Dock="Right"
-                                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNull}}">
+                                    DockPanel.Dock="Right">
                                     <icons:PackIconLucide
                                         Width="{StaticResource LargeFontSize}"
                                         Height="{StaticResource LargeFontSize}"
-                                        Kind="ArrowRightLeft" />
+                                        Kind="SquarePen" />
                                 </Button>
                                 <StackPanel Margin="12,6">
-                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceSetupView_LoaderLabelText}" />
-                                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding LoaderLabel, FallbackValue=None}" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.InstanceSetupView_LoaderLabelText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Text="{Binding LoaderLabel, FallbackValue=None}" />
                                 </StackPanel>
                             </DockPanel>
                         </Border>
@@ -213,10 +235,16 @@
                     IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=True}"
                     Source="{Binding Reference, FallbackValue={x:Null}}">
                     <husk:LazyContainer.FaultContent>
-                        <husk:Card BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <husk:Card
+                            BorderBrush="{StaticResource ControlBorderBrush}"
+                            BorderThickness="2">
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
                                 <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ReferenceUnavailableLabelText}" />
-                                <Button Content="Retry" IsVisible="False" />
+                                <Button
+                                    IsVisible="False"
+                                    Content="Retry" />
                             </StackPanel>
                         </husk:Card>
                     </husk:LazyContainer.FaultContent>
@@ -244,21 +272,25 @@
                                                 TextTrimming="CharacterEllipsis"
                                                 ToolTip.Tip="{Binding VersionName}" />
                                             <Button
-                                                Grid.Column="2"
                                                 Classes="Small"
+                                                Grid.Column="2"
                                                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
                                                 Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
                                                 Theme="{StaticResource OutlineButtonTheme}" />
                                         </Grid>
                                     </controls:Plaque.Header>
-                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,Auto"
+                                        ColumnSpacing="8">
                                         <Border
                                             Grid.Column="0"
                                             Width="42"
                                             Height="42"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
                                             <Border.Background>
-                                                <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail, FallbackValue={x:Null}}" Stretch="UniformToFill" />
+                                                <ImageBrush
+                                                    async:ImageBrushLoader.Source="{Binding Thumbnail, FallbackValue={x:Null}}"
+                                                    Stretch="UniformToFill" />
                                             </Border.Background>
                                         </Border>
                                         <StackPanel
@@ -274,7 +306,9 @@
                                             <HyperlinkButton NavigateUri="{Binding SourceUrl}">
                                                 <ToolTip.Tip>
                                                     <StackPanel Spacing="2">
-                                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                                        <Grid
+                                                            ColumnDefinitions="*,Auto"
+                                                            ColumnSpacing="4">
                                                             <TextBlock
                                                                 Grid.Column="0"
                                                                 FontSize="{StaticResource SmallFontSize}"
@@ -289,9 +323,13 @@
                                                         <TextBlock Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
                                                     </StackPanel>
                                                 </ToolTip.Tip>
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="4">
                                                     <TextBlock Text="{Binding Label, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Open" />
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Symbol="Open" />
                                                 </StackPanel>
                                             </HyperlinkButton>
                                         </StackPanel>
@@ -301,7 +339,9 @@
                                             VerticalAlignment="Center"
                                             Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
                                             CornerRadius="{StaticResource FullCornerRadius}">
-                                            <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="ArrowRight" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                Symbol="ArrowRight" />
                                         </Button>
                                     </Grid>
                                 </controls:Plaque>
@@ -310,7 +350,9 @@
                     </husk:LazyContainer.SourceTemplate>
                 </husk:LazyContainer>
             </Grid>
-            <Grid Grid.Row="2" RowDefinitions="Auto,*">
+            <Grid
+                Grid.Row="2"
+                RowDefinitions="Auto,*">
                 <Grid
                     Grid.Row="0"
                     Margin="16,8"
@@ -327,11 +369,11 @@
                         <TextBox.InnerRightContent>
                             <StackPanel Orientation="Horizontal">
                                 <Button
+                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     Command="{Binding $parent[TextBox].Clear}"
                                     Content="{fie:SymbolIcon Symbol=Dismiss,
                                                              FontSize={StaticResource MediumFontSize}}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <Button Classes.Primary="{Binding IsFilterActive, Mode=OneWay}">
                                     <Button.Flyout>
                                         <Flyout>
@@ -346,7 +388,9 @@
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}" />
-                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                <Grid
+                                                    ColumnDefinitions="*,Auto"
+                                                    ColumnSpacing="24">
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
@@ -360,13 +404,21 @@
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_Enabled}" Value="{x:True}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_Disabled}" Value="{x:False}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_All}"
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_Enabled}"
+                                                            Value="{x:True}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_Disabled}"
+                                                            Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
-                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                <Grid
+                                                    ColumnDefinitions="*,Auto"
+                                                    ColumnSpacing="24">
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
@@ -380,13 +432,21 @@
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}" Value="{x:True}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}" Value="{x:False}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_All}"
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
+                                                            Value="{x:True}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
+                                                            Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
-                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                                <Grid
+                                                    ColumnDefinitions="*,Auto"
+                                                    ColumnSpacing="24">
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
@@ -400,15 +460,27 @@
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel Label="{x:Static lang:Resources.Enum_All}" Value="{x:Null}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_Mod}" Value="{x:Static resources:ResourceKind.Mod}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_ResourcePack}" Value="{x:Static resources:ResourceKind.ResourcePack}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_ShaderPack}" Value="{x:Static resources:ResourceKind.ShaderPack}" />
-                                                        <m:FilterModel Label="{x:Static lang:Resources.ResourceKind_DataPack}" Value="{x:Static resources:ResourceKind.DataPack}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.Enum_All}"
+                                                            Value="{x:Null}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.ResourceKind_Mod}"
+                                                            Value="{x:Static resources:ResourceKind.Mod}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
+                                                            Value="{x:Static resources:ResourceKind.ResourcePack}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
+                                                            Value="{x:Static resources:ResourceKind.ShaderPack}" />
+                                                        <m:FilterModel
+                                                            Label="{x:Static lang:Resources.ResourceKind_DataPack}"
+                                                            Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider />
-                                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
+                                                <Grid
+                                                    ColumnDefinitions="*,Auto,Auto"
+                                                    ColumnSpacing="4">
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Center"
@@ -436,7 +508,9 @@
                                                     <ItemsControl ItemsSource="{Binding TagsView}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
-                                                                <WrapPanel ItemSpacing="8" LineSpacing="8" />
+                                                                <WrapPanel
+                                                                    ItemSpacing="8"
+                                                                    LineSpacing="8" />
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                         <ItemsControl.ItemTemplate>
@@ -447,7 +521,9 @@
                                                                     BorderThickness="1"
                                                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                                                     <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
-                                                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                                                        <StackPanel
+                                                                            Orientation="Horizontal"
+                                                                            Spacing="4">
                                                                             <TextBlock Text="{Binding Content}" />
                                                                             <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                                                                 <Run Text="(" />
@@ -473,16 +549,20 @@
                         </TextBox.InnerRightContent>
                     </TextBox>
                     <TextBlock Grid.Column="1">
-                        <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceSetupView_ResultCountLabelText}" />
+                        <Run
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.InstanceSetupView_ResultCountLabelText}" />
                         <LineBreak />
                         <Run Text="{Binding StageView.Count, Mode=OneWay, FallbackValue=0}" />
-                        <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="/" />
+                        <Run
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="/" />
                         <Run Text="{Binding StageCount, Mode=OneWay, FallbackValue=0}" />
                     </TextBlock>
                     <StackPanel
                         Grid.Column="2"
                         Orientation="Horizontal"
-                        Spacing="12">
+                        Spacing="8">
                         <StackPanel IsVisible="{Binding IsRefreshing}">
                             <husk:ProgressRing
                                 Width="16"
@@ -491,6 +571,32 @@
                                 IsIndeterminate="{Binding IsRefreshing}" />
                             <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_RefreshingLabelText}" />
                         </StackPanel>
+                        <Border
+                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="8,0"
+                                    VerticalAlignment="Center">
+                                    <Run
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="部署规则条数:" />
+                                    <Run
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="12" />
+                                </TextBlock>
+                                <Button
+                                    Classes="Small"
+                                    Width="{Binding $self.Bounds.Height}"
+                                    Margin="3"
+                                    Padding="0">
+                                    <icons:PackIconLucide
+                                        Width="{StaticResource SmallFontSize}"
+                                        Height="{StaticResource SmallFontSize}"
+                                        Kind="Settings2" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
                         <TabStrip
                             Name="LayoutSelector"
                             SelectedIndex="{Binding LayoutIndex, Mode=TwoWay}"
@@ -529,7 +635,9 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <husk:FlexWrapPanel ColumnSpacing="6" RowSpacing="6" />
+                                                <husk:FlexWrapPanel
+                                                    ColumnSpacing="6"
+                                                    RowSpacing="6" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                         <m:ListTemplateCombinationModel.ItemContainerTheme>
@@ -566,10 +674,10 @@
                                         Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
+                                        IsEnabled="False"
                                         Header="{x:Static lang:Resources.InstanceSetupView_DependencyGraphMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowSplit,
-                                                              FontSize={StaticResource MediumFontSize}}"
-                                        IsEnabled="False" />
+                                                              FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ImportListCommand}"
                                         Header="{x:Static lang:Resources.InstanceSetupView_ImportListMenuText}"
@@ -582,7 +690,9 @@
                                                               FontSize={StaticResource MediumFontSize}}" />
                                 </MenuFlyout>
                             </SplitButton.Flyout>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
                                 <icons:PackIconLucide
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
@@ -592,7 +702,9 @@
                         </SplitButton>
                     </StackPanel>
                 </Grid>
-                <Panel Grid.Row="1" Grid.Column="0">
+                <Panel
+                    Grid.Row="1"
+                    Grid.Column="0">
                     <StackPanel
                         VerticalAlignment="Center"
                         IsVisible="{Binding StageView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
