@@ -19,6 +19,9 @@
                 Text="在实例启动时，根据规则重定向或跳过特定的包。按从上到下的顺序应用，后继行会覆盖前继行。"
                 TextWrapping="Wrap" />
         </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl />
+        </ScrollViewer>
         <Grid
             Grid.Row="2"
             ColumnDefinitions="Auto,*,Auto,Auto"

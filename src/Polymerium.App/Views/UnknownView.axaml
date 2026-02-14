@@ -30,11 +30,17 @@
                         Height="12"
                         Kind="Film" />
                 </Button>
-                <Button Command="{Binding DebugCommand}">
+                <Button Command="{Binding CrashCommand}">
                     <icons:PackIconLucide
                         Width="12"
                         Height="12"
                         Kind="Bug" />
+                </Button>
+                <Button Command="{Binding DebugCommand}">
+                    <icons:PackIconLucide
+                        Width="12"
+                        Height="12"
+                        Kind="TestTube" />
                 </Button>
                 <Button Click="ThemeSwitchButton_OnClick">
                     <icons:PackIconLucide
@@ -444,8 +450,8 @@
                             <DockPanel>
                                 <Button
                                     Classes="Small Primary"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                    DockPanel.Dock="Bottom">
+                                    DockPanel.Dock="Bottom"
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
                                     <husk:IconLabel
                                         Icon="HandPoint"
                                         Text="Install" />
@@ -474,10 +480,10 @@
                             <DockPanel>
                                 <Button
                                     Classes="Small"
+                                    DockPanel.Dock="Bottom"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,0,1,1"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                    DockPanel.Dock="Bottom">
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
                                     <husk:IconLabel
                                         Icon="HandPoint"
                                         Text="Installed" />

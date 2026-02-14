@@ -12,8 +12,8 @@
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="24">
         <StackPanel
-            HorizontalAlignment="Right"
             DockPanel.Dock="Bottom"
+            HorizontalAlignment="Right"
             Orientation="Horizontal"
             Spacing="8">
             <Button
@@ -39,7 +39,7 @@
             <Button
                 Command="{Binding $parent[modals:AccountCreationModal].Dismiss}"
                 IsCancel="True">
-                <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_DismissButtonText}" />
+                <TextBlock Text="{x:Static lang:Resources.Dialog_DismissButtonText}" />
             </Button>
         </StackPanel>
         <TransitioningContentControl

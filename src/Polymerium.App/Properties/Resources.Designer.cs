@@ -159,15 +159,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dismiss.
-        /// </summary>
-        public static string AccountCreationModal_DismissButtonText {
-            get {
-                return ResourceManager.GetString("AccountCreationModal_DismissButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
         public static string AccountCreationModal_FinishButtonText {
@@ -4671,15 +4662,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dismiss.
-        /// </summary>
-        public static string PackageExplorerView_DismissButtonText {
-            get {
-                return ResourceManager.GetString("PackageExplorerView_DismissButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Empty.
         /// </summary>
         public static string PackageExplorerView_EmptyLabelText {
@@ -4730,6 +4712,96 @@ namespace Polymerium.App.Properties {
         public static string PackageExplorerView_SearchButtonText {
             get {
                 return ResourceManager.GetString("PackageExplorerView_SearchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string ProfileRuleModal_ChildrenEditButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_ChildrenEditButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Children.
+        /// </summary>
+        public static string ProfileRuleModal_ChildrenLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_ChildrenLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Pack.
+        /// </summary>
+        public static string ProfileRuleModal_DataPackMenuText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_DataPackMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PointBlank Gun Pack.
+        /// </summary>
+        public static string ProfileRuleModal_PointBlankGunPackMenuText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_PointBlankGunPackMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Presents.
+        /// </summary>
+        public static string ProfileRuleModal_PresentsButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_PresentsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Type.
+        /// </summary>
+        public static string ProfileRuleModal_RuleTypeLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_RuleTypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude from Deployment.
+        /// </summary>
+        public static string ProfileRuleModal_SkippingLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_SkippingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do Not Using Symlink.
+        /// </summary>
+        public static string ProfileRuleModal_SolidifyingLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_SolidifyingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TaC:Z Gun Pack.
+        /// </summary>
+        public static string ProfileRuleModal_TaCZGunPackMenuText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_TaCZGunPackMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Rule.
+        /// </summary>
+        public static string ProfileRuleModal_Title {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_Title", resourceCulture);
             }
         }
         
@@ -5031,6 +5103,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string ResourceKind_Unknown {
+            get {
+                return ResourceManager.GetString("ResourceKind_Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to World.
         /// </summary>
         public static string ResourceKind_World {
@@ -5063,6 +5144,69 @@ namespace Polymerium.App.Properties {
         public static string SafeLock_Title {
             get {
                 return ResourceManager.GetString("SafeLock_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to And Set.
+        /// </summary>
+        public static string SelectorType_And {
+            get {
+                return ResourceManager.GetString("SelectorType_And", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource Kind.
+        /// </summary>
+        public static string SelectorType_Kind {
+            get {
+                return ResourceManager.GetString("SelectorType_Kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Set.
+        /// </summary>
+        public static string SelectorType_Not {
+            get {
+                return ResourceManager.GetString("SelectorType_Not", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or Set.
+        /// </summary>
+        public static string SelectorType_Or {
+            get {
+                return ResourceManager.GetString("SelectorType_Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Identifier.
+        /// </summary>
+        public static string SelectorType_Purl {
+            get {
+                return ResourceManager.GetString("SelectorType_Purl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository Label.
+        /// </summary>
+        public static string SelectorType_Repository {
+            get {
+                return ResourceManager.GetString("SelectorType_Repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Tag.
+        /// </summary>
+        public static string SelectorType_Tag {
+            get {
+                return ResourceManager.GetString("SelectorType_Tag", resourceCulture);
             }
         }
         
