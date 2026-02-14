@@ -748,7 +748,7 @@
         <value>It's all set.</value>
     </data>
     <data name="AccountEntryModal_MicrosoftPrompt" xml:space="preserve">
-        <value>This kind of account is kind of: No use in the past then no use in the future any more.</value>
+        <value>This type of account is type of: No use in the past then no use in the future any more.</value>
     </data>
     <data name="ExhibitPackageModal_FilterLabelText" xml:space="preserve">
         <value>Show compatible versions only</value>

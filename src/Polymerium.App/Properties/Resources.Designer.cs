@@ -339,7 +339,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This kind of account is kind of: No use in the past then no use in the future any more..
+        ///   Looks up a localized string similar to This type of account is type of: No use in the past then no use in the future any more..
         /// </summary>
         public static string AccountEntryModal_MicrosoftPrompt {
             get {
