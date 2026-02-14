@@ -306,9 +306,6 @@
     <data name="PackageExplorerView_CollectButtonText" xml:space="preserve">
         <value>Collect</value>
     </data>
-    <data name="PackageExplorerView_DismissButtonText" xml:space="preserve">
-        <value>Dismiss</value>
-    </data>
     <data name="PackageExplorerView_SearchBarPlaceholder" xml:space="preserve">
         <value>Search by names and names...</value>
     </data>
@@ -731,9 +728,6 @@
     </data>
     <data name="AccountCreationModal_BackButtonText" xml:space="preserve">
         <value>Back</value>
-    </data>
-    <data name="AccountCreationModal_DismissButtonText" xml:space="preserve">
-        <value>Dismiss</value>
     </data>
     <data name="AccountEntryModal_LastUsedLabelText" xml:space="preserve">
         <value>Last Used</value>
@@ -1983,5 +1977,59 @@
     </data>
     <data name="ExhibitPackageModal_HistoryTabText" xml:space="preserve">
         <value>History</value>
+    </data>
+    <data name="ResourceKind_Unknown" xml:space="preserve">
+        <value>Unknown</value>
+    </data>
+    <data name="SelectorType_And" xml:space="preserve">
+        <value>And Set</value>
+    </data>
+    <data name="SelectorType_Or" xml:space="preserve">
+        <value>Or Set</value>
+    </data>
+    <data name="SelectorType_Not" xml:space="preserve">
+        <value>Not Set</value>
+    </data>
+    <data name="SelectorType_Purl" xml:space="preserve">
+        <value>Package Identifier</value>
+    </data>
+    <data name="SelectorType_Repository" xml:space="preserve">
+        <value>Repository Label</value>
+    </data>
+    <data name="SelectorType_Tag" xml:space="preserve">
+        <value>Package Tag</value>
+    </data>
+    <data name="SelectorType_Kind" xml:space="preserve">
+        <value>Resource Kind</value>
+    </data>
+    <data name="ProfileRuleModal_ChildrenLabelText" xml:space="preserve">
+        <value>Rule Children</value>
+    </data>
+    <data name="ProfileRuleModal_Title" xml:space="preserve">
+        <value>Edit Rule</value>
+    </data>
+    <data name="ProfileRuleModal_RuleTypeLabelText" xml:space="preserve">
+        <value>Rule Type</value>
+    </data>
+    <data name="ProfileRuleModal_SkippingLabelText" xml:space="preserve">
+        <value>Exclude from Deployment</value>
+    </data>
+    <data name="ProfileRuleModal_SolidifyingLabelText" xml:space="preserve">
+        <value>Do Not Using Symlink</value>
+    </data>
+    <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="ProfileRuleModal_PresentsButtonText" xml:space="preserve">
+        <value>Presents</value>
+    </data>
+    <data name="ProfileRuleModal_DataPackMenuText" xml:space="preserve">
+        <value>Data Pack</value>
+    </data>
+    <data name="ProfileRuleModal_TaCZGunPackMenuText" xml:space="preserve">
+        <value>TaC:Z Gun Pack</value>
+    </data>
+    <data name="ProfileRuleModal_PointBlankGunPackMenuText" xml:space="preserve">
+        <value>PointBlank Gun Pack</value>
     </data>
 </root>

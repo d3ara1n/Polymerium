@@ -26,12 +26,6 @@
     Icon="/Assets/Icon.ico"
     Loaded="Control_OnLoaded"
     mc:Ignorable="d">
-    <husk:AppWindow.Styles>
-        <Style Selector="husk|Dialog">
-            <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
-            <Setter Property="SecondaryText" Value="{x:Static lang:Resources.Dialog_CancelButtonText}" />
-        </Style>
-    </husk:AppWindow.Styles>
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />
@@ -78,8 +72,8 @@
             Grid.Column="1">
             <DockPanel
                 x:Name="TitleBar"
-                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}"
-                DockPanel.Dock="Top">
+                DockPanel.Dock="Top"
+                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
                 <StackPanel DockPanel.Dock="Right">
                     <husk:ButtonGroup BorderThickness="0">
                         <husk:ButtonGroup.Styles>
@@ -196,10 +190,10 @@
                         Kind="SquarePlus" />
                 </Button>
                 <Button
-                    Classes="Primary"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
+                    Classes="Primary"
                     Height="36"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:MarketplacePortalView}">
@@ -355,9 +349,9 @@
                 <Button
                     Grid.Row="6"
                     Grid.Column="0"
+                    DockPanel.Dock="Left"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:SettingsView}"
-                    DockPanel.Dock="Left"
                     Theme="{StaticResource GhostButtonTheme}">
                     <icons:PackIconLucide
                         Height="18"

@@ -2,6 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
 
     <Style Selector="TextBox">
@@ -30,6 +31,15 @@
                     InputGesture="{x:Static TextBox.PasteGesture}" />
             </MenuFlyout>
         </Setter>
+    </Style>
+
+    <Style Selector="husk|Dialog">
+        <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
+        <Setter Property="SecondaryText" Value="{x:Static lang:Resources.Dialog_CancelButtonText}" />
+    </Style>
+    <Style Selector="ToggleSwitch">
+        <Setter Property="OffContent" Value="{x:Static lang:Resources.Enum_Off}" />
+        <Setter Property="OnContent" Value="{x:Static lang:Resources.Enum_On}" />
     </Style>
 
 </Styles>

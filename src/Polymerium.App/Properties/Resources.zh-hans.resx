@@ -297,9 +297,6 @@
     <data name="PackageExplorerView_CollectButtonText" xml:space="preserve">
         <value>执行</value>
     </data>
-    <data name="PackageExplorerView_DismissButtonText" xml:space="preserve">
-        <value>清空</value>
-    </data>
     <data name="PackageExplorerView_SearchBarPlaceholder" xml:space="preserve">
         <value>根据名字...</value>
     </data>
@@ -722,9 +719,6 @@
     </data>
     <data name="AccountCreationModal_BackButtonText" xml:space="preserve">
         <value>返回</value>
-    </data>
-    <data name="AccountCreationModal_DismissButtonText" xml:space="preserve">
-        <value>关闭</value>
     </data>
     <data name="AccountEntryModal_LastUsedLabelText" xml:space="preserve">
         <value>最后使用于</value>
@@ -1974,5 +1968,59 @@
     </data>
     <data name="ExhibitPackageModal_HistoryTabText" xml:space="preserve">
         <value>变更记录</value>
+    </data>
+    <data name="ResourceKind_Unknown" xml:space="preserve">
+        <value>未知</value>
+    </data>
+    <data name="SelectorType_And" xml:space="preserve">
+        <value>与集合</value>
+    </data>
+    <data name="SelectorType_Kind" xml:space="preserve">
+        <value>资源类型</value>
+    </data>
+    <data name="SelectorType_Not" xml:space="preserve">
+        <value>非集合</value>
+    </data>
+    <data name="SelectorType_Or" xml:space="preserve">
+        <value>或集合</value>
+    </data>
+    <data name="SelectorType_Purl" xml:space="preserve">
+        <value>包匹配符</value>
+    </data>
+    <data name="SelectorType_Repository" xml:space="preserve">
+        <value>仓库</value>
+    </data>
+    <data name="SelectorType_Tag" xml:space="preserve">
+        <value>标签</value>
+    </data>
+    <data name="ProfileRuleModal_ChildrenLabelText" xml:space="preserve">
+        <value>成员规则</value>
+    </data>
+    <data name="ProfileRuleModal_Title" xml:space="preserve">
+        <value>编辑规则</value>
+    </data>
+    <data name="ProfileRuleModal_RuleTypeLabelText" xml:space="preserve">
+        <value>规则类型</value>
+    </data>
+    <data name="ProfileRuleModal_SkippingLabelText" xml:space="preserve">
+        <value>在部署中排除</value>
+    </data>
+    <data name="ProfileRuleModal_SolidifyingLabelText" xml:space="preserve">
+        <value>不使用软链接</value>
+    </data>
+    <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
+        <value>编辑</value>
+    </data>
+    <data name="ProfileRuleModal_PresentsButtonText" xml:space="preserve">
+        <value>预设</value>
+    </data>
+    <data name="ProfileRuleModal_TaCZGunPackMenuText" xml:space="preserve">
+        <value>TaC:Z 枪械扩展包</value>
+    </data>
+    <data name="ProfileRuleModal_PointBlankGunPackMenuText" xml:space="preserve">
+        <value>PointBlank 枪械扩展包</value>
+    </data>
+    <data name="ProfileRuleModal_DataPackMenuText" xml:space="preserve">
+        <value>数据包</value>
     </data>
 </root>

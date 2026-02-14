@@ -192,7 +192,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource LargeFontSize}"
                             Symbol="DrawerDismiss" />
-                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_DismissButtonText}" />
+                        <TextBlock Text="{x:Static lang:Resources.Dialog_DismissButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -271,8 +271,8 @@
                             </TextBox.InnerRightContent>
                         </TextBox>
                         <Button
-                            Classes="Primary"
                             Grid.Column="1"
+                            Classes="Primary"
                             Command="{Binding SearchCommand}"
                             IsDefault="True"
                             Theme="{StaticResource OutlineButtonTheme}">

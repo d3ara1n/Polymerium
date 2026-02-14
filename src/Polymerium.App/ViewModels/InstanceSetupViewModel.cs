@@ -356,6 +356,8 @@ public partial class InstanceSetupViewModel(
         {
             TriggerPackageMerge();
             TriggerReferenceRefresh();
+            // 只需要一次，因为 Profile.Setup.Rules 总是同一个
+            Rules ??= new(profile.Setup.Rules, x => new(x), x => x.Owner);
         });
 
         UpdatingPending = true;
@@ -583,7 +585,13 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
-    private void EditRules() => overlayService.PopModal(new ProfileRulesModal());
+    private void EditRules()
+    {
+        if (Rules is not null)
+        {
+            overlayService.PopModal(new ProfileRulesModal { Rules = Rules, Packages = _stageSource.Items, OverlayService = overlayService });
+        }
+    }
 
     private bool CanViewPackage(InstancePackageInfoModel? model) => model is not null;
 
@@ -1148,6 +1156,9 @@ public partial class InstanceSetupViewModel(
 
     [ObservableProperty]
     public partial ReadOnlyObservableCollection<InstancePackageFilterTagModel>? TagsView { get; set; }
+
+    [ObservableProperty]
+    public partial MappingCollection<Profile.Rice.Rule, ProfileRuleModel>? Rules { get; set; }
 
     [ObservableProperty]
     public partial string? FilterText { get; set; }
