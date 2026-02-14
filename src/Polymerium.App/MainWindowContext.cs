@@ -586,7 +586,7 @@ public partial class MainWindowContext : ObservableObject
         }
 
         e
-           .StageStream.Subscribe(x =>
+           .StageStream.Subscribe(_ =>
             {
                 model.IsPending = true;
                 model.Progress = 0d;
@@ -808,7 +808,7 @@ public partial class MainWindowContext : ObservableObject
         var exceptionMessage = tracker.FailureReason?.Message ?? "Unknown error";
         if (tracker.FailureReason is AggregateException { InnerException: not null } ae)
         {
-            exceptionMessage = ae.InnerException.Message;
+            exceptionMessage = ae.InnerException?.Message ?? "Unknown error";
             if (ae.InnerException is ProcessFaultedException innerPfe)
             {
                 exitCode = innerPfe.ExitCode;

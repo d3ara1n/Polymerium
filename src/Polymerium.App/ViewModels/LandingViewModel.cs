@@ -30,7 +30,6 @@ public partial class LandingViewModel(
     InstanceService instanceService,
     OverlayService overlayService,
     NotificationService notificationService,
-    RepositoryAgent repositoryAgent,
     InstanceManager instanceManager) : ViewModelBase
 {
     #region Reactive
