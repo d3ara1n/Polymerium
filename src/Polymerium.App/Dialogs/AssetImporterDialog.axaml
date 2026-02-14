@@ -37,7 +37,9 @@
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
                                     <Grid RowDefinitions="Auto,*">
-                                        <DockPanel Grid.Row="0" Margin="12,8">
+                                        <DockPanel
+                                            Grid.Row="0"
+                                            Margin="12,8">
                                             <HyperlinkButton
                                                 Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
                                                 DockPanel.Dock="Right"
@@ -88,7 +90,9 @@
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
                             <StackPanel>
-                                <icons:PackIconLucide Height="{StaticResource LargeFontSize}" Kind="MessageSquareWarning" />
+                                <icons:PackIconLucide
+                                    Height="{StaticResource LargeFontSize}"
+                                    Kind="MessageSquareWarning" />
                                 <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}" />
                             </StackPanel>
                         </Border>
@@ -101,16 +105,24 @@
                         CornerRadius="{StaticResource MediumCornerRadius}">
                         <StackPanel Spacing="8">
                             <DockPanel>
-                                <CheckBox DockPanel.Dock="Right" IsChecked="{Binding Persist.IsInImportMode, Mode=TwoWay}">
+                                <CheckBox
+                                    DockPanel.Dock="Right"
+                                    IsChecked="{Binding Persist.IsInImportMode, Mode=TwoWay}">
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PortableLabelText}" />
                                 </CheckBox>
                                 <RadioButton IsChecked="{Binding $parent[local:AssetImporterDialog].IsAssetSelected, Mode=TwoWay}">
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
                                 </RadioButton>
                             </DockPanel>
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                <TextBlock VerticalAlignment="Bottom" Text="{x:Static lang:Resources.AssetImporterDialog_AssetTypeLabelText}" />
-                                <TabStrip ItemsSource="{Binding Persist.Kinds}" SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    VerticalAlignment="Bottom"
+                                    Text="{x:Static lang:Resources.AssetImporterDialog_AssetTypeLabelText}" />
+                                <TabStrip
+                                    ItemsSource="{Binding Persist.Kinds}"
+                                    SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
                                     <TabStrip.ItemTemplate>
                                         <DataTemplate DataType="resources:ResourceKind">
                                             <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
@@ -119,7 +131,9 @@
                                 </TabStrip>
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}" TextWrapping="Wrap" />
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}"
+                                    TextWrapping="Wrap" />
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetPrompt}"
@@ -139,11 +153,13 @@
             <husk:DropZone
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
+                IsEnabled="{Binding $parent[local:AssetImporterDialog].PathAccepted, Mode=OneWay, Converter={x:Static ObjectConverters.IsNull}}"
                 DragOver="DropZone_OnDragOver"
                 Drop="DropZone_OnDrop"
-                IsEnabled="{Binding $parent[local:AssetImporterDialog].PathAccepted, Mode=OneWay, Converter={x:Static ObjectConverters.IsNull}}"
                 Model="{Binding $parent[local:AssetImporterDialog].PathAccepted, Mode=OneWayToSource}">
-                <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[local:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
+                <husk:SwitchPresenter
+                    TargetType="x:Boolean"
+                    Value="{Binding $parent[local:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
                     <husk:SwitchCase Value="{x:True}">
                         <StackPanel
                             HorizontalAlignment="Center"
@@ -159,11 +175,13 @@
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
                         <StackPanel HorizontalAlignment="Center">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <fi:SymbolIcon
+                                    IsHitTestVisible="False"
                                     FontSize="14"
                                     IconVariant="Filled"
-                                    IsHitTestVisible="False"
                                     Symbol="Attach" />
                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
                                     <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
@@ -178,8 +196,8 @@
                             </StackPanel>
                             <TextBlock
                                 HorizontalAlignment="Center"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 IsHitTestVisible="False"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
                         </StackPanel>
                     </husk:SwitchCase>

@@ -19,8 +19,12 @@
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <husk:Toast.Resources>
-        <DataTemplate x:Key="ScrapTemplate" DataType="m:ScrapModel">
-            <TextBlock TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Message}">
+        <DataTemplate
+            x:Key="ScrapTemplate"
+            DataType="m:ScrapModel">
+            <TextBlock
+                TextTrimming="CharacterEllipsis"
+                ToolTip.Tip="{Binding Message}">
                 <Run
                     FontFamily="Cascadia Code, Consolas, monospace"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -32,8 +36,12 @@
                         CornerRadius="2">
                         <Border.IsVisible>
                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                <Binding Converter="{x:Static StringConverters.IsNotNullOrEmpty}" Path="Thread" />
-                                <Binding Converter="{x:Static StringConverters.IsNotNullOrEmpty}" Path="Sender" />
+                                <Binding
+                                    Converter="{x:Static StringConverters.IsNotNullOrEmpty}"
+                                    Path="Thread" />
+                                <Binding
+                                    Converter="{x:Static StringConverters.IsNotNullOrEmpty}"
+                                    Path="Sender" />
                             </MultiBinding>
                         </Border.IsVisible>
                         <TextBlock
@@ -54,11 +62,15 @@
     </husk:Toast.Resources>
     <Grid RowDefinitions="*,0,Auto">
         <Border Grid.Row="0">
-            <ScrollViewer x:Name="Viewer" Margin="0,72,0,0">
+            <ScrollViewer
+                x:Name="Viewer"
+                Margin="0,72,0,0">
                 <ItemsControl ItemsSource="{Binding $parent[local:InstanceDashboardToast].Bindable}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="m:ScrapModel">
-                            <husk:SwitchPresenter TargetType="launching:ScrapLevel" Value="{Binding Level}">
+                            <husk:SwitchPresenter
+                                TargetType="launching:ScrapLevel"
+                                Value="{Binding Level}">
                                 <!--  Information 级别  -->
                                 <husk:SwitchCase Value="Information">
                                     <Border
@@ -66,7 +78,9 @@
                                         Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                         BorderBrush="{StaticResource ControlBorderBrush}"
                                         BorderThickness="3,0,0,0">
-                                        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ScrapTemplate}" />
+                                        <ContentControl
+                                            Content="{Binding}"
+                                            ContentTemplate="{StaticResource ScrapTemplate}" />
                                     </Border>
                                 </husk:SwitchCase>
                                 <!--  Warning 级别  -->
@@ -76,7 +90,9 @@
                                         Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
                                         BorderBrush="{StaticResource ControlWarningBorderBrush}"
                                         BorderThickness="3,0,0,0">
-                                        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ScrapTemplate}" />
+                                        <ContentControl
+                                            Content="{Binding}"
+                                            ContentTemplate="{StaticResource ScrapTemplate}" />
                                     </Border>
                                 </husk:SwitchCase>
                                 <!--  Error 级别  -->
@@ -86,7 +102,9 @@
                                         Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
                                         BorderBrush="{StaticResource ControlDangerBorderBrush}"
                                         BorderThickness="3,0,0,0">
-                                        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ScrapTemplate}" />
+                                        <ContentControl
+                                            Content="{Binding}"
+                                            ContentTemplate="{StaticResource ScrapTemplate}" />
                                     </Border>
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
@@ -123,25 +141,29 @@
                 </TextBox.InnerLeftContent>
                 <TextBox.InnerRightContent>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,8,0" VerticalAlignment="Center">
+                        <TextBlock
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center">
                             <Run Text="{Binding $parent[local:InstanceDashboardToast].Bindable.Count, Mode=OneWay, FallbackValue=0}" />
                             <Run Text="/" />
                             <Run Text="{Binding Source={x:Static services:ScrapService.CAPACITY}}" />
                         </TextBlock>
                         <Button
+                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding $parent[TextBox].Clear}"
                             Content="{fie:SymbolIcon Symbol=Dismiss,
                                                      FontSize={StaticResource MediumFontSize}}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
                 </TextBox.InnerRightContent>
             </TextBox>
             <ToggleButton
-                Grid.Column="4"
                 Classes="Small"
+                Grid.Column="4"
                 IsChecked="{Binding $parent[local:InstanceDashboardToast].IsAutoScroll, Mode=TwoWay}">
-                <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="TextBoxAlignBottom" />
+                <fi:SymbolIcon
+                    FontSize="{StaticResource LargeFontSize}"
+                    Symbol="TextBoxAlignBottom" />
             </ToggleButton>
         </Grid>
     </Grid>

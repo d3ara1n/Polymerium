@@ -24,7 +24,9 @@
     <local:WidgetBase.SlimTemplate>
         <DataTemplate x:DataType="local:NoteWidget">
             <ScrollViewer>
-                <TextBlock Text="{Binding NoteText}" TextWrapping="Wrap" />
+                <TextBlock
+                    Text="{Binding NoteText}"
+                    TextWrapping="Wrap" />
             </ScrollViewer>
         </DataTemplate>
     </local:WidgetBase.SlimTemplate>

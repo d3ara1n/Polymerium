@@ -2,11 +2,15 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Polymerium.App.Controls">
-    <ControlTheme x:Key="{x:Type local:AccountCreationStep}" TargetType="local:AccountCreationStep">
+    <ControlTheme
+        x:Key="{x:Type local:AccountCreationStep}"
+        TargetType="local:AccountCreationStep">
         <Setter Property="Template">
             <ControlTemplate>
                 <DockPanel VerticalSpacing="12">
-                    <ContentPresenter Content="{TemplateBinding Header}" DockPanel.Dock="Top">
+                    <ContentPresenter
+                        Content="{TemplateBinding Header}"
+                        DockPanel.Dock="Top">
                         <ContentPresenter.Styles>
                             <Style Selector="ContentPresenter &gt; TextBlock">
                                 <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />

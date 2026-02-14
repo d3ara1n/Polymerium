@@ -33,7 +33,9 @@
                 Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
         </StackPanel>
         <ScrollViewer Margin="-18,0">
-            <ItemsControl Margin="18,0" ItemsSource="{Binding $parent[dialogs:PackageBulkUpdaterDialog].Result}">
+            <ItemsControl
+                Margin="18,0"
+                ItemsSource="{Binding $parent[dialogs:PackageBulkUpdaterDialog].Result}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="models:PackageUpdaterModel">
                         <Border
@@ -42,7 +44,9 @@
                             Background="{StaticResource OverlaySolidBackgroundBrush}"
                             BoxShadow="0 0 4 0 #3F000000"
                             CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="12">
                                 <Border
                                     Grid.Column="0"
                                     Width="{Binding $self.Bounds.Height}"
@@ -78,7 +82,9 @@
                                         TextTrimming="CharacterEllipsis"
                                         ToolTip.Tip="{Binding OldVersionTimeRaw}" />
                                 </StackPanel>
-                                <Grid Grid.Column="2" RowDefinitions="*,*">
+                                <Grid
+                                    Grid.Column="2"
+                                    RowDefinitions="*,*">
                                     <CheckBox
                                         Grid.Row="0"
                                         HorizontalAlignment="Right"

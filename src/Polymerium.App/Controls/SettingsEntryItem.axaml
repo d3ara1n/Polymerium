@@ -2,7 +2,9 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Controls">
-    <ControlTheme x:Key="{x:Type local:SettingsEntryItem}" TargetType="local:SettingsEntryItem">
+    <ControlTheme
+        x:Key="{x:Type local:SettingsEntryItem}"
+        TargetType="local:SettingsEntryItem">
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>

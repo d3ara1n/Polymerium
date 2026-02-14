@@ -23,7 +23,9 @@
                     FontSize="24"
                     Text="👶" />
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Stewie" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="Stewie" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="A baby"
@@ -39,7 +41,9 @@
                     FontSize="24"
                     Text="🐶" />
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Brian" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="Brian" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="A dog"
@@ -55,7 +59,9 @@
                     FontSize="24"
                     Text="👦" />
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Chris" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="Chris" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="A boy"
@@ -71,7 +77,9 @@
                     FontSize="24"
                     Text="👨" />
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Peter" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="Peter" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="A retard"
@@ -87,7 +95,9 @@
                     FontSize="24"
                     Text="👩" />
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Lois" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="Lois" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="A lady"

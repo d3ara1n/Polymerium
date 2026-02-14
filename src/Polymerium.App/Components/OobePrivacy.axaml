@@ -17,7 +17,9 @@
         VerticalAlignment="Center"
         Spacing="16">
         <!--  Header  -->
-        <StackPanel HorizontalAlignment="Center" Spacing="8">
+        <StackPanel
+            HorizontalAlignment="Center"
+            Spacing="8">
             <Border
                 Width="64"
                 Height="64"
@@ -55,15 +57,23 @@
                     FontSize="20"
                     Foreground="{StaticResource AccentFillColorDefaultBrush}"
                     Symbol="Info" />
-                <StackPanel Grid.Column="2" Spacing="4">
-                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectTitle}" />
+                <StackPanel
+                    Grid.Column="2"
+                    Spacing="4">
+                    <TextBlock
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectTitle}" />
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         TextWrapping="Wrap">
                         <Run Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectDescription}" />
-                        <HyperlinkButton FontSize="{StaticResource SmallFontSize}" NavigateUri="https://sentry.io/privacy">
-                            <husk:IconLabel Icon="Open" Text="Sentry.io Privacy Policy" />
+                        <HyperlinkButton
+                            FontSize="{StaticResource SmallFontSize}"
+                            NavigateUri="https://sentry.io/privacy">
+                            <husk:IconLabel
+                                Icon="Open"
+                                Text="Sentry.io Privacy Policy" />
                         </HyperlinkButton>
                     </TextBlock>
                 </StackPanel>
@@ -76,7 +86,9 @@
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
             <StackPanel Spacing="12">
-                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.OobePrivacy_OurPromiseTitle}" />
+                <TextBlock
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="{x:Static lang:Resources.OobePrivacy_OurPromiseTitle}" />
                 <StackPanel Spacing="8">
                     <!--  Promise 1: No Personal Data  -->
                     <Grid ColumnDefinitions="Auto,8,*">
@@ -86,7 +98,9 @@
                             FontSize="16"
                             Foreground="{StaticResource SuccessForegroundBrush}"
                             Symbol="LockClosed" />
-                        <StackPanel Grid.Column="2" Spacing="2">
+                        <StackPanel
+                            Grid.Column="2"
+                            Spacing="2">
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -106,7 +120,9 @@
                             FontSize="16"
                             Foreground="{StaticResource SuccessForegroundBrush}"
                             Symbol="Database" />
-                        <StackPanel Grid.Column="2" Spacing="2">
+                        <StackPanel
+                            Grid.Column="2"
+                            Spacing="2">
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -126,7 +142,9 @@
                             FontSize="16"
                             Foreground="{StaticResource SuccessForegroundBrush}"
                             Symbol="Code" />
-                        <StackPanel Grid.Column="2" Spacing="2">
+                        <StackPanel
+                            Grid.Column="2"
+                            Spacing="2">
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"

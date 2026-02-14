@@ -11,7 +11,9 @@
     Title="{x:Static lang:Resources.LoaderPickerDialog_Title}"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
-    <TabStrip ItemsSource="{Binding $parent[local:LoaderPickerDialog].Candidates}" SelectedItem="{Binding $parent[local:LoaderPickerDialog].Result, Mode=TwoWay}">
+    <TabStrip
+        ItemsSource="{Binding $parent[local:LoaderPickerDialog].Candidates}"
+        SelectedItem="{Binding $parent[local:LoaderPickerDialog].Result, Mode=TwoWay}">
         <TabStrip.ItemTemplate>
             <DataTemplate DataType="m:LoaderCandidateModel">
                 <StackPanel>

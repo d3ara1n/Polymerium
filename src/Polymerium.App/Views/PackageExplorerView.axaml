@@ -23,11 +23,17 @@
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <controls:ScopedPage.Resources>
-        <DataTemplate x:Key="ExhibitModelTemplate" x:DataType="m:ExhibitModel">
-            <controls:ExhibitPendingPackageButton Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}" />
+        <DataTemplate
+            x:Key="ExhibitModelTemplate"
+            x:DataType="m:ExhibitModel">
+            <controls:ExhibitPendingPackageButton
+                Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}" />
         </DataTemplate>
     </controls:ScopedPage.Resources>
-    <Grid ColumnDefinitions="Auto,Auto,*" RowDefinitions="Auto,Auto,*">
+    <Grid
+        ColumnDefinitions="Auto,Auto,*"
+        RowDefinitions="Auto,Auto,*">
         <Grid
             Grid.Row="0"
             Grid.RowSpan="3"
@@ -40,15 +46,25 @@
                 Padding="12,6"
                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                 CornerRadius="{StaticResource MediumCornerRadius}">
-                <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="Drawer" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.PackageExplorerView_PendingLabelText}" />
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource LargeFontSize}"
+                        Symbol="Drawer" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.PackageExplorerView_PendingLabelText}" />
                 </StackPanel>
             </Border>
-            <ScrollViewer Grid.Row="1" Padding="12,0">
+            <ScrollViewer
+                Grid.Row="1"
+                Padding="12,0">
                 <StackPanel Spacing="8">
                     <husk:Divider>
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_AddLabelText}" />
                         </StackPanel>
                     </husk:Divider>
@@ -71,7 +87,9 @@
                         </ItemsControl>
                     </Panel>
                     <husk:Divider>
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_ModifyLabelText}" />
                         </StackPanel>
                     </husk:Divider>
@@ -94,7 +112,9 @@
                         </ItemsControl>
                     </Panel>
                     <husk:Divider>
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_RemoveLabelText}" />
                         </StackPanel>
                     </husk:Divider>
@@ -123,19 +143,29 @@
                 Margin="12"
                 Spacing="10">
                 <Button
-                    Padding="12,6"
                     Classes="Primary"
+                    Padding="12,6"
                     Command="{Binding CollectPendingCommand}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="AddingPackagesView.Count" />
-                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="ModifyingPackagesView.Count" />
-                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="RemovingPackagesView.Count" />
+                            <Binding
+                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
+                                Path="AddingPackagesView.Count" />
+                            <Binding
+                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
+                                Path="ModifyingPackagesView.Count" />
+                            <Binding
+                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
+                                Path="RemovingPackagesView.Count" />
                         </MultiBinding>
                     </Button.IsEnabled>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="BoxMultipleArrowLeft" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource LargeFontSize}"
+                            Symbol="BoxMultipleArrowLeft" />
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_CollectButtonText}" />
                     </StackPanel>
                 </Button>
@@ -145,13 +175,23 @@
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="AddingPackagesView.Count" />
-                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="ModifyingPackagesView.Count" />
-                            <Binding Converter="{x:Static husk:NumberConverters.IsNonZero}" Path="RemovingPackagesView.Count" />
+                            <Binding
+                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
+                                Path="AddingPackagesView.Count" />
+                            <Binding
+                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
+                                Path="ModifyingPackagesView.Count" />
+                            <Binding
+                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
+                                Path="RemovingPackagesView.Count" />
                         </MultiBinding>
                     </Button.IsEnabled>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <fi:SymbolIcon FontSize="{StaticResource LargeFontSize}" Symbol="DrawerDismiss" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource LargeFontSize}"
+                            Symbol="DrawerDismiss" />
                         <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_DismissButtonText}" />
                     </StackPanel>
                 </Button>
@@ -177,13 +217,19 @@
                 </Image.Effect>
             </Image>
             <Panel x:Name="ContentPanel">
-                <StackPanel Margin="12" Spacing="12">
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                <StackPanel
+                    Margin="12"
+                    Spacing="12">
+                    <Grid
+                        ColumnDefinitions="Auto,*,Auto"
+                        ColumnSpacing="12">
                         <Button
                             Grid.Column="0"
                             Command="{Binding $parent[husk:Frame].GoBackCommand}"
                             Theme="{StaticResource OutlineButtonTheme}">
-                            <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowLeft" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="ArrowLeft" />
                         </Button>
                         <TextBlock
                             Grid.Column="1"
@@ -191,7 +237,9 @@
                             Text="{Binding Basic.Name, FallbackValue=Name}"
                             TextTrimming="CharacterEllipsis" />
                     </Grid>
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        ColumnSpacing="8">
                         <TextBox
                             Grid.Column="0"
                             Text="{Binding QueryText}"
@@ -199,28 +247,38 @@
                             <TextBox.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
                                     <Button
+                                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                         Command="{Binding $parent[TextBox].Clear}"
                                         Content="{fie:SymbolIcon Symbol=Dismiss,
                                                                  FontSize={StaticResource MediumFontSize}}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     <husk:Divider Orientation="Vertical" />
-                                    <CheckBox Margin="6,0" IsChecked="{Binding IsFilterEnabled, Mode=TwoWay}">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
-                                            <husk:Tag Content="{Binding Basic.LoaderLabel, FallbackValue=Type}" FontSize="{StaticResource MediumFontSize}" />
-                                            <husk:Tag Content="{Binding Basic.Version, FallbackValue=Version}" FontSize="{StaticResource MediumFontSize}" />
+                                    <CheckBox
+                                        Margin="6,0"
+                                        IsChecked="{Binding IsFilterEnabled, Mode=TwoWay}">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4">
+                                            <husk:Tag
+                                                Content="{Binding Basic.LoaderLabel, FallbackValue=Type}"
+                                                FontSize="{StaticResource MediumFontSize}" />
+                                            <husk:Tag
+                                                Content="{Binding Basic.Version, FallbackValue=Version}"
+                                                FontSize="{StaticResource MediumFontSize}" />
                                         </StackPanel>
                                     </CheckBox>
                                 </StackPanel>
                             </TextBox.InnerRightContent>
                         </TextBox>
                         <Button
-                            Grid.Column="1"
                             Classes="Primary"
+                            Grid.Column="1"
                             Command="{Binding SearchCommand}"
                             IsDefault="True"
                             Theme="{StaticResource OutlineButtonTheme}">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
                                 <husk:SwitchPresenter
                                     Width="{StaticResource MediumFontSize}"
                                     Height="{StaticResource MediumFontSize}"
@@ -238,7 +296,9 @@
                                         <icons:PackIconLucide Kind="Search" />
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
-                                <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.PackageExplorerView_SearchButtonText}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.PackageExplorerView_SearchButtonText}" />
                             </StackPanel>
                         </Button>
                     </Grid>
@@ -281,9 +341,15 @@
                 </TabStrip>
             </Panel>
         </Panel>
-        <husk:Divider Grid.Row="1" Grid.Column="2" />
-        <Panel Grid.Row="2" Grid.Column="2">
-            <StackPanel VerticalAlignment="Center" Spacing="8">
+        <husk:Divider
+            Grid.Row="1"
+            Grid.Column="2" />
+        <Panel
+            Grid.Row="2"
+            Grid.Column="2">
+            <StackPanel
+                VerticalAlignment="Center"
+                Spacing="8">
                 <StackPanel.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                         <Binding
@@ -310,26 +376,36 @@
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
             </StackPanel>
-            <husk:InfiniteScrollView Padding="12" ItemsSource="{Binding Exhibits}">
+            <husk:InfiniteScrollView
+                Padding="12"
+                ItemsSource="{Binding Exhibits}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" />
+                        <husk:FlexWrapPanel
+                            ColumnSpacing="8"
+                            RowSpacing="8" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <husk:InfiniteScrollView.PendingContent>
-                    <StackPanel Margin="36" Spacing="6">
+                    <StackPanel
+                        Margin="36"
+                        Spacing="6">
                         <husk:ProgressRing
                             Width="20"
                             Height="20"
                             HorizontalAlignment="Center"
                             IsIndeterminate="{Binding Exhibits.IsFetching, Mode=OneWay, FallbackValue=False}"
                             ShowProgressText="False" />
-                        <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Resources.Shared_FetchingLabelText}" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="{x:Static lang:Resources.Shared_FetchingLabelText}" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
-                        <controls:ExhibitPackageButton Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}" />
+                        <controls:ExhibitPackageButton
+                            Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding}" />
                     </DataTemplate>
                 </husk:InfiniteScrollView.ItemTemplate>
                 <husk:InfiniteScrollView.ItemContainerTheme>

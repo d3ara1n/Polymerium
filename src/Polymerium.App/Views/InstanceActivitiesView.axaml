@@ -16,12 +16,16 @@
     x:DataType="vm:InstanceActivitiesViewModel"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <Grid RowDefinitions="256,*" RowSpacing="8">
+    <Grid
+        RowDefinitions="256,*"
+        RowSpacing="8">
         <Grid
             Grid.Row="0"
             ColumnDefinitions="212,*"
             ColumnSpacing="8">
-            <Grid Grid.Column="0" RowDefinitions="48,*,Auto">
+            <Grid
+                Grid.Column="0"
+                RowDefinitions="48,*,Auto">
                 <Border
                     Grid.Row="1"
                     Grid.RowSpan="2"
@@ -37,7 +41,9 @@
                     BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
                     BorderThickness="2,2,2,6"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                    <StackPanel VerticalAlignment="Center" Spacing="8">
+                    <StackPanel
+                        VerticalAlignment="Center"
+                        Spacing="8">
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -101,9 +107,13 @@
                 BorderBrush="{StaticResource ControlBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource MediumCornerRadius}">
-                <TabControl Padding="0" Theme="{StaticResource SolidTabControlTheme}">
+                <TabControl
+                    Padding="0"
+                    Theme="{StaticResource SolidTabControlTheme}">
                     <TabControl.ItemContainerTheme>
-                        <ControlTheme BasedOn="{StaticResource SolidTabItemTheme}" TargetType="TabItem">
+                        <ControlTheme
+                            BasedOn="{StaticResource SolidTabItemTheme}"
+                            TargetType="TabItem">
                             <Setter Property="Margin" Value="0" />
                             <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
                         </ControlTheme>
@@ -120,13 +130,17 @@
                     <!--  Tab 1: Playtime - 近7天柱状图  -->
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
                                 <iconPacks:PackIconLucide
                                     Width="{StaticResource MediumFontSize}"
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="Clock" />
-                                <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimeTabText}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimeTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <lvc:CartesianChart
@@ -139,13 +153,17 @@
                     <!--  Tab 2: Health - 健康度统计  -->
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
                                 <iconPacks:PackIconLucide
                                     Width="{StaticResource MediumFontSize}"
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="HeartPulse" />
-                                <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.InstanceActivitiesView_HealthTabText}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.InstanceActivitiesView_HealthTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -163,7 +181,9 @@
                                     Padding="16"
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="16">
                                         <Border
                                             Grid.Column="0"
                                             Padding="12"
@@ -175,9 +195,15 @@
                                                 Foreground="{StaticResource FlyoutBackgroundBrush}"
                                                 Kind="ShieldCheck" />
                                         </Border>
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_SuccessRateLabelText}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_SuccessRateLabelText}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource ExtraLargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -199,7 +225,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -207,8 +235,12 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Play" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_SessionCountLabelText}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_SessionCountLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -223,7 +255,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -231,8 +265,12 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Bug" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_CrashCountLabelText}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_CrashCountLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -247,13 +285,17 @@
                     <!--  Tab 3: Statistics - 统计数据  -->
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
                                 <iconPacks:PackIconLucide
                                     Width="{StaticResource MediumFontSize}"
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="List" />
-                                <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.InstanceActivitiesView_StatisticsTabText}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.InstanceActivitiesView_StatisticsTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -270,7 +312,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -278,9 +322,15 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Timer" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_AverageSessionLabelText}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_AverageSessionLabelText}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -300,7 +350,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -308,9 +360,15 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Trophy" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_LongestSessionLabelText}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_LongestSessionLabelText}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -330,7 +388,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -338,8 +398,12 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Calendar" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_FirstPlayedLabelText}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_FirstPlayedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -354,7 +418,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -362,8 +428,12 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="CalendarCheck" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_LastPlayedLabelText}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_LastPlayedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -378,13 +448,17 @@
                     <!--  Tab 4: Trends - 趋势分析  -->
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
                                 <iconPacks:PackIconLucide
                                     Width="{StaticResource MediumFontSize}"
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="TrendingUp" />
-                                <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.InstanceActivitiesView_TrendsTabText}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.InstanceActivitiesView_TrendsTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -402,7 +476,9 @@
                                     Padding="16"
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="16">
                                         <Border
                                             Grid.Column="0"
                                             Padding="12"
@@ -414,9 +490,15 @@
                                                 Foreground="{StaticResource FlyoutBackgroundBrush}"
                                                 Kind="ChartPie" />
                                         </Border>
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimePercentageLabelText}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimePercentageLabelText}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource ExtraLargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -438,7 +520,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -446,9 +530,15 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Calendar" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_ThisWeekLabelText}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_ThisWeekLabelText}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -468,7 +558,9 @@
                                     Padding="16,12"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12">
                                         <iconPacks:PackIconLucide
                                             Grid.Column="0"
                                             Width="20"
@@ -476,9 +568,15 @@
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="History" />
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.InstanceActivitiesView_LastWeekLabelText}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstanceActivitiesView_LastWeekLabelText}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -501,7 +599,9 @@
             Grid.Row="1"
             ColumnDefinitions="*"
             ColumnSpacing="8">
-            <husk:Card Grid.Column="0" Padding="0">
+            <husk:Card
+                Grid.Column="0"
+                Padding="0">
                 <DockPanel>
                     <Grid
                         Margin="{Binding Source={StaticResource CardContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutBottom}}"
@@ -544,7 +644,9 @@
                                             Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                                     </StackPanel>
                                     <ScrollViewer>
-                                        <ItemsControl Margin="{StaticResource CardContentMargin}" ItemsSource="{Binding}">
+                                        <ItemsControl
+                                            Margin="{StaticResource CardContentMargin}"
+                                            ItemsSource="{Binding}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel Spacing="6" />

@@ -24,14 +24,18 @@
     <StackPanel Spacing="24">
 
         <!--  Header Section  -->
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+        <Grid
+            ColumnDefinitions="Auto,*,Auto"
+            ColumnSpacing="12">
             <Image
                 Grid.Column="0"
                 Width="48"
                 Height="48"
                 Opacity="0.9"
                 Source="/Assets/Icons/Chipmunk.png" />
-            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center">
                 <TextBlock
                     FontSize="{StaticResource ExtraLargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -43,13 +47,17 @@
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.LandingView_Subtitle}" />
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.LandingView_Subtitle}" />
             </StackPanel>
             <Grid
                 Grid.Column="2"
                 ColumnDefinitions="*,*"
                 ColumnSpacing="12">
-                <husk:Card Grid.Column="0" Padding="12,8">
+                <husk:Card
+                    Grid.Column="0"
+                    Padding="12,8">
                     <Grid
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="12"
@@ -76,7 +84,9 @@
                             Text="{x:Static lang:Resources.LandingView_OverviewInstancesLabelText}" />
                     </Grid>
                 </husk:Card>
-                <husk:Card Grid.Column="1" Padding="12,8">
+                <husk:Card
+                    Grid.Column="1"
+                    Padding="12,8">
                     <Grid
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="12"
@@ -143,12 +153,16 @@
                                                 <ImageBrush Source="{Binding Thumbnail}" />
                                             </Border.Background>
                                         </Border>
-                                        <StackPanel Grid.Column="1" Spacing="2">
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Spacing="2">
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 Text="{Binding Name}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="8">
                                                 <husk:Tag Content="{Binding Version}" />
                                                 <husk:Tag Content="{Binding LoaderLabel}" />
                                             </StackPanel>
@@ -165,32 +179,38 @@
                                     RowDefinitions="*,Auto"
                                     RowSpacing="12">
                                     <Button
+                                        Classes="Primary"
                                         Grid.Row="0"
                                         Padding="12,8"
-                                        Classes="Primary"
                                         Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
                                         CommandParameter="{Binding Key}">
-                                        <husk:IconLabel Icon="Play" Text="{x:Static lang:Resources.LandingView_RecentPlayButtonText}" />
+                                        <husk:IconLabel
+                                            Icon="Play"
+                                            Text="{x:Static lang:Resources.LandingView_RecentPlayButtonText}" />
                                     </Button>
                                     <Grid
                                         Grid.Row="1"
                                         ColumnDefinitions="*,*"
                                         ColumnSpacing="8">
                                         <Button
-                                            Grid.Column="0"
                                             Classes="Small"
+                                            Grid.Column="0"
                                             Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
-                                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Open" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="Open" />
                                         </Button>
                                         <Button
-                                            Grid.Column="1"
                                             Classes="Small"
+                                            Grid.Column="1"
                                             Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).OpenInstanceFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
-                                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="FolderOpen" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="FolderOpen" />
                                         </Button>
                                     </Grid>
                                 </Grid>
@@ -199,7 +219,9 @@
                     </DataTemplate>
                 </husk:PlaceholderPresenter.SourceTemplate>
                 <husk:PlaceholderPresenter.Placeholder>
-                    <husk:Card MinHeight="120" CornerRadius="{StaticResource MediumCornerRadius}">
+                    <husk:Card
+                        MinHeight="120"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
                         <StackPanel
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -231,9 +253,13 @@
                         Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).GotoMarketplaceCommand, FallbackValue={x:Null}}"
                         DockPanel.Dock="Right"
                         Theme="{StaticResource OutlineButtonTheme}">
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
                             <TextBlock Text="{x:Static lang:Resources.LandingView_MoreButtonText}" />
-                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ChevronRight" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource SmallFontSize}"
+                                Symbol="ChevronRight" />
                         </StackPanel>
                     </Button>
                     <TextBlock
@@ -271,10 +297,14 @@
                                                     CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}"
                                                     DockPanel.Dock="Top">
                                                     <Border.Background>
-                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                                        <ImageBrush
+                                                            async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                                            Stretch="UniformToFill" />
                                                     </Border.Background>
                                                 </Border>
-                                                <StackPanel Margin="8" Spacing="2">
+                                                <StackPanel
+                                                    Margin="8"
+                                                    Spacing="2">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                                         MaxLines="1"
@@ -305,11 +335,13 @@
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.LandingView_FeaturedModpacksErrorText}" />
                                 <Button
-                                    HorizontalAlignment="Center"
                                     Classes="Small"
+                                    HorizontalAlignment="Center"
                                     Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).RefreshFeaturedModpacksCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
-                                    <husk:IconLabel Icon="ArrowClockwise" Text="{x:Static lang:Resources.LandingView_RetryButtonText}" />
+                                    <husk:IconLabel
+                                        Icon="ArrowClockwise"
+                                        Text="{x:Static lang:Resources.LandingView_RetryButtonText}" />
                                 </Button>
                             </StackPanel>
                         </husk:Card>
@@ -318,7 +350,9 @@
             </DockPanel>
 
             <!--  Random Play  -->
-            <husk:Card Grid.Row="0" Grid.Column="1">
+            <husk:Card
+                Grid.Row="0"
+                Grid.Column="1">
                 <Grid
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="12"
@@ -329,24 +363,34 @@
                         Grid.Column="0"
                         FontSize="24"
                         Text="🤔" />
-                    <StackPanel Grid.Row="0" Grid.Column="1">
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.LandingView_RandomPlayTitle}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.LandingView_RandomPlaySubtitle}" />
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="1">
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.LandingView_RandomPlayTitle}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.LandingView_RandomPlaySubtitle}" />
                     </StackPanel>
                     <Button
+                        Classes="Small"
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Classes="Small"
                         Command="{Binding TryOneCommand}"
                         Theme="{StaticResource OutlineButtonTheme}">
-                        <husk:IconLabel Icon="HandWave" Text="{x:Static lang:Resources.LandingView_RandomPlayButtonText}" />
+                        <husk:IconLabel
+                            Icon="HandWave"
+                            Text="{x:Static lang:Resources.LandingView_RandomPlayButtonText}" />
                     </Button>
                 </Grid>
             </husk:Card>
 
             <!--  Statistics  -->
-            <husk:Card Grid.Row="1" Grid.Column="1">
+            <husk:Card
+                Grid.Row="1"
+                Grid.Column="1">
                 <StackPanel Spacing="8">
                     <!--  Total Play Time  -->
                     <StackPanel Spacing="6">
@@ -360,11 +404,17 @@
                             Text="{Binding TotalPlayHours, StringFormat={}{0:0.0} hrs, FallbackValue=45.3 hrs}" />
                     </StackPanel>
 
-                    <husk:Divider Height="1" Orientation="Horizontal" />
+                    <husk:Divider
+                        Height="1"
+                        Orientation="Horizontal" />
 
                     <!--  Sessions  -->
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                        <StackPanel Grid.Column="0" Spacing="4">
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="12">
+                        <StackPanel
+                            Grid.Column="0"
+                            Spacing="4">
                             <TextBlock
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -375,7 +425,9 @@
                                 Text="{Binding TotalSessions, FallbackValue=12}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Spacing="4">
+                        <StackPanel
+                            Grid.Column="1"
+                            Spacing="4">
                             <TextBlock
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -423,13 +475,17 @@
         <!-- </WrapPanel> -->
 
         <!--  News Section  -->
-        <DockPanel MinHeight="24" VerticalSpacing="8">
+        <DockPanel
+            MinHeight="24"
+            VerticalSpacing="8">
             <TextBlock
                 DockPanel.Dock="Top"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
                 Text="{x:Static lang:Resources.LandingView_RecentReleasesLabelText}" />
-            <husk:LazyContainer MinHeight="220" Source="{Binding MinecraftNews}">
+            <husk:LazyContainer
+                MinHeight="220"
+                Source="{Binding MinecraftNews}">
                 <husk:LazyContainer.SourceTemplate>
                     <DataTemplate DataType="collections:IList">
                         <ItemsControl ItemsSource="{Binding}">
@@ -441,23 +497,35 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="m:MinecraftReleasePatchModel">
                                     <husk:Card>
-                                        <Grid RowDefinitions="Auto,*" RowSpacing="12">
-                                            <husk:ConstrainedBox Grid.Row="0" AspectRatio="117:50">
+                                        <Grid
+                                            RowDefinitions="Auto,*"
+                                            RowSpacing="12">
+                                            <husk:ConstrainedBox
+                                                Grid.Row="0"
+                                                AspectRatio="117:50">
                                                 <Border CornerRadius="{StaticResource MediumCornerRadius}">
                                                     <Border.Background>
-                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Cover}" Stretch="UniformToFill" />
+                                                        <ImageBrush
+                                                            async:ImageBrushLoader.Source="{Binding Cover}"
+                                                            Stretch="UniformToFill" />
                                                     </Border.Background>
                                                 </Border>
                                             </husk:ConstrainedBox>
-                                            <StackPanel Grid.Row="1" Spacing="4">
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                Spacing="4">
                                                 <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                                     Text="{Binding Title}"
                                                     TextWrapping="Wrap" />
-                                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+                                                <TextBlock
+                                                    Text="{Binding Description}"
+                                                    TextWrapping="Wrap" />
                                                 <DockPanel HorizontalSpacing="8">
-                                                    <husk:Tag Classes="Small" DockPanel.Dock="Right">
+                                                    <husk:Tag
+                                                        Classes="Small"
+                                                        DockPanel.Dock="Right">
                                                         <TextBlock Text="{Binding Category}" />
                                                     </husk:Tag>
                                                     <husk:IconLabel
@@ -485,11 +553,13 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.LandingView_MinecraftNewsErrorText}" />
                             <Button
-                                HorizontalAlignment="Center"
                                 Classes="Small"
+                                HorizontalAlignment="Center"
                                 Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).RefreshMinecraftNewsCommand}"
                                 Theme="{StaticResource OutlineButtonTheme}">
-                                <husk:IconLabel Icon="ArrowClockwise" Text="{x:Static lang:Resources.LandingView_RetryButtonText}" />
+                                <husk:IconLabel
+                                    Icon="ArrowClockwise"
+                                    Text="{x:Static lang:Resources.LandingView_RetryButtonText}" />
                             </Button>
                         </StackPanel>
                     </husk:Card>

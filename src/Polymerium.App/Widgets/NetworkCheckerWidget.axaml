@@ -18,19 +18,21 @@
             <DockPanel VerticalSpacing="12">
                 <!--  操作按钮  -->
                 <Button
-                    HorizontalAlignment="Left"
                     Classes="Primary Small"
+                    HorizontalAlignment="Left"
+                    IsEnabled="{Binding !IsTesting}"
                     Command="{Binding PerformCommand}"
-                    DockPanel.Dock="Top"
-                    IsEnabled="{Binding !IsTesting}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
+                    DockPanel.Dock="Top">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
                         <TextBlock Text="{Binding ButtonText}" />
                         <husk:ProgressRing
                             Width="16"
                             Height="16"
+                            IsVisible="{Binding IsTesting}"
                             Background="{StaticResource ControlForegroundBrush}"
-                            IsIndeterminate="True"
-                            IsVisible="{Binding IsTesting}" />
+                            IsIndeterminate="True" />
                     </StackPanel>
                 </Button>
 
@@ -66,10 +68,14 @@
                                         </ProgressBar>
 
                                         <!--  内容区域  -->
-                                        <Border Margin="8,4" CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                        <Border
+                                            Margin="8,4"
+                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                                             <Grid ColumnDefinitions="*,Auto">
                                                 <!--  网站名称  -->
-                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <StackPanel
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding Display}" />
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
@@ -85,29 +91,29 @@
                                                     <!--  延迟显示  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{Binding Latency, StringFormat={}{0:F0}ms}" />
 
                                                     <!--  错误消息  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                         IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}"
+                                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                         Text="{Binding ErrorMessage}" />
 
                                                     <!--  等待中  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="Waiting..." />
 
                                                     <!--  测试中  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         IsVisible="{Binding IsTesting}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="Testing..." />
                                                 </StackPanel>
                                             </Grid>
@@ -125,7 +131,9 @@
     <!--  Slim 模板：紧凑视图  -->
     <local:WidgetBase.SlimTemplate>
         <DataTemplate DataType="local:NetworkCheckerWidget">
-            <Grid RowDefinitions="*,Auto" RowSpacing="8">
+            <Grid
+                RowDefinitions="*,Auto"
+                RowSpacing="8">
                 <!--  简化的测试结果  -->
                 <ScrollViewer Grid.Row="0">
                     <ItemsControl ItemsSource="{Binding Sites}">
@@ -136,7 +144,9 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="m:ConnectionTestSiteModel">
-                                <Grid Margin="4,2" ColumnDefinitions="*,Auto">
+                                <Grid
+                                    Margin="4,2"
+                                    ColumnDefinitions="*,Auto">
                                     <TextBlock
                                         Grid.Column="0"
                                         VerticalAlignment="Center"
@@ -150,25 +160,25 @@
                                         <!--  成功状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}"
                                             Text="{Binding Latency, StringFormat={}{0:F0}ms}" />
 
                                         <!--  失败状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}"
                                             Text="✗" />
 
                                         <!--  等待状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}"
                                             Text="—" />
                                     </StackPanel>
                                 </Grid>
@@ -179,11 +189,11 @@
 
                 <!--  操作按钮  -->
                 <Button
+                    Classes="Small"
                     Grid.Row="1"
                     HorizontalAlignment="Stretch"
-                    Classes="Small"
-                    Command="{Binding PerformCommand}"
-                    IsEnabled="{Binding !IsTesting}">
+                    IsEnabled="{Binding !IsTesting}"
+                    Command="{Binding PerformCommand}">
                     <TextBlock Text="{Binding ButtonText}" />
                 </Button>
             </Grid>

@@ -29,7 +29,9 @@
                     Text="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterTitle}"
                     TextAlignment="Center">
                     <TextBlock.Effect>
-                        <DropShadowEffect BlurRadius="6" Opacity="0.1" />
+                        <DropShadowEffect
+                            BlurRadius="6"
+                            Opacity="0.1" />
                     </TextBlock.Effect>
                     <TextBlock.Foreground>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
@@ -50,8 +52,8 @@
                     Theme="{StaticResource UnderlineTextBoxTheme}"
                     Watermark="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}" />
                 <Button
-                    HorizontalAlignment="Center"
                     Classes="Primary"
+                    HorizontalAlignment="Center"
                     Command="{Binding GotoSearchViewCommand}"
                     CommandParameter="{Binding #QueryBox.Text}"
                     IsDefault="True"
@@ -65,7 +67,9 @@
                             Height="{StaticResource MediumFontSize}"
                             VerticalAlignment="Center"
                             Kind="Search" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>

@@ -28,14 +28,22 @@
         CornerRadius="{StaticResource MediumCornerRadius}">
         <Border.Transitions>
             <Transitions>
-                <BrushTransition Property="Background" Duration="{StaticResource ControlFasterAnimationDuration}" />
-                <BrushTransition Property="BorderBrush" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                <BrushTransition
+                    Property="Background"
+                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                <BrushTransition
+                    Property="BorderBrush"
+                    Duration="{StaticResource ControlFasterAnimationDuration}" />
             </Transitions>
         </Border.Transitions>
         <controls:SettingsEntryItem Header="{x:Static lang:Resources.SafeLock_Title}">
             <StackPanel Spacing="8">
-                <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" CornerRadius="{StaticResource SmallCornerRadius}">
-                    <Grid Margin="12,8" ColumnDefinitions="Auto,0,*">
+                <Border
+                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Grid
+                        Margin="12,8"
+                        ColumnDefinitions="Auto,0,*">
                         <TextBlock
                             Grid.Column="0"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -49,7 +57,9 @@
                 <TextBox Text="{Binding $parent[local:SafeLock].UserInput, Mode=TwoWay}">
                     <TextBox.InnerLeftContent>
                         <DockPanel>
-                            <husk:Divider DockPanel.Dock="Right" Orientation="Vertical" />
+                            <husk:Divider
+                                DockPanel.Dock="Right"
+                                Orientation="Vertical" />
                             <TextBlock
                                 Margin="12,0"
                                 VerticalAlignment="Center"

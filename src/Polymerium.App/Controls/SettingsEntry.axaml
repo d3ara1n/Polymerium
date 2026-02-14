@@ -3,7 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:local="using:Polymerium.App.Controls">
-    <ControlTheme x:Key="{x:Type local:SettingsEntry}" TargetType="local:SettingsEntry">
+    <ControlTheme
+        x:Key="{x:Type local:SettingsEntry}"
+        TargetType="local:SettingsEntry">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
                 <StackPanel Spacing="8" />
@@ -13,7 +15,9 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="55*,12,45*">
-                    <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
+                    <Grid
+                        Grid.Column="0"
+                        ColumnDefinitions="Auto,8,*">
                         <fi:SymbolIcon
                             Grid.Column="0"
                             Margin="3"
@@ -21,15 +25,21 @@
                             FontSize="26"
                             IconVariant="Regular"
                             Symbol="{TemplateBinding Icon}" />
-                        <StackPanel Grid.Column="2" Spacing="4">
-                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{TemplateBinding Title}" />
+                        <StackPanel
+                            Grid.Column="2"
+                            Spacing="4">
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{TemplateBinding Title}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{TemplateBinding Summary}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
-                    <ItemsPresenter Grid.Column="2" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    <ItemsPresenter
+                        Grid.Column="2"
+                        ItemsPanel="{TemplateBinding ItemsPanel}" />
                 </Grid>
             </ControlTemplate>
         </Setter>

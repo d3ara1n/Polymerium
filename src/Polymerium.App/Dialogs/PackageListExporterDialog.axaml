@@ -22,10 +22,16 @@
                 Padding="12"
                 Background="{StaticResource OverlaySolidBackgroundBrush}"
                 CornerRadius="{StaticResource SmallCornerRadius}">
-                <StackPanel HorizontalAlignment="Center" Spacing="12">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Spacing="12">
                     <TextBlock>
-                        <Run FontSize="{StaticResource ExtraLargeFontSize}" Text="{Binding $parent[local:PackageListExporterDialog].PackageCount, Mode=OneWay, FallbackValue=0}" />
-                        <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ExportPackageListDialog_PackageCountLabelText}" />
+                        <Run
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Text="{Binding $parent[local:PackageListExporterDialog].PackageCount, Mode=OneWay, FallbackValue=0}" />
+                        <Run
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.ExportPackageListDialog_PackageCountLabelText}" />
                     </TextBlock>
                 </StackPanel>
             </Border>
@@ -33,13 +39,17 @@
         <StackPanel Spacing="4">
             <TextBlock Text="{x:Static lang:Resources.ExportPackageListDialog_PathLabelText}" />
             <DockPanel HorizontalSpacing="8">
-                <Button Command="{Binding $parent[local:PackageListExporterDialog].BrowseCommand}" DockPanel.Dock="Right">
+                <Button
+                    Command="{Binding $parent[local:PackageListExporterDialog].BrowseCommand}"
+                    DockPanel.Dock="Right">
                     <fi:SymbolIcon
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource MediumFontSize}"
                         Symbol="MoreHorizontal" />
                 </Button>
-                <TextBox Text="{Binding $parent[local:PackageListExporterDialog].Result, Mode=TwoWay}" Watermark="{x:Static lang:Resources.ExportPackageListDialog_PathBarPlaceholder}" />
+                <TextBox
+                    Text="{Binding $parent[local:PackageListExporterDialog].Result, Mode=TwoWay}"
+                    Watermark="{x:Static lang:Resources.ExportPackageListDialog_PathBarPlaceholder}" />
             </DockPanel>
         </StackPanel>
     </StackPanel>

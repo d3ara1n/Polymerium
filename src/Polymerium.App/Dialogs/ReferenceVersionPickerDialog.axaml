@@ -22,31 +22,45 @@
         <ListBox.ItemTemplate>
             <DataTemplate DataType="m:InstanceReferenceVersionModel">
                 <StackPanel>
-                    <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding IsCurrent, FallbackValue=False}">
+                    <husk:SwitchPresenter
+                        TargetType="x:Boolean"
+                        Value="{Binding IsCurrent, FallbackValue=False}">
                         <husk:SwitchCase Value="True">
-                            <TextBlock Foreground="{StaticResource ControlAccentForegroundBrush}" Text="{Binding Display, FallbackValue=Display}" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Text="{Binding Display, FallbackValue=Display}" />
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="False">
                             <TextBlock Text="{Binding Display, FallbackValue=Display}" />
                         </husk:SwitchCase>
                     </husk:SwitchPresenter>
                     <DockPanel>
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <StackPanel
+                            DockPanel.Dock="Right"
+                            Orientation="Horizontal">
                             <TextBlock Text="{Binding UpdatedAt}" />
                         </StackPanel>
-                        <husk:SwitchPresenter TargetType="trident:ReleaseType" Value="{Binding ReleaseTypeRaw, FallbackValue=Release}">
+                        <husk:SwitchPresenter
+                            TargetType="trident:ReleaseType"
+                            Value="{Binding ReleaseTypeRaw, FallbackValue=Release}">
                             <husk:SwitchCase Value="Release">
-                                <husk:Tag Classes="Success" CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag
+                                    Classes="Success"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="Beta">
-                                <husk:Tag Classes="Warning" CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag
+                                    Classes="Warning"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="Alpha">
-                                <husk:Tag Classes="Danger" CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag
+                                    Classes="Danger"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                 </husk:Tag>
                             </husk:SwitchCase>

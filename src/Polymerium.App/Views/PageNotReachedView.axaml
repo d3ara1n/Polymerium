@@ -13,7 +13,9 @@
     mc:Ignorable="d">
     <StackPanel VerticalAlignment="Center">
         <StackPanel.Effect>
-            <DropShadowEffect BlurRadius="6" Opacity="0.1" />
+            <DropShadowEffect
+                BlurRadius="6"
+                Opacity="0.1" />
         </StackPanel.Effect>
         <Image
             Width="128"

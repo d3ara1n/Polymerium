@@ -50,19 +50,27 @@
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SidebarPlacementLabelText}">
                 <TabStrip SelectedIndex="{Binding SidebarPlacement, Mode=TwoWay}">
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
                                 Kind="PanelLeft" />
                             <husk:Divider Orientation="Vertical" />
-                            <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.SettingsView_SidebarPlacementLeftText}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.SettingsView_SidebarPlacementLeftText}" />
                         </StackPanel>
                     </TabStripItem>
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.SettingsView_SidebarPlacementRightText}" />
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.SettingsView_SidebarPlacementRightText}" />
                             <husk:Divider Orientation="Vertical" />
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
@@ -73,10 +81,14 @@
                     </TabStripItem>
                 </TabStrip>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem HorizontalContentAlignment="Left" Header="{x:Static lang:Resources.SettingsView_ThemeVariantLabelText}">
+            <controls:SettingsEntryItem
+                HorizontalContentAlignment="Left"
+                Header="{x:Static lang:Resources.SettingsView_ThemeVariantLabelText}">
                 <TabStrip SelectedIndex="{Binding DarkMode, Mode=TwoWay}">
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
@@ -86,7 +98,9 @@
                         </StackPanel>
                     </TabStripItem>
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
@@ -96,7 +110,9 @@
                         </StackPanel>
                     </TabStripItem>
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
@@ -108,7 +124,9 @@
                 </TabStrip>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_AccentColorLabelText}">
-                <ComboBox ItemsSource="{Binding AccentColors}" SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
+                <ComboBox
+                    ItemsSource="{Binding AccentColors}"
+                    SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="husk:AccentColor">
                             <TextBlock Text="{Binding}" />
@@ -116,8 +134,12 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}" IsVisible="False">
-                <ComboBox ItemsSource="{Binding CornerStyles}" SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
+            <controls:SettingsEntryItem
+                IsVisible="False"
+                Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}">
+                <ComboBox
+                    ItemsSource="{Binding CornerStyles}"
+                    SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="husk:CornerStyle">
                             <TextBlock Text="{Binding}" />
@@ -126,15 +148,17 @@
                 </ComboBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_BackgroundStyleLabelText}">
-                <ComboBox ItemsSource="{Binding BackgroundStyles}" SelectedItem="{Binding BackgroundMode, Mode=TwoWay}">
+                <ComboBox
+                    ItemsSource="{Binding BackgroundStyles}"
+                    SelectedItem="{Binding BackgroundMode, Mode=TwoWay}">
                     <ComboBox.SelectionBoxItemTemplate>
                         <DataTemplate DataType="m:BackgroundStyleModel">
                             <DockPanel>
                                 <husk:Tag
                                     Classes="Small"
+                                    IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     Content="{Binding Applicable}"
-                                    DockPanel.Dock="Right"
-                                    IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                    DockPanel.Dock="Right" />
                                 <TextBlock Text="{Binding Display}" />
                             </DockPanel>
                         </DataTemplate>
@@ -144,9 +168,9 @@
                             <DockPanel>
                                 <husk:Tag
                                     Classes="Small"
+                                    IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     Content="{Binding Applicable}"
-                                    DockPanel.Dock="Right"
-                                    IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                    DockPanel.Dock="Right" />
                                 <TextBlock Text="{Binding Display}" />
                             </DockPanel>
                         </DataTemplate>
@@ -155,7 +179,9 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_LanguageLabelText}">
                 <StackPanel>
-                    <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language, Mode=TwoWay}">
+                    <ComboBox
+                        ItemsSource="{Binding Languages}"
+                        SelectedItem="{Binding Language, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="m:LanguageModel">
                                 <Grid ColumnDefinitions="*,4,Auto">
@@ -164,9 +190,9 @@
                                         VerticalAlignment="Center"
                                         Text="{Binding Display}" />
                                     <husk:Tag
+                                        Classes="Small"
                                         Grid.Column="2"
-                                        VerticalAlignment="Center"
-                                        Classes="Small">
+                                        VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Id}" />
                                     </husk:Tag>
                                 </Grid>
@@ -180,7 +206,9 @@
                 </StackPanel>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_FontLabelText}">
-                <TextBox IsEnabled="False" Watermark="(Builtin)" />
+                <TextBox
+                    IsEnabled="False"
+                    Watermark="(Builtin)" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
@@ -190,19 +218,29 @@
             Icon="DrinkCoffee"
             Summary="{x:Static lang:Resources.SettingsView_JavaSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java8LabelText}">
-                <cp:JavaHomeContainer Home="{Binding JavaHome8, Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
+                <cp:JavaHomeContainer
+                    Home="{Binding JavaHome8, Mode=TwoWay}"
+                    OverlayService="{Binding OverlayService}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java11LabelText}">
-                <cp:JavaHomeContainer Home="{Binding JavaHome11, Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
+                <cp:JavaHomeContainer
+                    Home="{Binding JavaHome11, Mode=TwoWay}"
+                    OverlayService="{Binding OverlayService}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java17LabelText}">
-                <cp:JavaHomeContainer Home="{Binding JavaHome17, Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
+                <cp:JavaHomeContainer
+                    Home="{Binding JavaHome17, Mode=TwoWay}"
+                    OverlayService="{Binding OverlayService}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java21LabelText}">
-                <cp:JavaHomeContainer Home="{Binding JavaHome21, Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
+                <cp:JavaHomeContainer
+                    Home="{Binding JavaHome21, Mode=TwoWay}"
+                    OverlayService="{Binding OverlayService}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java25LabelText}">
-                <cp:JavaHomeContainer Home="{Binding JavaHome25, Mode=TwoWay}" OverlayService="{Binding OverlayService}" />
+                <cp:JavaHomeContainer
+                    Home="{Binding JavaHome25, Mode=TwoWay}"
+                    OverlayService="{Binding OverlayService}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
@@ -212,7 +250,9 @@
             Icon="Joystick"
             Summary="{x:Static lang:Resources.SettingsView_GameDefaultsSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaMaxMemoryLabelText}">
-                <TextBox Text="{Binding JavaMaxMemory, Mode=TwoWay}" Watermark="{x:Static lang:Resources.SettingsView_JavaMaxMemoryPlaceholder}">
+                <TextBox
+                    Text="{Binding JavaMaxMemory, Mode=TwoWay}"
+                    Watermark="{x:Static lang:Resources.SettingsView_JavaMaxMemoryPlaceholder}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
@@ -226,7 +266,9 @@
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsLabelText}">
-                <TextBox Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" Watermark="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsPlaceholder}" />
+                <TextBox
+                    Text="{Binding JavaAdditionalArguments, Mode=TwoWay}"
+                    Watermark="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsPlaceholder}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
@@ -271,7 +313,9 @@
             Summary="{x:Static lang:Resources.SettingsView_NetworkSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyEnabledLabelText}">
                 <StackPanel Spacing="4">
-                    <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border
+                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
                         <Grid
                             Margin="3"
                             ColumnDefinitions="*,Auto"
@@ -286,15 +330,19 @@
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{x:Static lang:Resources.SettingsView_ProxyCurrentStatusLabelText}" />
-                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{Binding ProxyStatusText}" />
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding ProxyStatusText}" />
                                 </StackPanel>
                             </Border>
                             <Button
-                                Grid.Column="1"
                                 Classes="Small"
+                                Grid.Column="1"
                                 Command="{Binding OpenProxySettingsCommand}"
                                 Theme="{StaticResource GhostButtonTheme}">
-                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Settings" />
                             </Button>
                         </Grid>
                     </Border>
@@ -314,7 +362,9 @@
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdatesLabelText}">
                 <controls:Plaque>
                     <controls:Plaque.Header>
-                        <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding UpdateTarget, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
+                        <husk:SwitchPresenter
+                            TargetType="x:Boolean"
+                            Value="{Binding UpdateTarget, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
                             <husk:SwitchCase Value="{x:True}">
                                 <DockPanel HorizontalSpacing="{StaticResource PlaqueSpacing}">
                                     <Button
@@ -345,12 +395,24 @@
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>
                     </controls:Plaque.Header>
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
-                        <StackPanel Grid.Column="0" Spacing="4">
-                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static app:Program.Brand}" />
-                            <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding Source={x:Static app:Program.Version}, StringFormat={}v{0}, FallbackValue=v0.1.0}" />
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <husk:SwitchPresenter TargetType="x:Boolean" Value="{x:Static app:Program.Debug}">
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        ColumnSpacing="6">
+                        <StackPanel
+                            Grid.Column="0"
+                            Spacing="4">
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static app:Program.Brand}" />
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="{Binding Source={x:Static app:Program.Version}, StringFormat={}v{0}, FallbackValue=v0.1.0}" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <husk:SwitchPresenter
+                                    TargetType="x:Boolean"
+                                    Value="{x:Static app:Program.Debug}">
                                     <husk:SwitchCase Value="{x:True}">
                                         <TextBlock
                                             FontSize="{StaticResource SmallFontSize}"
@@ -364,7 +426,9 @@
                                             Text="Prod" />
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
-                                <husk:Divider Margin="2" Orientation="Vertical" />
+                                <husk:Divider
+                                    Margin="2"
+                                    Orientation="Vertical" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -383,9 +447,9 @@
                                 <husk:SwitchCase Value="Idle" />
                                 <husk:SwitchCase Value="Unavailable">
                                     <husk:Tag
+                                        Classes="Small"
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Classes="Small">
+                                        VerticalAlignment="Top">
                                         <husk:IconLabel
                                             Icon="DismissCircle"
                                             Text="{x:Static lang:Resources.SettingsView_UpdatesUnavailableLabelText}"
@@ -394,9 +458,9 @@
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Latest">
                                     <husk:Tag
+                                        Classes="Small Success"
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Classes="Small Success">
+                                        VerticalAlignment="Top">
                                         <husk:IconLabel
                                             Icon="CheckmarkCircle"
                                             Text="{x:Static lang:Resources.SettingsView_UpdatesNotFoundLabelText}"
@@ -405,9 +469,9 @@
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Found">
                                     <husk:Tag
+                                        Classes="Small Primary"
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Classes="Small Primary">
+                                        VerticalAlignment="Top">
                                         <husk:IconLabel
                                             Icon="SparkleCircle"
                                             Text="{x:Static lang:Resources.SettingsView_UpdatesFoundLabelText}"
@@ -423,8 +487,12 @@
                                                 HorizontalAlignment="Right"
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 Text="{Binding Version, StringFormat={}v{0}, FallbackValue=v0.2.0}" />
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                                <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding IsPrerelease}">
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
+                                                <husk:SwitchPresenter
+                                                    TargetType="x:Boolean"
+                                                    Value="{Binding IsPrerelease}">
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <TextBlock
                                                             FontSize="{StaticResource SmallFontSize}"
@@ -438,7 +506,9 @@
                                                             Text="Release" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
-                                                <husk:Divider Margin="2" Orientation="Vertical" />
+                                                <husk:Divider
+                                                    Margin="2"
+                                                    Orientation="Vertical" />
                                                 <TextBlock
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -455,30 +525,40 @@
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}">
                 <TabStrip SelectedIndex="{Binding UpdateSource, Mode=TwoWay}">
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
                                 Kind="Github" />
                             <husk:Divider Orientation="Vertical" />
-                            <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.SettingsView_UpdateSourceGithubText}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.SettingsView_UpdateSourceGithubText}" />
                         </StackPanel>
                     </TabStripItem>
                     <TabStripItem>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
                                 Kind="Cloud" />
                             <husk:Divider Orientation="Vertical" />
-                            <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.SettingsView_UpdateSourceMirrorChyanText}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.SettingsView_UpdateSourceMirrorChyanText}" />
                         </StackPanel>
                     </TabStripItem>
                 </TabStrip>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_MirrorChyanCdkLabelText}" IsVisible="{Binding UpdateSource, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=1}">
+            <controls:SettingsEntryItem
+                IsVisible="{Binding UpdateSource, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=1}"
+                Header="{x:Static lang:Resources.SettingsView_MirrorChyanCdkLabelText}">
                 <StackPanel Spacing="4">
                     <TextBox
                         PasswordChar="*"
@@ -502,15 +582,21 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
                 <Button
-                    HorizontalAlignment="Left"
                     Classes="Small"
+                    HorizontalAlignment="Left"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:MaintenanceStorageView}"
                     Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}" />
             </controls:SettingsEntryItem>
-            <cp:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_DataManagementLabelText}" IsEnabled="{Binding #Lock.IsUnlocked}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+            <cp:SafeLock
+                Name="Lock"
+                SafeCode="{Binding SafeCode}" />
+            <controls:SettingsEntryItem
+                IsEnabled="{Binding #Lock.IsUnlocked}"
+                Header="{x:Static lang:Resources.SettingsView_DataManagementLabelText}">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="8">
                     <Button
                         Classes="Small"
                         Command="{Binding ClearStatisticsCommand}"
@@ -534,57 +620,91 @@
                     CornerRadius="{StaticResource MediumCornerRadius}"
                     RenderOptions.BitmapInterpolationMode="HighQuality" />
             </husk:ConstrainedBox>
-            <StackPanel Name="LinksPanel" Spacing="2">
+            <StackPanel
+                Name="LinksPanel"
+                Spacing="2">
                 <TextBlock ClipToBounds="False">
                     <Run Text="Source Code:" />
-                    <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/d3ara1n/Polymerium" />
+                    <HyperlinkButton
+                        Content="GitHub"
+                        NavigateUri="https://github.com/d3ara1n/Polymerium" />
                     <Run Text="License:" />
-                    <HyperlinkButton Content="MIT" NavigateUri="https://github.com/d3ara1n/Polymerium/blob/master/LICENSE.txt" />
+                    <HyperlinkButton
+                        Content="MIT"
+                        NavigateUri="https://github.com/d3ara1n/Polymerium/blob/master/LICENSE.txt" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Image in the Settings Page:" />
-                    <HyperlinkButton Content="Pixiv#126997360" NavigateUri="https://www.pixiv.net/artworks/126997360" />
+                    <HyperlinkButton
+                        Content="Pixiv#126997360"
+                        NavigateUri="https://www.pixiv.net/artworks/126997360" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Architecture &amp; Engine:" />
-                    <HyperlinkButton Content="Trident" NavigateUri="https://github.com/TridentCore/trident" />
+                    <HyperlinkButton
+                        Content="Trident"
+                        NavigateUri="https://github.com/TridentCore/trident" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Platform Services:" />
-                    <HyperlinkButton Content="PrismLauncher Meta" NavigateUri="https://meta.prismlauncher.org/" />
-                    <HyperlinkButton Content="Starlight API" NavigateUri="https://docs.lunareclipse.studio/" />
+                    <HyperlinkButton
+                        Content="PrismLauncher Meta"
+                        NavigateUri="https://meta.prismlauncher.org/" />
+                    <HyperlinkButton
+                        Content="Starlight API"
+                        NavigateUri="https://docs.lunareclipse.studio/" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Repositories:" />
-                    <HyperlinkButton Content="CurseForge" NavigateUri="https://docs.curseforge.com/" />
-                    <HyperlinkButton Content="Modrinth" NavigateUri="https://docs.modrinth.com/" />
+                    <HyperlinkButton
+                        Content="CurseForge"
+                        NavigateUri="https://docs.curseforge.com/" />
+                    <HyperlinkButton
+                        Content="Modrinth"
+                        NavigateUri="https://docs.modrinth.com/" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Frontend Framework:" />
-                    <HyperlinkButton Content="Avalonia" NavigateUri="https://avaloniaui.net" />
+                    <HyperlinkButton
+                        Content="Avalonia"
+                        NavigateUri="https://avaloniaui.net" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Control Library:" />
-                    <HyperlinkButton Content="Huskui" NavigateUri="https://github.com/d3ara1n/Huskui.Avalonia" />
+                    <HyperlinkButton
+                        Content="Huskui"
+                        NavigateUri="https://github.com/d3ara1n/Huskui.Avalonia" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Color Palette:" />
-                    <HyperlinkButton Content="Radix Colors" NavigateUri="https://www.radix-ui.com/colors" />
+                    <HyperlinkButton
+                        Content="Radix Colors"
+                        NavigateUri="https://www.radix-ui.com/colors" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Emoji:" />
-                    <HyperlinkButton Content="Fluent Emoji" NavigateUri="https://github.com/microsoft/fluentui-emoji" />
+                    <HyperlinkButton
+                        Content="Fluent Emoji"
+                        NavigateUri="https://github.com/microsoft/fluentui-emoji" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Icon Libraries:" />
-                    <HyperlinkButton Content="Fluent Icons" NavigateUri="fluent2.microsoft.design/" />
+                    <HyperlinkButton
+                        Content="Fluent Icons"
+                        NavigateUri="fluent2.microsoft.design/" />
                     <Run Text="(" />
-                    <HyperlinkButton Content="FluentIcons.Avalonia" NavigateUri="https://github.com/davidxuang/FluentIcons" />
+                    <HyperlinkButton
+                        Content="FluentIcons.Avalonia"
+                        NavigateUri="https://github.com/davidxuang/FluentIcons" />
                     <Run Text=")" />
                     <Run Text="&amp;" />
-                    <HyperlinkButton Content="Lucide Icons" NavigateUri="https://lucide.dev" />
+                    <HyperlinkButton
+                        Content="Lucide Icons"
+                        NavigateUri="https://lucide.dev" />
                     <Run Text="(" />
-                    <HyperlinkButton Content="IconPacks.Avalonia.Lucide" NavigateUri="https://github.com/MahApps/IconPacks.Avalonia" />
+                    <HyperlinkButton
+                        Content="IconPacks.Avalonia.Lucide"
+                        NavigateUri="https://github.com/MahApps/IconPacks.Avalonia" />
                     <Run Text=")" />
                 </TextBlock>
             </StackPanel>

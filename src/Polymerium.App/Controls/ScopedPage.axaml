@@ -6,8 +6,12 @@
     xmlns:local="using:Polymerium.App.Controls">
     <!--  当前页面包含上下文，例如展示某条数据而非某些数据，或者展示某个模型的数据，则该数据或模型为上下文，用 ScopedPage  -->
     <Design.PreviewWith>
-        <local:ScopedPage Width="128" Height="128">
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center">
+        <local:ScopedPage
+            Width="128"
+            Height="128">
+            <Button
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
                 <icons:PackIconLucide
                     Width="12"
                     Height="12"

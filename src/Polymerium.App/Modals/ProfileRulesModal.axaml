@@ -1,0 +1,44 @@
+﻿<husk:Modal
+    x:Class="Polymerium.App.Modals.ProfileRulesModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="600"
+    d:DesignWidth="450"
+    mc:Ignorable="d">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="部署规则" />
+            <TextBlock
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="在实例启动时，根据规则重定向或跳过特定的包。按从上到下的顺序应用，后继行会覆盖前继行。"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <Grid
+            Grid.Row="2"
+            ColumnDefinitions="Auto,*,Auto,Auto"
+            ColumnSpacing="8">
+            <Button
+                Classes="Primary"
+                Grid.Column="0">
+                <husk:IconLabel
+                    Icon="Add"
+                    Text="添加新规则" />
+            </Button>
+            <TextBlock
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="共计 12 条规则" />
+            <Button
+                Grid.Column="3"
+                Command="{Binding $parent[husk:Modal].Dismiss}"
+                Content="Dismiss" />
+        </Grid>
+    </Grid>
+</husk:Modal>

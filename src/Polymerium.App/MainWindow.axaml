@@ -40,7 +40,9 @@
                 MinWidth="200"
                 MaxWidth="400" />
         </Grid.ColumnDefinitions>
-        <DockPanel x:Name="Main" Grid.Column="0">
+        <DockPanel
+            x:Name="Main"
+            Grid.Column="0">
             <Panel>
                 <!--  <StackPanel VerticalAlignment="Center"  -->
                 <!--  Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}">  -->
@@ -71,11 +73,13 @@
                 <husk:Frame x:Name="Root" />
             </Panel>
         </DockPanel>
-        <DockPanel x:Name="Sidebar" Grid.Column="1">
+        <DockPanel
+            x:Name="Sidebar"
+            Grid.Column="1">
             <DockPanel
                 x:Name="TitleBar"
-                DockPanel.Dock="Top"
-                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
+                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}"
+                DockPanel.Dock="Top">
                 <StackPanel DockPanel.Dock="Right">
                     <husk:ButtonGroup BorderThickness="0">
                         <husk:ButtonGroup.Styles>
@@ -90,14 +94,18 @@
                                 <Setter Property="Width" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button Command="{Binding OpenNotificationSidebarCommand}" IsVisible="{x:Static local:Program.Debug}">
+                        <Button
+                            IsVisible="{x:Static local:Program.Debug}"
+                            Command="{Binding OpenNotificationSidebarCommand}">
                             <icons:PackIconLucide Kind="Bell" />
                         </Button>
                         <Button Click="MinimizeButton_OnClick">
                             <icons:PackIconLucide Kind="Minus" />
                         </Button>
                         <Button Click="ToggleMaximizeButton_OnClick">
-                            <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}">
+                            <husk:SwitchPresenter
+                                TargetType="x:Boolean"
+                                Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}">
                                 <husk:SwitchCase Value="True">
                                     <icons:PackIconLucide Kind="SquareSquare" />
                                 </husk:SwitchCase>
@@ -132,7 +140,9 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <StackPanel.Effect>
-                        <DropShadowEffect BlurRadius="6" Opacity="0.1" />
+                        <DropShadowEffect
+                            BlurRadius="6"
+                            Opacity="0.1" />
                     </StackPanel.Effect>
                     <icons:PackIconLucide
                         Width="{StaticResource MediumFontSize}"
@@ -159,13 +169,17 @@
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:LandingView}"
                     Theme="{StaticResource OutlineButtonTheme}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
                         <icons:PackIconLucide
                             Width="18"
                             Height="18"
                             VerticalAlignment="Center"
                             Kind="House" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -182,19 +196,23 @@
                         Kind="SquarePlus" />
                 </Button>
                 <Button
+                    Classes="Primary"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Height="36"
-                    Classes="Primary"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:MarketplacePortalView}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
                         <icons:PackIconLucide
                             Width="18"
                             Height="18"
                             Kind="Store" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
                     </StackPanel>
                 </Button>
                 <husk:Divider
@@ -209,11 +227,11 @@
                     Watermark="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}">
                     <TextBox.InnerRightContent>
                         <Button
+                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding $parent[TextBox].Clear}"
                             Content="{fie:SymbolIcon Symbol=Dismiss,
                                                      FontSize={StaticResource MediumFontSize}}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <husk:DropContainer
@@ -223,7 +241,9 @@
                     DragOver="DropContainer_OnDragOver"
                     Drop="DropContainer_OnDrop">
                     <husk:DropContainer.Overlay>
-                        <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Panel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
                             <Rectangle
                                 Fill="{StaticResource ControlInteractiveBackgroundBrush}"
                                 RadiusX="6"
@@ -339,7 +359,9 @@
                     CommandParameter="{x:Type v:SettingsView}"
                     DockPanel.Dock="Left"
                     Theme="{StaticResource GhostButtonTheme}">
-                    <icons:PackIconLucide Height="18" Kind="Settings" />
+                    <icons:PackIconLucide
+                        Height="18"
+                        Kind="Settings" />
                 </Button>
                 <Button
                     Grid.Row="6"

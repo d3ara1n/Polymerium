@@ -15,7 +15,9 @@
     IsPrimaryButtonVisible="True"
     Message="{x:Static lang:Resources.TagPickerDialog_Prompt}"
     mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+    <Grid
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="12">
         <!--  输入框  -->
         <TextBox
             Grid.Row="0"
@@ -25,13 +27,15 @@
         <!--  现有标签标题  -->
         <TextBlock
             Grid.Row="1"
+            IsVisible="{Binding $parent[local:TagPickerDialog].HasExistingTags}"
             FontSize="{StaticResource SmallFontSize}"
             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-            IsVisible="{Binding $parent[local:TagPickerDialog].HasExistingTags}"
             Text="{x:Static lang:Resources.TagPickerDialog_ExistingTagsLabelText}" />
 
         <!--  现有标签列表  -->
-        <ScrollViewer Grid.Row="2" MaxHeight="200">
+        <ScrollViewer
+            Grid.Row="2"
+            MaxHeight="200">
             <Panel>
                 <!--  空状态  -->
                 <StackPanel
@@ -51,10 +55,14 @@
                 </StackPanel>
 
                 <!--  标签列表  -->
-                <ItemsControl IsVisible="{Binding $parent[local:TagPickerDialog].HasExistingTags}" ItemsSource="{Binding $parent[local:TagPickerDialog].ExistingTags}">
+                <ItemsControl
+                    IsVisible="{Binding $parent[local:TagPickerDialog].HasExistingTags}"
+                    ItemsSource="{Binding $parent[local:TagPickerDialog].ExistingTags}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                            <WrapPanel
+                                ItemSpacing="6"
+                                LineSpacing="6" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -64,8 +72,12 @@
                                 Command="{Binding $parent[local:TagPickerDialog].SelectTagCommand}"
                                 CommandParameter="{Binding}"
                                 Theme="{StaticResource OutlineButtonTheme}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Tag" />
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Symbol="Tag" />
                                     <TextBlock Text="{Binding}" />
                                 </StackPanel>
                             </Button>

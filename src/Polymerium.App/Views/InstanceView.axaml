@@ -105,9 +105,13 @@
         <!--         </Rectangle> -->
         <!--     </husk:SwitchCase> -->
         <!-- </husk:SwitchPresenter> -->
-        <husk:DropContainer DragOver="DropContainer_OnDragOver" Drop="DropContainer_OnDrop">
+        <husk:DropContainer
+            DragOver="DropContainer_OnDragOver"
+            Drop="DropContainer_OnDrop">
             <husk:DropContainer.Overlay>
-                <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Panel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
                     <Rectangle
                         Fill="{StaticResource ControlInteractiveBackgroundBrush}"
                         RadiusX="6"
@@ -137,7 +141,9 @@
                     Margin="12,12,0,12"
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="12">
+                    <Grid
+                        RowDefinitions="Auto,*,Auto,Auto"
+                        RowSpacing="12">
                         <Button
                             Grid.Row="0"
                             Margin="12"
@@ -189,7 +195,9 @@
                                                     RenderTransform="scaleX(1.1)">
                                                     <Border.Transitions>
                                                         <Transitions>
-                                                            <DoubleTransition Property="Opacity" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <DoubleTransition
+                                                                Property="Opacity"
+                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                             <TransformOperationsTransition
                                                                 Easing="CubicEaseOut"
                                                                 Property="RenderTransform"
@@ -204,7 +212,9 @@
                                                     ContentTemplate="{TemplateBinding ContentTemplate}">
                                                     <ContentPresenter.Transitions>
                                                         <Transitions>
-                                                            <BrushTransition Property="Foreground" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            <BrushTransition
+                                                                Property="Foreground"
+                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                         </Transitions>
                                                     </ContentPresenter.Transitions>
                                                 </ContentPresenter>

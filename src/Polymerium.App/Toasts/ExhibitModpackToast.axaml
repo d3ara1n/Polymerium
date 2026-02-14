@@ -25,15 +25,23 @@
             BorderBrush="{StaticResource ControlBorderBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource MediumCornerRadius}">
-            <husk:LazyContainer MinHeight="100" Source="{Binding $parent[local:ExhibitModpackToast].LazyVersions, Mode=OneWay}">
+            <husk:LazyContainer
+                MinHeight="100"
+                Source="{Binding $parent[local:ExhibitModpackToast].LazyVersions, Mode=OneWay}">
                 <husk:LazyContainer.SourceTemplate>
                     <DataTemplate DataType="m:ExhibitVersionCollection">
                         <StackPanel Spacing="12">
-                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-                                <ItemsControl Grid.Column="0" ItemsSource="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Tags, FallbackValue={x:Null}}">
+                            <Grid
+                                ColumnDefinitions="*,Auto,Auto"
+                                ColumnSpacing="8">
+                                <ItemsControl
+                                    Grid.Column="0"
+                                    ItemsSource="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Tags, FallbackValue={x:Null}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="x:String">
-                                            <husk:Tag Content="{Binding}" FontSize="{StaticResource MediumFontSize}" />
+                                            <husk:Tag
+                                                Content="{Binding}"
+                                                FontSize="{StaticResource MediumFontSize}" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                     <ItemsControl.ItemsPanel>
@@ -49,10 +57,14 @@
                                     Grid.Column="1"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).AuthorName, StringFormat={}@{0}, FallbackValue=Author}" />
-                                <HyperlinkButton Grid.Column="2" NavigateUri="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Reference, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}">
+                                <HyperlinkButton
+                                    Grid.Column="2"
+                                    NavigateUri="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Reference, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}">
                                     <ToolTip.Tip>
                                         <StackPanel Spacing="2">
-                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                            <Grid
+                                                ColumnDefinitions="*,Auto"
+                                                ColumnSpacing="4">
                                                 <TextBlock
                                                     Grid.Column="0"
                                                     FontSize="{StaticResource SmallFontSize}"
@@ -67,29 +79,43 @@
                                             <TextBlock Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
                                         </StackPanel>
                                     </ToolTip.Tip>
-                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
                                         <TextBlock Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Open" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="Open" />
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>
-                            <TextBlock Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Summary, FallbackValue=Display}" TextWrapping="Wrap" />
-                            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
+                            <TextBlock
+                                Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Summary, FallbackValue=Display}"
+                                TextWrapping="Wrap" />
+                            <Grid
+                                ColumnDefinitions="Auto,Auto,*"
+                                ColumnSpacing="12">
                                 <Button
-                                    Grid.Column="0"
                                     Classes="Primary"
+                                    Grid.Column="0"
                                     Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
                                     CommandParameter="{Binding $parent[local:ExhibitModpackToast].SelectedVersion, Mode=OneWay, FallbackValue={x:Null}}">
                                     <StackPanel
                                         Margin="6,0"
                                         Orientation="Horizontal"
                                         Spacing="8">
-                                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowDownload" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="ArrowDownload" />
                                         <TextBlock Text="{x:Static lang:Resources.ExhibitModpackToast_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
-                                <Button Grid.Column="1" IsVisible="False">
-                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Bookmark" />
+                                <Button
+                                    Grid.Column="1"
+                                    IsVisible="False">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Bookmark" />
                                 </Button>
                                 <ComboBox
                                     Name="VersionBox"
@@ -98,28 +124,38 @@
                                     SelectedItem="{Binding $parent[local:ExhibitModpackToast].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}">
                                     <ComboBox.SelectionBoxItemTemplate>
                                         <DataTemplate DataType="m:ExhibitVersionModel">
-                                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
+                                            <Grid
+                                                ColumnDefinitions="Auto,*,Auto"
+                                                ColumnSpacing="4">
                                                 <husk:SwitchPresenter
                                                     Grid.Column="0"
                                                     TargetType="trident:ReleaseType"
                                                     Value="{Binding TypeRaw, FallbackValue=Release}">
                                                     <husk:SwitchCase Value="Release">
-                                                        <husk:Tag Classes="Success Small" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                        <husk:Tag
+                                                            Classes="Success Small"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                                             <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="Beta">
-                                                        <husk:Tag Classes="Warning Small" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                        <husk:Tag
+                                                            Classes="Warning Small"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                                             <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="Alpha">
-                                                        <husk:Tag Classes="Danger Small" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                        <husk:Tag
+                                                            Classes="Danger Small"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                                             <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
-                                                <TextBlock Grid.Column="1" Text="{Binding VersionName, FallbackValue=Display}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    Text="{Binding VersionName, FallbackValue=Display}" />
                                                 <TextBlock
                                                     Grid.Column="2"
                                                     VerticalAlignment="Center"
@@ -133,23 +169,31 @@
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate DataType="m:ExhibitVersionModel">
                                             <StackPanel Spacing="4">
-                                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="4">
+                                                <Grid
+                                                    ColumnDefinitions="Auto,*"
+                                                    ColumnSpacing="4">
                                                     <husk:SwitchPresenter
                                                         Grid.Column="0"
                                                         TargetType="trident:ReleaseType"
                                                         Value="{Binding TypeRaw, FallbackValue=Release}">
                                                         <husk:SwitchCase Value="Release">
-                                                            <husk:Tag Classes="Success" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <husk:Tag
+                                                                Classes="Success"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
                                                                 <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="Beta">
-                                                            <husk:Tag Classes="Warning" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <husk:Tag
+                                                                Classes="Warning"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
                                                                 <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="Alpha">
-                                                            <husk:Tag Classes="Danger" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <husk:Tag
+                                                                Classes="Danger"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
                                                                 <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
@@ -159,7 +203,9 @@
                                                         Text="{Binding VersionName, FallbackValue=Display}"
                                                         TextTrimming="CharacterEllipsis" />
                                                 </Grid>
-                                                <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="4">
+                                                <Grid
+                                                    ColumnDefinitions="Auto,Auto,*"
+                                                    ColumnSpacing="4">
                                                     <husk:IconLabel
                                                         Grid.Column="0"
                                                         Background="Transparent"
@@ -191,7 +237,9 @@
                 </husk:LazyContainer.SourceTemplate>
             </husk:LazyContainer>
         </Border>
-        <husk:ConstrainedBox AspectRatio="16:9" IsVisible="{Binding Gallery, Converter={x:Static husk:CollectionConverters.IsNotEmpty}}">
+        <husk:ConstrainedBox
+            IsVisible="{Binding Gallery, Converter={x:Static husk:CollectionConverters.IsNotEmpty}}"
+            AspectRatio="16:9">
             <Panel>
                 <Carousel
                     Name="GalleryCarousel"
@@ -210,7 +258,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Background="Transparent">
-                    <husk:PipsPager ItemCount="{Binding #GalleryCarousel.ItemCount}" SelectedIndex="{Binding #GalleryCarousel.SelectedIndex, Mode=TwoWay}" />
+                    <husk:PipsPager
+                        ItemCount="{Binding #GalleryCarousel.ItemCount}"
+                        SelectedIndex="{Binding #GalleryCarousel.SelectedIndex, Mode=TwoWay}" />
                 </Border>
             </Panel>
         </husk:ConstrainedBox>

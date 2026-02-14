@@ -7,7 +7,9 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:m="clr-namespace:Polymerium.App.Models">
-    <ControlTheme x:Key="{x:Type controls:ExhibitPackageButton}" TargetType="controls:ExhibitPackageButton">
+    <ControlTheme
+        x:Key="{x:Type controls:ExhibitPackageButton}"
+        TargetType="controls:ExhibitPackageButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
@@ -46,7 +48,9 @@
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Text="{Binding ProjectName}"
                                         TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Text="{Binding Summary}"
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
                             <Border
@@ -54,7 +58,9 @@
                                 Padding="6"
                                 Background="{StaticResource ControlBackgroundBrush}"
                                 CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                <Grid
+                                    ColumnDefinitions="*,Auto"
+                                    ColumnSpacing="4">
                                     <Border
                                         Grid.Column="0"
                                         Padding="4,2"
@@ -63,13 +69,17 @@
                                         BorderBrush="{StaticResource ControlBorderBrush}"
                                         BorderThickness="1"
                                         CornerRadius="{StaticResource SmallCornerRadius}">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4">
                                             <icons:PackIconLucide
                                                 Width="{StaticResource MediumFontSize}"
                                                 Height="{StaticResource MediumFontSize}"
                                                 VerticalAlignment="Center"
                                                 Kind="CircleUser" />
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Author}" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Author}" />
                                         </StackPanel>
                                     </Border>
                                     <StackPanel
@@ -82,13 +92,17 @@
                                             BorderBrush="{StaticResource ControlBorderBrush}"
                                             BorderThickness="1"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <icons:PackIconLucide
                                                     Width="{StaticResource MediumFontSize}"
                                                     Height="{StaticResource MediumFontSize}"
                                                     VerticalAlignment="Center"
                                                     Kind="CircleArrowDown" />
-                                                <TextBlock VerticalAlignment="Center" Text="{Binding Downloads}" />
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Downloads}" />
                                             </StackPanel>
                                         </Border>
                                         <Border
@@ -97,13 +111,17 @@
                                             BorderBrush="{StaticResource ControlBorderBrush}"
                                             BorderThickness="1"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
                                                 <icons:PackIconLucide
                                                     Width="{StaticResource MediumFontSize}"
                                                     Height="{StaticResource MediumFontSize}"
                                                     VerticalAlignment="Center"
                                                     Kind="Clock" />
-                                                <TextBlock VerticalAlignment="Center" Text="{Binding UpdatedAt}" />
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding UpdatedAt}" />
                                             </StackPanel>
                                         </Border>
                                     </StackPanel>

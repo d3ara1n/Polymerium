@@ -22,18 +22,26 @@
                 DockPanel.Dock="Right"
                 Orientation="Horizontal"
                 Spacing="4">
-                <Button Classes="Primary" Command="{Binding CreateAccountCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="7">
+                <Button
+                    Classes="Primary"
+                    Command="{Binding CreateAccountCommand}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="7">
                         <icons:PackIconLucide
                             Width="{StaticResource MediumFontSize}"
                             Height="{StaticResource MediumFontSize}"
                             VerticalAlignment="Center"
                             Kind="UserPlus" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.AccountsView_AddAccountButtonText}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.AccountsView_AddAccountButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <TextBlock Text="{x:Static lang:Resources.AccountsView_Title}" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+            <TextBlock
+                Text="{x:Static lang:Resources.AccountsView_Title}"
+                Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </husk:Page.Header>
     <Panel>
@@ -53,24 +61,30 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
         </StackPanel>
-        <ItemsControl ClipToBounds="False" ItemsSource="{Binding Accounts}">
+        <ItemsControl
+            ClipToBounds="False"
+            ItemsSource="{Binding Accounts}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel ItemSpacing="8" LineSpacing="8" />
+                    <WrapPanel
+                        ItemSpacing="8"
+                        LineSpacing="8" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="m:AccountModel">
-                    <controls:AccountEntryButton Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).ViewAccountCommand, FallbackValue={x:Null}}" CommandParameter="{Binding}">
+                    <controls:AccountEntryButton
+                        Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).ViewAccountCommand, FallbackValue={x:Null}}"
+                        CommandParameter="{Binding}">
                         <controls:AccountEntryButton.ContextFlyout>
                             <MenuFlyout>
                                 <MenuItem
+                                    IsEnabled="{Binding IsDefault, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
                                     Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).MarkAsDefaultAccountCommand, Mode=OneWay, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}"
                                     Header="{x:Static lang:Resources.AccountsView_MarkAsDefaultMenuText}"
                                     Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,
-                                                          FontSize={StaticResource MediumFontSize}}"
-                                    IsEnabled="{Binding IsDefault, Converter={x:Static BoolConverters.Not}, Mode=OneWay}" />
+                                                          FontSize={StaticResource MediumFontSize}}" />
                                 <MenuItem
                                     Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).RemoveAccountCommand, Mode=OneWay, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}"

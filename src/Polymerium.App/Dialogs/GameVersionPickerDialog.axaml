@@ -41,7 +41,9 @@
                 </DataTemplate>
             </TabStrip.ItemTemplate>
         </TabStrip>
-        <Panel Grid.Row="4" MinHeight="128">
+        <Panel
+            Grid.Row="4"
+            MinHeight="128">
             <StackPanel
                 VerticalAlignment="Center"
                 IsVisible="{Binding $parent[local:GameVersionPickerDialog].View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
@@ -65,7 +67,9 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="m:GameVersionModel">
                         <Grid ColumnDefinitions="*,4,Auto">
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="{Binding Name}" />
                             <husk:Tag
                                 Grid.Column="2"
                                 Content="{Binding ReleaseTime}"

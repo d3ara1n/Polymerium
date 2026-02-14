@@ -22,7 +22,9 @@
             </TabStrip.ItemsPanel>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftTitle}" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftTitle}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftSubtitle}"
@@ -31,7 +33,9 @@
             </TabStripItem>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.AccountCreationPortal_TrialSubtitle}"
@@ -40,7 +44,9 @@
             </TabStripItem>
             <TabStripItem IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, FallbackValue=False}">
                 <StackPanel>
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.AccountCreationPortal_OfflineTitle}" />
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_OfflineTitle}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.AccountCreationPortal_OfflineSubtitle}"
@@ -48,6 +54,8 @@
                 </StackPanel>
             </TabStripItem>
         </TabStrip>
-        <husk:InfoBar Content="{x:Static lang:Resources.AccountCreationPortal_Prompt}" IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, Converter={x:Static BoolConverters.Not}, FallbackValue=True}" />
+        <husk:InfoBar
+            IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
+            Content="{x:Static lang:Resources.AccountCreationPortal_Prompt}" />
     </StackPanel>
 </controls:AccountCreationStep>

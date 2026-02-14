@@ -19,11 +19,13 @@
             Drop="DropZone_OnDrop"
             Model="{Binding $parent[local:FilePickerDialog].Result, Mode=OneWayToSource}">
             <StackPanel HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal" Spacing="4">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
                     <fi:SymbolIcon
+                        IsHitTestVisible="False"
                         FontSize="14"
                         IconVariant="Filled"
-                        IsHitTestVisible="False"
                         Symbol="Attach" />
                     <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
                         <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
@@ -38,11 +40,13 @@
                 </StackPanel>
                 <TextBlock
                     HorizontalAlignment="Center"
-                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     IsHitTestVisible="False"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
             </StackPanel>
         </husk:DropZone>
-        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result, Mode=TwoWay}" Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />
+        <TextBox
+            Text="{Binding $parent[local:FilePickerDialog].Result, Mode=TwoWay}"
+            Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />
     </StackPanel>
 </husk:Dialog>

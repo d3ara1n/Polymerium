@@ -582,6 +582,9 @@ public partial class InstanceSetupViewModel(
         }
     }
 
+    [RelayCommand]
+    private void EditRules() => overlayService.PopModal(new ProfileRulesModal());
+
     private bool CanViewPackage(InstancePackageInfoModel? model) => model is not null;
 
     [RelayCommand(CanExecute = nameof(CanViewPackage))]

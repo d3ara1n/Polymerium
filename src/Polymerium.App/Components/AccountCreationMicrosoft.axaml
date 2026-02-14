@@ -14,9 +14,13 @@
     Header="{x:Static lang:Resources.AccountCreationMicrosoft_Title}"
     IsNextAvailable="{Binding $self.Account, Converter={x:Static ObjectConverters.IsNotNull}}"
     mc:Ignorable="d">
-    <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[cp:AccountCreationMicrosoft].ErrorMessage, Converter={x:Static ObjectConverters.IsNull}, FallbackValue={x:False}}">
+    <husk:SwitchPresenter
+        TargetType="x:Boolean"
+        Value="{Binding $parent[cp:AccountCreationMicrosoft].ErrorMessage, Converter={x:Static ObjectConverters.IsNull}, FallbackValue={x:False}}">
         <husk:SwitchCase Value="{x:False}">
-            <StackPanel Margin="0,12" Spacing="12">
+            <StackPanel
+                Margin="0,12"
+                Spacing="12">
                 <StackPanel>
                     <fi:SymbolIcon
                         HorizontalAlignment="Center"
@@ -32,17 +36,25 @@
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding $parent[cp:AccountCreationMicrosoft].ErrorMessage}"
                     TextWrapping="Wrap" />
-                <Button HorizontalAlignment="Center" Command="{Binding $parent[cp:AccountCreationMicrosoft].RetryCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button
+                    HorizontalAlignment="Center"
+                    Command="{Binding $parent[cp:AccountCreationMicrosoft].RetryCommand}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="10">
                         <TextBlock Text="{x:Static lang:Resources.AccountCreationMicrosoft_RetryButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
         </husk:SwitchCase>
         <husk:SwitchCase Value="{x:True}">
-            <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[cp:AccountCreationMicrosoft].Account, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
+            <husk:SwitchPresenter
+                TargetType="x:Boolean"
+                Value="{Binding $parent[cp:AccountCreationMicrosoft].Account, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
                 <husk:SwitchCase Value="{x:True}">
-                    <StackPanel Margin="0,12" Spacing="12">
+                    <StackPanel
+                        Margin="0,12"
+                        Spacing="12">
                         <StackPanel>
                             <fi:SymbolIcon
                                 HorizontalAlignment="Center"
@@ -88,7 +100,9 @@
                                 </Panel>
                             </Border>
                             <StackPanel>
-                                <TextBlock Text="{x:Static lang:Resources.AccountCreationMicrosoft_Prompt}" TextWrapping="Wrap" />
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.AccountCreationMicrosoft_Prompt}"
+                                    TextWrapping="Wrap" />
                                 <TextBlock
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"

@@ -4,7 +4,9 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Polymerium.App.Controls">
-    <ControlTheme x:Key="{x:Type controls:OobeStep}" TargetType="controls:OobeStep">
+    <ControlTheme
+        x:Key="{x:Type controls:OobeStep}"
+        TargetType="controls:OobeStep">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

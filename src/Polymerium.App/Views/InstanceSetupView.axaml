@@ -589,7 +589,8 @@
                                     Classes="Small"
                                     Width="{Binding $self.Bounds.Height}"
                                     Margin="3"
-                                    Padding="0">
+                                    Padding="0"
+                                    Command="{Binding EditRulesCommand}">
                                     <icons:PackIconLucide
                                         Width="{StaticResource SmallFontSize}"
                                         Height="{StaticResource SmallFontSize}"
