@@ -13,5 +13,7 @@
     IsPrimaryButtonVisible="True"
     Message="{x:Static lang:Resources.UserInputDialog_Prompt}"
     mc:Ignorable="d">
-    <TextBox Text="{Binding $parent[local:UserInputDialog].Result, Mode=TwoWay}" Watermark="{Binding $parent[local:UserInputDialog].Watermark}" />
+    <TextBox
+        Text="{Binding $parent[local:UserInputDialog].Result, Mode=TwoWay}"
+        Watermark="{Binding $parent[local:UserInputDialog].Watermark}" />
 </husk:Dialog>

@@ -4,7 +4,9 @@
     xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:local="clr-namespace:Polymerium.App.Controls"
     xmlns:m="clr-namespace:Polymerium.App.Models">
-    <ControlTheme x:Key="{x:Type local:StorageInstanceButton}" TargetType="local:StorageInstanceButton">
+    <ControlTheme
+        x:Key="{x:Type local:StorageInstanceButton}"
+        TargetType="local:StorageInstanceButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />

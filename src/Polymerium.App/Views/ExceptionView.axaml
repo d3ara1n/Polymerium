@@ -14,13 +14,19 @@
     Header="{x:Static lang:Resources.ExceptionView_Title}"
     mc:Ignorable="d">
     <ScrollViewer>
-        <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="8">
+        <StackPanel
+            Margin="{StaticResource PageContentMargin}"
+            Spacing="8">
             <TextBlock
                 FontSize="{StaticResource ExtraLargeFontSize}"
                 Text="{x:Static lang:Resources.ExceptionView_Subtitle}"
                 TextWrapping="Wrap" />
-            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
-            <Border Background="{StaticResource ControlBackgroundBrush}" CornerRadius="{StaticResource SmallCornerRadius}">
+            <TextBlock
+                Text="{Binding Message}"
+                TextWrapping="Wrap" />
+            <Border
+                Background="{StaticResource ControlBackgroundBrush}"
+                CornerRadius="{StaticResource SmallCornerRadius}">
                 <TextBlock
                     Margin="12"
                     Text="{Binding StackTrace}"

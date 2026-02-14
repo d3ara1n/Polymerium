@@ -20,7 +20,9 @@
         VerticalAlignment="Center"
         Spacing="16">
         <!--  Header  -->
-        <StackPanel HorizontalAlignment="Center" Spacing="8">
+        <StackPanel
+            HorizontalAlignment="Center"
+            Spacing="8">
             <Border
                 Width="64"
                 Height="64"
@@ -76,9 +78,9 @@
                                             VerticalAlignment="Center"
                                             Text="{Binding Display}" />
                                         <husk:Tag
+                                            Classes="Small"
                                             Grid.Column="2"
-                                            VerticalAlignment="Center"
-                                            Classes="Small">
+                                            VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Id}" />
                                         </husk:Tag>
                                     </Grid>
@@ -114,33 +116,45 @@
                         SelectedIndex="{Binding $parent[components:OobeQuickSetup].DarkModeIndex, Mode=TwoWay}"
                         Theme="{StaticResource SegmentedTabStripTheme}">
                         <TabStripItem>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <icons:PackIconLucide
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="SunMoon" />
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <icons:PackIconLucide
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="Sun" />
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <icons:PackIconLucide
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
                                     Kind="Moon" />
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" />
                             </StackPanel>
                         </TabStripItem>
                     </TabStrip>
@@ -200,11 +214,13 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{Binding $parent[components:OobeQuickSetup].ProxyStatusText}" />
                     <Button
-                        Grid.Column="6"
                         Classes="Small"
+                        Grid.Column="6"
                         Command="{Binding $parent[components:OobeQuickSetup].OpenProxySettingsCommand}"
                         Theme="{StaticResource GhostButtonTheme}">
-                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Settings" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource SmallFontSize}"
+                            Symbol="Settings" />
                     </Button>
                 </Grid>
             </Border>

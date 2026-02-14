@@ -13,45 +13,77 @@
     d:DesignWidth="800"
     ClipToBounds="False"
     mc:Ignorable="d">
-    <husk:SwitchPresenter TargetType="m:ExhibitState" Value="{Binding $parent[local:ExhibitStatePresenter].State}">
+    <husk:SwitchPresenter
+        TargetType="m:ExhibitState"
+        Value="{Binding $parent[local:ExhibitStatePresenter].State}">
         <husk:SwitchCase Value="{x:Null}" />
         <husk:SwitchCase Value="Editable">
             <husk:Tag Classes="Success">
-                <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="Checkmark" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_EditableTagText}" />
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        FontSize="{Binding $parent[husk:Tag].FontSize}"
+                        Symbol="Checkmark" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.ExhibitStatePresenter_EditableTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Locked">
             <husk:Tag>
-                <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="LockClosed" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_LockedTagText}" />
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        FontSize="{Binding $parent[husk:Tag].FontSize}"
+                        Symbol="LockClosed" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.ExhibitStatePresenter_LockedTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Adding">
             <husk:Tag Classes="Warning">
-                <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="AddCircle" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_AddingTagText}" />
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        FontSize="{Binding $parent[husk:Tag].FontSize}"
+                        Symbol="AddCircle" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.ExhibitStatePresenter_AddingTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Modifying">
             <husk:Tag Classes="Warning">
-                <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="Pen" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_ModifyingTagText}" />
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        FontSize="{Binding $parent[husk:Tag].FontSize}"
+                        Symbol="Pen" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.ExhibitStatePresenter_ModifyingTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
         <husk:SwitchCase Value="Removing">
             <husk:Tag Classes="Danger">
-                <StackPanel Orientation="Horizontal" Spacing="4">
-                    <fi:SymbolIcon FontSize="{Binding $parent[husk:Tag].FontSize}" Symbol="Dismiss" />
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.ExhibitStatePresenter_RemovingTagText}" />
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        FontSize="{Binding $parent[husk:Tag].FontSize}"
+                        Symbol="Dismiss" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.ExhibitStatePresenter_RemovingTagText}" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>

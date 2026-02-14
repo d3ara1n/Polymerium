@@ -16,27 +16,29 @@
             DockPanel.Dock="Bottom"
             Orientation="Horizontal"
             Spacing="8">
-            <Button Command="{Binding $parent[modals:OobeModal].GoBackCommand}" IsVisible="{Binding $parent[modals:OobeModal].IsBackAvailable, FallbackValue=False}">
+            <Button
+                IsVisible="{Binding $parent[modals:OobeModal].IsBackAvailable, FallbackValue=False}"
+                Command="{Binding $parent[modals:OobeModal].GoBackCommand}">
                 <TextBlock Text="{x:Static lang:Resources.OobeModal_BackButtonText}" />
             </Button>
             <Button
                 Classes="Primary"
+                IsVisible="{Binding $parent[modals:OobeModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
                 Command="{Binding $parent[modals:OobeModal].GoNextCommand}"
-                IsDefault="True"
-                IsVisible="{Binding $parent[modals:OobeModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=True}">
+                IsDefault="True">
                 <TextBlock Text="{x:Static lang:Resources.OobeModal_NextButtonText}" />
             </Button>
             <Button
                 Classes="Primary"
+                IsVisible="{Binding $parent[modals:OobeModal].IsLast, FallbackValue=False}"
                 Command="{Binding $parent[modals:OobeModal].GoFinishCommand}"
-                IsDefault="True"
-                IsVisible="{Binding $parent[modals:OobeModal].IsLast, FallbackValue=False}">
+                IsDefault="True">
                 <TextBlock Text="{x:Static lang:Resources.OobeModal_FinishButtonText}" />
             </Button>
             <Button
+                IsVisible="{Binding $parent[modals:OobeModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
                 Command="{Binding $parent[modals:OobeModal].SkipCommand}"
-                IsCancel="True"
-                IsVisible="{Binding $parent[modals:OobeModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=True}">
+                IsCancel="True">
                 <TextBlock Text="{x:Static lang:Resources.OobeModal_SkipButtonText}" />
             </Button>
         </StackPanel>
@@ -45,14 +47,16 @@
         <husk:StepControl
             x:Name="StepIndicator"
             HorizontalAlignment="Center"
-            DockPanel.Dock="Top"
             IsHitTestVisible="False"
+            DockPanel.Dock="Top"
             SelectedIndex="{Binding $parent[modals:OobeModal].StepIndex, Mode=OneWay}"
             Theme="{StaticResource MinimalStepControlTheme}" />
 
         <!--  Content: Step Panels  -->
         <ScrollViewer>
-            <TransitioningContentControl Content="{Binding $parent[modals:OobeModal].CurrentStep}" IsTransitionReversed="{Binding $parent[modals:OobeModal].IsReversed}">
+            <TransitioningContentControl
+                Content="{Binding $parent[modals:OobeModal].CurrentStep}"
+                IsTransitionReversed="{Binding $parent[modals:OobeModal].IsReversed}">
                 <TransitioningContentControl.PageTransition>
                     <CompositePageTransition>
                         <CrossFade

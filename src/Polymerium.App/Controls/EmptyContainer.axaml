@@ -4,7 +4,9 @@
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
-    <ControlTheme x:Key="{x:Type controls:EmptyContainer}" TargetType="controls:EmptyContainer">
+    <ControlTheme
+        x:Key="{x:Type controls:EmptyContainer}"
+        TargetType="controls:EmptyContainer">
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -26,7 +28,9 @@
                             Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                     </StackPanel>
 
-                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Panel>
             </ControlTemplate>
         </Setter>

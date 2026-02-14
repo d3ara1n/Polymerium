@@ -7,7 +7,9 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:local="clr-namespace:Polymerium.App.Controls"
     xmlns:m="clr-namespace:Polymerium.App.Models">
-    <ControlTheme x:Key="{x:Type local:ExhibitDependencyButton}" TargetType="local:ExhibitDependencyButton">
+    <ControlTheme
+        x:Key="{x:Type local:ExhibitDependencyButton}"
+        TargetType="local:ExhibitDependencyButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Padding" Value="12,10" />
@@ -64,9 +66,11 @@
                                 Spacing="4">
                                 <husk:Tag
                                     VerticalAlignment="Center"
-                                    Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}"
-                                    IsVisible="{Binding IsRequired}" />
-                                <components:ExhibitStatePresenter IsVisible="{TemplateBinding IsChecked}" State="{Binding Exhibit.State}" />
+                                    IsVisible="{Binding IsRequired}"
+                                    Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}" />
+                                <components:ExhibitStatePresenter
+                                    IsVisible="{TemplateBinding IsChecked}"
+                                    State="{Binding Exhibit.State}" />
                             </StackPanel>
                         </Grid>
                         <Border
@@ -95,11 +99,11 @@
                         Width="3"
                         Margin="0,4"
                         HorizontalAlignment="Left"
+                        IsVisible="{Binding Exhibit.Installed.Enabled, Mode=OneTime, FallbackValue={x:False}}"
                         Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                         BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                         BorderThickness="1"
                         CornerRadius="{StaticResource SmallCornerRadius}"
-                        IsVisible="{Binding Exhibit.Installed.Enabled, Mode=OneTime, FallbackValue={x:False}}"
                         Opacity="0"
                         RenderTransform="translateX(-4px)">
                         <Border.Transitions>

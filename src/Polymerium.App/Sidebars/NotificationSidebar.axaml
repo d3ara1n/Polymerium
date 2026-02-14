@@ -24,21 +24,27 @@
                 FontWeight="{StaticResource ControlStrongFontWeight}"
                 Text="Notifications" />
             <Button
-                Grid.Column="1"
                 Classes="Small"
+                Grid.Column="1"
                 Theme="{StaticResource OutlineButtonTheme}">
-                <husk:IconLabel Icon="Checkmark" Text="Mark all as read" />
+                <husk:IconLabel
+                    Icon="Checkmark"
+                    Text="Mark all as read" />
             </Button>
             <Button
-                Grid.Column="2"
                 Classes="Small"
+                Grid.Column="2"
                 Click="DimissButton_OnClick">
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Dismiss" />
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="Dismiss" />
             </Button>
         </Grid>
         <!--  临时模板  -->
         <ScrollViewer Grid.Row="1">
-            <StackPanel Margin="{StaticResource SidebarContentMargin}" Spacing="6">
+            <StackPanel
+                Margin="{StaticResource SidebarContentMargin}"
+                Spacing="6">
                 <Border
                     MinHeight="64"
                     BoxShadow="0 0 5 0 #1F000000"
@@ -83,7 +89,9 @@
                                 Grid.Column="2"
                                 Padding="4"
                                 VerticalAlignment="Top">
-                                <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="MoreVertical" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Symbol="MoreVertical" />
                             </Button>
                             <StackPanel
                                 Grid.Row="2"
@@ -92,8 +100,12 @@
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <Button Classes="Primary Small" Content="Read more" />
-                                <Button Classes="Small" Content="Never again" />
+                                <Button
+                                    Classes="Primary Small"
+                                    Content="Read more" />
+                                <Button
+                                    Classes="Small"
+                                    Content="Never again" />
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -146,7 +158,9 @@
                             Grid.Column="2"
                             Padding="4"
                             VerticalAlignment="Top">
-                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="MoreVertical" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource SmallFontSize}"
+                                Symbol="MoreVertical" />
                         </Button>
                         <StackPanel
                             Grid.Row="2"
@@ -155,8 +169,12 @@
                             HorizontalAlignment="Right"
                             Orientation="Horizontal"
                             Spacing="8">
-                            <Button Classes="Primary Small" Content="Read more" />
-                            <Button Classes="Small" Content="Never again" />
+                            <Button
+                                Classes="Primary Small"
+                                Content="Read more" />
+                            <Button
+                                Classes="Small"
+                                Content="Never again" />
                         </StackPanel>
                     </Grid>
                 </Border>

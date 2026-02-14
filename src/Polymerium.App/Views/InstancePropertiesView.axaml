@@ -24,9 +24,15 @@
             Icon="AppTitle"
             Summary="{x:Static lang:Resources.InstancePropertiesView_TitleSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_DisplayNameLabelText}">
-                <Border Background="{StaticResource ControlBackgroundBrush}" CornerRadius="{StaticResource MediumCornerRadius}">
-                    <StackPanel Margin="3" Spacing="3">
-                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}" CornerRadius="{StaticResource SmallCornerRadius}">
+                <Border
+                    Background="{StaticResource ControlBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <StackPanel
+                        Margin="3"
+                        Spacing="3">
+                        <Border
+                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <TextBlock
                                 Margin="8"
                                 FontSize="{StaticResource LargeFontSize}"
@@ -56,7 +62,9 @@
                         <Border.Effect>
                             <DropShadowEffect Opacity="0.1" />
                         </Border.Effect>
-                        <Border Name="ThumbnailBox" CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Border
+                            Name="ThumbnailBox"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <Border.Background>
                                 <ImageBrush Source="{Binding ThumbnailOverwrite}" />
                             </Border.Background>
@@ -67,8 +75,12 @@
                         Grid.Column="2"
                         VerticalAlignment="Center"
                         Spacing="12">
-                        <Button Classes="Small" Command="{Binding SelectThumbnailCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                        <Button
+                            Classes="Small"
+                            Command="{Binding SelectThumbnailCommand}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <icons:PackIconLucide
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
@@ -77,8 +89,12 @@
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_SelectButtonText}" />
                             </StackPanel>
                         </Button>
-                        <Button Classes="Small" Command="{Binding RemoveThumbnailCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                        <Button
+                            Classes="Small"
+                            Command="{Binding RemoveThumbnailCommand}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <icons:PackIconLucide
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
@@ -98,8 +114,12 @@
             Summary="{x:Static lang:Resources.InstancePropertiesView_OverridesSubtitle}">
             <Button Command="{Binding GotoSettingsCommand}">
                 <Grid ColumnDefinitions="Auto,8,*">
-                    <fi:SymbolIcon Grid.Column="0" Symbol="DocumentOnePage" />
-                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        Symbol="DocumentOnePage" />
+                    <StackPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Center">
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_NavigateToGlobalButtonTitle}" />
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
@@ -109,21 +129,31 @@
                 </Grid>
             </Button>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaHomeLabelText}">
-                <TextBox Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding JavaHomeWatermark}">
+                <TextBox
+                    Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}"
+                    Watermark="{Binding JavaHomeWatermark}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding $parent[TextBox].Clear}">
-                                <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Delete" />
+                                <icons:PackIconLucide
+                                    Height="{StaticResource SmallFontSize}"
+                                    Kind="Delete" />
                             </Button>
-                            <Button Command="{Binding PickFileCommand}" CommandParameter="{Binding $parent[TextBox]}">
-                                <icons:PackIconLucide Height="{StaticResource MediumFontSize}" Kind="FileOutput" />
+                            <Button
+                                Command="{Binding PickFileCommand}"
+                                CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide
+                                    Height="{StaticResource MediumFontSize}"
+                                    Kind="FileOutput" />
                             </Button>
                         </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryLabelText}">
-                <TextBox Text="{Binding JavaMaxMemoryOverride, Mode=TwoWay}" Watermark="{Binding JavaMaxMemoryWatermark}">
+                <TextBox
+                    Text="{Binding JavaMaxMemoryOverride, Mode=TwoWay}"
+                    Watermark="{Binding JavaMaxMemoryWatermark}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
@@ -137,7 +167,9 @@
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaAdditionalArgumentsLabelText}">
-                <TextBox Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" Watermark="{Binding JavaAdditionalArgumentsWatermark}" />
+                <TextBox
+                    Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}"
+                    Watermark="{Binding JavaAdditionalArgumentsWatermark}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
@@ -174,7 +206,9 @@
                 </Grid>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_QuickConnectLabelText}">
-                <TextBox Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}" Watermark="{Binding QuickConnectAddressWatermark}" />
+                <TextBox
+                    Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}"
+                    Watermark="{Binding QuickConnectAddressWatermark}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
@@ -215,7 +249,9 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <husk:BusyContainer Background="Transparent" IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
+        <husk:BusyContainer
+            Background="Transparent"
+            IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
             <controls:SettingsEntry
                 Title="{x:Static lang:Resources.InstancePropertiesView_DebugTitle}"
                 Icon="Bug"
@@ -243,46 +279,72 @@
             </husk:BusyContainer.PendingContent>
         </husk:BusyContainer>
         <husk:Divider>
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Warning" />
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="8">
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="Warning" />
                 <TextBlock Text="猫脑过载" />
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Warning" />
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="Warning" />
             </StackPanel>
         </husk:Divider>
-        <husk:BusyContainer Background="Transparent" IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
+        <husk:BusyContainer
+            Background="Transparent"
+            IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
             <controls:SettingsEntry
                 Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
                 Icon="WarningShield"
                 Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">
-                <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
-                <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_SacrificeLabelText}" IsEnabled="{Binding #Lock.IsUnlocked}">
+                <components:SafeLock
+                    Name="Lock"
+                    SafeCode="{Binding SafeCode}" />
+                <controls:SettingsEntryItem
+                    IsEnabled="{Binding #Lock.IsUnlocked}"
+                    Header="{x:Static lang:Resources.InstancePropertiesView_SacrificeLabelText}">
                     <Grid ColumnDefinitions="*,8,*">
-                        <Button Grid.Column="0" Command="{Binding ResetInstanceCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowReset" />
+                        <Button
+                            Grid.Column="0"
+                            Command="{Binding ResetInstanceCommand}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="ArrowReset" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_ResetButtonText}" />
                             </StackPanel>
                         </Button>
                         <Button
-                            Grid.Column="2"
                             Classes="Danger"
+                            Grid.Column="2"
                             Command="{Binding DeleteInstanceCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Delete" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Delete" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_DeleteButtonText}" />
                             </StackPanel>
                         </Button>
                     </Grid>
                 </controls:SettingsEntryItem>
                 <controls:SettingsEntryItem
-                    Header="{x:Static lang:Resources.InstancePropertiesView_LinkerLabelText}"
                     IsEnabled="{Binding #Lock.IsUnlocked}"
-                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    Header="{x:Static lang:Resources.InstancePropertiesView_LinkerLabelText}">
                     <StackPanel Spacing="8">
                         <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesView_LinkerPrompt}" />
                         <Button Command="{Binding UnlockInstanceCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="WarningLockOpen" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="WarningLockOpen" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_UnlockButtonText}" />
                             </StackPanel>
                         </Button>

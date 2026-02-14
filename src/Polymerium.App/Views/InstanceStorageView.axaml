@@ -16,16 +16,24 @@
     d:DesignWidth="800"
     x:DataType="vm:InstanceStorageViewModel"
     mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+    <Grid
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="12">
         <!--  总览区域  -->
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-            <StackPanel Grid.Column="0" Spacing="4">
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="*,Auto">
+            <StackPanel
+                Grid.Column="0"
+                Spacing="4">
                 <TextBlock>
                     <Run
                         FontSize="36"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Text="{Binding TotalSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=0.00}" />
-                    <Run FontSize="18" Text="GiB" />
+                    <Run
+                        FontSize="18"
+                        Text="GiB" />
                 </TextBlock>
             </StackPanel>
             <StackPanel
@@ -33,30 +41,38 @@
                 Orientation="Horizontal"
                 Spacing="8">
                 <Button
-                    VerticalAlignment="Center"
                     Classes="Small"
+                    VerticalAlignment="Center"
                     Command="{Binding OpenInstanceFolderCommand}"
                     Theme="{StaticResource OutlineButtonTheme}">
-                    <husk:IconLabel Icon="FolderOpen" Text="{x:Static lang:Resources.InstanceStorageView_OpenFolderButtonText}" />
+                    <husk:IconLabel
+                        Icon="FolderOpen"
+                        Text="{x:Static lang:Resources.InstanceStorageView_OpenFolderButtonText}" />
                 </Button>
                 <Button
-                    VerticalAlignment="Center"
                     Classes="Small"
+                    VerticalAlignment="Center"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                     CommandParameter="{x:Type v:InstanceAssetsView}"
                     Theme="{StaticResource OutlineButtonTheme}">
-                    <husk:IconLabel Icon="Library" Text="{x:Static lang:Resources.InstanceStorageView_GotoExplorerButtonText}" />
+                    <husk:IconLabel
+                        Icon="Library"
+                        Text="{x:Static lang:Resources.InstanceStorageView_GotoExplorerButtonText}" />
                 </Button>
             </StackPanel>
         </Grid>
 
         <!--  主要存储分类  -->
-        <StackPanel Grid.Row="1" Spacing="4">
+        <StackPanel
+            Grid.Row="1"
+            Spacing="4">
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
                 Text="{x:Static lang:Resources.InstanceStorageView_BreakdownLabelText}" />
-            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+            <Grid
+                ColumnDefinitions="*,*,*,*"
+                ColumnSpacing="12">
                 <!--  Mods  -->
                 <husk:Card Grid.Column="0">
                     <Grid
@@ -338,7 +354,9 @@
                         RowDefinitions="Auto,Auto,Auto"
                         RowSpacing="12">
                         <!--  Screenshots  -->
-                        <husk:Card Grid.Row="0" Grid.Column="0">
+                        <husk:Card
+                            Grid.Row="0"
+                            Grid.Column="0">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12"
@@ -355,8 +373,12 @@
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     VerticalAlignment="Center">
-                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
-                                    <TextBlock FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                         <Run Text="{Binding ScreenshotsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
@@ -394,7 +416,9 @@
                         </husk:Card>
 
                         <!--  Logs  -->
-                        <husk:Card Grid.Row="0" Grid.Column="1">
+                        <husk:Card
+                            Grid.Row="0"
+                            Grid.Column="1">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12"
@@ -411,8 +435,12 @@
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     VerticalAlignment="Center">
-                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.AssetKind_Log}" />
-                                    <TextBlock FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.AssetKind_Log}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                         <Run Text="{Binding LogsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
@@ -449,7 +477,9 @@
                         </husk:Card>
 
                         <!--  Crash Reports  -->
-                        <husk:Card Grid.Row="1" Grid.Column="0">
+                        <husk:Card
+                            Grid.Row="1"
+                            Grid.Column="0">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12"
@@ -466,8 +496,12 @@
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     VerticalAlignment="Center">
-                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.AssetKind_CrashReport}" />
-                                    <TextBlock FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.AssetKind_CrashReport}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                         <Run Text="{Binding CrashReportsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
@@ -504,7 +538,9 @@
                         </husk:Card>
 
                         <!--  Config  -->
-                        <husk:Card Grid.Row="1" Grid.Column="1">
+                        <husk:Card
+                            Grid.Row="1"
+                            Grid.Column="1">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12"
@@ -521,8 +557,12 @@
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     VerticalAlignment="Center">
-                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.AssetKind_Config}" />
-                                    <TextBlock FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.AssetKind_Config}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                         <Run Text="{Binding ConfigSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
@@ -559,7 +599,9 @@
                         </husk:Card>
 
                         <!--  Other Files  -->
-                        <husk:Card Grid.Row="2" Grid.Column="0">
+                        <husk:Card
+                            Grid.Row="2"
+                            Grid.Column="0">
                             <Grid
                                 ColumnDefinitions="Auto,*"
                                 ColumnSpacing="12"
@@ -576,8 +618,12 @@
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     VerticalAlignment="Center">
-                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.InstanceStorageView_OtherLabelText}" />
-                                    <TextBlock FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.InstanceStorageView_OtherLabelText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                         <Run Text="{Binding OtherSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />

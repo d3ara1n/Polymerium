@@ -14,7 +14,9 @@
     x:DataType="vm:InstanceWidgetsViewModel"
     mc:Ignorable="d">
     <Grid>
-        <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Widgets, Mode=OneTime}">
+        <ItemsControl
+            VerticalAlignment="Top"
+            ItemsSource="{Binding Widgets, Mode=OneTime}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="widgets:WidgetBase">
                     <Grid RowDefinitions="Auto,*">
@@ -25,7 +27,9 @@
                             BorderBrush="{StaticResource ControlAccentBorderBrush}"
                             BorderThickness="1"
                             CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="12">
                                 <!--  Grab Handle: Avalonia 没有 Grab 指针，而且本来就没法 ReOrder 所以这个图标仅供装饰  -->
                                 <!-- <Border Grid.Column="0" Cursor="SizeAll"> -->
                                 <!--  <fi:SymbolIcon Symbol="ReOrderDotsVertical"  -->
@@ -39,11 +43,11 @@
                                     Spacing="8"
                                     Text="{Binding Title}" />
                                 <ToggleButton
+                                    Classes="Small"
                                     Grid.Column="2"
                                     Margin="4"
-                                    Classes="Small"
-                                    IsChecked="{Binding IsPinned}"
                                     IsEnabled="{Binding SlimTemplate, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                    IsChecked="{Binding IsPinned}"
                                     Theme="{StaticResource GhostToggleButtonTheme}">
                                     <icons:PackIconLucide
                                         Width="{StaticResource SmallFontSize}"
@@ -59,7 +63,9 @@
                             BorderBrush="{StaticResource ControlBorderBrush}"
                             BorderThickness="1,0,1,1"
                             CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
-                            <ContentControl Content="{Binding}" ContentTemplate="{Binding FullTemplate}" />
+                            <ContentControl
+                                Content="{Binding}"
+                                ContentTemplate="{Binding FullTemplate}" />
                         </Border>
                     </Grid>
                 </DataTemplate>
@@ -74,7 +80,9 @@
             </ItemsControl.ItemContainerTheme>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <husk:FlexWrapPanel ColumnSpacing="12" RowSpacing="12" />
+                    <husk:FlexWrapPanel
+                        ColumnSpacing="12"
+                        RowSpacing="12" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

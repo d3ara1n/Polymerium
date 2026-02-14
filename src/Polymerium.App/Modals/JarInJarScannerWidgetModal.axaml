@@ -31,8 +31,12 @@
         </DockPanel>
         <husk:PlaceholderPresenter Margin="16">
             <husk:PlaceholderPresenter.Placeholder>
-                <DockPanel VerticalAlignment="Center" VerticalSpacing="12">
-                    <Button HorizontalAlignment="Center" DockPanel.Dock="Top">
+                <DockPanel
+                    VerticalAlignment="Center"
+                    VerticalSpacing="12">
+                    <Button
+                        HorizontalAlignment="Center"
+                        DockPanel.Dock="Top">
                         <DockPanel HorizontalSpacing="8">
                             <fi:SymbolIcon
                                 Width="{StaticResource MediumFontSize}"
@@ -43,7 +47,9 @@
                             <TextBlock Text="Scan" />
                         </DockPanel>
                     </Button>
-                    <DockPanel HorizontalAlignment="Center" HorizontalSpacing="8">
+                    <DockPanel
+                        HorizontalAlignment="Center"
+                        HorizontalSpacing="8">
                         <husk:ProgressRing
                             Width="{StaticResource MediumFontSize}"
                             Height="{StaticResource MediumFontSize}"

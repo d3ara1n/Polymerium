@@ -31,16 +31,24 @@
     <!--         ~1~ <lvc:PieChart Width="198" Height="198" Series="{Binding Series}" /> @1@ -->
     <!--     </StackPanel> -->
     <!-- </husk:Card> -->
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-            <StackPanel Grid.Column="0" Spacing="4">
+    <Grid
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="12">
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="*,Auto">
+            <StackPanel
+                Grid.Column="0"
+                Spacing="4">
                 <husk:Tag Content="{x:Static lang:Resources.MaintenanceStorageView_TotalLabelText}" />
                 <TextBlock>
                     <Run
                         FontSize="36"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Text="{Binding TotalSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
-                    <Run FontSize="18" Text="GiB" />
+                    <Run
+                        FontSize="18"
+                        Text="GiB" />
                 </TextBlock>
             </StackPanel>
             <StackPanel
@@ -57,10 +65,14 @@
                             FontSize="36"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{Binding CacheSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
-                        <Run FontSize="18" Text="GiB" />
+                        <Run
+                            FontSize="18"
+                            Text="GiB" />
                     </TextBlock>
                 </StackPanel>
-                <husk:Divider Margin="6" Orientation="Vertical" />
+                <husk:Divider
+                    Margin="6"
+                    Orientation="Vertical" />
                 <StackPanel Spacing="4">
                     <husk:Tag
                         Background="#F2D1F3"
@@ -71,33 +83,45 @@
                             FontSize="36"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{Binding InstanceSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
-                        <Run FontSize="18" Text="GiB" />
+                        <Run
+                            FontSize="18"
+                            Text="GiB" />
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="1" Spacing="4">
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <StackPanel
+            Grid.Row="1"
+            Spacing="4">
+            <Grid
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="12">
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     Text="{x:Static lang:Resources.MaintenanceStorageView_CacheTitle}" />
                 <Button
-                    Grid.Column="1"
                     Classes="Small"
+                    Grid.Column="1"
                     Command="{Binding PurgeCacheCommand}"
                     Theme="{StaticResource GhostButtonTheme}">
-                    <husk:IconLabel Icon="DeleteLines" Text="{x:Static lang:Resources.MaintenanceStorageView_PurgeButtonText}" />
+                    <husk:IconLabel
+                        Icon="DeleteLines"
+                        Text="{x:Static lang:Resources.MaintenanceStorageView_PurgeButtonText}" />
                 </Button>
             </Grid>
-            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+            <Grid
+                ColumnDefinitions="*,*,*,*"
+                ColumnSpacing="12">
                 <husk:Card Grid.Column="0">
                     <StackPanel Spacing="4">
                         <icons:PackIconLucide
                             Width="{StaticResource ExtraLargeFontSize}"
                             Height="{StaticResource ExtraLargeFontSize}"
                             Kind="Boxes" />
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}" />
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding PackageSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -105,7 +129,9 @@
                             <Run Text="{Binding #PackageProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
                             <Run Text="/" />
                             <Run Text="{Binding PackageCount, FallbackValue=514}" />
-                            <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Box" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource SmallFontSize}"
+                                Symbol="Box" />
                         </TextBlock>
                         <ProgressBar
                             Name="PackageProgressBar"
@@ -119,7 +145,9 @@
                             Width="{StaticResource ExtraLargeFontSize}"
                             Height="{StaticResource ExtraLargeFontSize}"
                             Kind="Library" />
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}" />
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding LibrarySize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -138,7 +166,9 @@
                             Width="{StaticResource ExtraLargeFontSize}"
                             Height="{StaticResource ExtraLargeFontSize}"
                             Kind="CassetteTape" />
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}" />
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding AssetSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -157,7 +187,9 @@
                             Width="{StaticResource ExtraLargeFontSize}"
                             Height="{StaticResource ExtraLargeFontSize}"
                             Kind="ShipWheel" />
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}" />
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding RuntimeSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -172,13 +204,19 @@
                 </husk:Card>
             </Grid>
         </StackPanel>
-        <StackPanel Grid.Row="2" Spacing="4">
+        <StackPanel
+            Grid.Row="2"
+            Spacing="4">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Right" Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                <TextBlock
+                    DockPanel.Dock="Right"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                     <Run Text="/" />
                     <Run Text="{Binding Instances.Count, Mode=OneWay, FallbackValue=0}" />
                 </TextBlock>
-                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{x:Static lang:Resources.MaintenanceStorageView_InstancesTitle}" />
+                <TextBlock
+                    FontSize="{StaticResource LargeFontSize}"
+                    Text="{x:Static lang:Resources.MaintenanceStorageView_InstancesTitle}" />
             </DockPanel>
             <ItemsControl ItemsSource="{Binding Instances}">
                 <ItemsControl.ItemTemplate>

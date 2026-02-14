@@ -14,7 +14,9 @@
     Width="256"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
-    <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[local:AccountPickerDialog].AccountsSource.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
+    <husk:SwitchPresenter
+        TargetType="x:Boolean"
+        Value="{Binding $parent[local:AccountPickerDialog].AccountsSource.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
         <husk:SwitchCase Value="{x:False}">
             <StackPanel
                 Margin="0,24"
@@ -36,7 +38,9 @@
                     HorizontalAlignment="Center"
                     Command="{Binding $parent[local:AccountPickerDialog].GotoManagerViewCommand}"
                     CommandParameter="{Binding $parent[local:AccountPickerDialog]}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
                         <icons:PackIconLucide
                             Width="{StaticResource MediumFontSize}"
                             Height="{StaticResource MediumFontSize}"
@@ -48,10 +52,14 @@
             </StackPanel>
         </husk:SwitchCase>
         <husk:SwitchCase Value="{x:True}">
-            <ListBox ItemsSource="{Binding $parent[local:AccountPickerDialog].AccountsSource}" SelectedItem="{Binding $parent[local:AccountPickerDialog].Result, Mode=TwoWay}">
+            <ListBox
+                ItemsSource="{Binding $parent[local:AccountPickerDialog].AccountsSource}"
+                SelectedItem="{Binding $parent[local:AccountPickerDialog].Result, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="m:AccountModel">
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            RowDefinitions="*,Auto">
                             <Border
                                 Grid.Row="0"
                                 Grid.Column="0"
@@ -68,9 +76,13 @@
                                 Grid.Column="1"
                                 Margin="8"
                                 VerticalAlignment="Bottom">
-                                <Run FontSize="{StaticResource LargeFontSize}" Text="{Binding UserName, FallbackValue=Name}" />
+                                <Run
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding UserName, FallbackValue=Name}" />
                                 <LineBreak />
-                                <Run Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{Binding TypeName, FallbackValue=Type}" />
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding TypeName, FallbackValue=Type}" />
                             </TextBlock>
                         </Grid>
                     </DataTemplate>

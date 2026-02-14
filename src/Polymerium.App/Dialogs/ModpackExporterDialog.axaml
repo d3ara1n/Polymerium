@@ -17,18 +17,28 @@
     <ScrollViewer>
         <StackPanel Spacing="24">
             <StackPanel Spacing="8">
-                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}" />
-                <TabStrip ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}" SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}" />
+                <TabStrip
+                    ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}"
+                    SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
                     <TabStrip.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <husk:IconLabel Icon="FolderZip" Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
+                            <husk:IconLabel
+                                Icon="FolderZip"
+                                Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
                         </DataTemplate>
                     </TabStrip.ItemTemplate>
                 </TabStrip>
             </StackPanel>
             <StackPanel Spacing="8">
-                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}" />
-                <TextBox Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}">
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}" />
+                <TextBox
+                    Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}"
+                    Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
@@ -41,8 +51,12 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}" />
-                <TextBox Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}">
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}" />
+                <TextBox
+                    Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}"
+                    Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
@@ -55,8 +69,12 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}" />
-                <TextBox Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}" Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}">
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}" />
+                <TextBox
+                    Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}"
+                    Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide
@@ -69,16 +87,26 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>
-                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsLabelText}" />
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsLabelText}" />
                 <Border
                     Padding="3"
                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Border Padding="8" Background="{StaticResource OverlaySolidBackgroundBrush}">
+                    <Border
+                        Padding="8"
+                        Background="{StaticResource OverlaySolidBackgroundBrush}">
                         <Border.CornerRadius>
                             <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
-                                <Binding Path="Padding" RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                <Binding
+                                    Path="CornerRadius"
+                                    RelativeSource="{RelativeSource FindAncestor,
+                                                                    AncestorType=Border}" />
+                                <Binding
+                                    Path="Padding"
+                                    RelativeSource="{RelativeSource FindAncestor,
+                                                                    AncestorType=Border}" />
                             </MultiBinding>
                         </Border.CornerRadius>
                         <Grid
@@ -97,17 +125,27 @@
                                     Height="36"
                                     Source="/Assets/Icons/Package.png" />
                                 <StackPanel Grid.Column="1">
-                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}" />
-                                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding $parent[local:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Text="{Binding $parent[local:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
                                 </StackPanel>
                             </Grid>
                             <husk:Divider
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Orientation="Vertical" />
-                            <StackPanel Grid.Row="0" Grid.Column="2">
-                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}" />
-                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="2">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}" />
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
                             </StackPanel>
                             <StackPanel
                                 Grid.Row="1"

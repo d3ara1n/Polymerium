@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Polymerium.App.Properties;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
@@ -86,7 +87,7 @@ public class AvaloniaLifetime : IHostedService
     private void Serve()
     {
         CultureInfo.CurrentUICulture = GetSafeCultureInfo(_configuration.Value.ApplicationLanguage);
-        Properties.Resources.Culture = CultureInfo.CurrentUICulture;
+        Resources.Culture = CultureInfo.CurrentUICulture;
         Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
         _lifetime.StopApplication();
     }

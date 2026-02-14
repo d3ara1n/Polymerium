@@ -9,12 +9,16 @@
     xmlns:m="using:Polymerium.App.Models">
     <Design.PreviewWith>
         <Panel>
-            <StackPanel Margin="24" Spacing="12">
+            <StackPanel
+                Margin="24"
+                Spacing="12">
                 <local:InstancePackageButton />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="BasePackageEntryButtonTheme" TargetType="local:InstancePackageButton">
+    <ControlTheme
+        x:Key="BasePackageEntryButtonTheme"
+        TargetType="local:InstancePackageButton">
         <Setter Property="Cursor" Value="Hand" />
     </ControlTheme>
 
@@ -32,7 +36,9 @@
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
-                            <Binding Mode="OneWay" Path="IsEnabled" />
+                            <Binding
+                                Mode="OneWay"
+                                Path="IsEnabled" />
                             <Binding Source="{StaticResource ControlDimOpacity}" />
                         </MultiBinding>
                     </husk:Card.Opacity>
@@ -62,7 +68,9 @@
                             Text="{x:Static lang:Resources.InstancePackageButton_DisabledLabelText}">
                             <TextBlock.Opacity>
                                 <MultiBinding Converter="{x:Static converters:InternalConverters.ZeroOr}">
-                                    <Binding Mode="OneWay" Path="IsEnabled" />
+                                    <Binding
+                                        Mode="OneWay"
+                                        Path="IsEnabled" />
                                     <Binding Source="{StaticResource Overlay2Opacity}" />
                                 </MultiBinding>
                             </TextBlock.Opacity>
@@ -105,9 +113,11 @@
                                                 Spacing="4">
                                                 <husk:Tag
                                                     Classes="Primary"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}"
-                                                    IsVisible="{Binding Owner.IsLocked}">
-                                                    <husk:IconLabel Icon="LockClosed" Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                    IsVisible="{Binding Owner.IsLocked}"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <husk:IconLabel
+                                                        Icon="LockClosed"
+                                                        Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <TextBlock Text="{Binding Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}, FallbackValue=Kind}" />
@@ -142,7 +152,9 @@
                                                 Margin="0,4"
                                                 IsVisible="{Binding Owner.Tags.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                                                 Orientation="Vertical" />
-                                            <ItemsControl Grid.Column="2" ItemsSource="{Binding Owner.Tags}">
+                                            <ItemsControl
+                                                Grid.Column="2"
+                                                ItemsSource="{Binding Owner.Tags}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="x:String">
                                                         <husk:Tag>
@@ -152,7 +164,9 @@
                                                 </ItemsControl.ItemTemplate>
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" Spacing="4" />
+                                                        <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Spacing="4" />
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                             </ItemsControl>
@@ -162,11 +176,15 @@
                                                 Content="{Binding Version}">
                                                 <ContentControl.DataTemplates>
                                                     <DataTemplate DataType="m:InstancePackageVersionModel">
-                                                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{Binding Name, FallbackValue=Version}" />
+                                                        <TextBlock
+                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                            Text="{Binding Name, FallbackValue=Version}" />
                                                     </DataTemplate>
                                                     <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
                                                         <husk:Tag Classes="Primary Small">
-                                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                            <StackPanel
+                                                                Orientation="Horizontal"
+                                                                Spacing="4">
                                                                 <TextBlock Text="{x:Static lang:Resources.InstancePackageButton_AutoVersionTagText}" />
                                                                 <fi:SymbolIcon
                                                                     VerticalAlignment="Center"
@@ -219,7 +237,9 @@
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
-                            <Binding Mode="OneWay" Path="IsEnabled" />
+                            <Binding
+                                Mode="OneWay"
+                                Path="IsEnabled" />
                             <Binding Source="{StaticResource ControlDimOpacity}" />
                         </MultiBinding>
                     </husk:Card.Opacity>

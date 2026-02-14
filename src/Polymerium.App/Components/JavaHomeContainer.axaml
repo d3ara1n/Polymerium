@@ -14,7 +14,9 @@
         Padding="3"
         Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
         CornerRadius="{StaticResource MediumCornerRadius}">
-        <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding $parent[cp:JavaHomeContainer].Home, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <husk:SwitchPresenter
+            TargetType="x:Boolean"
+            Value="{Binding $parent[cp:JavaHomeContainer].Home, Converter={x:Static ObjectConverters.IsNotNull}}">
             <husk:SwitchCase Value="{x:True}">
                 <Grid
                     ColumnDefinitions="*,Auto"
@@ -25,19 +27,27 @@
                         Padding="12,8"
                         Background="{StaticResource OverlaySolidBackgroundBrush}"
                         CornerRadius="{StaticResource SmallCornerRadius}">
-                        <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
+                        <Grid
+                            ColumnDefinitions="Auto,Auto,*"
+                            ColumnSpacing="12">
                             <husk:PlaceholderPresenter
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Source="{Binding $parent[cp:JavaHomeContainer].Major}">
-                                <fi:SymbolIcon FontSize="{StaticResource ExtraLargeFontSize}" Symbol="Question" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    Symbol="Question" />
                                 <husk:PlaceholderPresenter.SourceTemplate>
                                     <DataTemplate x:DataType="x:Int32">
-                                        <TextBlock FontSize="{StaticResource ExtraLargeFontSize}" Text="{Binding}" />
+                                        <TextBlock
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
+                                            Text="{Binding}" />
                                     </DataTemplate>
                                 </husk:PlaceholderPresenter.SourceTemplate>
                             </husk:PlaceholderPresenter>
-                            <husk:Divider Grid.Column="1" Orientation="Vertical" />
+                            <husk:Divider
+                                Grid.Column="1"
+                                Orientation="Vertical" />
                             <Grid
                                 Grid.Column="2"
                                 ColumnDefinitions="Auto,*"
@@ -55,11 +65,11 @@
                                     </husk:PlaceholderPresenter.SourceTemplate>
                                 </husk:PlaceholderPresenter>
                                 <husk:Tag
+                                    Classes="Small"
                                     Grid.Row="0"
                                     Grid.Column="1"
-                                    Classes="Small"
-                                    Content="{Binding $parent[cp:JavaHomeContainer].Version}"
-                                    IsVisible="{Binding $parent[cp:JavaHomeContainer].Version, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}" />
+                                    IsVisible="{Binding $parent[cp:JavaHomeContainer].Version, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
+                                    Content="{Binding $parent[cp:JavaHomeContainer].Version}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Grid.Column="0"
@@ -100,11 +110,13 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.JavaHomeContainer_Prompt}" />
                     <Button
-                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         Classes="Small"
-                        Command="{Binding $parent[cp:JavaHomeContainer].DetectHomeCommand}"
-                        IsEnabled="False">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        IsEnabled="False"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        Command="{Binding $parent[cp:JavaHomeContainer].DetectHomeCommand}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
@@ -113,10 +125,12 @@
                         </StackPanel>
                     </Button>
                     <Button
-                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         Classes="Small"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         Command="{Binding $parent[cp:JavaHomeContainer].PickFileCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"

@@ -32,9 +32,9 @@
             Text="You found the secret code!"
             TextAlignment="Center" />
         <Button
+            Classes="Primary"
             Margin="0,16,0,0"
             HorizontalAlignment="Center"
-            Classes="Primary"
             Command="{Binding $parent[modals:TrophyModal].Dismiss}">
             <TextBlock Text="Awesome!" />
         </Button>

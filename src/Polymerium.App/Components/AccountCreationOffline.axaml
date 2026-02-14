@@ -17,12 +17,14 @@
         </StackPanel>
         <StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AccountCreationOffline_UuidLabelText}" />
-            <TextBox Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite, Mode=TwoWay}" Watermark="{Binding $parent[local:AccountCreationOffline].Uuid, Mode=OneWay}" />
+            <TextBox
+                Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite, Mode=TwoWay}"
+                Watermark="{Binding $parent[local:AccountCreationOffline].Uuid, Mode=OneWay}" />
         </StackPanel>
         <husk:InfoBar
             Classes="Warning"
+            IsVisible="{Binding $parent[local:AccountCreationOffline].IsWarned, FallbackValue=False}"
             Content="{x:Static lang:Resources.AccountCreationOffline_Prompt}"
-            Header="Warning"
-            IsVisible="{Binding $parent[local:AccountCreationOffline].IsWarned, FallbackValue=False}" />
+            Header="Warning" />
     </StackPanel>
 </controls:AccountCreationStep>

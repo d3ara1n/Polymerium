@@ -16,18 +16,22 @@
     x:DataType="m:AccountModel"
     Background="Transparent"
     mc:Ignorable="d">
-    <Grid ColumnSpacing="12" RowDefinitions="Auto,Auto,*">
+    <Grid
+        ColumnSpacing="12"
+        RowDefinitions="Auto,Auto,*">
         <Border
             Grid.Row="1"
             Grid.RowSpan="2"
             Background="{StaticResource FlyoutBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
-            <StackPanel Margin="{StaticResource ModalContentMargin}" Spacing="24">
+            <StackPanel
+                Margin="{StaticResource ModalContentMargin}"
+                Spacing="24">
                 <StackPanel Spacing="12">
                     <Panel>
                         <Button
-                            HorizontalAlignment="Right"
                             Classes="Small"
+                            HorizontalAlignment="Right"
                             Command="{Binding $parent[modals:AccountEntryModal].Dismiss}"
                             CornerRadius="{StaticResource FullCornerRadius}"
                             DockPanel.Dock="Right"
@@ -47,13 +51,21 @@
                 </StackPanel>
                 <StackPanel Spacing="4">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right" Text="{Binding EnrolledAtRaw, StringFormat={}{0:g}, FallbackValue=2025/12/13 02:03}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.AccountEntryModal_EnrolledLabelText}" />
+                        <TextBlock
+                            DockPanel.Dock="Right"
+                            Text="{Binding EnrolledAtRaw, StringFormat={}{0:g}, FallbackValue=2025/12/13 02:03}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.AccountEntryModal_EnrolledLabelText}" />
 
                     </DockPanel>
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right" Text="{Binding LastUsedAt, FallbackValue=never}" />
-                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}" Text="{x:Static lang:Resources.AccountEntryModal_LastUsedLabelText}" />
+                        <TextBlock
+                            DockPanel.Dock="Right"
+                            Text="{Binding LastUsedAt, FallbackValue=never}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.AccountEntryModal_LastUsedLabelText}" />
                     </DockPanel>
                 </StackPanel>
                 <Border
@@ -65,7 +77,9 @@
                     <husk:SwitchPresenter Value="{Binding Type}">
                         <husk:SwitchCase Value="{x:Type accounts:TrialAccount}">
                             <StackPanel Spacing="8">
-                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding TypeName, FallbackValue=Family}" />
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding TypeName, FallbackValue=Family}" />
                                 <StackPanel>
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -76,7 +90,9 @@
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:OfflineAccount}">
                             <StackPanel Spacing="8">
-                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding TypeName, FallbackValue=Offline}" />
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding TypeName, FallbackValue=Offline}" />
                                 <StackPanel>
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -87,7 +103,9 @@
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:MicrosoftAccount}">
                             <StackPanel Spacing="8">
-                                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="{Binding TypeName, FallbackValue=Microsoft}" />
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding TypeName, FallbackValue=Microsoft}" />
                                 <StackPanel>
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -99,7 +117,9 @@
                                     IsVisible="False"
                                     Orientation="Horizontal"
                                     Spacing="8">
-                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
                                         <fi:SymbolIcon
                                             VerticalAlignment="Center"
                                             FontSize="{StaticResource MediumFontSize}"
@@ -112,8 +132,8 @@
                                             Text="Refreshed" />
                                     </StackPanel>
                                     <Button
-                                        HorizontalAlignment="Right"
                                         Classes="Primary Small"
+                                        HorizontalAlignment="Right"
                                         Content="Refresh" />
                                 </StackPanel>
                             </StackPanel>

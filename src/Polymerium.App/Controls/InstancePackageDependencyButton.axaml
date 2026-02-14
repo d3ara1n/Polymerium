@@ -5,7 +5,9 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:local="clr-namespace:Polymerium.App.Controls"
     xmlns:m="clr-namespace:Polymerium.App.Models">
-    <ControlTheme x:Key="{x:Type local:InstancePackageDependencyButton}" TargetType="local:InstancePackageDependencyButton">
+    <ControlTheme
+        x:Key="{x:Type local:InstancePackageDependencyButton}"
+        TargetType="local:InstancePackageDependencyButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Padding" Value="12,10" />
@@ -62,8 +64,8 @@
                                 Spacing="4">
                                 <husk:Tag
                                     VerticalAlignment="Center"
-                                    Content="{x:Static lang:Resources.InstancePackageDependencyButton_RequiredTagText}"
-                                    IsVisible="{Binding IsRequired}" />
+                                    IsVisible="{Binding IsRequired}"
+                                    Content="{x:Static lang:Resources.InstancePackageDependencyButton_RequiredTagText}" />
                                 <husk:Tag VerticalAlignment="Center">
                                     <TextBlock>
                                         <Run Text="{x:Static lang:Resources.InstancePackageDependencyButton_RefCountTagText}" />
@@ -98,11 +100,11 @@
                         Width="3"
                         Margin="0,4"
                         HorizontalAlignment="Left"
+                        IsVisible="{Binding Installed.IsEnabled, Mode=OneWay, FallbackValue={x:False}}"
                         Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                         BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                         BorderThickness="1"
                         CornerRadius="{StaticResource SmallCornerRadius}"
-                        IsVisible="{Binding Installed.IsEnabled, Mode=OneWay, FallbackValue={x:False}}"
                         Opacity="0"
                         RenderTransform="translateX(-4px)">
                         <Border.Transitions>

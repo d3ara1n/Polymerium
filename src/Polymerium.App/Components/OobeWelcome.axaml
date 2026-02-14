@@ -22,7 +22,9 @@
             HorizontalAlignment="Center"
             ClipToBounds="True"
             CornerRadius="{StaticResource LargeCornerRadius}">
-            <Image Source="{x:Static assets:AssetUriIndex.IconBitmap}" Stretch="UniformToFill" />
+            <Image
+                Source="{x:Static assets:AssetUriIndex.IconBitmap}"
+                Stretch="UniformToFill" />
         </Border>
 
         <!--  App Name  -->
@@ -33,7 +35,9 @@
             Text="{x:Static app:Program.Brand}" />
 
         <!--  Welcome Message  -->
-        <StackPanel HorizontalAlignment="Center" Spacing="8">
+        <StackPanel
+            HorizontalAlignment="Center"
+            Spacing="8">
             <TextBlock
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"

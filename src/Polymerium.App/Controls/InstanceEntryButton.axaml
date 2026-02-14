@@ -6,7 +6,9 @@
     xmlns:local="using:Polymerium.App.Controls"
     xmlns:m="clr-namespace:Polymerium.App.Models">
 
-    <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
+    <ControlTheme
+        x:Key="{x:Type local:InstanceEntryButton}"
+        TargetType="local:InstanceEntryButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
@@ -21,7 +23,9 @@
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Border.Transitions>
                         <Transitions>
-                            <BrushTransition Property="Background" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </Border.Transitions>
                     <Panel>
@@ -34,7 +38,9 @@
                             HorizontalAlignment="Right"
                             Opacity="0.5">
                             <Rectangle.Fill>
-                                <ImageBrush Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}" Stretch="Fill" />
+                                <ImageBrush
+                                    Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
+                                    Stretch="Fill" />
                             </Rectangle.Fill>
                             <Rectangle.OpacityMask>
                                 <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
@@ -47,9 +53,9 @@
                             Name="Progress"
                             Height="2"
                             VerticalAlignment="Bottom"
+                            IsVisible="False"
                             CornerRadius="0"
                             IsIndeterminate="{Binding IsPending}"
-                            IsVisible="False"
                             Value="{Binding Progress}">
                             <ProgressBar.Transitions>
                                 <Transitions>
@@ -60,7 +66,9 @@
                                 </Transitions>
                             </ProgressBar.Transitions>
                         </ProgressBar>
-                        <StackPanel Margin="12" Spacing="4">
+                        <StackPanel
+                            Margin="12"
+                            Spacing="4">
                             <Grid ColumnDefinitions="Auto,Auto,*">
                                 <TextBlock
                                     Grid.Column="0"
@@ -87,9 +95,15 @@
                                 TextWrapping="Wrap" />
                             <Border Name="SpacingPlaceholder" />
                             <WrapPanel DockPanel.Dock="Bottom">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <husk:Tag Name="InstallingTag" Classes="Status Warning">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <husk:Tag
+                                        Name="InstallingTag"
+                                        Classes="Status Warning">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4">
                                             <Ellipse
                                                 Width="6"
                                                 Height="6"
@@ -97,8 +111,12 @@
                                             <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_InstallTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="UpdatingTag" Classes="Status Warning">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <husk:Tag
+                                        Name="UpdatingTag"
+                                        Classes="Status Warning">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4">
                                             <Ellipse
                                                 Width="6"
                                                 Height="6"
@@ -106,8 +124,12 @@
                                             <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_UpdatingTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="PreparingTag" Classes="Status Warning">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <husk:Tag
+                                        Name="PreparingTag"
+                                        Classes="Status Warning">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4">
                                             <Ellipse
                                                 Width="6"
                                                 Height="6"
@@ -115,8 +137,12 @@
                                             <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_PreparingTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="RunningTag" Classes="Status Success">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <husk:Tag
+                                        Name="RunningTag"
+                                        Classes="Status Success">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4">
                                             <Ellipse
                                                 Width="6"
                                                 Height="6"
@@ -128,9 +154,15 @@
                                         Name="InfoTags"
                                         Orientation="Horizontal"
                                         Spacing="8">
-                                        <husk:Tag Classes="Status" Content="{Binding Basic.LoaderLabel, FallbackValue=Unknown}" />
-                                        <husk:Tag Classes="Status" Content="{Binding Basic.Version, FallbackValue=Unknown}" />
-                                        <husk:Tag Classes="Status" Content="{Binding LastPlayedAt, FallbackValue=Unknown}" />
+                                        <husk:Tag
+                                            Classes="Status"
+                                            Content="{Binding Basic.LoaderLabel, FallbackValue=Unknown}" />
+                                        <husk:Tag
+                                            Classes="Status"
+                                            Content="{Binding Basic.Version, FallbackValue=Unknown}" />
+                                        <husk:Tag
+                                            Classes="Status"
+                                            Content="{Binding LastPlayedAt, FallbackValue=Unknown}" />
                                     </StackPanel>
                                 </StackPanel>
                             </WrapPanel>
@@ -143,7 +175,9 @@
                             Opacity="0">
                             <Border.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Opacity" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <DoubleTransition
+                                        Property="Opacity"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 </Transitions>
                             </Border.Transitions>
                         </Border>

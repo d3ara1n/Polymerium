@@ -6,7 +6,9 @@
     xmlns:local="using:Polymerium.App.Controls">
     <Design.PreviewWith>
         <Panel>
-            <StackPanel Margin="24" Spacing="12">
+            <StackPanel
+                Margin="24"
+                Spacing="12">
                 <local:LaunchBar
                     Width="256"
                     Height="96"
@@ -22,7 +24,9 @@
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="{x:Type local:LaunchBar}" TargetType="local:LaunchBar">
+    <ControlTheme
+        x:Key="{x:Type local:LaunchBar}"
+        TargetType="local:LaunchBar">
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
@@ -33,7 +37,9 @@
                     ClipToBounds="{TemplateBinding ClipToBounds}"
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
-                        <Border ClipToBounds="{TemplateBinding ClipToBounds}" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border
+                            ClipToBounds="{TemplateBinding ClipToBounds}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                             <Rectangle
                                 Name="PART_Background"
                                 Margin="-250"
@@ -44,9 +50,9 @@
                                 <!--  Idle State  -->
                                 <Button
                                     Name="PART_PlayButton"
+                                    Classes="Primary"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"
-                                    Classes="Primary"
                                     Command="{TemplateBinding PlayCommand}">
                                     <Button.Transitions>
                                         <Transitions>
@@ -56,7 +62,9 @@
                                                 Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </Button.Transitions>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
                                         <icons:PackIconLucide
                                             Height="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
@@ -87,9 +95,9 @@
                                 <!--  Building State  -->
                                 <Button
                                     Name="PART_AbortButton"
+                                    Classes="Danger"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"
-                                    Classes="Danger"
                                     Command="{TemplateBinding AbortCommand}">
                                     <Button.Transitions>
                                         <Transitions>
@@ -99,7 +107,9 @@
                                                 Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </Button.Transitions>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
                                         <icons:PackIconLucide
                                             Height="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
@@ -155,7 +165,9 @@
                                                 Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
                                     </Button.Transitions>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
                                         <icons:PackIconLucide
                                             Height="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
@@ -273,7 +285,9 @@
                 </Setter>
 
                 <Style.Animations>
-                    <Animation IterationCount="Infinite" Duration="0:0:5">
+                    <Animation
+                        IterationCount="Infinite"
+                        Duration="0:0:5">
                         <KeyFrame Cue="0%">
                             <Setter Property="TranslateTransform.X" Value="0" />
                             <Setter Property="TranslateTransform.Y" Value="0" />
@@ -338,7 +352,9 @@
                 </Setter>
 
                 <Style.Animations>
-                    <Animation IterationCount="Infinite" Duration="0:0:10">
+                    <Animation
+                        IterationCount="Infinite"
+                        Duration="0:0:10">
                         <KeyFrame Cue="0%">
                             <Setter Property="TranslateTransform.X" Value="0" />
                             <Setter Property="TranslateTransform.Y" Value="0" />

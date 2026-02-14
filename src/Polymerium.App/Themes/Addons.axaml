@@ -8,26 +8,26 @@
         <Setter Property="ContextFlyout">
             <MenuFlyout>
                 <MenuItem
+                    IsEnabled="{Binding $parent[TextBox].CanCut}"
                     Command="{Binding $parent[TextBox].Cut}"
                     Header="{x:Static lang:Resources.Shared_Cut}"
                     Icon="{fie:SymbolIcon Symbol=Cut,
                                           FontSize={StaticResource MediumFontSize}}"
-                    InputGesture="{x:Static TextBox.CutGesture}"
-                    IsEnabled="{Binding $parent[TextBox].CanCut}" />
+                    InputGesture="{x:Static TextBox.CutGesture}" />
                 <MenuItem
+                    IsEnabled="{Binding $parent[TextBox].CanCopy}"
                     Command="{Binding $parent[TextBox].Copy}"
                     Header="{x:Static lang:Resources.Shared_Copy}"
                     Icon="{fie:SymbolIcon Symbol=Copy,
                                           FontSize={StaticResource MediumFontSize}}"
-                    InputGesture="{x:Static TextBox.CopyGesture}"
-                    IsEnabled="{Binding $parent[TextBox].CanCopy}" />
+                    InputGesture="{x:Static TextBox.CopyGesture}" />
                 <MenuItem
+                    IsEnabled="{Binding $parent[TextBox].CanPaste}"
                     Command="{Binding $parent[TextBox].Paste}"
                     Header="{x:Static lang:Resources.Shared_Paste}"
                     Icon="{fie:SymbolIcon Symbol=ClipboardPaste,
                                           FontSize={StaticResource MediumFontSize}}"
-                    InputGesture="{x:Static TextBox.PasteGesture}"
-                    IsEnabled="{Binding $parent[TextBox].CanPaste}" />
+                    InputGesture="{x:Static TextBox.PasteGesture}" />
             </MenuFlyout>
         </Setter>
     </Style>

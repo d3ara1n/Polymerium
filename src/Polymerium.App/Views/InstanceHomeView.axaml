@@ -29,7 +29,9 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Padding" Value="12,4" />
         </ControlTheme>
-        <ControlTheme x:Key="LaunchButtonTheme" TargetType="Button">
+        <ControlTheme
+            x:Key="LaunchButtonTheme"
+            TargetType="Button">
             <Setter Property="Background" Value="{StaticResource ControlAccentBackgroundBrush}" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="ClipToBounds" Value="False" />
@@ -140,7 +142,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" MinWidth="230" />
+            <ColumnDefinition
+                Width="*"
+                MinWidth="230" />
         </Grid.ColumnDefinitions>
         <!--  Overview  -->
         <husk:Card
@@ -153,7 +157,9 @@
             <Panel>
                 <Border CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
-                        <ImageBrush Source="{Binding Screenshot}" Stretch="UniformToFill" />
+                        <ImageBrush
+                            Source="{Binding Screenshot}"
+                            Stretch="UniformToFill" />
                     </Border.Background>
                     <Border.OpacityMask>
                         <LinearGradientBrush StartPoint="0%,10%" EndPoint="100%,100%">
@@ -186,9 +192,9 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Padding="2"
+                        IsVisible="False"
                         Background="{StaticResource ControlAccentBackgroundBrush}"
-                        CornerRadius="{StaticResource SmallCornerRadius}"
-                        IsVisible="False">
+                        CornerRadius="{StaticResource SmallCornerRadius}">
                         <Grid ColumnDefinitions="Auto,*">
                             <Border
                                 Grid.Column="0"
@@ -196,8 +202,14 @@
                                 Background="{StaticResource ControlAccentInteractiveBackgroundBrush}">
                                 <Border.CornerRadius>
                                     <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                        <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
-                                        <Binding Path="Padding" RelativeSource="{RelativeSource FindAncestor, AncestorType=Border}" />
+                                        <Binding
+                                            Path="CornerRadius"
+                                            RelativeSource="{RelativeSource FindAncestor,
+                                                                            AncestorType=Border}" />
+                                        <Binding
+                                            Path="Padding"
+                                            RelativeSource="{RelativeSource FindAncestor,
+                                                                            AncestorType=Border}" />
                                     </MultiBinding>
                                 </Border.CornerRadius>
                                 <icons:PackIconLucide
@@ -221,14 +233,20 @@
             Grid.Column="2"
             CornerRadius="{StaticResource MediumCornerRadius}"
             IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Updating}">
-            <husk:Card BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1">
-                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="8">
+            <husk:Card
+                BorderBrush="{StaticResource ControlBorderBrush}"
+                BorderThickness="1">
+                <Grid
+                    RowDefinitions="Auto,*,Auto"
+                    RowSpacing="8">
                     <StackPanel
                         Grid.Row="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                        <TextBlock FontSize="{StaticResource ExtraLargeFontSize}" Text="{Binding PackageCount, FallbackValue=114514}" />
+                        <TextBlock
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Text="{Binding PackageCount, FallbackValue=114514}" />
                         <TextBlock
                             Margin="4"
                             VerticalAlignment="Bottom"
@@ -253,9 +271,15 @@
                             Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                             CommandParameter="{x:Type v:InstanceSetupView}"
                             Theme="{StaticResource SectionHeaderButtonTheme}">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.InstanceHomeView_SetupEditButtonText}" />
-                                <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="{x:Static lang:Resources.InstanceHomeView_SetupEditButtonText}" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Symbol="ArrowRight" />
                             </StackPanel>
                         </Button>
                     </Grid>
@@ -265,11 +289,19 @@
                         BorderThickness="0">
                         <husk:Card.CornerRadius>
                             <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}" />
-                                <Binding Path="Padding" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}" />
+                                <Binding
+                                    Path="CornerRadius"
+                                    RelativeSource="{RelativeSource FindAncestor,
+                                                                    AncestorType={x:Type husk:Card}}" />
+                                <Binding
+                                    Path="Padding"
+                                    RelativeSource="{RelativeSource FindAncestor,
+                                                                    AncestorType={x:Type husk:Card}}" />
                             </MultiBinding>
                         </husk:Card.CornerRadius>
-                        <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="12">
+                        <Grid
+                            ColumnDefinitions="*,Auto,*"
+                            ColumnSpacing="12">
                             <Grid
                                 Grid.Column="0"
                                 RowDefinitions="Auto,*"
@@ -285,7 +317,9 @@
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding Basic.LoaderLabel, FallbackValue=Type}" />
                             </Grid>
-                            <husk:Divider Grid.Column="1" Orientation="Vertical" />
+                            <husk:Divider
+                                Grid.Column="1"
+                                Orientation="Vertical" />
                             <Grid
                                 Grid.Column="2"
                                 RowDefinitions="Auto,*"
@@ -338,14 +372,22 @@
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                     CommandParameter="{x:Type v:InstanceActivitiesView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
-                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource SmallFontSize}"
+                            Symbol="ArrowRight" />
                     </StackPanel>
                 </Button>
             </Grid>
             <husk:Card Grid.Row="1">
-                <Grid RowDefinitions="*,Auto" RowSpacing="12">
+                <Grid
+                    RowDefinitions="*,Auto"
+                    RowSpacing="12">
                     <Panel
                         Grid.Row="0"
                         Width="122"
@@ -358,22 +400,34 @@
                             TrackStrokeWidth="2"
                             Value="{Binding PercentageInTotalPlayTime, FallbackValue=0.37}" />
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource ExtraLargeFontSize}"
                                 Text="{Binding TotalPlayTime, StringFormat={}{0:0.0}, FallbackValue=12.4}" />
                         </StackPanel>
                     </Panel>
-                    <StackPanel Grid.Row="1" Spacing="8">
+                    <StackPanel
+                        Grid.Row="1"
+                        Spacing="8">
                         <husk:Card Background="Transparent">
                             <husk:Card.CornerRadius>
                                 <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}" />
-                                    <Binding Path="Padding" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}" />
+                                    <Binding
+                                        Path="CornerRadius"
+                                        RelativeSource="{RelativeSource FindAncestor,
+                                                                        AncestorType={x:Type husk:Card}}" />
+                                    <Binding
+                                        Path="Padding"
+                                        RelativeSource="{RelativeSource FindAncestor,
+                                                                        AncestorType={x:Type husk:Card}}" />
                                 </MultiBinding>
                             </husk:Card.CornerRadius>
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="4">
                                 <fi:SymbolIcon
                                     Grid.Column="0"
                                     FontSize="{StaticResource MediumFontSize}"
@@ -388,11 +442,19 @@
                         <husk:Card Background="Transparent">
                             <husk:Card.CornerRadius>
                                 <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}" />
-                                    <Binding Path="Padding" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}" />
+                                    <Binding
+                                        Path="CornerRadius"
+                                        RelativeSource="{RelativeSource FindAncestor,
+                                                                        AncestorType={x:Type husk:Card}}" />
+                                    <Binding
+                                        Path="Padding"
+                                        RelativeSource="{RelativeSource FindAncestor,
+                                                                        AncestorType={x:Type husk:Card}}" />
                                 </MultiBinding>
                             </husk:Card.CornerRadius>
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="4">
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="4">
                                 <fi:SymbolIcon
                                     Grid.Column="0"
                                     FontSize="{StaticResource MediumFontSize}"
@@ -430,9 +492,15 @@
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                     CommandParameter="{x:Type v:InstanceWidgetsView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
-                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource SmallFontSize}"
+                            Symbol="ArrowRight" />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -453,12 +521,16 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                 </StackPanel>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled">
                     <ItemsControl ItemsSource="{Binding PinnedWidgets, Mode=OneTime}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="widgets:WidgetBase">
                                 <husk:Card>
-                                    <Grid RowDefinitions="Auto,*" RowSpacing="8">
+                                    <Grid
+                                        RowDefinitions="Auto,*"
+                                        RowSpacing="8">
                                         <husk:IconLabel
                                             Grid.Row="0"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -480,7 +552,9 @@
                         </ItemsControl.ItemContainerTheme>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="12" />
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="12" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
@@ -509,9 +583,13 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="0">
-                    <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
+                    <husk:SwitchPresenter
+                        TargetType="trident:InstanceState"
+                        Value="{Binding State}">
                         <husk:SwitchCase Value="Idle">
-                            <husk:SwitchPresenter TargetType="x:Boolean" Value="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay, FallbackValue={x:False}}">
+                            <husk:SwitchPresenter
+                                TargetType="x:Boolean"
+                                Value="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay, FallbackValue={x:False}}">
                                 <husk:SwitchCase Value="{x:True}">
                                     <StackPanel
                                         HorizontalAlignment="Center"
@@ -524,7 +602,9 @@
                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
                                             IconVariant="Filled"
                                             Symbol="CheckmarkCircle" />
-                                        <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}" Text="{x:Static lang:Resources.InstanceHomeView_ReadyLabelText}" />
+                                        <TextBlock
+                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                            Text="{x:Static lang:Resources.InstanceHomeView_ReadyLabelText}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="{x:False}">
@@ -539,7 +619,9 @@
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
                                             IconVariant="Filled"
                                             Symbol="DismissCircle" />
-                                        <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}" Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
+                                        <TextBlock
+                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                            Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
@@ -561,12 +643,16 @@
                                         </Transitions>
                                     </ProgressBar.Transitions>
                                 </ProgressBar>
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding DeployingMessage, Mode=OneWay}" TextAlignment="Center" />
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
                                     <TextBlock
+                                        Text="{Binding DeployingMessage, Mode=OneWay}"
+                                        TextAlignment="Center" />
+                                    <TextBlock
+                                        IsVisible="{Binding DeployingPending, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        IsVisible="{Binding DeployingPending, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
                                         TextAlignment="Center">
                                         <Run Text="{Binding DeployingProgressCurrent, Mode=OneWay}" />
                                         <Run Text="/" />
@@ -578,8 +664,12 @@
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="Running">
                             <Panel>
-                                <Border ClipToBounds="True" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}}">
-                                    <Rectangle Margin="-250" Opacity="0.2">
+                                <Border
+                                    ClipToBounds="True"
+                                    CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}}">
+                                    <Rectangle
+                                        Margin="-250"
+                                        Opacity="0.2">
                                         <Rectangle.Fill>
                                             <VisualBrush
                                                 DestinationRect="0,0,250,250"
@@ -598,7 +688,9 @@
                                         <Rectangle.Styles>
                                             <Style Selector="Rectangle">
                                                 <Style.Animations>
-                                                    <Animation IterationCount="Infinite" Duration="0:0:5">
+                                                    <Animation
+                                                        IterationCount="Infinite"
+                                                        Duration="0:0:5">
                                                         <KeyFrame Cue="0%">
                                                             <Setter Property="TranslateTransform.X" Value="250" />
                                                         </KeyFrame>
@@ -624,31 +716,44 @@
                 </husk:Card>
 
             </Grid>
-            <husk:Card Grid.Column="1" Padding="0">
-                <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
+            <husk:Card
+                Grid.Column="1"
+                Padding="0">
+                <husk:SwitchPresenter
+                    TargetType="trident:InstanceState"
+                    Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <DockPanel>
                             <Button
                                 Margin="4"
+                                IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                 BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                                 Command="{Binding PlayCommand}"
                                 DockPanel.Dock="Left"
                                 Foreground="{StaticResource ControlBlackForegroundBrush}"
-                                IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Theme="{StaticResource LaunchButtonTheme}">
                                 <Button.CornerRadius>
                                     <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                        <Binding Path="CornerRadius" RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Card}" />
-                                        <Binding Path="Margin" RelativeSource="{RelativeSource Self}" />
+                                        <Binding
+                                            Path="CornerRadius"
+                                            RelativeSource="{RelativeSource FindAncestor,
+                                                                            AncestorType=husk:Card}" />
+                                        <Binding
+                                            Path="Margin"
+                                            RelativeSource="{RelativeSource Self}" />
                                     </MultiBinding>
                                 </Button.CornerRadius>
-                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    Spacing="6">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
                                         FontSize="20"
                                         Symbol="Rocket" />
-                                    <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Resources.InstanceHomeView_LaunchButtonText}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Text="{x:Static lang:Resources.InstanceHomeView_LaunchButtonText}" />
                                 </StackPanel>
                             </Button>
                             <DockPanel>
@@ -737,12 +842,16 @@
                             Margin="8"
                             Command="{Binding AbortCommand}"
                             Theme="{StaticResource LaunchButtonTheme}">
-                            <StackPanel VerticalAlignment="Center" Spacing="6">
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                Spacing="6">
                                 <fi:SymbolIcon
                                     HorizontalAlignment="Center"
                                     FontSize="20"
                                     Symbol="Stop" />
-                                <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Resources.InstanceHomeView_AbortButtonText}" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Text="{x:Static lang:Resources.InstanceHomeView_AbortButtonText}" />
                             </StackPanel>
                         </Button>
                     </husk:SwitchCase>
@@ -755,19 +864,25 @@
                                 BorderBrush="{StaticResource ControlDangerTranslucentFullBackgroundBrush}"
                                 Command="{Binding StopCommand}"
                                 Theme="{StaticResource LaunchButtonTheme}">
-                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    Spacing="6">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
                                         FontSize="20"
                                         Symbol="Rocket" />
-                                    <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Resources.InstanceHomeView_KillButtonText}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Text="{x:Static lang:Resources.InstanceHomeView_KillButtonText}" />
                                 </StackPanel>
                             </Button>
-                            <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                            <Grid
+                                Grid.Column="1"
+                                RowDefinitions="Auto,*">
                                 <Button
+                                    Classes="Small"
                                     Grid.Row="0"
                                     Margin="0,8,8,0"
-                                    Classes="Small"
                                     Command="{Binding EjectCommand}">
                                     <TextBlock Text="{x:Static lang:Resources.InstanceHomeView_DetachButtonText}" />
                                 </Button>
@@ -780,7 +895,9 @@
                                     Command="{Binding OpenDashboardCommand}"
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     Theme="{StaticResource GhostButtonTheme}">
-                                    <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
+                                    <Grid
+                                        ColumnDefinitions="Auto,8,*"
+                                        RowDefinitions="Auto,*,Auto">
                                         <icons:PackIconLucide
                                             Grid.Row="0"
                                             Grid.RowSpan="3"

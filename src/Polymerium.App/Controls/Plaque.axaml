@@ -6,12 +6,16 @@
 
     <x:Double x:Key="PlaqueSpacing">5</x:Double>
 
-    <ControlTheme x:Key="{x:Type local:Plaque}" TargetType="local:Plaque">
+    <ControlTheme
+        x:Key="{x:Type local:Plaque}"
+        TargetType="local:Plaque">
         <Setter Property="Padding" Value="12" />
         <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" CornerRadius="{StaticResource MediumCornerRadius}">
+                <Border
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid
                         Margin="{Binding Source={StaticResource PlaqueSpacing}, Converter={x:Static husk:ThicknessConverters.FromDouble}}"
                         RowDefinitions="*,Auto"
@@ -21,7 +25,9 @@
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             CornerRadius="{StaticResource SmallCornerRadius}">
-                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </Border>
                         <ContentPresenter
                             Grid.Row="1"

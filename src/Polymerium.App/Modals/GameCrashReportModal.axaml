@@ -23,12 +23,14 @@
                 ColumnSpacing="8">
                 <!--  Export Diagnostic Package Button  -->
                 <Button
+                    Classes="Primary"
                     Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"
-                    Classes="Primary"
                     Command="{Binding $parent[modals:GameCrashReportModal].ExportDiagnosticPackageCommand}">
-                    <husk:IconLabel Icon="BoxMultiple" Text="{x:Static lang:Resources.GameCrashReportModal_ExportDiagnosticPackageButtonText}" />
+                    <husk:IconLabel
+                        Icon="BoxMultiple"
+                        Text="{x:Static lang:Resources.GameCrashReportModal_ExportDiagnosticPackageButtonText}" />
                 </Button>
                 <!--  Close Button  -->
                 <Button
@@ -42,9 +44,13 @@
         </StackPanel>
 
         <ScrollViewer>
-            <StackPanel Margin="{StaticResource ModalContentMargin}" Spacing="20">
+            <StackPanel
+                Margin="{StaticResource ModalContentMargin}"
+                Spacing="20">
                 <!--  Header Section - Centered  -->
-                <StackPanel HorizontalAlignment="Center" Spacing="8">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Spacing="8">
                     <!--  Report Type Label  -->
                     <Border
                         Padding="16,6"
@@ -203,12 +209,16 @@
                     BorderThickness="1"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Desktop" />
-                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.GameCrashReportModal_SystemEnvironmentTitle}" />
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.GameCrashReportModal_SystemEnvironmentTitle}" />
                         </StackPanel>
                         <Grid
                             ColumnDefinitions="120,*"
@@ -280,11 +290,11 @@
 
                 <!--  Last Log Lines (if available)  -->
                 <Border
+                    IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.LastLogLines, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}"
                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                     BorderBrush="{StaticResource ControlBorderBrush}"
                     BorderThickness="1"
-                    CornerRadius="{StaticResource MediumCornerRadius}"
-                    IsVisible="{Binding $parent[modals:GameCrashReportModal].Report.LastLogLines, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
+                    CornerRadius="{StaticResource MediumCornerRadius}">
                     <StackPanel Spacing="12">
                         <StackPanel
                             Margin="16,16,16,0"
@@ -294,9 +304,13 @@
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Document" />
-                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="{x:Static lang:Resources.GameCrashReportModal_LastLogOutputTitle}" />
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.GameCrashReportModal_LastLogOutputTitle}" />
                         </StackPanel>
-                        <ScrollViewer MaxHeight="240" HorizontalScrollBarVisibility="Auto">
+                        <ScrollViewer
+                            MaxHeight="240"
+                            HorizontalScrollBarVisibility="Auto">
                             <TextBlock
                                 Margin="16"
                                 FontFamily="Cascadia Code, Consolas, Courier New, monospace"
@@ -319,11 +333,17 @@
                         Grid.Column="0"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
-                        Command="{Binding $parent[modals:GameCrashReportModal].OpenLogFileCommand}"
-                        IsEnabled="{Binding $parent[modals:GameCrashReportModal].Report.LogFilePath, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <fi:SymbolIcon FontSize="16" Symbol="Document" />
-                            <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.GameCrashReportModal_OpenLatestLogButtonText}" />
+                        IsEnabled="{Binding $parent[modals:GameCrashReportModal].Report.LogFilePath, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}"
+                        Command="{Binding $parent[modals:GameCrashReportModal].OpenLogFileCommand}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                FontSize="16"
+                                Symbol="Document" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Text="{x:Static lang:Resources.GameCrashReportModal_OpenLatestLogButtonText}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -331,11 +351,17 @@
                         Grid.Column="1"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
-                        Command="{Binding $parent[modals:GameCrashReportModal].OpenCrashReportCommand}"
-                        IsEnabled="{Binding $parent[modals:GameCrashReportModal].Report.CrashReportPath, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <fi:SymbolIcon FontSize="16" Symbol="DocumentError" />
-                            <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.GameCrashReportModal_OpenCrashReportButtonText}" />
+                        IsEnabled="{Binding $parent[modals:GameCrashReportModal].Report.CrashReportPath, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}"
+                        Command="{Binding $parent[modals:GameCrashReportModal].OpenCrashReportCommand}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                FontSize="16"
+                                Symbol="DocumentError" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Text="{x:Static lang:Resources.GameCrashReportModal_OpenCrashReportButtonText}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -344,9 +370,15 @@
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         Command="{Binding $parent[modals:GameCrashReportModal].OpenGameDirectoryCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <fi:SymbolIcon FontSize="16" Symbol="Folder" />
-                            <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.GameCrashReportModal_OpenGameDirectoryButtonText}" />
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                FontSize="16"
+                                Symbol="Folder" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Text="{x:Static lang:Resources.GameCrashReportModal_OpenGameDirectoryButtonText}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -355,9 +387,15 @@
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         Command="{Binding $parent[modals:GameCrashReportModal].CopyToClipboardCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <fi:SymbolIcon FontSize="16" Symbol="Copy" />
-                            <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{x:Static lang:Resources.GameCrashReportModal_CopyReportButtonText}" />
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                FontSize="16"
+                                Symbol="Copy" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Text="{x:Static lang:Resources.GameCrashReportModal_CopyReportButtonText}" />
                         </StackPanel>
                     </Button>
                 </Grid>

@@ -13,5 +13,7 @@
     Header="Image Viewer"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <Image async:ImageLoader.Source="{Binding $parent[local:ImageViewerToast].ImageSource}" RenderOptions.BitmapInterpolationMode="HighQuality" />
+    <Image
+        async:ImageLoader.Source="{Binding $parent[local:ImageViewerToast].ImageSource}"
+        RenderOptions.BitmapInterpolationMode="HighQuality" />
 </husk:Toast>

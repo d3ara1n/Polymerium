@@ -19,37 +19,51 @@
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <controls:Subpage.Resources>
-        <husk:RelayDataTemplate x:Key="LogSourceTemplate" x:DataType="m:LogSourceModelBase">
+        <husk:RelayDataTemplate
+            x:Key="LogSourceTemplate"
+            x:DataType="m:LogSourceModelBase">
             <DataTemplate DataType="m:LiveLogSourceModel">
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                <Grid
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="8">
                     <icons:PackIconLucide
                         Grid.Column="0"
                         Width="{StaticResource MediumFontSize}"
                         Height="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
                         Kind="Radio" />
-                    <TextBlock Grid.Column="1" Text="实时日志" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="实时日志" />
                     <husk:Tag
-                        Grid.Column="2"
                         Classes="Small Success"
+                        Grid.Column="2"
                         Content="Live" />
                 </Grid>
             </DataTemplate>
             <DataTemplate DataType="m:FileLogSourceModel">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="8">
                     <icons:PackIconLucide
                         Grid.Column="0"
                         Width="{StaticResource MediumFontSize}"
                         Height="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
                         Kind="File" />
-                    <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="{Binding Name}" />
                 </Grid>
             </DataTemplate>
         </husk:RelayDataTemplate>
         <!--  日志条目内容模板  -->
-        <DataTemplate x:Key="ScrapTemplate" DataType="m:ScrapModel">
-            <TextBlock TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Message}">
+        <DataTemplate
+            x:Key="ScrapTemplate"
+            DataType="m:ScrapModel">
+            <TextBlock
+                TextTrimming="CharacterEllipsis"
+                ToolTip.Tip="{Binding Message}">
                 <Run
                     FontFamily="Cascadia Code, Consolas, monospace"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -61,8 +75,12 @@
                         CornerRadius="2">
                         <Border.IsVisible>
                             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                <Binding Converter="{x:Static StringConverters.IsNotNullOrEmpty}" Path="Thread" />
-                                <Binding Converter="{x:Static StringConverters.IsNotNullOrEmpty}" Path="Sender" />
+                                <Binding
+                                    Converter="{x:Static StringConverters.IsNotNullOrEmpty}"
+                                    Path="Thread" />
+                                <Binding
+                                    Converter="{x:Static StringConverters.IsNotNullOrEmpty}"
+                                    Path="Sender" />
                             </MultiBinding>
                         </Border.IsVisible>
                         <TextBlock
@@ -82,7 +100,9 @@
         </DataTemplate>
     </controls:Subpage.Resources>
 
-    <Grid RowDefinitions="Auto,*" RowSpacing="12">
+    <Grid
+        RowDefinitions="Auto,*"
+        RowSpacing="12">
         <!--  顶部统计卡片区域  -->
         <UniformGrid
             Grid.Row="0"
@@ -92,14 +112,18 @@
             Rows="1">
             <!--  运行状态卡片  -->
             <husk:Card Padding="0">
-                <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
+                <husk:SwitchPresenter
+                    TargetType="trident:InstanceState"
+                    Value="{Binding State}">
                     <!--  Running 状态  -->
                     <husk:SwitchCase Value="Running">
                         <Border
                             Padding="12"
                             Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
                             CornerRadius="{StaticResource SmallCornerRadius}">
-                            <StackPanel VerticalAlignment="Center" Spacing="8">
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                Spacing="8">
                                 <icons:PackIconLucide
                                     Width="32"
                                     Height="32"
@@ -175,7 +199,9 @@
 
             <!--  游戏次数卡片  -->
             <husk:Card>
-                <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                <Grid
+                    RowDefinitions="*,Auto"
+                    RowSpacing="8">
                     <StackPanel
                         Grid.Row="0"
                         VerticalAlignment="Center"
@@ -191,11 +217,13 @@
                             Text="游戏次数" />
                     </StackPanel>
                     <Button
+                        Classes="Small"
                         Grid.Row="1"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Classes="Small">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        HorizontalContentAlignment="Center">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
@@ -208,7 +236,9 @@
 
             <!--  崩溃次数卡片  -->
             <husk:Card>
-                <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                <Grid
+                    RowDefinitions="*,Auto"
+                    RowSpacing="8">
                     <StackPanel
                         Grid.Row="0"
                         VerticalAlignment="Center"
@@ -224,11 +254,13 @@
                             Text="崩溃次数" />
                     </StackPanel>
                     <Button
+                        Classes="Small"
                         Grid.Row="1"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Classes="Small">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        HorizontalContentAlignment="Center">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <icons:PackIconLucide
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
@@ -281,7 +313,9 @@
                         SelectedItem="{Binding SelectedSource, Mode=TwoWay}" />
 
                     <!--  搜索框  -->
-                    <TextBox Grid.Column="1" Watermark="搜索日志内容...">
+                    <TextBox
+                        Grid.Column="1"
+                        Watermark="搜索日志内容...">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <icons:PackIconLucide
@@ -296,8 +330,12 @@
                         </TextBox.InnerLeftContent>
                         <TextBox.InnerRightContent>
                             <StackPanel Orientation="Horizontal">
-                                <Button Command="{Binding $parent[TextBox].Clear}" IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                                    <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="Dismiss" />
+                                <Button
+                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    Command="{Binding $parent[TextBox].Clear}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Symbol="Dismiss" />
                                 </Button>
                                 <TextBlock
                                     Margin="0,0,8,0"
@@ -324,12 +362,16 @@
                                     <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
                                 </Style>
                             </ToggleButton.Styles>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <Ellipse
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     Fill="{StaticResource ControlDangerBackgroundBrush}" />
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="8" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="8" />
                             </StackPanel>
                         </ToggleButton>
 
@@ -341,12 +383,16 @@
                                     <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
                                 </Style>
                             </ToggleButton.Styles>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <Ellipse
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     Fill="{StaticResource ControlWarningBackgroundBrush}" />
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="111" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="111" />
                             </StackPanel>
                         </ToggleButton>
 
@@ -358,12 +404,16 @@
                                     <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
                                 </Style>
                             </ToggleButton.Styles>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <Ellipse
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     Fill="{StaticResource ControlBackgroundBrush}" />
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="1021" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Text="1021" />
                             </StackPanel>
                         </ToggleButton>
                     </StackPanel>
@@ -409,7 +459,9 @@
                                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                                 BorderBrush="{StaticResource ControlBorderBrush}"
                                                 BorderThickness="3,0,0,0">
-                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                                <ContentControl
+                                                    Content="{Binding}"
+                                                    ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
                                         </husk:SwitchCase>
                                         <!--  Warning 级别  -->
@@ -419,7 +471,9 @@
                                                 Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
                                                 BorderBrush="{StaticResource ControlWarningBorderBrush}"
                                                 BorderThickness="3,0,0,0">
-                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                                <ContentControl
+                                                    Content="{Binding}"
+                                                    ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
                                         </husk:SwitchCase>
                                         <!--  Error 级别  -->
@@ -429,7 +483,9 @@
                                                 Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
                                                 BorderBrush="{StaticResource ControlDangerBorderBrush}"
                                                 BorderThickness="3,0,0,0">
-                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                                <ContentControl
+                                                    Content="{Binding}"
+                                                    ContentTemplate="{StaticResource LogEntryContentTemplate}" />
                                             </Border>
                                         </husk:SwitchCase>
                                     </husk:SwitchPresenter>

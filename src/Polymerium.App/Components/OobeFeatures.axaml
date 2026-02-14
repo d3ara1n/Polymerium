@@ -18,7 +18,9 @@
         VerticalAlignment="Center"
         Spacing="16">
         <!--  Header  -->
-        <StackPanel HorizontalAlignment="Center" Spacing="8">
+        <StackPanel
+            HorizontalAlignment="Center"
+            Spacing="8">
             <Border
                 Width="64"
                 Height="64"

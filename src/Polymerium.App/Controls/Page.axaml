@@ -4,8 +4,12 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
     <Design.PreviewWith>
-        <husk:Page Width="128" Height="128">
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center">
+        <husk:Page
+            Width="128"
+            Height="128">
+            <Button
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
                 <icons:PackIconLucide
                     Width="12"
                     Height="12"

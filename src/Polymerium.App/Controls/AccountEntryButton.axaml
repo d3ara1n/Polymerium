@@ -12,7 +12,9 @@
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="{x:Type local:AccountEntryButton}" TargetType="local:AccountEntryButton">
+    <ControlTheme
+        x:Key="{x:Type local:AccountEntryButton}"
+        TargetType="local:AccountEntryButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
@@ -31,7 +33,9 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
-                        <StackPanel Margin="{TemplateBinding Padding}" Spacing="12">
+                        <StackPanel
+                            Margin="{TemplateBinding Padding}"
+                            Spacing="12">
                             <Border CornerRadius="{StaticResource MediumCornerRadius}">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="100%,0%" EndPoint="0%,100%">
@@ -58,10 +62,10 @@
                                         Text="{Binding TypeName, FallbackValue=Type}" />
                                     <fi:SymbolIcon
                                         Grid.Column="1"
+                                        IsVisible="{Binding IsDefault, Mode=OneWay, FallbackValue=True}"
                                         FontSize="{StaticResource MediumFontSize}"
                                         Foreground="{StaticResource ControlSuccessForegroundBrush}"
                                         IconVariant="Filled"
-                                        IsVisible="{Binding IsDefault, Mode=OneWay, FallbackValue=True}"
                                         Symbol="CheckmarkCircle" />
                                 </Grid>
                             </StackPanel>

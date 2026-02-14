@@ -13,12 +13,16 @@
     <Design.PreviewWith>
         <Panel Background="White">
             <StackPanel Margin="24">
-                <controls:ExhibitModpackButton MaxWidth="256" Theme="{StaticResource GridExhibitModpackButtonTheme}" />
+                <controls:ExhibitModpackButton
+                    MaxWidth="256"
+                    Theme="{StaticResource GridExhibitModpackButtonTheme}" />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="BaseExhibitModpackButtonTheme" TargetType="controls:ExhibitModpackButton">
+    <ControlTheme
+        x:Key="BaseExhibitModpackButtonTheme"
+        TargetType="controls:ExhibitModpackButton">
         <Setter Property="Cursor" Value="Hand" />
     </ControlTheme>
 
@@ -59,10 +63,14 @@
                             Width="{Binding $self.Bounds.Height}"
                             CornerRadius="{StaticResource SmallCornerRadius}">
                             <Border.Background>
-                                <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                <ImageBrush
+                                    async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                    Stretch="UniformToFill" />
                             </Border.Background>
                         </Border>
-                        <StackPanel Grid.Row="0" Grid.Column="1">
+                        <StackPanel
+                            Grid.Row="0"
+                            Grid.Column="1">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -137,10 +145,14 @@
                                     Classes="Primary Small"
                                     Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
                                         <!--  <icons:PackIconLucide Kind="Download"  -->
                                         <!--  Height="10" Width="10" VerticalAlignment="Center" />  -->
-                                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowDownload" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="ArrowDownload" />
                                         <TextBlock Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
@@ -148,13 +160,17 @@
                             <ItemsControl ItemsSource="{Binding Tags}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" Spacing="4" />
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
                                         <husk:Tag>
-                                            <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{Binding}" />
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Text="{Binding}" />
                                         </husk:Tag>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -218,7 +234,9 @@
                                 Height="80"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                 <Border.Background>
-                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                    <ImageBrush
+                                        async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                        Stretch="UniformToFill" />
                                 </Border.Background>
                             </Border>
                             <Grid
@@ -235,19 +253,25 @@
                                     TextWrapping="Wrap"
                                     ToolTip.Tip="{Binding ProjectName}" />
                                 <Button
+                                    Classes="Primary Small"
                                     Grid.Row="1"
                                     BackgroundSizing="InnerBorderEdge"
-                                    Classes="Primary Small"
                                     Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowDownload" />
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="12">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="ArrowDownload" />
                                         <TextBlock Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Border Grid.Row="1" ToolTip.Tip="{Binding Summary}">
+                        <Border
+                            Grid.Row="1"
+                            ToolTip.Tip="{Binding Summary}">
                             <TextBlock
                                 Margin="12,0"
                                 MaxLines="2"
@@ -288,7 +312,9 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <husk:Tag>
-                                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="{Binding}" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Binding}" />
                                     </husk:Tag>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
