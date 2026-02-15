@@ -47,7 +47,23 @@ public partial class ProfileRuleModel(Profile.Rice.Rule owner) : ModelBase
     }
 
     [ObservableProperty]
-    public partial MappingCollection<Profile.Rice.Rule, ProfileRuleModel>? Children { get; set; } =
+    public partial string Destination { get; set; } = owner.Destination ?? string.Empty;
+
+    partial void OnDestinationChanged(string value) =>
+        owner.Destination = !string.IsNullOrWhiteSpace(value) ? value : null;
+
+    [ObservableProperty]
+    public partial bool Skipping { get; set; }
+
+    partial void OnSkippingChanged(bool value) => owner.Skipping = value;
+
+    [ObservableProperty]
+    public partial bool Solidifying { get; set; }
+
+    partial void OnSolidifyingChanged(bool value) => owner.Solidifying = value;
+
+    [ObservableProperty]
+    public partial MappingCollection<Profile.Rice.Rule, ProfileRuleModel>? Children { get; private set; } =
         owner.Children is not null ? new(owner.Children, x => new(x), x => x.Owner) : null;
 
     [ObservableProperty]

@@ -1991,7 +1991,7 @@
         <value>Not Set</value>
     </data>
     <data name="SelectorType_Purl" xml:space="preserve">
-        <value>Package Identifier</value>
+        <value>Package Identifier (Purl)</value>
     </data>
     <data name="SelectorType_Repository" xml:space="preserve">
         <value>Repository Label</value>
@@ -2031,5 +2031,14 @@
     </data>
     <data name="ProfileRuleModal_PointBlankGunPackMenuText" xml:space="preserve">
         <value>PointBlank Gun Pack</value>
+    </data>
+    <data name="ProfileRuleModal_DestinationLabelText" xml:space="preserve">
+        <value>Directory Redirection</value>
+    </data>
+    <data name="ProfileRuleModal_DestinationPlaceholder" xml:space="preserve">
+        <value>(Leave blank to unset)</value>
+    </data>
+    <data name="ProfileRuleModal_PickButtonText" xml:space="preserve">
+        <value>Pick</value>
     </data>
 </root>

@@ -206,12 +206,12 @@
                             CornerRadius="{StaticResource SmallCornerRadius}">
                             <DockPanel>
                                 <Button
+                                    DockPanel.Dock="Right"
                                     Padding="8,4"
                                     IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNull}}"
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     Command="{Binding EditLoaderCommand}"
-                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
-                                    DockPanel.Dock="Right">
+                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}">
                                     <icons:PackIconLucide
                                         Width="{StaticResource LargeFontSize}"
                                         Height="{StaticResource LargeFontSize}"
@@ -272,8 +272,8 @@
                                                 TextTrimming="CharacterEllipsis"
                                                 ToolTip.Tip="{Binding VersionName}" />
                                             <Button
-                                                Classes="Small"
                                                 Grid.Column="2"
+                                                Classes="Small"
                                                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
                                                 Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
                                                 Theme="{StaticResource OutlineButtonTheme}" />
@@ -590,6 +590,7 @@
                                     Width="{Binding $self.Bounds.Height}"
                                     Margin="3"
                                     Padding="0"
+                                    IsEnabled="{Binding !IsRefreshing}"
                                     Command="{Binding EditRulesCommand}">
                                     <icons:PackIconLucide
                                         Width="{StaticResource SmallFontSize}"

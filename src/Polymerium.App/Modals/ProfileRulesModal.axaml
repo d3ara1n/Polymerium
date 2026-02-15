@@ -4,11 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    MaxWidth="450"
     d:DesignHeight="600"
-    d:DesignWidth="450"
     mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="12">
         <StackPanel Grid.Row="0">
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
@@ -27,8 +30,8 @@
             ColumnDefinitions="Auto,*,Auto,Auto"
             ColumnSpacing="8">
             <Button
-                Classes="Primary"
-                Grid.Column="0">
+                Grid.Column="0"
+                Classes="Primary">
                 <husk:IconLabel
                     Icon="Add"
                     Text="添加新规则" />
@@ -41,7 +44,7 @@
             <Button
                 Grid.Column="3"
                 Command="{Binding $parent[husk:Modal].Dismiss}"
-                Content="Dismiss" />
+                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
         </Grid>
     </Grid>
 </husk:Modal>

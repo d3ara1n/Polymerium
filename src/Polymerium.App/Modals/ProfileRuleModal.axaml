@@ -37,88 +37,157 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <husk:SwitchPresenter Value="{Binding $parent[modals:ProfileRuleModal].SelectedSelectorType.Value, FallbackValue={x:Null}, Mode=OneWay}">
+                        <husk:SwitchCase Value="Purl">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Purl}" />
+                                <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Purl, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="12,0"
+                                                VerticalAlignment="Center"
+                                                Kind="Link" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                    <TextBox.InnerRightContent>
+                                        <Button>
+                                            <husk:IconLabel
+                                                Icon="Shortpick"
+                                                Text="{x:Static lang:Resources.ProfileRuleModal_PickButtonText}" />
+                                        </Button>
+                                    </TextBox.InnerRightContent>
+                                </TextBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Repository">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Repository}" />
+                                <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Repository, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="12,0"
+                                                VerticalAlignment="Center"
+                                                Kind="Warehouse" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                </TextBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Tag">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Tag}" />
+                                <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Tag, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="12,0"
+                                                VerticalAlignment="Center"
+                                                Kind="Tag" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                    <TextBox.InnerRightContent>
+                                        <Button>
+                                            <husk:IconLabel
+                                                Icon="Shortpick"
+                                                Text="{x:Static lang:Resources.ProfileRuleModal_PickButtonText}" />
+                                        </Button>
+                                    </TextBox.InnerRightContent>
+                                </TextBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Kind">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Kind}" />
+                                <ComboBox
+                                    ItemsSource="{Binding $parent[modals:ProfileRuleModal].Kinds}"
+                                    SelectedItem="{Binding $parent[modals:ProfileRuleModal].SelectedResourceKind, Mode=TwoWay}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate DataType="m:ResourceKindModel">
+                                            <TextBlock Text="{Binding Display}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase>
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.ProfileRuleModal_ChildrenLabelText}" />
+                                <Button
+                                    DockPanel.Dock="Right"
+                                    Classes="Small"
+                                    Command="{Binding $parent[modals:ProfileRuleModal].EditRulesCommand}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
+                                        <icons:PackIconLucide
+                                            Width="{StaticResource MediumFontSize}"
+                                            Height="{StaticResource MediumFontSize}"
+                                            VerticalAlignment="Center"
+                                            Kind="Settings2" />
+                                        <TextBlock Text="{x:Static lang:Resources.ProfileRuleModal_ChildrenEditButtonText}" />
+                                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                            <Run Text="(" />
+                                            <Run Text="{Binding $parent[modals:ProfileRuleModal].Rule.Children.Count, FallbackValue=N/A}" />
+                                            <Run Text=")" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
                 </StackPanel>
-                <DockPanel HorizontalSpacing="6">
-                    <ToggleSwitch DockPanel.Dock="Right" />
-                    <TextBlock
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
-                </DockPanel>
-                <DockPanel HorizontalSpacing="6">
-                    <ToggleSwitch DockPanel.Dock="Right" />
-                    <TextBlock
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
-                </DockPanel>
-                <husk:SwitchPresenter Value="{Binding $parent[modals:ProfileRuleModal].SelectedSelectorType.Value, FallbackValue={x:Null}, Mode=OneWay}">
-                    <husk:SwitchCase Value="Purl">
-                        <StackPanel Spacing="6">
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.SelectorType_Purl}" />
-                            <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Purl, Mode=TwoWay}" />
-                        </StackPanel>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Repository">
-                        <StackPanel Spacing="6">
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.SelectorType_Repository}" />
-                            <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Repository, Mode=TwoWay}" />
-                        </StackPanel>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Tag">
-                        <StackPanel Spacing="6">
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.SelectorType_Tag}" />
-                            <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Tag, Mode=TwoWay}" />
-                        </StackPanel>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Kind">
-                        <StackPanel Spacing="6">
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.SelectorType_Kind}" />
-                            <ComboBox
-                                ItemsSource="{Binding $parent[modals:ProfileRuleModal].Kinds}"
-                                SelectedItem="{Binding $parent[modals:ProfileRuleModal].SelectedResourceKind, Mode=TwoWay}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate DataType="m:ResourceKindModel">
-                                        <TextBlock Text="{Binding Display}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase>
-                        <StackPanel Spacing="6">
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.ProfileRuleModal_ChildrenLabelText}" />
-                            <Button
+                <Border
+                    Padding="12"
+                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <StackPanel Spacing="6">
+                        <DockPanel HorizontalSpacing="6">
+                            <ToggleSwitch
                                 DockPanel.Dock="Right"
-                                Classes="Small"
-                                Command="{Binding $parent[modals:ProfileRuleModal].EditRulesCommand}">
-                                <StackPanel
-                                    Orientation="Horizontal"
-                                    Spacing="6">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource MediumFontSize}"
-                                        Height="{StaticResource MediumFontSize}"
-                                        VerticalAlignment="Center"
-                                        Kind="Settings2" />
-                                    <TextBlock Text="{x:Static lang:Resources.ProfileRuleModal_ChildrenEditButtonText}" />
-                                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                        <Run Text="(" />
-                                        <Run Text="{Binding $parent[modals:ProfileRuleModal].Rule.Children.Count, FallbackValue=N/A}" />
-                                        <Run Text=")" />
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
+                                IsChecked="{Binding $parent[modals:ProfileRuleModal].Rule.Skipping, Mode=TwoWay}" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                        </DockPanel>
+                        <DockPanel HorizontalSpacing="6">
+                            <ToggleSwitch
+                                DockPanel.Dock="Right"
+                                IsChecked="{Binding $parent[modals:ProfileRuleModal].Rule.Solidifying, Mode=TwoWay}" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
+                        </DockPanel>
+                        <StackPanel Spacing="6">
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
+                            <TextBox
+                                Text="{Binding $parent[modals:ProfileRuleModal].Rule.Destination, Mode=TwoWay}"
+                                Watermark="{x:Static lang:Resources.ProfileRuleModal_DestinationPlaceholder}" />
                         </StackPanel>
-                    </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </ScrollViewer>
         <Grid
