@@ -2,45 +2,287 @@
     x:Class="Polymerium.App.Modals.ProfileRulesModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    MaxWidth="450"
+    xmlns:modals="clr-namespace:Polymerium.App.Modals"
+    Padding="0"
     d:DesignHeight="600"
+    d:DesignWidth="450"
     mc:Ignorable="d">
     <Grid
         RowDefinitions="Auto,*,Auto"
         RowSpacing="12">
-        <StackPanel Grid.Row="0">
+        <StackPanel
+            Grid.Row="0"
+            Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutBottom}}">
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="部署规则" />
+                Text="{x:Static lang:Resources.ProfileRulesModal_Title}" />
             <TextBlock
+                MaxWidth="{Binding $parent[Panel].Bounds.Width}"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="在实例启动时，根据规则重定向或跳过特定的包。按从上到下的顺序应用，后继行会覆盖前继行。"
+                Text="{x:Static lang:Resources.ProfileRulesModal_Message}"
                 TextWrapping="Wrap" />
         </StackPanel>
-        <ScrollViewer Grid.Row="1">
-            <ItemsControl />
-        </ScrollViewer>
+        <controls:EmptyContainer
+            Grid.Row="1"
+            Icon="Ruler"
+            IsEmpty="{Binding $parent[modals:ProfileRulesModal].Rules.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+            <ScrollViewer>
+                <ItemsControl
+                    Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.Horizontal}}"
+                    ItemsSource="{Binding $parent[modals:ProfileRulesModal].Rules}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="m:ProfileRuleModel">
+                            <Border
+                                Padding="12"
+                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Grid
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    ColumnSpacing="12">
+                                    <!--  启用开关  -->
+                                    <ToggleSwitch
+                                        Grid.Column="0"
+                                        IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
+
+                                    <!--  规则信息  -->
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Spacing="4">
+                                        <husk:SwitchPresenter Value="{Binding Selector}">
+                                            <husk:SwitchCase Value="And">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_And}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="条子规则" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Or">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_Or}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="条子规则" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Not">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_Not}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="条子规则" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Purl">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_Purl}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{Binding Purl}" />
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Repository">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_Repository}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{Binding Repository}" />
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Tag">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_Tag}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{Binding Tag}" />
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Kind">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.SelectorType_Kind}" />
+                                                    <husk:Divider
+                                                        Margin="0,4"
+                                                        Orientation="Vertical" />
+                                                    <TextBlock
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{Binding Kind}" />
+                                                </StackPanel>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+
+                                        <!--  规则效果  -->
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <!--  跳过标记  -->
+                                            <husk:Tag IsVisible="{Binding Skipping}">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="4">
+                                                    <icons:PackIconLucide
+                                                        Width="{StaticResource SmallFontSize}"
+                                                        Height="{StaticResource SmallFontSize}"
+                                                        VerticalAlignment="Center"
+                                                        Kind="Ban" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                                                </StackPanel>
+                                            </husk:Tag>
+
+                                            <!--  固化标记  -->
+                                            <husk:Tag IsVisible="{Binding Solidifying}">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="4">
+                                                    <icons:PackIconLucide
+                                                        Width="{StaticResource SmallFontSize}"
+                                                        Height="{StaticResource SmallFontSize}"
+                                                        VerticalAlignment="Center"
+                                                        Kind="FileArchive" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
+                                                </StackPanel>
+                                            </husk:Tag>
+
+                                            <!--  目标路径  -->
+                                            <husk:Tag IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="4">
+                                                    <icons:PackIconLucide
+                                                        Width="{StaticResource SmallFontSize}"
+                                                        Height="{StaticResource SmallFontSize}"
+                                                        VerticalAlignment="Center"
+                                                        Kind="FolderInput" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{Binding Destination}" />
+                                                </StackPanel>
+                                            </husk:Tag>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!--  操作按钮  -->
+                                    <husk:ButtonGroup
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center">
+                                        <Button
+                                            Classes="Small"
+                                            Command="{Binding $parent[modals:ProfileRulesModal].EditRuleCommand}"
+                                            CommandParameter="{Binding}">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Kind="Pencil" />
+                                        </Button>
+                                        <Button
+                                            Classes="Small"
+                                            Command="{Binding $parent[modals:ProfileRulesModal].RemoveRuleCommand}"
+                                            CommandParameter="{Binding}">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Kind="Trash2" />
+                                        </Button>
+                                    </husk:ButtonGroup>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </controls:EmptyContainer>
         <Grid
             Grid.Row="2"
+            Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutTop}}"
             ColumnDefinitions="Auto,*,Auto,Auto"
             ColumnSpacing="8">
             <Button
                 Grid.Column="0"
-                Classes="Primary">
+                Classes="Primary"
+                Command="{Binding $parent[modals:ProfileRulesModal].AddRuleCommand}">
                 <husk:IconLabel
                     Icon="Add"
-                    Text="添加新规则" />
+                    Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />
             </Button>
             <TextBlock
                 Grid.Column="2"
                 VerticalAlignment="Center"
-                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="共计 12 条规则" />
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                <Run Text="{Binding $parent[modals:ProfileRulesModal].Rules.Count, FallbackValue=0}" />
+            </TextBlock>
             <Button
                 Grid.Column="3"
                 Command="{Binding $parent[husk:Modal].Dismiss}"

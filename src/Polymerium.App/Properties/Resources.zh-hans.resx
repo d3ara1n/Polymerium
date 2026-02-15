@@ -2011,7 +2011,7 @@
     <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
         <value>编辑</value>
     </data>
-    <data name="ProfileRuleModal_PresentsButtonText" xml:space="preserve">
+    <data name="ProfileRuleModal_PresetsButtonText" xml:space="preserve">
         <value>预设</value>
     </data>
     <data name="ProfileRuleModal_TaCZGunPackMenuText" xml:space="preserve">
@@ -2031,5 +2031,17 @@
     </data>
     <data name="ProfileRuleModal_PickButtonText" xml:space="preserve">
         <value>选取</value>
+    </data>
+    <data name="ProfileRulesModal_RuleCountLabelText" xml:space="preserve">
+        <value>规则数：</value>
+    </data>
+    <data name="ProfileRulesModal_AddRuleButtonText" xml:space="preserve">
+        <value>添加新规则</value>
+    </data>
+    <data name="ProfileRulesModal_Message" xml:space="preserve">
+        <value>在实例启动时，根据规则重定向或跳过特定的包。按从上到下的顺序应用，后继行会覆盖前继行。</value>
+    </data>
+    <data name="ProfileRulesModal_Title" xml:space="preserve">
+        <value>部署规则</value>
     </data>
 </root>
