@@ -4716,6 +4716,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search packages....
+        /// </summary>
+        public static string PackagePickerDialog_SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("PackagePickerDialog_SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Package.
+        /// </summary>
+        public static string PackagePickerDialog_Title {
+            get {
+                return ResourceManager.GetString("PackagePickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string ProfileRuleModal_ChildrenEditButtonText {

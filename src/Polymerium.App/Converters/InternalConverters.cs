@@ -5,6 +5,7 @@ using Avalonia.Media;
 using Humanizer;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
+using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Core.Igniters;
 using Resources = Polymerium.App.Properties.Resources;
@@ -72,6 +73,26 @@ public static class InternalConverters
                 LaunchMode.FireAndForget => Resources.LaunchMode_FireAndForget,
                 LaunchMode.Debug => Resources.LaunchMode_Debug,
                 _ => mode.ToString()
+            };
+        }
+
+        return v;
+    });
+
+    public static IValueConverter LocalizedSelectorTypeConverter { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is Profile.Rice.Rule.SelectorType type)
+        {
+            return type switch
+            {
+                Profile.Rice.Rule.SelectorType.And => Resources.SelectorType_And,
+                Profile.Rice.Rule.SelectorType.Or => Resources.SelectorType_Or,
+                Profile.Rice.Rule.SelectorType.Not => Resources.SelectorType_Not,
+                Profile.Rice.Rule.SelectorType.Purl => Resources.SelectorType_Purl,
+                Profile.Rice.Rule.SelectorType.Repository => Resources.SelectorType_Repository,
+                Profile.Rice.Rule.SelectorType.Tag => Resources.SelectorType_Tag,
+                Profile.Rice.Rule.SelectorType.Kind => Resources.SelectorType_Kind,
+                _ => type.ToString()
             };
         }
 
