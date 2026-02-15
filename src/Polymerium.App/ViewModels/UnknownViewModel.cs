@@ -186,7 +186,7 @@ public partial class UnknownViewModel(
     {
         overlayService.PopModal(new ProfileRuleModal()
         {
-            Rule = new(new(Profile.Rice.Rule.SelectorType.Purl, true)),
+            Rule = new(new()),
             OverlayService = overlayService,
             Packages = []
         });

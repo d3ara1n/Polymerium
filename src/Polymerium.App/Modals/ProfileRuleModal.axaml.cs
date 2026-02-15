@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -141,6 +142,16 @@ public partial class ProfileRuleModal : Modal
             {
                 Rules = Rule.Children, Packages = Packages, OverlayService = OverlayService
             });
+        }
+    }
+
+    [RelayCommand]
+    private async Task PickTagAsync()
+    {
+        var dialog = new TagPickerDialog() { ExistingTags = Packages.SelectMany(x => x.Tags).Distinct().ToList() };
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag)
+        {
+            Rule.Tag = tag;
         }
     }
 
