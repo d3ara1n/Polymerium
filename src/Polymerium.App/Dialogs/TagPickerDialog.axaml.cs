@@ -17,7 +17,7 @@ public partial class TagPickerDialog : Dialog
 
     public TagPickerDialog() => InitializeComponent();
 
-    public IReadOnlyList<string>? ExistingTags
+    public required IReadOnlyList<string>? ExistingTags
     {
         get;
         set

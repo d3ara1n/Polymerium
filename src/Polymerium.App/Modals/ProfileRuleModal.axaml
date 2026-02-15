@@ -103,7 +103,7 @@
                                         </StackPanel>
                                     </TextBox.InnerLeftContent>
                                     <TextBox.InnerRightContent>
-                                        <Button>
+                                        <Button Command="{Binding $parent[modals:ProfileRuleModal].PickTagCommand}">
                                             <husk:IconLabel
                                                 Icon="Shortpick"
                                                 Text="{x:Static lang:Resources.ProfileRuleModal_PickButtonText}" />
