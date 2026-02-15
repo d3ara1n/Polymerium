@@ -197,7 +197,7 @@
             <DropDownButton Grid.Column="0">
                 <husk:IconLabel
                     Icon="ReceiptSparkles"
-                    Text="{x:Static lang:Resources.ProfileRuleModal_PresentsButtonText}" />
+                    Text="{x:Static lang:Resources.ProfileRuleModal_PresetsButtonText}" />
                 <DropDownButton.Flyout>
                     <MenuFlyout>
                         <MenuItem

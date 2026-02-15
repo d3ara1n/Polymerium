@@ -4779,11 +4779,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Presents.
+        ///   Looks up a localized string similar to Presets.
         /// </summary>
-        public static string ProfileRuleModal_PresentsButtonText {
+        public static string ProfileRuleModal_PresetsButtonText {
             get {
-                return ResourceManager.GetString("ProfileRuleModal_PresentsButtonText", resourceCulture);
+                return ResourceManager.GetString("ProfileRuleModal_PresetsButtonText", resourceCulture);
             }
         }
         
@@ -4829,6 +4829,42 @@ namespace Polymerium.App.Properties {
         public static string ProfileRuleModal_Title {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Rule.
+        /// </summary>
+        public static string ProfileRulesModal_AddRuleButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRulesModal_AddRuleButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply rules to redirect or skip packages during instance launch. Rules are processed top-to-bottom, with later rules taking precedence..
+        /// </summary>
+        public static string ProfileRulesModal_Message {
+            get {
+                return ResourceManager.GetString("ProfileRulesModal_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Count: .
+        /// </summary>
+        public static string ProfileRulesModal_RuleCountLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRulesModal_RuleCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deployment Rules.
+        /// </summary>
+        public static string ProfileRulesModal_Title {
+            get {
+                return ResourceManager.GetString("ProfileRulesModal_Title", resourceCulture);
             }
         }
         
@@ -5517,7 +5553,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Java Presents.
+        ///   Looks up a localized string similar to Java Presets.
         /// </summary>
         public static string SettingsView_JavaTitle {
             get {

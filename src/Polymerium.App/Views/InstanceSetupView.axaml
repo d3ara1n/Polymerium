@@ -583,7 +583,7 @@
                                         Text="部署规则条数:" />
                                     <Run
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="12" />
+                                        Text="{Binding Rules.Count, Mode=OneWay, FallbackValue=0}" />
                                 </TextBlock>
                                 <Button
                                     Classes="Small"

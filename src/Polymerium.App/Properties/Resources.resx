@@ -376,7 +376,7 @@
         <value>Font</value>
     </data>
     <data name="SettingsView_JavaTitle" xml:space="preserve">
-        <value>Java Presents</value>
+        <value>Java Presets</value>
     </data>
     <data name="SettingsView_JavaSubtitle" xml:space="preserve">
         <value>Instance will select the best match while launching</value>
@@ -2020,8 +2020,8 @@
     <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
         <value>Edit</value>
     </data>
-    <data name="ProfileRuleModal_PresentsButtonText" xml:space="preserve">
-        <value>Presents</value>
+    <data name="ProfileRuleModal_PresetsButtonText" xml:space="preserve">
+        <value>Presets</value>
     </data>
     <data name="ProfileRuleModal_DataPackMenuText" xml:space="preserve">
         <value>Data Pack</value>
@@ -2040,5 +2040,17 @@
     </data>
     <data name="ProfileRuleModal_PickButtonText" xml:space="preserve">
         <value>Pick</value>
+    </data>
+    <data name="ProfileRulesModal_RuleCountLabelText" xml:space="preserve">
+        <value>Rule Count: </value>
+    </data>
+    <data name="ProfileRulesModal_Title" xml:space="preserve">
+        <value>Deployment Rules</value>
+    </data>
+    <data name="ProfileRulesModal_Message" xml:space="preserve">
+        <value>Apply rules to redirect or skip packages during instance launch. Rules are processed top-to-bottom, with later rules taking precedence.</value>
+    </data>
+    <data name="ProfileRulesModal_AddRuleButtonText" xml:space="preserve">
+        <value>Add New Rule</value>
     </data>
 </root>

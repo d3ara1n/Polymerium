@@ -40,17 +40,22 @@ public partial class ProfileRuleModal : Modal
         set => SetAndRaise(SelectedResourceKindProperty, ref field, value);
     }
 
-    public ProfileRuleModal() => InitializeComponent();
+    public static readonly DirectProperty<ProfileRuleModal, ProfileRuleModel> RuleProperty =
+        AvaloniaProperty.RegisterDirect<ProfileRuleModal, ProfileRuleModel>(nameof(Rule),
+                                                                            o => o.Rule,
+                                                                            (o, v) => o.Rule = v);
 
     public required ProfileRuleModel Rule
     {
         get;
-        init
+        set
         {
-            field = value;
+            SetAndRaise(RuleProperty, ref field, value);
             SelectedSelectorType = SelectorTypes.FirstOrDefault(x => x.Value == value.Selector);
         }
     }
+
+    public ProfileRuleModal() => InitializeComponent();
 
     public required OverlayService OverlayService { get; init; }
     public required IReadOnlyList<InstancePackageModel> Packages { get; init; }
@@ -113,6 +118,7 @@ public partial class ProfileRuleModal : Modal
     {
         Rule.Selector = Profile.Rice.Rule.SelectorType.Kind;
         SelectedResourceKind = Kinds.FirstOrDefault(x => x.Value == ResourceKind.DataPack);
+        Rule.Destination = "datapacks";
     }
 
     private void TemplateTaCZButton_OnClick(object? sender, RoutedEventArgs e)
