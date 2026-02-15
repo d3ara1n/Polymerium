@@ -4743,6 +4743,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory Redirection.
+        /// </summary>
+        public static string ProfileRuleModal_DestinationLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_DestinationLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Leave blank to unset).
+        /// </summary>
+        public static string ProfileRuleModal_DestinationPlaceholder {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_DestinationPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick.
+        /// </summary>
+        public static string ProfileRuleModal_PickButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_PickButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PointBlank Gun Pack.
         /// </summary>
         public static string ProfileRuleModal_PointBlankGunPackMenuText {
@@ -5184,7 +5211,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Package Identifier.
+        ///   Looks up a localized string similar to Package Identifier (Purl).
         /// </summary>
         public static string SelectorType_Purl {
             get {

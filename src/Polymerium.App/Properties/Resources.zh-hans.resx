@@ -1985,7 +1985,7 @@
         <value>或集合</value>
     </data>
     <data name="SelectorType_Purl" xml:space="preserve">
-        <value>包匹配符</value>
+        <value>包匹配符（Purl）</value>
     </data>
     <data name="SelectorType_Repository" xml:space="preserve">
         <value>仓库</value>
@@ -2022,5 +2022,14 @@
     </data>
     <data name="ProfileRuleModal_DataPackMenuText" xml:space="preserve">
         <value>数据包</value>
+    </data>
+    <data name="ProfileRuleModal_DestinationLabelText" xml:space="preserve">
+        <value>目录重定向</value>
+    </data>
+    <data name="ProfileRuleModal_DestinationPlaceholder" xml:space="preserve">
+        <value>（留空禁用）</value>
+    </data>
+    <data name="ProfileRuleModal_PickButtonText" xml:space="preserve">
+        <value>选取</value>
     </data>
 </root>

@@ -118,12 +118,14 @@ public partial class ProfileRuleModal : Modal
     {
         Rule.Selector = Profile.Rice.Rule.SelectorType.Tag;
         Rule.Tag = "TaC:Z";
+        Rule.Destination = "tacz";
     }
 
     private void TemplatePointBlankButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Rule.Selector = Profile.Rice.Rule.SelectorType.Tag;
         Rule.Tag = "PointBlank";
+        Rule.Destination = "pointblank";
     }
 
     #endregion
