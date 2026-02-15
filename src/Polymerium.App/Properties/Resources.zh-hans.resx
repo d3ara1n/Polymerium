@@ -711,6 +711,12 @@
     <data name="TagPickerDialog_NoExistingTagsLabelText" xml:space="preserve">
         <value>暂无现有标签</value>
     </data>
+    <data name="PackagePickerDialog_Title" xml:space="preserve">
+        <value>选择一个包</value>
+    </data>
+    <data name="PackagePickerDialog_SearchPlaceholder" xml:space="preserve">
+        <value>搜索包...</value>
+    </data>
     <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
         <value>继续</value>
     </data>

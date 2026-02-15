@@ -1,0 +1,128 @@
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.PackagePickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="using:Polymerium.App.Dialogs"
+    xmlns:m="using:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.PackagePickerDialog_Title}"
+    Width="600"
+    d:DesignHeight="500"
+    d:DesignWidth="450"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
+    <Grid
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="12">
+        <!--  Search Box  -->
+        <TextBox
+            Grid.Row="0"
+            Text="{Binding $parent[local:PackagePickerDialog].FilterText, Mode=TwoWay}"
+            Watermark="{x:Static lang:Resources.PackagePickerDialog_SearchPlaceholder}">
+            <TextBox.InnerLeftContent>
+                <StackPanel Orientation="Horizontal">
+                    <icons:PackIconLucide
+                        Height="{StaticResource MediumFontSize}"
+                        Margin="10,0"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Kind="Search" />
+                    <husk:Divider Orientation="Vertical" />
+                </StackPanel>
+            </TextBox.InnerLeftContent>
+        </TextBox>
+
+        <!--  Package List  -->
+        <Panel
+            Grid.Row="1"
+            MinHeight="256">
+            <!--  Empty State  -->
+            <StackPanel
+                VerticalAlignment="Center"
+                IsVisible="{Binding $parent[local:PackagePickerDialog].View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                Spacing="8">
+                <icons:PackIconLucide
+                    Width="{StaticResource ExtraLargeFontSize}"
+                    Height="{StaticResource ExtraLargeFontSize}"
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Kind="Package" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="{StaticResource LargeFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+            </StackPanel>
+
+            <!--  Package List  -->
+            <ListBox
+                ItemsSource="{Binding $parent[local:PackagePickerDialog].View}"
+                SelectedItem="{Binding $parent[local:PackagePickerDialog].Result, Mode=OneWayToSource}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="m:InstancePackageModel">
+                        <Grid
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="12"
+                            RowDefinitions="Auto,Auto"
+                            RowSpacing="4">
+                            <!--  Thumbnail/Icon  -->
+                            <Border
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Width="36"
+                                Height="36"
+                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                ClipToBounds="True"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Panel>
+                                    <Image
+                                        IsVisible="{Binding Info.Thumbnail, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
+                                        Source="{Binding Info.Thumbnail, FallbackValue={x:Null}}"
+                                        Stretch="UniformToFill" />
+                                    <icons:PackIconLucide
+                                        Width="24"
+                                        Height="24"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsVisible="{Binding Info.Thumbnail, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Kind="Package" />
+                                </Panel>
+                            </Border>
+
+                            <!--  Package Name  -->
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{Binding Info.ProjectName, FallbackValue=Unknown}"
+                                TextTrimming="CharacterEllipsis" />
+
+                            <!--  Package Info  -->
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <husk:Tag
+                                    IsVisible="{Binding Info, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                    Content="{Binding Info.Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}, FallbackValue=Unknown}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}" />
+                                <husk:Tag
+                                    Content="{Binding Info.Label, Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=N/A}"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Panel>
+    </Grid>
+</husk:Dialog>

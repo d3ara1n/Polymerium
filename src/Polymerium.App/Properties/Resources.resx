@@ -720,6 +720,12 @@
     <data name="TagPickerDialog_NoExistingTagsLabelText" xml:space="preserve">
         <value>No existing tags</value>
     </data>
+    <data name="PackagePickerDialog_Title" xml:space="preserve">
+        <value>Select a Package</value>
+    </data>
+    <data name="PackagePickerDialog_SearchPlaceholder" xml:space="preserve">
+        <value>Search packages...</value>
+    </data>
     <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
         <value>Next</value>
     </data>

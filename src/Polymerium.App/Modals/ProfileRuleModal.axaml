@@ -2,6 +2,7 @@
     x:Class="Polymerium.App.Modals.ProfileRuleModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -30,14 +31,14 @@
                         Text="{x:Static lang:Resources.ProfileRuleModal_RuleTypeLabelText}" />
                     <ComboBox
                         ItemsSource="{Binding $parent[modals:ProfileRuleModal].SelectorTypes}"
-                        SelectedItem="{Binding $parent[modals:ProfileRuleModal].SelectedSelectorType, Mode=TwoWay}">
+                        SelectedItem="{Binding $parent[modals:ProfileRuleModal].Rule.Selector, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="m:SelectorTypeModel">
-                                <TextBlock Text="{Binding Display}" />
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedSelectorTypeConverter}}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <husk:SwitchPresenter Value="{Binding $parent[modals:ProfileRuleModal].SelectedSelectorType.Value, FallbackValue={x:Null}, Mode=OneWay}">
+                    <husk:SwitchPresenter Value="{Binding $parent[modals:ProfileRuleModal].Rule.Selector, FallbackValue={x:Null}, Mode=OneWay}">
                         <husk:SwitchCase Value="Purl">
                             <StackPanel Spacing="6">
                                 <TextBlock
@@ -56,7 +57,7 @@
                                         </StackPanel>
                                     </TextBox.InnerLeftContent>
                                     <TextBox.InnerRightContent>
-                                        <Button>
+                                        <Button Command="{Binding $parent[modals:ProfileRuleModal].PickPackageCommand}">
                                             <husk:IconLabel
                                                 Icon="Shortpick"
                                                 Text="{x:Static lang:Resources.ProfileRuleModal_PickButtonText}" />
@@ -119,10 +120,10 @@
                                     Text="{x:Static lang:Resources.SelectorType_Kind}" />
                                 <ComboBox
                                     ItemsSource="{Binding $parent[modals:ProfileRuleModal].Kinds}"
-                                    SelectedItem="{Binding $parent[modals:ProfileRuleModal].SelectedResourceKind, Mode=TwoWay}">
+                                    SelectedItem="{Binding $parent[modals:ProfileRuleModal].Rule.Kind, Mode=TwoWay}">
                                     <ComboBox.ItemTemplate>
-                                        <DataTemplate DataType="m:ResourceKindModel">
-                                            <TextBlock Text="{Binding Display}" />
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
