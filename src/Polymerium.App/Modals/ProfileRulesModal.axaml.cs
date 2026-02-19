@@ -33,7 +33,7 @@ public partial class ProfileRulesModal : Modal
     [RelayCommand]
     private void AddRule()
     {
-        Rules.Add(new(new() { Enabled = false }));
+        Rules.Add(new(new() { Enabled = false, Selector = new() }));
     }
 
     [RelayCommand]

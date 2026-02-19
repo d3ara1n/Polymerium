@@ -62,7 +62,7 @@
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         Spacing="4">
-                                        <husk:SwitchPresenter Value="{Binding Selector}">
+                                        <husk:SwitchPresenter Value="{Binding Selector.Type}">
                                             <husk:SwitchCase Value="And">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -76,7 +76,7 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                         <Run Text="条子规则" />
                                                     </TextBlock>
                                                 </StackPanel>
@@ -94,7 +94,7 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                         <Run Text="条子规则" />
                                                     </TextBlock>
                                                 </StackPanel>
@@ -112,7 +112,7 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                         <Run Text="条子规则" />
                                                     </TextBlock>
                                                 </StackPanel>
@@ -129,7 +129,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Purl}" />
+                                                        Text="{Binding Selector.Purl}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Repository">
@@ -144,7 +144,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Repository}" />
+                                                        Text="{Binding Selector.Repository}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Tag">
@@ -159,7 +159,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Tag}" />
+                                                        Text="{Binding Selector.Tag}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Kind">
@@ -174,7 +174,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Kind}" />
+                                                        Text="{Binding Selector.Kind}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>

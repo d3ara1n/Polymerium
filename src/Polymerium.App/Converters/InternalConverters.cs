@@ -81,17 +81,17 @@ public static class InternalConverters
 
     public static IValueConverter LocalizedSelectorTypeConverter { get; } = new RelayConverter((v, _) =>
     {
-        if (v is Profile.Rice.Rule.SelectorType type)
+        if (v is Profile.Rice.Rule.RuleSelector.SelectorType type)
         {
             return type switch
             {
-                Profile.Rice.Rule.SelectorType.And => Resources.SelectorType_And,
-                Profile.Rice.Rule.SelectorType.Or => Resources.SelectorType_Or,
-                Profile.Rice.Rule.SelectorType.Not => Resources.SelectorType_Not,
-                Profile.Rice.Rule.SelectorType.Purl => Resources.SelectorType_Purl,
-                Profile.Rice.Rule.SelectorType.Repository => Resources.SelectorType_Repository,
-                Profile.Rice.Rule.SelectorType.Tag => Resources.SelectorType_Tag,
-                Profile.Rice.Rule.SelectorType.Kind => Resources.SelectorType_Kind,
+                Profile.Rice.Rule.RuleSelector.SelectorType.And => Resources.SelectorType_And,
+                Profile.Rice.Rule.RuleSelector.SelectorType.Or => Resources.SelectorType_Or,
+                Profile.Rice.Rule.RuleSelector.SelectorType.Not => Resources.SelectorType_Not,
+                Profile.Rice.Rule.RuleSelector.SelectorType.Purl => Resources.SelectorType_Purl,
+                Profile.Rice.Rule.RuleSelector.SelectorType.Repository => Resources.SelectorType_Repository,
+                Profile.Rice.Rule.RuleSelector.SelectorType.Tag => Resources.SelectorType_Tag,
+                Profile.Rice.Rule.RuleSelector.SelectorType.Kind => Resources.SelectorType_Kind,
                 _ => type.ToString()
             };
         }
