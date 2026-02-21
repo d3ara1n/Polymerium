@@ -125,7 +125,7 @@ public partial class InstanceHomeViewModel(
 
     private Bitmap GetRandomScreenshot(string key)
     {
-        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
+        var screenshotPath = InstanceHelper.PickScreenshotRandomly(key);
         return screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
     }
 

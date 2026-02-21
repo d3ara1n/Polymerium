@@ -2000,7 +2000,7 @@
         <value>标签</value>
     </data>
     <data name="ProfileRuleModal_ChildrenLabelText" xml:space="preserve">
-        <value>成员规则</value>
+        <value>子规则</value>
     </data>
     <data name="ProfileRuleModal_Title" xml:space="preserve">
         <value>编辑规则</value>
@@ -2058,5 +2058,20 @@
     </data>
     <data name="ProfileRuleSelectorsModal_SelectorCountLabelText" xml:space="preserve">
         <value>选择器数：</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_Title" xml:space="preserve">
+        <value>编辑选择器</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_SelectorTypeLabelText" xml:space="preserve">
+        <value>规则类型</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_PickButtonText" xml:space="preserve">
+        <value>选取</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_ChildrenEditButtonText" xml:space="preserve">
+        <value>编辑</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
+        <value>子选择器</value>
     </data>
 </root>

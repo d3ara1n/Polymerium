@@ -83,7 +83,7 @@ public partial class LandingViewModel(
         var last = persistenceService.GetLastActivity();
         if (last is not null && profileManager.TryGetImmutable(last.Key, out var profile))
         {
-            var iconPath = ProfileHelper.PickIcon(last.Key);
+            var iconPath = InstanceHelper.PickIcon(last.Key);
             var icon = iconPath is not null ? new(iconPath) : AssetUriIndex.DirtImageBitmap;
             RecentPlay = new()
             {

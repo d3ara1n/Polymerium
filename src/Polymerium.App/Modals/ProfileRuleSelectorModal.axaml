@@ -22,14 +22,14 @@
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="编辑选择器" />
+                Text="{x:Static lang:Resources.ProfileRuleSelectorModal_Title}" />
         </StackPanel>
         <ScrollViewer Grid.Row="1">
             <StackPanel Spacing="12">
                 <StackPanel Spacing="6">
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="选择器类型" />
+                        Text="{x:Static lang:Resources.ProfileRuleSelectorModal_SelectorTypeLabelText}" />
                     <ComboBox
                         ItemsSource="{Binding $parent[modals:ProfileRuleSelectorModal].SelectorTypes}"
                         SelectedItem="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Type, Mode=TwoWay}">
@@ -61,7 +61,7 @@
                                         <Button Command="{Binding $parent[modals:ProfileRuleSelectorModal].PickPackageCommand}">
                                             <husk:IconLabel
                                                 Icon="Shortpick"
-                                                Text="选取" />
+                                                Text="{x:Static lang:Resources.ProfileRuleSelectorModal_PickButtonText}" />
                                         </Button>
                                     </TextBox.InnerRightContent>
                                 </TextBox>
@@ -108,7 +108,7 @@
                                         <Button Command="{Binding $parent[modals:ProfileRuleSelectorModal].PickTagCommand}">
                                             <husk:IconLabel
                                                 Icon="Shortpick"
-                                                Text="选取" />
+                                                Text="{x:Static lang:Resources.ProfileRuleSelectorModal_PickButtonText}" />
                                         </Button>
                                     </TextBox.InnerRightContent>
                                 </TextBox>
@@ -147,7 +147,7 @@
                                             Height="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
                                             Kind="Settings2" />
-                                        <TextBlock Text="编辑子选择器" />
+                                        <TextBlock Text="{x:Static lang:Resources.ProfileRuleSelectorModal_ChildrenEditButtonText}" />
                                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                             <Run Text="(" />
                                             <Run Text="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Children.Count, FallbackValue=N/A}" />
