@@ -4851,6 +4851,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conditions about how rules are applied.
+        /// </summary>
+        public static string ProfileRuleSelectorsModal_Message {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorsModal_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selector Count: .
+        /// </summary>
+        public static string ProfileRuleSelectorsModal_SelectorCountLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorsModal_SelectorCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selectors.
+        /// </summary>
+        public static string ProfileRuleSelectorsModal_Title {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorsModal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Rule.
         /// </summary>
         public static string ProfileRulesModal_AddRuleButtonText {

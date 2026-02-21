@@ -18,10 +18,10 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="CsvHelper" Version="33.1.0"/>
         <PackageReference Include="DynamicData" Version="9.4.1"/>
-        <PackageReference Include="FluentIcons.Avalonia" Version="2.0.318"/>
+        <PackageReference Include="FluentIcons.Avalonia" Version="2.0.319" />
         <PackageReference Include="fNbt" Version="1.0.0"/>
-        <PackageReference Include="FreeSql.Provider.SqliteCore" Version="3.5.305"/>
-        <PackageReference Include="GitVersion.MsBuild" Version="6.5.1">
+        <PackageReference Include="FreeSql.Provider.SqliteCore" Version="3.5.306" />
+        <PackageReference Include="GitVersion.MsBuild" Version="6.6.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

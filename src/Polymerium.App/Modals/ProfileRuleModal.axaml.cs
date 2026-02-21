@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,16 +67,16 @@ public partial class ProfileRuleModal : Modal
     #region Commands
 
     [RelayCommand]
-    private void EditRules()
+    private void EditSelectors()
     {
         if (Rule.Selector.Children is not null)
         {
-            // OverlayService.PopModal(new ProfileRulesModal
-            // {
-            //     Rules = Rule.Selector.Children,
-            //     Packages = Packages,
-            //     OverlayService = OverlayService
-            // });
+            OverlayService.PopModal(new ProfileRuleSelectorsModal
+            {
+                Selectors = Rule.Selector.Children,
+                Packages = Packages,
+                OverlayService = OverlayService
+            });
         }
     }
 

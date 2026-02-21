@@ -76,8 +76,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
                                                         <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
-                                                        <Run Text="条子规则" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -94,8 +94,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
                                                         <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
-                                                        <Run Text="条子规则" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -112,8 +112,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
                                                         <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
-                                                        <Run Text="条子规则" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>

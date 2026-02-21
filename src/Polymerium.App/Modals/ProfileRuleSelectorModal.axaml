@@ -1,0 +1,174 @@
+<husk:Modal
+    x:Class="Polymerium.App.Modals.ProfileRuleSelectorModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:modals="clr-namespace:Polymerium.App.Modals"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="12">
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="编辑选择器" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Spacing="12">
+                <StackPanel Spacing="6">
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="选择器类型" />
+                    <ComboBox
+                        ItemsSource="{Binding $parent[modals:ProfileRuleSelectorModal].SelectorTypes}"
+                        SelectedItem="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Type, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedSelectorTypeConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <husk:SwitchPresenter Value="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Type, FallbackValue={x:Null}, Mode=OneWay}">
+                        <husk:SwitchCase Value="Purl">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Purl}" />
+                                <TextBox Text="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Purl, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="12,0"
+                                                VerticalAlignment="Center"
+                                                Kind="Link" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                    <TextBox.InnerRightContent>
+                                        <Button Command="{Binding $parent[modals:ProfileRuleSelectorModal].PickPackageCommand}">
+                                            <husk:IconLabel
+                                                Icon="Shortpick"
+                                                Text="选取" />
+                                        </Button>
+                                    </TextBox.InnerRightContent>
+                                </TextBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Repository">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Repository}" />
+                                <TextBox Text="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Repository, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="12,0"
+                                                VerticalAlignment="Center"
+                                                Kind="Warehouse" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                </TextBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Tag">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Tag}" />
+                                <TextBox Text="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Tag, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="12,0"
+                                                VerticalAlignment="Center"
+                                                Kind="Tag" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                    <TextBox.InnerRightContent>
+                                        <Button Command="{Binding $parent[modals:ProfileRuleSelectorModal].PickTagCommand}">
+                                            <husk:IconLabel
+                                                Icon="Shortpick"
+                                                Text="选取" />
+                                        </Button>
+                                    </TextBox.InnerRightContent>
+                                </TextBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Kind">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.SelectorType_Kind}" />
+                                <ComboBox
+                                    ItemsSource="{Binding $parent[modals:ProfileRuleSelectorModal].Kinds}"
+                                    SelectedItem="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Kind, Mode=TwoWay}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase>
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="子选择器" />
+                                <Button
+                                    DockPanel.Dock="Right"
+                                    Classes="Small"
+                                    Command="{Binding $parent[modals:ProfileRuleSelectorModal].EditSelectorsCommand}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
+                                        <icons:PackIconLucide
+                                            Width="{StaticResource MediumFontSize}"
+                                            Height="{StaticResource MediumFontSize}"
+                                            VerticalAlignment="Center"
+                                            Kind="Settings2" />
+                                        <TextBlock Text="编辑子选择器" />
+                                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                            <Run Text="(" />
+                                            <Run Text="{Binding $parent[modals:ProfileRuleSelectorModal].Selector.Children.Count, FallbackValue=N/A}" />
+                                            <Run Text=")" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid
+            Grid.Row="2"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="8">
+            <Button
+                Grid.Column="1"
+                Command="{Binding $parent[husk:Modal].Dismiss}"
+                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+        </Grid>
+    </Grid>
+</husk:Modal>
