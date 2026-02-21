@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -54,6 +54,48 @@ public partial class ProfileRulesModal : Modal
             {
                 Rule = model, Packages = Packages, OverlayService = OverlayService
             });
+        }
+    }
+
+    [RelayCommand]
+    private void MoveRuleToTop(ProfileRuleModel? model)
+    {
+        if (model != null)
+        {
+            var index = Rules.IndexOf(model);
+            if (index > 0)
+            {
+                Rules.RemoveAt(index);
+                Rules.Insert(0, model);
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void MoveRuleUp(ProfileRuleModel? model)
+    {
+        if (model != null)
+        {
+            var index = Rules.IndexOf(model);
+            if (index > 0)
+            {
+                Rules.RemoveAt(index);
+                Rules.Insert(index - 1, model);
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void MoveRuleDown(ProfileRuleModel? model)
+    {
+        if (model != null)
+        {
+            var index = Rules.IndexOf(model);
+            if (index >= 0 && index < Rules.Count - 1)
+            {
+                Rules.RemoveAt(index);
+                Rules.Insert(index + 1, model);
+            }
         }
     }
 
