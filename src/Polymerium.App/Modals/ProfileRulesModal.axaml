@@ -1,4 +1,4 @@
-﻿<husk:Modal
+<husk:Modal
     x:Class="Polymerium.App.Modals.ProfileRulesModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -238,21 +238,45 @@
                                         Grid.Column="2"
                                         VerticalAlignment="Center">
                                         <Button
-                                            Classes="Small"
                                             Command="{Binding $parent[modals:ProfileRulesModal].EditRuleCommand}"
                                             CommandParameter="{Binding}">
                                             <icons:PackIconLucide
                                                 Width="{StaticResource MediumFontSize}"
                                                 Height="{StaticResource MediumFontSize}"
+                                                Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                 Kind="Pencil" />
                                         </Button>
                                         <Button
-                                            Classes="Small"
+                                            Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleToTopCommand}"
+                                            CommandParameter="{Binding}">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Kind="ArrowUpToLine" />
+                                        </Button>
+                                        <Button
+                                            Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleUpCommand}"
+                                            CommandParameter="{Binding}">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Kind="ArrowUp" />
+                                        </Button>
+                                        <Button
+                                            Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleDownCommand}"
+                                            CommandParameter="{Binding}">
+                                            <icons:PackIconLucide
+                                                Width="{StaticResource MediumFontSize}"
+                                                Height="{StaticResource MediumFontSize}"
+                                                Kind="ArrowDown" />
+                                        </Button>
+                                        <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].RemoveRuleCommand}"
                                             CommandParameter="{Binding}">
                                             <icons:PackIconLucide
                                                 Width="{StaticResource MediumFontSize}"
                                                 Height="{StaticResource MediumFontSize}"
+                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                 Kind="Trash2" />
                                         </Button>
                                     </husk:ButtonGroup>
