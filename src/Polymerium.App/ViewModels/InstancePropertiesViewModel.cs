@@ -89,7 +89,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
         try
         {
-            var path = ProfileHelper.PickIcon(Basic.Key);
+            var path = InstanceHelper.PickIcon(Basic.Key);
             if (path != null && File.Exists(path))
             {
                 File.Delete(path);

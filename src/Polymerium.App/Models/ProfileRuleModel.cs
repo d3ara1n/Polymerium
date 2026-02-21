@@ -33,12 +33,12 @@ public partial class ProfileRuleModel(Profile.Rice.Rule owner) : ModelBase
         owner.Destination = !string.IsNullOrWhiteSpace(value) ? value : null;
 
     [ObservableProperty]
-    public partial bool Skipping { get; set; }
+    public partial bool Skipping { get; set; } = owner.Skipping;
 
     partial void OnSkippingChanged(bool value) => owner.Skipping = value;
 
     [ObservableProperty]
-    public partial bool Solidifying { get; set; }
+    public partial bool Solidifying { get; set; } = owner.Solidifying;
 
     partial void OnSolidifyingChanged(bool value) => owner.Solidifying = value;
 

@@ -30,7 +30,7 @@ public partial class InstanceBasicModel : ModelBase
 
     public void UpdateIcon()
     {
-        var iconPath = ProfileHelper.PickIcon(Key);
+        var iconPath = InstanceHelper.PickIcon(Key);
         Thumbnail = iconPath is not null ? new(iconPath) : AssetUriIndex.DirtImageBitmap;
     }
 

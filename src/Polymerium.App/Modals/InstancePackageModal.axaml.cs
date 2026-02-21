@@ -16,6 +16,7 @@ using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services.Profiles;
+using Trident.Purl;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Modals;
@@ -202,7 +203,7 @@ public partial class InstancePackageModal : Modal
                                                                                 == Model.Namespace
                                                                                 && y.ProjectId
                                                                                 == Model.ProjectId))
-                                                                   .Select(x => (x.Info!.Label, x.Info!.Namespace,
+                                                                   .Select(x => new PackageIdentifier(x.Info!.Label, x.Info!.Namespace,
                                                                                            x.Info!.ProjectId,
                                                                                            (string?)
                                                                                            ((InstancePackageVersionModel)
@@ -213,24 +214,24 @@ public partial class InstancePackageModal : Modal
                         {
                             var count =
                                 (uint)Collection.Items.Count(y => y.Info!.Version is InstancePackageVersionModel version
-                                                               && version.Dependencies.Any(z => z.Label == x.Label
-                                                                   && z.Namespace == x.Namespace
-                                                                   && z.ProjectId == x.ProjectId));
-                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Label
-                                                                          && y.Info?.Namespace == x.Namespace
-                                                                          && y.Info?.ProjectId == x.ProjectId);
-                            var thumbnail = x.Thumbnail is not null
-                                                ? await DataService.GetBitmapAsync(x.Thumbnail)
+                                                               && version.Dependencies.Any(z => z.Label == x.Item2.Label
+                                                                   && z.Namespace == x.Item2.Namespace
+                                                                   && z.ProjectId == x.Item2.ProjectId));
+                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Item2.Label
+                                                                          && y.Info?.Namespace == x.Item2.Namespace
+                                                                          && y.Info?.ProjectId == x.Item2.ProjectId);
+                            var thumbnail = x.Item2.Thumbnail is not null
+                                                ? await DataService.GetBitmapAsync(x.Item2.Thumbnail)
                                                 : AssetUriIndex.DirtImageBitmap;
-                            return new InstancePackageDependencyModel(x.Label,
-                                                                      x.Namespace,
-                                                                      x.ProjectId,
-                                                                      x.VersionId,
-                                                                      x.ProjectName,
+                            return new InstancePackageDependencyModel(x.Item2.Label,
+                                                                      x.Item2.Namespace,
+                                                                      x.Item2.ProjectId,
+                                                                      x.Item2.VersionId,
+                                                                      x.Item2.ProjectName,
                                                                       thumbnail,
-                                                                      x.Reference,
+                                                                      x.Item2.Reference,
                                                                       count,
-                                                                      x.Dependencies
+                                                                      x.Item2.Dependencies
                                                                        .FirstOrDefault(y => y.Label == Model.Label
                                                                          && y.Namespace == Model.Namespace
                                                                          && y.ProjectId == Model.ProjectId)

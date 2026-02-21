@@ -2009,7 +2009,7 @@
         <value>Resource Kind</value>
     </data>
     <data name="ProfileRuleModal_ChildrenLabelText" xml:space="preserve">
-        <value>Rule Children</value>
+        <value>Child Rules</value>
     </data>
     <data name="ProfileRuleModal_Title" xml:space="preserve">
         <value>Edit Rule</value>
@@ -2067,5 +2067,20 @@
     </data>
     <data name="ProfileRuleSelectorsModal_SelectorCountLabelText" xml:space="preserve">
         <value>Selector Count: </value>
+    </data>
+    <data name="ProfileRuleSelectorModal_Title" xml:space="preserve">
+        <value>Edit Selector</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_SelectorTypeLabelText" xml:space="preserve">
+        <value>Rule Type</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_PickButtonText" xml:space="preserve">
+        <value>Pick</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_ChildrenEditButtonText" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
+        <value>Child Selectors</value>
     </data>
 </root>

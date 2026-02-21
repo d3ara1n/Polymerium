@@ -4743,7 +4743,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rule Children.
+        ///   Looks up a localized string similar to Child Rules.
         /// </summary>
         public static string ProfileRuleModal_ChildrenLabelText {
             get {
@@ -4847,6 +4847,51 @@ namespace Polymerium.App.Properties {
         public static string ProfileRuleModal_Title {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string ProfileRuleSelectorModal_ChildrenEditButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorModal_ChildrenEditButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Child Selectors.
+        /// </summary>
+        public static string ProfileRuleSelectorModal_ChildrenLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorModal_ChildrenLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick.
+        /// </summary>
+        public static string ProfileRuleSelectorModal_PickButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorModal_PickButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Type.
+        /// </summary>
+        public static string ProfileRuleSelectorModal_SelectorTypeLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorModal_SelectorTypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Selector.
+        /// </summary>
+        public static string ProfileRuleSelectorModal_Title {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorModal_Title", resourceCulture);
             }
         }
         

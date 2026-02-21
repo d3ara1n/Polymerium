@@ -39,6 +39,7 @@ using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
+using Trident.Purl;
 using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace Polymerium.App.ViewModels;
@@ -203,11 +204,12 @@ public partial class InstanceSetupViewModel(
         {
             var purls = packages
                        .Select(x => PackageHelper.TryParse(x.Entry.Purl, out var purl)
-                                        ? (Model: x, Purl: purl)
+                                        ? (Model: x,
+                                           Purl: new PackageIdentifier(purl.Label, purl.Namespace, purl.Pid, purl.Vid))
                                         : throw new FormatException($"Failed to parse purl: {x.Entry.Purl}"))
                        .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Model));
-            var knownVids = purls.Where(x => x.Key.Vid is not null).ToList();
-            var unknownVids = purls.Where(x => x.Key.Vid is null).ToList();
+            var knownVids = purls.Where(x => x.Key.Version is not null).ToArray();
+            var unknownVids = purls.Where(x => x.Key.Version is null).ToArray();
 
             if (token.IsCancellationRequested)
             {
@@ -222,21 +224,24 @@ public partial class InstanceSetupViewModel(
             }
 
             var unknownProjects =
-                await dataService.QueryProjectsAsync(unknownVids.Select(x => (x.Key.Label, x.Key.Namespace,
-                                                                              x.Key.Pid)));
+                await dataService.QueryProjectsAsync(unknownVids.Select(x => (x.Key.Repository, x.Key.Namespace,
+                                                                              x.Key.Identity)));
             if (token.IsCancellationRequested)
             {
                 return;
             }
 
             var thumbnailsTasks = knownPackages
-                                 .Select(async x => (Purl: (x.Label, x.Namespace, x.ProjectId, (string?)x.VersionId),
-                                                     Thumbnail: x.Thumbnail is not null
-                                                                    ? await dataService.GetBitmapAsync(x.Thumbnail)
+                                 .Select(async x => (Purl: x.Item1,
+                                                     Thumbnail: x.Item2.Thumbnail is not null
+                                                                    ? await dataService
+                                                                         .GetBitmapAsync(x.Item2.Thumbnail)
                                                                     : AssetUriIndex.DirtImageBitmap))
                                  .Concat(unknownProjects.Select(async x =>
-                                                                    (Purl: (x.Label, x.Namespace, x.ProjectId,
-                                                                            (string?)null),
+                                                                    (Purl: new PackageIdentifier(x.Label,
+                                                                         x.Namespace,
+                                                                         x.ProjectId,
+                                                                         null),
                                                                      Thumbnail: x.Thumbnail is not null
                                                                          ? await dataService
                                                                               .GetBitmapAsync(x.Thumbnail)
@@ -248,14 +253,14 @@ public partial class InstanceSetupViewModel(
                 return;
             }
 
-            foreach (var package in knownPackages)
+            foreach (var (id, package) in knownPackages)
             {
-                purls[(package.Label, package.Namespace, package.ProjectId, package.VersionId)].Package = package;
+                purls[id].Package = package;
             }
 
             foreach (var project in unknownProjects)
             {
-                purls[(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
+                purls[(new(project.Label, project.Namespace, project.ProjectId, null))].Project = project;
             }
 
             foreach (var thumbnailsTask in thumbnailsTasks)
@@ -589,7 +594,12 @@ public partial class InstanceSetupViewModel(
     {
         if (Rules is not null)
         {
-            overlayService.PopModal(new ProfileRulesModal { Rules = Rules, Packages = _stageSource.Items, OverlayService = overlayService });
+            overlayService.PopModal(new ProfileRulesModal
+            {
+                Rules = Rules,
+                Packages = _stageSource.Items,
+                OverlayService = overlayService
+            });
         }
     }
 

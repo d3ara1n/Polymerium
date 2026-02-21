@@ -13,6 +13,7 @@ using Trident.Core.Models.MojangLauncherApi;
 using Trident.Core.Models.PrismLauncherApi;
 using Trident.Core.Services;
 using Trident.Core.Utilities;
+using Trident.Purl;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Services;
@@ -43,30 +44,30 @@ public class DataService(
                     () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled),
                     cachedEnabled);
 
-    public async ValueTask<IReadOnlyList<Package>> ResolvePackagesAsync(
-        IEnumerable<(string label, string? ns, string pid, string? vid)> batch,
+    public async ValueTask<IReadOnlyList<(PackageIdentifier, Package)>> ResolvePackagesAsync(
+        IEnumerable<PackageIdentifier> batch,
         Filter filter)
     {
         var batchArray = batch.ToArray();
         var cachedTasks = batchArray
-                         .Select(x => (Meta: x,
+                         .Select(x => (Purl: x,
                                        Task:
-                                       Get<Package>($"package:{PackageHelper.Identify(x.label, x.ns, x.pid, x.vid, filter)}")))
+                                       Get<Package>($"package:{PackageHelper.Identify(x.Repository, x.Namespace, x.Identity, x.Version, filter)}")))
                          .Where(x => x.Task.HasValue)
-                         .Select(async x => (x.Meta, Package: await x.Task!.Value))
+                         .Select(async x => (Meta: x.Purl, Package: await x.Task!.Value))
                          .ToList();
 
         await Task.WhenAll(cachedTasks).ConfigureAwait(false);
-        var cached = cachedTasks.ConvertAll(x => x.Result);
-        var toResolve = batchArray.Except(cached.Select(x => x.Meta));
+        List<(PackageIdentifier Purl, Package Package)>? cached = cachedTasks.ConvertAll(x => x.Result);
+        var toResolve = batchArray.Except(cached.Select(x => x.Purl));
         var resolved = await agent.ResolveBatchAsync(toResolve, filter).ConfigureAwait(false);
-        foreach (var package in resolved)
+        foreach (var (id, package) in resolved)
         {
             Set($"package:{PackageHelper.Identify(package.Label, package.Namespace, package.ProjectId, package.VersionId, filter)}",
                 package);
         }
 
-        return cached.Select(x => x.Package).Concat(resolved).ToList();
+        return cached.Concat(resolved).ToList();
     }
 
     public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
