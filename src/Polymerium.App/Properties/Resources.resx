@@ -2059,4 +2059,13 @@
     <data name="ProfileRulesModal_AddRuleButtonText" xml:space="preserve">
         <value>Add New Rule</value>
     </data>
+    <data name="ProfileRuleSelectorsModal_Title" xml:space="preserve">
+        <value>Selectors</value>
+    </data>
+    <data name="ProfileRuleSelectorsModal_Message" xml:space="preserve">
+        <value>Conditions about how rules are applied</value>
+    </data>
+    <data name="ProfileRuleSelectorsModal_SelectorCountLabelText" xml:space="preserve">
+        <value>Selector Count: </value>
+    </data>
 </root>

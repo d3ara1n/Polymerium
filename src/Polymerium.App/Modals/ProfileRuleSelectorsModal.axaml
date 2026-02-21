@@ -1,8 +1,9 @@
-﻿<husk:Modal
-    x:Class="Polymerium.App.Modals.ProfileRulesModal"
+<husk:Modal
+    x:Class="Polymerium.App.Modals.ProfileRuleSelectorsModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
@@ -23,28 +24,28 @@
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.ProfileRulesModal_Title}" />
+                Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_Title}" />
             <TextBlock
                 MaxWidth="{Binding $parent[Panel].Bounds.Width}"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ProfileRulesModal_Message}"
+                Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_Message}"
                 TextWrapping="Wrap" />
         </StackPanel>
         <controls:EmptyContainer
             Grid.Row="1"
             Icon="Ruler"
-            IsEmpty="{Binding $parent[modals:ProfileRulesModal].Rules.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+            IsEmpty="{Binding $parent[modals:ProfileRuleSelectorsModal].Selectors.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
             <ScrollViewer>
                 <ItemsControl
                     Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.Horizontal}}"
-                    ItemsSource="{Binding $parent[modals:ProfileRulesModal].Rules}">
+                    ItemsSource="{Binding $parent[modals:ProfileRuleSelectorsModal].Selectors}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="8" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:ProfileRuleModel">
+                        <DataTemplate x:DataType="m:ProfileRuleSelectorModel">
                             <Border
                                 Padding="12"
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
@@ -52,17 +53,62 @@
                                 <Grid
                                     ColumnDefinitions="Auto,*,Auto"
                                     ColumnSpacing="12">
-                                    <!--  启用开关  -->
-                                    <ToggleSwitch
+                                    <!--  类型图标  -->
+                                    <StackPanel
                                         Grid.Column="0"
-                                        IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
+                                        VerticalAlignment="Center">
+                                        <husk:SwitchPresenter Value="{Binding Type}">
+                                            <husk:SwitchCase Value="And">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="Merge" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Or">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="Orbit" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Not">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="EqualNot" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Purl">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="Link" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Repository">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="Warehouse" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Tag">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="Tag" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Kind">
+                                                <icons:PackIconLucide
+                                                    Width="{StaticResource LargeFontSize}"
+                                                    Height="{StaticResource LargeFontSize}"
+                                                    Kind="Box" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </StackPanel>
 
-                                    <!--  规则信息  -->
+                                    <!--  选择器信息  -->
                                     <StackPanel
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         Spacing="4">
-                                        <husk:SwitchPresenter Value="{Binding Selector.Type}">
+                                        <husk:SwitchPresenter Value="{Binding Type}">
                                             <husk:SwitchCase Value="And">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -76,8 +122,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_SelectorCountLabelText}" />
+                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -94,8 +140,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_SelectorCountLabelText}" />
+                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -112,8 +158,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_SelectorCountLabelText}" />
+                                                        <Run Text="{Binding Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -129,7 +175,8 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Purl}" />
+                                                        Text="{Binding Purl}"
+                                                        TextTrimming="CharacterEllipsis" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Repository">
@@ -144,7 +191,8 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Repository}" />
+                                                        Text="{Binding Repository}"
+                                                        TextTrimming="CharacterEllipsis" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Tag">
@@ -159,7 +207,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Tag}" />
+                                                        Text="{Binding Tag}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Kind">
@@ -174,63 +222,10 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Kind}" />
+                                                        Text="{Binding Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
-
-                                        <!--  规则效果  -->
-                                        <StackPanel
-                                            Orientation="Horizontal"
-                                            Spacing="6">
-                                            <!--  跳过标记  -->
-                                            <husk:Tag IsVisible="{Binding Skipping}">
-                                                <StackPanel
-                                                    Orientation="Horizontal"
-                                                    Spacing="4">
-                                                    <icons:PackIconLucide
-                                                        Width="{StaticResource SmallFontSize}"
-                                                        Height="{StaticResource SmallFontSize}"
-                                                        VerticalAlignment="Center"
-                                                        Kind="Ban" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
-                                                </StackPanel>
-                                            </husk:Tag>
-
-                                            <!--  固化标记  -->
-                                            <husk:Tag IsVisible="{Binding Solidifying}">
-                                                <StackPanel
-                                                    Orientation="Horizontal"
-                                                    Spacing="4">
-                                                    <icons:PackIconLucide
-                                                        Width="{StaticResource SmallFontSize}"
-                                                        Height="{StaticResource SmallFontSize}"
-                                                        VerticalAlignment="Center"
-                                                        Kind="FileArchive" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
-                                                </StackPanel>
-                                            </husk:Tag>
-
-                                            <!--  目标路径  -->
-                                            <husk:Tag IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                                                <StackPanel
-                                                    Orientation="Horizontal"
-                                                    Spacing="4">
-                                                    <icons:PackIconLucide
-                                                        Width="{StaticResource SmallFontSize}"
-                                                        Height="{StaticResource SmallFontSize}"
-                                                        VerticalAlignment="Center"
-                                                        Kind="FolderInput" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Text="{Binding Destination}" />
-                                                </StackPanel>
-                                            </husk:Tag>
-                                        </StackPanel>
                                     </StackPanel>
 
                                     <!--  操作按钮  -->
@@ -239,7 +234,7 @@
                                         VerticalAlignment="Center">
                                         <Button
                                             Classes="Small"
-                                            Command="{Binding $parent[modals:ProfileRulesModal].EditRuleCommand}"
+                                            Command="{Binding $parent[modals:ProfileRuleSelectorsModal].EditSelectorCommand}"
                                             CommandParameter="{Binding}">
                                             <icons:PackIconLucide
                                                 Width="{StaticResource MediumFontSize}"
@@ -248,7 +243,7 @@
                                         </Button>
                                         <Button
                                             Classes="Small"
-                                            Command="{Binding $parent[modals:ProfileRulesModal].RemoveRuleCommand}"
+                                            Command="{Binding $parent[modals:ProfileRuleSelectorsModal].RemoveSelectorCommand}"
                                             CommandParameter="{Binding}">
                                             <icons:PackIconLucide
                                                 Width="{StaticResource MediumFontSize}"
@@ -271,17 +266,17 @@
             <Button
                 Grid.Column="0"
                 Classes="Primary"
-                Command="{Binding $parent[modals:ProfileRulesModal].AddRuleCommand}">
+                Command="{Binding $parent[modals:ProfileRuleSelectorsModal].AddSelectorCommand}">
                 <husk:IconLabel
                     Icon="Add"
-                    Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />
+                    Text="添加新选择器" />
             </Button>
             <TextBlock
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                <Run Text="{Binding $parent[modals:ProfileRulesModal].Rules.Count, FallbackValue=0}" />
+                <Run Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_SelectorCountLabelText}" />
+                <Run Text="{Binding $parent[modals:ProfileRuleSelectorsModal].Selectors.Count, FallbackValue=0}" />
             </TextBlock>
             <Button
                 Grid.Column="3"
