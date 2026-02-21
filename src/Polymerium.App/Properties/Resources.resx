@@ -2021,7 +2021,7 @@
         <value>Exclude from Deployment</value>
     </data>
     <data name="ProfileRuleModal_SolidifyingLabelText" xml:space="preserve">
-        <value>Do Not Using Symlink</value>
+        <value>Do not Use Symlink</value>
     </data>
     <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
         <value>Edit</value>

@@ -4824,7 +4824,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do Not Using Symlink.
+        ///   Looks up a localized string similar to Do not Use Symlink.
         /// </summary>
         public static string ProfileRuleModal_SolidifyingLabelText {
             get {
