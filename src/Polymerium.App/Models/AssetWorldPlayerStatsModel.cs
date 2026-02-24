@@ -51,7 +51,7 @@ public class AssetWorldPlayerStatsModel
                 TimeSpan.FromSeconds(TimeSinceDeath / 20d).Humanize(maxUnit: TimeUnit.Hour)),
             new(PackIconLucideKind.Sparkles, "Items Enchanted", ItemsEnchanted.ToString()),
             new(PackIconLucideKind.Rabbit, "Animals Bred", AnimalsBred.ToString()),
-            new(PackIconLucideKind.Fish, "ish Caught", FishCaught.ToString())
+            new(PackIconLucideKind.Fish, "Fish Caught", FishCaught.ToString())
         };
 
     private static string FormatDistance(long centimeters)
