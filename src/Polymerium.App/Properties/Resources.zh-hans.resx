@@ -2074,4 +2074,7 @@
     <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
         <value>子选择器</value>
     </data>
+    <data name="InstanceSetupView_RuleCountLabelText" xml:space="preserve">
+        <value>部署规则条数：</value>
+    </data>
 </root>
