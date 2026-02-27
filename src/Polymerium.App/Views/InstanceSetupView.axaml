@@ -580,7 +580,7 @@
                                     VerticalAlignment="Center">
                                     <Run
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="部署规则条数:" />
+                                        Text="{x:Static lang:Resources.InstanceSetupView_RuleCountLabelText}" />
                                     <Run
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Text="{Binding Rules.Count, Mode=OneWay, FallbackValue=0}" />

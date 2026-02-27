@@ -2083,4 +2083,7 @@
     <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
         <value>Child Selectors</value>
     </data>
+    <data name="InstanceSetupView_RuleCountLabelText" xml:space="preserve">
+        <value>Deployment Rule Count:</value>
+    </data>
 </root>

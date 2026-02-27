@@ -3057,6 +3057,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deployment Rule Count:.
+        /// </summary>
+        public static string InstanceSetupView_RuleCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_RuleCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Source.
         /// </summary>
         public static string InstanceSetupView_SourceFilterText {
