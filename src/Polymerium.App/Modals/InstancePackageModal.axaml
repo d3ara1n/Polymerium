@@ -101,9 +101,111 @@
                     </Style>
                 </TabControl.Styles>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_BasicsTabText}">
-                    <TextBlock
-                        Text="{Binding Summary, FallbackValue=Summary}"
-                        TextWrapping="Wrap" />
+                    <DockPanel>
+                        <husk:LazyContainer
+                            DockPanel.Dock="Bottom"
+                            Source="{Binding $parent[modals:InstancePackageModal].LazyRules}">
+                            <husk:LazyContainer.SourceTemplate>
+                                <DataTemplate DataType="m:InstancePackageRuleResultModel">
+                                    <Border
+                                        Padding="12"
+                                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <StackPanel Spacing="6">
+                                            <DockPanel>
+                                                <husk:Tag
+                                                    DockPanel.Dock="Right"
+                                                    Classes="Status">
+                                                    <TextBlock Text="{Binding AppliedRuleCount}" />
+                                                </husk:Tag>
+                                                <StackPanel
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Symbol="Filter" />
+                                                    <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AppliedRulesLabelText}" />
+                                                </StackPanel>
+                                            </DockPanel>
+                                            <TextBlock
+                                                IsVisible="{Binding Matched, Converter={x:Static BoolConverters.Not}}"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.InstancePackageModal_NoRulesLabelText}" />
+                                            <StackPanel
+                                                IsVisible="{Binding Matched}"
+                                                Spacing="4">
+                                                <DockPanel IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                    <TextBlock
+                                                        DockPanel.Dock="Right"
+                                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                        Text="{Binding Destination}" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
+                                                </DockPanel>
+                                                <DockPanel>
+                                                    <husk:SwitchPresenter
+                                                        DockPanel.Dock="Right"
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding Solidifying}">
+                                                        <husk:SwitchCase Value="True">
+                                                            <husk:Tag
+                                                                Classes="Warning"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                        <husk:SwitchCase Value="False">
+                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                    </husk:SwitchPresenter>
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
+                                                </DockPanel>
+                                                <DockPanel>
+                                                    <husk:SwitchPresenter
+                                                        DockPanel.Dock="Right"
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding Skipping}">
+                                                        <husk:SwitchCase Value="True">
+                                                            <husk:Tag
+                                                                Classes="Danger"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                        <husk:SwitchCase Value="False">
+                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                    </husk:SwitchPresenter>
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                                                </DockPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </husk:LazyContainer.SourceTemplate>
+                        </husk:LazyContainer>
+                        <ScrollViewer>
+                            <StackPanel Spacing="12">
+                                <TextBlock
+                                    Text="{Binding Summary, FallbackValue=Summary}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
                 </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_TagsTabText}">
                     <Border
@@ -118,9 +220,9 @@
                                 <Grid>
                                     <DockPanel Margin="6">
                                         <TextBlock
+                                            DockPanel.Dock="Right"
                                             Margin="4,0"
                                             VerticalAlignment="Center"
-                                            DockPanel.Dock="Right"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                             <Run Text="/" />
                                             <Run Text="{Binding Owner.Tags.Count, FallbackValue=0}" />
@@ -178,11 +280,11 @@
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                                 <DockPanel>
                                                     <Button
+                                                        DockPanel.Dock="Right"
                                                         Padding="4,0"
                                                         Command="{Binding $parent[modals:InstancePackageModal].RemoveTagCommand}"
                                                         CommandParameter="{Binding}"
                                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
-                                                        DockPanel.Dock="Right"
                                                         Theme="{StaticResource GhostButtonTheme}">
                                                         <fi:SymbolIcon
                                                             HorizontalAlignment="Right"
@@ -257,8 +359,8 @@
                                                 </StackPanel>
                                             </Border>
                                             <Button
-                                                Classes="Small"
                                                 Grid.Column="1"
+                                                Classes="Small"
                                                 Margin="4,0,0,0"
                                                 Padding="6"
                                                 IsVisible="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageInfoModel)DataContext).Owner.IsLocked, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
