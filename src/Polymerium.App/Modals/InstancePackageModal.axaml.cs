@@ -15,6 +15,7 @@ using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Utilities;
+using Polymerium.App.Models;
 using Trident.Core.Services.Profiles;
 using Trident.Purl;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -60,6 +61,11 @@ public partial class InstancePackageModal : Modal
                                                                     o => o.IsDeleting,
                                                                     (o, v) => o.IsDeleting = v);
 
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyRulesProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyRules),
+                                                                           o => o.LazyRules,
+                                                                           (o, v) => o.LazyRules = v);
+
     private string? _old;
 
     public InstancePackageModal() => InitializeComponent();
@@ -68,6 +74,12 @@ public partial class InstancePackageModal : Modal
     {
         get;
         set => SetAndRaise(IsDeletingProperty, ref field, value);
+    }
+
+    public LazyObject? LazyRules
+    {
+        get;
+        set => SetAndRaise(LazyRulesProperty, ref field, value);
     }
 
     public required ProfileGuard Guard { get; init; }
@@ -388,6 +400,28 @@ public partial class InstancePackageModal : Modal
         return lazy;
     }
 
+    private LazyObject ConstructRules()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            var vid = Model.Version is InstancePackageVersionModel v ? v.Id : null;
+            var package = await DataService.ResolvePackageAsync(Model.Label,
+                                                                Model.Namespace,
+                                                                Model.ProjectId,
+                                                                vid,
+                                                                Filter);
+            var enabledRules = Guard.Value.Setup.Rules.Where(x => x.Enabled).ToList();
+            var result = RuleHelper.Evaluate(new RuleHelper.Input(Model.Owner.Entry, package), enabledRules);
+            return new InstancePackageRuleResultModel(result);
+        });
+        return lazy;
+    }
+
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
@@ -401,6 +435,7 @@ public partial class InstancePackageModal : Modal
         LazyDependencies = ConstructDependencies();
         LazyDependants = ConstructDependants();
         LazyHistory = ConstructHistory();
+        LazyRules = ConstructRules();
         AddHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
     }
 

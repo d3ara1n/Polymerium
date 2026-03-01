@@ -2074,4 +2074,16 @@
     <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
         <value>子选择器</value>
     </data>
+    <data name="Shared_Yes" xml:space="preserve">
+        <value>是</value>
+    </data>
+    <data name="Shared_No" xml:space="preserve">
+        <value>否</value>
+    </data>
+    <data name="InstancePackageModal_AppliedRulesLabelText" xml:space="preserve">
+        <value>应用的规则</value>
+    </data>
+    <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
+        <value>无匹配规则</value>
+    </data>
 </root>

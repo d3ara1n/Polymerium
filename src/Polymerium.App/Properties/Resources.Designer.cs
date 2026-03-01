@@ -2238,6 +2238,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applied Rules.
+        /// </summary>
+        public static string InstancePackageModal_AppliedRulesLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_AppliedRulesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Version.
         /// </summary>
         public static string InstancePackageModal_AutoVersionLabelText {
@@ -2297,6 +2306,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePackageModal_LockedVersionLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_LockedVersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No rules matched.
+        /// </summary>
+        public static string InstancePackageModal_NoRulesLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_NoRulesLabelText", resourceCulture);
             }
         }
         
@@ -6066,11 +6084,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Shared_No {
+            get {
+                return ResourceManager.GetString("Shared_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
         public static string Shared_Paste {
             get {
                 return ResourceManager.GetString("Shared_Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Shared_Yes {
+            get {
+                return ResourceManager.GetString("Shared_Yes", resourceCulture);
             }
         }
         

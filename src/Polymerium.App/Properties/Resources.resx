@@ -2083,4 +2083,16 @@
     <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
         <value>Child Selectors</value>
     </data>
+    <data name="Shared_Yes" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+    <data name="Shared_No" xml:space="preserve">
+        <value>No</value>
+    </data>
+    <data name="InstancePackageModal_AppliedRulesLabelText" xml:space="preserve">
+        <value>Applied Rules</value>
+    </data>
+    <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
+        <value>No rules matched</value>
+    </data>
 </root>
