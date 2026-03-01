@@ -179,8 +179,8 @@
                                     RowDefinitions="*,Auto"
                                     RowSpacing="12">
                                     <Button
-                                        Classes="Primary"
                                         Grid.Row="0"
+                                        Classes="Primary"
                                         Padding="12,8"
                                         Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
                                         CommandParameter="{Binding Key}">
@@ -193,8 +193,8 @@
                                         ColumnDefinitions="*,*"
                                         ColumnSpacing="8">
                                         <Button
-                                            Classes="Small"
                                             Grid.Column="0"
+                                            Classes="Small"
                                             Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
@@ -203,8 +203,8 @@
                                                 Symbol="Open" />
                                         </Button>
                                         <Button
-                                            Classes="Small"
                                             Grid.Column="1"
+                                            Classes="Small"
                                             Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).OpenInstanceFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
@@ -219,9 +219,7 @@
                     </DataTemplate>
                 </husk:PlaceholderPresenter.SourceTemplate>
                 <husk:PlaceholderPresenter.Placeholder>
-                    <husk:Card
-                        MinHeight="120"
-                        CornerRadius="{StaticResource MediumCornerRadius}">
+                    <husk:Card CornerRadius="{StaticResource MediumCornerRadius}">
                         <StackPanel
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -249,9 +247,9 @@
                 VerticalSpacing="8">
                 <DockPanel DockPanel.Dock="Top">
                     <Button
+                        DockPanel.Dock="Right"
                         Classes="Small"
                         Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).GotoMarketplaceCommand, FallbackValue={x:Null}}"
-                        DockPanel.Dock="Right"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel
                             Orientation="Horizontal"
@@ -293,9 +291,9 @@
                                             ToolTip.Tip="{Binding ProjectName}">
                                             <DockPanel>
                                                 <Border
+                                                    DockPanel.Dock="Top"
                                                     Height="56"
-                                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}"
-                                                    DockPanel.Dock="Top">
+                                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
                                                     <Border.Background>
                                                         <ImageBrush
                                                             async:ImageBrushLoader.Source="{Binding Thumbnail}"
@@ -374,10 +372,10 @@
                             Text="{x:Static lang:Resources.LandingView_RandomPlaySubtitle}" />
                     </StackPanel>
                     <Button
-                        Classes="Small"
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
+                        Classes="Small"
                         Command="{Binding TryOneCommand}"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <husk:IconLabel
@@ -524,8 +522,8 @@
                                                     TextWrapping="Wrap" />
                                                 <DockPanel HorizontalSpacing="8">
                                                     <husk:Tag
-                                                        Classes="Small"
-                                                        DockPanel.Dock="Right">
+                                                        DockPanel.Dock="Right"
+                                                        Classes="Small">
                                                         <TextBlock Text="{Binding Category}" />
                                                     </husk:Tag>
                                                     <husk:IconLabel
