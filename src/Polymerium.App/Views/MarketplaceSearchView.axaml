@@ -64,9 +64,9 @@
                     </Border.Background>
                     <DockPanel HorizontalSpacing="12">
                         <Button
+                            DockPanel.Dock="Left"
                             VerticalAlignment="Top"
                             Command="{Binding $parent[husk:Frame].GoBackCommand}"
-                            DockPanel.Dock="Left"
                             Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon
                                 HorizontalAlignment="Left"
@@ -147,8 +147,8 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button
-                            Classes="Primary"
                             Grid.Column="5"
+                            Classes="Primary"
                             Padding="12,0"
                             IsEnabled="{Binding Exhibits.IsFetching, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
                             Command="{Binding SearchCommand}"

@@ -49,7 +49,9 @@ public partial class ProfileRulesModal : Modal
         {
             OverlayService.PopModal(new ProfileRuleModal
             {
-                Rule = model, Packages = Packages, OverlayService = OverlayService
+                Rule = model,
+                Packages = Packages,
+                OverlayService = OverlayService
             });
         }
     }

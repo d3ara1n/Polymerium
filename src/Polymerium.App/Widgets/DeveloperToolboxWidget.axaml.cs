@@ -1,4 +1,4 @@
-﻿using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Modals;

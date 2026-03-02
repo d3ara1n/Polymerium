@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
 using Avalonia.Media.Imaging;

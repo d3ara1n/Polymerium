@@ -54,8 +54,8 @@
                             </Grid>
                         </Border>
                         <Button
-                            Classes="Small"
                             Grid.Column="2"
+                            Classes="Small"
                             Click="RemoveButton_OnClick"
                             IsCancel="True"
                             Theme="{StaticResource GhostButtonTheme}">

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.Repositories.Resources;

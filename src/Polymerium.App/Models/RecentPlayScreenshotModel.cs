@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;

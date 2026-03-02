@@ -24,16 +24,16 @@
                 FontWeight="{StaticResource ControlStrongFontWeight}"
                 Text="Notifications" />
             <Button
-                Classes="Small"
                 Grid.Column="1"
+                Classes="Small"
                 Theme="{StaticResource OutlineButtonTheme}">
                 <husk:IconLabel
                     Icon="Checkmark"
                     Text="Mark all as read" />
             </Button>
             <Button
-                Classes="Small"
                 Grid.Column="2"
+                Classes="Small"
                 Click="DimissButton_OnClick">
                 <fi:SymbolIcon
                     FontSize="{StaticResource MediumFontSize}"

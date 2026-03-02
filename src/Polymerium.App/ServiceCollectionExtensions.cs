@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
 using MirrorChyan.Net;

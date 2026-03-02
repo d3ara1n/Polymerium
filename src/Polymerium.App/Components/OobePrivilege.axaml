@@ -104,8 +104,8 @@
                                 TextWrapping="Wrap" />
                         </StackPanel>
                         <Button
-                            Classes="Small"
                             Grid.Column="3"
+                            Classes="Small"
                             Command="{Binding $parent[components:OobePrivilege].CheckPrivilegeCommand}"
                             Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon

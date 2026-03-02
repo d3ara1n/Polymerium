@@ -170,7 +170,8 @@ public partial class UnknownViewModel(
                 Result = Program.MagicWords,
                 Content = new StackPanel
                 {
-                    Spacing = 8d, Children = { new TextBox(), pop }
+                    Spacing = 8d,
+                    Children = { new TextBox(), pop }
                 }
             });
         }

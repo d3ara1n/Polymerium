@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -86,9 +86,9 @@ public partial class InstanceDashboardViewModel(
         Sources.Clear();
         var files = new[] { "latest.log", "debug.log" }
                    .Select(x => new FileLogSourceModel
-                    {
-                        Path = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs", x)
-                    })
+                   {
+                       Path = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs", x)
+                   })
                    .ToList();
         var live = new LiveLogSourceModel();
         Sources.Add(live);

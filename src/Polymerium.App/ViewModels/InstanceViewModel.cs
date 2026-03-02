@@ -47,10 +47,10 @@ public partial class InstanceViewModel : ViewModelBase
         _dataService = dataService;
         _persistenceService = persistenceService;
         SelectedPage = bag.Parameter switch
-                       {
-                           CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
-                           _ => null
-                       }
+        {
+            CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
+            _ => null
+        }
                     ?? PageEntries.FirstOrDefault();
 
         var key = bag.Parameter switch
@@ -104,7 +104,9 @@ public partial class InstanceViewModel : ViewModelBase
         //  or AssetIdentificationPersistModel { IsInImportMode: true } import
         var dialog = new AssetImporterDialog
         {
-            PathAccepted = initialPath, DataService = _dataService, NotificationService = _notificationService
+            PathAccepted = initialPath,
+            DataService = _dataService,
+            NotificationService = _notificationService
         };
         if (await _overlayService.PopDialogAsync(dialog))
         {

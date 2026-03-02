@@ -43,8 +43,8 @@
                                     Spacing="8"
                                     Text="{Binding Title}" />
                                 <ToggleButton
-                                    Classes="Small"
                                     Grid.Column="2"
+                                    Classes="Small"
                                     Margin="4"
                                     IsEnabled="{Binding SlimTemplate, Converter={x:Static ObjectConverters.IsNotNull}}"
                                     IsChecked="{Binding IsPinned}"

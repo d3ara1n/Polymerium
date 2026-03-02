@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using Polymerium.App.Facilities;
 using Resources = Polymerium.App.Properties.Resources;
 

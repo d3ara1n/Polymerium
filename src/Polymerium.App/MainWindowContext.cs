@@ -684,14 +684,14 @@ public partial class MainWindowContext : ObservableObject
                         // Determine if this is an account issue or game crash
                         var isAccountIssue = e.FailureReason is AccountAuthenticationException
                                                              or AggregateException
-                                                                {
-                                                                    InnerException: AccountAuthenticationException
-                                                                };
+                        {
+                            InnerException: AccountAuthenticationException
+                        };
                         var isGameCrash = e.FailureReason is ProcessFaultedException
                                                           or AggregateException
-                                                             {
-                                                                 InnerException: ProcessFaultedException
-                                                             };
+                        {
+                            InnerException: ProcessFaultedException
+                        };
 
                         if (isAccountIssue)
                         {

@@ -67,7 +67,8 @@ public partial class AccountsViewModel(
                                          cooked.Uuid,
                                          cooked.Username,
                                          account.EnrolledAt,
-                                         account.LastUsedAt) { IsDefault = account.Uuid == defaultAccount?.Uuid };
+                                         account.LastUsedAt)
+            { IsDefault = account.Uuid == defaultAccount?.Uuid };
             Accounts.Add(model);
         }
 

@@ -12,10 +12,10 @@
             <ControlTemplate x:DataType="m:InstanceActionModel">
                 <DockPanel HorizontalSpacing="6">
                     <Button
+                        DockPanel.Dock="Right"
                         Classes="Small"
                         IsEnabled="{Binding CanUndo}"
                         IsVisible="False"
-                        DockPanel.Dock="Right"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel VerticalAlignment="Center">
                             <fi:SymbolIcon
