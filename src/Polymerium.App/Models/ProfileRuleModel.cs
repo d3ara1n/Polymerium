@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 

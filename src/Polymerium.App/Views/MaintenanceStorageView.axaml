@@ -101,8 +101,8 @@
                     FontSize="{StaticResource LargeFontSize}"
                     Text="{x:Static lang:Resources.MaintenanceStorageView_CacheTitle}" />
                 <Button
-                    Classes="Small"
                     Grid.Column="1"
+                    Classes="Small"
                     Command="{Binding PurgeCacheCommand}"
                     Theme="{StaticResource GhostButtonTheme}">
                     <husk:IconLabel

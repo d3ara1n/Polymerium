@@ -10,14 +10,14 @@ namespace Polymerium.App.Modals;
 
 public partial class ProfileRulesModal : Modal
 {
-    public ProfileRulesModal() => InitializeComponent();
-
     public static readonly DirectProperty<ProfileRulesModal, MappingCollection<Profile.Rice.Rule, ProfileRuleModel>>
         RulesProperty =
             AvaloniaProperty
                .RegisterDirect<ProfileRulesModal, MappingCollection<Profile.Rice.Rule, ProfileRuleModel>>(nameof(Rules),
                     o => o.Rules,
                     (o, v) => o.Rules = v);
+
+    public ProfileRulesModal() => InitializeComponent();
 
     public required MappingCollection<Profile.Rice.Rule, ProfileRuleModel> Rules
     {
@@ -31,10 +31,7 @@ public partial class ProfileRulesModal : Modal
     #region Commands
 
     [RelayCommand]
-    private void AddRule()
-    {
-        Rules.Add(new(new() { Enabled = false, Selector = new() }));
-    }
+    private void AddRule() => Rules.Add(new(new() { Enabled = false, Selector = new() }));
 
     [RelayCommand]
     private void RemoveRule(ProfileRuleModel? model)

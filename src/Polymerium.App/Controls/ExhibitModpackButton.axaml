@@ -253,8 +253,8 @@
                                     TextWrapping="Wrap"
                                     ToolTip.Tip="{Binding ProjectName}" />
                                 <Button
-                                    Classes="Primary Small"
                                     Grid.Row="1"
+                                    Classes="Primary Small"
                                     BackgroundSizing="InnerBorderEdge"
                                     Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">

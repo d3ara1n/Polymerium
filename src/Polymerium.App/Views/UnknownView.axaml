@@ -404,8 +404,8 @@
                                         CornerRadius="{StaticResource SmallCornerRadius}">
                                         <Grid ColumnDefinitions="Auto,0,Auto,0,Auto">
                                             <Button
-                                                Classes="Small"
                                                 Grid.Column="0"
+                                                Classes="Small"
                                                 CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Left}}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <StackPanel
@@ -422,8 +422,8 @@
                                                 Margin="0,4"
                                                 Orientation="Vertical" />
                                             <Button
-                                                Classes="Small"
                                                 Grid.Column="4"
+                                                Classes="Small"
                                                 CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <StackPanel
@@ -449,8 +449,8 @@
                             Spacing="12">
                             <DockPanel>
                                 <Button
-                                    Classes="Small Primary"
                                     DockPanel.Dock="Bottom"
+                                    Classes="Small Primary"
                                     CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
                                     <husk:IconLabel
                                         Icon="HandPoint"
@@ -479,8 +479,8 @@
                             </DockPanel>
                             <DockPanel>
                                 <Button
-                                    Classes="Small"
                                     DockPanel.Dock="Bottom"
+                                    Classes="Small"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,0,1,1"
                                     CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">

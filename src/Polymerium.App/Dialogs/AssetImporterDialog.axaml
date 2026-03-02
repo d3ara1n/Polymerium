@@ -41,8 +41,8 @@
                                             Grid.Row="0"
                                             Margin="12,8">
                                             <HyperlinkButton
-                                                Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
                                                 DockPanel.Dock="Right"
+                                                Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 NavigateUri="{Binding Reference}" />
                                             <RadioButton IsChecked="{Binding $parent[local:AssetImporterDialog].IsPackageSelected, Mode=TwoWay}">

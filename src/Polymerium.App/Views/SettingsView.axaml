@@ -155,10 +155,10 @@
                         <DataTemplate DataType="m:BackgroundStyleModel">
                             <DockPanel>
                                 <husk:Tag
+                                    DockPanel.Dock="Right"
                                     Classes="Small"
                                     IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                    Content="{Binding Applicable}"
-                                    DockPanel.Dock="Right" />
+                                    Content="{Binding Applicable}" />
                                 <TextBlock Text="{Binding Display}" />
                             </DockPanel>
                         </DataTemplate>
@@ -167,10 +167,10 @@
                         <DataTemplate DataType="m:BackgroundStyleModel">
                             <DockPanel>
                                 <husk:Tag
+                                    DockPanel.Dock="Right"
                                     Classes="Small"
                                     IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                    Content="{Binding Applicable}"
-                                    DockPanel.Dock="Right" />
+                                    Content="{Binding Applicable}" />
                                 <TextBlock Text="{Binding Display}" />
                             </DockPanel>
                         </DataTemplate>
@@ -190,8 +190,8 @@
                                         VerticalAlignment="Center"
                                         Text="{Binding Display}" />
                                     <husk:Tag
-                                        Classes="Small"
                                         Grid.Column="2"
+                                        Classes="Small"
                                         VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Id}" />
                                     </husk:Tag>
@@ -336,8 +336,8 @@
                                 </StackPanel>
                             </Border>
                             <Button
-                                Classes="Small"
                                 Grid.Column="1"
+                                Classes="Small"
                                 Command="{Binding OpenProxySettingsCommand}"
                                 Theme="{StaticResource GhostButtonTheme}">
                                 <fi:SymbolIcon
@@ -368,9 +368,9 @@
                             <husk:SwitchCase Value="{x:True}">
                                 <DockPanel HorizontalSpacing="{StaticResource PlaqueSpacing}">
                                     <Button
+                                        DockPanel.Dock="Right"
                                         Classes="Small"
                                         Command="{Binding CheckUpdatesCommand}"
-                                        DockPanel.Dock="Right"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <fi:SymbolIcon
                                             HorizontalAlignment="Center"
@@ -440,8 +440,8 @@
                             HorizontalAlignment="Right"
                             VerticalSpacing="4">
                             <husk:SwitchPresenter
-                                HorizontalAlignment="Right"
                                 DockPanel.Dock="Top"
+                                HorizontalAlignment="Right"
                                 TargetType="m:AppUpdateState"
                                 Value="{Binding UpdateState}">
                                 <husk:SwitchCase Value="Idle" />

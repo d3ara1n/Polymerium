@@ -23,8 +23,8 @@
                 ColumnSpacing="8">
                 <!--  Export Diagnostic Package Button  -->
                 <Button
-                    Classes="Primary"
                     Grid.Column="0"
+                    Classes="Primary"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"
                     Command="{Binding $parent[modals:GameCrashReportModal].ExportDiagnosticPackageCommand}">

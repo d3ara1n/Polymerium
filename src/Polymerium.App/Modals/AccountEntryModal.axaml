@@ -30,11 +30,11 @@
                 <StackPanel Spacing="12">
                     <Panel>
                         <Button
+                            DockPanel.Dock="Right"
                             Classes="Small"
                             HorizontalAlignment="Right"
                             Command="{Binding $parent[modals:AccountEntryModal].Dismiss}"
                             CornerRadius="{StaticResource FullCornerRadius}"
-                            DockPanel.Dock="Right"
                             IsCancel="True">
                             <fi:SymbolIcon
                                 HorizontalAlignment="Center"

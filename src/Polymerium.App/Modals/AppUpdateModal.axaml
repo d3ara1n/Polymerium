@@ -18,15 +18,15 @@
     <DockPanel>
         <!--  Header  -->
         <StackPanel
-            Margin="0,0,0,16"
             DockPanel.Dock="Top"
+            Margin="0,0,0,16"
             Spacing="8">
             <DockPanel>
                 <Button
+                    DockPanel.Dock="Right"
                     Classes="Small"
                     Command="{Binding $parent[modals:AppUpdateModal].Dismiss}"
                     CornerRadius="{StaticResource FullCornerRadius}"
-                    DockPanel.Dock="Right"
                     IsCancel="True">
                     <fi:SymbolIcon
                         HorizontalAlignment="Center"
@@ -64,10 +64,10 @@
 
         <!--  Action Buttons at Bottom  -->
         <Grid
+            DockPanel.Dock="Bottom"
             Margin="0,16,0,0"
             ColumnDefinitions="*,Auto,Auto"
-            ColumnSpacing="8"
-            DockPanel.Dock="Bottom">
+            ColumnSpacing="8">
             <!--  Progress Bar  -->
             <StackPanel
                 Grid.Column="0"
@@ -91,8 +91,8 @@
             </StackPanel>
 
             <Button
-                Classes="Primary"
                 Grid.Column="1"
+                Classes="Primary"
                 IsEnabled="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}"
                 Command="{Binding $parent[modals:AppUpdateModal].ConfirmUpdateCommand}">
                 <StackPanel
