@@ -318,8 +318,8 @@
                             </StackPanel>
                         </Button>
                         <Button
-                            Classes="Danger"
                             Grid.Column="2"
+                            Classes="Danger"
                             Command="{Binding DeleteInstanceCommand}">
                             <StackPanel
                                 Orientation="Horizontal"

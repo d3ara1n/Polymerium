@@ -8,11 +8,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
-using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Services;
-using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
 
@@ -182,15 +180,13 @@ public partial class UnknownViewModel(
     private void Crash() => throw new NotImplementedException("The sun is leaking...");
 
     [RelayCommand]
-    private void Debug()
-    {
-        overlayService.PopModal(new ProfileRuleModal()
+    private void Debug() =>
+        overlayService.PopModal(new ProfileRuleModal
         {
             Rule = new(new() { Selector = new() }),
             OverlayService = overlayService,
             Packages = []
         });
-    }
 
     [RelayCommand]
     private void ShowIntro() =>

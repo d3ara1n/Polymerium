@@ -11,4 +11,3 @@ public class InstancePackageRuleResultModel(RuleHelper.Result result) : ModelBas
     public bool Solidifying => result.EffectiveRule?.Solidifying ?? false;
     public bool Skipping => result.EffectiveRule?.Skipping ?? false;
 }
-

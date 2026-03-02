@@ -76,8 +76,8 @@
                                 Text="{x:Static lang:Resources.InstanceAssetsView_ModInfoBarText}" />
                         </StackPanel>
                         <Button
-                            Classes="Primary"
                             Grid.Column="2"
+                            Classes="Primary"
                             Padding="12,6"
                             VerticalAlignment="Center"
                             Command="{Binding $parent[v:InstanceView].NavigateCommand}"
@@ -273,10 +273,10 @@
 
                                                         <!--  状态指示器  -->
                                                         <husk:SwitchPresenter
+                                                            DockPanel.Dock="Right"
                                                             Width="8"
                                                             Height="8"
                                                             VerticalAlignment="Top"
-                                                            DockPanel.Dock="Right"
                                                             TargetType="x:Boolean"
                                                             Value="{Binding IsLocked}">
                                                             <husk:SwitchCase Value="{x:False}">
@@ -322,9 +322,9 @@
 
                                                         <!--  版本  -->
                                                         <husk:Tag
+                                                            DockPanel.Dock="Right"
                                                             Classes="Small"
-                                                            Content="{Binding Version}"
-                                                            DockPanel.Dock="Right" />
+                                                            Content="{Binding Version}" />
 
                                                         <!--  文件大小  -->
                                                         <TextBlock
@@ -662,10 +662,10 @@
 
                                                     <!--  状态指示器  -->
                                                     <husk:SwitchPresenter
+                                                        DockPanel.Dock="Right"
                                                         Width="8"
                                                         Height="8"
                                                         VerticalAlignment="Top"
-                                                        DockPanel.Dock="Right"
                                                         TargetType="x:Boolean"
                                                         Value="{Binding IsLocked}">
                                                         <husk:SwitchCase Value="{x:False}">
@@ -712,9 +712,9 @@
 
                                                     <!--  包格式版本  -->
                                                     <husk:Tag
+                                                        DockPanel.Dock="Right"
                                                         Classes="Small"
-                                                        Content="{Binding PackFormat, StringFormat='Pack Format: {0}'}"
-                                                        DockPanel.Dock="Right" />
+                                                        Content="{Binding PackFormat, StringFormat='Pack Format: {0}'}" />
 
                                                     <!--  文件大小  -->
                                                     <TextBlock
@@ -1012,10 +1012,10 @@
 
                                                     <!--  状态指示器  -->
                                                     <husk:SwitchPresenter
+                                                        DockPanel.Dock="Right"
                                                         Width="8"
                                                         Height="8"
                                                         VerticalAlignment="Top"
-                                                        DockPanel.Dock="Right"
                                                         TargetType="x:Boolean"
                                                         Value="{Binding IsLocked}">
                                                         <husk:SwitchCase Value="{x:False}">
@@ -1062,9 +1062,9 @@
 
                                                     <!--  包格式版本  -->
                                                     <husk:Tag
+                                                        DockPanel.Dock="Right"
                                                         Classes="Small"
-                                                        Content="{Binding PackFormat, StringFormat='Pack Format: {0}'}"
-                                                        DockPanel.Dock="Right" />
+                                                        Content="{Binding PackFormat, StringFormat='Pack Format: {0}'}" />
 
                                                     <!--  文件大小  -->
                                                     <TextBlock
@@ -1345,8 +1345,8 @@
                                     CornerRadius="{StaticResource MediumCornerRadius}">
                                     <DockPanel>
                                         <TextBlock
-                                            Margin="12,12,12,0"
                                             DockPanel.Dock="Top"
+                                            Margin="12,12,12,0"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Text="{Binding Date}" />
                                         <ScrollViewer>
@@ -1720,10 +1720,10 @@
 
                                                                         <!--  状态指示器  -->
                                                                         <husk:SwitchPresenter
+                                                                            DockPanel.Dock="Right"
                                                                             Width="8"
                                                                             Height="8"
                                                                             VerticalAlignment="Top"
-                                                                            DockPanel.Dock="Right"
                                                                             TargetType="x:Boolean"
                                                                             Value="{Binding IsEnabled}">
                                                                             <husk:SwitchCase Value="{x:True}">
@@ -1756,9 +1756,9 @@
                                                                     <DockPanel>
                                                                         <!--  包格式版本  -->
                                                                         <husk:Tag
+                                                                            DockPanel.Dock="Right"
                                                                             Classes="Small"
-                                                                            Content="{Binding PackFormatText, StringFormat='Format {0}'}"
-                                                                            DockPanel.Dock="Right" />
+                                                                            Content="{Binding PackFormatText, StringFormat='Format {0}'}" />
 
                                                                         <!--  文件名  -->
                                                                         <TextBlock

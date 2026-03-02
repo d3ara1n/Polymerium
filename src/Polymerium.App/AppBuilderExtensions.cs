@@ -32,7 +32,7 @@ public static class AppBuilderExtensions
                 fontManager.AddFontCollection(new EmbeddedFontCollection(new("fonts:AlimamaFangYuanTi"),
                                                                          new("avares://Polymerium.App/Assets/Fonts/AlimamaFangYuanTi")));
             })
-           .With(new FontManagerOptions { DefaultFamilyName = "fonts:AlimamaFangYuanTi#AlimamaFangYuanTi", });
+           .With(new FontManagerOptions { DefaultFamilyName = "fonts:AlimamaFangYuanTi#AlimamaFangYuanTi" });
         return appBuilder;
     }
 }

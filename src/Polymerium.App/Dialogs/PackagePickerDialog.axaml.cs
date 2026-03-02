@@ -6,10 +6,8 @@ using System.Reactive.Linq;
 using Avalonia;
 using Avalonia.Interactivity;
 using DynamicData;
-using DynamicData.Binding;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
-using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Dialogs;
 
@@ -27,8 +25,9 @@ public partial class PackagePickerDialog : Dialog
                                                                      o => o.FilterText,
                                                                      (o, v) => o.FilterText = v);
 
-    private readonly IDisposable _subscription;
     private readonly SourceCache<InstancePackageModel, string> _packages = new(x => x.Entry.Purl);
+
+    private readonly IDisposable _subscription;
 
     public PackagePickerDialog()
     {
@@ -76,5 +75,4 @@ public partial class PackagePickerDialog : Dialog
           || (x.Info?.ProjectName?.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ?? false)
           || (x.Info?.Label?.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ?? false)
           || x.Entry.Purl.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
-
 }

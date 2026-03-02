@@ -17,16 +17,16 @@ public partial class ProfileRuleSelectorModal : Modal
 {
     public static readonly DirectProperty<ProfileRuleSelectorModal, ProfileRuleSelectorModel> SelectorProperty =
         AvaloniaProperty.RegisterDirect<ProfileRuleSelectorModal, ProfileRuleSelectorModel>(nameof(Selector),
-                                                                            o => o.Selector,
-                                                                            (o, v) => o.Selector = v);
+            o => o.Selector,
+            (o, v) => o.Selector = v);
+
+    public ProfileRuleSelectorModal() => InitializeComponent();
 
     public required ProfileRuleSelectorModel Selector
     {
         get;
         set => SetAndRaise(SelectorProperty, ref field, value);
     }
-
-    public ProfileRuleSelectorModal() => InitializeComponent();
 
     public required OverlayService OverlayService { get; init; }
     public required IReadOnlyList<InstancePackageModel> Packages { get; init; }
@@ -55,7 +55,7 @@ public partial class ProfileRuleSelectorModal : Modal
     [RelayCommand]
     private async Task PickTagAsync()
     {
-        var dialog = new TagPickerDialog() { ExistingTags = Packages.SelectMany(x => x.Tags).Distinct().ToList() };
+        var dialog = new TagPickerDialog { ExistingTags = Packages.SelectMany(x => x.Tags).Distinct().ToList() };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag)
         {
             Selector.Tag = tag;

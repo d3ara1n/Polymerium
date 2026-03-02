@@ -36,8 +36,8 @@
                         Grid.Column="1"
                         Text="实时日志" />
                     <husk:Tag
-                        Classes="Small Success"
                         Grid.Column="2"
+                        Classes="Small Success"
                         Content="Live" />
                 </Grid>
             </DataTemplate>
@@ -217,8 +217,8 @@
                             Text="游戏次数" />
                     </StackPanel>
                     <Button
-                        Classes="Small"
                         Grid.Row="1"
+                        Classes="Small"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center">
                         <StackPanel
@@ -254,8 +254,8 @@
                             Text="崩溃次数" />
                     </StackPanel>
                     <Button
-                        Classes="Small"
                         Grid.Row="1"
+                        Classes="Small"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center">
                         <StackPanel

@@ -25,11 +25,11 @@
             CornerRadius="{StaticResource MediumCornerRadius}">
             <DockPanel VerticalSpacing="12">
                 <Border
+                    DockPanel.Dock="Top"
                     Width="64"
                     Height="64"
                     BoxShadow="0 0 4 0 #3F000000"
-                    CornerRadius="{StaticResource SmallCornerRadius}"
-                    DockPanel.Dock="Top">
+                    CornerRadius="{StaticResource SmallCornerRadius}">
                     <Border.Background>
                         <ImageBrush async:ImageBrushLoader.Source="{Binding $parent[local:AccountCreationPreview].Model.FaceUrl, FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
                     </Border.Background>

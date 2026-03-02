@@ -260,7 +260,7 @@ public partial class InstanceSetupViewModel(
 
             foreach (var project in unknownProjects)
             {
-                purls[(new(project.Label, project.Namespace, project.ProjectId, null))].Project = project;
+                purls[new(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
             }
 
             foreach (var thumbnailsTask in thumbnailsTasks)

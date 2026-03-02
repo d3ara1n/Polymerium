@@ -725,12 +725,12 @@
                     <husk:SwitchCase Value="Idle">
                         <DockPanel>
                             <Button
+                                DockPanel.Dock="Left"
                                 Margin="4"
                                 IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                 BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                                 Command="{Binding PlayCommand}"
-                                DockPanel.Dock="Left"
                                 Foreground="{StaticResource ControlBlackForegroundBrush}"
                                 Theme="{StaticResource LaunchButtonTheme}">
                                 <Button.CornerRadius>
@@ -758,12 +758,12 @@
                             </Button>
                             <DockPanel>
                                 <Button
+                                    DockPanel.Dock="Top"
                                     Margin="0,0,8,0"
                                     Padding="12,6"
                                     HorizontalAlignment="Center"
                                     Command="{Binding SwitchModeCommand}"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
-                                    DockPanel.Dock="Top">
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
                                     <TextBlock Text="{Binding Mode, Converter={x:Static converters:InternalConverters.LocalizedLaunchModeConverter}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button
@@ -880,8 +880,8 @@
                                 Grid.Column="1"
                                 RowDefinitions="Auto,*">
                                 <Button
-                                    Classes="Small"
                                     Grid.Row="0"
+                                    Classes="Small"
                                     Margin="0,8,8,0"
                                     Command="{Binding EjectCommand}">
                                     <TextBlock Text="{x:Static lang:Resources.InstanceHomeView_DetachButtonText}" />

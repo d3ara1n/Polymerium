@@ -184,8 +184,8 @@
                             ColumnDefinitions="Auto,*,Auto"
                             ColumnSpacing="12">
                             <ToggleButton
-                                Classes="Small"
                                 Grid.Column="0"
+                                Classes="Small"
                                 BorderThickness="1"
                                 IsChecked="{Binding $parent[modals:ExhibitPackageModal].IsDetailPanelVisible, Mode=TwoWay}">
                                 <fi:SymbolIcon
@@ -193,8 +193,8 @@
                                     Symbol="PanelLeftText" />
                             </ToggleButton>
                             <Button
-                                Classes="Small"
                                 Grid.Column="2"
+                                Classes="Small"
                                 Background="Transparent"
                                 Command="{Binding $parent[modals:ExhibitPackageModal].Dismiss}"
                                 IsCancel="True"
@@ -314,8 +314,8 @@
                                             Symbol="Bookmark" />
                                     </Button>
                                     <Button
-                                        Classes="Primary"
                                         Grid.Column="1"
+                                        Classes="Primary"
                                         Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -332,8 +332,8 @@
                         <husk:SwitchCase Value="Editable">
                             <Grid RowDefinitions="Auto,4,Auto,12,Auto">
                                 <husk:Tag
-                                    Classes="Success"
                                     Grid.Row="0"
+                                    Classes="Success"
                                     ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -376,8 +376,8 @@
                                             Symbol="Bookmark" />
                                     </Button>
                                     <Button
-                                        Classes="Primary"
                                         Grid.Column="1"
+                                        Classes="Primary"
                                         Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -427,8 +427,8 @@
                         <husk:SwitchCase Value="Adding">
                             <Grid RowDefinitions="Auto,4,Auto,12,Auto">
                                 <husk:Tag
-                                    Classes="Warning"
                                     Grid.Row="0"
+                                    Classes="Warning"
                                     ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=Version}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -471,8 +471,8 @@
                                             Symbol="Bookmark" />
                                     </Button>
                                     <Button
-                                        Classes="Primary"
                                         Grid.Column="1"
+                                        Classes="Primary"
                                         Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -496,8 +496,8 @@
                         <husk:SwitchCase Value="Modifying">
                             <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
                                 <husk:Tag
-                                    Classes="Success"
                                     Grid.Row="0"
+                                    Classes="Success"
                                     ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -526,8 +526,8 @@
                                     </StackPanel>
                                 </husk:Tag>
                                 <husk:Tag
-                                    Classes="Warning"
                                     Grid.Row="2"
+                                    Classes="Warning"
                                     ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=Version}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -570,8 +570,8 @@
                                             Symbol="Bookmark" />
                                     </Button>
                                     <Button
-                                        Classes="Primary"
                                         Grid.Column="1"
+                                        Classes="Primary"
                                         Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -595,8 +595,8 @@
                         <husk:SwitchCase Value="Removing">
                             <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
                                 <husk:Tag
-                                    Classes="Danger"
                                     Grid.Row="0"
+                                    Classes="Danger"
                                     ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
                                     <StackPanel
                                         Orientation="Horizontal"

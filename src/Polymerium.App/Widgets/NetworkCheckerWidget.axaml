@@ -18,11 +18,11 @@
             <DockPanel VerticalSpacing="12">
                 <!--  操作按钮  -->
                 <Button
+                    DockPanel.Dock="Top"
                     Classes="Primary Small"
                     HorizontalAlignment="Left"
                     IsEnabled="{Binding !IsTesting}"
-                    Command="{Binding PerformCommand}"
-                    DockPanel.Dock="Top">
+                    Command="{Binding PerformCommand}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
@@ -54,8 +54,8 @@
                                     <DockPanel>
                                         <!--  延迟进度条  -->
                                         <ProgressBar
-                                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
                                             DockPanel.Dock="Bottom"
+                                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
                                             IsIndeterminate="{Binding IsTesting}"
                                             Maximum="500"
                                             Value="{Binding Latency}">
@@ -189,8 +189,8 @@
 
                 <!--  操作按钮  -->
                 <Button
-                    Classes="Small"
                     Grid.Row="1"
+                    Classes="Small"
                     HorizontalAlignment="Stretch"
                     IsEnabled="{Binding !IsTesting}"
                     Command="{Binding PerformCommand}">

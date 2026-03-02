@@ -15,7 +15,6 @@ using Polymerium.App.Services;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Utilities;
-using Polymerium.App.Models;
 using Trident.Core.Services.Profiles;
 using Trident.Purl;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -215,11 +214,12 @@ public partial class InstancePackageModal : Modal
                                                                                 == Model.Namespace
                                                                                 && y.ProjectId
                                                                                 == Model.ProjectId))
-                                                                   .Select(x => new PackageIdentifier(x.Info!.Label, x.Info!.Namespace,
-                                                                                           x.Info!.ProjectId,
-                                                                                           (string?)
-                                                                                           ((InstancePackageVersionModel)
-                                                                                               x.Info!.Version).Id)),
+                                                                   .Select(x => new PackageIdentifier(x.Info!.Label,
+                                                                               x.Info!.Namespace,
+                                                                               x.Info!.ProjectId,
+                                                                               (string?)
+                                                                               ((InstancePackageVersionModel)
+                                                                                   x.Info!.Version).Id)),
                                                                     Filter.None);
             var tasks = dependants
                        .Select(async x =>
