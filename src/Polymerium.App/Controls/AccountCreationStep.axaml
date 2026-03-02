@@ -9,8 +9,8 @@
             <ControlTemplate>
                 <DockPanel VerticalSpacing="12">
                     <ContentPresenter
-                        Content="{TemplateBinding Header}"
-                        DockPanel.Dock="Top">
+                        DockPanel.Dock="Top"
+                        Content="{TemplateBinding Header}">
                         <ContentPresenter.Styles>
                             <Style Selector="ContentPresenter &gt; TextBlock">
                                 <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />

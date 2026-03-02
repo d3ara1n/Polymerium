@@ -1,4 +1,4 @@
-﻿namespace Polymerium.App.Models;
+namespace Polymerium.App.Models;
 
 public class FileLogSourceModel : LogSourceModelBase
 {

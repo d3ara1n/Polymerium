@@ -177,8 +177,8 @@
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto">
                         <Button
-                            Classes="Small"
                             Grid.Column="2"
+                            Classes="Small"
                             Command="{Binding ClearImportedPackCommand}"
                             Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon

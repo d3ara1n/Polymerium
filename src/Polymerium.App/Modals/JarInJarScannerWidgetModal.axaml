@@ -13,10 +13,10 @@
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Button
+                DockPanel.Dock="Right"
                 Classes="Small"
                 Command="{Binding $parent[modals:JarInJarScannerWidgetModal].Dismiss}"
                 CornerRadius="{StaticResource FullCornerRadius}"
-                DockPanel.Dock="Right"
                 IsCancel="True">
                 <fi:SymbolIcon
                     Width="{StaticResource MediumFontSize}"
@@ -35,13 +35,13 @@
                     VerticalAlignment="Center"
                     VerticalSpacing="12">
                     <Button
-                        HorizontalAlignment="Center"
-                        DockPanel.Dock="Top">
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Center">
                         <DockPanel HorizontalSpacing="8">
                             <fi:SymbolIcon
+                                DockPanel.Dock="Left"
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
-                                DockPanel.Dock="Left"
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="FolderSearch" />
                             <TextBlock Text="Scan" />
@@ -51,9 +51,9 @@
                         HorizontalAlignment="Center"
                         HorizontalSpacing="8">
                         <husk:ProgressRing
+                            DockPanel.Dock="Left"
                             Width="{StaticResource MediumFontSize}"
                             Height="{StaticResource MediumFontSize}"
-                            DockPanel.Dock="Left"
                             IsIndeterminate="True" />
                         <TextBlock Text="Scanning jar files...(0/0)" />
                     </DockPanel>

@@ -78,8 +78,8 @@
                                             VerticalAlignment="Center"
                                             Text="{Binding Display}" />
                                         <husk:Tag
-                                            Classes="Small"
                                             Grid.Column="2"
+                                            Classes="Small"
                                             VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Id}" />
                                         </husk:Tag>
@@ -214,8 +214,8 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{Binding $parent[components:OobeQuickSetup].ProxyStatusText}" />
                     <Button
-                        Classes="Small"
                         Grid.Column="6"
+                        Classes="Small"
                         Command="{Binding $parent[components:OobeQuickSetup].OpenProxySettingsCommand}"
                         Theme="{StaticResource GhostButtonTheme}">
                         <fi:SymbolIcon

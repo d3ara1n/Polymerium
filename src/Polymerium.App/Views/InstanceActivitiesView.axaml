@@ -604,9 +604,9 @@
                 Padding="0">
                 <DockPanel>
                     <Grid
+                        DockPanel.Dock="Top"
                         Margin="{Binding Source={StaticResource CardContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutBottom}}"
-                        ColumnDefinitions="*,Auto"
-                        DockPanel.Dock="Top">
+                        ColumnDefinitions="*,Auto">
                         <TextBlock
                             Grid.Column="0"
                             FontSize="{StaticResource LargeFontSize}"

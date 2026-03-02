@@ -435,7 +435,9 @@ public partial class ExhibitPackageModal : Modal
 
                             return new InstancePackageModificationModel
                             {
-                                Kind = InstancePackageModificationKind.Remove, VersionName = null, ModifiedAtRaw = x.At
+                                Kind = InstancePackageModificationKind.Remove,
+                                VersionName = null,
+                                ModifiedAtRaw = x.At
                             };
                         })
                        .ToArray();

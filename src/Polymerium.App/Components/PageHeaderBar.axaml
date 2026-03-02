@@ -12,10 +12,10 @@
     mc:Ignorable="d">
     <DockPanel>
         <Button
+            DockPanel.Dock="Left"
             Margin="8"
             Command="{Binding $parent[husk:Frame].GoBackCommand}"
-            CornerRadius="4"
-            DockPanel.Dock="Left">
+            CornerRadius="4">
             <icons:PackIconLucide
                 Width="12"
                 Height="12"

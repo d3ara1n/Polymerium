@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -27,9 +27,9 @@ public static class Startup
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
-        #if !DEBUG
+#if !DEBUG
                 services.AddSentry();
-        #endif
+#endif
 
         services
            .AddAvalonia()

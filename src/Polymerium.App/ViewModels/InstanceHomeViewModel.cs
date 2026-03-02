@@ -201,7 +201,9 @@ public partial class InstanceHomeViewModel(
                       .ToList();
         var dialog = new AccountPickerDialog
         {
-            GotoManagerViewCommand = OpenAccountsViewCommand, AccountsSource = accounts, Result = SelectedAccount
+            GotoManagerViewCommand = OpenAccountsViewCommand,
+            AccountsSource = accounts,
+            Result = SelectedAccount
         };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
         {

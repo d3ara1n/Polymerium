@@ -65,9 +65,9 @@
                                     </husk:PlaceholderPresenter.SourceTemplate>
                                 </husk:PlaceholderPresenter>
                                 <husk:Tag
-                                    Classes="Small"
                                     Grid.Row="0"
                                     Grid.Column="1"
+                                    Classes="Small"
                                     IsVisible="{Binding $parent[cp:JavaHomeContainer].Version, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
                                     Content="{Binding $parent[cp:JavaHomeContainer].Version}" />
                                 <TextBlock

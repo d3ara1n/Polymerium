@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.Repositories.Resources;

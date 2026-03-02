@@ -1,4 +1,4 @@
-﻿using Avalonia.Interactivity;
+using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Sidebars;

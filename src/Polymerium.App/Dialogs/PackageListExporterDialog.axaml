@@ -40,8 +40,8 @@
             <TextBlock Text="{x:Static lang:Resources.ExportPackageListDialog_PathLabelText}" />
             <DockPanel HorizontalSpacing="8">
                 <Button
-                    Command="{Binding $parent[local:PackageListExporterDialog].BrowseCommand}"
-                    DockPanel.Dock="Right">
+                    DockPanel.Dock="Right"
+                    Command="{Binding $parent[local:PackageListExporterDialog].BrowseCommand}">
                     <fi:SymbolIcon
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource MediumFontSize}"

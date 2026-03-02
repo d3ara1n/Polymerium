@@ -1,4 +1,4 @@
-﻿namespace Polymerium.App.Models;
+namespace Polymerium.App.Models;
 
 /// <summary>
 ///     资源包元数据模型（从 pack.mcmeta 中读取）

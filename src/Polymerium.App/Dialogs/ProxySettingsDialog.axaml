@@ -185,8 +185,8 @@
                             ColumnDefinitions="Auto,*"
                             ColumnSpacing="12">
                             <Button
-                                Classes="Small"
                                 Grid.Column="0"
+                                Classes="Small"
                                 IsEnabled="{Binding $parent[local:ProxySettingsDialog].IsTesting, Converter={x:Static BoolConverters.Not}}"
                                 Command="{Binding $parent[local:ProxySettingsDialog].TestConnectionCommand}">
                                 <husk:IconLabel
