@@ -324,7 +324,7 @@ public partial class InstanceSetupViewModel(
         {
             Dispatcher.UIThread.Post(() =>
             {
-                notificationService.PopMessage(ex.Message, "Failed to parse purl", GrowlLevel.Danger);
+                notificationService.PopMessage(ex.Message, Resources.InstanceSetupView_ParsePurlDangerNotificationTitle, GrowlLevel.Danger);
             });
         }
 
@@ -660,7 +660,7 @@ public partial class InstanceSetupViewModel(
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
+                notificationService.PopMessage(ex, Resources.InstanceSetupView_LoadProjectInformationDangerNotificationTitle, GrowlLevel.Warning);
             }
         }
     }
@@ -712,7 +712,7 @@ public partial class InstanceSetupViewModel(
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to load project information", GrowlLevel.Warning);
+                notificationService.PopMessage(ex, Resources.InstanceSetupView_LoadProjectInformationDangerNotificationTitle, GrowlLevel.Warning);
             }
 
             if (notification.Token.IsCancellationRequested)
@@ -863,8 +863,8 @@ public partial class InstanceSetupViewModel(
 
                 if (importedEntries.Count == 0)
                 {
-                    notificationService.PopMessage("No packages found in the file",
-                                                   "Import package list",
+                    notificationService.PopMessage(Resources.InstanceSetupView_ImportListNoPackagesWarningNotificationMessage,
+                                                   Resources.InstanceSetupView_ImportListWarningNotificationTitle,
                                                    GrowlLevel.Warning);
                     return;
                 }
@@ -961,14 +961,17 @@ public partial class InstanceSetupViewModel(
                 }
 
                 // 显示结果通知
-                var resultMessage = $"Added: {addedCount}, Updated: {updatedCount}, Failed: {failedCount}";
+                var resultMessage = Resources.InstanceSetupView_ImportListSuccessNotificationMessage
+                    .Replace("{0}", addedCount.ToString())
+                    .Replace("{1}", updatedCount.ToString())
+                    .Replace("{2}", failedCount.ToString());
                 var level = failedCount > 0 ? GrowlLevel.Warning : GrowlLevel.Success;
-                notificationService.PopMessage(resultMessage, "Import package list completed", level);
+                notificationService.PopMessage(resultMessage, Resources.InstanceSetupView_ImportListSuccessNotificationTitle, level);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Failed to import package list from file: {path}", filePath);
-                notificationService.PopMessage(ex, "Import package list");
+                notificationService.PopMessage(ex, Resources.InstanceSetupView_ImportListDangerNotificationTitle);
             }
         }
     }
@@ -1020,7 +1023,7 @@ public partial class InstanceSetupViewModel(
                     {
                         logger.LogError(ex, "Failed to exporting: {}", entry.Purl);
                         notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
-                                                       "Failed to fetching information",
+                                                       Resources.InstanceSetupView_FetchingInformationDangerNotificationTitle,
                                                        GrowlLevel.Warning);
                     }
                 }
@@ -1055,14 +1058,16 @@ public partial class InstanceSetupViewModel(
                     await csv.WriteRecordsAsync(output);
                 }
 
-                notificationService.PopMessage($"Exported package list to file {path}",
-                                               "Export package list to file",
+                notificationService.PopMessage(Resources.InstanceSetupView_ExportListSuccessNotificationMessage.Replace("{0}", path),
+                                               Resources.InstanceSetupView_ExportListSuccessNotificationTitle,
                                                GrowlLevel.Success);
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage($"Writing data to file ({path}) failed: {ex.Message}",
-                                               "Export package list to file",
+                notificationService.PopMessage(Resources.InstanceSetupView_ExportListDangerNotificationMessage
+                                                   .Replace("{0}", path)
+                                                   .Replace("{1}", ex.Message),
+                                               Resources.InstanceSetupView_ExportListDangerNotificationTitle,
                                                GrowlLevel.Danger);
             }
         }
@@ -1106,7 +1111,7 @@ public partial class InstanceSetupViewModel(
             catch (ApiException ex)
             {
                 logger.LogError(ex, "Failed to check update: {}", reference.Purl);
-                notificationService.PopMessage(ex, "Failed to check update");
+                notificationService.PopMessage(ex, Resources.InstanceSetupView_CheckUpdateDangerNotificationTitle);
             }
         }
     }
@@ -1127,7 +1132,7 @@ public partial class InstanceSetupViewModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Update failed");
+            notificationService.PopMessage(ex, Resources.InstanceSetupView_UpdateDangerNotificationTitle);
         }
     }
 
@@ -1141,7 +1146,9 @@ public partial class InstanceSetupViewModel(
                                     version.Namespace,
                                     version.ProjectId,
                                     version.VersionId);
-            notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+            notificationService.PopMessage(Resources.InstanceSetupView_InstallVersionNotificationMessage
+                .Replace("{0}", version.ProjectName)
+                .Replace("{1}", version.VersionName));
         }
     }
 

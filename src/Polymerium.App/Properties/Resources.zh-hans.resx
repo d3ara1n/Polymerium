@@ -1005,6 +1005,51 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>查看</value>
     </data>
+    <data name="InstanceSetupView_ParsePurlDangerNotificationTitle" xml:space="preserve">
+        <value>解析 purl 失败</value>
+    </data>
+    <data name="InstanceSetupView_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
+        <value>加载项目信息失败</value>
+    </data>
+    <data name="InstanceSetupView_ImportListNoPackagesWarningNotificationMessage" xml:space="preserve">
+        <value>文件中未找到任何包</value>
+    </data>
+    <data name="InstanceSetupView_ImportListWarningNotificationTitle" xml:space="preserve">
+        <value>导入包列表</value>
+    </data>
+    <data name="InstanceSetupView_ImportListSuccessNotificationMessage" xml:space="preserve">
+        <value>已添加: {0}, 已更新: {1}, 失败: {2}</value>
+    </data>
+    <data name="InstanceSetupView_ImportListSuccessNotificationTitle" xml:space="preserve">
+        <value>导入包列表完成</value>
+    </data>
+    <data name="InstanceSetupView_ImportListDangerNotificationTitle" xml:space="preserve">
+        <value>导入包列表</value>
+    </data>
+    <data name="InstanceSetupView_FetchingInformationDangerNotificationTitle" xml:space="preserve">
+        <value>获取信息失败</value>
+    </data>
+    <data name="InstanceSetupView_ExportListSuccessNotificationMessage" xml:space="preserve">
+        <value>已导出包列表到文件 {0}</value>
+    </data>
+    <data name="InstanceSetupView_ExportListSuccessNotificationTitle" xml:space="preserve">
+        <value>导出包列表到文件</value>
+    </data>
+    <data name="InstanceSetupView_ExportListDangerNotificationMessage" xml:space="preserve">
+        <value>写入数据到文件 ({0}) 失败: {1}</value>
+    </data>
+    <data name="InstanceSetupView_ExportListDangerNotificationTitle" xml:space="preserve">
+        <value>导出包列表到文件</value>
+    </data>
+    <data name="InstanceSetupView_CheckUpdateDangerNotificationTitle" xml:space="preserve">
+        <value>检查更新失败</value>
+    </data>
+    <data name="InstanceSetupView_UpdateDangerNotificationTitle" xml:space="preserve">
+        <value>更新失败</value>
+    </data>
+    <data name="InstanceSetupView_InstallVersionNotificationMessage" xml:space="preserve">
+        <value>{0}({1}) 已添加到安装队列</value>
+    </data>
     <data name="MarketplaceSearchView_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} 已添加到队列</value>
     </data>
