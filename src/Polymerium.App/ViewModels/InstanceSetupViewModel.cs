@@ -67,7 +67,8 @@ public partial class InstanceSetupViewModel(
         bool Enabled,
         string? Source,
         string? Name,
-        string? Version);
+        string? Version,
+        string Tags);
 
     #endregion
 
@@ -292,9 +293,9 @@ public partial class InstanceSetupViewModel(
                                                                               x.Package.PublishedAt,
                                                                               x.Package.ReleaseType,
                                                                               x.Package.Dependencies)
-                                                                      {
-                                                                          IsCurrent = true
-                                                                      },
+                                                                          {
+                                                                              IsCurrent = true
+                                                                          },
                                                                       x.Package.Author,
                                                                       x.Package.Summary,
                                                                       x.Package.Reference,
@@ -451,12 +452,12 @@ public partial class InstanceSetupViewModel(
     {
         _updatingSubscription?.Dispose();
         if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
-        // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
-        //  但该 TrackerBase.StateChanged 事件未接触订阅
-        //  实际是状态订阅有三层，第一层由 InstanceViewModelBase 维护，且正确工作
-        //  第二层是第一层的订阅事件中创建，由事件处理函数维护
-        //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
-        //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
+            // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
+            //  但该 TrackerBase.StateChanged 事件未接触订阅
+            //  实际是状态订阅有三层，第一层由 InstanceViewModelBase 维护，且正确工作
+            //  第二层是第一层的订阅事件中创建，由事件处理函数维护
+            //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
+            //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
         {
             return;
         }
@@ -509,13 +510,13 @@ public partial class InstanceSetupViewModel(
     private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter)
           || (x.Info is
-          {
-              ProjectId: { } pid,
-              ProjectName: { } name,
-              Author: { } author,
-              Summary: { } summary,
-              Version: { } version
-          }
+              {
+                  ProjectId: { } pid,
+                  ProjectName: { } name,
+                  Author: { } author,
+                  Summary: { } summary,
+                  Version: { } version
+              }
            && filter
              .Split(' ')
              .All(y => y switch
@@ -904,10 +905,35 @@ public partial class InstanceSetupViewModel(
                                     existingEntry.Purl = importedEntry.Purl;
                                     existingEntry.Enabled = importedEntry.Enabled;
 
-                                    persistenceService.AppendAction(new(Basic.Key,
-                                                                        PersistenceService.ActionKind.EditPackage,
-                                                                        oldPurl,
-                                                                        importedEntry.Purl));
+                                    var tags = importedEntry
+                                              .Tags.Split('|')
+                                              .Where(x => !string.IsNullOrEmpty(x))
+                                              .ToList();
+                                    var toAdd = tags.Except(existingEntry.Tags).ToList();
+
+                                    if (toAdd.Count > 0)
+                                    {
+                                        // HACK: 由于触发更新并不会同步 Tags，
+                                        //  在 Entry 中修改也不会同步，
+                                        //  所以需要推送到 InstancePackageModel 中
+                                        var model = _stageSource.Lookup(existingEntry);
+                                        if (model.HasValue)
+                                        {
+                                            foreach (var tag in toAdd)
+                                            {
+                                                model.Value.Tags.Add(tag);
+                                            }
+                                        }
+                                    }
+
+                                    if (oldPurl != importedEntry.Purl)
+                                    {
+                                        persistenceService.AppendAction(new(Basic.Key,
+                                                                            PersistenceService.ActionKind.EditPackage,
+                                                                            oldPurl,
+                                                                            importedEntry.Purl));
+                                    }
+
                                     updatedCount++;
                                 }
                                 else
@@ -1007,7 +1033,8 @@ public partial class InstanceSetupViewModel(
                                entry.Enabled,
                                entry.Source,
                                name,
-                               version));
+                               version,
+                               string.Join("|", entry.Tags)));
                 notification.Progress = output.Count;
                 notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
             }
@@ -1065,9 +1092,9 @@ public partial class InstanceSetupViewModel(
                                                                              x.VersionName,
                                                                              x.ReleaseType,
                                                                              x.PublishedAt)
-                              {
-                                  IsCurrent = x.VersionId == reference.VersionId
-                              })
+                               {
+                                   IsCurrent = x.VersionId == reference.VersionId
+                               })
                               .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (await overlayService.PopDialogAsync(dialog)
