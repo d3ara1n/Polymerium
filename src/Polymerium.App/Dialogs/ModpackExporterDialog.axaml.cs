@@ -39,7 +39,7 @@ public partial class ModpackExporterDialog : Dialog
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(VersionOriginal));
 
     public ModpackExporterDialog() => InitializeComponent();
-    public IReadOnlyList<string> ExporterLabels { get; } = ["curseforge", "modrinth"];
+    public IReadOnlyList<string> ExporterLabels { get; } = ["trident", "curseforge", "modrinth"];
 
     public string SelectedExporterLabel
     {
