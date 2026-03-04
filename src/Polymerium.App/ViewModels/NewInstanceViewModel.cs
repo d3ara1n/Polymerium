@@ -125,7 +125,7 @@ public partial class NewInstanceViewModel(
         if (ImportedPack != null)
         {
             profile = ImportedPack.Container.Profile;
-            await importerAgent.ExtractImportFilesAsync(key.Key, ImportedPack.Container, ImportedPack.Pack);
+            await importerAgent.ExtractFilesAsync(key.Key, ImportedPack.Container, ImportedPack.Pack);
         }
         else
         {
