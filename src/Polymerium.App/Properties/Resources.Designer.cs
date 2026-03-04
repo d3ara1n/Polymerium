@@ -2886,6 +2886,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to check update.
+        /// </summary>
+        public static string InstanceSetupView_CheckUpdateDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_CheckUpdateDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dependency Graph.
         /// </summary>
         public static string InstanceSetupView_DependencyGraphMenuText {
@@ -2895,11 +2904,56 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Writing data to file ({0}) failed: {1}.
+        /// </summary>
+        public static string InstanceSetupView_ExportListDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ExportListDangerNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export package list to file.
+        /// </summary>
+        public static string InstanceSetupView_ExportListDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ExportListDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Explort List.
         /// </summary>
         public static string InstanceSetupView_ExportListMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_ExportListMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exported package list to file {0}.
+        /// </summary>
+        public static string InstanceSetupView_ExportListSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ExportListSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export package list to file.
+        /// </summary>
+        public static string InstanceSetupView_ExportListSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ExportListSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to fetching information.
+        /// </summary>
+        public static string InstanceSetupView_FetchingInformationDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_FetchingInformationDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -2931,11 +2985,56 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import package list.
+        /// </summary>
+        public static string InstanceSetupView_ImportListDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ImportListDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import List.
         /// </summary>
         public static string InstanceSetupView_ImportListMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_ImportListMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No packages found in the file.
+        /// </summary>
+        public static string InstanceSetupView_ImportListNoPackagesWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ImportListNoPackagesWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added: {0}, Updated: {1}, Failed: {2}.
+        /// </summary>
+        public static string InstanceSetupView_ImportListSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ImportListSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import package list completed.
+        /// </summary>
+        public static string InstanceSetupView_ImportListSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ImportListSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import package list.
+        /// </summary>
+        public static string InstanceSetupView_ImportListWarningNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ImportListWarningNotificationTitle", resourceCulture);
             }
         }
         
@@ -2949,11 +3048,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}({1}) has added to install queue.
+        /// </summary>
+        public static string InstanceSetupView_InstallVersionNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_InstallVersionNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mod Loader.
         /// </summary>
         public static string InstanceSetupView_LoaderLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_LoaderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load project information.
+        /// </summary>
+        public static string InstanceSetupView_LoadProjectInformationDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_LoadProjectInformationDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -3017,6 +3134,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to parse purl.
+        /// </summary>
+        public static string InstanceSetupView_ParsePurlDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ParsePurlDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -3143,6 +3269,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceSetupView_TypeFilterText {
             get {
                 return ResourceManager.GetString("InstanceSetupView_TypeFilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update failed.
+        /// </summary>
+        public static string InstanceSetupView_UpdateDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_UpdateDangerNotificationTitle", resourceCulture);
             }
         }
         

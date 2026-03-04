@@ -1014,6 +1014,51 @@
     <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>Review</value>
     </data>
+    <data name="InstanceSetupView_ParsePurlDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to parse purl</value>
+    </data>
+    <data name="InstanceSetupView_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to load project information</value>
+    </data>
+    <data name="InstanceSetupView_ImportListNoPackagesWarningNotificationMessage" xml:space="preserve">
+        <value>No packages found in the file</value>
+    </data>
+    <data name="InstanceSetupView_ImportListWarningNotificationTitle" xml:space="preserve">
+        <value>Import package list</value>
+    </data>
+    <data name="InstanceSetupView_ImportListSuccessNotificationMessage" xml:space="preserve">
+        <value>Added: {0}, Updated: {1}, Failed: {2}</value>
+    </data>
+    <data name="InstanceSetupView_ImportListSuccessNotificationTitle" xml:space="preserve">
+        <value>Import package list completed</value>
+    </data>
+    <data name="InstanceSetupView_ImportListDangerNotificationTitle" xml:space="preserve">
+        <value>Import package list</value>
+    </data>
+    <data name="InstanceSetupView_FetchingInformationDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to fetching information</value>
+    </data>
+    <data name="InstanceSetupView_ExportListSuccessNotificationMessage" xml:space="preserve">
+        <value>Exported package list to file {0}</value>
+    </data>
+    <data name="InstanceSetupView_ExportListSuccessNotificationTitle" xml:space="preserve">
+        <value>Export package list to file</value>
+    </data>
+    <data name="InstanceSetupView_ExportListDangerNotificationMessage" xml:space="preserve">
+        <value>Writing data to file ({0}) failed: {1}</value>
+    </data>
+    <data name="InstanceSetupView_ExportListDangerNotificationTitle" xml:space="preserve">
+        <value>Export package list to file</value>
+    </data>
+    <data name="InstanceSetupView_CheckUpdateDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to check update</value>
+    </data>
+    <data name="InstanceSetupView_UpdateDangerNotificationTitle" xml:space="preserve">
+        <value>Update failed</value>
+    </data>
+    <data name="InstanceSetupView_InstallVersionNotificationMessage" xml:space="preserve">
+        <value>{0}({1}) has added to install queue</value>
+    </data>
     <data name="MarketplaceSearchView_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} has been added to the queue</value>
     </data>
