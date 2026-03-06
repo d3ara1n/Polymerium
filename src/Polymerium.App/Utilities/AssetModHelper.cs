@@ -8,7 +8,7 @@ using Polymerium.App.Models;
 using Tomlyn;
 using Tomlyn.Model;
 
-namespace Polymerium.App.Services;
+namespace Polymerium.App.Utilities;
 
 /// <summary>
 ///     Mod 元数据解析器，支持 Fabric、Forge 和 NeoForge
@@ -230,7 +230,7 @@ public static class AssetModHelper
 
         try
         {
-            var toml = Toml.ToModel(tomlContent);
+            var toml = TomlSerializer.Deserialize<TomlTable>(tomlContent)!;
 
             var metadata = new AssetModeMetadataModel { LoaderType = guessKind };
 
