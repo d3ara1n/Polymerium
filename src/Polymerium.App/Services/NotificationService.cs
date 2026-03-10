@@ -39,21 +39,22 @@ public class NotificationService
         string title = "Notification",
         GrowlLevel level = GrowlLevel.Information,
         bool forceExpire = false,
-        params GrowlAction[] actions)
-    {
-        var item = new GrowlItem { Content = message, Title = title, Level = level };
-        item.Actions.AddRange(actions);
-        Pop(item);
-        if ((level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
-          && actions is { Length: 0 } or null)
-         || forceExpire)
+        params GrowlAction[] actions) =>
+        Dispatcher.UIThread.Post(() =>
         {
-            item.IsProgressBarVisible = true;
-            COUNTDOWN
-               .RunAsync(item, item.Token)
-               .ContinueWith(_ => item.Dismiss(), TaskScheduler.FromCurrentSynchronizationContext());
-        }
-    }
+            var item = new GrowlItem { Content = message, Title = title, Level = level };
+            item.Actions.AddRange(actions);
+            Pop(item);
+            if ((level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
+              && actions is { Length: 0 } or null)
+             || forceExpire)
+            {
+                item.IsProgressBarVisible = true;
+                COUNTDOWN
+                   .RunAsync(item, item.Token)
+                   .ContinueWith(_ => item.Dismiss(), TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        });
 
     public void PopMessage(
         Exception? ex,
