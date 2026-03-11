@@ -6003,7 +6003,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ....
+        ///   Looks up a localized string similar to sudo superpower activate.
         /// </summary>
         public static string SettingsView_SuperPowerSubtitle {
             get {

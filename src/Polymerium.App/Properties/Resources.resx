@@ -319,7 +319,7 @@
         <value>Super Power</value>
     </data>
     <data name="SettingsView_SuperPowerSubtitle" xml:space="preserve">
-        <value>...</value>
+        <value>sudo superpower activate</value>
     </data>
     <data name="SettingsView_SuperPowerLabelText" xml:space="preserve">
         <value>Activate</value>
