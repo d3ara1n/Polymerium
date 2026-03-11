@@ -998,7 +998,7 @@ public partial class InstanceSetupViewModel(
     {
         var profile = ProfileManager.GetImmutable(Basic.Key);
         var list = new List<Profile.Rice.Entry>(profile.Setup.Packages);
-        var dialog = new PackageListExporterDialog { PackageCount = list.Count };
+        var dialog = new PackageListExporterDialog { PackageCount = list.Count, Key = Basic.Key };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             var notification = new GrowlItem { Title = "Export package list to file", IsProgressBarVisible = true };

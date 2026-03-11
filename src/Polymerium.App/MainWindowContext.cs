@@ -210,9 +210,9 @@ public partial class MainWindowContext : ObservableObject
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_NAME, name);
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
+                            var notification = _notificationService.PopProgress(name, "Exporting...");
                             try
                             {
-                                var notification = _notificationService.PopProgress(name, "Exporting...");
                                 var container = await _exporterAgent.ExportAsync(model.SelectedExporterLabel,
                                                     key,
                                                     name,
@@ -225,13 +225,16 @@ public partial class MainWindowContext : ObservableObject
                                 await packed.CopyToAsync(stream);
                                 notification.Report(100);
                                 await Task.Delay(TimeSpan.FromSeconds(1));
-                                notification.Dispose();
                                 var path = storageItem.TryGetLocalPath();
                                 _notificationService.PopMessage(path ?? "Unknown", "Export successfully");
                             }
                             catch (Exception ex)
                             {
                                 _notificationService.PopMessage(ex, "Failed to export instance");
+                            }
+                            finally
+                            {
+                                notification.Dispose();
                             }
                         }
                     }
@@ -684,14 +687,14 @@ public partial class MainWindowContext : ObservableObject
                         // Determine if this is an account issue or game crash
                         var isAccountIssue = e.FailureReason is AccountAuthenticationException
                                                              or AggregateException
-                        {
-                            InnerException: AccountAuthenticationException
-                        };
+                                                                {
+                                                                    InnerException: AccountAuthenticationException
+                                                                };
                         var isGameCrash = e.FailureReason is ProcessFaultedException
                                                           or AggregateException
-                        {
-                            InnerException: ProcessFaultedException
-                        };
+                                                             {
+                                                                 InnerException: ProcessFaultedException
+                                                             };
 
                         if (isAccountIssue)
                         {
