@@ -359,7 +359,7 @@
             Title="{x:Static lang:Resources.SettingsView_MaintenanceTitle}"
             Icon="Wrench"
             Summary="{x:Static lang:Resources.SettingsView_MaintenanceSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdatesLabelText}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_VersionLabelText}">
                 <controls:Plaque>
                     <controls:Plaque.Header>
                         <husk:SwitchPresenter
@@ -570,7 +570,6 @@
                         TextWrapping="Wrap">
                         <Run Text="☕" />
                         <Run Text="{x:Static lang:Resources.SettingsView_MirrorChyanCdkHint}" />
-                        <Run Text=" " />
                         <HyperlinkButton
                             Padding="0"
                             VerticalAlignment="Bottom"

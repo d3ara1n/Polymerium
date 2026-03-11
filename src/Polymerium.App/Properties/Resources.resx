@@ -1179,8 +1179,8 @@
     <data name="SettingsView_StorageManagementButtonText" xml:space="preserve">
         <value>Manage</value>
     </data>
-    <data name="SettingsView_UpdatesLabelText" xml:space="preserve">
-        <value>Updates</value>
+    <data name="SettingsView_VersionLabelText" xml:space="preserve">
+        <value>Version</value>
     </data>
     <data name="SettingsView_UpdatesViewButtonText" xml:space="preserve">
         <value>View update</value>
@@ -1210,7 +1210,7 @@
         <value>(Optional) Enter your CDK here</value>
     </data>
     <data name="SettingsView_MirrorChyanCdkHint" xml:space="preserve">
-        <value>Get CDK from mirrorchyan.com to support development</value>
+        <value>Get a CDK to support development: </value>
     </data>
     <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
         <value>Dependants</value>

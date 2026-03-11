@@ -58,7 +58,7 @@ public class DataService(
                          .ToList();
 
         await Task.WhenAll(cachedTasks).ConfigureAwait(false);
-        List<(PackageIdentifier Purl, Package Package)>? cached = cachedTasks.ConvertAll(x => x.Result);
+        List<(PackageIdentifier Purl, Package Package)> cached = cachedTasks.ConvertAll(x => x.Result);
         var toResolve = batchArray.Except(cached.Select(x => x.Purl));
         var resolved = await agent.ResolveBatchAsync(toResolve, filter).ConfigureAwait(false);
         foreach (var (id, package) in resolved)

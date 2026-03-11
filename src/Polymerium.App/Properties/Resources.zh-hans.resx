@@ -1170,8 +1170,8 @@
     <data name="SettingsView_StorageManagementLabelText" xml:space="preserve">
         <value>储存管理</value>
     </data>
-    <data name="SettingsView_UpdatesLabelText" xml:space="preserve">
-        <value>更新</value>
+    <data name="SettingsView_VersionLabelText" xml:space="preserve">
+        <value>版本</value>
     </data>
     <data name="SettingsView_UpdatesViewButtonText" xml:space="preserve">
         <value>查看更新</value>
@@ -1201,7 +1201,7 @@
         <value>（可选）在此输入你的 CDK</value>
     </data>
     <data name="SettingsView_MirrorChyanCdkHint" xml:space="preserve">
-        <value>从 mirrorchyan.com 获取 CDK 以支持开发</value>
+        <value>获取 CDK 以支持开发：</value>
     </data>
     <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
         <value>附属</value>

@@ -66,7 +66,7 @@ public class Configuration
         { NETWORK_PROXY_USERNAME, string.Empty },
         { NETWORK_PROXY_PASSWORD, string.Empty },
         { UPDATE_SOURCE, 1 },
-        { UPDATE_MIRRORCHYAN_CDK, string.Empty }
+        { UPDATE_MIRRORCHYAN_CDK, string.Empty },
     };
 
     public static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
