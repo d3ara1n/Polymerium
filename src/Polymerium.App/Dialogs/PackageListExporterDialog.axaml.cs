@@ -17,11 +17,13 @@ public partial class PackageListExporterDialog : Dialog
 
     public PackageListExporterDialog() => InitializeComponent();
 
-    public int PackageCount
+    public required int PackageCount
     {
         get;
         set => SetAndRaise(PackageCountProperty, ref field, value);
     }
+
+    public required string Key { get; init; }
 
 
     protected override bool ValidateResult(object? result)
@@ -55,7 +57,7 @@ public partial class PackageListExporterDialog : Dialog
                         await storage
                            .TryGetWellKnownFolderAsync(WellKnownFolder
                                                           .Downloads),
-                    SuggestedFileName = "packages.csv",
+                    SuggestedFileName = $"{Key}.csv",
                     DefaultExtension = "csv"
                 });
                 if (file != null)

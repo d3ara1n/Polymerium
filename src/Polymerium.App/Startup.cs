@@ -27,9 +27,9 @@ public static class Startup
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
-#if !DEBUG
+        #if !DEBUG
                 services.AddSentry();
-#endif
+        #endif
 
         services
            .AddAvalonia()
@@ -148,8 +148,10 @@ public static class Startup
         services
            .AddTransient<IProfileImporter, CurseForgeImporter>()
            .AddTransient<IProfileImporter, ModrinthImporter>()
+            .AddTransient<IProfileImporter, TridentImporter>()
            .AddTransient<IProfileExporter, CurseForgeExporter>()
            .AddTransient<IProfileExporter, ModrinthExporter>()
+           .AddTransient<IProfileExporter, TridentExporter>()
            .AddPrismLauncher()
            .AddMojangLauncher()
            .AddMicrosoft()
