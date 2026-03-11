@@ -5841,7 +5841,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Get CDK from mirrorchyan.com to support development.
+        ///   Looks up a localized string similar to Get a CDK to support development: .
         /// </summary>
         public static string SettingsView_MirrorChyanCdkHint {
             get {
@@ -6093,15 +6093,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updates.
-        /// </summary>
-        public static string SettingsView_UpdatesLabelText {
-            get {
-                return ResourceManager.GetString("SettingsView_UpdatesLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Up to date.
         /// </summary>
         public static string SettingsView_UpdatesNotFoundLabelText {
@@ -6152,6 +6143,15 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_UpdatesViewButtonText {
             get {
                 return ResourceManager.GetString("SettingsView_UpdatesViewButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string SettingsView_VersionLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_VersionLabelText", resourceCulture);
             }
         }
         
