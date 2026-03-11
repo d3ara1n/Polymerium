@@ -46,11 +46,12 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
     #region Other
 
-    private string AccessOverrideString<T>(string key)
+    private string AccessOverrideString(string key)
     {
-        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is T rv)
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result != null)
         {
-            return rv.ToString() ?? string.Empty;
+            return result.ToString() ?? string.Empty;
         }
 
         return string.Empty;
@@ -132,22 +133,22 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
         #region Update Overrides & Perferences
 
-        JavaHomeOverride = AccessOverrideString<string>(Profile.OVERRIDE_JAVA_HOME);
+        JavaHomeOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_HOME);
         JavaHomeWatermark = Resources.InstancePropertiesView_JavaHomePlaceholder;
-        JavaMaxMemoryOverride = AccessOverrideString<uint>(Profile.OVERRIDE_JAVA_MAX_MEMORY);
+        JavaMaxMemoryOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
-        JavaAdditionalArgumentsOverride = AccessOverrideString<string>(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
+        JavaAdditionalArgumentsOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
         JavaAdditionalArgumentsWatermark =
             !string.IsNullOrEmpty(_configurationService.Value.GameJavaAdditionalArguments)
                 ? _configurationService.Value.GameJavaAdditionalArguments
                 : Resources.InstancePropertiesView_JavaAdditionalArgumentsPlaceholder;
-        WindowInitialHeightOverride = AccessOverrideString<uint>(Profile.OVERRIDE_WINDOW_HEIGHT);
+        WindowInitialHeightOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_HEIGHT);
         WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
-        WindowInitialWidthOverride = AccessOverrideString<uint>(Profile.OVERRIDE_WINDOW_WIDTH);
+        WindowInitialWidthOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_WIDTH);
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
         BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
-        QuickConnectAddressOverride = AccessOverrideString<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
+        QuickConnectAddressOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
         QuickConnectAddressWatermark = Resources.InstancePropertiesView_QuickConnectPlaceholder;
 
         #endregion
@@ -337,7 +338,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
     #endregion
 
-    #region Overrides
+    #region Properties
 
     [ObservableProperty]
     public partial string JavaHomeOverride { get; set; } = string.Empty;
