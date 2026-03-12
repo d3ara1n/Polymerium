@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Trident.Abstractions;
 
@@ -38,7 +42,16 @@ public partial class ModpackExporterDialog : Dialog
     public static readonly StyledProperty<string> VersionOriginalProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(VersionOriginal));
 
-    public ModpackExporterDialog() => InitializeComponent();
+    public static readonly DirectProperty<ModpackExporterDialog, PackDataModel?> PackDataProperty =
+        AvaloniaProperty.RegisterDirect<ModpackExporterDialog, PackDataModel?>(nameof(PackData),
+                                                                               o => o.PackData,
+                                                                               (o, v) => o.PackData = v);
+
+    public ModpackExporterDialog()
+    {
+        InitializeComponent();
+    }
+
     public IReadOnlyList<string> ExporterLabels { get; } = ["trident", "curseforge", "modrinth"];
 
     public string SelectedExporterLabel
@@ -95,6 +108,17 @@ public partial class ModpackExporterDialog : Dialog
         set => SetValue(VersionOriginalProperty, value);
     }
 
+
+    public PackDataModel? PackData
+    {
+        get;
+        set => SetAndRaise(PackDataProperty, ref field, value);
+    }
+
+    public required string Key { get; init; }
+
+    #region Overrides
+
     protected override bool ValidateResult(object? result)
     {
         // 由于 Avalonia 的 TabStrip 机制导致其根本没法用，所以需要写一大堆代理属性和验证代码
@@ -127,6 +151,12 @@ public partial class ModpackExporterDialog : Dialog
 
         return false;
     }
+
+    protected override void OnUnloaded(RoutedEventArgs e) => base.OnUnloaded(e);
+
+    protected override void OnLoaded(RoutedEventArgs e) => base.OnLoaded(e);
+
+    #endregion
 
     #region Commands
 

@@ -201,6 +201,7 @@
                                         Grid.Column="0"
                                         Width="36"
                                         Height="36"
+                                        RenderOptions.BitmapInterpolationMode="HighQuality"
                                         Source="/Assets/Icons/Package.png" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock

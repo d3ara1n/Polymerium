@@ -8,7 +8,7 @@ public class AssetScreenshotCollection : ObservableCollection<AssetScreenshotGro
 
     public int ScreenshotCount
     {
-        get => field;
+        get;
         set
         {
             field = value;
