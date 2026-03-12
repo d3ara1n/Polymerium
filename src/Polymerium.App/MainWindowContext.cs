@@ -164,6 +164,7 @@ public partial class MainWindowContext : ObservableObject
 
             var dialog = new ModpackExporterDialog
             {
+                Key = key,
                 NameOriginal = !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
                 LoaderLabel = loaderLabel,
                 PackageCount = profile.Setup.Packages.Count,
