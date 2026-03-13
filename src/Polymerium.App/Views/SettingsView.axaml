@@ -41,7 +41,9 @@
             Title="{x:Static lang:Resources.SettingsView_DisplayTitle}"
             Icon="LocalLanguage"
             Summary="{x:Static lang:Resources.SettingsView_DisplaySubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_TitleBarVisibilityLabelText}">
+            <controls:SettingsEntryItem
+                IsVisible="{Binding CanCustomizeTitleBar}"
+                Header="{x:Static lang:Resources.SettingsView_TitleBarVisibilityLabelText}">
                 <ToggleSwitch
                     IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}"
                     OffContent="{x:Static lang:Resources.Enum_Off}"

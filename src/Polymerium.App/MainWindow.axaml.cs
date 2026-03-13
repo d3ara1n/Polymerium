@@ -4,6 +4,7 @@ using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using Huskui.Avalonia;
@@ -26,6 +27,7 @@ public partial class MainWindow : AppWindow
     {
         Instance = this;
         InitializeComponent();
+        ConfigureWindowChrome();
     }
 
     public bool IsLeftPanelMode
@@ -43,10 +45,27 @@ public partial class MainWindow : AppWindow
 
     public static MainWindow Instance { get; private set; } = null!;
 
+    public bool IsMacOS => OperatingSystem.IsMacOS();
+
     public Frame.PageActivatorDelegate PageActivator
     {
         get => Root.PageActivator;
         set => Root.PageActivator = value;
+    }
+
+    private void ConfigureWindowChrome()
+    {
+        SystemDecorations = SystemDecorations.Full;
+
+        if (OperatingSystem.IsMacOS())
+        {
+            ExtendClientAreaToDecorationsHint = false;
+            ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
+            return;
+        }
+
+        ExtendClientAreaToDecorationsHint = true;
+        ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
     }
 
     internal void SetTransparencyLevelHintByIndex(int index) =>
@@ -145,9 +164,32 @@ public partial class MainWindow : AppWindow
                 WindowState = WindowState.Maximized;
                 break;
             case WindowState.Maximized:
+            case WindowState.FullScreen:
                 WindowState = WindowState.Normal;
                 break;
         }
+    }
+
+    private void TitleBarDragArea_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+
+        BeginMoveDrag(e);
+        e.Handled = true;
+    }
+
+    private void TitleBarDragArea_OnDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (!CanResize)
+        {
+            return;
+        }
+
+        ToggleMaximize();
+        e.Handled = true;
     }
 
     private void MinimizeButton_OnClick(object? sender, RoutedEventArgs e)

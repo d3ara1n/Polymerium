@@ -94,6 +94,7 @@ public partial class SettingsViewModel : ViewModelBase
     #region Service Export
 
     public OverlayService OverlayService { get; }
+    public bool CanCustomizeTitleBar => !OperatingSystem.IsMacOS();
 
     #endregion
 
