@@ -1368,6 +1368,24 @@
     <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
         <value>包数量</value>
     </data>
+    <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
+        <value>额外选项</value>
+    </data>
+    <data name="ModpackExporterDialog_AdvancedOptionsInfoBarText" xml:space="preserve">
+        <value>这些选项只有在导出为 Trident Portable Instance 时才有作用</value>
+    </data>
+    <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
+        <value>保留来源信息</value>
+    </data>
+    <data name="ModpackExporterDialog_ConnectServerText" xml:space="preserve">
+        <value>包含服务器连接设置</value>
+    </data>
+    <data name="ModpackExporterDialog_JavaMaxMemoryLabelText" xml:space="preserve">
+        <value>包含 JVM 最大内存设置</value>
+    </data>
+    <data name="ModpackExporterDialog_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+        <value>包含 JVM 附加参数设置</value>
+    </data>
     <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
         <value>描述</value>
     </data>

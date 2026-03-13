@@ -1377,6 +1377,24 @@
     <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
         <value>Mod Loader</value>
     </data>
+    <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
+        <value>Advanced Options</value>
+    </data>
+    <data name="ModpackExporterDialog_AdvancedOptionsInfoBarText" xml:space="preserve">
+        <value>These options only take effect when exporting as Trident Portable Instance</value>
+    </data>
+    <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
+        <value>Include source information</value>
+    </data>
+    <data name="ModpackExporterDialog_ConnectServerText" xml:space="preserve">
+        <value>Include server connection settings</value>
+    </data>
+    <data name="ModpackExporterDialog_JavaMaxMemoryLabelText" xml:space="preserve">
+        <value>Include JVM max memory settings</value>
+    </data>
+    <data name="ModpackExporterDialog_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+        <value>Include JVM additional arguments settings</value>
+    </data>
     <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
         <value>Description</value>
     </data>
