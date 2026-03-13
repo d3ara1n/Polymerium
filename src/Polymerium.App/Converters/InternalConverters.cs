@@ -2,6 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using Avalonia.Platform;
 using Humanizer;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
@@ -32,16 +33,6 @@ public static class InternalConverters
         }
 
         return 0.0d;
-    });
-
-    public static IValueConverter Weird { get; } = new RelayConverter((v, _) =>
-    {
-        if (v is double d)
-        {
-            return Math.Min(Math.Max((1 - d) * 2, 0.0d), 1.0d);
-        }
-
-        return v;
     });
 
     public static IValueConverter LocalizedResourceKindConverter { get; } = new RelayConverter((v, _) =>

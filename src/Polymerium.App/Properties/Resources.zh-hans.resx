@@ -835,7 +835,7 @@
         <value>选择 Java 可执行文件</value>
     </data>
     <data name="JavaHomeContainer_RequestJavaPrompt" xml:space="preserve">
-        <value>文件名形如 bin/java.exe 或 /bin/javaw.exe</value>
+        <value>请选择 Java Home 中的可执行文件，例如 /bin/java 或 /bin/java.exe</value>
     </data>
     <data name="NewInstanceView_RequestFileTitle" xml:space="preserve">
         <value>从文件导入</value>
@@ -874,7 +874,7 @@
         <value>保存图标失败</value>
     </data>
     <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
-        <value>文件名形如 /bin/java.exe 或 /bin/javaw.exe</value>
+        <value>请选择 Java Home 中的可执行文件，例如 /bin/java 或 /bin/java.exe</value>
     </data>
     <data name="InstancePropertiesView_RequestJavaTitle" xml:space="preserve">
         <value>选择 Java 可执行文件</value>

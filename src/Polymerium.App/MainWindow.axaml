@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
@@ -21,8 +22,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="local:MainWindowContext"
-    ExtendClientAreaChromeHints="NoChrome"
-    ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/Icon.ico"
     Loaded="Control_OnLoaded"
     mc:Ignorable="d">
@@ -38,43 +37,24 @@
             x:Name="Main"
             Grid.Column="0">
             <Panel>
-                <!--  <StackPanel VerticalAlignment="Center"  -->
-                <!--  Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}">  -->
-                <!--     <StackPanel.Transitions> -->
-                <!--         <Transitions> -->
-                <!--  <DoubleTransition  -->
-                <!--  Easing="CubicEaseInOut"  -->
-                <!--  Property="Opacity"  -->
-                <!--  Duration="{StaticResource ControlFasterAnimationDuration}" />  -->
-                <!--         </Transitions> -->
-                <!--     </StackPanel.Transitions> -->
-                <!--     <StackPanel.Effect> -->
-                <!--         <DropShadowEffect BlurRadius="6" Opacity="0.1" /> -->
-                <!--     </StackPanel.Effect> -->
-                <!--  <Image  -->
-                <!--  Width="128"  -->
-                <!--  Height="128"  -->
-                <!--  HorizontalAlignment="Center"  -->
-                <!--  Source="/Assets/Icons/Bird.png" />  -->
-                <!--  <TextBlock  -->
-                <!--  Margin="48,12,48,12"  -->
-                <!--  FontSize="24"  -->
-                <!--  FontWeight="{StaticResource ControlStrongFontWeight}"  -->
-                <!--  Text="{x:Static lang:Resources.MainWindow_BackgroundText}"  -->
-                <!--  TextAlignment="Center"  -->
-                <!--  TextWrapping="WrapWithOverflow" />  -->
-                <!-- </StackPanel> -->
                 <husk:Frame x:Name="Root" />
             </Panel>
         </DockPanel>
         <DockPanel
             x:Name="Sidebar"
             Grid.Column="1">
-            <DockPanel
+            <Grid
                 x:Name="TitleBar"
                 DockPanel.Dock="Top"
-                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
-                <StackPanel DockPanel.Dock="Right">
+                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}"
+                ColumnDefinitions="*,Auto">
+                <Border
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Background="Transparent"
+                    DoubleTapped="TitleBarDragArea_OnDoubleTapped"
+                    PointerPressed="TitleBarDragArea_OnPointerPressed" />
+                <StackPanel Grid.Column="1">
                     <husk:ButtonGroup BorderThickness="0">
                         <husk:ButtonGroup.Styles>
                             <Style Selector="Button">
@@ -89,7 +69,7 @@
                             </Style>
                         </husk:ButtonGroup.Styles>
                         <Button
-                            IsVisible="{x:Static local:Program.Debug}"
+                            IsVisible="{x:Static local:Program.IsDebug}"
                             Command="{Binding OpenNotificationSidebarCommand}">
                             <icons:PackIconLucide Kind="Bell" />
                         </Button>
@@ -128,6 +108,7 @@
                     </husk:ButtonGroup>
                 </StackPanel>
                 <StackPanel
+                    Grid.Column="0"
                     Margin="12,0,0,-9"
                     VerticalAlignment="Center"
                     IsHitTestVisible="False"
@@ -148,7 +129,7 @@
                         FontSize="{StaticResource SmallFontSize}"
                         Text="{Binding $parent[Window].Title, Mode=OneWay}" />
                 </StackPanel>
-            </DockPanel>
+            </Grid>
             <Grid
                 Margin="9"
                 ColumnDefinitions="Auto,*,Auto"
