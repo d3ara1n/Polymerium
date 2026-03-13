@@ -1,9 +1,13 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
+using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
@@ -15,6 +19,8 @@ namespace Polymerium.App;
 
 public partial class MainWindow : AppWindow
 {
+    private static readonly TimeSpan SidebarPlacementAnimationDuration = TimeSpan.FromMilliseconds(240);
+
     public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
         AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
 
@@ -28,6 +34,10 @@ public partial class MainWindow : AppWindow
         Instance = this;
         InitializeComponent();
         ConfigureWindowChrome();
+        _mainTransform.Transitions = CreateSidebarPlacementTransitions();
+        _sidebarTransform.Transitions = CreateSidebarPlacementTransitions();
+        Main.RenderTransform = _mainTransform;
+        Sidebar.RenderTransform = _sidebarTransform;
     }
 
     public bool IsLeftPanelMode
@@ -46,6 +56,11 @@ public partial class MainWindow : AppWindow
     public static MainWindow Instance { get; private set; } = null!;
 
     public bool IsMacOS => OperatingSystem.IsMacOS();
+
+    private readonly TranslateTransform _mainTransform = new();
+    private readonly TranslateTransform _sidebarTransform = new();
+    private CancellationTokenSource? _sidebarPlacementAnimationTokenSource;
+    private bool _isReadyToAnimateSidebarPlacement;
 
     public Frame.PageActivatorDelegate PageActivator
     {
@@ -135,6 +150,8 @@ public partial class MainWindow : AppWindow
 
     private void Control_OnLoaded(object? sender, RoutedEventArgs e)
     {
+        _isReadyToAnimateSidebarPlacement = true;
+
         if (DataContext is MainWindowContext context)
         {
             context.OnInitialize();
@@ -216,28 +233,115 @@ public partial class MainWindow : AppWindow
         if (change.Property == IsLeftPanelModeProperty)
         {
             var mode = change.GetNewValue<bool>();
-            if (mode)
-            {
-                if (Container.ColumnDefinitions is [var mainColumn, var sidebarColumn])
-                {
-                    Container.ColumnDefinitions = [sidebarColumn, mainColumn];
+            _ = UpdateSidebarPlacementAsync(mode);
+        }
+    }
 
-                    Main.SetValue(Grid.ColumnProperty, 1);
-                    Sidebar.SetValue(Grid.ColumnProperty, 0);
-                }
+    private async Task UpdateSidebarPlacementAsync(bool leftMode)
+    {
+        _sidebarPlacementAnimationTokenSource?.Cancel();
+        _sidebarPlacementAnimationTokenSource?.Dispose();
+
+        using var cancellationTokenSource = new CancellationTokenSource();
+        _sidebarPlacementAnimationTokenSource = cancellationTokenSource;
+
+        try
+        {
+            if (!_isReadyToAnimateSidebarPlacement || Main.Bounds.Width <= 0 || Sidebar.Bounds.Width <= 0)
+            {
+                ResetSidebarTransforms();
+                ApplySidebarPlacement(leftMode);
+                return;
             }
-            else
-            {
-                if (Container.ColumnDefinitions is [var sidebarColumn, var mainColumn])
-                {
-                    Container.ColumnDefinitions = [mainColumn, sidebarColumn];
 
-                    Main.SetValue(Grid.ColumnProperty, 0);
-                    Sidebar.SetValue(Grid.ColumnProperty, 1);
-                }
+            var sidebarIsOnLeft = IsSidebarOnLeft();
+            if (sidebarIsOnLeft == leftMode)
+            {
+                ResetSidebarTransforms();
+                return;
+            }
+
+            var mainWidth = Main.Bounds.Width;
+            var sidebarWidth = Sidebar.Bounds.Width;
+            var mainOffset = leftMode ? sidebarWidth : -sidebarWidth;
+            var sidebarOffset = leftMode ? -mainWidth : mainWidth;
+
+            SetSidebarPlacementTransitionsEnabled(true);
+            _mainTransform.X = mainOffset;
+            _sidebarTransform.X = sidebarOffset;
+
+            await Task.Delay(SidebarPlacementAnimationDuration, cancellationTokenSource.Token);
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+            SetSidebarPlacementTransitionsEnabled(false);
+            ApplySidebarPlacement(leftMode);
+            ResetSidebarTransforms();
+        }
+        catch (OperationCanceledException)
+        {
+            // A newer sidebar placement request superseded the current animation.
+            SetSidebarPlacementTransitionsEnabled(false);
+            ResetSidebarTransforms();
+        }
+        finally
+        {
+            if (_sidebarPlacementAnimationTokenSource == cancellationTokenSource)
+            {
+                SetSidebarPlacementTransitionsEnabled(true);
+                _sidebarPlacementAnimationTokenSource = null;
             }
         }
     }
+
+    private void ApplySidebarPlacement(bool leftMode)
+    {
+        if (Container.ColumnDefinitions is not [var firstColumn, var secondColumn])
+        {
+            return;
+        }
+
+        if (IsSidebarOnLeft() == leftMode)
+        {
+            return;
+        }
+
+        Container.ColumnDefinitions = [secondColumn, firstColumn];
+
+        if (leftMode)
+        {
+            Main.SetValue(Grid.ColumnProperty, 1);
+            Sidebar.SetValue(Grid.ColumnProperty, 0);
+            return;
+        }
+
+        Main.SetValue(Grid.ColumnProperty, 0);
+        Sidebar.SetValue(Grid.ColumnProperty, 1);
+    }
+
+    private bool IsSidebarOnLeft() => Sidebar.GetValue(Grid.ColumnProperty) == 0;
+
+    private void ResetSidebarTransforms()
+    {
+        _mainTransform.X = 0;
+        _sidebarTransform.X = 0;
+    }
+
+    private void SetSidebarPlacementTransitionsEnabled(bool enabled)
+    {
+        _mainTransform.Transitions = enabled ? CreateSidebarPlacementTransitions() : null;
+        _sidebarTransform.Transitions = enabled ? CreateSidebarPlacementTransitions() : null;
+    }
+
+    private static Transitions CreateSidebarPlacementTransitions() =>
+        new()
+        {
+            new DoubleTransition
+            {
+                Property = TranslateTransform.XProperty,
+                Duration = SidebarPlacementAnimationDuration,
+                Easing = new CubicEaseOut()
+            }
+        };
 
     #endregion
 }
