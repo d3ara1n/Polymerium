@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polymerium.App.Properties;
+using Polymerium.App.Services;
 using Trident.Abstractions;
 using Velopack;
 
@@ -32,12 +35,12 @@ internal static class Program
 
     public static bool FirstRun { get; private set; }
 
-    #if DEBUG
+#if DEBUG
     public static bool IsDebug => true;
-    #else
+#else
     public static bool Debug {get;} =
  Debugger.IsAttached || Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") != "Production";
-    #endif
+#endif
 
     [STAThread]
     public static void Main(string[] args)
@@ -79,6 +82,9 @@ internal static class Program
 
         Startup.InitializeUnhostedServices();
 
+        var configurationService = Services.GetRequiredService<ConfigurationService>();
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configurationService.Value.ApplicationLanguage);
+        Resources.Culture = CultureInfo.CurrentUICulture;
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
         Startup.DeinitializeUnhostedServices();
@@ -92,6 +98,22 @@ internal static class Program
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.Shutdown();
+        }
+    }
+
+    private static CultureInfo GetSafeCultureInfo(string cultureName)
+    {
+        try
+        {
+            return CultureInfo.GetCultureInfo(cultureName);
+        }
+        catch (CultureNotFoundException)
+        {
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+        catch (ArgumentException)
+        {
+            return CultureInfo.GetCultureInfo("en-US");
         }
     }
 
