@@ -161,7 +161,7 @@ public partial class InstancePackageDependencyModal : Modal
         // 如果是自动版本，则不指定版本号（传 null）
         var versionId = IsAutoVersion ? null : SelectedVersion?.Id;
         var purl = PackageHelper.ToPurl(Model.Label, Model.Namespace, Model.ProjectId, versionId);
-        var entry = new Profile.Rice.Entry(purl, true, null, []);
+        var entry = new Profile.Rice.Entry() { Purl = purl, Enabled = true, Source = null };
 
         // 创建新的 InstancePackageModel 并通知回调
         var newPackage = new InstancePackageModel(entry, false);

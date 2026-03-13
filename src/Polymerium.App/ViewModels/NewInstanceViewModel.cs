@@ -129,7 +129,10 @@ public partial class NewInstanceViewModel(
         }
         else
         {
-            profile = new(display, new(null, VersionName, null, [], []), new Dictionary<string, object>());
+            profile = new()
+            {
+                Name = display, Setup = new() { Loader = null, Version = VersionName, Source = null }
+            };
         }
 
         if (Thumbnail != null)

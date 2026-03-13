@@ -126,7 +126,12 @@ public partial class InstanceViewModel : ViewModelBase
                                                                 package.Package.Namespace,
                                                                 package.Package.ProjectId,
                                                                 package.Package.VersionId);
-                                guard.Value.Setup.Packages.Add(new(purl, true, null, []));
+                                guard.Value.Setup.Packages.Add(new()
+                                {
+                                    Purl = purl,
+                                    Enabled = true,
+                                    Source = null
+                                });
                                 _persistenceService.AppendAction(new(Basic.Key,
                                                                      PersistenceService.ActionKind.EditPackage,
                                                                      null,
