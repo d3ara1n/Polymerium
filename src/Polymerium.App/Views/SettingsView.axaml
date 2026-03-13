@@ -412,7 +412,7 @@
                                 Spacing="4">
                                 <husk:SwitchPresenter
                                     TargetType="x:Boolean"
-                                    Value="{x:Static app:Program.Debug}">
+                                    Value="{x:Static app:Program.IsDebug}">
                                     <husk:SwitchCase Value="{x:True}">
                                         <TextBlock
                                             FontSize="{StaticResource SmallFontSize}"

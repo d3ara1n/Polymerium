@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,15 +18,6 @@ public static class ServiceCollectionExtensions
 
     extension(IServiceCollection services)
     {
-        public IServiceCollection AddAvalonia()
-        {
-            if (!OperatingSystem.IsMacOS())
-            {
-                services.AddHostedService<AvaloniaLifetime>();
-            }
-
-            return services;
-        }
 
         public IServiceCollection AddViewFacilities()
         {
@@ -51,12 +41,6 @@ public static class ServiceCollectionExtensions
                       .UseAutoSyncStructure(true)
                       .Build();
             });
-            return services;
-        }
-
-        public IServiceCollection AddSentry()
-        {
-            services.AddHostedService<SentryHostedService>();
             return services;
         }
 
