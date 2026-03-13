@@ -4083,6 +4083,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to These options only take effect when exporting as Trident Portable Instance.
+        /// </summary>
+        public static string ModpackExporterDialog_AdvancedOptionsInfoBarText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AdvancedOptionsInfoBarText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Options.
+        /// </summary>
+        public static string ModpackExporterDialog_AdvancedOptionsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_AdvancedOptionsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attachments.
         /// </summary>
         public static string ModpackExporterDialog_AttachmentsLabelText {
@@ -4110,11 +4128,47 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include server connection settings.
+        /// </summary>
+        public static string ModpackExporterDialog_ConnectServerText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_ConnectServerText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Format.
         /// </summary>
         public static string ModpackExporterDialog_FormatLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_FormatLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include source information.
+        /// </summary>
+        public static string ModpackExporterDialog_IncludingSourceLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include JVM additional arguments settings.
+        /// </summary>
+        public static string ModpackExporterDialog_JavaAdditionalArgumentsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_JavaAdditionalArgumentsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include JVM max memory settings.
+        /// </summary>
+        public static string ModpackExporterDialog_JavaMaxMemoryLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
         

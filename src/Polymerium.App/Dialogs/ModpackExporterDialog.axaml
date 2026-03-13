@@ -91,19 +91,19 @@
             </TextBox>
         </StackPanel>
         <!--  额外选项  -->
-        <Expander Header="额外选项">
+        <Expander Header="{x:Static lang:Resources.ModpackExporterDialog_AdvancedOptionsLabelText}">
             <StackPanel Spacing="8">
                 <husk:InfoBar
                     Classes="Warning"
                     IsVisible="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=trident}"
-                    Content="这些选项只有在导出为 Trident Portable Instance 时才有作用" />
+                    Content="{x:Static lang:Resources.ModpackExporterDialog_AdvancedOptionsInfoBarText}" />
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
                         IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.IncludingSource, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="保留来源信息" />
+                        Text="{x:Static lang:Resources.ModpackExporterDialog_IncludingSourceLabelText}" />
                 </DockPanel>
                 <DockPanel>
                     <ToggleSwitch
@@ -111,7 +111,7 @@
                         IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.ConnectServer, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="包含服务器连接设置" />
+                        Text="{x:Static lang:Resources.ModpackExporterDialog_ConnectServerText}" />
                 </DockPanel>
                 <DockPanel>
                     <ToggleSwitch
@@ -119,7 +119,7 @@
                         IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.JavaMaxMemory, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="包含 JVM 最大内存设置" />
+                        Text="{x:Static lang:Resources.ModpackExporterDialog_JavaMaxMemoryLabelText}" />
                 </DockPanel>
                 <DockPanel>
                     <ToggleSwitch
@@ -127,7 +127,7 @@
                         IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.JavaAdditionalArguments, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="包含 JVM 附加参数设置" />
+                        Text="{x:Static lang:Resources.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}" />
                 </DockPanel>
 
             </StackPanel>
