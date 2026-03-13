@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -31,6 +32,7 @@ using Trident.Core.Exceptions;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
+using Trident.Core.Utilities;
 using NotificationSidebar = Polymerium.App.Sidebars.NotificationSidebar;
 
 namespace Polymerium.App;
@@ -141,7 +143,7 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private async Task ExportInstance(string? key)
+    private async Task ExportInstanceAsync(string? key)
     {
         if (key is not null && _profileManager.TryGetImmutable(key, out var profile))
         {
@@ -162,9 +164,26 @@ public partial class MainWindowContext : ObservableObject
                 user = AccountHelper.ToCooked(account).Username;
             }
 
+            var dataPath = PathDef.Default.FileOfPackData(key);
+            PackData? pack = null;
+            try
+            {
+                if (File.Exists(dataPath))
+                {
+                    pack = JsonSerializer.Deserialize<PackData>(await File.ReadAllTextAsync(dataPath),
+                                                                FileHelper.SerializerOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage(ex, "Unable to read pack config");
+            }
+
+            pack ??= PackData.CreateDefault();
+
             var dialog = new ModpackExporterDialog
             {
-                Key = key,
+                Pack = pack,
                 NameOriginal = !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
                 LoaderLabel = loaderLabel,
                 PackageCount = profile.Setup.Packages.Count,
@@ -214,7 +233,8 @@ public partial class MainWindowContext : ObservableObject
                             var notification = _notificationService.PopProgress(name, "Exporting...");
                             try
                             {
-                                var container = await _exporterAgent.ExportAsync(model.SelectedExporterLabel,
+                                var container = await _exporterAgent.ExportAsync(pack,
+                                                    model.SelectedExporterLabel,
                                                     key,
                                                     name,
                                                     author,
@@ -240,6 +260,21 @@ public partial class MainWindowContext : ObservableObject
                         }
                     }
                 }
+            }
+
+            var dir = Path.GetDirectoryName(dataPath);
+            if (dir != null && !Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            try
+            {
+                await File.WriteAllTextAsync(dataPath, JsonSerializer.Serialize(pack, FileHelper.SerializerOptions));
+            }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage(ex, "Unable to save pack config");
             }
         }
     }

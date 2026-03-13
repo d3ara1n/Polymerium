@@ -441,13 +441,15 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 {
                     case { State: ExhibitState.Adding }:
                         {
-                            var entry = new Profile.Rice.Entry(PackageHelper.ToPurl(model.Label,
-                                                                                        model.Namespace,
-                                                                                        model.ProjectId,
-                                                                                        model.PendingVersionId),
-                                                               true,
-                                                               null,
-                                                               []);
+                            var entry = new Profile.Rice.Entry
+                            {
+                                Enabled = true,
+                                Purl = PackageHelper.ToPurl(model.Label,
+                                                            model.Namespace,
+                                                            model.ProjectId,
+                                                            model.PendingVersionId),
+                                Source = null
+                            };
                             _persistenceService.AppendAction(new(Basic.Key,
                                                                  PersistenceService.ActionKind.EditPackage,
                                                                  null,

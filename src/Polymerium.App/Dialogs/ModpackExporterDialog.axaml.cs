@@ -10,6 +10,7 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Trident.Abstractions;
+using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.Dialogs;
 
@@ -115,7 +116,15 @@ public partial class ModpackExporterDialog : Dialog
         set => SetAndRaise(PackDataProperty, ref field, value);
     }
 
-    public required string Key { get; init; }
+    public required PackData Pack
+    {
+        get;
+        init
+        {
+            field = value;
+            PackData = new(value);
+        }
+    }
 
     #region Overrides
 
@@ -151,10 +160,6 @@ public partial class ModpackExporterDialog : Dialog
 
         return false;
     }
-
-    protected override void OnUnloaded(RoutedEventArgs e) => base.OnUnloaded(e);
-
-    protected override void OnLoaded(RoutedEventArgs e) => base.OnLoaded(e);
 
     #endregion
 

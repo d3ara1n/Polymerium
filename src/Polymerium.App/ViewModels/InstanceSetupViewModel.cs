@@ -953,10 +953,12 @@ public partial class InstanceSetupViewModel(
                                 else
                                 {
                                     // 添加新包
-                                    var newEntry = new Profile.Rice.Entry(importedEntry.Purl,
-                                                                          importedEntry.Enabled,
-                                                                          importedEntry.Source,
-                                                                          []);
+                                    var newEntry = new Profile.Rice.Entry
+                                    {
+                                        Enabled = importedEntry.Enabled,
+                                        Purl = importedEntry.Purl,
+                                        Source =  importedEntry.Source,
+                                    };
                                     guard.Value.Setup.Packages.Add(newEntry);
                                     persistenceService.AppendAction(new(Basic.Key,
                                                                         PersistenceService.ActionKind.EditPackage,
