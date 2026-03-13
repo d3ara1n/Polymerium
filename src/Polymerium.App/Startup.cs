@@ -2,9 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
@@ -12,6 +10,7 @@ using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Sentry;
 using Trident.Abstractions;
 using Trident.Abstractions.Exporters;
 using Trident.Abstractions.Importers;
@@ -25,14 +24,9 @@ namespace Polymerium.App;
 
 public static class Startup
 {
-    public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
+    public static void ConfigureServices(IServiceCollection services, bool debug)
     {
-        #if !DEBUG
-                services.AddSentry();
-        #endif
-
         services
-           .AddAvalonia()
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder
                                                   .RemoveAllLoggers()
@@ -125,10 +119,7 @@ public static class Startup
            .AddLogging(logging => logging
                                  .AddConsole()
                                  .AddDebug()
-                                 .AddFilter<ConsoleLoggerProvider>(null,
-                                                                   environment.EnvironmentName == "Development"
-                                                                       ? LogLevel.Debug
-                                                                       : LogLevel.Information)
+                                 .AddFilter<ConsoleLoggerProvider>(null, debug ? LogLevel.Debug : LogLevel.Information)
                                  .AddFilter<DebugLoggerProvider>(null, LogLevel.Trace))
            .AddSqliteCache(setup =>
             {
@@ -148,7 +139,7 @@ public static class Startup
         services
            .AddTransient<IProfileImporter, CurseForgeImporter>()
            .AddTransient<IProfileImporter, ModrinthImporter>()
-            .AddTransient<IProfileImporter, TridentImporter>()
+           .AddTransient<IProfileImporter, TridentImporter>()
            .AddTransient<IProfileExporter, CurseForgeExporter>()
            .AddTransient<IProfileExporter, ModrinthExporter>()
            .AddTransient<IProfileExporter, TridentExporter>()
@@ -183,5 +174,45 @@ public static class Startup
            .AddSingleton<ScrapService>()
            .AddSingleton<InstanceService>()
            .AddSingleton<WidgetHostService>();
+    }
+
+    public static void InitializeUnhostedServices()
+    {
+        #region SentrySdk Init (only in Debug)
+
+        #if !DEBUG
+        SentrySdk.Init(options =>
+        {
+            options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
+            options.AutoSessionTracking = true;
+            options.Environment = Program.IsDebug ? "Development" : "Production";
+            options.CacheDirectoryPath = PathDef.Default.PrivateDirectory(Program.Brand);
+            options.AddExceptionFilterForType<OperationCanceledException>();
+            if (Program.IsDebug)
+            {
+                options.Release = "In Dev";
+                options.Debug = true;
+                options.ProfilesSampleRate = 1.0f;
+                options.TracesSampleRate = 1.0f;
+            }
+            else
+            {
+                options.Release = Program.Version;
+                options.ProfilesSampleRate = 0.1f;
+                options.TracesSampleRate = 0.1f;
+            }
+
+            options.SendDefaultPii = true;
+        });
+        #endif
+
+        #endregion
+    }
+
+    public static void DeinitializeUnhostedServices()
+    {
+        #if !DEBUG
+        SentrySdk.Close();
+        #endif
     }
 }
