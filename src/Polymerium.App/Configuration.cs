@@ -40,7 +40,7 @@ public class Configuration
     private static readonly Dictionary<string, object?> Defaults = new()
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
-        { APPLICATION_TITLEBAR_VISIBILITY, !OperatingSystem.IsLinux() },
+        { APPLICATION_TITLEBAR_VISIBILITY, OperatingSystem.IsWindows() },
         { APPLICATION_LEFT_PANEL_MODE, OperatingSystem.IsMacOS() },
         { APPLICATION_STYLE_ACCENT, AccentColor.System },
         { APPLICATION_STYLE_CORNER, CornerStyle.Normal },

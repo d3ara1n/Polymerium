@@ -11,6 +11,7 @@ using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
+using Avalonia.Threading;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Views;
@@ -19,8 +20,6 @@ namespace Polymerium.App;
 
 public partial class MainWindow : AppWindow
 {
-    private static readonly TimeSpan SidebarPlacementAnimationDuration = TimeSpan.FromMilliseconds(240);
-
     public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
         AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
 
@@ -33,11 +32,6 @@ public partial class MainWindow : AppWindow
     {
         Instance = this;
         InitializeComponent();
-        ConfigureWindowChrome();
-        _mainTransform.Transitions = CreateSidebarPlacementTransitions();
-        _sidebarTransform.Transitions = CreateSidebarPlacementTransitions();
-        Main.RenderTransform = _mainTransform;
-        Sidebar.RenderTransform = _sidebarTransform;
     }
 
     public bool IsLeftPanelMode
@@ -50,37 +44,15 @@ public partial class MainWindow : AppWindow
     {
         get;
         set => SetAndRaise(IsTitleBarVisibleProperty, ref field, value);
-    } = true;
+    }
 
 
     public static MainWindow Instance { get; private set; } = null!;
-
-    public bool IsMacOS => OperatingSystem.IsMacOS();
-
-    private readonly TranslateTransform _mainTransform = new();
-    private readonly TranslateTransform _sidebarTransform = new();
-    private CancellationTokenSource? _sidebarPlacementAnimationTokenSource;
-    private bool _isReadyToAnimateSidebarPlacement;
 
     public Frame.PageActivatorDelegate PageActivator
     {
         get => Root.PageActivator;
         set => Root.PageActivator = value;
-    }
-
-    private void ConfigureWindowChrome()
-    {
-        SystemDecorations = SystemDecorations.Full;
-
-        if (OperatingSystem.IsMacOS())
-        {
-            ExtendClientAreaToDecorationsHint = false;
-            ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
-            return;
-        }
-
-        ExtendClientAreaToDecorationsHint = true;
-        ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
     }
 
     internal void SetTransparencyLevelHintByIndex(int index) =>
@@ -150,8 +122,6 @@ public partial class MainWindow : AppWindow
 
     private void Control_OnLoaded(object? sender, RoutedEventArgs e)
     {
-        _isReadyToAnimateSidebarPlacement = true;
-
         if (DataContext is MainWindowContext context)
         {
             context.OnInitialize();
@@ -227,80 +197,14 @@ public partial class MainWindow : AppWindow
         e.Handled = true;
     }
 
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-        if (change.Property == IsLeftPanelModeProperty)
-        {
-            var mode = change.GetNewValue<bool>();
-            _ = UpdateSidebarPlacementAsync(mode);
-        }
-    }
-
-    private async Task UpdateSidebarPlacementAsync(bool leftMode)
-    {
-        _sidebarPlacementAnimationTokenSource?.Cancel();
-        _sidebarPlacementAnimationTokenSource?.Dispose();
-
-        using var cancellationTokenSource = new CancellationTokenSource();
-        _sidebarPlacementAnimationTokenSource = cancellationTokenSource;
-
-        try
-        {
-            if (!_isReadyToAnimateSidebarPlacement || Main.Bounds.Width <= 0 || Sidebar.Bounds.Width <= 0)
-            {
-                ResetSidebarTransforms();
-                ApplySidebarPlacement(leftMode);
-                return;
-            }
-
-            var sidebarIsOnLeft = IsSidebarOnLeft();
-            if (sidebarIsOnLeft == leftMode)
-            {
-                ResetSidebarTransforms();
-                return;
-            }
-
-            var mainWidth = Main.Bounds.Width;
-            var sidebarWidth = Sidebar.Bounds.Width;
-            var mainOffset = leftMode ? sidebarWidth : -sidebarWidth;
-            var sidebarOffset = leftMode ? -mainWidth : mainWidth;
-
-            SetSidebarPlacementTransitionsEnabled(true);
-            _mainTransform.X = mainOffset;
-            _sidebarTransform.X = sidebarOffset;
-
-            await Task.Delay(SidebarPlacementAnimationDuration, cancellationTokenSource.Token);
-            cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
-            SetSidebarPlacementTransitionsEnabled(false);
-            ApplySidebarPlacement(leftMode);
-            ResetSidebarTransforms();
-        }
-        catch (OperationCanceledException)
-        {
-            // A newer sidebar placement request superseded the current animation.
-            SetSidebarPlacementTransitionsEnabled(false);
-            ResetSidebarTransforms();
-        }
-        finally
-        {
-            if (_sidebarPlacementAnimationTokenSource == cancellationTokenSource)
-            {
-                SetSidebarPlacementTransitionsEnabled(true);
-                _sidebarPlacementAnimationTokenSource = null;
-            }
-        }
-    }
-
     private void ApplySidebarPlacement(bool leftMode)
     {
-        if (Container.ColumnDefinitions is not [var firstColumn, var secondColumn])
+        if ((Sidebar.GetValue(Grid.ColumnProperty) == 0) == leftMode)
         {
             return;
         }
 
-        if (IsSidebarOnLeft() == leftMode)
+        if (Container.ColumnDefinitions is not [var firstColumn, var secondColumn])
         {
             return;
         }
@@ -318,30 +222,32 @@ public partial class MainWindow : AppWindow
         Sidebar.SetValue(Grid.ColumnProperty, 1);
     }
 
-    private bool IsSidebarOnLeft() => Sidebar.GetValue(Grid.ColumnProperty) == 0;
-
-    private void ResetSidebarTransforms()
-    {
-        _mainTransform.X = 0;
-        _sidebarTransform.X = 0;
-    }
-
-    private void SetSidebarPlacementTransitionsEnabled(bool enabled)
-    {
-        _mainTransform.Transitions = enabled ? CreateSidebarPlacementTransitions() : null;
-        _sidebarTransform.Transitions = enabled ? CreateSidebarPlacementTransitions() : null;
-    }
-
-    private static Transitions CreateSidebarPlacementTransitions() =>
-        new()
-        {
-            new DoubleTransition
-            {
-                Property = TranslateTransform.XProperty,
-                Duration = SidebarPlacementAnimationDuration,
-                Easing = new CubicEaseOut()
-            }
-        };
-
     #endregion
+
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == IsLeftPanelModeProperty)
+        {
+            var mode = change.GetNewValue<bool>();
+            ApplySidebarPlacement(mode);
+        }
+
+        // IsTitleBarVisible 默认值是 false，此时连锁的连个属性也处于默认值，刚好
+        if (change.Property == IsTitleBarVisibleProperty)
+        {
+            var visible = change.GetNewValue<bool>();
+            if (visible)
+            {
+                ExtendClientAreaToDecorationsHint = true;
+                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
+            }
+            else
+            {
+                ExtendClientAreaToDecorationsHint = false;
+                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
+            }
+        }
+    }
 }
