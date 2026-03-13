@@ -21,8 +21,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="local:MainWindowContext"
-    ExtendClientAreaChromeHints="NoChrome"
-    ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/Icon.ico"
     Loaded="Control_OnLoaded"
     mc:Ignorable="d">
@@ -70,11 +68,26 @@
         <DockPanel
             x:Name="Sidebar"
             Grid.Column="1">
-            <DockPanel
+            <Grid
                 x:Name="TitleBar"
                 DockPanel.Dock="Top"
-                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
-                <StackPanel DockPanel.Dock="Right">
+                ColumnDefinitions="*,Auto"
+                Height="40">
+                <Grid.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="$parent[local:MainWindow].IsTitleBarVisible" Mode="OneWay" />
+                        <Binding
+                            Path="$parent[local:MainWindow].IsMacOS"
+                            Converter="{x:Static BoolConverters.Not}"
+                            Mode="OneWay" />
+                    </MultiBinding>
+                </Grid.IsVisible>
+                <Border
+                    Grid.ColumnSpan="2"
+                    Background="Transparent"
+                    DoubleTapped="TitleBarDragArea_OnDoubleTapped"
+                    PointerPressed="TitleBarDragArea_OnPointerPressed" />
+                <StackPanel Grid.Column="1">
                     <husk:ButtonGroup BorderThickness="0">
                         <husk:ButtonGroup.Styles>
                             <Style Selector="Button">
@@ -128,6 +141,7 @@
                     </husk:ButtonGroup>
                 </StackPanel>
                 <StackPanel
+                    Grid.Column="0"
                     Margin="12,0,0,-9"
                     VerticalAlignment="Center"
                     IsHitTestVisible="False"
@@ -148,7 +162,7 @@
                         FontSize="{StaticResource SmallFontSize}"
                         Text="{Binding $parent[Window].Title, Mode=OneWay}" />
                 </StackPanel>
-            </DockPanel>
+            </Grid>
             <Grid
                 Margin="9"
                 ColumnDefinitions="Auto,*,Auto"
