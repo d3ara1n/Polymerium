@@ -41,7 +41,7 @@ public class Configuration
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
         { APPLICATION_TITLEBAR_VISIBILITY, !OperatingSystem.IsLinux() },
-        { APPLICATION_LEFT_PANEL_MODE, false },
+        { APPLICATION_LEFT_PANEL_MODE, OperatingSystem.IsMacOS() },
         { APPLICATION_STYLE_ACCENT, AccentColor.System },
         { APPLICATION_STYLE_CORNER, CornerStyle.Normal },
         { APPLICATION_STYLE_BACKGROUND, 0 },
