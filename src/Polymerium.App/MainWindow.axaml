@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
@@ -36,32 +37,6 @@
             x:Name="Main"
             Grid.Column="0">
             <Panel>
-                <!--  <StackPanel VerticalAlignment="Center"  -->
-                <!--  Opacity="{Binding #Root.Content, Converter={x:Static husk:OpacityConverters.IsNull}}">  -->
-                <!--     <StackPanel.Transitions> -->
-                <!--         <Transitions> -->
-                <!--  <DoubleTransition  -->
-                <!--  Easing="CubicEaseInOut"  -->
-                <!--  Property="Opacity"  -->
-                <!--  Duration="{StaticResource ControlFasterAnimationDuration}" />  -->
-                <!--         </Transitions> -->
-                <!--     </StackPanel.Transitions> -->
-                <!--     <StackPanel.Effect> -->
-                <!--         <DropShadowEffect BlurRadius="6" Opacity="0.1" /> -->
-                <!--     </StackPanel.Effect> -->
-                <!--  <Image  -->
-                <!--  Width="128"  -->
-                <!--  Height="128"  -->
-                <!--  HorizontalAlignment="Center"  -->
-                <!--  Source="/Assets/Icons/Bird.png" />  -->
-                <!--  <TextBlock  -->
-                <!--  Margin="48,12,48,12"  -->
-                <!--  FontSize="24"  -->
-                <!--  FontWeight="{StaticResource ControlStrongFontWeight}"  -->
-                <!--  Text="{x:Static lang:Resources.MainWindow_BackgroundText}"  -->
-                <!--  TextAlignment="Center"  -->
-                <!--  TextWrapping="WrapWithOverflow" />  -->
-                <!-- </StackPanel> -->
                 <husk:Frame x:Name="Root" />
             </Panel>
         </DockPanel>
@@ -71,18 +46,10 @@
             <Grid
                 x:Name="TitleBar"
                 DockPanel.Dock="Top"
-                ColumnDefinitions="*,Auto"
-                Height="40">
-                <Grid.IsVisible>
-                    <MultiBinding Converter="{x:Static BoolConverters.And}">
-                        <Binding Path="$parent[local:MainWindow].IsTitleBarVisible" Mode="OneWay" />
-                        <Binding
-                            Path="$parent[local:MainWindow].IsMacOS"
-                            Converter="{x:Static BoolConverters.Not}"
-                            Mode="OneWay" />
-                    </MultiBinding>
-                </Grid.IsVisible>
+                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}"
+                ColumnDefinitions="*,Auto">
                 <Border
+                    Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Background="Transparent"
                     DoubleTapped="TitleBarDragArea_OnDoubleTapped"
