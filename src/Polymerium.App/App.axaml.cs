@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -66,9 +67,7 @@ public class App : Application
             SentrySdk.CaptureException(rec);
         }
 
-        if (core is Exception ex
-         && !critical
-         && Program.AppHost?.Services.GetService<NavigationService>() is { } navigation)
+        if (core is Exception ex && !critical && Program.Services?.GetService<NavigationService>() is { } navigation)
         {
             Dispatcher.UIThread.Post(() => navigation.Navigate<ExceptionView>(ex));
         }
@@ -169,7 +168,7 @@ public class App : Application
                                                           $"{view.Name} was bound to a view model which is not derived from ObservableObject");
                 }
 
-                using var scope = Program.AppHost!.Services.CreateScope();
+                using var scope = Program.Services!.CreateScope();
 
                 var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
                 factory.Bag = parameter;
@@ -212,12 +211,12 @@ public class App : Application
 
     private static Window ConstructWindow()
     {
-        if (Program.AppHost is null)
+        if (Program.Services is null)
         {
             return new();
         }
 
-        var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
+        var configuration = Program.Services!.GetRequiredService<ConfigurationService>();
 
         var window = new MainWindow();
 
@@ -231,7 +230,7 @@ public class App : Application
         #region Navigation
 
         // Link navigation service
-        var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
+        var navigation = Program.Services.GetRequiredService<NavigationService>();
         navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
         // Closure captures Program.AppHost.Services
         window.PageActivator = ActivatePage;
@@ -240,16 +239,16 @@ public class App : Application
 
         #region Overlay & Notificiation
 
-        var overlay = Program.AppHost.Services.GetRequiredService<OverlayService>();
+        var overlay = Program.Services.GetRequiredService<OverlayService>();
         overlay.SetHandler(window.PopToast, window.PopSidebar, window.PopModal, window.PopDialog);
-        var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
+        var notification = Program.Services.GetRequiredService<NotificationService>();
         notification.SetHandler(window.PopGrowl);
 
         #endregion
 
 
         // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
-        window.DataContext = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.AppHost.Services);
+        window.DataContext = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
 
         // MainWindowContext 没有 InitializeAsync 能力，这里代替进行初始化
         navigation.Navigate<LandingView>();

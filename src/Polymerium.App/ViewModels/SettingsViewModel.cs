@@ -84,7 +84,7 @@ public partial class SettingsViewModel : ViewModelBase
         UpdateProxyStatusText();
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
-        UpdateState = updateManager.IsInstalled || Program.Debug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
+        UpdateState = updateManager.IsInstalled || Program.IsDebug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
         // MOTE: 由于只有 SettingsView 有触发更新的过程，所以在这个地方赋值 Cdk 是安全的
         mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(configurationService.Value.UpdateMirrorChyanCdk)
                                                  ? configurationService.Value.UpdateMirrorChyanCdk

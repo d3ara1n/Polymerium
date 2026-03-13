@@ -1,16 +1,12 @@
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Polymerium.App.Properties;
-using Polymerium.App.Services;
 using Trident.Abstractions;
 using Velopack;
 
@@ -32,11 +28,18 @@ internal static class Program
 
     private static Action? exitAction;
 
-    internal static IHost? AppHost { get; private set; }
+    internal static IServiceProvider? Services { get; private set; }
 
-    public static bool Debug { get; private set; } = Debugger.IsAttached;
     public static bool FirstRun { get; private set; }
 
+    #if DEBUG
+    public static bool IsDebug => true;
+    #else
+    public static bool Debug {get;} =
+ Debugger.IsAttached || Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") != "Production";
+    #endif
+
+    [STAThread]
     public static void Main(string[] args)
     {
         VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
@@ -69,35 +72,17 @@ internal static class Program
 
         #endregion
 
-        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
-        {
-            Args = args,
-            EnvironmentName = Debug ? "Development" : "Production"
-        });
-        Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
-        Debug = Debug || builder.Environment.EnvironmentName == "Development";
-        AppHost = builder.Build();
 
-        if (OperatingSystem.IsMacOS())
-        {
-            ConfigureDesktopRuntime(AppHost.Services);
-            AppHost.StartAsync().GetAwaiter().GetResult();
+        var services = new ServiceCollection();
+        Startup.ConfigureServices(services, IsDebug);
+        Services = services.BuildServiceProvider();
 
-            try
-            {
-                BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-            }
-            finally
-            {
-                AppHost.StopAsync().GetAwaiter().GetResult();
-                exitAction?.Invoke();
-            }
+        Startup.InitializeUnhostedServices();
 
-            return;
-        }
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
-        AppHost.Run();
-
+        Startup.DeinitializeUnhostedServices();
+        ((IDisposable)Services).Dispose();
         exitAction?.Invoke();
     }
 
@@ -110,53 +95,12 @@ internal static class Program
         }
     }
 
-    private static void ConfigureDesktopRuntime(IServiceProvider services)
-    {
-        var configuration = services.GetRequiredService<ConfigurationService>();
-        var environment = services.GetRequiredService<IHostEnvironment>();
-        var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-        var logger = loggerFactory.CreateLogger("AvaloniaLifetime");
-
-        logger.LogInformation("""
-                              {app}({env}):{root}
-                              Polymerium/{app_version}
-                              Avalonia({debug})/{ava_version}
-                              Home: {home}
-                              """,
-                              environment.ApplicationName,
-                              environment.EnvironmentName,
-                              environment.ContentRootPath,
-                              typeof(Program).Assembly.GetName().Version,
-                              Debug ? "Debug" : "Prod",
-                              typeof(AvaloniaObject).Assembly.GetName().Version,
-                              PathDef.Default.Home);
-
-        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configuration.Value.ApplicationLanguage);
-        Resources.Culture = CultureInfo.CurrentUICulture;
-    }
-
-    private static CultureInfo GetSafeCultureInfo(string cultureName)
-    {
-        try
-        {
-            return CultureInfo.GetCultureInfo(cultureName);
-        }
-        catch (CultureNotFoundException)
-        {
-            return CultureInfo.GetCultureInfo("en-US");
-        }
-        catch (ArgumentException)
-        {
-            return CultureInfo.GetCultureInfo("en-US");
-        }
-    }
-
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
     {
         var builder = AppBuilder.Configure<App>().UsePlatformDetect().WithFontSetup();
 
-        if (Debug)
+        if (IsDebug)
         {
             builder.LogToTextWriter(Console.Out);
         }

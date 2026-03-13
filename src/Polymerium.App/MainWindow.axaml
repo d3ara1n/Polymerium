@@ -89,7 +89,7 @@
                             </Style>
                         </husk:ButtonGroup.Styles>
                         <Button
-                            IsVisible="{x:Static local:Program.Debug}"
+                            IsVisible="{x:Static local:Program.IsDebug}"
                             Command="{Binding OpenNotificationSidebarCommand}">
                             <icons:PackIconLucide Kind="Bell" />
                         </Button>

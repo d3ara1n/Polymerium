@@ -61,7 +61,7 @@ public class NotificationService
         string title = "Operation failed",
         GrowlLevel level = GrowlLevel.Danger,
         params GrowlAction[] actions) =>
-        PopMessage(ex is not null ? Program.Debug ? ex.ToString() : ex.Message : "Unknown error",
+        PopMessage(ex is not null ? Program.IsDebug ? ex.ToString() : ex.Message : "Unknown error",
                    title,
                    level,
                    false,
