@@ -122,8 +122,8 @@ public partial class SettingsViewModel : ViewModelBase
     {
         if (box != null)
         {
-            var path = await OverlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
-                                                             "Select a Java executable");
+            var path = await OverlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestJavaPrompt,
+                                                             Resources.InstancePropertiesView_RequestJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));

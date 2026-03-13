@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,11 @@ public static class ServiceCollectionExtensions
     {
         public IServiceCollection AddAvalonia()
         {
-            services.AddHostedService<AvaloniaLifetime>();
+            if (!OperatingSystem.IsMacOS())
+            {
+                services.AddHostedService<AvaloniaLifetime>();
+            }
+
             return services;
         }
 
