@@ -827,10 +827,10 @@ public partial class InstanceSetupViewModel(
                 // 导致 Guard 无法保证能被释放而出现泄露
                 // 缺陷：可能会导致批量更新未能保存到硬盘，例如进程被杀的情况
                 var dialog = new PackageBulkUpdaterDialog { Result = updates.ToList() };
-                reviewNotification.Dismiss();
                 if (await overlayService.PopDialogAsync(dialog)
                  && dialog.Result is IReadOnlyList<PackageUpdaterModel> results)
                 {
+                    reviewNotification.Dismiss();
                     foreach (var model in results.Where(x => x.IsChecked))
                     {
                         var old = model.Model.Entry.Purl;
@@ -957,7 +957,7 @@ public partial class InstanceSetupViewModel(
                                     {
                                         Enabled = importedEntry.Enabled,
                                         Purl = importedEntry.Purl,
-                                        Source =  importedEntry.Source,
+                                        Source = importedEntry.Source,
                                     };
                                     guard.Value.Setup.Packages.Add(newEntry);
                                     persistenceService.AppendAction(new(Basic.Key,
