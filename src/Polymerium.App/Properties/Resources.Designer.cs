@@ -2328,6 +2328,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation: .
+        /// </summary>
+        public static string InstancePackageModal_OperationLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_OperationLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
         public static string InstancePackageModal_OverviewLabelText {
@@ -2688,7 +2697,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick a file like /bin/java.exe or /bin/javaw.exe.
+        ///   Looks up a localized string similar to Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe.
         /// </summary>
         public static string InstancePropertiesView_RequestJavaPrompt {
             get {
@@ -3399,7 +3408,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick a file like /bin/java.exe or /bin/javaw.exe.
+        ///   Looks up a localized string similar to Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe.
         /// </summary>
         public static string JavaHomeContainer_RequestJavaPrompt {
             get {

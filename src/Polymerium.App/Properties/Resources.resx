@@ -2161,4 +2161,7 @@
     <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
         <value>No rules matched</value>
     </data>
+    <data name="InstancePackageModal_OperationLabelText" xml:space="preserve">
+        <value>Operation: </value>
+    </data>
 </root>

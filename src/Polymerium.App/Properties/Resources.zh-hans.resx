@@ -2152,4 +2152,7 @@
     <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
         <value>无匹配规则</value>
     </data>
+    <data name="InstancePackageModal_OperationLabelText" xml:space="preserve">
+        <value>操作：</value>
+    </data>
 </root>
