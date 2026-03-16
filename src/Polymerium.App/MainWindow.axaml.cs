@@ -1,11 +1,17 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
+using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
+using Avalonia.Threading;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Views;
@@ -38,7 +44,7 @@ public partial class MainWindow : AppWindow
     {
         get;
         set => SetAndRaise(IsTitleBarVisibleProperty, ref field, value);
-    } = true;
+    }
 
 
     public static MainWindow Instance { get; private set; } = null!;
@@ -145,9 +151,32 @@ public partial class MainWindow : AppWindow
                 WindowState = WindowState.Maximized;
                 break;
             case WindowState.Maximized:
+            case WindowState.FullScreen:
                 WindowState = WindowState.Normal;
                 break;
         }
+    }
+
+    private void TitleBarDragArea_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+
+        BeginMoveDrag(e);
+        e.Handled = true;
+    }
+
+    private void TitleBarDragArea_OnDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (!CanResize)
+        {
+            return;
+        }
+
+        ToggleMaximize();
+        e.Handled = true;
     }
 
     private void MinimizeButton_OnClick(object? sender, RoutedEventArgs e)
@@ -168,34 +197,57 @@ public partial class MainWindow : AppWindow
         e.Handled = true;
     }
 
+    private void ApplySidebarPlacement(bool leftMode)
+    {
+        if ((Sidebar.GetValue(Grid.ColumnProperty) == 0) == leftMode)
+        {
+            return;
+        }
+
+        if (Container.ColumnDefinitions is not [var firstColumn, var secondColumn])
+        {
+            return;
+        }
+
+        Container.ColumnDefinitions = [secondColumn, firstColumn];
+
+        if (leftMode)
+        {
+            Main.SetValue(Grid.ColumnProperty, 1);
+            Sidebar.SetValue(Grid.ColumnProperty, 0);
+            return;
+        }
+
+        Main.SetValue(Grid.ColumnProperty, 0);
+        Sidebar.SetValue(Grid.ColumnProperty, 1);
+    }
+
+    #endregion
+
+
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
         if (change.Property == IsLeftPanelModeProperty)
         {
             var mode = change.GetNewValue<bool>();
-            if (mode)
-            {
-                if (Container.ColumnDefinitions is [var mainColumn, var sidebarColumn])
-                {
-                    Container.ColumnDefinitions = [sidebarColumn, mainColumn];
+            ApplySidebarPlacement(mode);
+        }
 
-                    Main.SetValue(Grid.ColumnProperty, 1);
-                    Sidebar.SetValue(Grid.ColumnProperty, 0);
-                }
+        // IsTitleBarVisible 默认值是 false，此时连锁的连个属性也处于默认值，刚好
+        if (change.Property == IsTitleBarVisibleProperty)
+        {
+            var visible = change.GetNewValue<bool>();
+            if (visible)
+            {
+                ExtendClientAreaToDecorationsHint = true;
+                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
             }
             else
             {
-                if (Container.ColumnDefinitions is [var sidebarColumn, var mainColumn])
-                {
-                    Container.ColumnDefinitions = [mainColumn, sidebarColumn];
-
-                    Main.SetValue(Grid.ColumnProperty, 0);
-                    Sidebar.SetValue(Grid.ColumnProperty, 1);
-                }
+                ExtendClientAreaToDecorationsHint = false;
+                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
             }
         }
     }
-
-    #endregion
 }

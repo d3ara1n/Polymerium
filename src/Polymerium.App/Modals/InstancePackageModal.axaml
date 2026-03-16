@@ -910,7 +910,7 @@
                         Spacing="6">
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="操作: " />
+                            Text="{x:Static lang:Resources.InstancePackageModal_OperationLabelText}" />
                         <husk:SwitchPresenter
                             IsVisible="False"
                             TargetType="x:Boolean"

@@ -84,7 +84,7 @@ public partial class SettingsViewModel : ViewModelBase
         UpdateProxyStatusText();
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
-        UpdateState = updateManager.IsInstalled || Program.Debug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
+        UpdateState = updateManager.IsInstalled || Program.IsDebug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
         // MOTE: 由于只有 SettingsView 有触发更新的过程，所以在这个地方赋值 Cdk 是安全的
         mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(configurationService.Value.UpdateMirrorChyanCdk)
                                                  ? configurationService.Value.UpdateMirrorChyanCdk
@@ -94,6 +94,7 @@ public partial class SettingsViewModel : ViewModelBase
     #region Service Export
 
     public OverlayService OverlayService { get; }
+    public bool CanCustomizeTitleBar => !OperatingSystem.IsMacOS();
 
     #endregion
 
@@ -122,8 +123,8 @@ public partial class SettingsViewModel : ViewModelBase
     {
         if (box != null)
         {
-            var path = await OverlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
-                                                             "Select a Java executable");
+            var path = await OverlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestJavaPrompt,
+                                                             Resources.InstancePropertiesView_RequestJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));

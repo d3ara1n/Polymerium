@@ -1,11 +1,15 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Polymerium.App.Properties;
+using Polymerium.App.Services;
 using Trident.Abstractions;
 using Velopack;
 
@@ -27,11 +31,18 @@ internal static class Program
 
     private static Action? exitAction;
 
-    internal static IHost? AppHost { get; private set; }
+    internal static IServiceProvider? Services { get; private set; }
 
-    public static bool Debug { get; private set; } = Debugger.IsAttached;
     public static bool FirstRun { get; private set; }
 
+#if DEBUG
+    public static bool IsDebug => true;
+#else
+    public static bool IsDebug {get;} =
+ Debugger.IsAttached || Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") != "Production";
+#endif
+
+    [STAThread]
     public static void Main(string[] args)
     {
         VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
@@ -64,16 +75,20 @@ internal static class Program
 
         #endregion
 
-        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
-        {
-            Args = args,
-            EnvironmentName = Debug ? "Development" : "Production"
-        });
-        Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
-        Debug = Debug || builder.Environment.EnvironmentName == "Development";
-        AppHost = builder.Build();
-        AppHost.Run();
 
+        var services = new ServiceCollection();
+        Startup.ConfigureServices(services, IsDebug);
+        Services = services.BuildServiceProvider();
+
+        Startup.InitializeUnhostedServices();
+
+        var configurationService = Services.GetRequiredService<ConfigurationService>();
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configurationService.Value.ApplicationLanguage);
+        Resources.Culture = CultureInfo.CurrentUICulture;
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+
+        Startup.DeinitializeUnhostedServices();
+        ((IDisposable)Services).Dispose();
         exitAction?.Invoke();
     }
 
@@ -86,12 +101,28 @@ internal static class Program
         }
     }
 
+    private static CultureInfo GetSafeCultureInfo(string cultureName)
+    {
+        try
+        {
+            return CultureInfo.GetCultureInfo(cultureName);
+        }
+        catch (CultureNotFoundException)
+        {
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+        catch (ArgumentException)
+        {
+            return CultureInfo.GetCultureInfo("en-US");
+        }
+    }
+
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
     {
         var builder = AppBuilder.Configure<App>().UsePlatformDetect().WithFontSetup();
 
-        if (Debug)
+        if (IsDebug)
         {
             builder.LogToTextWriter(Console.Out);
         }
