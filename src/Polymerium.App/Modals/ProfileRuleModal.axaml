@@ -33,7 +33,7 @@
                         SelectedItem="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Type, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedSelectorTypeConverter}}" />
+                                <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedSelectorType}}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -122,7 +122,7 @@
                                     SelectedItem="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Kind, Mode=TwoWay}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                            <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>

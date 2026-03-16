@@ -120,7 +120,7 @@
                                                         Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock Text="{Binding Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}, FallbackValue=Kind}" />
+                                                    <TextBlock Text="{Binding Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Kind}" />
                                                 </husk:Tag>
                                             </StackPanel>
                                             <TextBlock

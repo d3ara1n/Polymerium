@@ -105,7 +105,7 @@
                                     Spacing="8">
                                     <husk:Tag
                                         IsVisible="{Binding Info, Converter={x:Static ObjectConverters.IsNotNull}}"
-                                        Content="{Binding Info.Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}, FallbackValue=Unknown}"
+                                        Content="{Binding Info.Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Unknown}"
                                         CornerRadius="{StaticResource SmallCornerRadius}" />
                                     <husk:Tag
                                         Content="{Binding Info.Label, Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=N/A}"

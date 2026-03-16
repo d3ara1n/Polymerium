@@ -222,7 +222,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Kind, Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                                        Text="{Binding Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
