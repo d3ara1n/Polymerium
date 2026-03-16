@@ -844,7 +844,7 @@
         <value>Select a Java executable</value>
     </data>
     <data name="JavaHomeContainer_RequestJavaPrompt" xml:space="preserve">
-        <value>Pick a file like /bin/java.exe or /bin/javaw.exe</value>
+        <value>Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe</value>
     </data>
     <data name="NewInstanceView_RequestFileTitle" xml:space="preserve">
         <value>Import from file</value>
@@ -886,7 +886,7 @@
         <value>Select a Java executable</value>
     </data>
     <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
-        <value>Pick a file like /bin/java.exe or /bin/javaw.exe</value>
+        <value>Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe</value>
     </data>
     <data name="InstancePropertiesView_UnlockingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance is no longer associated to any modpack brand and free to edit.</value>
@@ -2160,6 +2160,9 @@
     </data>
     <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
         <value>No rules matched</value>
+    </data>
+    <data name="InstancePackageModal_OperationLabelText" xml:space="preserve">
+        <value>Operation: </value>
     </data>
     <data name="PackageBulkUpdatePreviewerTagPolicy_Ignore" xml:space="preserve">
         <value>Ignore</value>

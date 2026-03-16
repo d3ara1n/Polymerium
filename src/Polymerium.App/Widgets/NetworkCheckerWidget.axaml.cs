@@ -116,7 +116,7 @@ public partial class NetworkCheckerWidget : WidgetBase
             NetworkCheckHelper.ResetAll(Sites);
 
             // 从服务容器获取 HttpClientFactory
-            var httpClientFactory = Program.AppHost?.Services.GetService<IHttpClientFactory>();
+            var httpClientFactory = Program.Services?.GetService<IHttpClientFactory>();
             var httpClient = httpClientFactory?.CreateClient() ?? new HttpClient();
 
             await NetworkCheckHelper.TestConnectionsAsync(Sites, httpClient, _cts?.Token ?? CancellationToken.None);

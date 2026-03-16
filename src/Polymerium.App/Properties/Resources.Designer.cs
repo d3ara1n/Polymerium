@@ -2328,6 +2328,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation: .
+        /// </summary>
+        public static string InstancePackageModal_OperationLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_OperationLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
         public static string InstancePackageModal_OverviewLabelText {
