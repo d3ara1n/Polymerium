@@ -679,175 +679,199 @@ public partial class InstanceSetupViewModel(
     {
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            var total = _stageSource.Items.Count;
-            var notification = new GrowlItem
+            // 收集所有现有标签（去重，排除当前包已有的标签）
+            var existingTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(t => t).ToList();
+            var previewer = new PackageBulkUpdatePreviewerDialog()
             {
-                Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
-                Content = Resources
-                         .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace("{0}", "0")
-                         .Replace("{1}", _stageSource.Count.ToString()),
-                IsProgressBarVisible = true,
-                IsCloseButtonVisible = false
+                ExistingTags = existingTags, OverlayService = overlayService, IsEnabledOnly = true
             };
-            notification.Actions.Add(new(Resources
-                                            .InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
-                                         new RelayCommand(Cancel)));
-
-            notificationService.Pop(notification);
-
-            var filter = new Filter(Kind: null,
-                                    Version: profile.Setup.Version,
-                                    Loader: profile.Setup.Loader is not null
-                                                ? LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
-                                                      ? loader.Identity
-                                                      : null
-                                                : null);
-
-            var updates = new ConcurrentBag<PackageUpdaterModel>();
-            try
-            {
-                // 值设置太大会触发 API 限制
-                var semaphore = new SemaphoreSlim(2);
-                // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
-                // ReSharper disable once AccessToDisposedClosure
-                var tasks = _stageSource.Items.Select(x => UpdateAsync(x, semaphore, notification.Token));
-                await Task.WhenAll(tasks);
-                semaphore.Dispose();
-            }
-            catch (OperationCanceledException) { }
-            catch (Exception ex)
-            {
-                notificationService.PopMessage(ex,
-                                               Resources
-                                                  .InstanceSetupView_LoadProjectInformationDangerNotificationTitle,
-                                               GrowlLevel.Warning);
-            }
-
-            if (notification.Token.IsCancellationRequested)
-            {
-                notification.Dismiss();
-                return;
-            }
-
-            // 调用 Dismiss 会让 Token 进入 Cancel 状态
-            notification.Dismiss();
-
-            var reviewNotification = new GrowlItem
-            {
-                Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
-                Content = Resources
-                         .InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage
-                         .Replace("{0}", updates.Count.ToString())
-            };
-            reviewNotification.Actions.Add(new(Resources
-                                                  .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
-                                               new AsyncRelayCommand(ReviewAsync, CanReview)));
-            notificationService.Pop(reviewNotification);
-            return;
-
-
-            async Task UpdateAsync(InstancePackageModel entry, SemaphoreSlim semaphore, CancellationToken token)
-            {
-                if (token.IsCancellationRequested)
+            if (await overlayService.PopDialogAsync(previewer)
+             && previewer.Result is PackageBulkUpdatePreviewerModel
                 {
+                    IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
+                })
+            {
+                var staging = _stageSource
+                             .Items.Where(x => !enabledOnly || x.IsEnabled)
+                             .Where(x => tagPolicy switch
+                              {
+                                  PackageBulkUpdatePreviewerTagPolicy.Include => tags.Any(y => x.Tags.Contains(y)),
+                                  PackageBulkUpdatePreviewerTagPolicy.Exclude => !tags.Any(y => x.Tags.Contains(y)),
+                                  _ => true
+                              })
+                             .ToList();
+                var total = staging.Count;
+                var notification = new GrowlItem
+                {
+                    Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
+                    Content = Resources
+                             .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage
+                             .Replace("{0}", "0")
+                             .Replace("{1}", staging.Count.ToString()),
+                    IsProgressBarVisible = true,
+                    IsCloseButtonVisible = false
+                };
+                notification.Actions.Add(new(Resources
+                                                .InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
+                                             new RelayCommand(Cancel)));
+
+                notificationService.Pop(notification);
+
+                var filter = new Filter(Kind: null,
+                                        Version: profile.Setup.Version,
+                                        Loader: profile.Setup.Loader is not null
+                                                    ? LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                                                          ? loader.Identity
+                                                          : null
+                                                    : null);
+
+                var updates = new ConcurrentBag<PackageUpdateReviewerModel>();
+                try
+                {
+                    // 值设置太大会触发 API 限制
+                    var semaphore = new SemaphoreSlim(2);
+                    // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
+                    // ReSharper disable once AccessToDisposedClosure
+                    var tasks = staging.Select(x => UpdateAsync(x, semaphore, notification.Token));
+                    await Task.WhenAll(tasks);
+                    semaphore.Dispose();
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception ex)
+                {
+                    notificationService.PopMessage(ex,
+                                                   Resources
+                                                      .InstanceSetupView_LoadProjectInformationDangerNotificationTitle,
+                                                   GrowlLevel.Warning);
+                }
+
+                if (notification.Token.IsCancellationRequested)
+                {
+                    notification.Dismiss();
                     return;
                 }
 
-                await semaphore.WaitAsync(token);
-                if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
+                // 调用 Dismiss 会让 Token 进入 Cancel 状态
+                notification.Dismiss();
+
+                var reviewNotification = new GrowlItem
                 {
-                    if (result.Vid is not null)
+                    Title = Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
+                    Content = Resources
+                             .InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage
+                             .Replace("{0}", updates.Count.ToString())
+                };
+                reviewNotification.Actions.Add(new(Resources
+                                                      .InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
+                                                   new AsyncRelayCommand(ReviewAsync, CanReview)));
+                notificationService.Pop(reviewNotification);
+                return;
+
+
+                async Task UpdateAsync(InstancePackageModel entry, SemaphoreSlim semaphore, CancellationToken token)
+                {
+                    if (token.IsCancellationRequested)
                     {
-                        try
+                        return;
+                    }
+
+                    await semaphore.WaitAsync(token);
+                    if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
+                    {
+                        if (result.Vid is not null)
                         {
-                            var resolved = await dataService
-                                                .ResolvePackageAsync(result.Label,
-                                                                     result.Namespace,
-                                                                     result.Pid,
-                                                                     null,
-                                                                     filter,
-                                                                     false)
-                                                .ConfigureAwait(false);
-                            if (resolved.VersionId != result.Vid)
+                            try
                             {
-                                var package = await dataService
-                                                   .ResolvePackageAsync(result.Label,
-                                                                        result.Namespace,
-                                                                        result.Pid,
-                                                                        result.Vid,
-                                                                        Filter.None)
-                                                   .ConfigureAwait(false);
-                                var model = new PackageUpdaterModel(entry,
-                                                                    package,
-                                                                    package.Thumbnail ?? AssetUriIndex.DirtImage,
-                                                                    package.VersionId,
-                                                                    package.VersionName,
-                                                                    package.PublishedAt,
-                                                                    resolved.VersionId,
-                                                                    resolved.VersionName,
-                                                                    resolved.PublishedAt);
-                                updates.Add(model);
+                                var resolved = await dataService
+                                                    .ResolvePackageAsync(result.Label,
+                                                                         result.Namespace,
+                                                                         result.Pid,
+                                                                         null,
+                                                                         filter,
+                                                                         false)
+                                                    .ConfigureAwait(false);
+                                if (resolved.VersionId != result.Vid)
+                                {
+                                    var package = await dataService
+                                                       .ResolvePackageAsync(result.Label,
+                                                                            result.Namespace,
+                                                                            result.Pid,
+                                                                            result.Vid,
+                                                                            Filter.None)
+                                                       .ConfigureAwait(false);
+                                    var model = new PackageUpdateReviewerModel(entry,
+                                                                               package,
+                                                                               package.Thumbnail
+                                                                            ?? AssetUriIndex.DirtImage,
+                                                                               package.VersionId,
+                                                                               package.VersionName,
+                                                                               package.PublishedAt,
+                                                                               resolved.VersionId,
+                                                                               resolved.VersionName,
+                                                                               resolved.PublishedAt);
+                                    updates.Add(model);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                notificationService.PopMessage(ex,
+                                                               entry.Info?.ProjectName ?? entry.Entry.Purl,
+                                                               GrowlLevel.Warning);
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            notificationService.PopMessage(ex,
-                                                           entry.Info?.ProjectName ?? entry.Entry.Purl,
-                                                           GrowlLevel.Warning);
-                        }
                     }
+
+                    Interlocked.Decrement(ref total);
+                    semaphore.Release();
+
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        notification.Progress = Math.Min(100d,
+                                                         100d
+                                                       * (_stageSource.Items.Count - total)
+                                                       / _stageSource.Items.Count);
+                        notification.Content = Resources
+                                              .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage
+                                              .Replace("{0}", updates.Count.ToString())
+                                              .Replace("{1}", total.ToString());
+                    });
                 }
 
-                Interlocked.Decrement(ref total);
-                semaphore.Release();
+                void Cancel() => notification.Dismiss();
 
-                Dispatcher.UIThread.Post(() =>
+                bool CanReview() => !updates.IsEmpty;
+
+                async Task ReviewAsync()
                 {
-                    notification.Progress = Math.Min(100d,
-                                                     100d
-                                                   * (_stageSource.Items.Count - total)
-                                                   / _stageSource.Items.Count);
-                    notification.Content = Resources
-                                          .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage
-                                          .Replace("{0}", updates.Count.ToString())
-                                          .Replace("{1}", total.ToString());
-                });
-            }
-
-            void Cancel() => notification.Dismiss();
-
-            bool CanReview() => !updates.IsEmpty;
-
-            async Task ReviewAsync()
-            {
-                // 这里有个性能 Trick，使用的是不可变 Profile 引用，这里不使用 ProfileGuard 是为了避免重复刷新
-                // 由于 Profile 是单例的，实际改变已经被应用，只是没有用 guard.DisposeAsync 通知写入硬盘
-                // 为什么不用 Guard：
-                // 除了避免触发无效的刷新 diff 以外还有一个原因是这里涉及跨三个控制流且可以在任意一层中断
-                // 导致 Guard 无法保证能被释放而出现泄露
-                // 缺陷：可能会导致批量更新未能保存到硬盘，例如进程被杀的情况
-                var dialog = new PackageBulkUpdaterDialog { Result = updates.ToList() };
-                reviewNotification.Dismiss();
-                if (await overlayService.PopDialogAsync(dialog)
-                 && dialog.Result is IReadOnlyList<PackageUpdaterModel> results)
-                {
-                    foreach (var model in results.Where(x => x.IsChecked))
+                    // 这里有个性能 Trick，使用的是不可变 Profile 引用，这里不使用 ProfileGuard 是为了避免重复刷新
+                    // 由于 Profile 是单例的，实际改变已经被应用，只是没有用 guard.DisposeAsync 通知写入硬盘
+                    // 为什么不用 Guard：
+                    // 除了避免触发无效的刷新 diff 以外还有一个原因是这里涉及跨三个控制流且可以在任意一层中断
+                    // 导致 Guard 无法保证能被释放而出现泄露
+                    // 缺陷：可能会导致批量更新未能保存到硬盘，例如进程被杀的情况
+                    var dialog = new PackageBulkUpdateReviewerDialog { Result = updates.ToList() };
+                    reviewNotification.Dismiss();
+                    if (await overlayService.PopDialogAsync(dialog)
+                     && dialog.Result is IReadOnlyList<PackageUpdateReviewerModel> results)
                     {
-                        var old = model.Model.Entry.Purl;
-                        model.Model.Info?.Version = new InstancePackageVersionModel(model.NewVersionId,
-                            model.NewVersionName,
-                            string.Join(",",
-                                        model.Package.Requirements.AnyOfLoaders
-                                             .Select(LoaderHelper.ToDisplayName)),
-                            string.Join(",", model.Package.Requirements.AnyOfVersions),
-                            model.NewVersionTimeRaw,
-                            model.Package.ReleaseType,
-                            model.Package.Dependencies);
-                        // 设置 Version 会同步到 Entry.Purl
-                        persistenceService.AppendAction(new(Basic.Key,
-                                                            PersistenceService.ActionKind.EditPackage,
-                                                            old,
-                                                            model.Model.Entry.Purl));
+                        foreach (var model in results.Where(x => x.IsChecked))
+                        {
+                            var old = model.Model.Entry.Purl;
+                            model.Model.Info?.Version = new InstancePackageVersionModel(model.NewVersionId,
+                                model.NewVersionName,
+                                string.Join(",",
+                                            model.Package.Requirements.AnyOfLoaders.Select(LoaderHelper
+                                               .ToDisplayName)),
+                                string.Join(",", model.Package.Requirements.AnyOfVersions),
+                                model.NewVersionTimeRaw,
+                                model.Package.ReleaseType,
+                                model.Package.Dependencies);
+                            // 设置 Version 会同步到 Entry.Purl
+                            persistenceService.AppendAction(new(Basic.Key,
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                old,
+                                                                model.Model.Entry.Purl));
+                        }
                     }
                 }
             }
@@ -957,7 +981,7 @@ public partial class InstanceSetupViewModel(
                                     {
                                         Enabled = importedEntry.Enabled,
                                         Purl = importedEntry.Purl,
-                                        Source =  importedEntry.Source,
+                                        Source = importedEntry.Source,
                                     };
                                     guard.Value.Setup.Packages.Add(newEntry);
                                     persistenceService.AppendAction(new(Basic.Key,

@@ -1,0 +1,82 @@
+﻿<husk:Dialog
+    x:Class="Polymerium.App.Dialogs.PackageBulkUpdatePreviewerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:Polymerium.App.Dialogs"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="https://github.com/d3ara1n/Polymerium/Models"
+    Title="{x:Static lang:Resources.PackageBulkUpdatePreviewerDialog_Title}"
+    Width="360"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
+    <StackPanel Spacing="12">
+        <DockPanel>
+            <ToggleSwitch
+                DockPanel.Dock="Right"
+                IsChecked="{Binding $parent[dialogs:PackageBulkUpdatePreviewerDialog].IsEnabledOnly, Mode=TwoWay}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Text="{x:Static lang:Resources.PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText}" />
+        </DockPanel>
+        <DockPanel>
+            <ComboBox
+                DockPanel.Dock="Right"
+                DisplayMemberBinding="{Binding DataType={x:Type models:PackageBulkUpdatePreviewerTagPolicy}, Mode=OneTime, Converter={x:Static converters:LocalizedEnumConverters.LocalizedPackageBulkUpdatePreviewerTagPolicy}}"
+                ItemsSource="{Binding Source={x:Type models:PackageBulkUpdatePreviewerTagPolicy}, Mode=OneTime, DataType={x:Type collections:IEnumerable}, Converter={x:Static converters:InternalConverters.EnumTypeToList}}"
+                SelectedItem="{Binding $parent[dialogs:PackageBulkUpdatePreviewerDialog].TagPolicy, Mode=TwoWay}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Text="{x:Static lang:Resources.PackageBulkUpdatePreviewerDialog_TagPolicyLabelText}" />
+        </DockPanel>
+        <ItemsControl ItemsSource="{Binding $parent[dialogs:PackageBulkUpdatePreviewerDialog].Tags}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel
+                        ItemSpacing="6"
+                        LineSpacing="6" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Border
+                        Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                        BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
+                        <DockPanel>
+                            <Button
+                                DockPanel.Dock="Right"
+                                Padding="4,0"
+                                Command="{Binding $parent[dialogs:PackageBulkUpdatePreviewerDialog].RemoveTagCommand}"
+                                CommandParameter="{Binding}"
+                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                Theme="{StaticResource GhostButtonTheme}">
+                                <fi:SymbolIcon
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="{Binding $parent[Button].FontSize}"
+                                    Symbol="Dismiss" />
+                            </Button>
+                            <TextBlock
+                                Margin="8,4,0,4"
+                                Text="{Binding}" />
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Command="{Binding $parent[dialogs:PackageBulkUpdatePreviewerDialog].AddTagCommand}">
+            <husk:IconLabel
+                Icon="Tag"
+                Text="{x:Static lang:Resources.PackageBulkUpdatePreviewerDialog_AddTagButtonText}" />
+        </Button>
+    </StackPanel>
+</husk:Dialog>

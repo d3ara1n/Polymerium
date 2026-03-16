@@ -2152,4 +2152,25 @@
     <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
         <value>无匹配规则</value>
     </data>
+    <data name="PackageBulkUpdatePreviewerTagPolicy_Ignore" xml:space="preserve">
+        <value>忽略</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerTagPolicy_Include" xml:space="preserve">
+        <value>包含</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerTagPolicy_Exclude" xml:space="preserve">
+        <value>排除</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_TagPolicyLabelText" xml:space="preserve">
+        <value>针对标签</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText" xml:space="preserve">
+        <value>仅启用的包</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_Title" xml:space="preserve">
+        <value>批量检查更新</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_AddTagButtonText" xml:space="preserve">
+        <value>添加标签</value>
+    </data>
 </root>

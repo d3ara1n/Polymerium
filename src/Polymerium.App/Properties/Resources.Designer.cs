@@ -2688,7 +2688,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick a file like /bin/java.exe or /bin/javaw.exe.
+        ///   Looks up a localized string similar to Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe.
         /// </summary>
         public static string InstancePropertiesView_RequestJavaPrompt {
             get {
@@ -3399,7 +3399,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick a file like /bin/java.exe or /bin/javaw.exe.
+        ///   Looks up a localized string similar to Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe.
         /// </summary>
         public static string JavaHomeContainer_RequestJavaPrompt {
             get {
@@ -4838,6 +4838,69 @@ namespace Polymerium.App.Properties {
         public static string OobeWelcome_Title {
             get {
                 return ResourceManager.GetString("OobeWelcome_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Tag.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerDialog_AddTagButtonText {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_AddTagButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled Only.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag Policy.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerDialog_TagPolicyLabelText {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_TagPolicyLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Update Packages.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerDialog_Title {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerTagPolicy_Exclude {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Exclude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerTagPolicy_Ignore {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include.
+        /// </summary>
+        public static string PackageBulkUpdatePreviewerTagPolicy_Include {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Include", resourceCulture);
             }
         }
         

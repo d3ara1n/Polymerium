@@ -2161,4 +2161,25 @@
     <data name="InstancePackageModal_NoRulesLabelText" xml:space="preserve">
         <value>No rules matched</value>
     </data>
+    <data name="PackageBulkUpdatePreviewerTagPolicy_Ignore" xml:space="preserve">
+        <value>Ignore</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerTagPolicy_Include" xml:space="preserve">
+        <value>Include</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerTagPolicy_Exclude" xml:space="preserve">
+        <value>Exclude</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_TagPolicyLabelText" xml:space="preserve">
+        <value>Tag Policy</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText" xml:space="preserve">
+        <value>Enabled Only</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_Title" xml:space="preserve">
+        <value>Batch Update Packages</value>
+    </data>
+    <data name="PackageBulkUpdatePreviewerDialog_AddTagButtonText" xml:space="preserve">
+        <value>Add Tag</value>
+    </data>
 </root>
