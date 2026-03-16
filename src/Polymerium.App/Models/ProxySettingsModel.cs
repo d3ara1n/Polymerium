@@ -48,7 +48,7 @@ public class ProxySettingsModel
             Address = Address,
             Port = Port,
             Username = Username,
-            Password = Password
+            Password = Password,
         };
 
     /// <summary>
@@ -59,7 +59,9 @@ public class ProxySettingsModel
         {
             ProxyMode.Auto => Resources.SettingsView_ProxyStatusAutoText,
             ProxyMode.Disabled => Resources.SettingsView_ProxyStatusDisabledText,
-            ProxyMode.Manual => Protocol == ProxyProtocol.Socks5 ? $"socks5://{Address}:{Port}" : $"{Address}:{Port}",
-            _ => string.Empty
+            ProxyMode.Manual => Protocol == ProxyProtocol.Socks5
+                ? $"socks5://{Address}:{Port}"
+                : $"{Address}:{Port}",
+            _ => string.Empty,
         };
 }

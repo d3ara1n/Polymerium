@@ -10,7 +10,8 @@ public class InstanceReferenceModel(
     string versionId,
     string versionName,
     Uri? thumbnail,
-    Uri sourceUrl) : ModelBase
+    Uri sourceUrl
+) : ModelBase
 {
     #region Direct
 

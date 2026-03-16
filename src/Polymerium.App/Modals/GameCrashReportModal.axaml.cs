@@ -61,7 +61,9 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.GameDirectory != null && Directory.Exists(Report.GameDirectory))
         {
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchDirectoryInfoAsync(new(Report.GameDirectory));
+            TopLevel
+                .GetTopLevel(this)
+                ?.Launcher.LaunchDirectoryInfoAsync(new(Report.GameDirectory));
         }
     }
 
@@ -81,21 +83,17 @@ public partial class GameCrashReportModal : Modal
 
         try
         {
-            var fileName = $"crash-diagnostic-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
-            var file = await top.StorageProvider.SaveFilePickerAsync(new()
-            {
-                Title = Properties.Resources
-                                  .GameCrashReportModal_ExportDialogTitle,
-                SuggestedFileName = fileName,
-                DefaultExtension = "zip",
-                FileTypeChoices =
-                [
-                    new("Zip Archive")
-                    {
-                        Patterns = ["*.zip"]
-                    }
-                ]
-            });
+            var fileName =
+                $"crash-diagnostic-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
+            var file = await top.StorageProvider.SaveFilePickerAsync(
+                new()
+                {
+                    Title = Properties.Resources.GameCrashReportModal_ExportDialogTitle,
+                    SuggestedFileName = fileName,
+                    DefaultExtension = "zip",
+                    FileTypeChoices = [new("Zip Archive") { Patterns = ["*.zip"] }],
+                }
+            );
 
             if (file == null)
             {
@@ -138,11 +136,17 @@ public partial class GameCrashReportModal : Modal
             if (Report.CrashReportPath != null)
             {
                 var crashFileName = Path.GetFileName(Report.CrashReportPath);
-                await archive.CreateEntryFromFileAsync(Report.CrashReportPath, $"crash-reports/{crashFileName}");
+                await archive.CreateEntryFromFileAsync(
+                    Report.CrashReportPath,
+                    $"crash-reports/{crashFileName}"
+                );
             }
 
             // Add profile.json from instance directory
-            var profilePath = Path.Combine(Path.GetDirectoryName(Report.GameDirectory) ?? "", "profile.json");
+            var profilePath = Path.Combine(
+                Path.GetDirectoryName(Report.GameDirectory) ?? "",
+                "profile.json"
+            );
             if (File.Exists(profilePath))
             {
                 await archive.CreateEntryFromFileAsync(profilePath, "profile.json");
@@ -161,7 +165,10 @@ public partial class GameCrashReportModal : Modal
             {
                 var modsListEntry = archive.CreateEntry("mods-list.txt");
                 await using var writer = new StreamWriter(await modsListEntry.OpenAsync());
-                var modFiles = Directory.GetFiles(modsDir, "*.jar").Select(Path.GetFileName).OrderBy(x => x);
+                var modFiles = Directory
+                    .GetFiles(modsDir, "*.jar")
+                    .Select(Path.GetFileName)
+                    .OrderBy(x => x);
                 foreach (var mod in modFiles)
                 {
                     await writer.WriteLineAsync(mod);

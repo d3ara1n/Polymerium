@@ -18,5 +18,5 @@ public enum ProxyProtocol
     /// <summary>
     ///     SOCKS5 proxy protocol (.NET 6+ native support).
     /// </summary>
-    Socks5 = 2
+    Socks5 = 2,
 }

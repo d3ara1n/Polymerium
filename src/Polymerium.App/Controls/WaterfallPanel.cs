@@ -15,14 +15,18 @@ public class WaterfallPanel : Panel
     /// <summary>
     ///     Defines the <see cref="ColumnWidth" /> property.
     /// </summary>
-    public static readonly StyledProperty<double> ColumnWidthProperty =
-        AvaloniaProperty.Register<WaterfallPanel, double>(nameof(ColumnWidth), 200.0);
+    public static readonly StyledProperty<double> ColumnWidthProperty = AvaloniaProperty.Register<
+        WaterfallPanel,
+        double
+    >(nameof(ColumnWidth), 200.0);
 
     /// <summary>
     ///     Defines the <see cref="Spacing" /> property.
     /// </summary>
-    public static readonly StyledProperty<double> SpacingProperty =
-        AvaloniaProperty.Register<WaterfallPanel, double>(nameof(Spacing), 10.0);
+    public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<
+        WaterfallPanel,
+        double
+    >(nameof(Spacing), 10.0);
 
     /// <summary>
     ///     Gets or sets the width of each column.
@@ -60,7 +64,10 @@ public class WaterfallPanel : Panel
         }
 
         // Calculate the number of columns that can fit in the available width.
-        var columnCount = Math.Max(1, (int)Math.Floor((availableSize.Width + spacing) / (columnWidth + spacing)));
+        var columnCount = Math.Max(
+            1,
+            (int)Math.Floor((availableSize.Width + spacing) / (columnWidth + spacing))
+        );
         var columnHeights = new double[columnCount];
 
         // Measure each child and distribute them into columns.
@@ -108,7 +115,10 @@ public class WaterfallPanel : Panel
         }
 
         // Calculate the number of columns.
-        var columnCount = Math.Max(1, (int)Math.Floor((finalSize.Width + spacing) / (columnWidth + spacing)));
+        var columnCount = Math.Max(
+            1,
+            (int)Math.Floor((finalSize.Width + spacing) / (columnWidth + spacing))
+        );
         var columnHeights = new double[columnCount];
 
         // Arrange each child in its final position.

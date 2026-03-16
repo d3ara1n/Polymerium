@@ -18,5 +18,5 @@ public enum ProxyMode
     /// <summary>
     ///     Disable all proxies, use direct connection.
     /// </summary>
-    Disabled = 2
+    Disabled = 2,
 }

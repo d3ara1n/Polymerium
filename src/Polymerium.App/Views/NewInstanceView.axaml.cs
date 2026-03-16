@@ -9,7 +9,9 @@ namespace Polymerium.App.Views;
 
 public partial class NewInstanceView : ScopedPage
 {
-    private static readonly DataFormat FileContentsFormat = DataFormat.CreateStringPlatformFormat("FileContents");
+    private static readonly DataFormat FileContentsFormat = DataFormat.CreateStringPlatformFormat(
+        "FileContents"
+    );
 
     public NewInstanceView() => InitializeComponent();
 

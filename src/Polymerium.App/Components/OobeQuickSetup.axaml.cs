@@ -16,28 +16,43 @@ namespace Polymerium.App.Components;
 public partial class OobeQuickSetup : OobeStep
 {
     public static readonly DirectProperty<OobeQuickSetup, LanguageModel[]> LanguagesProperty =
-        AvaloniaProperty.RegisterDirect<OobeQuickSetup, LanguageModel[]>(nameof(Languages), o => o.Languages);
+        AvaloniaProperty.RegisterDirect<OobeQuickSetup, LanguageModel[]>(
+            nameof(Languages),
+            o => o.Languages
+        );
 
     public static readonly DirectProperty<OobeQuickSetup, LanguageModel?> SelectedLanguageProperty =
-        AvaloniaProperty.RegisterDirect<OobeQuickSetup, LanguageModel?>(nameof(SelectedLanguage),
-                                                                        o => o.SelectedLanguage,
-                                                                        (o, v) => o.SelectedLanguage = v);
+        AvaloniaProperty.RegisterDirect<OobeQuickSetup, LanguageModel?>(
+            nameof(SelectedLanguage),
+            o => o.SelectedLanguage,
+            (o, v) => o.SelectedLanguage = v
+        );
 
     public static readonly DirectProperty<OobeQuickSetup, int> DarkModeIndexProperty =
-        AvaloniaProperty.RegisterDirect<OobeQuickSetup, int>(nameof(DarkModeIndex),
-                                                             o => o.DarkModeIndex,
-                                                             (o, v) => o.DarkModeIndex = v);
+        AvaloniaProperty.RegisterDirect<OobeQuickSetup, int>(
+            nameof(DarkModeIndex),
+            o => o.DarkModeIndex,
+            (o, v) => o.DarkModeIndex = v
+        );
 
     public static readonly DirectProperty<OobeQuickSetup, AccentColor[]> AccentColorsProperty =
-        AvaloniaProperty.RegisterDirect<OobeQuickSetup, AccentColor[]>(nameof(AccentColors), o => o.AccentColors);
+        AvaloniaProperty.RegisterDirect<OobeQuickSetup, AccentColor[]>(
+            nameof(AccentColors),
+            o => o.AccentColors
+        );
 
     public static readonly DirectProperty<OobeQuickSetup, AccentColor> SelectedAccentColorProperty =
-        AvaloniaProperty.RegisterDirect<OobeQuickSetup, AccentColor>(nameof(SelectedAccentColor),
-                                                                     o => o.SelectedAccentColor,
-                                                                     (o, v) => o.SelectedAccentColor = v);
+        AvaloniaProperty.RegisterDirect<OobeQuickSetup, AccentColor>(
+            nameof(SelectedAccentColor),
+            o => o.SelectedAccentColor,
+            (o, v) => o.SelectedAccentColor = v
+        );
 
     public static readonly DirectProperty<OobeQuickSetup, string> ProxyStatusTextProperty =
-        AvaloniaProperty.RegisterDirect<OobeQuickSetup, string>(nameof(ProxyStatusText), o => o.ProxyStatusText);
+        AvaloniaProperty.RegisterDirect<OobeQuickSetup, string>(
+            nameof(ProxyStatusText),
+            o => o.ProxyStatusText
+        );
 
     public OobeQuickSetup() => InitializeComponent();
 
@@ -46,7 +61,9 @@ public partial class OobeQuickSetup : OobeStep
 
     public LanguageModel[] Languages { get; } =
     [
-        .. Configuration.SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x))
+        .. Configuration
+            .SupportedLanguages.Select(CultureInfo.GetCultureInfo)
+            .Select(x => new LanguageModel(x)),
     ];
 
     public LanguageModel? SelectedLanguage
@@ -106,13 +123,16 @@ public partial class OobeQuickSetup : OobeStep
             Address = config.NetworkProxyAddress,
             Port = config.NetworkProxyPort,
             Username = config.NetworkProxyUsername,
-            Password = config.NetworkProxyPassword
+            Password = config.NetworkProxyPassword,
         };
 
         var dialog = new ProxySettingsDialog();
         dialog.Initialize(settings);
 
-        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is ProxySettingsModel result)
+        if (
+            await OverlayService.PopDialogAsync(dialog)
+            && dialog.Result is ProxySettingsModel result
+        )
         {
             config.NetworkProxyMode = (int)result.Mode;
             config.NetworkProxyProtocol = (int)result.Protocol;
@@ -133,7 +153,7 @@ public partial class OobeQuickSetup : OobeStep
             ProxyMode.Auto => Properties.Resources.ProxySettingsDialog_ProxyMode_Auto,
             ProxyMode.Manual => $"{config.NetworkProxyAddress}:{config.NetworkProxyPort}",
             ProxyMode.Disabled => Properties.Resources.ProxySettingsDialog_ProxyMode_Disabled,
-            _ => string.Empty
+            _ => string.Empty,
         };
     }
 
@@ -144,7 +164,8 @@ public partial class OobeQuickSetup : OobeStep
         // Load current settings
         var config = ConfigurationService.Value;
 
-        SelectedLanguage = Languages.FirstOrDefault(x => x.Id == config.ApplicationLanguage) ?? Languages.First();
+        SelectedLanguage =
+            Languages.FirstOrDefault(x => x.Id == config.ApplicationLanguage) ?? Languages.First();
         DarkModeIndex = config.ApplicationStyleThemeVariant;
         SelectedAccentColor = config.ApplicationStyleAccent;
         UpdateProxyStatusText();

@@ -17,7 +17,8 @@ public class OverlayService
         Action<Toast> toastHandler,
         Action<Sidebar> drawerHandler,
         Action<Modal> modalHandler,
-        Action<Dialog> dialogHandler)
+        Action<Dialog> dialogHandler
+    )
     {
         _toastHandler = toastHandler;
         _drawerHandler = drawerHandler;
@@ -49,7 +50,12 @@ public class OverlayService
 
     public void PopMessage(string message, string title)
     {
-        var dialog = new MessageDialog { Title = title, Message = message, IsPrimaryButtonVisible = false };
+        var dialog = new MessageDialog
+        {
+            Title = title,
+            Message = message,
+            IsPrimaryButtonVisible = false,
+        };
         PopDialog(dialog);
     }
 
@@ -60,7 +66,11 @@ public class OverlayService
         return await source.Task;
     }
 
-    public async Task<string?> RequestInputAsync(string? message = null, string? title = null, string? watermark = null)
+    public async Task<string?> RequestInputAsync(
+        string? message = null,
+        string? title = null,
+        string? watermark = null
+    )
     {
         var dialog = new UserInputDialog();
         if (title != null)

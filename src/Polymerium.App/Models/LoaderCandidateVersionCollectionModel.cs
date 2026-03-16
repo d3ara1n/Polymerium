@@ -3,7 +3,9 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class LoaderCandidateVersionCollectionModel(IReadOnlyList<LoaderCandidateVersionModel> versions) : ModelBase
+public class LoaderCandidateVersionCollectionModel(
+    IReadOnlyList<LoaderCandidateVersionModel> versions
+) : ModelBase
 {
     #region Direct
 

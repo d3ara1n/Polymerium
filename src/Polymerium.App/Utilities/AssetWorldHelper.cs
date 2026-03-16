@@ -45,7 +45,8 @@ public static class AssetWorldHelper
             }
 
             // 基本信息
-            metadata.LevelName = dataTag.Get<NbtString>("LevelName")?.Value ?? Path.GetFileName(worldPath);
+            metadata.LevelName =
+                dataTag.Get<NbtString>("LevelName")?.Value ?? Path.GetFileName(worldPath);
             metadata.GameType = dataTag.Get<NbtInt>("GameType")?.Value ?? 0;
             metadata.Difficulty = dataTag.Get<NbtByte>("Difficulty")?.Value ?? 2;
             metadata.Hardcore = dataTag.Get<NbtByte>("hardcore")?.Value == 1;
@@ -78,7 +79,8 @@ public static class AssetWorldHelper
             {
                 // 旧版本格式
                 metadata.Seed = dataTag.Get<NbtLong>("RandomSeed")?.Value;
-                metadata.GeneratorName = dataTag.Get<NbtString>("generatorName")?.Value ?? "default";
+                metadata.GeneratorName =
+                    dataTag.Get<NbtString>("generatorName")?.Value ?? "default";
             }
 
             // 天气信息
@@ -159,7 +161,8 @@ public static class AssetWorldHelper
     /// </summary>
     public static IReadOnlyList<AssetWorldDataPackModel> ParseDataPacks(
         string worldPath,
-        AssetWorldMetadataModel metadata)
+        AssetWorldMetadataModel metadata
+    )
     {
         var dataPacks = new List<AssetWorldDataPackModel>();
         var datapacksDir = Path.Combine(worldPath, "datapacks");
@@ -186,15 +189,19 @@ public static class AssetWorldHelper
             var packMetadata = AssetDataPackHelper.ParseMetadata(file);
             var icon = AssetDataPackHelper.ExtractIcon(file) ?? AssetUriIndex.DirtImageBitmap;
             var displayName = !string.IsNullOrEmpty(packMetadata.Description)
-                                  ? packMetadata.Description
-                                  : Path.GetFileNameWithoutExtension(fileName);
+                ? packMetadata.Description
+                : Path.GetFileNameWithoutExtension(fileName);
 
-            dataPacks.Add(new(displayName,
-                              fileName,
-                              icon,
-                              packMetadata.Description,
-                              packMetadata.PackFormat,
-                              isEnabled));
+            dataPacks.Add(
+                new(
+                    displayName,
+                    fileName,
+                    icon,
+                    packMetadata.Description,
+                    packMetadata.PackFormat,
+                    isEnabled
+                )
+            );
         }
 
         // 扫描 datapacks 目录下的文件夹
@@ -216,14 +223,20 @@ public static class AssetWorldHelper
 
             var packMetadata = ParsePackMcmetaFromFile(packMetaPath);
             var icon = ExtractIconFromFolder(dir) ?? AssetUriIndex.DirtImageBitmap;
-            var displayName = !string.IsNullOrEmpty(packMetadata.Description) ? packMetadata.Description : dirName;
+            var displayName = !string.IsNullOrEmpty(packMetadata.Description)
+                ? packMetadata.Description
+                : dirName;
 
-            dataPacks.Add(new(displayName,
-                              dirName,
-                              icon,
-                              packMetadata.Description,
-                              packMetadata.PackFormat,
-                              isEnabled));
+            dataPacks.Add(
+                new(
+                    displayName,
+                    dirName,
+                    icon,
+                    packMetadata.Description,
+                    packMetadata.PackFormat,
+                    isEnabled
+                )
+            );
         }
 
         return dataPacks;
@@ -289,7 +302,8 @@ public static class AssetWorldHelper
     /// </summary>
     public static IReadOnlyList<AssetWorldPlayerModel> ParsePlayers(
         string worldPath,
-        IEnumerable<AccountModel> managedAccounts)
+        IEnumerable<AccountModel> managedAccounts
+    )
     {
         var players = new List<AssetWorldPlayerModel>();
 
@@ -305,10 +319,10 @@ public static class AssetWorldHelper
 
             // 获取所有有统计数据的玩家 UUID
             var playerUuids = Directory
-                             .GetFiles(statsDir, "*.json")
-                             .Select(Path.GetFileNameWithoutExtension)
-                             .Where(uuid => uuid != null)
-                             .ToHashSet();
+                .GetFiles(statsDir, "*.json")
+                .Select(Path.GetFileNameWithoutExtension)
+                .Where(uuid => uuid != null)
+                .ToHashSet();
 
             // 只处理在账号管理中的玩家
             foreach (var account in managedAccounts)
@@ -319,9 +333,13 @@ public static class AssetWorldHelper
                 if (playerUuids.Contains(formattedUuid))
                 {
                     var stats = ParsePlayerStats(Path.Combine(statsDir, $"{formattedUuid}.json"));
-                    var advancements = ParsePlayerAdvancements(Path.Combine(advancementsDir, $"{formattedUuid}.json"));
+                    var advancements = ParsePlayerAdvancements(
+                        Path.Combine(advancementsDir, $"{formattedUuid}.json")
+                    );
 
-                    players.Add(new(account.Uuid, account.UserName, account.FaceUrl, stats, advancements));
+                    players.Add(
+                        new(account.Uuid, account.UserName, account.FaceUrl, stats, advancements)
+                    );
                 }
             }
         }
@@ -403,7 +421,9 @@ public static class AssetWorldHelper
     /// <summary>
     ///     解析玩家成就数据
     /// </summary>
-    private static AssetWorldPlayerAdvancementsModel ParsePlayerAdvancements(string advancementsFilePath)
+    private static AssetWorldPlayerAdvancementsModel ParsePlayerAdvancements(
+        string advancementsFilePath
+    )
     {
         var advancementsModel = new AssetWorldPlayerAdvancementsModel();
 

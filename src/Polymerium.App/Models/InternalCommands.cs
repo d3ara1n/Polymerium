@@ -9,27 +9,32 @@ namespace Polymerium.App.Models;
 
 public static class InternalCommands
 {
-    public static ICommand OpenUriCommand { get; } = new RelayCommand<Uri>(uri =>
-    {
-        if (uri != null && uri.IsAbsoluteUri)
+    public static ICommand OpenUriCommand { get; } =
+        new RelayCommand<Uri>(uri =>
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(uri);
-        }
-    });
+            if (uri != null && uri.IsAbsoluteUri)
+            {
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(uri);
+            }
+        });
 
-    public static ICommand OpenFolderCommand { get; } = new RelayCommand<string>(path =>
-    {
-        if (path != null && Directory.Exists(path))
+    public static ICommand OpenFolderCommand { get; } =
+        new RelayCommand<string>(path =>
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(path));
-        }
-    });
+            if (path != null && Directory.Exists(path))
+            {
+                TopLevel
+                    .GetTopLevel(MainWindow.Instance)
+                    ?.Launcher.LaunchDirectoryInfoAsync(new(path));
+            }
+        });
 
-    public static ICommand CopyToClipboardCommand { get; } = new RelayCommand<string>(text =>
-    {
-        if (text != null)
+    public static ICommand CopyToClipboardCommand { get; } =
+        new RelayCommand<string>(text =>
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Clipboard?.SetTextAsync(text);
-        }
-    });
+            if (text != null)
+            {
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Clipboard?.SetTextAsync(text);
+            }
+        });
 }

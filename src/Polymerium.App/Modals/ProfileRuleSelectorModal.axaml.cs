@@ -15,10 +15,13 @@ namespace Polymerium.App.Modals;
 
 public partial class ProfileRuleSelectorModal : Modal
 {
-    public static readonly DirectProperty<ProfileRuleSelectorModal, ProfileRuleSelectorModel> SelectorProperty =
-        AvaloniaProperty.RegisterDirect<ProfileRuleSelectorModal, ProfileRuleSelectorModel>(nameof(Selector),
-            o => o.Selector,
-            (o, v) => o.Selector = v);
+    public static readonly DirectProperty<
+        ProfileRuleSelectorModal,
+        ProfileRuleSelectorModel
+    > SelectorProperty = AvaloniaProperty.RegisterDirect<
+        ProfileRuleSelectorModal,
+        ProfileRuleSelectorModel
+    >(nameof(Selector), o => o.Selector, (o, v) => o.Selector = v);
 
     public ProfileRuleSelectorModal() => InitializeComponent();
 
@@ -43,19 +46,24 @@ public partial class ProfileRuleSelectorModal : Modal
     {
         if (Selector.Children is not null)
         {
-            OverlayService.PopModal(new ProfileRuleSelectorsModal
-            {
-                Selectors = Selector.Children,
-                Packages = Packages,
-                OverlayService = OverlayService
-            });
+            OverlayService.PopModal(
+                new ProfileRuleSelectorsModal
+                {
+                    Selectors = Selector.Children,
+                    Packages = Packages,
+                    OverlayService = OverlayService,
+                }
+            );
         }
     }
 
     [RelayCommand]
     private async Task PickTagAsync()
     {
-        var dialog = new TagPickerDialog { ExistingTags = Packages.SelectMany(x => x.Tags).Distinct().ToList() };
+        var dialog = new TagPickerDialog
+        {
+            ExistingTags = Packages.SelectMany(x => x.Tags).Distinct().ToList(),
+        };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag)
         {
             Selector.Tag = tag;
@@ -67,7 +75,10 @@ public partial class ProfileRuleSelectorModal : Modal
     {
         var dialog = new PackagePickerDialog();
         dialog.SetItems(Packages);
-        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is InstancePackageModel package)
+        if (
+            await OverlayService.PopDialogAsync(dialog)
+            && dialog.Result is InstancePackageModel package
+        )
         {
             Selector.Purl = package.Entry.Purl;
         }

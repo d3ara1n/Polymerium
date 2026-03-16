@@ -18,7 +18,6 @@ public static class ServiceCollectionExtensions
 
     extension(IServiceCollection services)
     {
-
         public IServiceCollection AddViewFacilities()
         {
             services.AddScoped<ViewBagFactory>().AddScoped<ViewBag>();
@@ -37,17 +36,21 @@ public static class ServiceCollectionExtensions
                 }
 
                 return new FreeSqlBuilder()
-                      .UseConnectionString(DataType.Sqlite, $"Data Source=\"{path}\";Cache=Private")
-                      .UseAutoSyncStructure(true)
-                      .Build();
+                    .UseConnectionString(DataType.Sqlite, $"Data Source=\"{path}\";Cache=Private")
+                    .UseAutoSyncStructure(true)
+                    .Build();
             });
             return services;
         }
 
         public IServiceCollection AddVelopackGithubSource()
         {
-            services.AddSingleton<GithubSource>(_ => new("https://github.com/d3ara1n/Polymerium", null, true));
-            services.AddSingleton<IUpdateSource, GithubSource>(sp => sp.GetRequiredService<GithubSource>());
+            services.AddSingleton<GithubSource>(_ =>
+                new("https://github.com/d3ara1n/Polymerium", null, true)
+            );
+            services.AddSingleton<IUpdateSource, GithubSource>(sp =>
+                sp.GetRequiredService<GithubSource>()
+            );
             return services;
         }
 
@@ -55,7 +58,9 @@ public static class ServiceCollectionExtensions
         {
             services.AddSingleton<UpdateSourceSelector>();
             // 不能作为 IUpdateSource 避免自己引用自己
-            services.AddSingleton<UpdateManager>(sp => new(sp.GetRequiredService<UpdateSourceSelector>()));
+            services.AddSingleton<UpdateManager>(sp =>
+                new(sp.GetRequiredService<UpdateSourceSelector>())
+            );
             return services;
         }
 

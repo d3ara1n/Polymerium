@@ -14,7 +14,8 @@ public class InstanceActionModel(
     string? newVersionName,
     Bitmap thumbnail,
     DateTimeOffset modifiedAt,
-    bool canUndo) : ModelBase
+    bool canUndo
+) : ModelBase
 {
     #region Direct
 

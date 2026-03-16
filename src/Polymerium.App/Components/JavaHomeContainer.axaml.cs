@@ -13,26 +13,41 @@ namespace Polymerium.App.Components;
 public partial class JavaHomeContainer : UserControl
 {
     public static readonly DirectProperty<JavaHomeContainer, string?> HomeProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Home), o => o.Home, (o, v) => o.Home = v);
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
+            nameof(Home),
+            o => o.Home,
+            (o, v) => o.Home = v
+        );
 
-    public static readonly DirectProperty<JavaHomeContainer, OverlayService?> OverlayServiceProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, OverlayService?>(nameof(OverlayService),
-                                                                            o => o.OverlayService,
-                                                                            (o, v) => o.OverlayService = v);
+    public static readonly DirectProperty<
+        JavaHomeContainer,
+        OverlayService?
+    > OverlayServiceProperty = AvaloniaProperty.RegisterDirect<JavaHomeContainer, OverlayService?>(
+        nameof(OverlayService),
+        o => o.OverlayService,
+        (o, v) => o.OverlayService = v
+    );
 
     public static readonly DirectProperty<JavaHomeContainer, string?> VendorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Vendor),
-                                                                    o => o.Vendor,
-                                                                    (o, v) => o.Vendor = v);
-
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
+            nameof(Vendor),
+            o => o.Vendor,
+            (o, v) => o.Vendor = v
+        );
 
     public static readonly DirectProperty<JavaHomeContainer, string?> VersionProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Version),
-                                                                    o => o.Version,
-                                                                    (o, v) => o.Version = v);
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
+            nameof(Version),
+            o => o.Version,
+            (o, v) => o.Version = v
+        );
 
     public static readonly DirectProperty<JavaHomeContainer, int?> MajorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(nameof(Major), o => o.Major, (o, v) => o.Major = v);
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(
+            nameof(Major),
+            o => o.Major,
+            (o, v) => o.Major = v
+        );
 
     public JavaHomeContainer() => InitializeComponent();
 
@@ -41,7 +56,6 @@ public partial class JavaHomeContainer : UserControl
         get;
         set => SetAndRaise(OverlayServiceProperty, ref field, value);
     }
-
 
     public string? Home
     {
@@ -66,7 +80,6 @@ public partial class JavaHomeContainer : UserControl
         get;
         set => SetAndRaise(MajorProperty, ref field, value);
     }
-
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
@@ -96,15 +109,15 @@ public partial class JavaHomeContainer : UserControl
             {
                 var lines = File.ReadAllLines(path);
                 var vendor = lines
-                            .FirstOrDefault(x => x.StartsWith("IMPLEMENTOR="))
-                           ?.Split('=')
-                            .LastOrDefault()
-                           ?.Replace("\"", "");
+                    .FirstOrDefault(x => x.StartsWith("IMPLEMENTOR="))
+                    ?.Split('=')
+                    .LastOrDefault()
+                    ?.Replace("\"", "");
                 var version = lines
-                             .FirstOrDefault(x => x.StartsWith("JAVA_VERSION="))
-                            ?.Split('=')
-                             .LastOrDefault()
-                            ?.Replace("\"", "");
+                    .FirstOrDefault(x => x.StartsWith("JAVA_VERSION="))
+                    ?.Split('=')
+                    .LastOrDefault()
+                    ?.Replace("\"", "");
                 var major = version?.Split('.').FirstOrDefault();
                 Vendor = vendor;
                 Version = version;
@@ -137,8 +150,10 @@ public partial class JavaHomeContainer : UserControl
     {
         if (OverlayService != null)
         {
-            var path = await OverlayService.RequestFileAsync(Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
-                                                             Properties.Resources.JavaHomeContainer_ReqeustJavaTitle);
+            var path = await OverlayService.RequestFileAsync(
+                Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
+                Properties.Resources.JavaHomeContainer_ReqeustJavaTitle
+            );
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));

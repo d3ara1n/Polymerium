@@ -16,23 +16,29 @@ namespace Polymerium.App.Components;
 
 public partial class AccountCreationMicrosoft : AccountCreationStep
 {
-    public static readonly DirectProperty<AccountCreationMicrosoft, MicrosoftUserCodeModel?> ModelProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, MicrosoftUserCodeModel?>(nameof(Model),
-            o => o.Model,
-            (o, v) => o.Model = v);
+    public static readonly DirectProperty<
+        AccountCreationMicrosoft,
+        MicrosoftUserCodeModel?
+    > ModelProperty = AvaloniaProperty.RegisterDirect<
+        AccountCreationMicrosoft,
+        MicrosoftUserCodeModel?
+    >(nameof(Model), o => o.Model, (o, v) => o.Model = v);
 
     public static readonly DirectProperty<AccountCreationMicrosoft, string?> ErrorMessageProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, string?>(nameof(ErrorMessage),
-                                                                           o => o.ErrorMessage,
-                                                                           (o, v) => o.ErrorMessage = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, string?>(
+            nameof(ErrorMessage),
+            o => o.ErrorMessage,
+            (o, v) => o.ErrorMessage = v
+        );
 
     public static readonly DirectProperty<AccountCreationMicrosoft, IAccount?> AccountProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, IAccount?>(nameof(Account),
-                                                                             o => o.Account,
-                                                                             (o, v) => o.Account = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, IAccount?>(
+            nameof(Account),
+            o => o.Account,
+            (o, v) => o.Account = v
+        );
 
     private CancellationTokenSource _cts = new();
-
 
     public AccountCreationMicrosoft() => InitializeComponent();
 
@@ -53,7 +59,6 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
         get;
         set => SetAndRaise(ErrorMessageProperty, ref field, value);
     }
-
 
     public required MicrosoftService MicrosoftService { get; init; }
     public required XboxLiveService XboxLiveService { get; init; }
@@ -85,23 +90,36 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
         try
         {
             var model = await MicrosoftService.AcquireUserCodeAsync();
-            Model = new(model.DeviceCode,
-                        model.UserCode,
-                        model.VerificationUri ?? new Uri("https://aka.ms/devicelogin"));
+            Model = new(
+                model.DeviceCode,
+                model.UserCode,
+                model.VerificationUri ?? new Uri("https://aka.ms/devicelogin")
+            );
 
-
-            var microsoft = await MicrosoftService.AuthenticateAsync(model.DeviceCode, model.Interval, _cts.Token);
-            var xbox = await XboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
-            var xsts = await XboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
-            var minecraft = await MinecraftService.AuthenticateByXboxLiveServiceTokenAsync(xsts.Token,
-                                xsts.DisplayClaims.Xui.First().Uhs);
-            var profile = await MinecraftService.AcquireAccountProfileByMinecraftTokenAsync(minecraft.AccessToken);
+            var microsoft = await MicrosoftService.AuthenticateAsync(
+                model.DeviceCode,
+                model.Interval,
+                _cts.Token
+            );
+            var xbox = await XboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
+                microsoft.AccessToken
+            );
+            var xsts = await XboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
+                xbox.Token
+            );
+            var minecraft = await MinecraftService.AuthenticateByXboxLiveServiceTokenAsync(
+                xsts.Token,
+                xsts.DisplayClaims.Xui.First().Uhs
+            );
+            var profile = await MinecraftService.AcquireAccountProfileByMinecraftTokenAsync(
+                minecraft.AccessToken
+            );
             Account = new MicrosoftAccount
             {
                 AccessToken = minecraft.AccessToken,
                 RefreshToken = microsoft.RefreshToken,
                 Uuid = profile.Id,
-                Username = profile.Name
+                Username = profile.Name,
             };
         }
         catch (Exception ex)

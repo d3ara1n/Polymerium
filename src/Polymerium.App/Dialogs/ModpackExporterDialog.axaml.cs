@@ -19,20 +19,28 @@ public partial class ModpackExporterDialog : Dialog
     public static readonly StyledProperty<string> SelectedExporterLabelProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(SelectedExporterLabel));
 
-    public static readonly StyledProperty<string> NameOverrideProperty =
-        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(NameOverride));
+    public static readonly StyledProperty<string> NameOverrideProperty = AvaloniaProperty.Register<
+        ModpackExporterDialog,
+        string
+    >(nameof(NameOverride));
 
     public static readonly StyledProperty<string> AuthorOverrideProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(AuthorOverride));
 
-    public static readonly StyledProperty<int> PackageCountProperty =
-        AvaloniaProperty.Register<ModpackExporterDialog, int>(nameof(PackageCount));
+    public static readonly StyledProperty<int> PackageCountProperty = AvaloniaProperty.Register<
+        ModpackExporterDialog,
+        int
+    >(nameof(PackageCount));
 
-    public static readonly StyledProperty<string> LoaderLabelProperty =
-        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(LoaderLabel));
+    public static readonly StyledProperty<string> LoaderLabelProperty = AvaloniaProperty.Register<
+        ModpackExporterDialog,
+        string
+    >(nameof(LoaderLabel));
 
-    public static readonly StyledProperty<string> NameOriginalProperty =
-        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(NameOriginal));
+    public static readonly StyledProperty<string> NameOriginalProperty = AvaloniaProperty.Register<
+        ModpackExporterDialog,
+        string
+    >(nameof(NameOriginal));
 
     public static readonly StyledProperty<string> AuthorOriginalProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(AuthorOriginal));
@@ -44,9 +52,11 @@ public partial class ModpackExporterDialog : Dialog
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(VersionOriginal));
 
     public static readonly DirectProperty<ModpackExporterDialog, PackDataModel?> PackDataProperty =
-        AvaloniaProperty.RegisterDirect<ModpackExporterDialog, PackDataModel?>(nameof(PackData),
-                                                                               o => o.PackData,
-                                                                               (o, v) => o.PackData = v);
+        AvaloniaProperty.RegisterDirect<ModpackExporterDialog, PackDataModel?>(
+            nameof(PackData),
+            o => o.PackData,
+            (o, v) => o.PackData = v
+        );
 
     public ModpackExporterDialog()
     {
@@ -109,7 +119,6 @@ public partial class ModpackExporterDialog : Dialog
         set => SetValue(VersionOriginalProperty, value);
     }
 
-
     public PackDataModel? PackData
     {
         get;
@@ -171,8 +180,10 @@ public partial class ModpackExporterDialog : Dialog
         if (Result is ModpackExporterModel model)
         {
             TopLevel
-               .GetTopLevel(MainWindow.Instance)
-              ?.Launcher.LaunchDirectoryInfoAsync(new(PathDef.Default.DirectoryOfImport(model.Key)));
+                .GetTopLevel(MainWindow.Instance)
+                ?.Launcher.LaunchDirectoryInfoAsync(
+                    new(PathDef.Default.DirectoryOfImport(model.Key))
+                );
         }
     }
 

@@ -11,7 +11,16 @@ public class PersistenceService(IFreeSql freeSql)
 {
     #region ActionKind enum
 
-    public enum ActionKind { Install, Update, Unlock, Reset, Rename, EditPackage, EditLoader }
+    public enum ActionKind
+    {
+        Install,
+        Update,
+        Unlock,
+        Reset,
+        Rename,
+        EditPackage,
+        EditLoader,
+    }
 
     #endregion
 
@@ -23,7 +32,8 @@ public class PersistenceService(IFreeSql freeSql)
         string data,
         DateTime enrolledAt,
         DateTime? lastUsedAt,
-        bool isDefault)
+        bool isDefault
+    )
     {
         [Column(IsPrimary = true)]
         public string Uuid { get; set; } = uuid;
@@ -68,7 +78,13 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Nested type: Activity
 
-    public class Activity(string key, DateTimeOffset begin, DateTimeOffset end, string accountId, bool dieInPeace)
+    public class Activity(
+        string key,
+        DateTimeOffset begin,
+        DateTimeOffset end,
+        string accountId,
+        bool dieInPeace
+    )
     {
         public string Key { get; set; } = key;
 
@@ -110,12 +126,15 @@ public class PersistenceService(IFreeSql freeSql)
 
     public IReadOnlyList<Action> GetLatestActions(string key, DateTimeOffset since) =>
         freeSql
-           .Select<Action>()
-           .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage && x.At >= since.LocalDateTime)
-           .OrderByDescending(x => x.At)
-           .ToList();
+            .Select<Action>()
+            .Where(x =>
+                x.Key == key && x.Kind == ActionKind.EditPackage && x.At >= since.LocalDateTime
+            )
+            .OrderByDescending(x => x.At)
+            .ToList();
 
-    public int ClearActions(string key) => freeSql.Delete<Action>().Where(x => x.Key == key).ExecuteAffrows();
+    public int ClearActions(string key) =>
+        freeSql.Delete<Action>().Where(x => x.Key == key).ExecuteAffrows();
 
     public int ClearAllActions() => freeSql.Delete<Action>().Where("1=1").ExecuteAffrows();
 
@@ -128,11 +147,15 @@ public class PersistenceService(IFreeSql freeSql)
     public Activity? GetLastActivity(string key) =>
         freeSql.Select<Activity>().Where(x => x.Key == key).OrderByDescending(x => x.End).First();
 
-    public Activity? GetLastActivity() => freeSql.Select<Activity>().OrderByDescending(x => x.End).First();
+    public Activity? GetLastActivity() =>
+        freeSql.Select<Activity>().OrderByDescending(x => x.End).First();
 
     public TimeSpan GetTotalPlayTime(string key)
     {
-        var totalSeconds = freeSql.Select<Activity>().Where(x => x.Key == key).Sum(x => (x.End - x.Begin).TotalSeconds);
+        var totalSeconds = freeSql
+            .Select<Activity>()
+            .Where(x => x.Key == key)
+            .Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
@@ -147,7 +170,8 @@ public class PersistenceService(IFreeSql freeSql)
 
     public int GetActiveDays() => (int)freeSql.Select<Activity>().GroupBy(x => x.End.Date).Count();
 
-    public int GetSessionCount(string key) => (int)freeSql.Select<Activity>().Where(x => x.Key == key).Count();
+    public int GetSessionCount(string key) =>
+        (int)freeSql.Select<Activity>().Where(x => x.Key == key).Count();
 
     public int GetSessionCount() => (int)freeSql.Select<Activity>().Count();
 
@@ -161,10 +185,10 @@ public class PersistenceService(IFreeSql freeSql)
         var allActivities = freeSql.Select<Activity>().ToList();
 
         var playTimes = allActivities
-                       .GroupBy(x => x.Key)
-                       .Select(g => new { g.Key, TotalHours = g.Sum(x => (x.End - x.Begin).TotalHours) })
-                       .OrderByDescending(x => x.TotalHours)
-                       .ToList();
+            .GroupBy(x => x.Key)
+            .Select(g => new { g.Key, TotalHours = g.Sum(x => (x.End - x.Begin).TotalHours) })
+            .OrderByDescending(x => x.TotalHours)
+            .ToList();
 
         var rank = playTimes.FindIndex(x => x.Key == key);
         return rank == -1 ? playTimes.Count + 1 : rank + 1;
@@ -173,28 +197,25 @@ public class PersistenceService(IFreeSql freeSql)
     public TimeSpan GetDayPlayTime(string key, DateTimeOffset date)
     {
         var totalSeconds = freeSql
-                          .Select<Activity>()
-                          .Where(x => x.Key == key && x.End.Date == date.DateTime.Date)
-                          .Sum(x => (x.End - x.Begin).TotalSeconds);
+            .Select<Activity>()
+            .Where(x => x.Key == key && x.End.Date == date.DateTime.Date)
+            .Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
     public double GetPercentageInTotalPlayTime(string key)
     {
         var keyTotalSeconds = freeSql
-                             .Select<Activity>()
-                             .Where(x => x.Key == key)
-                             .Sum(x => (x.End - x.Begin).TotalSeconds);
-
+            .Select<Activity>()
+            .Where(x => x.Key == key)
+            .Sum(x => (x.End - x.Begin).TotalSeconds);
 
         var allTotalSeconds = freeSql.Select<Activity>().Sum(x => (x.End - x.Begin).TotalSeconds);
-
 
         if (allTotalSeconds == 0)
         {
             return 0d;
         }
-
 
         return (double)(keyTotalSeconds / allTotalSeconds);
     }
@@ -219,13 +240,14 @@ public class PersistenceService(IFreeSql freeSql)
         var weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - weeksAgo * 7);
         var weekEnd = weekStart.AddDays(7);
         var totalSeconds = freeSql
-                          .Select<Activity>()
-                          .Where(x => x.Key == key && x.End >= weekStart && x.End < weekEnd)
-                          .Sum(x => (x.End - x.Begin).TotalSeconds);
+            .Select<Activity>()
+            .Where(x => x.Key == key && x.End >= weekStart && x.End < weekEnd)
+            .Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
 
-    public int ClearActivities(string key) => freeSql.Delete<Activity>().Where(x => x.Key == key).ExecuteAffrows();
+    public int ClearActivities(string key) =>
+        freeSql.Delete<Activity>().Where(x => x.Key == key).ExecuteAffrows();
 
     public int ClearAllActivities() => freeSql.Delete<Activity>().Where("1=1").ExecuteAffrows();
 
@@ -237,26 +259,42 @@ public class PersistenceService(IFreeSql freeSql)
 
     public IReadOnlyList<Account> GetAccounts() => freeSql.Select<Account>().ToList();
 
-    public Account? GetDefaultAccount() => freeSql.Select<Account>().Where(x => x.IsDefault).First();
+    public Account? GetDefaultAccount() =>
+        freeSql.Select<Account>().Where(x => x.IsDefault).First();
 
-    public Account? GetAccount(string uuid) => freeSql.Select<Account>().Where(x => x.Uuid == uuid).First();
+    public Account? GetAccount(string uuid) =>
+        freeSql.Select<Account>().Where(x => x.Uuid == uuid).First();
 
-    public bool HasMicrosoftAccount() => freeSql.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
+    public bool HasMicrosoftAccount() =>
+        freeSql.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
 
     public void MarkDefaultAccount(string uuid) =>
         freeSql.Transaction(() =>
         {
             freeSql.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
-            freeSql.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.IsDefault, true).ExecuteAffrows();
+            freeSql
+                .Update<Account>()
+                .Where(x => x.Uuid == uuid)
+                .Set(x => x.IsDefault, true)
+                .ExecuteAffrows();
         });
 
-    public void RemoveAccount(string uuid) => freeSql.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
+    public void RemoveAccount(string uuid) =>
+        freeSql.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
 
     public void UseAccount(string uuid) =>
-        freeSql.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.LastUsedAt, DateTime.Now).ExecuteAffrows();
+        freeSql
+            .Update<Account>()
+            .Where(x => x.Uuid == uuid)
+            .Set(x => x.LastUsedAt, DateTime.Now)
+            .ExecuteAffrows();
 
     public void UpdateAccount(string uuid, string data) =>
-        freeSql.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.Data, data).ExecuteAffrows();
+        freeSql
+            .Update<Account>()
+            .Where(x => x.Uuid == uuid)
+            .Set(x => x.Data, data)
+            .ExecuteAffrows();
 
     #endregion
 
@@ -273,7 +311,11 @@ public class PersistenceService(IFreeSql freeSql)
             {
                 if (found.Uuid != uuid)
                 {
-                    freeSql.Update<AccountSelector>().Where(x => x.Key == key).Set(x => x.Uuid, uuid).ExecuteAffrows();
+                    freeSql
+                        .Update<AccountSelector>()
+                        .Where(x => x.Key == key)
+                        .Set(x => x.Uuid, uuid)
+                        .ExecuteAffrows();
                 }
             }
             else
@@ -289,9 +331,9 @@ public class PersistenceService(IFreeSql freeSql)
     public T? GetWidgetLocalData<T>(string key, string widgetId, string indicator)
     {
         var data = freeSql
-                  .Select<WidgetLocalSection>()
-                  .Where(x => x.Key == key && x.WidgetId == widgetId && x.Indicator == indicator)
-                  .First();
+            .Select<WidgetLocalSection>()
+            .Where(x => x.Key == key && x.WidgetId == widgetId && x.Indicator == indicator)
+            .First();
         return data == null ? default : JsonSerializer.Deserialize<T>(data.Data);
     }
 

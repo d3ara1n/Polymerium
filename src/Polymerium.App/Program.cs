@@ -21,9 +21,10 @@ internal static class Program
 
     public static readonly string Version =
         typeof(Program)
-           .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-          ?.InformationalVersion.Split('+')[0]
-     ?? typeof(Program).Assembly.GetName().Version?.ToString() ?? "Eternal";
+            .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion.Split('+')[0]
+        ?? typeof(Program).Assembly.GetName().Version?.ToString()
+        ?? "Eternal";
 
     public static readonly string MagicWords = "say u say me";
 
@@ -38,8 +39,9 @@ internal static class Program
 #if DEBUG
     public static bool IsDebug => true;
 #else
-    public static bool IsDebug {get;} =
- Debugger.IsAttached || Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") != "Production";
+    public static bool IsDebug { get; } =
+        Debugger.IsAttached
+        || Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") != "Production";
 #endif
 
     [STAThread]
@@ -49,12 +51,18 @@ internal static class Program
 
         #region Before lifetime configuration
 
-        var overrideFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                                        ".trident.home");
+        var overrideFile = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            ".trident.home"
+        );
         if (File.Exists(overrideFile))
         {
             var firstLine = File.ReadLines(overrideFile).FirstOrDefault();
-            if (!string.IsNullOrWhiteSpace(firstLine) && Path.IsPathRooted(firstLine) && !File.Exists(firstLine))
+            if (
+                !string.IsNullOrWhiteSpace(firstLine)
+                && Path.IsPathRooted(firstLine)
+                && !File.Exists(firstLine)
+            )
             {
                 PathDef.Default = new(firstLine);
             }
@@ -83,7 +91,9 @@ internal static class Program
         Startup.InitializeUnhostedServices();
 
         var configurationService = Services.GetRequiredService<ConfigurationService>();
-        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configurationService.Value.ApplicationLanguage);
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(
+            configurationService.Value.ApplicationLanguage
+        );
         Resources.Culture = CultureInfo.CurrentUICulture;
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
@@ -95,7 +105,10 @@ internal static class Program
     public static void Terminate(Action? beforeDie)
     {
         exitAction = beforeDie;
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (
+            Application.Current?.ApplicationLifetime
+            is IClassicDesktopStyleApplicationLifetime desktop
+        )
         {
             desktop.Shutdown();
         }

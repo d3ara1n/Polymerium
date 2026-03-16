@@ -11,9 +11,11 @@ namespace Polymerium.App.Dialogs;
 public partial class PackageListExporterDialog : Dialog
 {
     public static readonly DirectProperty<PackageListExporterDialog, int> PackageCountProperty =
-        AvaloniaProperty.RegisterDirect<PackageListExporterDialog, int>(nameof(PackageCount),
-                                                                        o => o.PackageCount,
-                                                                        (o, v) => o.PackageCount = v);
+        AvaloniaProperty.RegisterDirect<PackageListExporterDialog, int>(
+            nameof(PackageCount),
+            o => o.PackageCount,
+            (o, v) => o.PackageCount = v
+        );
 
     public PackageListExporterDialog() => InitializeComponent();
 
@@ -24,7 +26,6 @@ public partial class PackageListExporterDialog : Dialog
     }
 
     public required string Key { get; init; }
-
 
     protected override bool ValidateResult(object? result)
     {
@@ -51,15 +52,16 @@ public partial class PackageListExporterDialog : Dialog
             var storage = top.StorageProvider;
             if (storage.CanOpen)
             {
-                var file = await storage.SaveFilePickerAsync(new()
-                {
-                    SuggestedStartLocation =
-                        await storage
-                           .TryGetWellKnownFolderAsync(WellKnownFolder
-                                                          .Downloads),
-                    SuggestedFileName = $"{Key}.csv",
-                    DefaultExtension = "csv"
-                });
+                var file = await storage.SaveFilePickerAsync(
+                    new()
+                    {
+                        SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(
+                            WellKnownFolder.Downloads
+                        ),
+                        SuggestedFileName = $"{Key}.csv",
+                        DefaultExtension = "csv",
+                    }
+                );
                 if (file != null)
                 {
                     Result = file.TryGetLocalPath();

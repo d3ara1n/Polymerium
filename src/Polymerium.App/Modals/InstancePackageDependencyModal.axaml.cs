@@ -19,27 +19,38 @@ namespace Polymerium.App.Modals;
 
 public partial class InstancePackageDependencyModal : Modal
 {
-    public static readonly DirectProperty<InstancePackageDependencyModal, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, LazyObject?>(nameof(LazyVersions),
-            o => o.LazyVersions,
-            (o, v) => o.LazyVersions = v);
+    public static readonly DirectProperty<
+        InstancePackageDependencyModal,
+        LazyObject?
+    > LazyVersionsProperty = AvaloniaProperty.RegisterDirect<
+        InstancePackageDependencyModal,
+        LazyObject?
+    >(nameof(LazyVersions), o => o.LazyVersions, (o, v) => o.LazyVersions = v);
 
-    public static readonly DirectProperty<InstancePackageDependencyModal, bool> IsFilterEnabledProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, bool>(nameof(IsFilterEnabled),
-                                                                              o => o.IsFilterEnabled,
-                                                                              (o, v) => o.IsFilterEnabled = v);
+    public static readonly DirectProperty<
+        InstancePackageDependencyModal,
+        bool
+    > IsFilterEnabledProperty = AvaloniaProperty.RegisterDirect<
+        InstancePackageDependencyModal,
+        bool
+    >(nameof(IsFilterEnabled), o => o.IsFilterEnabled, (o, v) => o.IsFilterEnabled = v);
 
-    public static readonly DirectProperty<InstancePackageDependencyModal, InstancePackageVersionModel?>
-        SelectedVersionProperty =
-            AvaloniaProperty
-               .RegisterDirect<InstancePackageDependencyModal, InstancePackageVersionModel?>(nameof(SelectedVersion),
-                    o => o.SelectedVersion,
-                    (o, v) => o.SelectedVersion = v);
+    public static readonly DirectProperty<
+        InstancePackageDependencyModal,
+        InstancePackageVersionModel?
+    > SelectedVersionProperty = AvaloniaProperty.RegisterDirect<
+        InstancePackageDependencyModal,
+        InstancePackageVersionModel?
+    >(nameof(SelectedVersion), o => o.SelectedVersion, (o, v) => o.SelectedVersion = v);
 
-    public static readonly DirectProperty<InstancePackageDependencyModal, bool> IsAutoVersionProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, bool>(nameof(IsAutoVersion),
-                                                                              o => o.IsAutoVersion,
-                                                                              (o, v) => o.IsAutoVersion = v);
+    public static readonly DirectProperty<
+        InstancePackageDependencyModal,
+        bool
+    > IsAutoVersionProperty = AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, bool>(
+        nameof(IsAutoVersion),
+        o => o.IsAutoVersion,
+        (o, v) => o.IsAutoVersion = v
+    );
 
     public InstancePackageDependencyModal() => InitializeComponent();
 
@@ -78,43 +89,49 @@ public partial class InstancePackageDependencyModal : Modal
 
     private LazyObject ConstructVersions()
     {
-        var lazy = new LazyObject(async t =>
-                                  {
-                                      if (t.IsCancellationRequested)
-                                      {
-                                          return null;
-                                      }
+        var lazy = new LazyObject(
+            async t =>
+            {
+                if (t.IsCancellationRequested)
+                {
+                    return null;
+                }
 
-                                      var versions = await DataService.InspectVersionsAsync(Model.Label,
-                                                         Model.Namespace,
-                                                         Model.ProjectId,
-                                                         IsFilterEnabled ? Filter : Filter.None);
-                                      return new InstancePackageVersionCollection([
-                                          .. versions.Select(x => new InstancePackageVersionModel(x.VersionId,
-                                                                 x.VersionName,
-                                                                 string.Join(",",
-                                                                             x.Requirements.AnyOfLoaders
-                                                                              .Select(LoaderHelper
-                                                                                  .ToDisplayName)),
-                                                                 string.Join(",", x.Requirements.AnyOfVersions),
-                                                                 x.PublishedAt,
-                                                                 x.ReleaseType,
-                                                                 x.Dependencies))
-                                      ]);
-                                  },
-                                  value =>
-                                  {
-                                      // Auto-select the first (best) version after loading
-                                      if (value is InstancePackageVersionCollection { Count: > 0 } versions)
-                                      {
-                                          Dispatcher.UIThread.Post(() =>
-                                          {
-                                              SelectedVersion =
-                                                  versions.FirstOrDefault(x => x is InstancePackageVersionModel) as
-                                                      InstancePackageVersionModel;
-                                          });
-                                      }
-                                  });
+                var versions = await DataService.InspectVersionsAsync(
+                    Model.Label,
+                    Model.Namespace,
+                    Model.ProjectId,
+                    IsFilterEnabled ? Filter : Filter.None
+                );
+                return new InstancePackageVersionCollection([
+                    .. versions.Select(x => new InstancePackageVersionModel(
+                        x.VersionId,
+                        x.VersionName,
+                        string.Join(
+                            ",",
+                            x.Requirements.AnyOfLoaders.Select(LoaderHelper.ToDisplayName)
+                        ),
+                        string.Join(",", x.Requirements.AnyOfVersions),
+                        x.PublishedAt,
+                        x.ReleaseType,
+                        x.Dependencies
+                    )),
+                ]);
+            },
+            value =>
+            {
+                // Auto-select the first (best) version after loading
+                if (value is InstancePackageVersionCollection { Count: > 0 } versions)
+                {
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        SelectedVersion =
+                            versions.FirstOrDefault(x => x is InstancePackageVersionModel)
+                            as InstancePackageVersionModel;
+                    });
+                }
+            }
+        );
         return lazy;
     }
 
@@ -147,9 +164,11 @@ public partial class InstancePackageDependencyModal : Modal
     private async Task Install()
     {
         // 检查是否已安装
-        var existing = Collection.Items.FirstOrDefault(x => x.Info?.Label == Model.Label
-                                                         && x.Info?.Namespace == Model.Namespace
-                                                         && x.Info?.ProjectId == Model.ProjectId);
+        var existing = Collection.Items.FirstOrDefault(x =>
+            x.Info?.Label == Model.Label
+            && x.Info?.Namespace == Model.Namespace
+            && x.Info?.ProjectId == Model.ProjectId
+        );
         if (existing is not null)
         {
             // 已安装，直接关闭
@@ -161,7 +180,12 @@ public partial class InstancePackageDependencyModal : Modal
         // 如果是自动版本，则不指定版本号（传 null）
         var versionId = IsAutoVersion ? null : SelectedVersion?.Id;
         var purl = PackageHelper.ToPurl(Model.Label, Model.Namespace, Model.ProjectId, versionId);
-        var entry = new Profile.Rice.Entry() { Purl = purl, Enabled = true, Source = null };
+        var entry = new Profile.Rice.Entry()
+        {
+            Purl = purl,
+            Enabled = true,
+            Source = null,
+        };
 
         // 创建新的 InstancePackageModel 并通知回调
         var newPackage = new InstancePackageModel(entry, false);
@@ -172,7 +196,9 @@ public partial class InstancePackageDependencyModal : Modal
         Guard.NotifyChanged();
 
         // 记录操作
-        PersistenceService.AppendAction(new(Guard.Key, PersistenceService.ActionKind.EditPackage, null, purl));
+        PersistenceService.AppendAction(
+            new(Guard.Key, PersistenceService.ActionKind.EditPackage, null, purl)
+        );
 
         // NOTE: 这里有个非常别扭的地方就是如果想要被视为本地包，那么这个 InstancePackageModel.Info 必须已被赋值
         //  而这个 Info 只能是在 InstanceSetupView 中对新增的包引用进行刷新获取信息之后才会赋值
@@ -191,7 +217,6 @@ public partial class InstancePackageDependencyModal : Modal
         // NOTE: "将这里创建的 InstancePackageModel 提前加入到 Collection 里" 打破了刷新机制中的 Collection 前后一致性
         //  即 Collection 再外部被修改会导致一致性校验失效，真烦啊
         //  解决方案是降低一致性校验的等级，只要保证 Collection.Count == profile.Setup.Packages.Count + toAdd - toRemove 即可
-
 
         Dismiss();
     }

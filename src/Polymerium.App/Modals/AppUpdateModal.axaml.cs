@@ -13,19 +13,25 @@ namespace Polymerium.App.Modals;
 public partial class AppUpdateModal : Modal
 {
     public static readonly DirectProperty<AppUpdateModal, AppUpdateModel?> ModelProperty =
-        AvaloniaProperty.RegisterDirect<AppUpdateModal, AppUpdateModel?>(nameof(Model),
-                                                                         o => o.Model,
-                                                                         (o, v) => o.Model = v);
+        AvaloniaProperty.RegisterDirect<AppUpdateModal, AppUpdateModel?>(
+            nameof(Model),
+            o => o.Model,
+            (o, v) => o.Model = v
+        );
 
     public static readonly DirectProperty<AppUpdateModal, bool> IsDownloadingProperty =
-        AvaloniaProperty.RegisterDirect<AppUpdateModal, bool>(nameof(IsDownloading),
-                                                              o => o.IsDownloading,
-                                                              (o, v) => o.IsDownloading = v);
+        AvaloniaProperty.RegisterDirect<AppUpdateModal, bool>(
+            nameof(IsDownloading),
+            o => o.IsDownloading,
+            (o, v) => o.IsDownloading = v
+        );
 
     public static readonly DirectProperty<AppUpdateModal, int> DownloadProgressProperty =
-        AvaloniaProperty.RegisterDirect<AppUpdateModal, int>(nameof(DownloadProgress),
-                                                             o => o.DownloadProgress,
-                                                             (o, v) => o.DownloadProgress = v);
+        AvaloniaProperty.RegisterDirect<AppUpdateModal, int>(
+            nameof(DownloadProgress),
+            o => o.DownloadProgress,
+            (o, v) => o.DownloadProgress = v
+        );
 
     public AppUpdateModal() => InitializeComponent();
 

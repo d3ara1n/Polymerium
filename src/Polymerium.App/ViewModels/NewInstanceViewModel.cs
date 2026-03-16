@@ -29,7 +29,8 @@ public partial class NewInstanceViewModel(
     NotificationService notificationService,
     ImporterAgent importerAgent,
     DataService dataService,
-    PersistenceService persistenceService) : ViewModelBase
+    PersistenceService persistenceService
+) : ViewModelBase
 {
     #region Overrides
 
@@ -46,7 +47,9 @@ public partial class NewInstanceViewModel(
         }
 
         var game = await dataService.GetMinecraftVersionsAsync();
-        var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
+        var versions = game
+            .Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime))
+            .ToList();
 
         Versions = versions;
         var first = game.Versions.FirstOrDefault(x => x.Recommended);
@@ -75,7 +78,10 @@ public partial class NewInstanceViewModel(
         }
         catch (Exception e)
         {
-            notificationService.PopMessage(e, Resources.NewInstanceView_ImportDangerNotificationTitle);
+            notificationService.PopMessage(
+                e,
+                Resources.NewInstanceView_ImportDangerNotificationTitle
+            );
         }
     }
 
@@ -90,7 +96,10 @@ public partial class NewInstanceViewModel(
         {
             var dialog = new GameVersionPickerDialog();
             dialog.SetItems(Versions);
-            if (await overlayService.PopDialogAsync(dialog) && dialog.Result is GameVersionModel version)
+            if (
+                await overlayService.PopDialogAsync(dialog)
+                && dialog.Result is GameVersionModel version
+            )
             {
                 Dispatcher.UIThread.Post(() => VersionName = version.Name);
             }
@@ -100,8 +109,10 @@ public partial class NewInstanceViewModel(
     [RelayCommand]
     private async Task OpenImportDialog()
     {
-        var path = await overlayService.RequestFileAsync(Resources.NewInstanceView_RequestFilePrompt,
-                                                         Resources.NewInstanceView_RequestFileTitle);
+        var path = await overlayService.RequestFileAsync(
+            Resources.NewInstanceView_RequestFilePrompt,
+            Resources.NewInstanceView_RequestFileTitle
+        );
         if (path != null)
         {
             await TryImportFromFileAsync(path);
@@ -125,13 +136,23 @@ public partial class NewInstanceViewModel(
         if (ImportedPack != null)
         {
             profile = ImportedPack.Container.Profile;
-            await importerAgent.ExtractFilesAsync(key.Key, ImportedPack.Container, ImportedPack.Pack);
+            await importerAgent.ExtractFilesAsync(
+                key.Key,
+                ImportedPack.Container,
+                ImportedPack.Pack
+            );
         }
         else
         {
             profile = new()
             {
-                Name = display, Setup = new() { Loader = null, Version = VersionName, Source = null }
+                Name = display,
+                Setup = new()
+                {
+                    Loader = null,
+                    Version = VersionName,
+                    Source = null,
+                },
             };
         }
 
@@ -157,15 +178,20 @@ public partial class NewInstanceViewModel(
             }
             catch (Exception ex)
             {
-                Dispatcher.UIThread.Post(() => notificationService.PopMessage(ex,
-                                                                              Resources
-                                                                                 .NewInstanceView_IconSavingDangerNotificationTitle));
+                Dispatcher.UIThread.Post(() =>
+                    notificationService.PopMessage(
+                        ex,
+                        Resources.NewInstanceView_IconSavingDangerNotificationTitle
+                    )
+                );
             }
         }
 
         profileManager.Add(key, profile);
 
-        persistenceService.AppendAction(new(key.Key, PersistenceService.ActionKind.Install, null, ImportedPack?.Path));
+        persistenceService.AppendAction(
+            new(key.Key, PersistenceService.ActionKind.Install, null, ImportedPack?.Path)
+        );
 
         navigationService.Navigate<InstanceView>(key.Key);
     }

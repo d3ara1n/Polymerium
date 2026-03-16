@@ -19,13 +19,20 @@ public class NotificationService
             new()
             {
                 Cue = new(0),
-                Setters = { new Setter { Property = GrowlItem.ProgressProperty, Value = 100d } }
+                Setters =
+                {
+                    new Setter { Property = GrowlItem.ProgressProperty, Value = 100d },
+                },
             },
             new()
             {
-                Cue = new(1), Setters = { new Setter { Property = GrowlItem.ProgressProperty, Value = 0d } }
-            }
-        }
+                Cue = new(1),
+                Setters =
+                {
+                    new Setter { Property = GrowlItem.ProgressProperty, Value = 0d },
+                },
+            },
+        },
     };
 
     private Action<GrowlItem>? _handler;
@@ -39,20 +46,32 @@ public class NotificationService
         string title = "Notification",
         GrowlLevel level = GrowlLevel.Information,
         bool forceExpire = false,
-        params GrowlAction[] actions) =>
+        params GrowlAction[] actions
+    ) =>
         Dispatcher.UIThread.Post(() =>
         {
-            var item = new GrowlItem { Content = message, Title = title, Level = level };
+            var item = new GrowlItem
+            {
+                Content = message,
+                Title = title,
+                Level = level,
+            };
             item.Actions.AddRange(actions);
             Pop(item);
-            if ((level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
-              && actions is { Length: 0 } or null)
-             || forceExpire)
+            if (
+                (
+                    level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
+                    && actions is { Length: 0 } or null
+                ) || forceExpire
+            )
             {
                 item.IsProgressBarVisible = true;
                 COUNTDOWN
-                   .RunAsync(item, item.Token)
-                   .ContinueWith(_ => item.Dismiss(), TaskScheduler.FromCurrentSynchronizationContext());
+                    .RunAsync(item, item.Token)
+                    .ContinueWith(
+                        _ => item.Dismiss(),
+                        TaskScheduler.FromCurrentSynchronizationContext()
+                    );
             }
         });
 
@@ -60,20 +79,34 @@ public class NotificationService
         Exception? ex,
         string title = "Operation failed",
         GrowlLevel level = GrowlLevel.Danger,
-        params GrowlAction[] actions) =>
-        PopMessage(ex is not null ? Program.IsDebug ? ex.ToString() : ex.Message : "Unknown error",
-                   title,
-                   level,
-                   false,
-                   actions);
+        params GrowlAction[] actions
+    ) =>
+        PopMessage(
+            ex is not null
+                ? Program.IsDebug
+                    ? ex.ToString()
+                    : ex.Message
+                : "Unknown error",
+            title,
+            level,
+            false,
+            actions
+        );
 
     public ProgressHandle PopProgress(
         string message,
         string title = "Progress",
-        GrowlLevel level = GrowlLevel.Information) =>
+        GrowlLevel level = GrowlLevel.Information
+    ) =>
         Dispatcher.UIThread.Invoke(() =>
         {
-            var item = new GrowlItem { Content = message, Title = title, Level = level, IsProgressBarVisible = true };
+            var item = new GrowlItem
+            {
+                Content = message,
+                Title = title,
+                Level = level,
+                IsProgressBarVisible = true,
+            };
             Pop(item);
 
             return new ProgressHandle(item);

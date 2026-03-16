@@ -24,7 +24,8 @@ public static class NetworkCheckHelper
     public static async Task<bool> TestConnectionAsync(
         ConnectionTestSiteModel model,
         HttpClient httpClient,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default
+    )
     {
         model.Status = ConnectionTestStatus.Testing;
         model.IsTesting = true;
@@ -40,15 +41,20 @@ public static class NetworkCheckHelper
 
             // 使用 HEAD 请求来减少数据传输
             using var request = new HttpRequestMessage(HttpMethod.Head, model.Endpoint);
-            using var response =
-                await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+            using var response = await httpClient.SendAsync(
+                request,
+                HttpCompletionOption.ResponseHeadersRead,
+                cts.Token
+            );
 
             stopwatch.Stop();
 
             // 检查响应状态
-            if (response.IsSuccessStatusCode
-             || response.StatusCode == HttpStatusCode.MethodNotAllowed
-             || response.StatusCode == HttpStatusCode.NotFound)
+            if (
+                response.IsSuccessStatusCode
+                || response.StatusCode == HttpStatusCode.MethodNotAllowed
+                || response.StatusCode == HttpStatusCode.NotFound
+            )
             {
                 // 某些服务器可能不支持 HEAD 请求，返回 405，但这仍然表示服务器可达
                 // 如果返回 404，对于 API 测试来说也行得通
@@ -99,7 +105,8 @@ public static class NetworkCheckHelper
     public static async Task<int> TestConnectionsAsync(
         IEnumerable<ConnectionTestSiteModel> models,
         HttpClient httpClient,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default
+    )
     {
         var successCount = 0;
 

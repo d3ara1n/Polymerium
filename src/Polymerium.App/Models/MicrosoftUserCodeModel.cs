@@ -3,7 +3,8 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class MicrosoftUserCodeModel(string deviceCode, string userCode, Uri verificationUri) : ModelBase
+public class MicrosoftUserCodeModel(string deviceCode, string userCode, Uri verificationUri)
+    : ModelBase
 {
     #region Direct
 

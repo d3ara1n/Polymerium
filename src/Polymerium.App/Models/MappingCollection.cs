@@ -8,7 +8,8 @@ namespace Polymerium.App.Models;
 public class MappingCollection<TSource, TValue>(
     IList<TSource> from,
     Func<TSource, TValue> mapper,
-    Func<TValue, TSource> selector) : ObservableCollection<TValue>([.. from.Select(mapper)])
+    Func<TValue, TSource> selector
+) : ObservableCollection<TValue>([.. from.Select(mapper)])
 {
     protected override void ClearItems()
     {
@@ -19,7 +20,6 @@ public class MappingCollection<TSource, TValue>(
     protected override void RemoveItem(int index)
     {
         var removedItem = this[index];
-
 
         from.Remove(selector(removedItem));
         base.RemoveItem(index);

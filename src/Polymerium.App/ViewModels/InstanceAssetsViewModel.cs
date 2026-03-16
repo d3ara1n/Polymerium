@@ -30,7 +30,8 @@ public partial class InstanceAssetsViewModel(
     ProfileManager profileManager,
     OverlayService overlayService,
     NotificationService notificationService,
-    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService
+) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Overrides
 
@@ -50,7 +51,9 @@ public partial class InstanceAssetsViewModel(
     private readonly SourceCache<AssetModModel, string> _modCache = new(x => x.FilePath);
     private IDisposable? _modFilterSubscription;
 
-    private readonly SourceCache<AssetResourcePackModel, string> _resourcePackCache = new(x => x.FilePath);
+    private readonly SourceCache<AssetResourcePackModel, string> _resourcePackCache = new(x =>
+        x.FilePath
+    );
     private IDisposable? _resourcePackFilterSubscription;
 
     private readonly SourceCache<AssetDataPackModel, string> _dataPackCache = new(x => x.FilePath);
@@ -124,7 +127,9 @@ public partial class InstanceAssetsViewModel(
     public partial FilterModel? ModFilterLoader { get; set; }
 
     public bool IsModFilterActive =>
-        ModFilterEnability?.Value != null || ModFilterLockility?.Value != null || ModFilterLoader?.Value != null;
+        ModFilterEnability?.Value != null
+        || ModFilterLockility?.Value != null
+        || ModFilterLoader?.Value != null;
 
     #endregion
 
@@ -135,16 +140,20 @@ public partial class InstanceAssetsViewModel(
         var sourced = Basic.Source != null;
         var import = PathDef.Default.DirectoryOfImport(Basic.Key);
         var groups = new AssetScreenshotCollection();
-        foreach (var files in AssetHelper
-                             .ScanNonSymlinkFiles(Basic.Key, "*.png", ["screenshots"])
-                             .GroupBy(x => x.CreationTimeUtc.Date)
-                             .OrderByDescending(x => x.Key))
+        foreach (
+            var files in AssetHelper
+                .ScanNonSymlinkFiles(Basic.Key, "*.png", ["screenshots"])
+                .GroupBy(x => x.CreationTimeUtc.Date)
+                .OrderByDescending(x => x.Key)
+        )
         {
             var group = new AssetScreenshotGroupModel(files.Key);
             foreach (var file in files)
             {
                 var imported = sourced && FileHelper.IsInDirectory(file.FullName, import);
-                group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc, imported));
+                group.Screenshots.Add(
+                    new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc, imported)
+                );
             }
 
             groups.Add(group);
@@ -152,7 +161,6 @@ public partial class InstanceAssetsViewModel(
 
         ScreenshotGroups = groups;
         ScreenshotGroups.ScreenshotCount = groups.Sum(x => x.Screenshots.Count);
-
 
         return Task.CompletedTask;
     }
@@ -166,9 +174,11 @@ public partial class InstanceAssetsViewModel(
 
         var sourced = Basic.Source != null;
         var mods = new List<AssetModModel>();
-        foreach (var file in AssetHelper
-                            .ScanNonSymlinkFiles(Basic.Key, "*.jar", ["mods"])
-                            .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.jar.disabled", ["mods"])))
+        foreach (
+            var file in AssetHelper
+                .ScanNonSymlinkFiles(Basic.Key, "*.jar", ["mods"])
+                .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.jar.disabled", ["mods"]))
+        )
         {
             // 解析 jar 文件中的 mod 元数据
             var metadata = AssetModHelper.ParseMetadata(file.FullName);
@@ -180,11 +190,20 @@ public partial class InstanceAssetsViewModel(
                 icon = AssetModHelper.ExtractIcon(file.FullName, metadata.LogoFile);
             }
 
-            var imported = sourced
-                        && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
-            var model = new AssetModModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            var imported =
+                sourced
+                && FileHelper.IsInDirectory(
+                    file.FullName,
+                    PathDef.Default.DirectoryOfImport(Basic.Key)
+                );
+            var model = new AssetModModel(
+                file,
+                icon ?? AssetUriIndex.DirtImageBitmap,
+                metadata,
+                imported
+            )
             {
-                IsEnabled = file.Name.EndsWith(".jar")
+                IsEnabled = file.Name.EndsWith(".jar"),
             };
 
             mods.Add(model);
@@ -195,20 +214,27 @@ public partial class InstanceAssetsViewModel(
         // 设置过滤器
         _modFilterSubscription?.Dispose();
         var searchFilter = this.WhenValueChanged(x => x.ModSearchText).Select(BuildSearchFilter);
-        var enabilityFilter = this.WhenValueChanged(x => x.ModFilterEnability).Select(BuildEnabilityFilter);
-        var lockilityFilter = this.WhenValueChanged(x => x.ModFilterLockility).Select(BuildLockilityFilter);
+        var enabilityFilter = this.WhenValueChanged(x => x.ModFilterEnability)
+            .Select(BuildEnabilityFilter);
+        var lockilityFilter = this.WhenValueChanged(x => x.ModFilterLockility)
+            .Select(BuildLockilityFilter);
         var loaderFilter = this.WhenValueChanged(x => x.ModFilterLoader).Select(BuildLoaderFilter);
 
-        var combinedFilter = searchFilter.CombineLatest(enabilityFilter,
-                                                        lockilityFilter,
-                                                        loaderFilter,
-                                                        (search, enability, lockility, loader) =>
-                                                            new Func<AssetModModel, bool>(x => search(x)
-                                                             && enability(x)
-                                                             && lockility(x)
-                                                             && loader(x)));
+        var combinedFilter = searchFilter.CombineLatest(
+            enabilityFilter,
+            lockilityFilter,
+            loaderFilter,
+            (search, enability, lockility, loader) =>
+                new Func<AssetModModel, bool>(x =>
+                    search(x) && enability(x) && lockility(x) && loader(x)
+                )
+        );
 
-        _modFilterSubscription = _modCache.Connect().Filter(combinedFilter).Bind(out var view).Subscribe();
+        _modFilterSubscription = _modCache
+            .Connect()
+            .Filter(combinedFilter)
+            .Bind(out var view)
+            .Subscribe();
 
         Mods = view;
 
@@ -219,9 +245,13 @@ public partial class InstanceAssetsViewModel(
     {
         var sourced = Basic.Source != null;
         var resourcePacks = new List<AssetResourcePackModel>();
-        foreach (var file in AssetHelper
-                            .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["resourcepacks"])
-                            .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["resourcepacks"])))
+        foreach (
+            var file in AssetHelper
+                .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["resourcepacks"])
+                .Concat(
+                    AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["resourcepacks"])
+                )
+        )
         {
             // 解析 zip 文件中的资源包元数据
             var metadata = AssetResourcePackHelper.ParseMetadata(file.FullName);
@@ -229,11 +259,20 @@ public partial class InstanceAssetsViewModel(
             // 尝试提取资源包图标
             var icon = AssetResourcePackHelper.ExtractIcon(file.FullName);
 
-            var imported = sourced
-                        && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
-            var model = new AssetResourcePackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            var imported =
+                sourced
+                && FileHelper.IsInDirectory(
+                    file.FullName,
+                    PathDef.Default.DirectoryOfImport(Basic.Key)
+                );
+            var model = new AssetResourcePackModel(
+                file,
+                icon ?? AssetUriIndex.DirtImageBitmap,
+                metadata,
+                imported
+            )
             {
-                IsEnabled = file.Name.EndsWith(".zip")
+                IsEnabled = file.Name.EndsWith(".zip"),
             };
 
             resourcePacks.Add(model);
@@ -243,13 +282,14 @@ public partial class InstanceAssetsViewModel(
 
         // 设置过滤器
         _resourcePackFilterSubscription?.Dispose();
-        var searchFilter = this.WhenValueChanged(x => x.ResourcePackSearchText).Select(BuildResourcePackSearchFilter);
+        var searchFilter = this.WhenValueChanged(x => x.ResourcePackSearchText)
+            .Select(BuildResourcePackSearchFilter);
 
         _resourcePackFilterSubscription = _resourcePackCache
-                                         .Connect()
-                                         .Filter(searchFilter)
-                                         .Bind(out var view)
-                                         .Subscribe();
+            .Connect()
+            .Filter(searchFilter)
+            .Bind(out var view)
+            .Subscribe();
 
         ResourcePacks = view;
 
@@ -262,9 +302,11 @@ public partial class InstanceAssetsViewModel(
         var dataPacks = new List<AssetDataPackModel>();
 
         // 扫描 datapacks 目录下的 zip 文件
-        foreach (var file in AssetHelper
-                            .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["datapacks"])
-                            .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["datapacks"])))
+        foreach (
+            var file in AssetHelper
+                .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["datapacks"])
+                .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["datapacks"]))
+        )
         {
             // 解析 zip 文件中的数据包元数据
             var metadata = AssetDataPackHelper.ParseMetadata(file.FullName);
@@ -272,11 +314,20 @@ public partial class InstanceAssetsViewModel(
             // 尝试提取数据包图标
             var icon = AssetDataPackHelper.ExtractIcon(file.FullName);
 
-            var imported = sourced
-                        && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
-            var model = new AssetDataPackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            var imported =
+                sourced
+                && FileHelper.IsInDirectory(
+                    file.FullName,
+                    PathDef.Default.DirectoryOfImport(Basic.Key)
+                );
+            var model = new AssetDataPackModel(
+                file,
+                icon ?? AssetUriIndex.DirtImageBitmap,
+                metadata,
+                imported
+            )
             {
-                IsEnabled = file.Name.EndsWith(".zip")
+                IsEnabled = file.Name.EndsWith(".zip"),
             };
 
             dataPacks.Add(model);
@@ -286,9 +337,14 @@ public partial class InstanceAssetsViewModel(
 
         // 设置过滤器
         _dataPackFilterSubscription?.Dispose();
-        var searchFilter = this.WhenValueChanged(x => x.DataPackSearchText).Select(BuildDataPackSearchFilter);
+        var searchFilter = this.WhenValueChanged(x => x.DataPackSearchText)
+            .Select(BuildDataPackSearchFilter);
 
-        _dataPackFilterSubscription = _dataPackCache.Connect().Filter(searchFilter).Bind(out var view).Subscribe();
+        _dataPackFilterSubscription = _dataPackCache
+            .Connect()
+            .Filter(searchFilter)
+            .Bind(out var view)
+            .Subscribe();
 
         DataPacks = view;
 
@@ -305,7 +361,9 @@ public partial class InstanceAssetsViewModel(
             if (File.Exists(levelDatPath))
             {
                 var metadata = AssetWorldHelper.ParseMetadata(worldDir.FullName);
-                var icon = AssetWorldHelper.ExtractIcon(worldDir.FullName) ?? AssetUriIndex.DirtImageBitmap;
+                var icon =
+                    AssetWorldHelper.ExtractIcon(worldDir.FullName)
+                    ?? AssetUriIndex.DirtImageBitmap;
                 var lastPlayed = AssetWorldHelper.GetLastPlayed(worldDir.FullName);
 
                 var world = new AssetWorldModel(worldDir, icon, metadata, lastPlayed);
@@ -349,17 +407,19 @@ public partial class InstanceAssetsViewModel(
 
         // 加载玩家列表（只包含在账号管理中的玩家）
         var accounts = persistenceService
-                      .GetAccounts()
-                      .Select(x =>
-                       {
-                           var cooked = AccountHelper.ToCooked(x);
-                           return new AccountModel(cooked.GetType(),
-                                                   cooked.Uuid,
-                                                   cooked.Username,
-                                                   x.EnrolledAt,
-                                                   x.LastUsedAt);
-                       })
-                      .ToList();
+            .GetAccounts()
+            .Select(x =>
+            {
+                var cooked = AccountHelper.ToCooked(x);
+                return new AccountModel(
+                    cooked.GetType(),
+                    cooked.Uuid,
+                    cooked.Username,
+                    x.EnrolledAt,
+                    x.LastUsedAt
+                );
+            })
+            .ToList();
 
         var players = AssetWorldHelper.ParsePlayers(world.WorldPath, accounts);
         SelectedWorldPlayers = new(players);
@@ -389,17 +449,21 @@ public partial class InstanceAssetsViewModel(
     #region Filters
 
     private static Func<AssetModModel, bool> BuildSearchFilter(string? searchText) =>
-        x => string.IsNullOrEmpty(searchText)
-          || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-          || (x.Metadata.ModId?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false)
-          || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
+        x =>
+            string.IsNullOrEmpty(searchText)
+            || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || (x.Metadata.ModId?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false)
+            || (
+                x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                ?? false
+            );
 
     private static Func<AssetModModel, bool> BuildEnabilityFilter(FilterModel? filter) =>
         filter?.Value switch
         {
             true => x => x.IsEnabled,
             false => x => !x.IsEnabled,
-            _ => _ => true
+            _ => _ => true,
         };
 
     private static Func<AssetModModel, bool> BuildLockilityFilter(FilterModel? filter) =>
@@ -407,25 +471,35 @@ public partial class InstanceAssetsViewModel(
         {
             true => x => x.IsLocked,
             false => x => !x.IsLocked,
-            _ => _ => true
+            _ => _ => true,
         };
 
     private static Func<AssetModModel, bool> BuildLoaderFilter(FilterModel? filter) =>
         filter?.Value switch
         {
             ModLoaderKind loader => x => x.Metadata.LoaderType == loader,
-            _ => _ => true
+            _ => _ => true,
         };
 
-    private static Func<AssetResourcePackModel, bool> BuildResourcePackSearchFilter(string? searchText) =>
-        x => string.IsNullOrEmpty(searchText)
-          || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-          || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
+    private static Func<AssetResourcePackModel, bool> BuildResourcePackSearchFilter(
+        string? searchText
+    ) =>
+        x =>
+            string.IsNullOrEmpty(searchText)
+            || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || (
+                x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                ?? false
+            );
 
     private static Func<AssetDataPackModel, bool> BuildDataPackSearchFilter(string? searchText) =>
-        x => string.IsNullOrEmpty(searchText)
-          || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-          || (x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false);
+        x =>
+            string.IsNullOrEmpty(searchText)
+            || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || (
+                x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                ?? false
+            );
 
     #endregion
 
@@ -445,7 +519,9 @@ public partial class InstanceAssetsViewModel(
     {
         if (model != null)
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new(model.Image.LocalPath));
+            TopLevel
+                .GetTopLevel(MainWindow.Instance)
+                ?.Launcher.LaunchFileInfoAsync(new(model.Image.LocalPath));
         }
     }
 
@@ -457,7 +533,9 @@ public partial class InstanceAssetsViewModel(
             var dir = Path.GetDirectoryName(filePath);
             if (dir != null && Directory.Exists(dir))
             {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+                TopLevel
+                    .GetTopLevel(MainWindow.Instance)
+                    ?.Launcher.LaunchDirectoryInfoAsync(new(dir));
             }
         }
     }
@@ -467,10 +545,14 @@ public partial class InstanceAssetsViewModel(
     [RelayCommand(CanExecute = nameof(CanDeleteScreenshot))]
     private async Task DeleteScreenshotAsync(AssetScreenshotModel? model)
     {
-        if (model != null
-         && ScreenshotGroups is not null
-         && File.Exists(model.Image.LocalPath)
-         && await overlayService.RequestConfirmationAsync("Are you sure you want to delete this screenshot?"))
+        if (
+            model != null
+            && ScreenshotGroups is not null
+            && File.Exists(model.Image.LocalPath)
+            && await overlayService.RequestConfirmationAsync(
+                "Are you sure you want to delete this screenshot?"
+            )
+        )
         {
             try
             {
@@ -522,10 +604,14 @@ public partial class InstanceAssetsViewModel(
     [RelayCommand(CanExecute = nameof(CanDeleteMod))]
     private async Task DeleteModAsync(AssetModModel? model)
     {
-        if (model != null
-         && Mods is not null
-         && File.Exists(model.FilePath)
-         && await overlayService.RequestConfirmationAsync($"Are you sure you want to delete '{model.DisplayName}'?"))
+        if (
+            model != null
+            && Mods is not null
+            && File.Exists(model.FilePath)
+            && await overlayService.RequestConfirmationAsync(
+                $"Are you sure you want to delete '{model.DisplayName}'?"
+            )
+        )
         {
             try
             {
@@ -536,7 +622,10 @@ public partial class InstanceAssetsViewModel(
                     SelectedMod = null;
                 }
 
-                notificationService.PopMessage($"Mod '{model.DisplayName}' deleted successfully", "Mod Deleted");
+                notificationService.PopMessage(
+                    $"Mod '{model.DisplayName}' deleted successfully",
+                    "Mod Deleted"
+                );
             }
             catch (Exception ex)
             {
@@ -545,7 +634,8 @@ public partial class InstanceAssetsViewModel(
         }
     }
 
-    private bool CanToggleResourcePack(AssetResourcePackModel? model) => model is { IsLocked: false };
+    private bool CanToggleResourcePack(AssetResourcePackModel? model) =>
+        model is { IsLocked: false };
 
     [RelayCommand(CanExecute = nameof(CanToggleResourcePack))]
     private void ToggleResourcePack(AssetResourcePackModel? model)
@@ -570,15 +660,20 @@ public partial class InstanceAssetsViewModel(
         }
     }
 
-    private bool CanDeleteResourcePack(AssetResourcePackModel? model) => model is { IsLocked: false };
+    private bool CanDeleteResourcePack(AssetResourcePackModel? model) =>
+        model is { IsLocked: false };
 
     [RelayCommand(CanExecute = nameof(CanDeleteResourcePack))]
     private async Task DeleteResourcePackAsync(AssetResourcePackModel? model)
     {
-        if (model != null
-         && ResourcePacks is not null
-         && File.Exists(model.FilePath)
-         && await overlayService.RequestConfirmationAsync($"Are you sure you want to delete '{model.DisplayName}'?"))
+        if (
+            model != null
+            && ResourcePacks is not null
+            && File.Exists(model.FilePath)
+            && await overlayService.RequestConfirmationAsync(
+                $"Are you sure you want to delete '{model.DisplayName}'?"
+            )
+        )
         {
             try
             {
@@ -589,8 +684,10 @@ public partial class InstanceAssetsViewModel(
                     SelectedResourcePack = null;
                 }
 
-                notificationService.PopMessage($"Resource pack '{model.DisplayName}' deleted successfully",
-                                               "Resource Pack Deleted");
+                notificationService.PopMessage(
+                    $"Resource pack '{model.DisplayName}' deleted successfully",
+                    "Resource Pack Deleted"
+                );
             }
             catch (Exception ex)
             {
@@ -629,10 +726,14 @@ public partial class InstanceAssetsViewModel(
     [RelayCommand(CanExecute = nameof(CanDeleteDataPack))]
     private async Task DeleteDataPackAsync(AssetDataPackModel? model)
     {
-        if (model != null
-         && DataPacks is not null
-         && File.Exists(model.FilePath)
-         && await overlayService.RequestConfirmationAsync($"Are you sure you want to delete '{model.DisplayName}'?"))
+        if (
+            model != null
+            && DataPacks is not null
+            && File.Exists(model.FilePath)
+            && await overlayService.RequestConfirmationAsync(
+                $"Are you sure you want to delete '{model.DisplayName}'?"
+            )
+        )
         {
             try
             {
@@ -643,8 +744,10 @@ public partial class InstanceAssetsViewModel(
                     SelectedDataPack = null;
                 }
 
-                notificationService.PopMessage($"Data pack '{model.DisplayName}' deleted successfully",
-                                               "Data Pack Deleted");
+                notificationService.PopMessage(
+                    $"Data pack '{model.DisplayName}' deleted successfully",
+                    "Data Pack Deleted"
+                );
             }
             catch (Exception ex)
             {

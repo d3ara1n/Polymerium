@@ -12,7 +12,8 @@ namespace Polymerium.App.Services;
 
 public class UpdateSourceSelector(
     IEnumerable<IUpdateSource> sources,
-    ConfigurationService configurationService) : IUpdateSource
+    ConfigurationService configurationService
+) : IUpdateSource
 {
     #region IUpdateSource Members
 
@@ -21,16 +22,16 @@ public class UpdateSourceSelector(
         string? appId,
         string channel,
         Guid? stagingId = null,
-        VelopackAsset? latestLocalRelease = null) =>
-        Select().GetReleaseFeed(logger, appId, channel, stagingId, latestLocalRelease);
+        VelopackAsset? latestLocalRelease = null
+    ) => Select().GetReleaseFeed(logger, appId, channel, stagingId, latestLocalRelease);
 
     public Task DownloadReleaseEntry(
         IVelopackLogger logger,
         VelopackAsset releaseEntry,
         string localFile,
         Action<int> progress,
-        CancellationToken cancelToken = new()) =>
-        Select().DownloadReleaseEntry(logger, releaseEntry, localFile, progress, cancelToken);
+        CancellationToken cancelToken = new()
+    ) => Select().DownloadReleaseEntry(logger, releaseEntry, localFile, progress, cancelToken);
 
     #endregion
 

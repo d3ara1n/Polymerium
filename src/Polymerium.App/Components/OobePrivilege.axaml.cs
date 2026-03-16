@@ -11,9 +11,11 @@ namespace Polymerium.App.Components;
 public partial class OobePrivilege : OobeStep
 {
     public static readonly DirectProperty<OobePrivilege, bool> IsPrivilegeGrantedProperty =
-        AvaloniaProperty.RegisterDirect<OobePrivilege, bool>(nameof(IsPrivilegeGranted),
-                                                             o => o.IsPrivilegeGranted,
-                                                             (o, v) => o.IsPrivilegeGranted = v);
+        AvaloniaProperty.RegisterDirect<OobePrivilege, bool>(
+            nameof(IsPrivilegeGranted),
+            o => o.IsPrivilegeGranted,
+            (o, v) => o.IsPrivilegeGranted = v
+        );
 
     public OobePrivilege()
     {
@@ -41,10 +43,12 @@ public partial class OobePrivilege : OobeStep
         var symlink = Path.Combine(PathDef.Default.PrivateDirectory(Program.Brand), "symlink");
 
         // If symlink already exists and points to first_run, we're good
-        if (File.Exists(first)
-         && File.Exists(symlink)
-         && File.ResolveLinkTarget(symlink, false) is { FullName: { } file }
-         && first.Equals(file, StringComparison.InvariantCultureIgnoreCase))
+        if (
+            File.Exists(first)
+            && File.Exists(symlink)
+            && File.ResolveLinkTarget(symlink, false) is { FullName: { } file }
+            && first.Equals(file, StringComparison.InvariantCultureIgnoreCase)
+        )
         {
             return true;
         }

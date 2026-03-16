@@ -15,7 +15,8 @@ namespace Polymerium.App.ViewModels;
 public partial class InstanceStorageViewModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    ProfileManager profileManager
+) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Overrides
 
@@ -103,29 +104,32 @@ public partial class InstanceStorageViewModel(
         (ConfigSize, ConfigCount) = CalculateDirectorySize("config");
 
         // Calculate total
-        var calculatedTotalSize = ModsSize
-                                + ResourcePacksSize
-                                + ShaderPacksSize
-                                + WorldsSize
-                                + ScreenshotsSize
-                                + LogsSize
-                                + CrashReportsSize
-                                + ConfigSize;
+        var calculatedTotalSize =
+            ModsSize
+            + ResourcePacksSize
+            + ShaderPacksSize
+            + WorldsSize
+            + ScreenshotsSize
+            + LogsSize
+            + CrashReportsSize
+            + ConfigSize;
 
-        var calculatedTotalCount = ModsCount
-                                 + ResourcePacksCount
-                                 + ShaderPacksCount
-                                 + WorldsCount
-                                 + ScreenshotsCount
-                                 + LogsCount
-                                 + CrashReportsCount
-                                 + ConfigCount;
+        var calculatedTotalCount =
+            ModsCount
+            + ResourcePacksCount
+            + ShaderPacksCount
+            + WorldsCount
+            + ScreenshotsCount
+            + LogsCount
+            + CrashReportsCount
+            + ConfigCount;
 
         // Calculate other files (total directory size minus calculated categories)
         var (totalDirSize, totalDirCount) = CalculateDirectorySize(homeDir);
         TotalSize = totalDirSize;
         OtherSize = totalDirSize > calculatedTotalSize ? totalDirSize - calculatedTotalSize : 0;
-        OtherCount = totalDirCount > calculatedTotalCount ? totalDirCount - calculatedTotalCount : 0;
+        OtherCount =
+            totalDirCount > calculatedTotalCount ? totalDirCount - calculatedTotalCount : 0;
     }
 
     private (ulong, ulong) CalculateDirectorySize(string folderName)
@@ -138,7 +142,7 @@ public partial class InstanceStorageViewModel(
         {
             FileHelper.CalculateDirectorySize(Path.Combine(buildDir, folderName)),
             FileHelper.CalculateDirectorySize(Path.Combine(importDir, folderName)),
-            FileHelper.CalculateDirectorySize(Path.Combine(persistDir, folderName))
+            FileHelper.CalculateDirectorySize(Path.Combine(persistDir, folderName)),
         };
 
         return agg.Aggregate((0ul, 0ul), (acc, t) => (acc.Item1 + t.Item1, acc.Item2 + t.Item2));

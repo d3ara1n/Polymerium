@@ -14,27 +14,34 @@ namespace Polymerium.App.Dialogs;
 
 public partial class GameVersionPickerDialog : Dialog
 {
-    public static readonly DirectProperty<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>
-        ViewProperty =
-            AvaloniaProperty
-               .RegisterDirect<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>(nameof(View),
-                    o => o.View,
-                    (o, v) => o.View = v);
+    public static readonly DirectProperty<
+        GameVersionPickerDialog,
+        ReadOnlyObservableCollection<GameVersionModel>?
+    > ViewProperty = AvaloniaProperty.RegisterDirect<
+        GameVersionPickerDialog,
+        ReadOnlyObservableCollection<GameVersionModel>?
+    >(nameof(View), o => o.View, (o, v) => o.View = v);
 
     public static readonly DirectProperty<GameVersionPickerDialog, string> FilterTextProperty =
-        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(FilterText),
-                                                                         o => o.FilterText,
-                                                                         (o, v) => o.FilterText = v);
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(
+            nameof(FilterText),
+            o => o.FilterText,
+            (o, v) => o.FilterText = v
+        );
 
     public static readonly DirectProperty<GameVersionPickerDialog, string> SelectedTypeProperty =
-        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(SelectedType),
-                                                                         o => o.SelectedType,
-                                                                         (o, v) => o.SelectedType = v);
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(
+            nameof(SelectedType),
+            o => o.SelectedType,
+            (o, v) => o.SelectedType = v
+        );
 
     public static readonly DirectProperty<GameVersionPickerDialog, string[]> TypesProperty =
-        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string[]>(nameof(Types),
-                                                                           o => o.Types,
-                                                                           (o, v) => o.Types = v);
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string[]>(
+            nameof(Types),
+            o => o.Types,
+            (o, v) => o.Types = v
+        );
 
     private readonly IDisposable _subscription;
 
@@ -48,12 +55,12 @@ public partial class GameVersionPickerDialog : Dialog
         var filter = this.GetObservable(FilterTextProperty).Select(BuildFilterText);
         var type = this.GetObservable(SelectedTypeProperty).Select(BuildFilterType);
         _subscription = _versions
-                       .Connect()
-                       .Filter(filter)
-                       .Filter(type)
-                       .SortBy(x => x.ReleaseTimeRaw, SortDirection.Descending)
-                       .Bind(out var view)
-                       .Subscribe();
+            .Connect()
+            .Filter(filter)
+            .Filter(type)
+            .SortBy(x => x.ReleaseTimeRaw, SortDirection.Descending)
+            .Bind(out var view)
+            .Subscribe();
         View = view;
     }
 
@@ -97,7 +104,9 @@ public partial class GameVersionPickerDialog : Dialog
     }
 
     private Func<GameVersionModel, bool> BuildFilterText(string filter) =>
-        x => string.IsNullOrEmpty(filter) || x.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
+        x =>
+            string.IsNullOrEmpty(filter)
+            || x.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
 
     private Func<GameVersionModel, bool> BuildFilterType(string type) =>
         x => x.TypeRaw.Equals(type, StringComparison.InvariantCultureIgnoreCase);

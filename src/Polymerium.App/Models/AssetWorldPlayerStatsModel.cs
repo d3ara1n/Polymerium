@@ -38,7 +38,11 @@ public class AssetWorldPlayerStatsModel
     public IReadOnlyList<AssetWorldPlayerStatEntryModel> GetDisplayStats() =>
         new List<AssetWorldPlayerStatEntryModel>
         {
-            new(PackIconLucideKind.Clock, "Play Time", TimeSpan.FromSeconds(PlayTime / 20d).Humanize(2)),
+            new(
+                PackIconLucideKind.Clock,
+                "Play Time",
+                TimeSpan.FromSeconds(PlayTime / 20d).Humanize(2)
+            ),
             new(PackIconLucideKind.Skull, "Deaths", Deaths.ToString()),
             new(PackIconLucideKind.Sword, "Mob Kills", MobKills.ToString()),
             new(PackIconLucideKind.Target, "Player Kills", PlayerKills.ToString()),
@@ -46,12 +50,14 @@ public class AssetWorldPlayerStatsModel
             new(PackIconLucideKind.Heart, "Damage Taken", ((int)DamageTaken).ToMetric()),
             new(PackIconLucideKind.Footprints, "Distance Walked", FormatDistance(DistanceWalked)),
             new(PackIconLucideKind.Zap, "Distance Sprinted", FormatDistance(DistanceSprinted)),
-            new(PackIconLucideKind.Timer,
+            new(
+                PackIconLucideKind.Timer,
                 "Time Since Death",
-                TimeSpan.FromSeconds(TimeSinceDeath / 20d).Humanize(maxUnit: TimeUnit.Hour)),
+                TimeSpan.FromSeconds(TimeSinceDeath / 20d).Humanize(maxUnit: TimeUnit.Hour)
+            ),
             new(PackIconLucideKind.Sparkles, "Items Enchanted", ItemsEnchanted.ToString()),
             new(PackIconLucideKind.Rabbit, "Animals Bred", AnimalsBred.ToString()),
-            new(PackIconLucideKind.Fish, "Fish Caught", FishCaught.ToString())
+            new(PackIconLucideKind.Fish, "Fish Caught", FishCaught.ToString()),
         };
 
     private static string FormatDistance(long centimeters)

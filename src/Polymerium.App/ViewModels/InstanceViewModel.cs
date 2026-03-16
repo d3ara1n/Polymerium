@@ -38,7 +38,8 @@ public partial class InstanceViewModel : ViewModelBase
         WidgetHostService widgetHostService,
         NotificationService notificationService,
         DataService dataService,
-        PersistenceService persistenceService)
+        PersistenceService persistenceService
+    )
     {
         _profileManager = profileManager;
         _overlayService = overlayService;
@@ -46,36 +47,49 @@ public partial class InstanceViewModel : ViewModelBase
         _notificationService = notificationService;
         _dataService = dataService;
         _persistenceService = persistenceService;
-        SelectedPage = bag.Parameter switch
-        {
-            CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
-            _ => null
-        }
-                    ?? PageEntries.FirstOrDefault();
+        SelectedPage =
+            bag.Parameter switch
+            {
+                CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
+                _ => null,
+            } ?? PageEntries.FirstOrDefault();
 
         var key = bag.Parameter switch
         {
             CompositeParameter p => p.Key,
             string s => s,
-            _ => throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided")
+            _ => throw new PageNotReachedException(
+                typeof(InstanceView),
+                "Key to the instance is not provided"
+            ),
         };
         if (profileManager.TryGetImmutable(key, out var profile))
         {
-            Basic = new(key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source);
-            Context = new(Basic,
-            [
-                .. widgetHostService.WidgetTypes.Select(type =>
-                {
-                    var widget = (WidgetBase)Activator.CreateInstance(type)!;
-                    widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
-                    return widget;
-                })
-            ]);
+            Basic = new(
+                key,
+                profile.Name,
+                profile.Setup.Version,
+                profile.Setup.Loader,
+                profile.Setup.Source
+            );
+            Context = new(
+                Basic,
+                [
+                    .. widgetHostService.WidgetTypes.Select(type =>
+                    {
+                        var widget = (WidgetBase)Activator.CreateInstance(type)!;
+                        widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
+                        return widget;
+                    }),
+                ]
+            );
         }
         else
         {
-            throw new PageNotReachedException(typeof(InstanceView),
-                                              Resources.InstanceView_KeyNotFoundExceptionMessage.Replace("{0}", key));
+            throw new PageNotReachedException(
+                typeof(InstanceView),
+                Resources.InstanceView_KeyNotFoundExceptionMessage.Replace("{0}", key)
+            );
         }
     }
 
@@ -106,7 +120,7 @@ public partial class InstanceViewModel : ViewModelBase
         {
             PathAccepted = initialPath,
             DataService = _dataService,
-            NotificationService = _notificationService
+            NotificationService = _notificationService,
         };
         if (await _overlayService.PopDialogAsync(dialog))
         {
@@ -117,47 +131,64 @@ public partial class InstanceViewModel : ViewModelBase
                     {
                         await using (guard)
                         {
-                            if (!guard.Value.Setup.Packages.Any(x => PackageHelper.IsMatched(x.Purl,
-                                                                    package.Package.Label,
-                                                                    package.Package.Namespace,
-                                                                    package.Package.ProjectId)))
+                            if (
+                                !guard.Value.Setup.Packages.Any(x =>
+                                    PackageHelper.IsMatched(
+                                        x.Purl,
+                                        package.Package.Label,
+                                        package.Package.Namespace,
+                                        package.Package.ProjectId
+                                    )
+                                )
+                            )
                             {
-                                var purl = PackageHelper.ToPurl(package.Package.Label,
-                                                                package.Package.Namespace,
-                                                                package.Package.ProjectId,
-                                                                package.Package.VersionId);
-                                guard.Value.Setup.Packages.Add(new()
-                                {
-                                    Purl = purl,
-                                    Enabled = true,
-                                    Source = null
-                                });
-                                _persistenceService.AppendAction(new(Basic.Key,
-                                                                     PersistenceService.ActionKind.EditPackage,
-                                                                     null,
-                                                                     purl));
-                                _notificationService
-                                   .PopMessage($"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
-                                               guard.Key);
+                                var purl = PackageHelper.ToPurl(
+                                    package.Package.Label,
+                                    package.Package.Namespace,
+                                    package.Package.ProjectId,
+                                    package.Package.VersionId
+                                );
+                                guard.Value.Setup.Packages.Add(
+                                    new()
+                                    {
+                                        Purl = purl,
+                                        Enabled = true,
+                                        Source = null,
+                                    }
+                                );
+                                _persistenceService.AppendAction(
+                                    new(
+                                        Basic.Key,
+                                        PersistenceService.ActionKind.EditPackage,
+                                        null,
+                                        purl
+                                    )
+                                );
+                                _notificationService.PopMessage(
+                                    $"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
+                                    guard.Key
+                                );
                             }
                             else
                             {
-                                _notificationService
-                                   .PopMessage($"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
-                                               "Failed to import as package",
-                                               GrowlLevel.Danger);
+                                _notificationService.PopMessage(
+                                    $"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
+                                    "Failed to import as package",
+                                    GrowlLevel.Danger
+                                );
                             }
                         }
                     }
 
                     break;
                 case AssetIdentificationPersistModel persist:
-                    var target =
-                        Path.Combine(persist.IsInImportMode
-                                         ? PathDef.Default.DirectoryOfImport(Basic.Key)
-                                         : PathDef.Default.DirectoryOfPersist(Basic.Key),
-                                     FileHelper.GetAssetFolderName(persist.Kind),
-                                     Path.GetFileName(persist.Path));
+                    var target = Path.Combine(
+                        persist.IsInImportMode
+                            ? PathDef.Default.DirectoryOfImport(Basic.Key)
+                            : PathDef.Default.DirectoryOfPersist(Basic.Key),
+                        FileHelper.GetAssetFolderName(persist.Kind),
+                        Path.GetFileName(persist.Path)
+                    );
                     if (!File.Exists(target))
                     {
                         var dir = Path.GetDirectoryName(target);
@@ -167,14 +198,22 @@ public partial class InstanceViewModel : ViewModelBase
                         }
 
                         File.Copy(persist.Path, target, false);
-                        _notificationService.PopMessage($"File {target} has added to the instance", Basic.Key);
+                        _notificationService.PopMessage(
+                            $"File {target} has added to the instance",
+                            Basic.Key
+                        );
                     }
                     else
                     {
-                        var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
-                        _notificationService.PopMessage($"File {relative} already exists",
-                                                        "Failed to import as solid file",
-                                                        GrowlLevel.Danger);
+                        var relative = Path.GetRelativePath(
+                            PathDef.Default.DirectoryOfHome(Basic.Key),
+                            target
+                        );
+                        _notificationService.PopMessage(
+                            $"File {relative} already exists",
+                            "Failed to import as solid file",
+                            GrowlLevel.Danger
+                        );
                     }
 
                     break;
@@ -229,7 +268,6 @@ public partial class InstanceViewModel : ViewModelBase
     }
 
     protected override async Task OnDeinitializeAsync()
-
     {
         _instanceManager.InstanceUpdating -= OnProfileUpdating;
         _instanceManager.InstanceDeploying -= OnProfileDeploying;
@@ -353,9 +391,9 @@ public partial class InstanceViewModel : ViewModelBase
         // Home
         new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
         // Dashboard
-        #if DEBUG
+#if DEBUG
         new(typeof(InstanceDashboardView), PackIconLucideKind.Activity),
-        #endif
+#endif
         // Setup
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Assets
@@ -367,7 +405,7 @@ public partial class InstanceViewModel : ViewModelBase
         // Storage
         new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
         // Properties
-        new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench)
+        new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench),
     ];
 
     [ObservableProperty]

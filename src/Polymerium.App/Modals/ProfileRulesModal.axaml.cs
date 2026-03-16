@@ -10,12 +10,13 @@ namespace Polymerium.App.Modals;
 
 public partial class ProfileRulesModal : Modal
 {
-    public static readonly DirectProperty<ProfileRulesModal, MappingCollection<Profile.Rice.Rule, ProfileRuleModel>>
-        RulesProperty =
-            AvaloniaProperty
-               .RegisterDirect<ProfileRulesModal, MappingCollection<Profile.Rice.Rule, ProfileRuleModel>>(nameof(Rules),
-                    o => o.Rules,
-                    (o, v) => o.Rules = v);
+    public static readonly DirectProperty<
+        ProfileRulesModal,
+        MappingCollection<Profile.Rice.Rule, ProfileRuleModel>
+    > RulesProperty = AvaloniaProperty.RegisterDirect<
+        ProfileRulesModal,
+        MappingCollection<Profile.Rice.Rule, ProfileRuleModel>
+    >(nameof(Rules), o => o.Rules, (o, v) => o.Rules = v);
 
     public ProfileRulesModal() => InitializeComponent();
 
@@ -47,12 +48,14 @@ public partial class ProfileRulesModal : Modal
     {
         if (model != null)
         {
-            OverlayService.PopModal(new ProfileRuleModal
-            {
-                Rule = model,
-                Packages = Packages,
-                OverlayService = OverlayService
-            });
+            OverlayService.PopModal(
+                new ProfileRuleModal
+                {
+                    Rule = model,
+                    Packages = Packages,
+                    OverlayService = OverlayService,
+                }
+            );
         }
     }
 

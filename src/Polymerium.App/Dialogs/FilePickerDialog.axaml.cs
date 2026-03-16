@@ -12,7 +12,8 @@ public partial class FilePickerDialog : Dialog
 {
     public FilePickerDialog() => InitializeComponent();
 
-    protected override bool ValidateResult(object? result) => result is string filePath && File.Exists(filePath);
+    protected override bool ValidateResult(object? result) =>
+        result is string filePath && File.Exists(filePath);
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {

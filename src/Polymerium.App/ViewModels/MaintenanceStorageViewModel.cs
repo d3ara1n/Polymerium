@@ -18,7 +18,8 @@ public partial class MaintenanceStorageViewModel(
     ProfileManager profileManager,
     NavigationService navigationService,
     OverlayService overlayService,
-    NotificationService notificationService) : ViewModelBase
+    NotificationService notificationService
+) : ViewModelBase
 {
     #region Direct
 
@@ -32,7 +33,9 @@ public partial class MaintenanceStorageViewModel(
 
     private void Calculate()
     {
-        (PackageSize, PackageCount) = FileHelper.CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
+        (PackageSize, PackageCount) = FileHelper.CalculateDirectorySize(
+            PathDef.Default.CachePackageDirectory
+        );
         (LibrarySize, _) = FileHelper.CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
         (AssetSize, _) = FileHelper.CalculateDirectorySize(PathDef.Default.CacheAssetDirectory);
         (RuntimeSize, _) = FileHelper.CalculateDirectorySize(PathDef.Default.CacheRuntimeDirectory);
@@ -49,7 +52,6 @@ public partial class MaintenanceStorageViewModel(
         TotalSize = CacheSize + InstanceSize;
     }
 
-
     private static void PurgeDirectory(string path)
     {
         if (Directory.Exists(path))
@@ -65,7 +67,11 @@ public partial class MaintenanceStorageViewModel(
     [RelayCommand]
     private async Task PurgeCache()
     {
-        if (await overlayService.RequestConfirmationAsync("Are you sure you want to purge the cache?"))
+        if (
+            await overlayService.RequestConfirmationAsync(
+                "Are you sure you want to purge the cache?"
+            )
+        )
         {
             try
             {
@@ -85,8 +91,9 @@ public partial class MaintenanceStorageViewModel(
     {
         if (model != null)
         {
-            navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(model.Key,
-                                                         typeof(InstanceStorageView)));
+            navigationService.Navigate<InstanceView>(
+                new InstanceViewModel.CompositeParameter(model.Key, typeof(InstanceStorageView))
+            );
         }
     }
 

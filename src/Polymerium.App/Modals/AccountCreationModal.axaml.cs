@@ -14,24 +14,32 @@ namespace Polymerium.App.Modals;
 public partial class AccountCreationModal : Modal
 {
     public static readonly DirectProperty<AccountCreationModal, object?> CurrentStepProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, object?>(nameof(CurrentStep),
-                                                                       o => o.CurrentStep,
-                                                                       (o, v) => o.CurrentStep = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, object?>(
+            nameof(CurrentStep),
+            o => o.CurrentStep,
+            (o, v) => o.CurrentStep = v
+        );
 
     public static readonly DirectProperty<AccountCreationModal, bool> IsReversedProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsReversed),
-                                                                    o => o.IsReversed,
-                                                                    (o, v) => o.IsReversed = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(
+            nameof(IsReversed),
+            o => o.IsReversed,
+            (o, v) => o.IsReversed = v
+        );
 
     public static readonly DirectProperty<AccountCreationModal, bool> IsBackAvailableProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsBackAvailable),
-                                                                    o => o.IsBackAvailable,
-                                                                    (o, v) => o.IsBackAvailable = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(
+            nameof(IsBackAvailable),
+            o => o.IsBackAvailable,
+            (o, v) => o.IsBackAvailable = v
+        );
 
     public static readonly DirectProperty<AccountCreationModal, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsLast),
-                                                                    o => o.IsLast,
-                                                                    (o, v) => o.IsLast = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(
+            nameof(IsLast),
+            o => o.IsLast,
+            (o, v) => o.IsLast = v
+        );
 
     private readonly Stack<object> _history = new();
 
@@ -77,7 +85,7 @@ public partial class AccountCreationModal : Modal
             IsOfflineAvailable = IsOfflineAvailable,
             MicrosoftService = MicrosoftService,
             XboxLiveService = XboxLiveService,
-            MinecraftService = MinecraftService
+            MinecraftService = MinecraftService,
         };
     }
 

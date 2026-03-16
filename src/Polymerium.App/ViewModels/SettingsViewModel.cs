@@ -28,7 +28,8 @@ public partial class SettingsViewModel : ViewModelBase
         NotificationService notificationService,
         PersistenceService persistenceService,
         UpdateManager updateManager,
-        IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions)
+        IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions
+    )
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
@@ -44,33 +45,39 @@ public partial class SettingsViewModel : ViewModelBase
         AccentColor = configurationService.Value.ApplicationStyleAccent;
         CornerStyle = configurationService.Value.ApplicationStyleCorner;
         BackgroundMode =
-            BackgroundStyles.FirstOrDefault(x => x.Index == configurationService.Value.ApplicationStyleBackground)
-         ?? BackgroundStyles.First();
+            BackgroundStyles.FirstOrDefault(x =>
+                x.Index == configurationService.Value.ApplicationStyleBackground
+            ) ?? BackgroundStyles.First();
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
-        Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
-                ?? Languages.First();
-        JavaHome8 = configurationService.Value.RuntimeJavaHome8 != string.Empty
-                        ? configurationService.Value.RuntimeJavaHome8
-                        : null;
-        JavaHome11 = configurationService.Value.RuntimeJavaHome11 != string.Empty
-                         ? configurationService.Value.RuntimeJavaHome11
-                         : null;
-        JavaHome17 = configurationService.Value.RuntimeJavaHome17 != string.Empty
-                         ? configurationService.Value.RuntimeJavaHome17
-                         : null;
-        JavaHome21 = configurationService.Value.RuntimeJavaHome21 != string.Empty
-                         ? configurationService.Value.RuntimeJavaHome21
-                         : null;
-        JavaHome25 = configurationService.Value.RuntimeJavaHome25 != string.Empty
-                         ? configurationService.Value.RuntimeJavaHome25
-                         : null;
+        Language =
+            Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
+            ?? Languages.First();
+        JavaHome8 =
+            configurationService.Value.RuntimeJavaHome8 != string.Empty
+                ? configurationService.Value.RuntimeJavaHome8
+                : null;
+        JavaHome11 =
+            configurationService.Value.RuntimeJavaHome11 != string.Empty
+                ? configurationService.Value.RuntimeJavaHome11
+                : null;
+        JavaHome17 =
+            configurationService.Value.RuntimeJavaHome17 != string.Empty
+                ? configurationService.Value.RuntimeJavaHome17
+                : null;
+        JavaHome21 =
+            configurationService.Value.RuntimeJavaHome21 != string.Empty
+                ? configurationService.Value.RuntimeJavaHome21
+                : null;
+        JavaHome25 =
+            configurationService.Value.RuntimeJavaHome25 != string.Empty
+                ? configurationService.Value.RuntimeJavaHome25
+                : null;
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
         UpdateSource = configurationService.Value.UpdateSource;
         MirrorChyanCdk = configurationService.Value.UpdateMirrorChyanCdk;
-
 
         ProxyMode = (ProxyMode)configurationService.Value.NetworkProxyMode;
         ProxyProtocol = (ProxyProtocol)configurationService.Value.NetworkProxyProtocol;
@@ -80,28 +87,32 @@ public partial class SettingsViewModel : ViewModelBase
         ProxyUsername = configurationService.Value.NetworkProxyUsername;
         ProxyPassword = configurationService.Value.NetworkProxyPassword;
 
-
         UpdateProxyStatusText();
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
-        UpdateState = updateManager.IsInstalled || Program.IsDebug ? AppUpdateState.Idle : AppUpdateState.Unavailable;
+        UpdateState =
+            updateManager.IsInstalled || Program.IsDebug
+                ? AppUpdateState.Idle
+                : AppUpdateState.Unavailable;
         // MOTE: 由于只有 SettingsView 有触发更新的过程，所以在这个地方赋值 Cdk 是安全的
-        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(configurationService.Value.UpdateMirrorChyanCdk)
-                                                 ? configurationService.Value.UpdateMirrorChyanCdk
-                                                 : Program.MirrorChyanCdk;
+        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(
+            configurationService.Value.UpdateMirrorChyanCdk
+        )
+            ? configurationService.Value.UpdateMirrorChyanCdk
+            : Program.MirrorChyanCdk;
     }
-
-    #region Service Export
-
-    public OverlayService OverlayService { get; }
-    public bool CanCustomizeTitleBar => !OperatingSystem.IsMacOS();
-
-    #endregion
 
     #region SafeCode
 
     [ObservableProperty]
     public partial string SafeCode { get; set; }
+
+    #endregion
+
+    #region Service Export
+
+    public OverlayService OverlayService { get; }
+    public bool CanCustomizeTitleBar => !OperatingSystem.IsMacOS();
 
     #endregion
 
@@ -123,8 +134,10 @@ public partial class SettingsViewModel : ViewModelBase
     {
         if (box != null)
         {
-            var path = await OverlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestJavaPrompt,
-                                                             Resources.InstancePropertiesView_RequestJavaTitle);
+            var path = await OverlayService.RequestFileAsync(
+                Resources.InstancePropertiesView_RequestJavaPrompt,
+                Resources.InstancePropertiesView_RequestJavaTitle
+            );
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -179,20 +192,23 @@ public partial class SettingsViewModel : ViewModelBase
             return;
         }
 
-        OverlayService.PopModal(new AppUpdateModal
-        {
-            Model = model,
-            UpdateManager = _updateManager,
-            NotificationService = _notificationService
-        });
+        OverlayService.PopModal(
+            new AppUpdateModal
+            {
+                Model = model,
+                UpdateManager = _updateManager,
+                NotificationService = _notificationService,
+            }
+        );
     }
 
     [RelayCommand]
     private async Task ClearStatisticsAsync()
     {
-        var confirmed =
-            await OverlayService.RequestConfirmationAsync(Resources.SettingsView_ClearStatisticsConfirmationMessage,
-                                                          Resources.SettingsView_ClearStatisticsConfirmationTitle);
+        var confirmed = await OverlayService.RequestConfirmationAsync(
+            Resources.SettingsView_ClearStatisticsConfirmationMessage,
+            Resources.SettingsView_ClearStatisticsConfirmationTitle
+        );
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -202,9 +218,10 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ClearRecordsAsync()
     {
-        var confirmed =
-            await OverlayService.RequestConfirmationAsync(Resources.SettingsView_ClearRecordsConfirmationMessage,
-                                                          Resources.SettingsView_ClearRecordsConfirmationTitle);
+        var confirmed = await OverlayService.RequestConfirmationAsync(
+            Resources.SettingsView_ClearRecordsConfirmationMessage,
+            Resources.SettingsView_ClearRecordsConfirmationTitle
+        );
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
@@ -224,7 +241,8 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial int UpdateSource { get; set; }
 
-    partial void OnUpdateSourceChanged(int value) => _configurationService.Value.UpdateSource = value;
+    partial void OnUpdateSourceChanged(int value) =>
+        _configurationService.Value.UpdateSource = value;
 
     [ObservableProperty]
     public partial string MirrorChyanCdk { get; set; }
@@ -232,7 +250,9 @@ public partial class SettingsViewModel : ViewModelBase
     partial void OnMirrorChyanCdkChanged(string value)
     {
         _configurationService.Value.UpdateMirrorChyanCdk = value;
-        _mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(value) ? value : Program.MirrorChyanCdk;
+        _mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(value)
+            ? value
+            : Program.MirrorChyanCdk;
     }
 
     #endregion
@@ -321,7 +341,7 @@ public partial class SettingsViewModel : ViewModelBase
         new(1, Resources.SettingsView_BackgroundStyleMicaText, "Windows 11+"),
         new(2, Resources.SettingsView_BackgroundStyleAcrylicText, "Windows 10+"),
         new(3, Resources.SettingsView_BackgroundStyleBlurText, "macOS/Linux"),
-        new(4, Resources.SettingsView_BackgroundStyleNoneText)
+        new(4, Resources.SettingsView_BackgroundStyleNoneText),
     ];
 
     #endregion
@@ -343,13 +363,16 @@ public partial class SettingsViewModel : ViewModelBase
 
     public LanguageModel[] Languages { get; } =
     [
-        .. Configuration.SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x))
+        .. Configuration
+            .SupportedLanguages.Select(CultureInfo.GetCultureInfo)
+            .Select(x => new LanguageModel(x)),
     ];
 
     [ObservableProperty]
     public partial LanguageModel Language { get; set; }
 
-    partial void OnLanguageChanged(LanguageModel value) => _configurationService.Value.ApplicationLanguage = value.Id;
+    partial void OnLanguageChanged(LanguageModel value) =>
+        _configurationService.Value.ApplicationLanguage = value.Id;
 
     #endregion
 
@@ -392,7 +415,8 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial uint JavaMaxMemory { get; set; }
 
-    partial void OnJavaMaxMemoryChanged(uint value) => _configurationService.Value.GameJavaMaxMemory = value;
+    partial void OnJavaMaxMemoryChanged(uint value) =>
+        _configurationService.Value.GameJavaMaxMemory = value;
 
     #endregion
 
@@ -411,7 +435,8 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial uint WindowInitialWidth { get; set; }
 
-    partial void OnWindowInitialWidthChanged(uint value) => _configurationService.Value.GameWindowInitialWidth = value;
+    partial void OnWindowInitialWidthChanged(uint value) =>
+        _configurationService.Value.GameWindowInitialWidth = value;
 
     #endregion
 
@@ -448,7 +473,8 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool ProxyEnabled { get; set; }
 
-    partial void OnProxyEnabledChanged(bool value) => _configurationService.Value.NetworkProxyEnabled = value;
+    partial void OnProxyEnabledChanged(bool value) =>
+        _configurationService.Value.NetworkProxyEnabled = value;
 
     [ObservableProperty]
     public partial string ProxyAddress { get; set; }
@@ -471,12 +497,14 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string ProxyUsername { get; set; }
 
-    partial void OnProxyUsernameChanged(string value) => _configurationService.Value.NetworkProxyUsername = value;
+    partial void OnProxyUsernameChanged(string value) =>
+        _configurationService.Value.NetworkProxyUsername = value;
 
     [ObservableProperty]
     public partial string ProxyPassword { get; set; }
 
-    partial void OnProxyPasswordChanged(string value) => _configurationService.Value.NetworkProxyPassword = value;
+    partial void OnProxyPasswordChanged(string value) =>
+        _configurationService.Value.NetworkProxyPassword = value;
 
     [ObservableProperty]
     public partial string ProxyStatusText { get; set; } = string.Empty;
@@ -487,10 +515,13 @@ public partial class SettingsViewModel : ViewModelBase
             ProxyMode.Auto => Resources.SettingsView_ProxyStatusAutoText,
             ProxyMode.Disabled => Resources.SettingsView_ProxyStatusDisabledText,
             ProxyMode.Manual => Resources
-                               .SettingsView_ProxyStatusManualText.Replace("{0}", ProxyProtocol.ToString().ToLower())
-                               .Replace("{1}", ProxyAddress)
-                               .Replace("{2}", ProxyPort.ToString()),
-            _ => string.Empty
+                .SettingsView_ProxyStatusManualText.Replace(
+                    "{0}",
+                    ProxyProtocol.ToString().ToLower()
+                )
+                .Replace("{1}", ProxyAddress)
+                .Replace("{2}", ProxyPort.ToString()),
+            _ => string.Empty,
         };
 
     [RelayCommand]
@@ -503,13 +534,16 @@ public partial class SettingsViewModel : ViewModelBase
             Address = ProxyAddress,
             Port = ProxyPort,
             Username = ProxyUsername,
-            Password = ProxyPassword
+            Password = ProxyPassword,
         };
 
         var dialog = new ProxySettingsDialog();
         dialog.Initialize(currentSettings);
 
-        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is ProxySettingsModel newSettings)
+        if (
+            await OverlayService.PopDialogAsync(dialog)
+            && dialog.Result is ProxySettingsModel newSettings
+        )
         {
             // Apply the new settings
             ProxyMode = newSettings.Mode;
