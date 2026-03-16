@@ -6,7 +6,7 @@ using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
-public partial class PackageUpdaterModel(
+public partial class PackageUpdateReviewerModel(
     InstancePackageModel model,
     Package package,
     Uri thumbnail,

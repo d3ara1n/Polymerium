@@ -34,11 +34,11 @@ public static class InternalConverters
         return 0.0d;
     });
 
-    public static IValueConverter Weird { get; } = new RelayConverter((v, _) =>
+    public static IValueConverter EnumTypeToList { get; } = new RelayConverter((v, _) =>
     {
-        if (v is double d)
+        if (v is Type { IsEnum: true } t)
         {
-            return Math.Min(Math.Max((1 - d) * 2, 0.0d), 1.0d);
+            return Enum.GetValues(t);
         }
 
         return v;

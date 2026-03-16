@@ -2,9 +2,9 @@ using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Dialogs;
 
-public partial class PackageBulkUpdaterDialog : Dialog
+public partial class PackageBulkUpdateReviewerDialog : Dialog
 {
-    public PackageBulkUpdaterDialog() => InitializeComponent();
+    public PackageBulkUpdateReviewerDialog() => InitializeComponent();
 
     protected override bool ValidateResult(object? result) => true;
 }
