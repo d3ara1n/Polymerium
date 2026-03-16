@@ -27,12 +27,12 @@ public class App : Application
 
     public HuskuiTheme? Theme { get; private set; }
 
-
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
     {
-        AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowOrDump(e.ExceptionObject, e.IsTerminating);
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            ShowOrDump(e.ExceptionObject, e.IsTerminating);
         TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
         Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
 
@@ -53,7 +53,6 @@ public class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-
     private static void ShowOrDump(object core, bool critical = false)
     {
         // 只接受致命错误的 dump，避免 TaskCancellationException 等在 Task 中发生触发 UnobservedTaskException 转发把 Dump 吃满
@@ -67,7 +66,11 @@ public class App : Application
             SentrySdk.CaptureException(rec);
         }
 
-        if (core is Exception ex && !critical && Program.Services?.GetService<NavigationService>() is { } navigation)
+        if (
+            core is Exception ex
+            && !critical
+            && Program.Services?.GetService<NavigationService>() is { } navigation
+        )
         {
             Dispatcher.UIThread.Post(() => navigation.Navigate<ExceptionView>(ex));
         }
@@ -79,14 +82,20 @@ public class App : Application
 
     private static void Dump(object core)
     {
-        var path = Path.Combine(AppContext.BaseDirectory, "dumps", $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
-        var sb = new StringBuilder($"""
+        var path = Path.Combine(
+            AppContext.BaseDirectory,
+            "dumps",
+            $"Exception-{DateTimeOffset.Now.ToFileTime()}.log"
+        );
+        var sb = new StringBuilder(
+            $"""
                                     // {DateTimeOffset.Now.ToString()}
                                     // Polymerium: {typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                                                                   ?.InformationalVersion.Split('+')[0] ?? Program.Version}
                                     // Avalonia: {Assembly.GetEntryAssembly()?.GetName().Version}
 
-                                    """);
+                                    """
+        );
         sb.AppendLine();
         DumpInternal(sb, core, 0);
         var dir = Path.GetDirectoryName(path);
@@ -103,13 +112,15 @@ public class App : Application
         switch (core)
         {
             case AggregateException ae:
-                builder.AppendLine($"""
-                                    --- LEVEL: {level} ---
-                                    Exception: {ae.GetType().Name}
-                                    Message: {ae.Message}
-                                    StackTrace: {ae.StackTrace}
+                builder.AppendLine(
+                    $"""
+                    --- LEVEL: {level} ---
+                    Exception: {ae.GetType().Name}
+                    Message: {ae.Message}
+                    StackTrace: {ae.StackTrace}
 
-                                    """);
+                    """
+                );
                 foreach (var inner in ae.InnerExceptions)
                 {
                     DumpInternal(builder, inner, level + 1);
@@ -122,13 +133,15 @@ public class App : Application
 
                 break;
             case Exception e:
-                builder.AppendLine($"""
-                                    --- LEVEL: {level} ---
-                                    Exception: {e.GetType().Name}
-                                    Message: {e.Message}
-                                    StackTrace: {e.StackTrace}
+                builder.AppendLine(
+                    $"""
+                    --- LEVEL: {level} ---
+                    Exception: {e.GetType().Name}
+                    Message: {e.Message}
+                    StackTrace: {e.StackTrace}
 
-                                    """);
+                    """
+                );
                 if (e.InnerException is not null)
                 {
                     DumpInternal(builder, e.InnerException, level + 1);
@@ -136,11 +149,13 @@ public class App : Application
 
                 break;
             default:
-                builder.AppendLine($"""
-                                    --- LEVEL: {level} ---
-                                    Content: {core.ToString()}
+                builder.AppendLine(
+                    $"""
+                    --- LEVEL: {level} ---
+                    Content: {core.ToString()}
 
-                                    """);
+                    """
+                );
                 break;
         }
     }
@@ -151,7 +166,11 @@ public class App : Application
         {
             if (!view.IsAssignableTo(typeof(Page)))
             {
-                throw new ArgumentOutOfRangeException(nameof(view), view, "Parameter view must be derived from Page");
+                throw new ArgumentOutOfRangeException(
+                    nameof(view),
+                    view,
+                    "Parameter view must be derived from Page"
+                );
             }
 
             var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
@@ -163,9 +182,11 @@ public class App : Application
             {
                 if (!type.IsAssignableTo(typeof(ObservableObject)))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(view),
-                                                          type,
-                                                          $"{view.Name} was bound to a view model which is not derived from ObservableObject");
+                    throw new ArgumentOutOfRangeException(
+                        nameof(view),
+                        type,
+                        $"{view.Name} was bound to a view model which is not derived from ObservableObject"
+                    );
                 }
 
                 using var scope = Program.Services!.CreateScope();
@@ -231,7 +252,12 @@ public class App : Application
 
         // Link navigation service
         var navigation = Program.Services.GetRequiredService<NavigationService>();
-        navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
+        navigation.SetHandler(
+            window.Navigate,
+            window.GoBack,
+            window.CanGoBack,
+            window.ClearHistory
+        );
         // Closure captures Program.AppHost.Services
         window.PageActivator = ActivatePage;
 

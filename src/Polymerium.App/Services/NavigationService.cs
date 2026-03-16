@@ -28,7 +28,8 @@ public class NavigationService
         Action<Type, object?, IPageTransition> navigateHandler,
         Action goBackHandler,
         Func<bool> canGoBackHandler,
-        Action clearHistoryHandler)
+        Action clearHistoryHandler
+    )
     {
         _navigateHandler = navigateHandler;
         _goBackHandler = goBackHandler;
@@ -37,17 +38,26 @@ public class NavigationService
     }
 
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null) =>
-        _navigateHandler?.Invoke(page,
-                                 parameter,
-                                 transition
-                              ?? (page.IsAssignableTo(typeof(ScopedPage))
-                                      ? new PageCoverOverTransition(null, DirectionFrom.Right)
-                                      : new CrossFadeTransition()));
+        _navigateHandler?.Invoke(
+            page,
+            parameter,
+            transition
+                ?? (
+                    page.IsAssignableTo(typeof(ScopedPage))
+                        ? new PageCoverOverTransition(null, DirectionFrom.Right)
+                        : new CrossFadeTransition()
+                )
+        );
 
-    public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page
+    public void Navigate<T>(object? parameter = null, IPageTransition? transition = null)
+        where T : Page
     {
         Navigate(typeof(T), parameter, transition);
-        _logger.LogInformation("Navigating to {page} with {arg}", typeof(T).Name, parameter ?? "(null)");
+        _logger.LogInformation(
+            "Navigating to {page} with {arg}",
+            typeof(T).Name,
+            parameter ?? "(null)"
+        );
     }
 
     public void GoBack() => _goBackHandler?.Invoke();

@@ -5,8 +5,10 @@ namespace Polymerium.App.Controls;
 
 public class InstancePackageButton : Button
 {
-    public static readonly StyledProperty<bool> IsRefreshingProperty =
-        AvaloniaProperty.Register<InstancePackageButton, bool>(nameof(IsRefreshing));
+    public static readonly StyledProperty<bool> IsRefreshingProperty = AvaloniaProperty.Register<
+        InstancePackageButton,
+        bool
+    >(nameof(IsRefreshing));
 
     public bool IsRefreshing
     {

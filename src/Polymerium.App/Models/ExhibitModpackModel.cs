@@ -16,7 +16,8 @@ public class ExhibitModpackModel(
     ulong downloadCount,
     string summary,
     DateTimeOffset updatedAt,
-    IReadOnlyList<Uri> gallery) : ModelBase
+    IReadOnlyList<Uri> gallery
+) : ModelBase
 {
     #region Direct
 

@@ -4,7 +4,8 @@ namespace Polymerium.App.Models;
 
 public class AssetIdentificationModel(
     AssetIdentificationPackageModel? package,
-    AssetIdentificationPersistModel persist) : ModelBase
+    AssetIdentificationPersistModel persist
+) : ModelBase
 {
     #region Direct
 

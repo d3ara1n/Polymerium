@@ -7,8 +7,13 @@ namespace Polymerium.App.Models;
 
 public partial class InstanceEntryModel : ModelBase
 {
-    public InstanceEntryModel(string key, string name, string version, string? loader, string? source) =>
-        Basic = new(key, name, version, loader, source);
+    public InstanceEntryModel(
+        string key,
+        string name,
+        string version,
+        string? loader,
+        string? source
+    ) => Basic = new(key, name, version, loader, source);
 
     public InstanceBasicModel Basic { get; }
 

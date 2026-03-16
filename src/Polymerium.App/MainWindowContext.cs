@@ -54,7 +54,8 @@ public partial class MainWindowContext : ObservableObject
         InstanceService instanceService,
         OverlayService overlayService,
         ExporterAgent exporterAgent,
-        ConfigurationService configurationService)
+        ConfigurationService configurationService
+    )
     {
         _profileManager = profileManager;
         _notificationService = notificationService;
@@ -70,18 +71,22 @@ public partial class MainWindowContext : ObservableObject
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
         _ = _entries
-           .Connect()
-           .Filter(filter)
-           .SortAndBind(out var view,
-                        SortExpressionComparer<InstanceEntryModel>.Descending(x => x.LastPlayedAtRaw
-                                                                               ?? DateTimeOffset.MinValue))
-           .Subscribe();
+            .Connect()
+            .Filter(filter)
+            .SortAndBind(
+                out var view,
+                SortExpressionComparer<InstanceEntryModel>.Descending(x =>
+                    x.LastPlayedAtRaw ?? DateTimeOffset.MinValue
+                )
+            )
+            .Subscribe();
         View = view;
     }
 
-
     private static Func<InstanceEntryModel, bool> BuildFilter(string? filter) =>
-        x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
+        x =>
+            string.IsNullOrEmpty(filter)
+            || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
     #region Lifecycles
 
@@ -91,12 +96,14 @@ public partial class MainWindowContext : ObservableObject
         // OOBE now includes privilege check step on Windows
         if (Program.FirstRun)
         {
-            _overlayService.PopModal(new OobeModal
-            {
-                ConfigurationService = _configurationService,
-                OverlayService = _overlayService,
-                NotificationService = _notificationService
-            });
+            _overlayService.PopModal(
+                new OobeModal
+                {
+                    ConfigurationService = _configurationService,
+                    OverlayService = _overlayService,
+                    NotificationService = _notificationService,
+                }
+            );
         }
     }
 
@@ -104,7 +111,8 @@ public partial class MainWindowContext : ObservableObject
 
     #region Other
 
-    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
+    public void Navigate(Type page, object? parameter) =>
+        _navigationService.Navigate(page, parameter);
 
     #endregion
 
@@ -148,7 +156,10 @@ public partial class MainWindowContext : ObservableObject
         if (key is not null && _profileManager.TryGetImmutable(key, out var profile))
         {
             var loaderLabel = "None";
-            if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader))
+            if (
+                profile.Setup.Loader is not null
+                && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+            )
             {
                 loaderLabel = LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version);
             }
@@ -170,8 +181,10 @@ public partial class MainWindowContext : ObservableObject
             {
                 if (File.Exists(dataPath))
                 {
-                    pack = JsonSerializer.Deserialize<PackData>(await File.ReadAllTextAsync(dataPath),
-                                                                FileHelper.SerializerOptions);
+                    pack = JsonSerializer.Deserialize<PackData>(
+                        await File.ReadAllTextAsync(dataPath),
+                        FileHelper.SerializerOptions
+                    );
                 }
             }
             catch (Exception ex)
@@ -188,12 +201,16 @@ public partial class MainWindowContext : ObservableObject
                 LoaderLabel = loaderLabel,
                 PackageCount = profile.Setup.Packages.Count,
                 AuthorOriginal = !string.IsNullOrEmpty(overrideAuthor) ? overrideAuthor : user,
-                VersionOriginal = !string.IsNullOrEmpty(overrideVersion) ? overrideVersion : "1.0.0",
-                Result = new ModpackExporterModel(key)
+                VersionOriginal = !string.IsNullOrEmpty(overrideVersion)
+                    ? overrideVersion
+                    : "1.0.0",
+                Result = new ModpackExporterModel(key),
             };
 
-
-            if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
+            if (
+                await _overlayService.PopDialogAsync(dialog)
+                && dialog.Result is ModpackExporterModel model
+            )
             {
                 var top = TopLevel.GetTopLevel(MainWindow.Instance);
                 if (top != null)
@@ -201,53 +218,59 @@ public partial class MainWindowContext : ObservableObject
                     var storage = top.StorageProvider;
                     if (storage.CanOpen)
                     {
-                        var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : dialog.NameOriginal;
+                        var name = !string.IsNullOrEmpty(model.NameOverride)
+                            ? model.NameOverride
+                            : dialog.NameOriginal;
                         var author = !string.IsNullOrEmpty(model.AuthorOverride)
-                                         ? model.AuthorOverride
-                                         : dialog.AuthorOriginal;
+                            ? model.AuthorOverride
+                            : dialog.AuthorOriginal;
                         var version = !string.IsNullOrEmpty(model.VersionOverride)
-                                          ? model.VersionOverride
-                                          : dialog.VersionOriginal;
-                        var storageItem = await storage.SaveFilePickerAsync(new()
-                        {
-                            SuggestedStartLocation =
-                                await storage
-                                   .TryGetWellKnownFolderAsync(WellKnownFolder
-                                                                  .Downloads),
-                            SuggestedFileName =
-                                $"{name}.{version}",
-                            DefaultExtension = "zip",
-                            FileTypeChoices =
-                            [
-                                new("Zip Archive")
-                                {
-                                    Patterns = ["*.zip"]
-                                }
-                            ]
-                        });
+                            ? model.VersionOverride
+                            : dialog.VersionOriginal;
+                        var storageItem = await storage.SaveFilePickerAsync(
+                            new()
+                            {
+                                SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(
+                                    WellKnownFolder.Downloads
+                                ),
+                                SuggestedFileName = $"{name}.{version}",
+                                DefaultExtension = "zip",
+                                FileTypeChoices = [new("Zip Archive") { Patterns = ["*.zip"] }],
+                            }
+                        );
                         if (storageItem is not null)
                         {
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_NAME, name);
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
-                            var notification = _notificationService.PopProgress(name, "Exporting...");
+                            var notification = _notificationService.PopProgress(
+                                name,
+                                "Exporting..."
+                            );
                             try
                             {
-                                var container = await _exporterAgent.ExportAsync(pack,
-                                                    model.SelectedExporterLabel,
-                                                    key,
-                                                    name,
-                                                    author,
-                                                    version);
+                                var container = await _exporterAgent.ExportAsync(
+                                    pack,
+                                    model.SelectedExporterLabel,
+                                    key,
+                                    name,
+                                    author,
+                                    version
+                                );
                                 notification.Report(33);
-                                await using var packed = await _exporterAgent.PackCompressedAsync(container);
+                                await using var packed = await _exporterAgent.PackCompressedAsync(
+                                    container
+                                );
                                 notification.Report(66);
                                 await using var stream = await storageItem.OpenWriteAsync();
                                 await packed.CopyToAsync(stream);
                                 notification.Report(100);
                                 await Task.Delay(TimeSpan.FromSeconds(1));
                                 var path = storageItem.TryGetLocalPath();
-                                _notificationService.PopMessage(path ?? "Unknown", "Export successfully");
+                                _notificationService.PopMessage(
+                                    path ?? "Unknown",
+                                    "Export successfully"
+                                );
                             }
                             catch (Exception ex)
                             {
@@ -270,7 +293,10 @@ public partial class MainWindowContext : ObservableObject
 
             try
             {
-                await File.WriteAllTextAsync(dataPath, JsonSerializer.Serialize(pack, FileHelper.SerializerOptions));
+                await File.WriteAllTextAsync(
+                    dataPath,
+                    JsonSerializer.Serialize(pack, FileHelper.SerializerOptions)
+                );
             }
             catch (Exception ex)
             {
@@ -293,14 +319,22 @@ public partial class MainWindowContext : ObservableObject
     {
         if (tracker != null)
         {
-            var path = Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key), "logs", "latest.log");
+            var path = Path.Combine(
+                PathDef.Default.DirectoryOfBuild(tracker.Key),
+                "logs",
+                "latest.log"
+            );
             if (File.Exists(path))
             {
                 TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new(path));
             }
             else
             {
-                _notificationService.PopMessage("Log file not found", "Failed to open log file", GrowlLevel.Warning);
+                _notificationService.PopMessage(
+                    "Log file not found",
+                    "Failed to open log file",
+                    GrowlLevel.Warning
+                );
             }
         }
     }
@@ -346,8 +380,9 @@ public partial class MainWindowContext : ObservableObject
     {
         if (key != null)
         {
-            _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                          typeof(InstancePropertiesView)));
+            _navigationService.Navigate<InstanceView>(
+                new InstanceViewModel.CompositeParameter(key, typeof(InstancePropertiesView))
+            );
         }
     }
 
@@ -356,8 +391,9 @@ public partial class MainWindowContext : ObservableObject
     {
         if (key != null)
         {
-            _navigationService.Navigate<InstanceView>(new InstanceViewModel.CompositeParameter(key,
-                                                          typeof(InstanceSetupView)));
+            _navigationService.Navigate<InstanceView>(
+                new InstanceViewModel.CompositeParameter(key, typeof(InstanceSetupView))
+            );
         }
     }
 
@@ -394,7 +430,13 @@ public partial class MainWindowContext : ObservableObject
         var list = new List<InstanceEntryModel>();
         foreach (var (key, item) in manager.Profiles)
         {
-            InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
+            InstanceEntryModel model = new(
+                key,
+                item.Name,
+                item.Setup.Version,
+                item.Setup.Loader,
+                item.Setup.Source
+            );
             model.LastPlayedAtRaw = _persistenceService.GetLastActivity(key)?.End;
             list.Add(model);
         }
@@ -418,7 +460,13 @@ public partial class MainWindowContext : ObservableObject
         else
         {
             // Install
-            exist = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
+            exist = new(
+                e.Key,
+                e.Value.Name,
+                e.Value.Setup.Version,
+                e.Value.Setup.Loader,
+                e.Value.Setup.Source
+            );
             _entries.AddOrUpdate(exist);
         }
 
@@ -472,16 +520,15 @@ public partial class MainWindowContext : ObservableObject
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         var model = new InstanceEntryModel(e.Key, e.Key, "N/A", null, null);
 
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
+        e.ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+            .Where(x => x.Any())
+            .Select(x => x.Last())
+            .Subscribe(x =>
             {
                 model.IsPending = !x.HasValue;
                 model.Progress = x ?? 0d;
             })
-           .DisposeWith(e);
+            .DisposeWith(e);
 
         e.StateUpdated += OnStateChanged;
         _entries.AddOrUpdate(model);
@@ -503,9 +550,13 @@ public partial class MainWindowContext : ObservableObject
                     {
                         model.State = InstanceEntryState.Idle;
                         _entries.Remove(model);
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceInstallingDangerNotificationTitle
-                                                                 .Replace("{0}", e.Key));
+                        _notificationService.PopMessage(
+                            e.FailureReason,
+                            Resources.MainWindow_InstanceInstallingDangerNotificationTitle.Replace(
+                                "{0}",
+                                e.Key
+                            )
+                        );
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -513,20 +564,21 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceInstallingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success,
-                                                        actions: new GrowlAction(Resources
-                                                               .MainWindow_InstanceInstallingSuccessNotificationOpenText,
-                                                            ViewInstanceCommand,
-                                                            e.Key),
-                                                        forceExpire: true);
+                        _notificationService.PopMessage(
+                            Resources.MainWindow_InstanceInstallingSuccessNotificationMessage,
+                            e.Key,
+                            GrowlLevel.Success,
+                            actions: new GrowlAction(
+                                Resources.MainWindow_InstanceInstallingSuccessNotificationOpenText,
+                                ViewInstanceCommand,
+                                e.Key
+                            ),
+                            forceExpire: true
+                        );
                     });
-                    _persistenceService.AppendAction(new(e.Key,
-                                                         PersistenceService.ActionKind.Install,
-                                                         null,
-                                                         e.Reference));
+                    _persistenceService.AppendAction(
+                        new(e.Key, PersistenceService.ActionKind.Install, null, e.Reference)
+                    );
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -552,16 +604,15 @@ public partial class MainWindowContext : ObservableObject
             return;
         }
 
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
+        e.ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+            .Where(x => x.Any())
+            .Select(x => x.Last())
+            .Subscribe(x =>
             {
                 model.IsPending = !x.HasValue;
                 model.Progress = x ?? 0d;
             })
-           .DisposeWith(e);
+            .DisposeWith(e);
 
         e.StateUpdated += OnStateChanged;
         return;
@@ -581,9 +632,13 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
-                                                                 .Replace("{0}", e.Key));
+                        _notificationService.PopMessage(
+                            e.FailureReason,
+                            Resources.MainWindow_InstanceUpdatingDangerNotificationTitle.Replace(
+                                "{0}",
+                                e.Key
+                            )
+                        );
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -591,19 +646,21 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success,
-                                                        true,
-                                                        new GrowlAction(Resources
-                                                                           .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
-                                                                        ViewInstanceCommand,
-                                                                        e.Key));
+                        _notificationService.PopMessage(
+                            Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
+                            e.Key,
+                            GrowlLevel.Success,
+                            true,
+                            new GrowlAction(
+                                Resources.MainWindow_InstanceUpdatingSuccessNotificationOpenText,
+                                ViewInstanceCommand,
+                                e.Key
+                            )
+                        );
                     });
-                    _persistenceService.AppendAction(new(e.Key,
-                                                         PersistenceService.ActionKind.Update,
-                                                         e.OldSource,
-                                                         e.NewSource));
+                    _persistenceService.AppendAction(
+                        new(e.Key, PersistenceService.ActionKind.Update, e.OldSource, e.NewSource)
+                    );
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -624,23 +681,21 @@ public partial class MainWindowContext : ObservableObject
             return;
         }
 
-        e
-           .StageStream.Subscribe(_ =>
+        e.StageStream.Subscribe(_ =>
             {
                 model.IsPending = true;
                 model.Progress = 0d;
             })
-           .DisposeWith(e);
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
+            .DisposeWith(e);
+        e.ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+            .Where(x => x.Any())
+            .Select(x => x.Last())
+            .Subscribe(x =>
             {
                 model.IsPending = false;
                 model.Progress = x.Item2 != 0 ? x.Item1 * 100d / x.Item2 : 0;
             })
-           .DisposeWith(e);
+            .DisposeWith(e);
 
         e.StateUpdated += OnStateChanged;
         return;
@@ -660,9 +715,13 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceDeployingNotificationTitle
-                                                                 .Replace("{0}", e.Key));
+                        _notificationService.PopMessage(
+                            e.FailureReason,
+                            Resources.MainWindow_InstanceDeployingNotificationTitle.Replace(
+                                "{0}",
+                                e.Key
+                            )
+                        );
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -670,10 +729,11 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceDeployingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success);
+                        _notificationService.PopMessage(
+                            Resources.MainWindow_InstanceDeployingSuccessNotificationMessage,
+                            e.Key,
+                            GrowlLevel.Success
+                        );
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -721,16 +781,17 @@ public partial class MainWindowContext : ObservableObject
                         model.State = InstanceEntryState.Idle;
 
                         // Determine if this is an account issue or game crash
-                        var isAccountIssue = e.FailureReason is AccountAuthenticationException
-                                                             or AggregateException
-                                                                {
-                                                                    InnerException: AccountAuthenticationException
-                                                                };
-                        var isGameCrash = e.FailureReason is ProcessFaultedException
-                                                          or AggregateException
-                                                             {
-                                                                 InnerException: ProcessFaultedException
-                                                             };
+                        var isAccountIssue =
+                            e.FailureReason
+                            is AccountAuthenticationException
+                                or AggregateException
+                                {
+                                    InnerException: AccountAuthenticationException
+                                };
+                        var isGameCrash =
+                            e.FailureReason
+                            is ProcessFaultedException
+                                or AggregateException { InnerException: ProcessFaultedException };
 
                         if (isAccountIssue)
                         {
@@ -740,19 +801,22 @@ public partial class MainWindowContext : ObservableObject
                         else if (isGameCrash)
                         {
                             // Game crash error
-                            _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceLaunchingDangerNotificationMessage
-                                                           .Replace("{0}", e.Key),
-                                                            Resources
-                                                               .MainWindow_InstanceLaunchingDangerNotificationTitle,
-                                                            GrowlLevel.Danger,
-                                                            actions:
-                                                            [
-                                                                new(Resources
-                                                                       .MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
-                                                                    DiagnoseGameCrashCommand,
-                                                                    e)
-                                                            ]);
+                            _notificationService.PopMessage(
+                                Resources.MainWindow_InstanceLaunchingDangerNotificationMessage.Replace(
+                                    "{0}",
+                                    e.Key
+                                ),
+                                Resources.MainWindow_InstanceLaunchingDangerNotificationTitle,
+                                GrowlLevel.Danger,
+                                actions:
+                                [
+                                    new(
+                                        Resources.MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
+                                        DiagnoseGameCrashCommand,
+                                        e
+                                    ),
+                                ]
+                            );
                         }
                         else
                         {
@@ -760,27 +824,36 @@ public partial class MainWindowContext : ObservableObject
                             _notificationService.PopMessage(e.FailureReason, e.Key);
                         }
                     });
-                    _persistenceService.AppendActivity(new(e.Key,
-                                                           e.StartedAt,
-                                                           DateTimeOffset.Now,
-                                                           e.Options.Account?.Uuid ?? string.Empty,
-                                                           false));
+                    _persistenceService.AppendActivity(
+                        new(
+                            e.Key,
+                            e.StartedAt,
+                            DateTimeOffset.Now,
+                            e.Options.Account?.Uuid ?? string.Empty,
+                            false
+                        )
+                    );
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceLaunchingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success);
+                        _notificationService.PopMessage(
+                            Resources.MainWindow_InstanceLaunchingSuccessNotificationMessage,
+                            e.Key,
+                            GrowlLevel.Success
+                        );
                     });
-                    _persistenceService.AppendActivity(new(e.Key,
-                                                           e.StartedAt,
-                                                           DateTimeOffset.Now,
-                                                           e.Options.Account?.Uuid ?? string.Empty,
-                                                           true));
+                    _persistenceService.AppendActivity(
+                        new(
+                            e.Key,
+                            e.StartedAt,
+                            DateTimeOffset.Now,
+                            e.Options.Account?.Uuid ?? string.Empty,
+                            true
+                        )
+                    );
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -805,9 +878,11 @@ public partial class MainWindowContext : ObservableObject
         var crashReportPath = FindLatestCrashReport(gameDir);
 
         // Extract loader info
-        var loaderLabel = profile?.Setup.Loader != null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
-                              ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
-                              : Resources.Enum_Vanilla;
+        var loaderLabel =
+            profile?.Setup.Loader != null
+            && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
+                : Resources.Enum_Vanilla;
 
         // Get Java info
         var javaVersion = tracker.JavaVersion?.ToString();
@@ -874,7 +949,7 @@ public partial class MainWindowContext : ObservableObject
             CrashReportPath = crashReportPath,
             LastLogLines = lastLogLines,
             ModCount = profile?.Setup.Packages.Count ?? 0,
-            CommandLine = tracker.CommandLine
+            CommandLine = tracker.CommandLine,
         };
     }
 
@@ -889,9 +964,9 @@ public partial class MainWindowContext : ObservableObject
             }
 
             var crashReports = Directory
-                              .GetFiles(crashReportsDir, "crash-*.txt")
-                              .OrderByDescending(File.GetLastWriteTime)
-                              .FirstOrDefault();
+                .GetFiles(crashReportsDir, "crash-*.txt")
+                .OrderByDescending(File.GetLastWriteTime)
+                .FirstOrDefault();
 
             return crashReports;
         }

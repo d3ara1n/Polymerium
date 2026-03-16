@@ -78,8 +78,10 @@ public static class AssetResourcePackHelper
         if (root.TryGetProperty("pack", out var packElement))
         {
             // 解析 pack_format
-            if (packElement.TryGetProperty("pack_format", out var formatElement)
-             && formatElement.ValueKind == JsonValueKind.Number)
+            if (
+                packElement.TryGetProperty("pack_format", out var formatElement)
+                && formatElement.ValueKind == JsonValueKind.Number
+            )
             {
                 metadata.PackFormat = formatElement.GetInt32();
             }
@@ -88,9 +90,10 @@ public static class AssetResourcePackHelper
             if (packElement.TryGetProperty("description", out var descElement))
             {
                 // description 可能是字符串或复杂的文本组件
-                metadata.Description = descElement.ValueKind == JsonValueKind.String
-                                           ? descElement.GetString()
-                                           : descElement.ToString();
+                metadata.Description =
+                    descElement.ValueKind == JsonValueKind.String
+                        ? descElement.GetString()
+                        : descElement.ToString();
             }
         }
 

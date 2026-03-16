@@ -29,7 +29,8 @@ public partial class PackDataModel : ModelBase
     [ObservableProperty]
     public partial bool JavaMaxMemory { get; set; }
 
-    partial void OnJavaMaxMemoryChanged(bool value) => SetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY, value);
+    partial void OnJavaMaxMemoryChanged(bool value) =>
+        SetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY, value);
 
     [ObservableProperty]
     public partial bool JavaAdditionalArguments { get; set; }
@@ -40,7 +41,8 @@ public partial class PackDataModel : ModelBase
     [ObservableProperty]
     public partial bool ConnectServer { get; set; }
 
-    partial void OnConnectServerChanged(bool value) => SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
+    partial void OnConnectServerChanged(bool value) =>
+        SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
 
     #endregion
 

@@ -6,7 +6,8 @@ namespace Polymerium.App.Models;
 /// <summary>
 ///     玩家统计数据条目模型（用于列表展示）
 /// </summary>
-public class AssetWorldPlayerStatEntryModel(PackIconLucideKind icon, string name, string value) : ModelBase
+public class AssetWorldPlayerStatEntryModel(PackIconLucideKind icon, string name, string value)
+    : ModelBase
 {
     #region Direct
 

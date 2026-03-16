@@ -22,7 +22,7 @@ public partial class NetworkCheckerWidget : WidgetBase
         ("PrismLauncher Meta", "https://meta.prismlauncher.org"),
         ("Starlight Skins", "https://starlightskins.lunareclipse.studio"),
         ("CurseForge API", "https://api.curseforge.com"),
-        ("Modrinth API", "https://api.modrinth.com")
+        ("Modrinth API", "https://api.modrinth.com"),
     ];
 
     private CancellationTokenSource? _cts;
@@ -59,19 +59,25 @@ public partial class NetworkCheckerWidget : WidgetBase
     #region Reactive
 
     public static readonly DirectProperty<NetworkCheckerWidget, bool> IsTestingProperty =
-        AvaloniaProperty.RegisterDirect<NetworkCheckerWidget, bool>(nameof(IsTesting),
-                                                                    o => o.IsTesting,
-                                                                    (o, v) => o.IsTesting = v);
+        AvaloniaProperty.RegisterDirect<NetworkCheckerWidget, bool>(
+            nameof(IsTesting),
+            o => o.IsTesting,
+            (o, v) => o.IsTesting = v
+        );
 
     public static readonly DirectProperty<NetworkCheckerWidget, bool> HasTestedProperty =
-        AvaloniaProperty.RegisterDirect<NetworkCheckerWidget, bool>(nameof(HasTested),
-                                                                    o => o.HasTested,
-                                                                    (o, v) => o.HasTested = v);
+        AvaloniaProperty.RegisterDirect<NetworkCheckerWidget, bool>(
+            nameof(HasTested),
+            o => o.HasTested,
+            (o, v) => o.HasTested = v
+        );
 
     public static readonly DirectProperty<NetworkCheckerWidget, string> ButtonTextProperty =
-        AvaloniaProperty.RegisterDirect<NetworkCheckerWidget, string>(nameof(ButtonText),
-                                                                      o => o.ButtonText,
-                                                                      (o, v) => o.ButtonText = v);
+        AvaloniaProperty.RegisterDirect<NetworkCheckerWidget, string>(
+            nameof(ButtonText),
+            o => o.ButtonText,
+            (o, v) => o.ButtonText = v
+        );
 
     public bool IsTesting
     {
@@ -119,7 +125,11 @@ public partial class NetworkCheckerWidget : WidgetBase
             var httpClientFactory = Program.Services?.GetService<IHttpClientFactory>();
             var httpClient = httpClientFactory?.CreateClient() ?? new HttpClient();
 
-            await NetworkCheckHelper.TestConnectionsAsync(Sites, httpClient, _cts?.Token ?? CancellationToken.None);
+            await NetworkCheckHelper.TestConnectionsAsync(
+                Sites,
+                httpClient,
+                _cts?.Token ?? CancellationToken.None
+            );
 
             HasTested = true;
             ButtonText = "Test Again";

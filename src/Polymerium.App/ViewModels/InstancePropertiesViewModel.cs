@@ -32,7 +32,9 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         NavigationService navigationService,
         ConfigurationService configurationService,
         PersistenceService persistenceService,
-        InstanceService instanceService) : base(bag, instanceManager, profileManager)
+        InstanceService instanceService
+    )
+        : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
@@ -49,7 +51,11 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     private string AccessOverrideString(string key)
     {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result != null)
+        if (
+            _owned != null
+            && _owned.Value.Overrides.TryGetValue(key, out var result)
+            && result != null
+        )
         {
             return result.ToString() ?? string.Empty;
         }
@@ -59,7 +65,11 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
     private bool AccessOverrideBoolean(string key)
     {
-        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is bool rv)
+        if (
+            _owned != null
+            && _owned.Value.Overrides.TryGetValue(key, out var result)
+            && result is bool rv
+        )
         {
             return rv;
         }
@@ -84,7 +94,6 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         }
     }
 
-
     private async Task WriteIconAsync()
     {
         // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
@@ -107,8 +116,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex,
-                                            Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle);
+            _notificationService.PopMessage(
+                ex,
+                Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle
+            );
         }
     }
 
@@ -137,18 +148,26 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         JavaHomeWatermark = Resources.InstancePropertiesView_JavaHomePlaceholder;
         JavaMaxMemoryOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
-        JavaAdditionalArgumentsOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
-        JavaAdditionalArgumentsWatermark =
-            !string.IsNullOrEmpty(_configurationService.Value.GameJavaAdditionalArguments)
-                ? _configurationService.Value.GameJavaAdditionalArguments
-                : Resources.InstancePropertiesView_JavaAdditionalArgumentsPlaceholder;
+        JavaAdditionalArgumentsOverride = AccessOverrideString(
+            Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS
+        );
+        JavaAdditionalArgumentsWatermark = !string.IsNullOrEmpty(
+            _configurationService.Value.GameJavaAdditionalArguments
+        )
+            ? _configurationService.Value.GameJavaAdditionalArguments
+            : Resources.InstancePropertiesView_JavaAdditionalArgumentsPlaceholder;
         WindowInitialHeightOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_HEIGHT);
-        WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
+        WindowInitialHeightWatermark =
+            _configurationService.Value.GameWindowInitialHeight.ToString();
         WindowInitialWidthOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_WIDTH);
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
-        BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
-        QuickConnectAddressOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
+        BehaviorResolveDependency = AccessOverrideBoolean(
+            Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY
+        );
+        QuickConnectAddressOverride = AccessOverrideString(
+            Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
+        );
         QuickConnectAddressWatermark = Resources.InstancePropertiesView_QuickConnectPlaceholder;
 
         #endregion
@@ -186,8 +205,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     {
         if (box != null)
         {
-            var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestJavaPrompt,
-                                                              Resources.InstancePropertiesView_RequestJavaTitle);
+            var path = await _overlayService.RequestFileAsync(
+                Resources.InstancePropertiesView_RequestJavaPrompt,
+                Resources.InstancePropertiesView_RequestJavaTitle
+            );
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -200,7 +221,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [RelayCommand]
-    private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
+    private void CheckIntegrity() =>
+        _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
 
     [RelayCommand]
     private void ResetInstance()
@@ -227,7 +249,9 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                     File.Delete(file);
                 }
 
-                _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Reset, null, null));
+                _persistenceService.AppendAction(
+                    new(Basic.Key, PersistenceService.ActionKind.Reset, null, null)
+                );
                 _notificationService.PopMessage("Instance reset", Basic.Key, GrowlLevel.Success);
             }
             catch (Exception ex)
@@ -269,10 +293,14 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
         var oldSource = Basic.Source;
         Basic.Source = null;
-        _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Unlock, oldSource, null));
-        _notificationService.PopMessage(Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
-                                        Basic.Key,
-                                        GrowlLevel.Success);
+        _persistenceService.AppendAction(
+            new(Basic.Key, PersistenceService.ActionKind.Unlock, oldSource, null)
+        );
+        _notificationService.PopMessage(
+            Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
+            Basic.Key,
+            GrowlLevel.Success
+        );
     }
 
     [RelayCommand]
@@ -285,8 +313,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private async Task SelectThumbnailAsync()
     {
-        var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestThumbnailPrompt,
-                                                          Resources.InstancePropertiesView_RequestThumbnailTitle);
+        var path = await _overlayService.RequestFileAsync(
+            Resources.InstancePropertiesView_RequestThumbnailPrompt,
+            Resources.InstancePropertiesView_RequestThumbnailTitle
+        );
         if (path != null)
         {
             if (FileHelper.IsBitmapFile(path))
@@ -296,11 +326,11 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             }
             else
             {
-                _notificationService.PopMessage(Resources
-                                                   .InstancePropertiesView_ThumbnailSettingDangerNotificationMessage,
-                                                Resources
-                                                   .InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
-                                                GrowlLevel.Warning);
+                _notificationService.PopMessage(
+                    Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationMessage,
+                    Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
+                    GrowlLevel.Warning
+                );
             }
         }
     }
@@ -308,15 +338,19 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private async Task RenameInstance()
     {
-        var name = await _overlayService.RequestInputAsync(Resources.InstancePropertiesView_RequestNamePrompt,
-                                                           Resources.InstancePropertiesView_RequestNameTitle,
-                                                           Basic.Name);
+        var name = await _overlayService.RequestInputAsync(
+            Resources.InstancePropertiesView_RequestNamePrompt,
+            Resources.InstancePropertiesView_RequestNameTitle,
+            Basic.Name
+        );
         if (name != null && _owned != null && !string.Equals(name, Basic.Name))
         {
             var oldName = NameOverwrite;
             NameOverwrite = name;
             _owned.Value.Name = name;
-            _persistenceService.AppendAction(new(Basic.Key, PersistenceService.ActionKind.Rename, oldName, name));
+            _persistenceService.AppendAction(
+                new(Basic.Key, PersistenceService.ActionKind.Rename, oldName, name)
+            );
         }
     }
 
@@ -346,7 +380,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [ObservableProperty]
     public partial string JavaHomeWatermark { get; set; } = string.Empty;
 
-    partial void OnJavaHomeOverrideChanged(string value) => WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
+    partial void OnJavaHomeOverrideChanged(string value) =>
+        WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
 
     [ObservableProperty]
     public partial string JavaMaxMemoryOverride { get; set; } = string.Empty;
@@ -355,8 +390,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     public partial string JavaMaxMemoryWatermark { get; set; } = string.Empty;
 
     partial void OnJavaMaxMemoryOverrideChanged(string value) =>
-        WriteOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
+        WriteOverride(
+            Profile.OVERRIDE_JAVA_MAX_MEMORY,
+            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
+        );
 
     [ObservableProperty]
     public partial string JavaAdditionalArgumentsOverride { get; set; } = string.Empty;
@@ -365,7 +402,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     public partial string JavaAdditionalArgumentsWatermark { get; set; } = string.Empty;
 
     partial void OnJavaAdditionalArgumentsOverrideChanged(string value) =>
-        WriteOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS, !string.IsNullOrEmpty(value) ? value : null);
+        WriteOverride(
+            Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+            !string.IsNullOrEmpty(value) ? value : null
+        );
 
     [ObservableProperty]
     public partial string WindowInitialHeightOverride { get; set; } = string.Empty;
@@ -374,8 +414,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     public partial string WindowInitialHeightWatermark { get; set; } = string.Empty;
 
     partial void OnWindowInitialHeightOverrideChanged(string value) =>
-        WriteOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
+        WriteOverride(
+            Profile.OVERRIDE_WINDOW_HEIGHT,
+            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
+        );
 
     [ObservableProperty]
     public partial string WindowInitialWidthOverride { get; set; } = string.Empty;
@@ -384,19 +426,22 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     public partial string WindowInitialWidthWatermark { get; set; } = string.Empty;
 
     partial void OnWindowInitialWidthOverrideChanged(string value) =>
-        WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH,
-                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
+        WriteOverride(
+            Profile.OVERRIDE_WINDOW_WIDTH,
+            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
+        );
 
     [ObservableProperty]
     public partial string QuickConnectAddressOverride { get; set; } = string.Empty;
-
 
     [ObservableProperty]
     public partial string QuickConnectAddressWatermark { get; set; } = string.Empty;
 
     partial void OnQuickConnectAddressOverrideChanged(string value) =>
-        WriteOverride(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, !string.IsNullOrEmpty(value) ? value : null);
-
+        WriteOverride(
+            Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER,
+            !string.IsNullOrEmpty(value) ? value : null
+        );
 
     [ObservableProperty]
     public partial bool BehaviorResolveDependency { get; set; }

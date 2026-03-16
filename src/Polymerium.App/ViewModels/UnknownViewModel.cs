@@ -18,7 +18,8 @@ public partial class UnknownViewModel(
     ViewBag bag,
     NotificationService notificationService,
     OverlayService overlayService,
-    ConfigurationService configurationService) : ViewModelBase
+    ConfigurationService configurationService
+) : ViewModelBase
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
@@ -39,7 +40,7 @@ public partial class UnknownViewModel(
             new("Information", ShowInformationCommand),
             new("Success", ShowSuccessCommand),
             new("Warning", ShowWarningCommand),
-            new("Danger", ShowDangerCommand)
+            new("Danger", ShowDangerCommand),
         ]);
 
         await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
@@ -69,13 +70,16 @@ public partial class UnknownViewModel(
     private void ShowInformation() => notificationService.PopMessage("Hello", "Hi there!");
 
     [RelayCommand]
-    private void ShowSuccess() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Success);
+    private void ShowSuccess() =>
+        notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Success);
 
     [RelayCommand]
-    private void ShowWarning() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Warning);
+    private void ShowWarning() =>
+        notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Warning);
 
     [RelayCommand]
-    private void ShowDanger() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Danger);
+    private void ShowDanger() =>
+        notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Danger);
 
     [RelayCommand]
     private void ShowToast()
@@ -87,24 +91,25 @@ public partial class UnknownViewModel(
         {
             var pop = new Button { Content = "POP" };
             pop.Click += (_, __) => PopToast();
-            overlayService.PopToast(new()
-            {
-                Header = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
-                Content = new StackPanel
+            overlayService.PopToast(
+                new()
                 {
-                    Spacing = 8d,
-                    Children =
+                    Header = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
+                    Content = new StackPanel
                     {
-                        new TextBlock
+                        Spacing = 8d,
+                        Children =
                         {
-                            Text =
-                                "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM"
+                            new TextBlock
+                            {
+                                Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
+                            },
+                            new TextBox(),
+                            pop,
                         },
-                        new TextBox(),
-                        pop
-                    }
+                    },
                 }
-            });
+            );
         }
     }
 
@@ -124,7 +129,12 @@ public partial class UnknownViewModel(
             drawer.Content = new StackPanel
             {
                 Spacing = 8d,
-                Children = { new TextBox { Text = $"DRAWER {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
+                Children =
+                {
+                    new TextBox { Text = $"DRAWER {Random.Shared.Next(1000, 9999)}" },
+                    pop,
+                    dismiss,
+                },
             };
             overlayService.PopSidebar(drawer);
         }
@@ -146,7 +156,12 @@ public partial class UnknownViewModel(
             modal.Content = new StackPanel
             {
                 Spacing = 8d,
-                Children = { new TextBox { Text = $"MODAL {Random.Shared.Next(1000, 9999)}" }, pop, dismiss }
+                Children =
+                {
+                    new TextBox { Text = $"MODAL {Random.Shared.Next(1000, 9999)}" },
+                    pop,
+                    dismiss,
+                },
             };
             overlayService.PopModal(modal);
         }
@@ -162,18 +177,16 @@ public partial class UnknownViewModel(
         {
             var pop = new Button { Content = "POP" };
             pop.Click += (_, __) => PopDialog();
-            overlayService.PopDialog(new()
-            {
-                IsPrimaryButtonVisible = true,
-                Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
-                Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
-                Result = Program.MagicWords,
-                Content = new StackPanel
+            overlayService.PopDialog(
+                new()
                 {
-                    Spacing = 8d,
-                    Children = { new TextBox(), pop }
+                    IsPrimaryButtonVisible = true,
+                    Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
+                    Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
+                    Result = Program.MagicWords,
+                    Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } },
                 }
-            });
+            );
         }
     }
 
@@ -182,52 +195,58 @@ public partial class UnknownViewModel(
 
     [RelayCommand]
     private void Debug() =>
-        overlayService.PopModal(new ProfileRuleModal
-        {
-            Rule = new(new() { Selector = new() }),
-            OverlayService = overlayService,
-            Packages = []
-        });
+        overlayService.PopModal(
+            new ProfileRuleModal
+            {
+                Rule = new(new() { Selector = new() }),
+                OverlayService = overlayService,
+                Packages = [],
+            }
+        );
 
     [RelayCommand]
     private void ShowIntro() =>
-        overlayService.PopModal(new OobeModal
-        {
-            ConfigurationService = configurationService,
-            OverlayService = overlayService,
-            NotificationService = notificationService
-        });
+        overlayService.PopModal(
+            new OobeModal
+            {
+                ConfigurationService = configurationService,
+                OverlayService = overlayService,
+                NotificationService = notificationService,
+            }
+        );
 
     [RelayCommand]
     private void ShowDiagnosis() =>
-        overlayService.PopModal(new GameCrashReportModal
-        {
-            Report = new()
+        overlayService.PopModal(
+            new GameCrashReportModal
             {
-                CrashReportPath =
-                    "C:\\Users\\HuskyT\\Desktop\\crash-2023-09-19_17.17.57-client.txt",
-                GameDirectory = "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft",
-                InstanceKey = "cherry_picks",
-                InstanceName = "Cherry Picks",
-                LaunchTime = DateTimeOffset.Now.AddHours(-1),
-                CrashTime = DateTimeOffset.Now,
-                ExceptionMessage = "I USED TO RULE THE WORLD",
-                MinecraftVersion = "1.19.2",
-                LoaderLabel = "Fabric 0.14.12",
-                OperatingSystem = "Windows 10",
-                InstalledMemory =
-                    $"{double.Round((double)GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024 / 1024)} GB",
-                JavaVersion = "17",
-                JavaPath = "C:\\Program Files\\Java\\jdk-17.0.8",
-                AllocatedMemory = "8 GB",
-                LogFilePath =
-                    "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft\\logs\\latest.log",
-                LastLogLines = "ALIVE OR DEAD VERY LONG LOG THAT DONT TRIM",
-                ModCount = 10,
-                CommandLine = "java -jar fabric-loader-0.14.12.jar",
-                ExitCode = 1
+                Report = new()
+                {
+                    CrashReportPath =
+                        "C:\\Users\\HuskyT\\Desktop\\crash-2023-09-19_17.17.57-client.txt",
+                    GameDirectory = "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft",
+                    InstanceKey = "cherry_picks",
+                    InstanceName = "Cherry Picks",
+                    LaunchTime = DateTimeOffset.Now.AddHours(-1),
+                    CrashTime = DateTimeOffset.Now,
+                    ExceptionMessage = "I USED TO RULE THE WORLD",
+                    MinecraftVersion = "1.19.2",
+                    LoaderLabel = "Fabric 0.14.12",
+                    OperatingSystem = "Windows 10",
+                    InstalledMemory =
+                        $"{double.Round((double)GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024 / 1024)} GB",
+                    JavaVersion = "17",
+                    JavaPath = "C:\\Program Files\\Java\\jdk-17.0.8",
+                    AllocatedMemory = "8 GB",
+                    LogFilePath =
+                        "C:\\Users\\HuskyT\\AppData\\Roaming\\.minecraft\\logs\\latest.log",
+                    LastLogLines = "ALIVE OR DEAD VERY LONG LOG THAT DONT TRIM",
+                    ModCount = 10,
+                    CommandLine = "java -jar fabric-loader-0.14.12.jar",
+                    ExitCode = 1,
+                },
             }
-        });
+        );
 
     #endregion
 }

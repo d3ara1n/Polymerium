@@ -10,7 +10,6 @@ public partial class UnknownView : Page
 {
     public UnknownView() => InitializeComponent();
 
-
     private void ThemeSwitchButton_OnClick(object? sender, RoutedEventArgs e)
     {
         if (Application.Current != null)

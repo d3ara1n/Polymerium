@@ -2,7 +2,8 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class JavaInstallationModel(string path, string? vendor, string? version, int? major) : ModelBase
+public class JavaInstallationModel(string path, string? vendor, string? version, int? major)
+    : ModelBase
 {
     #region Direct
 

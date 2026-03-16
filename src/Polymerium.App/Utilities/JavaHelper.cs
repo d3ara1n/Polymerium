@@ -13,23 +13,32 @@ public static class JavaHelper
     public static JavaHomeLocatorDelegate MakeLocator(
         Profile first,
         Configuration secondary,
-        bool withFallback = true) =>
-        major => Locate(major, first, secondary, withFallback);
+        bool withFallback = true
+    ) => major => Locate(major, first, secondary, withFallback);
 
-    private static string Locate(uint major, Profile first, Configuration secondary, bool withFallback = true)
+    private static string Locate(
+        uint major,
+        Profile first,
+        Configuration secondary,
+        bool withFallback = true
+    )
     {
-        var home = first.GetOverride(Profile.OVERRIDE_JAVA_HOME,
-                                     major switch
-                                     {
-                                         8 => secondary.RuntimeJavaHome8,
-                                         11 => secondary.RuntimeJavaHome11,
-                                         16 or 17 => secondary.RuntimeJavaHome17,
-                                         21 => secondary.RuntimeJavaHome21,
-                                         24 or 25 => secondary.RuntimeJavaHome25,
-                                         _ => throw new ArgumentOutOfRangeException(nameof(major),
-                                                  major,
-                                                  $"Unsupported java version: {major}")
-                                     });
+        var home = first.GetOverride(
+            Profile.OVERRIDE_JAVA_HOME,
+            major switch
+            {
+                8 => secondary.RuntimeJavaHome8,
+                11 => secondary.RuntimeJavaHome11,
+                16 or 17 => secondary.RuntimeJavaHome17,
+                21 => secondary.RuntimeJavaHome21,
+                24 or 25 => secondary.RuntimeJavaHome25,
+                _ => throw new ArgumentOutOfRangeException(
+                    nameof(major),
+                    major,
+                    $"Unsupported java version: {major}"
+                ),
+            }
+        );
         if (!string.IsNullOrEmpty(home) && Directory.Exists(home))
         {
             return home;

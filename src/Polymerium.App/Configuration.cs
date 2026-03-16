@@ -71,24 +71,33 @@ public class Configuration
 
     public static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
 
-    public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
+    public bool ApplicationSuperPowerActivated { get; set; } =
+        AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
 
-    public bool ApplicationTitleBarVisibility { get; set; } = AccessDefault<bool>(APPLICATION_TITLEBAR_VISIBILITY);
-    public bool ApplicationLeftPanelMode { get; set; } = AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);
-    public AccentColor ApplicationStyleAccent { get; set; } = AccessDefault<AccentColor>(APPLICATION_STYLE_ACCENT);
-    public CornerStyle ApplicationStyleCorner { get; set; } = AccessDefault<CornerStyle>(APPLICATION_STYLE_CORNER);
-    public int ApplicationStyleBackground { get; set; } = AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
-    public int ApplicationStyleThemeVariant { get; set; } = AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);
+    public bool ApplicationTitleBarVisibility { get; set; } =
+        AccessDefault<bool>(APPLICATION_TITLEBAR_VISIBILITY);
+    public bool ApplicationLeftPanelMode { get; set; } =
+        AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);
+    public AccentColor ApplicationStyleAccent { get; set; } =
+        AccessDefault<AccentColor>(APPLICATION_STYLE_ACCENT);
+    public CornerStyle ApplicationStyleCorner { get; set; } =
+        AccessDefault<CornerStyle>(APPLICATION_STYLE_CORNER);
+    public int ApplicationStyleBackground { get; set; } =
+        AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
+    public int ApplicationStyleThemeVariant { get; set; } =
+        AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);
     public string ApplicationLanguage { get; set; } = AccessDefault<string>(APPLICATION_LANGUAGE);
     public int InterfaceSetupLayout { get; set; } = AccessDefault<int>(INTERFACE_SETUP_LAYOUT);
-    public int InterfaceMarketplaceLayout { get; set; } = AccessDefault<int>(INTERFACE_MARKETPLACE_LAYOUT);
+    public int InterfaceMarketplaceLayout { get; set; } =
+        AccessDefault<int>(INTERFACE_MARKETPLACE_LAYOUT);
     public string RuntimeJavaHome8 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_8);
     public string RuntimeJavaHome11 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_11);
     public string RuntimeJavaHome17 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_17);
     public string RuntimeJavaHome21 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_21);
     public string RuntimeJavaHome25 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_25);
     public uint GameJavaMaxMemory { get; set; } = AccessDefault<uint>(GAME_JAVA_MAX_MEMORY);
-    public string GameJavaAdditionalArguments { get; set; } = AccessDefault<string>(GAME_JAVA_ADDITIONAL_ARGUMENTS);
+    public string GameJavaAdditionalArguments { get; set; } =
+        AccessDefault<string>(GAME_JAVA_ADDITIONAL_ARGUMENTS);
     public uint GameWindowInitialWidth { get; set; } = AccessDefault<uint>(GAME_WINDOW_WIDTH);
     public uint GameWindowInitialHeight { get; set; } = AccessDefault<uint>(GAME_WINDOW_HEIGHT);
     public int NetworkProxyMode { get; set; } = AccessDefault<int>(NETWORK_PROXY_MODE);
@@ -96,10 +105,13 @@ public class Configuration
     public bool NetworkProxyEnabled { get; set; } = AccessDefault<bool>(NETWORK_PROXY_ENABLED);
     public string NetworkProxyAddress { get; set; } = AccessDefault<string>(NETWORK_PROXY_ADDRESS);
     public uint NetworkProxyPort { get; set; } = AccessDefault<uint>(NETWORK_PROXY_PORT);
-    public string NetworkProxyUsername { get; set; } = AccessDefault<string>(NETWORK_PROXY_USERNAME);
-    public string NetworkProxyPassword { get; set; } = AccessDefault<string>(NETWORK_PROXY_PASSWORD);
+    public string NetworkProxyUsername { get; set; } =
+        AccessDefault<string>(NETWORK_PROXY_USERNAME);
+    public string NetworkProxyPassword { get; set; } =
+        AccessDefault<string>(NETWORK_PROXY_PASSWORD);
     public int UpdateSource { get; set; } = AccessDefault<int>(UPDATE_SOURCE);
-    public string UpdateMirrorChyanCdk { get; set; } = AccessDefault<string>(UPDATE_MIRRORCHYAN_CDK);
+    public string UpdateMirrorChyanCdk { get; set; } =
+        AccessDefault<string>(UPDATE_MIRRORCHYAN_CDK);
 
     public static T AccessDefault<T>(string key) => (T)Defaults[key]!;
 }

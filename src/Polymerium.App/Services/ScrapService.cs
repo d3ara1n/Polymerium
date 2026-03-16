@@ -31,7 +31,8 @@ public class ScrapService : IDisposable
 
     #region IDisposable Members
 
-    public void Dispose() => _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
+    public void Dispose() =>
+        _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
 
     #endregion
 
@@ -43,34 +44,41 @@ public class ScrapService : IDisposable
             _buffers.Add(e.Key, buffer);
         }
 
-        e
-           .ScrapStream.Subscribe(x =>
-                                  {
-                                      if (x is
-                                          {
-                                              Level: { } level, Time: { } time, Thread: { } thread, Sender: { } sender
-                                          })
-                                      {
-                                          buffer.AddLast(new(x.Message, level, time, thread, sender));
-                                      }
-                                      else
-                                      {
-                                          var last = buffer.LastOrDefault();
+        e.ScrapStream.Subscribe(
+                x =>
+                {
+                    if (
+                        x is
+                        { Level: { } level, Time: { } time, Thread: { } thread, Sender: { } sender }
+                    )
+                    {
+                        buffer.AddLast(new(x.Message, level, time, thread, sender));
+                    }
+                    else
+                    {
+                        var last = buffer.LastOrDefault();
 
-                                          buffer.AddLast(new(x.Message,
-                                                             last?.Level ?? ScrapLevel.Information,
-                                                             DateTimeOffset.Now,
-                                                             null,
-                                                             null));
-                                      }
-                                  },
-                                  () =>
-                                  {
-                                      _buffers.Remove(e.Key);
-                                  })
-           .DisposeWith(e);
+                        buffer.AddLast(
+                            new(
+                                x.Message,
+                                last?.Level ?? ScrapLevel.Information,
+                                DateTimeOffset.Now,
+                                null,
+                                null
+                            )
+                        );
+                    }
+                },
+                () =>
+                {
+                    _buffers.Remove(e.Key);
+                }
+            )
+            .DisposeWith(e);
     }
 
-    public bool TryGetBuffer(string key, [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
-        _buffers.TryGetValue(key, out buffer);
+    public bool TryGetBuffer(
+        string key,
+        [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer
+    ) => _buffers.TryGetValue(key, out buffer);
 }

@@ -20,13 +20,17 @@ namespace Polymerium.App;
 
 public partial class MainWindow : AppWindow
 {
-    public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
-        AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
+    public static readonly StyledProperty<bool> IsLeftPanelModeProperty = AvaloniaProperty.Register<
+        MainWindow,
+        bool
+    >(nameof(IsLeftPanelMode));
 
     public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
-                                                          o => o.IsTitleBarVisible,
-                                                          (o, v) => o.IsTitleBarVisible = v);
+        AvaloniaProperty.RegisterDirect<MainWindow, bool>(
+            nameof(IsTitleBarVisible),
+            o => o.IsTitleBarVisible,
+            (o, v) => o.IsTitleBarVisible = v
+        );
 
     public MainWindow()
     {
@@ -46,7 +50,6 @@ public partial class MainWindow : AppWindow
         set => SetAndRaise(IsTitleBarVisibleProperty, ref field, value);
     }
 
-
     public static MainWindow Instance { get; private set; } = null!;
 
     public Frame.PageActivatorDelegate PageActivator
@@ -63,12 +66,12 @@ public partial class MainWindow : AppWindow
                 WindowTransparencyLevel.Mica,
                 WindowTransparencyLevel.AcrylicBlur,
                 WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None
+                WindowTransparencyLevel.None,
             ],
             1 => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.None],
             2 => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
             3 => [WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
-            _ => [WindowTransparencyLevel.None]
+            _ => [WindowTransparencyLevel.None],
         };
 
     internal void SetThemeVariantByIndex(int index) =>
@@ -77,7 +80,7 @@ public partial class MainWindow : AppWindow
             0 => ThemeVariant.Default,
             1 => ThemeVariant.Light,
             2 => ThemeVariant.Dark,
-            _ => ThemeVariant.Default
+            _ => ThemeVariant.Default,
         };
 
     internal void SetColorVariant(AccentColor accent)
@@ -128,6 +131,32 @@ public partial class MainWindow : AppWindow
         }
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == IsLeftPanelModeProperty)
+        {
+            var mode = change.GetNewValue<bool>();
+            ApplySidebarPlacement(mode);
+        }
+
+        // IsTitleBarVisible 默认值是 false，此时连锁的连个属性也处于默认值，刚好
+        if (change.Property == IsTitleBarVisibleProperty)
+        {
+            var visible = change.GetNewValue<bool>();
+            if (visible)
+            {
+                ExtendClientAreaToDecorationsHint = true;
+                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
+            }
+            else
+            {
+                ExtendClientAreaToDecorationsHint = false;
+                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
+            }
+        }
+    }
+
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
@@ -137,6 +166,7 @@ public partial class MainWindow : AppWindow
     internal bool CanGoBack() => Root.CanGoBack;
 
     internal void GoBack() => Root.GoBack();
+
     internal void ClearHistory() => Root.ClearHistory();
 
     #endregion
@@ -223,31 +253,4 @@ public partial class MainWindow : AppWindow
     }
 
     #endregion
-
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-        if (change.Property == IsLeftPanelModeProperty)
-        {
-            var mode = change.GetNewValue<bool>();
-            ApplySidebarPlacement(mode);
-        }
-
-        // IsTitleBarVisible 默认值是 false，此时连锁的连个属性也处于默认值，刚好
-        if (change.Property == IsTitleBarVisibleProperty)
-        {
-            var visible = change.GetNewValue<bool>();
-            if (visible)
-            {
-                ExtendClientAreaToDecorationsHint = true;
-                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
-            }
-            else
-            {
-                ExtendClientAreaToDecorationsHint = false;
-                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
-            }
-        }
-    }
 }

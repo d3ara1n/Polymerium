@@ -18,7 +18,8 @@ public partial class ExhibitModel(
     IReadOnlyList<string> tags,
     DateTimeOffset updatedAt,
     ulong downloads,
-    Uri reference) : ModelBase
+    Uri reference
+) : ModelBase
 {
     #region Direct
 

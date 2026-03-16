@@ -16,7 +16,8 @@ namespace Polymerium.App.ViewModels;
 public partial class InstanceDashboardViewModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    ProfileManager profileManager
+) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Overrides
 
@@ -85,11 +86,11 @@ public partial class InstanceDashboardViewModel(
         // 这里不在乎是否是哪个实际目录，因为最终都会出现在 build/logs 中
         Sources.Clear();
         var files = new[] { "latest.log", "debug.log" }
-                   .Select(x => new FileLogSourceModel
-                   {
-                       Path = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs", x)
-                   })
-                   .ToList();
+            .Select(x => new FileLogSourceModel
+            {
+                Path = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs", x),
+            })
+            .ToList();
         var live = new LiveLogSourceModel();
         Sources.Add(live);
         foreach (var item in files)

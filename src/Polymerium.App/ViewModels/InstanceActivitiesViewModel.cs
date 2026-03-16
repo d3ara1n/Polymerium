@@ -27,7 +27,8 @@ public partial class InstanceActivitiesViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     DataService dataService,
-    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService
+) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Other
 
@@ -36,9 +37,14 @@ public partial class InstanceActivitiesViewModel(
         try
         {
             // Try to get the ControlAccentInteractiveBackgroundBrush from Avalonia resources
-            if (Application.Current?.TryGetResource("ControlAccentInteractiveBackgroundBrush", null, out var resource)
-             == true
-             && resource is SolidColorBrush brush)
+            if (
+                Application.Current?.TryGetResource(
+                    "ControlAccentInteractiveBackgroundBrush",
+                    null,
+                    out var resource
+                ) == true
+                && resource is SolidColorBrush brush
+            )
             {
                 var avaloniaColor = brush.Color;
                 // Convert Avalonia Color to SkiaSharp SKColor
@@ -60,51 +66,61 @@ public partial class InstanceActivitiesViewModel(
         {
             var actions = persistenceService.GetLatestActions(Basic.Key, since);
             var tasks = actions
-                       .Where(x => !(x.Old == null && x.New == null))
-                       .Select(async x =>
-                        {
-                            Package? oldPackage = null;
-                            Package? newPackage = null;
-                            if (x.Old != null && PackageHelper.TryParse(x.Old, out var old))
-                            {
-                                oldPackage = await dataService.ResolvePackageAsync(old.Label,
-                                                 old.Namespace,
-                                                 old.Pid,
-                                                 old.Vid,
-                                                 Filter.None);
-                            }
+                .Where(x => !(x.Old == null && x.New == null))
+                .Select(async x =>
+                {
+                    Package? oldPackage = null;
+                    Package? newPackage = null;
+                    if (x.Old != null && PackageHelper.TryParse(x.Old, out var old))
+                    {
+                        oldPackage = await dataService.ResolvePackageAsync(
+                            old.Label,
+                            old.Namespace,
+                            old.Pid,
+                            old.Vid,
+                            Filter.None
+                        );
+                    }
 
-                            if (x.New != null && PackageHelper.TryParse(x.New, out var @new))
-                            {
-                                newPackage = await dataService.ResolvePackageAsync(@new.Label,
-                                                 @new.Namespace,
-                                                 @new.Pid,
-                                                 @new.Vid,
-                                                 Filter.None);
-                            }
+                    if (x.New != null && PackageHelper.TryParse(x.New, out var @new))
+                    {
+                        newPackage = await dataService.ResolvePackageAsync(
+                            @new.Label,
+                            @new.Namespace,
+                            @new.Pid,
+                            @new.Vid,
+                            Filter.None
+                        );
+                    }
 
-                            var thumbnail = newPackage?.Thumbnail != null || oldPackage?.Thumbnail != null
-                                                ? await dataService.GetBitmapAsync(newPackage?.Thumbnail
-                                                   ?? oldPackage?.Thumbnail
-                                                   ?? throw new NotImplementedException())
-                                                : AssetUriIndex.DirtImageBitmap;
+                    var thumbnail =
+                        newPackage?.Thumbnail != null || oldPackage?.Thumbnail != null
+                            ? await dataService.GetBitmapAsync(
+                                newPackage?.Thumbnail
+                                    ?? oldPackage?.Thumbnail
+                                    ?? throw new NotImplementedException()
+                            )
+                            : AssetUriIndex.DirtImageBitmap;
 
-                            return new InstanceActionModel(newPackage?.ProjectId
-                                                        ?? oldPackage?.ProjectId ?? string.Empty,
-                                                           newPackage?.ProjectName
-                                                        ?? oldPackage?.ProjectName ?? string.Empty,
-                                                           oldPackage?.VersionId,
-                                                           oldPackage?.VersionName,
-                                                           newPackage?.VersionId,
-                                                           newPackage?.VersionName,
-                                                           thumbnail,
-                                                           x.At,
-                                                           false);
-                        })
-                       .ToArray();
+                    return new InstanceActionModel(
+                        newPackage?.ProjectId ?? oldPackage?.ProjectId ?? string.Empty,
+                        newPackage?.ProjectName ?? oldPackage?.ProjectName ?? string.Empty,
+                        oldPackage?.VersionId,
+                        oldPackage?.VersionName,
+                        newPackage?.VersionId,
+                        newPackage?.VersionName,
+                        thumbnail,
+                        x.At,
+                        false
+                    );
+                })
+                .ToArray();
 
             await Task.WhenAll(tasks);
-            var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
+            var results = tasks
+                .Where(x => x.IsCompletedSuccessfully)
+                .Select(x => x.Result)
+                .ToList();
             return new InstanceActionCollection(results);
         });
         PagedActions = lazy;
@@ -120,37 +136,59 @@ public partial class InstanceActivitiesViewModel(
         SinceDayIndex = 0;
 
         int[] days = [-6, -5, -4, -3, -2, -1, 0];
-        var times = days
-                   .Select(x => persistenceService.GetDayPlayTime(Basic.Key, DateTime.Now.AddDays(x)))
-                   .Select(x => x.TotalHours)
-                   .ToArray();
+        var times = days.Select(x =>
+                persistenceService.GetDayPlayTime(Basic.Key, DateTime.Now.AddDays(x))
+            )
+            .Select(x => x.TotalHours)
+            .ToArray();
 
         // Get accent color from Avalonia resources
         var accentColor = GetAccentColorFromResources();
 
         WeekSeries =
         [
-            new ColumnSeries<double>(times) { Name = "Play Time (Hours)", Fill = new SolidColorPaint(accentColor) }
+            new ColumnSeries<double>(times)
+            {
+                Name = "Play Time (Hours)",
+                Fill = new SolidColorPaint(accentColor),
+            },
         ];
 
         // Configure X-axis with day labels
-        var dayLabels = days
-                       .Select(x => DateTimeOffset.Now.AddDays(x).DayOfWeek switch
-                        {
-                            DayOfWeek.Sunday => "Sun",
-                            DayOfWeek.Monday => "Mon",
-                            DayOfWeek.Tuesday => "Tue",
-                            DayOfWeek.Wednesday => "Wed",
-                            DayOfWeek.Thursday => "Thu",
-                            DayOfWeek.Friday => "Fri",
-                            DayOfWeek.Saturday => "Sat",
-                            _ => throw new ArgumentOutOfRangeException(nameof(x), x, null)
-                        })
-                       .ToArray();
-        XAxes = [new() { Labels = dayLabels, ForceStepToMin = true, MinStep = 1 }];
+        var dayLabels = days.Select(x =>
+                DateTimeOffset.Now.AddDays(x).DayOfWeek switch
+                {
+                    DayOfWeek.Sunday => "Sun",
+                    DayOfWeek.Monday => "Mon",
+                    DayOfWeek.Tuesday => "Tue",
+                    DayOfWeek.Wednesday => "Wed",
+                    DayOfWeek.Thursday => "Thu",
+                    DayOfWeek.Friday => "Fri",
+                    DayOfWeek.Saturday => "Sat",
+                    _ => throw new ArgumentOutOfRangeException(nameof(x), x, null),
+                }
+            )
+            .ToArray();
+        XAxes =
+        [
+            new()
+            {
+                Labels = dayLabels,
+                ForceStepToMin = true,
+                MinStep = 1,
+            },
+        ];
 
         // Configure Y-axis for hours
-        YAxes = [new() { Name = "Hours", MinLimit = 0, Labeler = value => $"{value:F1}h" }];
+        YAxes =
+        [
+            new()
+            {
+                Name = "Hours",
+                MinLimit = 0,
+                Labeler = value => $"{value:F1}h",
+            },
+        ];
 
         TotalPlayTimeRank = persistenceService.GetTotalPlayTimeRank(Basic.Key);
         SessionCount = persistenceService.GetSessionCount(Basic.Key);
@@ -172,21 +210,22 @@ public partial class InstanceActivitiesViewModel(
         return Task.CompletedTask;
     }
 
-
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
 
         if (e.PropertyName == nameof(SinceDayIndex))
         {
-            var since = DateTimeOffset.Now.AddDays(SinceDayIndex switch
-            {
-                0 => -1,
-                1 => -7,
-                2 => -30,
-                3 => -365,
-                _ => -114514
-            });
+            var since = DateTimeOffset.Now.AddDays(
+                SinceDayIndex switch
+                {
+                    0 => -1,
+                    1 => -7,
+                    2 => -30,
+                    3 => -365,
+                    _ => -114514,
+                }
+            );
             LoadPage(since);
         }
     }
@@ -232,7 +271,8 @@ public partial class InstanceActivitiesViewModel(
     public partial int CrashCount { get; set; }
 
     // 正常运行率（计算属性）
-    public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
+    public double SuccessRate =>
+        SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
 
     // Statistics Tab 属性
     // 最后一次游戏时间
@@ -251,7 +291,8 @@ public partial class InstanceActivitiesViewModel(
     public double LongestSessionHours => LongestSessionRaw.TotalHours;
 
     // 平均每次游戏时长（计算属性）
-    public double AverageSessionMinutes => SessionCount > 0 ? TotalPlayTimeRaw.TotalMinutes / SessionCount : 0;
+    public double AverageSessionMinutes =>
+        SessionCount > 0 ? TotalPlayTimeRaw.TotalMinutes / SessionCount : 0;
 
     // Trends Tab 属性
     // 占总游戏时间百分比
@@ -275,11 +316,11 @@ public partial class InstanceActivitiesViewModel(
     // 周对比变化率（计算属性）
     public double WeekChangePercentage =>
         LastWeekPlayTimeRaw.TotalHours > 0
-            ?
-            (ThisWeekPlayTimeRaw.TotalHours - LastWeekPlayTimeRaw.TotalHours) / LastWeekPlayTimeRaw.TotalHours * 100
-            : ThisWeekPlayTimeRaw.TotalHours > 0
-                ? 100
-                : 0;
+            ? (ThisWeekPlayTimeRaw.TotalHours - LastWeekPlayTimeRaw.TotalHours)
+                / LastWeekPlayTimeRaw.TotalHours
+                * 100
+        : ThisWeekPlayTimeRaw.TotalHours > 0 ? 100
+        : 0;
 
     #endregion
 }

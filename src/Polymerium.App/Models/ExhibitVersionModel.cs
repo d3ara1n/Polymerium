@@ -18,7 +18,8 @@ public class ExhibitVersionModel(
     DateTimeOffset publishedAt,
     ulong downloadCount,
     ReleaseType type,
-    string purl) : ModelBase
+    string purl
+) : ModelBase
 {
     #region Direct
 

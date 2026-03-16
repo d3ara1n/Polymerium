@@ -40,7 +40,9 @@ public partial class AssetModModel : ModelBase
     public string Description => Metadata.Description ?? Resources.Enum_Unknown;
 
     public string Author =>
-        Metadata.Authors is { Length: > 0 } ? string.Join(", ", Metadata.Authors) : Resources.Enum_Unknown;
+        Metadata.Authors is { Length: > 0 }
+            ? string.Join(", ", Metadata.Authors)
+            : Resources.Enum_Unknown;
 
     #endregion
 

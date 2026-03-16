@@ -36,7 +36,7 @@ public partial class ProxySettingsDialog : Dialog
         {
             ProxyProtocol.Socks4 => new($"socks4://{ProxyAddress}:{port}"),
             ProxyProtocol.Socks5 => new($"socks5://{ProxyAddress}:{port}"),
-            _ => new Uri($"http://{ProxyAddress}:{port}")
+            _ => new Uri($"http://{ProxyAddress}:{port}"),
         };
 
         var proxy = new WebProxy(proxyUri);
@@ -58,50 +58,67 @@ public partial class ProxySettingsDialog : Dialog
     #region Avalonia Properties
 
     public static readonly DirectProperty<ProxySettingsDialog, int> SelectedModeIndexProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, int>(nameof(SelectedModeIndex),
-                                                                  o => o.SelectedModeIndex,
-                                                                  (o, v) => o.SelectedModeIndex = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, int>(
+            nameof(SelectedModeIndex),
+            o => o.SelectedModeIndex,
+            (o, v) => o.SelectedModeIndex = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, int> SelectedProtocolIndexProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, int>(nameof(SelectedProtocolIndex),
-                                                                  o => o.SelectedProtocolIndex,
-                                                                  (o, v) => o.SelectedProtocolIndex = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, int>(
+            nameof(SelectedProtocolIndex),
+            o => o.SelectedProtocolIndex,
+            (o, v) => o.SelectedProtocolIndex = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, string> ProxyAddressProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(nameof(ProxyAddress),
-                                                                     o => o.ProxyAddress,
-                                                                     (o, v) => o.ProxyAddress = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(
+            nameof(ProxyAddress),
+            o => o.ProxyAddress,
+            (o, v) => o.ProxyAddress = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, string> ProxyPortProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(nameof(ProxyPort),
-                                                                     o => o.ProxyPort,
-                                                                     (o, v) => o.ProxyPort = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(
+            nameof(ProxyPort),
+            o => o.ProxyPort,
+            (o, v) => o.ProxyPort = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, string> ProxyUsernameProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(nameof(ProxyUsername),
-                                                                     o => o.ProxyUsername,
-                                                                     (o, v) => o.ProxyUsername = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(
+            nameof(ProxyUsername),
+            o => o.ProxyUsername,
+            (o, v) => o.ProxyUsername = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, string> ProxyPasswordProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(nameof(ProxyPassword),
-                                                                     o => o.ProxyPassword,
-                                                                     (o, v) => o.ProxyPassword = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(
+            nameof(ProxyPassword),
+            o => o.ProxyPassword,
+            (o, v) => o.ProxyPassword = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, bool> IsTestingProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, bool>(nameof(IsTesting),
-                                                                   o => o.IsTesting,
-                                                                   (o, v) => o.IsTesting = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, bool>(
+            nameof(IsTesting),
+            o => o.IsTesting,
+            (o, v) => o.IsTesting = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, int> TestStateProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, int>(nameof(TestState),
-                                                                  o => o.TestState,
-                                                                  (o, v) => o.TestState = v);
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, int>(
+            nameof(TestState),
+            o => o.TestState,
+            (o, v) => o.TestState = v
+        );
 
     public static readonly DirectProperty<ProxySettingsDialog, string> TestResultMessageProperty =
-        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(nameof(TestResultMessage),
-                                                                     o => o.TestResultMessage,
-                                                                     (o, v) => o.TestResultMessage = v);
-
+        AvaloniaProperty.RegisterDirect<ProxySettingsDialog, string>(
+            nameof(TestResultMessage),
+            o => o.TestResultMessage,
+            (o, v) => o.TestResultMessage = v
+        );
 
     public int SelectedModeIndex
     {
@@ -224,7 +241,7 @@ public partial class ProxySettingsDialog : Dialog
             Address = ProxyAddress,
             Port = port,
             Username = ProxyUsername,
-            Password = ProxyPassword
+            Password = ProxyPassword,
         };
     }
 

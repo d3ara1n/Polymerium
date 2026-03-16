@@ -28,7 +28,8 @@ public partial class RecentPlayModel : ModelBase
     [NotifyPropertyChangedFor(nameof(LastPlayTime))]
     public required partial TimeSpan LastPlayTimeRaw { get; set; }
 
-    public string LastPlayTime => LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
+    public string LastPlayTime =>
+        LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
 
     public string LastPlayed => LastPlayedRaw.Humanize();
 

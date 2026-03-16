@@ -9,7 +9,8 @@ public class MinecraftReleasePatchModel(
     string category,
     string title,
     string description,
-    DateTimeOffset publishedAt) : ModelBase
+    DateTimeOffset publishedAt
+) : ModelBase
 {
     #region Direct
 

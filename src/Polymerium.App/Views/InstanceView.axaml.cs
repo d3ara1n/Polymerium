@@ -17,18 +17,20 @@ namespace Polymerium.App.Views;
 
 public partial class InstanceView : ScopedPage
 {
-    public static readonly DirectProperty<InstanceView, InstanceViewModelBase.InstanceContextParameter?>
-        ContextProperty =
-            AvaloniaProperty
-               .RegisterDirect<InstanceView, InstanceViewModelBase.InstanceContextParameter?>(nameof(Context),
-                    o => o.Context,
-                    (o, v) => o.Context = v);
-
+    public static readonly DirectProperty<
+        InstanceView,
+        InstanceViewModelBase.InstanceContextParameter?
+    > ContextProperty = AvaloniaProperty.RegisterDirect<
+        InstanceView,
+        InstanceViewModelBase.InstanceContextParameter?
+    >(nameof(Context), o => o.Context, (o, v) => o.Context = v);
 
     public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
-        AvaloniaProperty.RegisterDirect<InstanceView, ICommand?>(nameof(NavigateCommand),
-                                                                 o => o.NavigateCommand,
-                                                                 (o, v) => o.NavigateCommand = v);
+        AvaloniaProperty.RegisterDirect<InstanceView, ICommand?>(
+            nameof(NavigateCommand),
+            o => o.NavigateCommand,
+            (o, v) => o.NavigateCommand = v
+        );
 
     public InstanceView()
     {
@@ -54,7 +56,6 @@ public partial class InstanceView : ScopedPage
         set => SetAndRaise(NavigateCommandProperty, ref field, value);
     }
 
-
     private void EntryBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         var oldIndex = -1;
@@ -68,14 +69,14 @@ public partial class InstanceView : ScopedPage
             if (e.AddedItems[0] is InstanceSubpageEntryModel selected)
             {
                 var newIndex = EntryBox.Items.IndexOf(selected);
-                IPageTransition transition = oldIndex != -1
-                                                 ? new PageSlideTransition
-                                                 {
-                                                     Direction = newIndex - oldIndex > 0
-                                                                     ? DirectionFrom.Bottom
-                                                                     : DirectionFrom.Top
-                                                 }
-                                                 : new PopUpTransition();
+                IPageTransition transition =
+                    oldIndex != -1
+                        ? new PageSlideTransition
+                        {
+                            Direction =
+                                newIndex - oldIndex > 0 ? DirectionFrom.Bottom : DirectionFrom.Top,
+                        }
+                        : new PopUpTransition();
 
                 Frame.Navigate(selected.Page, Context, transition);
             }

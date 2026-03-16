@@ -15,7 +15,11 @@ namespace Polymerium.App.ViewModels;
 
 public abstract partial class InstanceViewModelBase : ViewModelBase
 {
-    protected InstanceViewModelBase(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
+    protected InstanceViewModelBase(
+        ViewBag bag,
+        InstanceManager instanceManager,
+        ProfileManager profileManager
+    )
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;

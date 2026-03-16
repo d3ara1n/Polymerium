@@ -10,7 +10,13 @@ namespace Polymerium.App.Models;
 
 public partial class AccountModel : ModelBase
 {
-    public AccountModel(Type type, string uuid, string userName, DateTimeOffset enrolledAt, DateTimeOffset? lastUsedAt)
+    public AccountModel(
+        Type type,
+        string uuid,
+        string userName,
+        DateTimeOffset enrolledAt,
+        DateTimeOffset? lastUsedAt
+    )
     {
         UserName = userName;
         Uuid = uuid;
@@ -22,26 +28,42 @@ public partial class AccountModel : ModelBase
             TypeName = Resources.Account_Microsoft;
             Color1 = Color.FromArgb(255, 131, 158, 255);
             Color2 = Color.FromArgb(255, 121, 255, 207);
-            FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{uuid}/face", UriKind.Absolute);
-            BodyUrl = new($"https://starlightskins.lunareclipse.studio/render/default/{uuid}/face", UriKind.Absolute);
+            FaceUrl = new(
+                $"https://starlightskins.lunareclipse.studio/render/pixel/{uuid}/face",
+                UriKind.Absolute
+            );
+            BodyUrl = new(
+                $"https://starlightskins.lunareclipse.studio/render/default/{uuid}/face",
+                UriKind.Absolute
+            );
         }
         else if (type.IsAssignableTo(typeof(TrialAccount)))
         {
             TypeName = Resources.Account_Trial;
             Color1 = Color.FromArgb(255, 253, 160, 133);
             Color2 = Color.FromArgb(255, 246, 211, 101);
-            FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face", UriKind.Absolute);
-            BodyUrl = new($"https://starlightskins.lunareclipse.studio/render/default/{userName}/face",
-                          UriKind.Absolute);
+            FaceUrl = new(
+                $"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face",
+                UriKind.Absolute
+            );
+            BodyUrl = new(
+                $"https://starlightskins.lunareclipse.studio/render/default/{userName}/face",
+                UriKind.Absolute
+            );
         }
         else
         {
             TypeName = Resources.Account_Offline;
             Color1 = Color.FromArgb(255, 134, 143, 150);
             Color2 = Color.FromArgb(255, 89, 97, 100);
-            FaceUrl = new($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face", UriKind.Absolute);
-            BodyUrl = new($"https://starlightskins.lunareclipse.studio/render/default/{userName}/face",
-                          UriKind.Absolute);
+            FaceUrl = new(
+                $"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face",
+                UriKind.Absolute
+            );
+            BodyUrl = new(
+                $"https://starlightskins.lunareclipse.studio/render/default/{userName}/face",
+                UriKind.Absolute
+            );
         }
     }
 

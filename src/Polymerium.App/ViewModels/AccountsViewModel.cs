@@ -22,7 +22,8 @@ public partial class AccountsViewModel(
     ConfigurationService configurationService,
     MicrosoftService microsoftService,
     XboxLiveService xboxLiveService,
-    MinecraftService minecraftService) : ViewModelBase
+    MinecraftService minecraftService
+) : ViewModelBase
 {
     #region Direct
 
@@ -37,19 +38,23 @@ public partial class AccountsViewModel(
         var found = persistenceService.GetAccount(account.Uuid);
         if (found != null)
         {
-            notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationMessage,
-                                           Resources.AccountsView_AccountAddingDangerNotificationTitle,
-                                           GrowlLevel.Danger);
+            notificationService.PopMessage(
+                Resources.AccountsView_AccountAddingDangerNotificationMessage,
+                Resources.AccountsView_AccountAddingDangerNotificationTitle,
+                GrowlLevel.Danger
+            );
             return false;
         }
 
         var isDefault = !Accounts.Any(x => x.IsDefault);
         var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, isDefault);
         persistenceService.AppendAccount(raw);
-        Accounts.Add(new(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
-        {
-            IsDefault = isDefault
-        });
+        Accounts.Add(
+            new(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
+            {
+                IsDefault = isDefault,
+            }
+        );
         return true;
     }
 
@@ -63,15 +68,18 @@ public partial class AccountsViewModel(
         foreach (var account in persistenceService.GetAccounts())
         {
             var cooked = AccountHelper.ToCooked(account);
-            var model = new AccountModel(cooked.GetType(),
-                                         cooked.Uuid,
-                                         cooked.Username,
-                                         account.EnrolledAt,
-                                         account.LastUsedAt)
-            { IsDefault = account.Uuid == defaultAccount?.Uuid };
+            var model = new AccountModel(
+                cooked.GetType(),
+                cooked.Uuid,
+                cooked.Username,
+                account.EnrolledAt,
+                account.LastUsedAt
+            )
+            {
+                IsDefault = account.Uuid == defaultAccount?.Uuid,
+            };
             Accounts.Add(model);
         }
-
 
         return base.OnInitializeAsync();
     }
@@ -82,16 +90,18 @@ public partial class AccountsViewModel(
 
     [RelayCommand]
     private void CreateAccount() =>
-        overlayService.PopModal(new AccountCreationModal
-        {
-            FinishCallback = Finish,
-            IsOfflineAvailable =
-                configurationService.Value.ApplicationSuperPowerActivated
-             || persistenceService.HasMicrosoftAccount(),
-            MicrosoftService = microsoftService,
-            XboxLiveService = xboxLiveService,
-            MinecraftService = minecraftService
-        });
+        overlayService.PopModal(
+            new AccountCreationModal
+            {
+                FinishCallback = Finish,
+                IsOfflineAvailable =
+                    configurationService.Value.ApplicationSuperPowerActivated
+                    || persistenceService.HasMicrosoftAccount(),
+                MicrosoftService = microsoftService,
+                XboxLiveService = xboxLiveService,
+                MinecraftService = minecraftService,
+            }
+        );
 
     [RelayCommand]
     private void ViewAccount(AccountModel? model)

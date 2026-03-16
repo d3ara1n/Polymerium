@@ -9,7 +9,8 @@ namespace Polymerium.App.ViewModels;
 public partial class MarketplacePortalViewModel(
     ConfigurationService configurationService,
     NavigationService navigationService,
-    OverlayService overlayService) : ViewModelBase
+    OverlayService overlayService
+) : ViewModelBase
 {
     #region Commands
 
@@ -31,7 +32,9 @@ public partial class MarketplacePortalViewModel(
             }
         }
 
-        navigationService.Navigate<MarketplaceSearchView>(new MarketplaceSearchViewModel.SearchArguments(query, null));
+        navigationService.Navigate<MarketplaceSearchView>(
+            new MarketplaceSearchViewModel.SearchArguments(query, null)
+        );
     }
 
     #endregion

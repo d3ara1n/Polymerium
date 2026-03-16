@@ -10,7 +10,8 @@ public partial class ScrapModel(
     ScrapLevel level,
     DateTimeOffset time,
     string? thread,
-    string? sender) : ModelBase
+    string? sender
+) : ModelBase
 {
     #region Reactive
 

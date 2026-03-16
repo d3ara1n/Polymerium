@@ -7,15 +7,18 @@ namespace Polymerium.App.Components;
 [PseudoClasses(":locked", ":unlocked")]
 public partial class SafeLock : UserControl
 {
-    public static readonly StyledProperty<string> UserInputProperty =
-        AvaloniaProperty.Register<SafeLock, string>(nameof(UserInput));
+    public static readonly StyledProperty<string> UserInputProperty = AvaloniaProperty.Register<
+        SafeLock,
+        string
+    >(nameof(UserInput));
 
-    public static readonly StyledProperty<string> SafeCodeProperty =
-        AvaloniaProperty.Register<SafeLock, string>(nameof(SafeCode));
+    public static readonly StyledProperty<string> SafeCodeProperty = AvaloniaProperty.Register<
+        SafeLock,
+        string
+    >(nameof(SafeCode));
 
     public static readonly DirectProperty<SafeLock, bool> IsUnlockedProperty =
         AvaloniaProperty.RegisterDirect<SafeLock, bool>(nameof(IsUnlocked), o => o.IsUnlocked);
-
 
     public SafeLock()
     {

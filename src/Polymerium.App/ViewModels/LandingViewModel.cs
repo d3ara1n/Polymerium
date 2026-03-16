@@ -30,7 +30,8 @@ public partial class LandingViewModel(
     InstanceService instanceService,
     OverlayService overlayService,
     NotificationService notificationService,
-    InstanceManager instanceManager) : ViewModelBase
+    InstanceManager instanceManager
+) : ViewModelBase
 {
     #region Reactive
 
@@ -91,12 +92,13 @@ public partial class LandingViewModel(
                 Name = profile.Name,
                 Version = profile.Setup.Version,
                 LoaderLabel =
-                    profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                    profile.Setup.Loader is not null
+                    && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
                         ? LoaderHelper.ToDisplayName(loader.Identity)
                         : Resources.Enum_Vanilla,
                 Thumbnail = icon,
                 LastPlayedRaw = last.End,
-                LastPlayTimeRaw = last.End - last.Begin
+                LastPlayTimeRaw = last.End - last.Begin,
             };
         }
 
@@ -108,7 +110,6 @@ public partial class LandingViewModel(
         profileManager.ProfileAdded -= OnProfileAdded;
         profileManager.ProfileRemoved -= OnProfileRemoved;
 
-
         return Task.CompletedTask;
     }
 
@@ -116,23 +117,33 @@ public partial class LandingViewModel(
 
     #region Other
 
-    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount--;
+    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
+        InstanceCount--;
 
-    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount++;
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
+        InstanceCount++;
 
     private void LoadMinecraftNews() =>
         MinecraftNews = new(async _ =>
         {
             var news = await dataService.GetMinecraftReleasePatchesAsync();
             var models = news
-                        .Entries.Take(24)
-                        .Select((x, i) =>
-                         {
-                             var url = mojangServuce.GetAbsoluteImageUrl(x.Image.Url);
+                .Entries.Take(24)
+                .Select(
+                    (x, i) =>
+                    {
+                        var url = mojangServuce.GetAbsoluteImageUrl(x.Image.Url);
 
-                             return new MinecraftReleasePatchModel(url, x.Type, x.Title, x.ShortText, x.Date);
-                         })
-                        .ToList();
+                        return new MinecraftReleasePatchModel(
+                            url,
+                            x.Type,
+                            x.Title,
+                            x.ShortText,
+                            x.Date
+                        );
+                    }
+                )
+                .ToList();
             return models;
         });
 
@@ -141,14 +152,16 @@ public partial class LandingViewModel(
         {
             var exhibits = await dataService.GetFeaturedModpacksAsync();
             var models = exhibits
-                        .Select(x => new FeaturedModpackModel(x.Label,
-                                                              x.Namespace,
-                                                              x.Pid,
-                                                              x.Name,
-                                                              x.Author,
-                                                              x.Thumbnail ?? AssetUriIndex.DirtImage,
-                                                              x.Tags))
-                        .ToList();
+                .Select(x => new FeaturedModpackModel(
+                    x.Label,
+                    x.Namespace,
+                    x.Pid,
+                    x.Name,
+                    x.Author,
+                    x.Thumbnail ?? AssetUriIndex.DirtImage,
+                    x.Tags
+                ))
+                .ToList();
             return models;
         });
 
@@ -164,7 +177,9 @@ public partial class LandingViewModel(
             try
             {
                 var dir = PathDef.Default.DirectoryOfHome(key);
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+                TopLevel
+                    .GetTopLevel(MainWindow.Instance)
+                    ?.Launcher.LaunchDirectoryInfoAsync(new(dir));
             }
             catch (Exception ex)
             {
@@ -225,24 +240,32 @@ public partial class LandingViewModel(
         {
             try
             {
-                var project = await dataService.QueryProjectAsync(modpack.Label, modpack.Namespace, modpack.ProjectId);
-                var model = new ExhibitModpackModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-                overlayService.PopToast(new ExhibitModpackToast
-                {
-                    DataService = dataService,
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand
-                });
+                var project = await dataService.QueryProjectAsync(
+                    modpack.Label,
+                    modpack.Namespace,
+                    modpack.ProjectId
+                );
+                var model = new ExhibitModpackModel(
+                    project.Label,
+                    project.Namespace,
+                    project.ProjectId,
+                    project.ProjectName,
+                    project.Author,
+                    project.Reference,
+                    project.Tags,
+                    project.DownloadCount,
+                    project.Summary,
+                    project.UpdatedAt,
+                    [.. project.Gallery.Select(x => x.Url)]
+                );
+                overlayService.PopToast(
+                    new ExhibitModpackToast
+                    {
+                        DataService = dataService,
+                        DataContext = model,
+                        InstallCommand = InstallVersionCommand,
+                    }
+                );
             }
             catch (Exception ex)
             {
@@ -256,14 +279,20 @@ public partial class LandingViewModel(
     {
         if (version is not null)
         {
-            instanceManager.Install(version.ProjectName,
-                                    version.Label,
-                                    version.Namespace,
-                                    version.ProjectId,
-                                    version.VersionId);
-            notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage
-                                                    .Replace("{0}", version.VersionName),
-                                           version.ProjectName);
+            instanceManager.Install(
+                version.ProjectName,
+                version.Label,
+                version.Namespace,
+                version.ProjectId,
+                version.VersionId
+            );
+            notificationService.PopMessage(
+                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
+                    "{0}",
+                    version.VersionName
+                ),
+                version.ProjectName
+            );
         }
     }
 

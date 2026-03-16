@@ -10,7 +10,12 @@ namespace Polymerium.App.Models;
 
 public partial class AssetResourcePackModel : ModelBase
 {
-    public AssetResourcePackModel(FileInfo file, Bitmap icon, AssetResourcePackMetadataModel metadata, bool isLocked)
+    public AssetResourcePackModel(
+        FileInfo file,
+        Bitmap icon,
+        AssetResourcePackMetadataModel metadata,
+        bool isLocked
+    )
     {
         FilePath = file.FullName;
         FileSizeRaw = file.Length;

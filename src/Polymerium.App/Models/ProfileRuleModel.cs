@@ -21,7 +21,6 @@ public partial class ProfileRuleModel(Profile.Rice.Rule owner) : ModelBase
 
     partial void OnIsEnabledChanged(bool value) => owner.Enabled = value;
 
-
     [ObservableProperty]
     public partial string Destination { get; set; } = owner.Destination ?? string.Empty;
 

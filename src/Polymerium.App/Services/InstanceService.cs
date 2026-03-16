@@ -20,7 +20,8 @@ public class InstanceService(
     PersistenceService persistenceService,
     MinecraftService minecraftService,
     XboxLiveService xboxLiveService,
-    MicrosoftService microsoftService)
+    MicrosoftService microsoftService
+)
 {
     public async Task DeployAndLaunchAsync(string key, LaunchMode mode)
     {
@@ -36,24 +37,37 @@ public class InstanceService(
                 {
                     try
                     {
-                        _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(msa.AccessToken);
+                        _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(
+                            msa.AccessToken
+                        );
                     }
                     catch (ApiException ex)
                     {
                         if (ex.StatusCode == HttpStatusCode.Unauthorized)
                         {
-                            var microsoft = await microsoftService.RefreshUserAsync(msa.RefreshToken);
+                            var microsoft = await microsoftService.RefreshUserAsync(
+                                msa.RefreshToken
+                            );
                             var xbox =
-                                await xboxLiveService
-                                   .AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
-                            var xsts = await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
+                                await xboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
+                                    microsoft.AccessToken
+                                );
+                            var xsts =
+                                await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
+                                    xbox.Token
+                                );
                             var minecraft =
-                                await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(xsts.Token,
-                                    xsts.DisplayClaims.Xui.First().Uhs);
+                                await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(
+                                    xsts.Token,
+                                    xsts.DisplayClaims.Xui.First().Uhs
+                                );
 
                             msa.AccessToken = minecraft.AccessToken;
                             msa.RefreshToken = microsoft.RefreshToken;
-                            persistenceService.UpdateAccount(account.Uuid, AccountHelper.ToRaw(msa));
+                            persistenceService.UpdateAccount(
+                                account.Uuid,
+                                AccountHelper.ToRaw(msa)
+                            );
                         }
                         else
                         {
@@ -67,27 +81,37 @@ public class InstanceService(
                 // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
                 // Full Check Mode 只有在检查文件完整性时为 true，不随用户决定
                 var locator = JavaHelper.MakeLocator(profile, configurationService.Value);
-                var deploy = new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
-                                               profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
-                                               false);
-                var launch = new LaunchOptions(additionalArguments:
-                                               profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                                                                   configurationService.Value
-                                                                      .GameJavaAdditionalArguments),
-                                               maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                                              configurationService.Value
-                                                                                 .GameJavaMaxMemory),
-                                               windowSize: (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH,
-                                                                                    configurationService.Value
-                                                                                       .GameWindowInitialWidth),
-                                                            profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                                                                                    configurationService.Value
-                                                                                       .GameWindowInitialHeight)),
-                                               quickConnectAddress:
-                                               profile.GetOverride<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER),
-                                               launchMode: mode,
-                                               account: cooked,
-                                               brand: Program.Brand);
+                var deploy = new DeployOptions(
+                    profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
+                    profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
+                    false
+                );
+                var launch = new LaunchOptions(
+                    additionalArguments: profile.GetOverride(
+                        Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                        configurationService.Value.GameJavaAdditionalArguments
+                    ),
+                    maxMemory: profile.GetOverride(
+                        Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                        configurationService.Value.GameJavaMaxMemory
+                    ),
+                    windowSize: (
+                        profile.GetOverride(
+                            Profile.OVERRIDE_WINDOW_WIDTH,
+                            configurationService.Value.GameWindowInitialWidth
+                        ),
+                        profile.GetOverride(
+                            Profile.OVERRIDE_WINDOW_HEIGHT,
+                            configurationService.Value.GameWindowInitialHeight
+                        )
+                    ),
+                    quickConnectAddress: profile.GetOverride<string>(
+                        Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
+                    ),
+                    launchMode: mode,
+                    account: cooked,
+                    brand: Program.Brand
+                );
                 instanceManager.DeployAndLaunch(key, deploy, launch, locator);
             }
         }
@@ -97,11 +121,19 @@ public class InstanceService(
         }
     }
 
-    public void Deploy(string key, bool? fastMode = null, bool? resolveDependency = null, bool? fullCheckMode = null)
+    public void Deploy(
+        string key,
+        bool? fastMode = null,
+        bool? resolveDependency = null,
+        bool? fullCheckMode = null
+    )
     {
         var profile = profileManager.GetImmutable(key);
         fastMode ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false);
-        resolveDependency ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false);
+        resolveDependency ??= profile.GetOverride(
+            Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY,
+            false
+        );
         fullCheckMode ??= false;
         var locator = JavaHelper.MakeLocator(profile, configurationService.Value);
         instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);

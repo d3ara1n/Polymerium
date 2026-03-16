@@ -31,7 +31,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         NotificationService notificationService,
         OverlayService overlayService,
         DataService dataService,
-        ConfigurationService configurationService)
+        ConfigurationService configurationService
+    )
     {
         _agent = agent;
         _instanceManager = instanceManager;
@@ -42,7 +43,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
         LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
 
-        var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
+        var r = agent
+            .Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper()))
+            .ToList();
         Repositories = r;
         if (bag.Parameter is SearchArguments arguments)
         {
@@ -79,16 +82,20 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                 var status = await _dataService.CheckStatusAsync(repository.Label);
                 repository.Loaders =
                 [
-                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x, LoaderHelper.ToDisplayName(x)))
+                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(
+                        x,
+                        LoaderHelper.ToDisplayName(x)
+                    )),
                 ];
                 repository.Versions =
                 [
-                    .. status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x,
-                                                                           SemVersionStyles.OptionalPatch,
-                                                                           out var sem)
-                                                                           ? sem
-                                                                           : new(0, 0, 0),
-                                                                  SemVersion.SortOrderComparer)
+                    .. status.SupportedVersions.OrderByDescending(
+                        x =>
+                            SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
+                                ? sem
+                                : new(0, 0, 0),
+                        SemVersion.SortOrderComparer
+                    ),
                 ];
             }
         }
@@ -118,7 +125,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     [ObservableProperty]
     public partial int LayoutIndex { get; set; }
 
-    partial void OnLayoutIndexChanged(int value) => _configurationService.Value.InterfaceMarketplaceLayout = value;
+    partial void OnLayoutIndexChanged(int value) =>
+        _configurationService.Value.InterfaceMarketplaceLayout = value;
 
     [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
@@ -131,7 +139,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             "curseforge" => AssetUriIndex.RepositoryHeaderCurseforgeBitmap,
             "modrinth" => AssetUriIndex.RepositoryHeaderModrinthBitmap,
             "favorite" => AssetUriIndex.RepositoryHeaderFavoriteBitmap,
-            _ => HeaderImage
+            _ => HeaderImage,
         };
     }
 
@@ -166,38 +174,47 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         try
         {
-            var handle = await _agent.SearchAsync(SelectedRepository.Label,
-                                                  QueryText,
-                                                  new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
-            var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
-            {
-                handle.PageIndex = (uint)(i < 0 ? 0 : i);
-                try
+            var handle = await _agent.SearchAsync(
+                SelectedRepository.Label,
+                QueryText,
+                new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack)
+            );
+            var source = new InfiniteCollection<ExhibitModel>(
+                async (i, token) =>
                 {
-                    var rv = await handle.FetchAsync(token);
-                    var tasks = rv
-                               .Select(x => new ExhibitModel(x.Label,
-                                                             x.Namespace,
-                                                             x.Pid,
-                                                             x.Name,
-                                                             x.Summary,
-                                                             x.Thumbnail ?? AssetUriIndex.DirtImage,
-                                                             x.Author,
-                                                             x.Tags,
-                                                             x.UpdatedAt,
-                                                             x.DownloadCount,
-                                                             x.Reference))
-                               .ToArray();
-                    return tasks;
-                }
-                catch (ApiException ex)
-                {
-                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
-                    Debug.WriteLine(ex);
-                }
+                    handle.PageIndex = (uint)(i < 0 ? 0 : i);
+                    try
+                    {
+                        var rv = await handle.FetchAsync(token);
+                        var tasks = rv.Select(x => new ExhibitModel(
+                                x.Label,
+                                x.Namespace,
+                                x.Pid,
+                                x.Name,
+                                x.Summary,
+                                x.Thumbnail ?? AssetUriIndex.DirtImage,
+                                x.Author,
+                                x.Tags,
+                                x.UpdatedAt,
+                                x.DownloadCount,
+                                x.Reference
+                            ))
+                            .ToArray();
+                        return tasks;
+                    }
+                    catch (ApiException ex)
+                    {
+                        _notificationService.PopMessage(
+                            ex,
+                            Resources.Error_BadNetwork,
+                            GrowlLevel.Warning
+                        );
+                        Debug.WriteLine(ex);
+                    }
 
-                return [];
-            });
+                    return [];
+                }
+            );
             Exhibits = source;
         }
         catch (ApiException ex)
@@ -212,10 +229,20 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         if (exhibit is not null)
         {
-            _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Namespace, exhibit.ProjectId, null);
-            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage
-                                                     .Replace("{0}", exhibit.ProjectName),
-                                            exhibit.ProjectName);
+            _instanceManager.Install(
+                exhibit.ProjectName,
+                exhibit.Label,
+                exhibit.Namespace,
+                exhibit.ProjectId,
+                null
+            );
+            _notificationService.PopMessage(
+                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
+                    "{0}",
+                    exhibit.ProjectName
+                ),
+                exhibit.ProjectName
+            );
         }
     }
 
@@ -226,31 +253,41 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
-                var model = new ExhibitModpackModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-                _overlayService.PopToast(new ExhibitModpackToast
-                {
-                    DataService = _dataService,
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand
-                });
+                var project = await _dataService.QueryProjectAsync(
+                    exhibit.Label,
+                    exhibit.Namespace,
+                    exhibit.ProjectId
+                );
+                var model = new ExhibitModpackModel(
+                    project.Label,
+                    project.Namespace,
+                    project.ProjectId,
+                    project.ProjectName,
+                    project.Author,
+                    project.Reference,
+                    project.Tags,
+                    project.DownloadCount,
+                    project.Summary,
+                    project.UpdatedAt,
+                    [.. project.Gallery.Select(x => x.Url)]
+                );
+                _overlayService.PopToast(
+                    new ExhibitModpackToast
+                    {
+                        DataService = _dataService,
+                        DataContext = model,
+                        InstallCommand = InstallVersionCommand,
+                    }
+                );
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex,
-                                                Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
-                                                GrowlLevel.Warning);
+                _notificationService.PopMessage(
+                    ex,
+                    Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
+                    GrowlLevel.Warning
+                );
             }
         }
     }
@@ -269,14 +306,20 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         if (version is not null)
         {
-            _instanceManager.Install(version.ProjectName,
-                                     version.Label,
-                                     version.Namespace,
-                                     version.ProjectId,
-                                     version.VersionId);
-            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage
-                                                     .Replace("{0}", version.VersionName),
-                                            version.ProjectName);
+            _instanceManager.Install(
+                version.ProjectName,
+                version.Label,
+                version.Namespace,
+                version.ProjectId,
+                version.VersionId
+            );
+            _notificationService.PopMessage(
+                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
+                    "{0}",
+                    version.VersionName
+                ),
+                version.ProjectName
+            );
         }
     }
 

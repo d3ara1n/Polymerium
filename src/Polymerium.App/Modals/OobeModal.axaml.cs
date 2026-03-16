@@ -13,28 +13,46 @@ namespace Polymerium.App.Modals;
 public partial class OobeModal : Modal
 {
     public static readonly DirectProperty<OobeModal, object?> CurrentStepProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, object?>(nameof(CurrentStep),
-                                                            o => o.CurrentStep,
-                                                            (o, v) => o.CurrentStep = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, object?>(
+            nameof(CurrentStep),
+            o => o.CurrentStep,
+            (o, v) => o.CurrentStep = v
+        );
 
     public static readonly DirectProperty<OobeModal, bool> IsReversedProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(nameof(IsReversed),
-                                                         o => o.IsReversed,
-                                                         (o, v) => o.IsReversed = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, bool>(
+            nameof(IsReversed),
+            o => o.IsReversed,
+            (o, v) => o.IsReversed = v
+        );
 
     public static readonly DirectProperty<OobeModal, bool> IsBackAvailableProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(nameof(IsBackAvailable),
-                                                         o => o.IsBackAvailable,
-                                                         (o, v) => o.IsBackAvailable = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, bool>(
+            nameof(IsBackAvailable),
+            o => o.IsBackAvailable,
+            (o, v) => o.IsBackAvailable = v
+        );
 
     public static readonly DirectProperty<OobeModal, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(nameof(IsLast), o => o.IsLast, (o, v) => o.IsLast = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, bool>(
+            nameof(IsLast),
+            o => o.IsLast,
+            (o, v) => o.IsLast = v
+        );
 
     public static readonly DirectProperty<OobeModal, int> StepIndexProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepIndex), o => o.StepIndex, (o, v) => o.StepIndex = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, int>(
+            nameof(StepIndex),
+            o => o.StepIndex,
+            (o, v) => o.StepIndex = v
+        );
 
     public static readonly DirectProperty<OobeModal, int> StepCountProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepCount), o => o.StepCount, (o, v) => o.StepCount = v);
+        AvaloniaProperty.RegisterDirect<OobeModal, int>(
+            nameof(StepCount),
+            o => o.StepCount,
+            (o, v) => o.StepCount = v
+        );
 
     private readonly List<OobeStep> _steps = [];
 
@@ -95,7 +113,13 @@ public partial class OobeModal : Modal
             _steps.Add(new OobePrivilege { NotificationService = NotificationService });
         }
 
-        _steps.Add(new OobeQuickSetup { ConfigurationService = ConfigurationService, OverlayService = OverlayService });
+        _steps.Add(
+            new OobeQuickSetup
+            {
+                ConfigurationService = ConfigurationService,
+                OverlayService = OverlayService,
+            }
+        );
         _steps.Add(new OobePrivacy());
         _steps.Add(new OobeFinish());
 

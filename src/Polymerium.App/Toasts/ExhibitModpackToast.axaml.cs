@@ -17,22 +17,33 @@ namespace Polymerium.App.Toasts;
 public partial class ExhibitModpackToast : Toast
 {
     public static readonly StyledProperty<IRelayCommand<ExhibitVersionModel>?> InstallCommandProperty =
-        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(nameof(InstallCommand));
+        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(
+            nameof(InstallCommand)
+        );
 
-    public static readonly DirectProperty<ExhibitModpackToast, LazyObject?> LazyDescriptionProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(nameof(LazyDescription),
-                                                                          o => o.LazyDescription,
-                                                                          (o, v) => o.LazyDescription = v);
+    public static readonly DirectProperty<
+        ExhibitModpackToast,
+        LazyObject?
+    > LazyDescriptionProperty = AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(
+        nameof(LazyDescription),
+        o => o.LazyDescription,
+        (o, v) => o.LazyDescription = v
+    );
 
     public static readonly DirectProperty<ExhibitModpackToast, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(nameof(LazyVersions),
-                                                                          o => o.LazyVersions,
-                                                                          (o, v) => o.LazyVersions = v);
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(
+            nameof(LazyVersions),
+            o => o.LazyVersions,
+            (o, v) => o.LazyVersions = v
+        );
 
-    public static readonly DirectProperty<ExhibitModpackToast, ExhibitVersionModel?> SelectedVersionProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, ExhibitVersionModel?>(nameof(SelectedVersion),
-            o => o.SelectedVersion,
-            (o, v) => o.SelectedVersion = v);
+    public static readonly DirectProperty<
+        ExhibitModpackToast,
+        ExhibitVersionModel?
+    > SelectedVersionProperty = AvaloniaProperty.RegisterDirect<
+        ExhibitModpackToast,
+        ExhibitVersionModel?
+    >(nameof(SelectedVersion), o => o.SelectedVersion, (o, v) => o.SelectedVersion = v);
 
     public ExhibitModpackToast() => InitializeComponent();
 
@@ -56,7 +67,6 @@ public partial class ExhibitModpackToast : Toast
         set => SetAndRaise(LazyVersionsProperty, ref field, value);
     }
 
-
     private ExhibitModpackModel Modpack => (ExhibitModpackModel)DataContext!;
 
     public LazyObject? LazyDescription
@@ -77,30 +87,35 @@ public partial class ExhibitModpackToast : Toast
         LazyVersions = new(async _ =>
         {
             var project = Modpack;
-            var versions = await DataService.InspectVersionsAsync(project.Label,
-                                                                  project.Namespace,
-                                                                  project.ProjectId,
-                                                                  Filter.None with { Kind = ResourceKind.Modpack });
+            var versions = await DataService.InspectVersionsAsync(
+                project.Label,
+                project.Namespace,
+                project.ProjectId,
+                Filter.None with
+                {
+                    Kind = ResourceKind.Modpack,
+                }
+            );
             var rv = versions
-                    .Select(x => new ExhibitVersionModel(project.Label,
-                                                         project.Namespace,
-                                                         project.ProjectName,
-                                                         project.ProjectId,
-                                                         x.VersionName,
-                                                         x.VersionId,
-                                                         string.Join(",",
-                                                                     x.Requirements.AnyOfLoaders.Select(LoaderHelper
-                                                                        .ToDisplayName)),
-                                                         string.Join(",", x.Requirements.AnyOfVersions),
-                                                         string.Empty,
-                                                         x.PublishedAt,
-                                                         x.DownloadCount,
-                                                         x.ReleaseType,
-                                                         PackageHelper.ToPurl(x.Label,
-                                                                              x.Namespace,
-                                                                              x.ProjectId,
-                                                                              x.VersionId)))
-                    .ToList();
+                .Select(x => new ExhibitVersionModel(
+                    project.Label,
+                    project.Namespace,
+                    project.ProjectName,
+                    project.ProjectId,
+                    x.VersionName,
+                    x.VersionId,
+                    string.Join(
+                        ",",
+                        x.Requirements.AnyOfLoaders.Select(LoaderHelper.ToDisplayName)
+                    ),
+                    string.Join(",", x.Requirements.AnyOfVersions),
+                    string.Empty,
+                    x.PublishedAt,
+                    x.DownloadCount,
+                    x.ReleaseType,
+                    PackageHelper.ToPurl(x.Label, x.Namespace, x.ProjectId, x.VersionId)
+                ))
+                .ToList();
             SelectedVersion = rv.FirstOrDefault();
             return new ExhibitVersionCollection(rv);
         });
@@ -108,8 +123,11 @@ public partial class ExhibitModpackToast : Toast
     private void LoadDescription() =>
         LazyDescription = new(async _ =>
         {
-            var description =
-                await DataService.ReadDescriptionAsync(Modpack.Label, Modpack.Namespace, Modpack.ProjectId);
+            var description = await DataService.ReadDescriptionAsync(
+                Modpack.Label,
+                Modpack.Namespace,
+                Modpack.ProjectId
+            );
             return description;
         });
 
@@ -121,7 +139,9 @@ public partial class ExhibitModpackToast : Toast
         if (url is not null)
         {
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev));
+            TopLevel
+                .GetTopLevel(this)
+                ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev));
         }
     }
 

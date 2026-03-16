@@ -43,12 +43,12 @@ public partial class InstanceHomeViewModel(
     PersistenceService persistenceService,
     ScrapService scrapService,
     InstanceService instanceService,
-    WidgetHostService widgetHostService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    WidgetHostService widgetHostService
+) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     // Launch Lifecycle
     private CompositeDisposable? _subscription;
     private IDisposable? _timerSubscription;
-
 
     #region Other
 
@@ -64,12 +64,15 @@ public partial class InstanceHomeViewModel(
     internal void ViewForTimerLaunch()
     {
         _timerSubscription?.Dispose();
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        if (
+            InstanceManager.IsTracking(Basic.Key, out var tracker)
+            && tracker is LaunchTracker launch
+        )
         {
             var start = DateTimeOffset.Now - launch.StartedAt;
             _timerSubscription = Observable
-                                .Interval(TimeSpan.FromSeconds(1))
-                                .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
+                .Interval(TimeSpan.FromSeconds(1))
+                .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
         }
     }
 
@@ -88,19 +91,24 @@ public partial class InstanceHomeViewModel(
             if (account != null)
             {
                 var cooked = AccountHelper.ToCooked(account);
-                SelectedAccount = new(cooked.GetType(),
-                                      cooked.Uuid,
-                                      cooked.Username,
-                                      account.EnrolledAt,
-                                      account.LastUsedAt);
+                SelectedAccount = new(
+                    cooked.GetType(),
+                    cooked.Uuid,
+                    cooked.Username,
+                    account.EnrolledAt,
+                    account.LastUsedAt
+                );
             }
         }
 
-        foreach (var widget in Widgets.Where(x => widgetHostService.GetIsPinned(Basic.Key, x.GetType().Name)))
+        foreach (
+            var widget in Widgets.Where(x =>
+                widgetHostService.GetIsPinned(Basic.Key, x.GetType().Name)
+            )
+        )
         {
             PinnedWidgets.Add(widget);
         }
-
 
         return base.OnInitializeAsync();
     }
@@ -114,7 +122,6 @@ public partial class InstanceHomeViewModel(
         return Task.CompletedTask;
     }
 
-
     protected override void OnModelUpdated(string key, Profile profile)
     {
         base.OnModelUpdated(key, profile);
@@ -126,7 +133,9 @@ public partial class InstanceHomeViewModel(
     private Bitmap GetRandomScreenshot(string key)
     {
         var screenshotPath = InstanceHelper.PickScreenshotRandomly(key);
-        return screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
+        return screenshotPath is not null
+            ? new(screenshotPath)
+            : AssetUriIndex.WallpaperImageBitmap;
     }
 
     #endregion
@@ -140,25 +149,25 @@ public partial class InstanceHomeViewModel(
         _subscription = new();
         DeployingMessage = GetStageTitle(tracker.CurrentStage);
         tracker
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
+            .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+            .Where(x => x.Any())
+            .Select(x => x.Last())
+            .Subscribe(x =>
             {
                 DeployingProgressTotal = x.Item2;
                 DeployingProgressCurrent = x.Item1;
                 DeployingPending = false;
             })
-           .DisposeWith(tracker)
-           .DisposeWith(_subscription);
+            .DisposeWith(tracker)
+            .DisposeWith(_subscription);
         tracker
-           .StageStream.Subscribe(stage =>
+            .StageStream.Subscribe(stage =>
             {
                 DeployingMessage = GetStageTitle(stage);
                 DeployingPending = true;
             })
-           .DisposeWith(tracker)
-           .DisposeWith(_subscription);
+            .DisposeWith(tracker)
+            .DisposeWith(_subscription);
     }
 
     private string GetStageTitle(DeployStage stage) =>
@@ -172,7 +181,7 @@ public partial class InstanceHomeViewModel(
             DeployStage.EnsureRuntime => Resources.DeployStage_EnsureRuntime,
             DeployStage.GenerateManifest => Resources.DeployStage_GenerateManifest,
             DeployStage.SolidifyManifest => Resources.DeployStage_SolidifyManifest,
-            _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null),
         };
 
     protected override void OnInstanceLaunched(LaunchTracker tracker)
@@ -190,20 +199,26 @@ public partial class InstanceHomeViewModel(
     private async Task SwitchAccountAsync()
     {
         var accounts = persistenceService
-                      .GetAccounts()
-                      .Select(x =>
-                       {
-                           var cooked = AccountHelper.ToCooked(x);
-                           return SelectedAccount?.Uuid == cooked.Uuid
-                                      ? SelectedAccount
-                                      : new(cooked.GetType(), cooked.Uuid, cooked.Username, x.EnrolledAt, x.LastUsedAt);
-                       })
-                      .ToList();
+            .GetAccounts()
+            .Select(x =>
+            {
+                var cooked = AccountHelper.ToCooked(x);
+                return SelectedAccount?.Uuid == cooked.Uuid
+                    ? SelectedAccount
+                    : new(
+                        cooked.GetType(),
+                        cooked.Uuid,
+                        cooked.Username,
+                        x.EnrolledAt,
+                        x.LastUsedAt
+                    );
+            })
+            .ToList();
         var dialog = new AccountPickerDialog
         {
             GotoManagerViewCommand = OpenAccountsViewCommand,
             AccountsSource = accounts,
-            Result = SelectedAccount
+            Result = SelectedAccount,
         };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
         {
@@ -221,23 +236,32 @@ public partial class InstanceHomeViewModel(
         }
         catch (AccountNotFoundException)
         {
-            notificationService.PopMessage(Resources.InstanceHomeView_AccountNotFoundDangerNotificationMessage,
-                                           Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
-                                           GrowlLevel.Danger,
-                                           actions:
-                                           [
-                                               new(Resources
-                                                      .InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText,
-                                                   SwitchAccountCommand)
-                                           ]);
+            notificationService.PopMessage(
+                Resources.InstanceHomeView_AccountNotFoundDangerNotificationMessage,
+                Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
+                GrowlLevel.Danger,
+                actions:
+                [
+                    new(
+                        Resources.InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText,
+                        SwitchAccountCommand
+                    ),
+                ]
+            );
         }
         catch (AccountInvalidException ex)
         {
-            notificationService.PopMessage(ex, Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle);
+            notificationService.PopMessage(
+                ex,
+                Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle
+            );
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.InstanceHomeView_DeployDangerNotificationTitle);
+            notificationService.PopMessage(
+                ex,
+                Resources.InstanceHomeView_DeployDangerNotificationTitle
+            );
         }
     }
 
@@ -253,7 +277,10 @@ public partial class InstanceHomeViewModel(
     [RelayCommand]
     private void Eject()
     {
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        if (
+            InstanceManager.IsTracking(Basic.Key, out var tracker)
+            && tracker is LaunchTracker launch
+        )
         {
             launch.IsDetaching = true;
             tracker.Abort();
@@ -272,7 +299,10 @@ public partial class InstanceHomeViewModel(
     [RelayCommand]
     private void OpenDashboard()
     {
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        if (
+            InstanceManager.IsTracking(Basic.Key, out var tracker)
+            && tracker is LaunchTracker launch
+        )
         {
             var toast = new InstanceDashboardToast { Header = Basic.Name };
             if (scrapService.TryGetBuffer(launch.Key, out var buffer))
@@ -283,7 +313,6 @@ public partial class InstanceHomeViewModel(
             overlayService.PopToast(toast);
         }
     }
-
 
     [RelayCommand]
     private void OpenAccountsView(Dialog? self)
@@ -301,10 +330,10 @@ public partial class InstanceHomeViewModel(
         {
             LaunchMode.Managed => LaunchMode.FireAndForget,
             LaunchMode.FireAndForget => configurationService.Value.ApplicationSuperPowerActivated
-                                            ? LaunchMode.Debug
-                                            : LaunchMode.Managed,
+                ? LaunchMode.Debug
+                : LaunchMode.Managed,
             LaunchMode.Debug => LaunchMode.Managed,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
 
     #endregion
@@ -342,7 +371,8 @@ public partial class InstanceHomeViewModel(
     [NotifyPropertyChangedFor(nameof(LastPlayTime))]
     public partial TimeSpan LastPlayTimeRaw { get; set; }
 
-    public string LastPlayTime => LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
+    public string LastPlayTime =>
+        LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TotalPlayTime))]

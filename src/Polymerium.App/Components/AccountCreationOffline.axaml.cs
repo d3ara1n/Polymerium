@@ -11,25 +11,32 @@ namespace Polymerium.App.Components;
 public partial class AccountCreationOffline : AccountCreationStep
 {
     public static readonly DirectProperty<AccountCreationOffline, string> UserNameProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(UserName),
-                                                                        o => o.UserName,
-                                                                        (o, v) => o.UserName = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(
+            nameof(UserName),
+            o => o.UserName,
+            (o, v) => o.UserName = v
+        );
 
     public static readonly DirectProperty<AccountCreationOffline, string> UuidProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(Uuid),
-                                                                        o => o.Uuid,
-                                                                        (o, v) => o.Uuid = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(
+            nameof(Uuid),
+            o => o.Uuid,
+            (o, v) => o.Uuid = v
+        );
 
     public static readonly DirectProperty<AccountCreationOffline, string> UuidOverwriteProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(UuidOverwrite),
-                                                                        o => o.UuidOverwrite,
-                                                                        (o, v) => o.UuidOverwrite = v);
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(
+            nameof(UuidOverwrite),
+            o => o.UuidOverwrite,
+            (o, v) => o.UuidOverwrite = v
+        );
 
     public static readonly DirectProperty<AccountCreationOffline, bool> IsWarnedProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, bool>(nameof(IsWarned),
-                                                                      o => o.IsWarned,
-                                                                      (o, v) => o.IsWarned = v);
-
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, bool>(
+            nameof(IsWarned),
+            o => o.IsWarned,
+            (o, v) => o.IsWarned = v
+        );
 
     public AccountCreationOffline() => InitializeComponent();
 
@@ -84,7 +91,7 @@ public partial class AccountCreationOffline : AccountCreationStep
         var account = new OfflineAccount
         {
             Username = UserName,
-            Uuid = !string.IsNullOrEmpty(UuidOverwrite) ? UuidOverwrite : Uuid
+            Uuid = !string.IsNullOrEmpty(UuidOverwrite) ? UuidOverwrite : Uuid,
         };
 
         return new AccountCreationPreview { Account = account };
