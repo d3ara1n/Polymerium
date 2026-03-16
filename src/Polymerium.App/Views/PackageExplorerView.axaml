@@ -315,7 +315,7 @@
                                 Theme="{StaticResource SegmentedTabStripTheme}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate x:DataType="resources:ResourceKind">
-                                        <TextBlock Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                        <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                     </DataTemplate>
                                 </TabStrip.ItemTemplate>
                             </TabStrip>

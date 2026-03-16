@@ -44,61 +44,6 @@ public static class InternalConverters
         return v;
     });
 
-    public static IValueConverter LocalizedResourceKindConverter { get; } = new RelayConverter((v, _) =>
-    {
-        if (v is ResourceKind kind)
-        {
-            return kind switch
-            {
-                ResourceKind.Modpack => Resources.ResourceKind_Modpack,
-                ResourceKind.Mod => Resources.ResourceKind_Mod,
-                ResourceKind.ResourcePack => Resources.ResourceKind_ResourcePack,
-                ResourceKind.ShaderPack => Resources.ResourceKind_ShaderPack,
-                ResourceKind.DataPack => Resources.ResourceKind_DataPack,
-                ResourceKind.World => Resources.ResourceKind_World,
-                _ => kind.ToString()
-            };
-        }
-
-        return v;
-    });
-
-    public static IValueConverter LocalizedLaunchModeConverter { get; } = new RelayConverter((v, _) =>
-    {
-        if (v is LaunchMode mode)
-        {
-            return mode switch
-            {
-                LaunchMode.Managed => Resources.LaunchMode_Managed,
-                LaunchMode.FireAndForget => Resources.LaunchMode_FireAndForget,
-                LaunchMode.Debug => Resources.LaunchMode_Debug,
-                _ => mode.ToString()
-            };
-        }
-
-        return v;
-    });
-
-    public static IValueConverter LocalizedSelectorTypeConverter { get; } = new RelayConverter((v, _) =>
-    {
-        if (v is Profile.Rice.Rule.RuleSelector.SelectorType type)
-        {
-            return type switch
-            {
-                Profile.Rice.Rule.RuleSelector.SelectorType.And => Resources.SelectorType_And,
-                Profile.Rice.Rule.RuleSelector.SelectorType.Or => Resources.SelectorType_Or,
-                Profile.Rice.Rule.RuleSelector.SelectorType.Not => Resources.SelectorType_Not,
-                Profile.Rice.Rule.RuleSelector.SelectorType.Purl => Resources.SelectorType_Purl,
-                Profile.Rice.Rule.RuleSelector.SelectorType.Repository => Resources.SelectorType_Repository,
-                Profile.Rice.Rule.RuleSelector.SelectorType.Tag => Resources.SelectorType_Tag,
-                Profile.Rice.Rule.RuleSelector.SelectorType.Kind => Resources.SelectorType_Kind,
-                _ => type.ToString()
-            };
-        }
-
-        return v;
-    });
-
     public static IValueConverter UnsignedLongToMiBDoubleConverter { get; } = new RelayConverter(v => v switch
     {
         ulong l => (double)l / 1024 / 1024,
