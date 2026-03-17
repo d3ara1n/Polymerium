@@ -41,6 +41,9 @@ $IsCrossPlatform = $CurrentOS -ne $TargetOS
 if ($Rid -like "win-*") {
     $ExeName = "Polymerium.App.exe"
     $IconPath = "./src/Polymerium.App/Assets/Icon.ico"
+} elseif ($Rid -like "osx-*") {
+    $ExeName = "Polymerium.App"
+    $IconPath = "./src/Polymerium.App/Assets/Icon.icns"
 } else {
     $ExeName = "Polymerium.App"
     $IconPath = "./src/Polymerium.App/Assets/Icon.png"

@@ -18,6 +18,8 @@ jobs:
                         runtime: win-x64
                     -   os: ubuntu-latest
                         runtime: linux-x64
+                    -   os: macos-latest
+                        runtime: osx-arm64
         runs-on: ${{ matrix.os }}
 
         steps:
@@ -141,6 +143,8 @@ jobs:
                     fi
                     if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
                         pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.png"
+                    elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
+                        pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.icns"
                     fi
                     vpk download github --repoUrl https://github.com/${{ github.repository }} $download_extra_args
                     vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
@@ -153,7 +157,7 @@ jobs:
                     path: Releases
 
             -   name: Upload Release Metadata
-                if: matrix.runtime == 'linux-x64'
+                if: matrix.runtime == 'osx-arm64'
                 uses: actions/upload-artifact@v4
                 with:
                     name: release-metadata
