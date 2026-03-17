@@ -87,17 +87,21 @@ jobs:
             -   name: Determine Release Type
                 id: get_version
                 run: |
-                    version="${{ steps.gitversion.outputs.semVer }}"
-                    echo "version=$version" >> $GITHUB_OUTPUT
+                    base_version="${{ steps.gitversion.outputs.MajorMinorPatch }}"
+                    prerelease_tag="${{ steps.gitversion.outputs.preReleaseTag }}"
 
-                    # Check if version contains prerelease tag or metadata
-                    if [ "${{ steps.gitversion.outputs.preReleaseTag }}" != "" ] || [[ "$version" == *+* ]]; then
+                    # Construct version string
+                    if [ -n "$prerelease_tag" ]; then
+                        version="$base_version-$prerelease_tag"
                         is_prerelease=true
                         release_name="v$version (Preview)"
                     else
+                        version="$base_version"
                         is_prerelease=false
                         release_name="v$version"
                     fi
+
+                    echo "version=$version" >> $GITHUB_OUTPUT
                     echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
                     echo "release_name=$release_name" >> $GITHUB_OUTPUT
                     if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
