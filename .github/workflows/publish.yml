@@ -44,7 +44,7 @@ jobs:
                     dotnet_version=$(grep '<TargetFramework>' src/Polymerium.App/Polymerium.App.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
                     echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
                     echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
-                    if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
+                    if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
                       echo "dotnet_version=$dotnet_version" > release.properties
                     fi
                 shell: bash
@@ -100,7 +100,7 @@ jobs:
                     fi
                     echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
                     echo "release_name=$release_name" >> $GITHUB_OUTPUT
-                    if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
+                    if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
                       echo "is_prerelease=$is_prerelease" >> release.properties
                       echo "release_name=\"$release_name\"" >> release.properties
                     fi

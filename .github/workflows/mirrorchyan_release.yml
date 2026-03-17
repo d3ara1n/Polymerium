@@ -17,8 +17,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                os: [ win, linux ]
-                arch: [ x86_64 ]
+                include:
+                    -   os: win
+                        arch: x86_64
+                    -   os: linux
+                        arch: x86_64
+                    -   os: osx
+                        arch: arm64
         steps:
             -   name: Get version from tag
                 id: version
@@ -36,7 +41,7 @@ jobs:
             -   uses: MirrorChyan/uploading-action@v1
                 with:
                     filetype: latest-release
-                    filename: ${{ format(fromJson('{"win":"Polymerium-{0}-full.nupkg","linux":"Polymerium-{0}-linux-full.nupkg"}')[matrix.os], steps.version.outputs.version) }}
+                    filename: ${{ format(fromJson('{"win":"Polymerium-{0}-full.nupkg","linux":"Polymerium-{0}-linux-full.nupkg","osx":"Polymerium-{0}-osx-arm64-full.nupkg"}')[matrix.os], steps.version.outputs.version) }}
                     mirrorchyan_rid: Polymerium
                     tag: ${{ inputs.tag }}
 
