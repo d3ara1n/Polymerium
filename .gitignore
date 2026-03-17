@@ -375,4 +375,5 @@ appsettings.*.json
 build/
 Releases/
 publish/
+plans/
 .alma-snapshots
