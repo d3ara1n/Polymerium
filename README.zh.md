@@ -227,7 +227,7 @@ git cliff
 |------------------------------------------------------------------------------------------------------------|------------|
 | ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **稳定**   |
 | ![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)  | ✅ **稳定**   |
-| ![macOS](https://img.shields.io/badge/macOS-Planned-000000?style=flat-square&logo=apple&logoColor=white)   | 📋 **计划中** |
+| ![macOS](https://img.shields.io/badge/macOS-ARM64-000000?style=flat-square&logo=apple&logoColor=white)     | ✅ **稳定**   |
 
 ---
 
