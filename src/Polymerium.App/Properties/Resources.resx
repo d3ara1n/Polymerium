@@ -2185,4 +2185,7 @@
     <data name="PackageBulkUpdatePreviewerDialog_AddTagButtonText" xml:space="preserve">
         <value>Add Tag</value>
     </data>
+    <data name="ModpackExporterDialog_IncludingTagsLabelText" xml:space="preserve">
+        <value>Include package tags</value>
+    </data>
 </root>

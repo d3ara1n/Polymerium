@@ -14,6 +14,7 @@ public partial class PackDataModel : ModelBase
     {
         _pack = pack;
         IncludingSource = pack.IncludingSource;
+        IncludingTags = pack.IncludingTags;
         JavaMaxMemory = GetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaAdditionalArguments = GetEntry(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
         ConnectServer = GetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
@@ -27,10 +28,14 @@ public partial class PackDataModel : ModelBase
     partial void OnIncludingSourceChanged(bool value) => _pack.IncludingSource = value;
 
     [ObservableProperty]
+    public partial bool IncludingTags { get; set; }
+
+    partial void OnIncludingTagsChanged(bool value) => _pack.IncludingTags = value;
+
+    [ObservableProperty]
     public partial bool JavaMaxMemory { get; set; }
 
-    partial void OnJavaMaxMemoryChanged(bool value) =>
-        SetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY, value);
+    partial void OnJavaMaxMemoryChanged(bool value) => SetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY, value);
 
     [ObservableProperty]
     public partial bool JavaAdditionalArguments { get; set; }
@@ -41,8 +46,7 @@ public partial class PackDataModel : ModelBase
     [ObservableProperty]
     public partial bool ConnectServer { get; set; }
 
-    partial void OnConnectServerChanged(bool value) =>
-        SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
+    partial void OnConnectServerChanged(bool value) => SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
 
     #endregion
 
