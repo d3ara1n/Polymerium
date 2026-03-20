@@ -108,6 +108,14 @@
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
+                        IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.IncludingTags, FallbackValue=false}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.ModpackExporterDialog_IncludingTagsLabelText}" />
+                </DockPanel>
+                <DockPanel>
+                    <ToggleSwitch
+                        DockPanel.Dock="Right"
                         IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.ConnectServer, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"

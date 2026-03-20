@@ -2176,4 +2176,7 @@
     <data name="PackageBulkUpdatePreviewerDialog_AddTagButtonText" xml:space="preserve">
         <value>添加标签</value>
     </data>
+    <data name="ModpackExporterDialog_IncludingTagsLabelText" xml:space="preserve">
+        <value>保留包的标签</value>
+    </data>
 </root>

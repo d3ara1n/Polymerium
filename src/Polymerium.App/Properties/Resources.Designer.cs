@@ -4164,6 +4164,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include package tags.
+        /// </summary>
+        public static string ModpackExporterDialog_IncludingTagsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_IncludingTagsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Include JVM additional arguments settings.
         /// </summary>
         public static string ModpackExporterDialog_JavaAdditionalArgumentsLabelText {
