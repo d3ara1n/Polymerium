@@ -1,12 +1,11 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Services;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.Components;
 
@@ -102,42 +101,22 @@ public partial class JavaHomeContainer : UserControl
 
     private void CaptureHome(string home)
     {
-        try
+        ClearJavaInfo();
+
+        var info = JavaHelper.ProbeHome(home);
+        if (info.HasValue)
         {
-            var path = Path.Combine(home, "release");
-            if (File.Exists(path))
-            {
-                var lines = File.ReadAllLines(path);
-                var vendor = lines
-                    .FirstOrDefault(x => x.StartsWith("IMPLEMENTOR="))
-                    ?.Split('=')
-                    .LastOrDefault()
-                    ?.Replace("\"", "");
-                var version = lines
-                    .FirstOrDefault(x => x.StartsWith("JAVA_VERSION="))
-                    ?.Split('=')
-                    .LastOrDefault()
-                    ?.Replace("\"", "");
-                var major = version?.Split('.').FirstOrDefault();
-                Vendor = vendor;
-                Version = version;
-                if (major != null && int.TryParse(major, out var result))
-                {
-                    Major = result is 1 ? 8 : result;
-                }
-                else
-                {
-                    Major = null;
-                }
-            }
+            Vendor = info.Value.Vendor;
+            Version = info.Value.Version;
+            Major = info.Value.Major;
         }
-        catch (Exception ex)
-        {
-            Vendor = null;
-            Version = null;
-            Major = null;
-            Debug.WriteLine(ex);
-        }
+    }
+
+    private void ClearJavaInfo()
+    {
+        Vendor = null;
+        Version = null;
+        Major = null;
     }
 
     #region Commands

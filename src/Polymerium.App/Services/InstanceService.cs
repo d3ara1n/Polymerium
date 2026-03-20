@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Trident.Core.Accounts;
 using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.Services;
 
@@ -80,7 +82,7 @@ public class InstanceService(
                 var profile = profileManager.GetImmutable(key);
                 // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
                 // Full Check Mode 只有在检查文件完整性时为 true，不随用户决定
-                var locator = JavaHelper.MakeLocator(profile, configurationService.Value);
+                var locator = CreateJavaLocator(profile, configurationService.Value);
                 var deploy = new DeployOptions(
                     profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
                     profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
@@ -135,7 +137,27 @@ public class InstanceService(
             false
         );
         fullCheckMode ??= false;
-        var locator = JavaHelper.MakeLocator(profile, configurationService.Value);
+        var locator = CreateJavaLocator(profile, configurationService.Value);
         instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
     }
+
+    private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
+        JavaHelper.MakeLocator(major =>
+            profile.GetOverride(
+                Profile.OVERRIDE_JAVA_HOME,
+                major switch
+                {
+                    8 => configuration.RuntimeJavaHome8,
+                    11 => configuration.RuntimeJavaHome11,
+                    16 or 17 => configuration.RuntimeJavaHome17,
+                    21 => configuration.RuntimeJavaHome21,
+                    24 or 25 => configuration.RuntimeJavaHome25,
+                    _ => throw new ArgumentOutOfRangeException(
+                        nameof(major),
+                        major,
+                        $"Unsupported java version: {major}"
+                    ),
+                }
+            )
+        );
 }
