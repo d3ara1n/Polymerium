@@ -164,8 +164,8 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceSubpageEntryModel">
                                     <fi:SymbolIcon
-                                        FontSize="18"
                                         HorizontalAlignment="Center"
+                                        FontSize="18"
                                         Symbol="{Binding Icon}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

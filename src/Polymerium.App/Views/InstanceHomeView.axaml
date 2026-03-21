@@ -509,8 +509,8 @@
                     IsVisible="{Binding PinnedWidgets.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                     Spacing="8">
                     <fi:SymbolIcon
-                        FontSize="{StaticResource ExtraLargeFontSize}"
                         HorizontalAlignment="Center"
+                        FontSize="{StaticResource ExtraLargeFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Grid" />
                     <TextBlock
@@ -780,8 +780,8 @@
                                                     Grid.Row="0"
                                                     Grid.RowSpan="3"
                                                     Grid.Column="0"
-                                                    FontSize="28"
                                                     VerticalAlignment="Center"
+                                                    FontSize="28"
                                                     Symbol="PersonCircle" />
                                                 <TextBlock
                                                     Grid.Row="0"
@@ -899,8 +899,8 @@
                                             Grid.Row="0"
                                             Grid.RowSpan="3"
                                             Grid.Column="0"
-                                            FontSize="26"
                                             VerticalAlignment="Center"
+                                            FontSize="26"
                                             Symbol="WindowConsole" />
                                         <TextBlock
                                             Grid.Row="0"

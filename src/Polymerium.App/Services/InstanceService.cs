@@ -141,7 +141,10 @@ public class InstanceService(
         instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
     }
 
-    private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
+    private static JavaHomeLocatorDelegate CreateJavaLocator(
+        Profile profile,
+        Configuration configuration
+    ) =>
         JavaHelper.MakeLocator(major =>
             profile.GetOverride(
                 Profile.OVERRIDE_JAVA_HOME,

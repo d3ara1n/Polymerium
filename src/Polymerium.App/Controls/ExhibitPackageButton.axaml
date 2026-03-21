@@ -4,8 +4,8 @@
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:components="clr-namespace:Polymerium.App.Components"
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:m="clr-namespace:Polymerium.App.Models">
     <ControlTheme
@@ -74,8 +74,8 @@
                                             Orientation="Horizontal"
                                             Spacing="4">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource MediumFontSize}"
                                                 VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="Person" />
                                             <TextBlock
                                                 VerticalAlignment="Center"
@@ -96,8 +96,8 @@
                                                 Orientation="Horizontal"
                                                 Spacing="4">
                                                 <fi:SymbolIcon
-                                                    FontSize="{StaticResource MediumFontSize}"
                                                     VerticalAlignment="Center"
+                                                    FontSize="{StaticResource MediumFontSize}"
                                                     Symbol="ArrowDownload" />
                                                 <TextBlock
                                                     VerticalAlignment="Center"
@@ -114,8 +114,8 @@
                                                 Orientation="Horizontal"
                                                 Spacing="4">
                                                 <fi:SymbolIcon
-                                                    FontSize="{StaticResource MediumFontSize}"
                                                     VerticalAlignment="Center"
+                                                    FontSize="{StaticResource MediumFontSize}"
                                                     Symbol="Clock" />
                                                 <TextBlock
                                                     VerticalAlignment="Center"

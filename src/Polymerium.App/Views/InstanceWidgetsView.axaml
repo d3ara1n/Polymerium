@@ -51,8 +51,8 @@
                                     IsChecked="{Binding IsPinned}"
                                     Theme="{StaticResource GhostToggleButtonTheme}">
                                     <fi:SymbolIcon
-                                        FontSize="{StaticResource SmallFontSize}"
                                         Height="{StaticResource SmallFontSize}"
+                                        FontSize="{StaticResource SmallFontSize}"
                                         Symbol="Pin" />
                                 </ToggleButton>
                             </Grid>

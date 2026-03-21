@@ -39,11 +39,7 @@ public class AssetWorldPlayerStatsModel
     public IReadOnlyList<AssetWorldPlayerStatEntryModel> GetDisplayStats() =>
         new List<AssetWorldPlayerStatEntryModel>
         {
-            new(
-                Symbol.Clock,
-                "Play Time",
-                TimeSpan.FromSeconds(PlayTime / 20d).Humanize(2)
-            ),
+            new(Symbol.Clock, "Play Time", TimeSpan.FromSeconds(PlayTime / 20d).Humanize(2)),
             new(Symbol.HeartOff, "Deaths", Deaths.ToString()),
             new(Symbol.Sanitize, "Mob Kills", MobKills.ToString()),
             new(Symbol.Target, "Player Kills", PlayerKills.ToString()),

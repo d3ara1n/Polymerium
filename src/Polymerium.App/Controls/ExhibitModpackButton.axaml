@@ -90,8 +90,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="12"
                                     VerticalAlignment="Center"
+                                    FontSize="12"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Symbol="Person" />
                                 <TextBlock
@@ -104,8 +104,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="12"
                                     VerticalAlignment="Center"
+                                    FontSize="12"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Symbol="ArrowDownload" />
                                 <TextBlock
@@ -118,8 +118,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="12"
                                     VerticalAlignment="Center"
+                                    FontSize="12"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Symbol="Clock" />
                                 <TextBlock
@@ -327,8 +327,8 @@
                             ColumnSpacing="4">
                             <fi:SymbolIcon
                                 Grid.Column="0"
-                                FontSize="12"
                                 VerticalAlignment="Center"
+                                FontSize="12"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Person" />
                             <TextBlock
@@ -339,8 +339,8 @@
                                 ToolTip.Tip="{Binding Author}" />
                             <fi:SymbolIcon
                                 Grid.Column="2"
-                                FontSize="12"
                                 VerticalAlignment="Center"
+                                FontSize="12"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="ArrowDownload" />
                             <TextBlock
@@ -350,8 +350,8 @@
                                 ToolTip.Tip="{Binding DownloadsRaw}" />
                             <fi:SymbolIcon
                                 Grid.Column="4"
-                                FontSize="12"
                                 VerticalAlignment="Center"
+                                FontSize="12"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Clock" />
                             <TextBlock

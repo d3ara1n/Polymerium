@@ -25,13 +25,12 @@ public class ListTemplateCombinationModel : AvaloniaObject
         ItemsPanelTemplate?
     >(nameof(ItemsPanelTemplate), o => o.ItemsPanelTemplate, (o, v) => o.ItemsPanelTemplate = v);
 
-    public static readonly DirectProperty<
-        ListTemplateCombinationModel,
-        Symbol
-    > IconProperty = AvaloniaProperty.RegisterDirect<
-        ListTemplateCombinationModel,
-        Symbol
-    >(nameof(Icon), o => o.Icon, (o, v) => o.Icon = v);
+    public static readonly DirectProperty<ListTemplateCombinationModel, Symbol> IconProperty =
+        AvaloniaProperty.RegisterDirect<ListTemplateCombinationModel, Symbol>(
+            nameof(Icon),
+            o => o.Icon,
+            (o, v) => o.Icon = v
+        );
 
     public static readonly DirectProperty<
         ListTemplateCombinationModel,

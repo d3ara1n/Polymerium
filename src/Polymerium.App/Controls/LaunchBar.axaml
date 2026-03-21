@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:local="using:Polymerium.App.Controls">
     <Design.PreviewWith>
@@ -67,20 +67,20 @@
                                         Orientation="Horizontal"
                                         Spacing="6">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Play" />
                                         <TextBlock Text="PLAY" />
                                     </StackPanel>
                                 </Button>
                                 <fi:SymbolIcon
                                     Name="PART_IdleIcon"
-                                    FontSize="64"
                                     Margin="0,-16,-24,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Symbol="Rocket"
-                                    Opacity="0.5">
+                                    FontSize="64"
+                                    Opacity="0.5"
+                                    Symbol="Rocket">
                                     <fi:SymbolIcon.Transitions>
                                         <Transitions>
                                             <TransformOperationsTransition
@@ -111,8 +111,8 @@
                                         Orientation="Horizontal"
                                         Spacing="6">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Square" />
                                         <TextBlock Text="Abort" />
                                     </StackPanel>
@@ -133,12 +133,12 @@
                                 </TextBlock>
                                 <fi:SymbolIcon
                                     Name="PART_BuildingIcon"
-                                    FontSize="64"
                                     Margin="0,-16,-24,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Symbol="VehicleCarProfile"
-                                    Opacity="0.5">
+                                    FontSize="64"
+                                    Opacity="0.5"
+                                    Symbol="VehicleCarProfile">
                                     <fi:SymbolIcon.Transitions>
                                         <Transitions>
                                             <TransformOperationsTransition
@@ -168,8 +168,8 @@
                                         Orientation="Horizontal"
                                         Spacing="6">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Symbol="WindowConsole" />
                                         <TextBlock Text="Dashboard" />
                                     </StackPanel>
@@ -190,12 +190,12 @@
                                 </TextBlock>
                                 <fi:SymbolIcon
                                     Name="PART_RunningIcon"
-                                    FontSize="64"
                                     Margin="0,-16,-24,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Symbol="VehicleCarProfile"
-                                    Opacity="0.5">
+                                    FontSize="64"
+                                    Opacity="0.5"
+                                    Symbol="VehicleCarProfile">
                                     <fi:SymbolIcon.Transitions>
                                         <Transitions>
                                             <TransformOperationsTransition

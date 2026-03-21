@@ -294,8 +294,8 @@
                 Orientation="Horizontal"
                 Spacing="6">
                 <fi:SymbolIcon
-                    FontSize="{StaticResource SmallFontSize}"
                     VerticalAlignment="Center"
+                    FontSize="{StaticResource SmallFontSize}"
                     Symbol="Info" />
                 <TextBlock
                     Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}"

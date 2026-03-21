@@ -61,9 +61,9 @@
                             VerticalAlignment="Center"
                             CornerRadius="{StaticResource SmallCornerRadius}">
                             <fi:SymbolIcon
-                                FontSize="{StaticResource ExtraLargeFontSize}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
                                 Symbol="Info" />
                         </Border>
                         <StackPanel
@@ -227,8 +227,8 @@
                                             </Flyout>
                                         </Button.Flyout>
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
                                             Height="{StaticResource MediumFontSize}"
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Filter" />
                                     </Button>
                                 </StackPanel>
@@ -567,8 +567,8 @@
                                 VerticalAlignment="Center"
                                 Spacing="12">
                                 <fi:SymbolIcon
-                                    FontSize="32"
                                     HorizontalAlignment="Center"
+                                    FontSize="32"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Symbol="Hexagon" />
                                 <TextBlock
@@ -916,8 +916,8 @@
                             VerticalAlignment="Center"
                             Spacing="12">
                             <fi:SymbolIcon
-                                FontSize="32"
                                 HorizontalAlignment="Center"
+                                FontSize="32"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Hexagon" />
                             <TextBlock
@@ -1270,8 +1270,8 @@
                             VerticalAlignment="Center"
                             Spacing="12">
                             <fi:SymbolIcon
-                                FontSize="32"
                                 HorizontalAlignment="Center"
+                                FontSize="32"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Hexagon" />
                             <TextBlock
@@ -1308,9 +1308,9 @@
                     IsVisible="{Binding ScreenshotGroups.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                     Spacing="8">
                     <fi:SymbolIcon
-                        FontSize="{StaticResource ExtraLargeFontSize}"
                         Height="{StaticResource ExtraLargeFontSize}"
                         HorizontalAlignment="Center"
+                        FontSize="{StaticResource ExtraLargeFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Image" />
                     <TextBlock
@@ -1395,9 +1395,9 @@
                                                                                                 </Transitions>
                                                                                             </Border.Transitions>
                                                                                             <fi:SymbolIcon
-                                                                                                FontSize="36"
                                                                                                 HorizontalAlignment="Center"
                                                                                                 VerticalAlignment="Center"
+                                                                                                FontSize="36"
                                                                                                 Foreground="{StaticResource ControlWhiteForegroundBrush}"
                                                                                                 Symbol="ArrowExpand" />
                                                                                         </Border>
@@ -1831,8 +1831,8 @@
                                                                         CornerRadius="{StaticResource MediumCornerRadius}">
                                                                         <StackPanel Spacing="4">
                                                                             <fi:SymbolIcon
-                                                                                FontSize="20"
                                                                                 HorizontalAlignment="Left"
+                                                                                FontSize="20"
                                                                                 Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                                                 Symbol="{Binding Icon}" />
                                                                             <TextBlock
@@ -1863,8 +1863,8 @@
                             VerticalAlignment="Center"
                             Spacing="12">
                             <fi:SymbolIcon
-                                FontSize="32"
                                 HorizontalAlignment="Center"
+                                FontSize="32"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Globe" />
                             <TextBlock

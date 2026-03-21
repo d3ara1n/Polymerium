@@ -293,7 +293,9 @@
                                             TrackStrokeWidth="2" />
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="False">
-                                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Search" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="Search" />
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
                                 <TextBlock
@@ -365,8 +367,8 @@
                     </MultiBinding>
                 </StackPanel.IsVisible>
                 <fi:SymbolIcon
-                    FontSize="{StaticResource ExtraLargeFontSize}"
                     HorizontalAlignment="Center"
+                    FontSize="{StaticResource ExtraLargeFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Symbol="Box" />
                 <TextBlock
