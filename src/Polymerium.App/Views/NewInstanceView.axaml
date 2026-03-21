@@ -129,9 +129,9 @@
                                 <TextBox.InnerLeftContent>
                                     <StackPanel Orientation="Horizontal">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
                                             Margin="10,0"
                                             VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Symbol="Tag" />
                                         <husk:Divider Orientation="Vertical" />
@@ -150,9 +150,9 @@
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource MediumFontSize}"
                                                 Margin="10,0"
                                                 VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                 Symbol="CompassNorthwest" />
                                             <husk:Divider Orientation="Vertical" />

@@ -64,8 +64,8 @@
                         Orientation="Horizontal"
                         Spacing="8">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource MediumFontSize}"
                             VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
                             Symbol="Search" />
                         <TextBlock
                             VerticalAlignment="Center"

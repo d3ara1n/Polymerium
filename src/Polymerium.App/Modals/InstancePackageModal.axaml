@@ -250,8 +250,8 @@
                                     IsVisible="{Binding Owner.Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                     Spacing="8">
                                     <fi:SymbolIcon
-                                        FontSize="{StaticResource ExtraLargeFontSize}"
                                         HorizontalAlignment="Center"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Symbol="Tag" />
                                     <TextBlock
@@ -556,8 +556,8 @@
                                             IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                             Spacing="8">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 HorizontalAlignment="Center"
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                 Symbol="Box" />
                                             <TextBlock
@@ -630,8 +630,8 @@
                                             IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                             Spacing="8">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 HorizontalAlignment="Center"
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                 Symbol="Box" />
                                             <TextBlock
@@ -668,8 +668,8 @@
                                         IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}"
                                         Spacing="8">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Symbol="History" />
                                         <TextBlock

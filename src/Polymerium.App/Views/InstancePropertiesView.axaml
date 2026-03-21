@@ -82,8 +82,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource SmallFontSize}"
                                     Symbol="Document" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_SelectButtonText}" />
                             </StackPanel>
@@ -95,8 +95,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource SmallFontSize}"
                                     Symbol="Delete" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_RemoveButtonText}" />
                             </StackPanel>
@@ -267,9 +267,9 @@
                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Height="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="Info" />
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
                     </StackPanel>
@@ -356,8 +356,8 @@
                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="Info" />
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
                     </StackPanel>

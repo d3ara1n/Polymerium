@@ -17,8 +17,8 @@
                         IsVisible="{TemplateBinding IsEmpty}"
                         Spacing="8">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="{TemplateBinding Icon}" />
                         <TextBlock

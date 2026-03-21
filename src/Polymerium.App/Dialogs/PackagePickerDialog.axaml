@@ -29,9 +29,9 @@
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <fi:SymbolIcon
-                        FontSize="{StaticResource MediumFontSize}"
                         Margin="10,0"
                         VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Search" />
                     <husk:Divider Orientation="Vertical" />
@@ -79,10 +79,10 @@
                                             Source="{Binding Info.Thumbnail, FallbackValue={x:Null}}"
                                             Stretch="UniformToFill" />
                                         <fi:SymbolIcon
-                                            FontSize="24"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding Info.Thumbnail, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
+                                            FontSize="24"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Symbol="Box" />
                                     </Panel>

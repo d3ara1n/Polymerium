@@ -44,9 +44,9 @@
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource MediumFontSize}"
                             Margin="12,0"
                             VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="Tag" />
                         <husk:Divider Orientation="Vertical" />
@@ -62,9 +62,9 @@
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource MediumFontSize}"
                             Margin="12,0"
                             VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="Person" />
                         <husk:Divider Orientation="Vertical" />
@@ -80,9 +80,9 @@
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource MediumFontSize}"
                             Margin="12,0"
                             VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="Branch" />
                         <husk:Divider Orientation="Vertical" />

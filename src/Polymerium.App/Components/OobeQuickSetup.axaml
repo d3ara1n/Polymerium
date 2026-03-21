@@ -120,8 +120,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource SmallFontSize}"
                                     Symbol="System" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
@@ -147,8 +147,8 @@
                                 Orientation="Horizontal"
                                 Spacing="4">
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource SmallFontSize}"
                                     Symbol="WeatherMoon" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"

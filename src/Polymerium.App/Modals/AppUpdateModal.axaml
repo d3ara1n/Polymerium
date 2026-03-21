@@ -38,8 +38,8 @@
                     Orientation="Horizontal"
                     Spacing="8">
                     <fi:SymbolIcon
-                        FontSize="{StaticResource LargeFontSize}"
                         VerticalAlignment="Center"
+                        FontSize="{StaticResource LargeFontSize}"
                         Symbol="SparkleAction" />
                     <TextBlock
                         VerticalAlignment="Center"
@@ -99,8 +99,8 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <fi:SymbolIcon
-                        FontSize="{StaticResource MediumFontSize}"
                         IsVisible="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}"
+                        FontSize="{StaticResource MediumFontSize}"
                         Symbol="ArrowDownload" />
                     <husk:ProgressRing
                         Width="{StaticResource MediumFontSize}"
@@ -136,8 +136,8 @@
                         VerticalAlignment="Center"
                         Spacing="8">
                         <fi:SymbolIcon
-                            FontSize="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="DocumentText" />
                         <TextBlock

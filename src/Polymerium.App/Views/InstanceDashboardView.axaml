@@ -28,8 +28,8 @@
                     ColumnSpacing="8">
                     <fi:SymbolIcon
                         Grid.Column="0"
-                        FontSize="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
                         Symbol="Live" />
                     <TextBlock
                         Grid.Column="1"
@@ -46,8 +46,8 @@
                     ColumnSpacing="8">
                     <fi:SymbolIcon
                         Grid.Column="0"
-                        FontSize="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
                         Symbol="Document" />
                     <TextBlock
                         Grid.Column="1"
@@ -123,8 +123,8 @@
                                 VerticalAlignment="Center"
                                 Spacing="8">
                                 <fi:SymbolIcon
-                                    FontSize="32"
                                     HorizontalAlignment="Center"
+                                    FontSize="32"
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"
                                     Symbol="Play" />
                                 <TextBlock
@@ -179,8 +179,8 @@
                             VerticalAlignment="Center"
                             Spacing="8">
                             <fi:SymbolIcon
-                                FontSize="32"
                                 HorizontalAlignment="Center"
+                                FontSize="32"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Symbol="Pause" />
                             <TextBlock
@@ -272,8 +272,8 @@
                     VerticalAlignment="Center"
                     Spacing="8">
                     <fi:SymbolIcon
-                        FontSize="32"
                         HorizontalAlignment="Center"
+                        FontSize="32"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Add" />
                     <TextBlock
@@ -312,9 +312,9 @@
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
                                     Margin="12,0"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Symbol="Search" />
                                 <husk:Divider Orientation="Vertical" />
@@ -421,10 +421,10 @@
                         VerticalAlignment="Center"
                         Spacing="8">
                         <fi:SymbolIcon
-                            FontSize="48"
                             HorizontalAlignment="Center"
-                            Symbol="DocumentText"
-                            Opacity="0.3" />
+                            FontSize="48"
+                            Opacity="0.3"
+                            Symbol="DocumentText" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"

@@ -47,9 +47,9 @@
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource MediumFontSize}"
                                                 Margin="12,0"
                                                 VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="Link" />
                                             <husk:Divider Orientation="Vertical" />
                                         </StackPanel>
@@ -73,9 +73,9 @@
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource MediumFontSize}"
                                                 Margin="12,0"
                                                 VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="BuildingRetail" />
                                             <husk:Divider Orientation="Vertical" />
                                         </StackPanel>
@@ -92,9 +92,9 @@
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
-                                                FontSize="{StaticResource MediumFontSize}"
                                                 Margin="12,0"
                                                 VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="Tag" />
                                             <husk:Divider Orientation="Vertical" />
                                         </StackPanel>
@@ -138,8 +138,8 @@
                                         Orientation="Horizontal"
                                         Spacing="6">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Symbol="SettingsCogMultiple" />
                                         <TextBlock Text="{x:Static lang:Resources.ProfileRuleModal_ChildrenEditButtonText}" />
                                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -212,8 +212,8 @@
                             Header="{x:Static lang:Resources.ProfileRuleModal_DataPackMenuText}">
                             <MenuItem.Icon>
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
                                     Symbol="FolderZip" />
                             </MenuItem.Icon>
                         </MenuItem>
@@ -222,8 +222,8 @@
                             Header="{x:Static lang:Resources.ProfileRuleModal_TaCZGunPackMenuText}">
                             <MenuItem.Icon>
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Guitar" />
                             </MenuItem.Icon>
                         </MenuItem>
@@ -232,8 +232,8 @@
                             Header="{x:Static lang:Resources.ProfileRuleModal_PointBlankGunPackMenuText}">
                             <MenuItem.Icon>
                                 <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Guitar" />
                             </MenuItem.Icon>
                         </MenuItem>

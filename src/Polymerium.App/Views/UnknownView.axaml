@@ -459,8 +459,8 @@
                                         VerticalAlignment="Center"
                                         Spacing="8">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             Symbol="Dock" />
                                         <TextBlock
                                             HorizontalAlignment="Center"
@@ -490,8 +490,8 @@
                                         VerticalAlignment="Center"
                                         Spacing="8">
                                         <fi:SymbolIcon
-                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             Symbol="Scan" />
                                         <TextBlock
                                             HorizontalAlignment="Center"
@@ -514,8 +514,8 @@
                             Opacity="0.7"
                             Spacing="12">
                             <fi:SymbolIcon
-                                FontSize="36"
                                 HorizontalAlignment="Center"
+                                FontSize="36"
                                 Foreground="{StaticResource ControlWhiteForegroundBrush}"
                                 Symbol="DocumentAdd" />
                         </StackPanel>
