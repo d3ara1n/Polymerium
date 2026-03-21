@@ -6,6 +6,7 @@
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia.Tight"
     xmlns:vm="using:Polymerium.App.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -543,6 +544,9 @@
                         Height="64"
                         Background="{Binding Accent3Brush}" />
                 </WrapPanel>
+            </TabItem>
+            <TabItem Header="Leading">
+                <mdxaml:MarkdownScrollViewer Markdown="{Binding MarkdownContent}" />
             </TabItem>
         </TabControl>
     </StackPanel>

@@ -62,6 +62,98 @@ public partial class UnknownViewModel(
     [ObservableProperty]
     public partial AvaloniaList<GrowlAction> NotificationActions { get; set; } = [];
 
+    // TODO: After installing LiveMarkdown package, change type to ObservableStringBuilder
+    // [ObservableProperty]
+    // public partial ObservableStringBuilder MarkdownBuilder { get; set; } = new(GetSampleMarkdown());
+    [ObservableProperty]
+    public partial string MarkdownContent { get; set; } = GetSampleMarkdown();
+
+    #endregion
+
+    #region Helpers
+
+    private static string GetSampleMarkdown() => """
+# Markdown 测试文档
+
+这是一个用于测试 Markdown 渲染的示例文档，包含常用样式。
+
+## 1. 文本样式
+
+**粗体文本** 和 *斜体文本* 以及 ***粗斜体文本***
+
+~~删除线文本~~
+
+`行内代码`
+
+## 2. 列表
+
+### 无序列表
+- 第一项
+- 第二项
+  - 嵌套项 1
+  - 嵌套项 2
+- 第三项
+
+### 有序列表
+1. 第一步
+2. 第二步
+3. 第三步
+
+## 3. 链接和图片
+
+[访问 GitHub](https://github.com)
+
+## 4. 引用
+
+> 这是一段引用文本
+>
+> 可以包含多行
+
+## 5. 代码块
+
+```csharp
+public class HelloWorld
+{
+    public void SayHello()
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}
+```
+
+## 6. 表格
+
+| 名称 | 年龄 | 职业 |
+|------|------|------|
+| 张三 | 25 | 工程师 |
+| 李四 | 30 | 设计师 |
+| 王五 | 28 | 产品经理 |
+
+## 7. 分隔线
+
+---
+
+## 8. 任务列表
+
+- [x] 已完成任务
+- [ ] 未完成任务
+- [ ] 另一个未完成任务
+
+## 9. 混合内容
+
+这是一个包含 **粗体**、*斜体*、`代码` 和 [链接](https://example.com) 的段落。
+
+> 引用中也可以包含 **粗体** 和 *斜体*。
+
+## 10. 特殊字符
+
+© 2024 测试文档 &reg; &trade; &lt; &gt; &amp;
+
+---
+
+*文档结束*
+""";
+
     #endregion
 
     #region Commands
