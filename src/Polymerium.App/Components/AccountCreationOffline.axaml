@@ -18,8 +18,8 @@
         <StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AccountCreationOffline_UuidLabelText}" />
             <TextBox
-                Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite, Mode=TwoWay}"
-                Watermark="{Binding $parent[local:AccountCreationOffline].Uuid, Mode=OneWay}" />
+                PlaceholderText="{Binding $parent[local:AccountCreationOffline].Uuid, Mode=OneWay}"
+                Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite, Mode=TwoWay}" />
         </StackPanel>
         <husk:InfoBar
             Classes="Warning"

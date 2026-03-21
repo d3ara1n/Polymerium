@@ -15,8 +15,8 @@
     <Grid RowDefinitions="Auto,12,Auto,12,*">
         <TextBox
             Grid.Row="0"
-            Text="{Binding $parent[local:GameVersionPickerDialog].FilterText, Mode=TwoWay}"
-            Watermark="{x:Static lang:Resources.GameVersionPickerDialog_VersionBarPlaceholder}">
+            PlaceholderText="{x:Static lang:Resources.GameVersionPickerDialog_VersionBarPlaceholder}"
+            Text="{Binding $parent[local:GameVersionPickerDialog].FilterText, Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <icons:PackIconLucide
