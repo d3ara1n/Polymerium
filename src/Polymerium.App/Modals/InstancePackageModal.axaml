@@ -249,12 +249,11 @@
                                     VerticalAlignment="Center"
                                     IsVisible="{Binding Owner.Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                     Spacing="8">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource ExtraLargeFontSize}"
-                                        Height="{StaticResource ExtraLargeFontSize}"
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
                                         HorizontalAlignment="Center"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Kind="Tag" />
+                                        Symbol="Tag" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         FontSize="{StaticResource LargeFontSize}"
@@ -414,10 +413,9 @@
                                                         Command="{Binding #VersionBox.ScrollIntoView}"
                                                         CommandParameter="{Binding #VersionBox.SelectedIndex}"
                                                         Theme="{StaticResource OutlineButtonTheme}">
-                                                        <icons:PackIconLucide
-                                                            Width="{StaticResource MediumFontSize}"
-                                                            Height="{StaticResource MediumFontSize}"
-                                                            Kind="LocateFixed" />
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            Symbol="MyLocation" />
                                                     </Button>
                                                 </Grid>
                                                 <ListBox
@@ -557,12 +555,11 @@
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                             Spacing="8">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource ExtraLargeFontSize}"
-                                                Height="{StaticResource ExtraLargeFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 HorizontalAlignment="Center"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Kind="Eclipse" />
+                                                Symbol="Box" />
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 FontSize="{StaticResource LargeFontSize}"
@@ -632,12 +629,11 @@
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                             Spacing="8">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource ExtraLargeFontSize}"
-                                                Height="{StaticResource ExtraLargeFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 HorizontalAlignment="Center"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Kind="Eclipse" />
+                                                Symbol="Box" />
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 FontSize="{StaticResource LargeFontSize}"
@@ -671,12 +667,11 @@
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}"
                                         Spacing="8">
-                                        <icons:PackIconLucide
-                                            Width="{StaticResource ExtraLargeFontSize}"
-                                            Height="{StaticResource ExtraLargeFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="History" />
+                                            Symbol="History" />
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource LargeFontSize}"

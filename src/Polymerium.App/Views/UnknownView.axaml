@@ -19,34 +19,29 @@
                 Orientation="Horizontal"
                 Spacing="4">
                 <Button Command="{Binding ShowDiagnosisCommand}">
-                    <icons:PackIconLucide
-                        Width="12"
-                        Height="12"
-                        Kind="HandHelping" />
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="Handshake" />
                 </Button>
                 <Button Command="{Binding ShowIntroCommand}">
-                    <icons:PackIconLucide
-                        Width="12"
-                        Height="12"
-                        Kind="Film" />
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="Filmstrip" />
                 </Button>
                 <Button Command="{Binding CrashCommand}">
-                    <icons:PackIconLucide
-                        Width="12"
-                        Height="12"
-                        Kind="Bug" />
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="Planet" />
                 </Button>
                 <Button Command="{Binding DebugCommand}">
-                    <icons:PackIconLucide
-                        Width="12"
-                        Height="12"
-                        Kind="TestTube" />
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="Bug" />
                 </Button>
                 <Button Click="ThemeSwitchButton_OnClick">
-                    <icons:PackIconLucide
-                        Width="12"
-                        Height="12"
-                        Kind="Lightbulb" />
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="Lightbulb" />
                 </Button>
             </StackPanel>
             <TextBlock
@@ -129,16 +124,14 @@
             Background="{StaticResource OverlayBackgroundBrush}"
             Theme="{StaticResource SegmentedTabStripTheme}">
             <TabStripItem>
-                <icons:PackIconLucide
-                    Width="12"
-                    Height="12"
-                    Kind="Menu" />
+                <fi:SymbolIcon
+                    FontSize="12"
+                    Symbol="TextAlignJustify" />
             </TabStripItem>
             <TabStripItem>
-                <icons:PackIconLucide
-                    Width="12"
-                    Height="12"
-                    Kind="Folder" />
+                <fi:SymbolIcon
+                    FontSize="12"
+                    Symbol="Folder" />
             </TabStripItem>
         </TabStrip>
         <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
@@ -465,11 +458,10 @@
                                     <StackPanel
                                         VerticalAlignment="Center"
                                         Spacing="8">
-                                        <icons:PackIconLucide
-                                            Width="{StaticResource ExtraLargeFontSize}"
-                                            Height="{StaticResource ExtraLargeFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
-                                            Kind="Dock" />
+                                            Symbol="Dock" />
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -497,11 +489,10 @@
                                     <StackPanel
                                         VerticalAlignment="Center"
                                         Spacing="8">
-                                        <icons:PackIconLucide
-                                            Width="{StaticResource ExtraLargeFontSize}"
-                                            Height="{StaticResource ExtraLargeFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
-                                            Kind="Scan" />
+                                            Symbol="Scan" />
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -522,12 +513,11 @@
                             Margin="64,48"
                             Opacity="0.7"
                             Spacing="12">
-                            <icons:PackIconLucide
-                                Width="36"
-                                Height="36"
+                            <fi:SymbolIcon
+                                FontSize="36"
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                                Kind="FilePlus" />
+                                Symbol="DocumentAdd" />
                         </StackPanel>
                     </husk:DropContainer.Overlay>
                     <husk:Card Padding="64,48">

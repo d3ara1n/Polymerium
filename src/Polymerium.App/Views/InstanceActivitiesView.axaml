@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
@@ -133,11 +134,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="6">
-                                <iconPacks:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="Clock" />
+                                    Symbol="Clock" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimeTabText}" />
@@ -156,11 +156,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="6">
-                                <iconPacks:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="HeartPulse" />
+                                    Symbol="HeartPulse" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.InstanceActivitiesView_HealthTabText}" />
@@ -189,11 +188,10 @@
                                             Padding="12"
                                             Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <iconPacks:PackIconLucide
-                                                Width="24"
-                                                Height="24"
+                                            <fi:SymbolIcon
+                                                FontSize="24"
                                                 Foreground="{StaticResource FlyoutBackgroundBrush}"
-                                                Kind="ShieldCheck" />
+                                                Symbol="HeartPulse" />
                                         </Border>
                                         <StackPanel
                                             Grid.Column="1"
@@ -228,13 +226,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Play" />
+                                            Symbol="Play" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -258,13 +255,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Bug" />
+                                            Symbol="Bug" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -288,11 +284,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="6">
-                                <iconPacks:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="List" />
+                                    Symbol="List" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.InstanceActivitiesView_StatisticsTabText}" />
@@ -315,13 +310,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Timer" />
+                                            Symbol="Timer" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -353,13 +347,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Trophy" />
+                                            Symbol="Trophy" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -391,13 +384,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Calendar" />
+                                            Symbol="Calendar" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -421,13 +413,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="CalendarCheck" />
+                                            Symbol="CalendarCheckmark" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -451,11 +442,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="6">
-                                <iconPacks:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="TrendingUp" />
+                                    Symbol="ArrowTrending" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.InstanceActivitiesView_TrendsTabText}" />
@@ -484,11 +474,10 @@
                                             Padding="12"
                                             Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <iconPacks:PackIconLucide
-                                                Width="24"
-                                                Height="24"
+                                            <fi:SymbolIcon
+                                                FontSize="24"
                                                 Foreground="{StaticResource FlyoutBackgroundBrush}"
-                                                Kind="ChartPie" />
+                                                Symbol="DataPie" />
                                         </Border>
                                         <StackPanel
                                             Grid.Column="1"
@@ -523,13 +512,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Calendar" />
+                                            Symbol="Calendar" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -561,13 +549,12 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="12">
-                                        <iconPacks:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Column="0"
-                                            Width="20"
-                                            Height="20"
+                                            FontSize="20"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="History" />
+                                            Symbol="History" />
                                         <StackPanel
                                             Grid.Column="1"
                                             VerticalAlignment="Center">
@@ -631,12 +618,11 @@
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}"
                                         Spacing="8">
-                                        <iconPacks:PackIconLucide
-                                            Width="{StaticResource ExtraLargeFontSize}"
-                                            Height="{StaticResource ExtraLargeFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                             HorizontalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Grid2x2" />
+                                            Symbol="Grid" />
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource LargeFontSize}"

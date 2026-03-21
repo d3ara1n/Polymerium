@@ -60,12 +60,11 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             CornerRadius="{StaticResource SmallCornerRadius}">
-                            <icons:PackIconLucide
-                                Width="{StaticResource ExtraLargeFontSize}"
-                                Height="{StaticResource ExtraLargeFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource ExtraLargeFontSize}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Kind="Info" />
+                                Symbol="Info" />
                         </Border>
                         <StackPanel
                             Grid.Column="1"
@@ -227,10 +226,10 @@
                                                 </StackPanel>
                                             </Flyout>
                                         </Button.Flyout>
-                                        <icons:PackIconLucide
-                                            Width="{StaticResource MediumFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Height="{StaticResource MediumFontSize}"
-                                            Kind="ListFilter" />
+                                            Symbol="Filter" />
                                     </Button>
                                 </StackPanel>
                             </TextBox.InnerRightContent>
@@ -567,12 +566,11 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Spacing="12">
-                                <icons:PackIconLucide
-                                    Width="32"
-                                    Height="32"
+                                <fi:SymbolIcon
+                                    FontSize="32"
                                     HorizontalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="Boxes" />
+                                    Symbol="Hexagon" />
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -917,12 +915,11 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="12">
-                            <icons:PackIconLucide
-                                Width="32"
-                                Height="32"
+                            <fi:SymbolIcon
+                                FontSize="32"
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Boxes" />
+                                Symbol="Hexagon" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -1272,12 +1269,11 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="12">
-                            <icons:PackIconLucide
-                                Width="32"
-                                Height="32"
+                            <fi:SymbolIcon
+                                FontSize="32"
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Boxes" />
+                                Symbol="Hexagon" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -1311,12 +1307,12 @@
                     VerticalAlignment="Center"
                     IsVisible="{Binding ScreenshotGroups.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                     Spacing="8">
-                    <icons:PackIconLucide
-                        Width="{StaticResource ExtraLargeFontSize}"
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource ExtraLargeFontSize}"
                         Height="{StaticResource ExtraLargeFontSize}"
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Kind="Image" />
+                        Symbol="Image" />
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
@@ -1398,13 +1394,12 @@
                                                                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                                                                 </Transitions>
                                                                                             </Border.Transitions>
-                                                                                            <icons:PackIconLucide
-                                                                                                Width="36"
-                                                                                                Height="36"
+                                                                                            <fi:SymbolIcon
+                                                                                                FontSize="36"
                                                                                                 HorizontalAlignment="Center"
                                                                                                 VerticalAlignment="Center"
                                                                                                 Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                                                                                                Kind="View" />
+                                                                                                Symbol="ArrowExpand" />
                                                                                         </Border>
                                                                                     </Panel>
                                                                                 </ControlTemplate>
@@ -1426,27 +1421,24 @@
                                                                         <Button
                                                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenScreenshotFileCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
-                                                                            <icons:PackIconLucide
-                                                                                Width="{StaticResource SmallFontSize}"
-                                                                                Height="{StaticResource SmallFontSize}"
-                                                                                Kind="ImagePlay" />
+                                                                            <fi:SymbolIcon
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Symbol="DocumentImage" />
                                                                         </Button>
                                                                         <Button
                                                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding Image.LocalPath}">
-                                                                            <icons:PackIconLucide
-                                                                                Width="{StaticResource SmallFontSize}"
-                                                                                Height="{StaticResource SmallFontSize}"
-                                                                                Kind="FolderOpen" />
+                                                                            <fi:SymbolIcon
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Symbol="FolderOpen" />
                                                                         </Button>
                                                                         <Button
                                                                             Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteScreenshotCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
-                                                                            <icons:PackIconLucide
-                                                                                Width="{StaticResource SmallFontSize}"
-                                                                                Height="{StaticResource SmallFontSize}"
+                                                                            <fi:SymbolIcon
+                                                                                FontSize="{StaticResource SmallFontSize}"
                                                                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                                Kind="Trash2" />
+                                                                                Symbol="Delete" />
                                                                         </Button>
                                                                     </husk:ButtonGroup>
                                                                     <StackPanel
@@ -1838,12 +1830,11 @@
                                                                         Background="{StaticResource CardBackgroundBrush}"
                                                                         CornerRadius="{StaticResource MediumCornerRadius}">
                                                                         <StackPanel Spacing="4">
-                                                                            <icons:PackIconLucide
-                                                                                Width="20"
-                                                                                Height="20"
+                                                                            <fi:SymbolIcon
+                                                                                FontSize="20"
                                                                                 HorizontalAlignment="Left"
                                                                                 Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                                                                Kind="{Binding Icon}" />
+                                                                                Symbol="{Binding Icon}" />
                                                                             <TextBlock
                                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -1871,12 +1862,11 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="12">
-                            <icons:PackIconLucide
-                                Width="32"
-                                Height="32"
+                            <fi:SymbolIcon
+                                FontSize="32"
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Globe" />
+                                Symbol="Globe" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"

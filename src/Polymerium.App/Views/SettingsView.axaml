@@ -55,11 +55,10 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="PanelLeft" />
+                                Symbol="PanelLeft" />
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
                                 VerticalAlignment="Center"
@@ -74,11 +73,10 @@
                                 VerticalAlignment="Center"
                                 Text="{x:Static lang:Resources.SettingsView_SidebarPlacementRightText}" />
                             <husk:Divider Orientation="Vertical" />
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="PanelRight" />
+                                Symbol="PanelRight" />
                         </StackPanel>
                     </TabStripItem>
                 </TabStrip>
@@ -91,11 +89,10 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="SunMoon" />
+                                Symbol="System" />
                             <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" />
                         </StackPanel>
                     </TabStripItem>
@@ -103,11 +100,10 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="Sun" />
+                                Symbol="WeatherSunny" />
                             <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" />
                         </StackPanel>
                     </TabStripItem>
@@ -115,11 +111,10 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="Moon" />
+                                Symbol="WeatherMoon" />
                             <TextBlock Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" />
                         </StackPanel>
                     </TabStripItem>
@@ -530,11 +525,10 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="Github" />
+                                Symbol="Gift" />
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
                                 VerticalAlignment="Center"
@@ -545,11 +539,10 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
                                 VerticalAlignment="Center"
-                                Kind="Cloud" />
+                                Symbol="Cloud" />
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
                                 VerticalAlignment="Center"

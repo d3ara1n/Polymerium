@@ -37,10 +37,10 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="8">
-                    <icons:PackIconLucide
-                        Height="{StaticResource LargeFontSize}"
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource LargeFontSize}"
                         VerticalAlignment="Center"
-                        Kind="Sparkles" />
+                        Symbol="SparkleAction" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
@@ -98,10 +98,10 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="6">
-                    <icons:PackIconLucide
-                        Height="{StaticResource MediumFontSize}"
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource MediumFontSize}"
                         IsVisible="{Binding !$parent[modals:AppUpdateModal].IsDownloading, FallbackValue=True}"
-                        Kind="Download" />
+                        Symbol="ArrowDownload" />
                     <husk:ProgressRing
                         Width="{StaticResource MediumFontSize}"
                         Height="{StaticResource MediumFontSize}"
@@ -135,11 +135,11 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Height="{StaticResource ExtraLargeFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Kind="FileText" />
+                            Symbol="DocumentText" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"

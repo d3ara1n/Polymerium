@@ -129,12 +129,12 @@
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal">
-                            <icons:PackIconLucide
+                            <fi:SymbolIcon
                                 Height="{StaticResource MediumFontSize}"
                                 Margin="10,0"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="ListFilter" />
+                                Symbol="Filter" />
                             <husk:Divider Orientation="Vertical" />
                         </StackPanel>
                     </StackPanel>

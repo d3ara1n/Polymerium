@@ -2,6 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:local="using:Polymerium.App.Controls">
     <Design.PreviewWith>
@@ -65,31 +66,30 @@
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="6">
-                                        <icons:PackIconLucide
-                                            Height="{StaticResource MediumFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
-                                            Kind="Play" />
+                                            Symbol="Play" />
                                         <TextBlock Text="PLAY" />
                                     </StackPanel>
                                 </Button>
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Name="PART_IdleIcon"
-                                    Width="64"
-                                    Height="64"
+                                    FontSize="64"
                                     Margin="0,-16,-24,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Kind="Rocket"
+                                    Symbol="Rocket"
                                     Opacity="0.5">
-                                    <icons:PackIconLucide.Transitions>
+                                    <fi:SymbolIcon.Transitions>
                                         <Transitions>
                                             <TransformOperationsTransition
                                                 Easing="BackEaseOut"
                                                 Property="RenderTransform"
                                                 Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
-                                    </icons:PackIconLucide.Transitions>
-                                </icons:PackIconLucide>
+                                    </fi:SymbolIcon.Transitions>
+                                </fi:SymbolIcon>
                             </Panel>
                             <Panel>
                                 <!--  Building State  -->
@@ -110,10 +110,10 @@
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="6">
-                                        <icons:PackIconLucide
-                                            Height="{StaticResource MediumFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
-                                            Kind="Square" />
+                                            Symbol="Square" />
                                         <TextBlock Text="Abort" />
                                     </StackPanel>
                                 </Button>
@@ -131,24 +131,23 @@
                                         </Transitions>
                                     </TextBlock.Transitions>
                                 </TextBlock>
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Name="PART_BuildingIcon"
-                                    Width="64"
-                                    Height="64"
+                                    FontSize="64"
                                     Margin="0,-16,-24,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Kind="Construction"
+                                    Symbol="VehicleCarProfile"
                                     Opacity="0.5">
-                                    <icons:PackIconLucide.Transitions>
+                                    <fi:SymbolIcon.Transitions>
                                         <Transitions>
                                             <TransformOperationsTransition
                                                 Easing="BackEaseOut"
                                                 Property="RenderTransform"
                                                 Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
-                                    </icons:PackIconLucide.Transitions>
-                                </icons:PackIconLucide>
+                                    </fi:SymbolIcon.Transitions>
+                                </fi:SymbolIcon>
                             </Panel>
                             <Panel>
                                 <!--  Running State  -->
@@ -168,10 +167,10 @@
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="6">
-                                        <icons:PackIconLucide
-                                            Height="{StaticResource MediumFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
                                             VerticalAlignment="Center"
-                                            Kind="Logs" />
+                                            Symbol="WindowConsole" />
                                         <TextBlock Text="Dashboard" />
                                     </StackPanel>
                                 </Button>
@@ -189,24 +188,23 @@
                                         </Transitions>
                                     </TextBlock.Transitions>
                                 </TextBlock>
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Name="PART_RunningIcon"
-                                    Width="64"
-                                    Height="64"
+                                    FontSize="64"
                                     Margin="0,-16,-24,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Kind="Car"
+                                    Symbol="VehicleCarProfile"
                                     Opacity="0.5">
-                                    <icons:PackIconLucide.Transitions>
+                                    <fi:SymbolIcon.Transitions>
                                         <Transitions>
                                             <TransformOperationsTransition
                                                 Easing="BackEaseOut"
                                                 Property="RenderTransform"
                                                 Duration="{StaticResource ControlNormalAnimationDuration}" />
                                         </Transitions>
-                                    </icons:PackIconLucide.Transitions>
-                                </icons:PackIconLucide>
+                                    </fi:SymbolIcon.Transitions>
+                                </fi:SymbolIcon>
                             </Panel>
                         </Panel>
                     </Panel>
@@ -233,15 +231,15 @@
                 </Setter>
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_IdleIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_IdleIcon">
                 <Setter Property="RenderTransform" Value="translateY(0px)" />
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_BuildingIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_BuildingIcon">
                 <Setter Property="RenderTransform" Value="translateY(-64px)" />
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_RunningIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_RunningIcon">
                 <Setter Property="RenderTransform" Value="translateX(64px)" />
             </Style>
 
@@ -300,15 +298,15 @@
                 </Style.Animations>
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_IdleIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_IdleIcon">
                 <Setter Property="RenderTransform" Value="translateY(-64px)" />
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_BuildingIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_BuildingIcon">
                 <Setter Property="RenderTransform" Value="translateY(0px)" />
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_RunningIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_RunningIcon">
                 <Setter Property="RenderTransform" Value="translateX(64px)" />
             </Style>
 
@@ -366,15 +364,15 @@
                 </Style.Animations>
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_IdleIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_IdleIcon">
                 <Setter Property="RenderTransform" Value="translateY(-64px)" />
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_BuildingIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_BuildingIcon">
                 <Setter Property="RenderTransform" Value="translateY(-64px)" />
             </Style>
 
-            <Style Selector="^ /template/ icons|PackIconLucide#PART_RunningIcon">
+            <Style Selector="^ /template/ fi|SymbolIcon#PART_RunningIcon">
                 <Setter Property="RenderTransform" Value="translateX(0px)" />
             </Style>
 

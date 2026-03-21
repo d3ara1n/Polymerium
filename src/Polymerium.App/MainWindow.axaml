@@ -63,47 +63,46 @@
                             <Style Selector="fi|SymbolIcon">
                                 <Setter Property="FontSize" Value="10" />
                             </Style>
-                            <Style Selector="icons|PackIconLucide">
-                                <Setter Property="Height" Value="10" />
-                                <Setter Property="Width" Value="10" />
+                            <Style Selector="fi|SymbolIcon">
+                                <Setter Property="FontSize" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
                         <Button
                             IsVisible="{x:Static local:Program.IsDebug}"
                             Command="{Binding OpenNotificationSidebarCommand}">
-                            <icons:PackIconLucide Kind="Bell" />
+                            <fi:SymbolIcon Symbol="Alert" />
                         </Button>
                         <Button Click="MinimizeButton_OnClick">
-                            <icons:PackIconLucide Kind="Minus" />
+                            <fi:SymbolIcon Symbol="Subtract" />
                         </Button>
                         <Button Click="ToggleMaximizeButton_OnClick">
                             <husk:SwitchPresenter
                                 TargetType="x:Boolean"
                                 Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}">
                                 <husk:SwitchCase Value="True">
-                                    <icons:PackIconLucide Kind="SquareSquare" />
+                                    <fi:SymbolIcon Symbol="ArrowMinimize" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="False">
-                                    <icons:PackIconLucide Kind="Square" />
+                                    <fi:SymbolIcon Symbol="Maximize" />
                                 </husk:SwitchCase>
                             </husk:SwitchPresenter>
                         </Button>
                         <Button Click="CloseButton_OnClick">
                             <Button.Styles>
-                                <Style Selector="Button:pointerover icons|PackIconLucide">
+                                <Style Selector="Button:pointerover fi|SymbolIcon">
                                     <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
                                 </Style>
                             </Button.Styles>
-                            <icons:PackIconLucide Kind="X">
-                                <icons:PackIconLucide.Transitions>
+                            <fi:SymbolIcon Symbol="Dismiss">
+                                <fi:SymbolIcon.Transitions>
                                     <Transitions>
                                         <BrushTransition
                                             Easing="SineEaseOut"
                                             Property="Foreground"
                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Transitions>
-                                </icons:PackIconLucide.Transitions>
-                            </icons:PackIconLucide>
+                                </fi:SymbolIcon.Transitions>
+                            </fi:SymbolIcon>
                         </Button>
                     </husk:ButtonGroup>
                 </StackPanel>
@@ -119,11 +118,10 @@
                             BlurRadius="6"
                             Opacity="0.1" />
                     </StackPanel.Effect>
-                    <icons:PackIconLucide
-                        Width="{StaticResource MediumFontSize}"
-                        Height="{StaticResource MediumFontSize}"
+                    <fi:SymbolIcon
                         VerticalAlignment="Center"
-                        Kind="Squirrel" />
+                        FontSize="{StaticResource MediumFontSize}"
+                        Symbol="AnimalPawPrint" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"
@@ -147,11 +145,11 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Width="18"
-                            Height="18"
+                        <fi:SymbolIcon
                             VerticalAlignment="Center"
-                            Kind="House" />
+                            FontSize="18"
+                            IconVariant="Color"
+                            Symbol="Home" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
@@ -165,10 +163,10 @@
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:NewInstanceView}"
                     Theme="{StaticResource OutlineButtonTheme}">
-                    <icons:PackIconLucide
-                        Width="18"
-                        Height="18"
-                        Kind="SquarePlus" />
+                    <fi:SymbolIcon
+                        FontSize="18"
+                        IconVariant="Color"
+                        Symbol="AddStarburst" />
                 </Button>
                 <Button
                     Grid.Row="1"
@@ -181,10 +179,10 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Width="18"
-                            Height="18"
-                            Kind="Store" />
+                        <fi:SymbolIcon
+                            FontSize="18"
+                            IconVariant="Color"
+                            Symbol="BuildingStore" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
@@ -232,12 +230,11 @@
                                 Margin="24,18"
                                 Opacity="{StaticResource Overlay1Opacity}"
                                 Spacing="12">
-                                <icons:PackIconLucide
-                                    Width="36"
-                                    Height="36"
+                                <fi:SymbolIcon
                                     HorizontalAlignment="Center"
+                                    FontSize="36"
                                     Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                                    Kind="PackagePlus" />
+                                    Symbol="CubeAdd" />
                             </StackPanel>
                         </Panel>
                     </husk:DropContainer.Overlay>
@@ -246,12 +243,11 @@
                             VerticalAlignment="Center"
                             IsVisible="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="{StaticResource ExtraLargeFontSize}"
-                                Height="{StaticResource ExtraLargeFontSize}"
+                            <fi:SymbolIcon
                                 HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Box" />
+                                Symbol="Cube" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
@@ -334,9 +330,9 @@
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:SettingsView}"
                     Theme="{StaticResource GhostButtonTheme}">
-                    <icons:PackIconLucide
-                        Height="18"
-                        Kind="Settings" />
+                    <fi:SymbolIcon
+                        FontSize="18"
+                        Symbol="Settings" />
                 </Button>
                 <Button
                     Grid.Row="6"

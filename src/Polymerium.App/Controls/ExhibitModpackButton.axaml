@@ -89,11 +89,11 @@
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Height="12"
+                                <fi:SymbolIcon
+                                    FontSize="12"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="CircleUser" />
+                                    Symbol="Person" />
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{Binding Author}"
@@ -103,11 +103,11 @@
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Height="12"
+                                <fi:SymbolIcon
+                                    FontSize="12"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="CircleArrowDown" />
+                                    Symbol="ArrowDownload" />
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{Binding Downloads}"
@@ -117,11 +117,11 @@
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Height="12"
+                                <fi:SymbolIcon
+                                    FontSize="12"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="Clock" />
+                                    Symbol="Clock" />
                                 <TextBlock
                                     Background="Transparent"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -325,35 +325,35 @@
                             Margin="12,8"
                             ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto"
                             ColumnSpacing="4">
-                            <icons:PackIconLucide
+                            <fi:SymbolIcon
                                 Grid.Column="0"
-                                Height="12"
+                                FontSize="12"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="CircleUser" />
+                                Symbol="Person" />
                             <TextBlock
                                 Grid.Column="1"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{Binding Author}"
                                 TextTrimming="CharacterEllipsis"
                                 ToolTip.Tip="{Binding Author}" />
-                            <icons:PackIconLucide
+                            <fi:SymbolIcon
                                 Grid.Column="2"
-                                Height="12"
+                                FontSize="12"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="CircleArrowDown" />
+                                Symbol="ArrowDownload" />
                             <TextBlock
                                 Grid.Column="3"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{Binding Downloads}"
                                 ToolTip.Tip="{Binding DownloadsRaw}" />
-                            <icons:PackIconLucide
+                            <fi:SymbolIcon
                                 Grid.Column="4"
-                                Height="12"
+                                FontSize="12"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Clock" />
+                                Symbol="Clock" />
                             <TextBlock
                                 Grid.Column="5"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"

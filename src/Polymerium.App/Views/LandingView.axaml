@@ -62,14 +62,12 @@
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="12"
                         RowDefinitions="*,Auto">
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Row="0"
-                            Grid.RowSpan="2"
                             Grid.Column="0"
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Foreground="{StaticResource ControlAccentForegroundBrush}"
-                            Kind="Boxes" />
+                            Symbol="CubeMultiple" />
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
@@ -91,13 +89,12 @@
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="12"
                         RowDefinitions="*,Auto">
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Row="0"
                             Grid.Column="0"
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Foreground="{StaticResource ControlAccentForegroundBrush}"
-                            Kind="Users" />
+                            Symbol="People" />
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
@@ -224,12 +221,11 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="{StaticResource ExtraLargeFontSize}"
-                                Height="{StaticResource ExtraLargeFontSize}"
+                            <fi:SymbolIcon
                                 HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="Gamepad2" />
+                                Symbol="Games" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"

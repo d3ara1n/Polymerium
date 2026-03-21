@@ -212,10 +212,9 @@
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                     Command="{Binding EditLoaderCommand}"
                                     CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource LargeFontSize}"
-                                        Height="{StaticResource LargeFontSize}"
-                                        Kind="SquarePen" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Symbol="TextBulletListSquareEdit" />
                                 </Button>
                                 <StackPanel Margin="12,6">
                                     <TextBlock
@@ -493,12 +492,11 @@
                                                         VerticalAlignment="Center"
                                                         IsVisible="{Binding TagsView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                                         Spacing="8">
-                                                        <icons:PackIconLucide
-                                                            Width="{StaticResource ExtraLargeFontSize}"
-                                                            Height="{StaticResource ExtraLargeFontSize}"
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource ExtraLargeFontSize}"
                                                             HorizontalAlignment="Center"
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Kind="Tags" />
+                                                            Symbol="TagMultiple" />
                                                         <TextBlock
                                                             HorizontalAlignment="Center"
                                                             FontSize="{StaticResource LargeFontSize}"
@@ -540,10 +538,9 @@
                                             </StackPanel>
                                         </Flyout>
                                     </Button.Flyout>
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource MediumFontSize}"
-                                        Height="{StaticResource MediumFontSize}"
-                                        Kind="ListFilter" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Filter" />
                                 </Button>
                             </StackPanel>
                         </TextBox.InnerRightContent>
@@ -592,10 +589,9 @@
                                     Padding="0"
                                     IsEnabled="{Binding !IsRefreshing}"
                                     Command="{Binding EditRulesCommand}">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource SmallFontSize}"
-                                        Height="{StaticResource SmallFontSize}"
-                                        Kind="Settings2" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Symbol="TaskListSquareSettings" />
                                 </Button>
                             </StackPanel>
                         </Border>
@@ -605,7 +601,7 @@
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <generic:List x:TypeArguments="m:ListTemplateCombinationModel">
-                                    <m:ListTemplateCombinationModel Icon="LayoutList">
+                                    <m:ListTemplateCombinationModel Icon="List">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
@@ -623,7 +619,7 @@
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                     </m:ListTemplateCombinationModel>
-                                    <m:ListTemplateCombinationModel Icon="LayoutGrid">
+                                    <m:ListTemplateCombinationModel Icon="Grid">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:InstancePackageModel">
                                                 <controls:InstancePackageButton
@@ -655,12 +651,11 @@
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
                                 <DataTemplate x:DataType="m:ListTemplateCombinationModel">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource MediumFontSize}"
-                                        Height="{StaticResource MediumFontSize}"
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Kind="{Binding Icon}" />
+                                        Symbol="{Binding Icon}" />
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>
@@ -695,10 +690,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="WandSparkles" />
+                                    Symbol="Wand" />
                                 <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_GetMoreButtonText}" />
                             </StackPanel>
                         </SplitButton>
@@ -711,12 +706,11 @@
                         VerticalAlignment="Center"
                         IsVisible="{Binding StageView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Kind="Package" />
+                            Symbol="Box" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"

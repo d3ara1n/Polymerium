@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
@@ -28,11 +29,10 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="7">
-                        <icons:PackIconLucide
-                            Width="{StaticResource MediumFontSize}"
-                            Height="{StaticResource MediumFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
                             VerticalAlignment="Center"
-                            Kind="UserPlus" />
+                            Symbol="PersonAdd" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="{x:Static lang:Resources.AccountsView_AddAccountButtonText}" />
@@ -49,12 +49,11 @@
             VerticalAlignment="Center"
             IsVisible="{Binding Accounts.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
             Spacing="8">
-            <icons:PackIconLucide
-                Width="{StaticResource ExtraLargeFontSize}"
-                Height="{StaticResource ExtraLargeFontSize}"
+            <fi:SymbolIcon
+                FontSize="{StaticResource ExtraLargeFontSize}"
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Kind="Users" />
+                Symbol="People" />
             <TextBlock
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"

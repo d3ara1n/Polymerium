@@ -2,6 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
     <Design.PreviewWith>
         <husk:Page
@@ -10,10 +11,9 @@
             <Button
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <icons:PackIconLucide
-                    Width="12"
-                    Height="12"
-                    Kind="ArrowLeft" />
+                <fi:SymbolIcon
+                    FontSize="12"
+                    Symbol="ArrowLeft" />
             </Button>
         </husk:Page>
     </Design.PreviewWith>
