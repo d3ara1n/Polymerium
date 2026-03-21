@@ -406,11 +406,11 @@
                                 <Grid
                                     ColumnDefinitions="Auto,*"
                                     ColumnSpacing="12">
-                                    <icons:PackIconLucide
+                                    <fi:SymbolIcon
                                         Grid.Column="0"
-                                        Height="{StaticResource ExtraLargeFontSize}"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
                                         VerticalAlignment="Center"
-                                        Kind="Lock" />
+                                        Symbol="LockClosed" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock
                                             FontSize="{StaticResource SmallFontSize}"
@@ -678,11 +678,10 @@
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="House" />
+                                    Symbol="Home" />
                                 <!-- <TextBlock Text="About" VerticalAlignment="Center" /> -->
                             </StackPanel>
                         </TabItem.Header>
@@ -735,11 +734,10 @@
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="List" />
+                                    Symbol="List" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabText}" />
@@ -764,12 +762,11 @@
                                     VerticalAlignment="Center"
                                     IsVisible="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                     Spacing="8">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource ExtraLargeFontSize}"
-                                        Height="{StaticResource ExtraLargeFontSize}"
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
                                         HorizontalAlignment="Center"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Kind="Box" />
+                                        Symbol="Box" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         FontSize="{StaticResource LargeFontSize}"
@@ -826,11 +823,10 @@
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="FileText" />
+                                    Symbol="DocumentText" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabText}" />
@@ -871,12 +867,11 @@
                                 VerticalAlignment="Center"
                                 IsVisible="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource ExtraLargeFontSize}"
-                                    Height="{StaticResource ExtraLargeFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
                                     HorizontalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="CheckLine" />
+                                    Symbol="CheckmarkUnderlineCircle" />
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="{StaticResource LargeFontSize}"
@@ -891,11 +886,10 @@
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="History" />
+                                    Symbol="History" />
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.ExhibitPackageModal_HistoryTabText}" />
@@ -909,12 +903,11 @@
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}"
                                             Spacing="8">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource ExtraLargeFontSize}"
-                                                Height="{StaticResource ExtraLargeFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
                                                 HorizontalAlignment="Center"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Kind="History" />
+                                                Symbol="History" />
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 FontSize="{StaticResource LargeFontSize}"

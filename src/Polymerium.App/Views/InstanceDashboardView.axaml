@@ -26,12 +26,11 @@
                 <Grid
                     ColumnDefinitions="Auto,*,Auto"
                     ColumnSpacing="8">
-                    <icons:PackIconLucide
+                    <fi:SymbolIcon
                         Grid.Column="0"
-                        Width="{StaticResource MediumFontSize}"
-                        Height="{StaticResource MediumFontSize}"
+                        FontSize="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
-                        Kind="Radio" />
+                        Symbol="Live" />
                     <TextBlock
                         Grid.Column="1"
                         Text="实时日志" />
@@ -45,12 +44,11 @@
                 <Grid
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="8">
-                    <icons:PackIconLucide
+                    <fi:SymbolIcon
                         Grid.Column="0"
-                        Width="{StaticResource MediumFontSize}"
-                        Height="{StaticResource MediumFontSize}"
+                        FontSize="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
-                        Kind="File" />
+                        Symbol="Document" />
                     <TextBlock
                         Grid.Column="1"
                         Text="{Binding Name}" />
@@ -124,12 +122,11 @@
                             <StackPanel
                                 VerticalAlignment="Center"
                                 Spacing="8">
-                                <icons:PackIconLucide
-                                    Width="32"
-                                    Height="32"
+                                <fi:SymbolIcon
+                                    FontSize="32"
                                     HorizontalAlignment="Center"
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                    Kind="Play" />
+                                    Symbol="Play" />
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     FontSize="{StaticResource LargeFontSize}"
@@ -181,12 +178,11 @@
                             Margin="{StaticResource CardContentMargin}"
                             VerticalAlignment="Center"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="32"
-                                Height="32"
+                            <fi:SymbolIcon
+                                FontSize="32"
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Kind="CirclePause" />
+                                Symbol="Pause" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
@@ -224,10 +220,9 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
-                                Kind="FolderOpen" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="FolderOpen" />
                             <TextBlock Text="日志目录" />
                         </StackPanel>
                     </Button>
@@ -261,10 +256,9 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <icons:PackIconLucide
-                                Width="{StaticResource MediumFontSize}"
-                                Height="{StaticResource MediumFontSize}"
-                                Kind="FolderOpen" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="FolderOpen" />
                             <TextBlock Text="崩溃报告" />
                         </StackPanel>
                     </Button>
@@ -277,12 +271,11 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Spacing="8">
-                    <icons:PackIconLucide
-                        Width="32"
-                        Height="32"
+                    <fi:SymbolIcon
+                        FontSize="32"
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Kind="Plus" />
+                        Symbol="Add" />
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -318,13 +311,12 @@
                         PlaceholderText="搜索日志内容...">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
                                     Margin="12,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="Search" />
+                                    Symbol="Search" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
                         </TextBox.InnerLeftContent>
@@ -428,11 +420,10 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Width="48"
-                            Height="48"
+                        <fi:SymbolIcon
+                            FontSize="48"
                             HorizontalAlignment="Center"
-                            Kind="FileText"
+                            Symbol="DocumentText"
                             Opacity="0.3" />
                         <TextBlock
                             HorizontalAlignment="Center"

@@ -5,6 +5,7 @@
     xmlns:components="clr-namespace:Polymerium.App.Components"
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:m="clr-namespace:Polymerium.App.Models">
     <ControlTheme
@@ -72,11 +73,10 @@
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="4">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource MediumFontSize}"
-                                                Height="{StaticResource MediumFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 VerticalAlignment="Center"
-                                                Kind="CircleUser" />
+                                                Symbol="Person" />
                                             <TextBlock
                                                 VerticalAlignment="Center"
                                                 Text="{Binding Author}" />
@@ -95,11 +95,10 @@
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource MediumFontSize}"
-                                                    Height="{StaticResource MediumFontSize}"
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
                                                     VerticalAlignment="Center"
-                                                    Kind="CircleArrowDown" />
+                                                    Symbol="ArrowDownload" />
                                                 <TextBlock
                                                     VerticalAlignment="Center"
                                                     Text="{Binding Downloads}" />
@@ -114,11 +113,10 @@
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource MediumFontSize}"
-                                                    Height="{StaticResource MediumFontSize}"
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
                                                     VerticalAlignment="Center"
-                                                    Kind="Clock" />
+                                                    Symbol="Clock" />
                                                 <TextBlock
                                                     VerticalAlignment="Center"
                                                     Text="{Binding UpdatedAt}" />

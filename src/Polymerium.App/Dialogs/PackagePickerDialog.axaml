@@ -28,12 +28,12 @@
             Text="{Binding $parent[local:PackagePickerDialog].FilterText, Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
-                    <icons:PackIconLucide
-                        Height="{StaticResource MediumFontSize}"
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource MediumFontSize}"
                         Margin="10,0"
                         VerticalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Kind="Search" />
+                        Symbol="Search" />
                     <husk:Divider Orientation="Vertical" />
                 </StackPanel>
             </TextBox.InnerLeftContent>
@@ -78,14 +78,13 @@
                                             IsVisible="{Binding Info.Thumbnail, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
                                             Source="{Binding Info.Thumbnail, FallbackValue={x:Null}}"
                                             Stretch="UniformToFill" />
-                                        <icons:PackIconLucide
-                                            Width="24"
-                                            Height="24"
+                                        <fi:SymbolIcon
+                                            FontSize="24"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding Info.Thumbnail, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Package" />
+                                            Symbol="Box" />
                                     </Panel>
                                 </Border>
 

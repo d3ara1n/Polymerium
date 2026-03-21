@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FluentIcons.Common;
 using Humanizer;
 using IconPacks.Avalonia.Lucide;
 
@@ -39,25 +40,25 @@ public class AssetWorldPlayerStatsModel
         new List<AssetWorldPlayerStatEntryModel>
         {
             new(
-                PackIconLucideKind.Clock,
+                Symbol.Clock,
                 "Play Time",
                 TimeSpan.FromSeconds(PlayTime / 20d).Humanize(2)
             ),
-            new(PackIconLucideKind.Skull, "Deaths", Deaths.ToString()),
-            new(PackIconLucideKind.Sword, "Mob Kills", MobKills.ToString()),
-            new(PackIconLucideKind.Target, "Player Kills", PlayerKills.ToString()),
-            new(PackIconLucideKind.TrendingUp, "Jumps", ((int)JumpCount).ToMetric()),
-            new(PackIconLucideKind.Heart, "Damage Taken", ((int)DamageTaken).ToMetric()),
-            new(PackIconLucideKind.Footprints, "Distance Walked", FormatDistance(DistanceWalked)),
-            new(PackIconLucideKind.Zap, "Distance Sprinted", FormatDistance(DistanceSprinted)),
+            new(Symbol.HeartOff, "Deaths", Deaths.ToString()),
+            new(Symbol.Sanitize, "Mob Kills", MobKills.ToString()),
+            new(Symbol.Target, "Player Kills", PlayerKills.ToString()),
+            new(Symbol.Run, "Jumps", ((int)JumpCount).ToMetric()),
+            new(Symbol.HeartBroken, "Damage Taken", ((int)DamageTaken).ToMetric()),
+            new(Symbol.PersonRunning, "Distance Walked", FormatDistance(DistanceWalked)),
+            new(Symbol.Flash, "Distance Sprinted", FormatDistance(DistanceSprinted)),
             new(
-                PackIconLucideKind.Timer,
+                Symbol.Timer,
                 "Time Since Death",
                 TimeSpan.FromSeconds(TimeSinceDeath / 20d).Humanize(maxUnit: TimeUnit.Hour)
             ),
-            new(PackIconLucideKind.Sparkles, "Items Enchanted", ItemsEnchanted.ToString()),
-            new(PackIconLucideKind.Rabbit, "Animals Bred", AnimalsBred.ToString()),
-            new(PackIconLucideKind.Fish, "Fish Caught", FishCaught.ToString()),
+            new(Symbol.BroomSparkle, "Items Enchanted", ItemsEnchanted.ToString()),
+            new(Symbol.AnimalRabbit, "Animals Bred", AnimalsBred.ToString()),
+            new(Symbol.FoodFish, "Fish Caught", FishCaught.ToString()),
         };
 
     private static string FormatDistance(long centimeters)

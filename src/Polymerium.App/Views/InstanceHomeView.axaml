@@ -212,10 +212,9 @@
                                                                             AncestorType=Border}" />
                                     </MultiBinding>
                                 </Border.CornerRadius>
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
-                                    Kind="Star" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Star" />
                             </Border>
                             <TextBlock
                                 Grid.Column="1"
@@ -257,11 +256,11 @@
                         Grid.Row="0"
                         ColumnDefinitions="Auto,*,Auto"
                         ColumnSpacing="8">
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Column="0"
-                            Height="{StaticResource LargeFontSize}"
+                            FontSize="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlAccentForegroundBrush}"
-                            Kind="Pyramid" />
+                            Symbol="Diversity" />
                         <TextBlock
                             Grid.Column="1"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -509,12 +508,11 @@
                     VerticalAlignment="Center"
                     IsVisible="{Binding PinnedWidgets.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                     Spacing="8">
-                    <icons:PackIconLucide
-                        Width="{StaticResource ExtraLargeFontSize}"
-                        Height="{StaticResource ExtraLargeFontSize}"
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource ExtraLargeFontSize}"
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Kind="LayoutGrid" />
+                        Symbol="Grid" />
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
@@ -778,14 +776,13 @@
                                                 ColumnDefinitions="Auto,*"
                                                 ColumnSpacing="8"
                                                 RowDefinitions="Auto,Auto">
-                                                <icons:PackIconLucide
+                                                <fi:SymbolIcon
                                                     Grid.Row="0"
                                                     Grid.RowSpan="3"
                                                     Grid.Column="0"
-                                                    Width="28"
-                                                    Height="28"
+                                                    FontSize="28"
                                                     VerticalAlignment="Center"
-                                                    Kind="UserRound" />
+                                                    Symbol="PersonCircle" />
                                                 <TextBlock
                                                     Grid.Row="0"
                                                     Grid.Column="1"
@@ -898,14 +895,13 @@
                                     <Grid
                                         ColumnDefinitions="Auto,8,*"
                                         RowDefinitions="Auto,*,Auto">
-                                        <icons:PackIconLucide
+                                        <fi:SymbolIcon
                                             Grid.Row="0"
                                             Grid.RowSpan="3"
                                             Grid.Column="0"
-                                            Width="26"
-                                            Height="26"
+                                            FontSize="26"
                                             VerticalAlignment="Center"
-                                            Kind="Logs" />
+                                            Symbol="WindowConsole" />
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="2"

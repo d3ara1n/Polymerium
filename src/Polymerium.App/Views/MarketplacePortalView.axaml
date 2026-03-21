@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
@@ -62,11 +63,10 @@
                         Margin="8,4"
                         Orientation="Horizontal"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Width="{StaticResource MediumFontSize}"
-                            Height="{StaticResource MediumFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
                             VerticalAlignment="Center"
-                            Kind="Search" />
+                            Symbol="Search" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}" />

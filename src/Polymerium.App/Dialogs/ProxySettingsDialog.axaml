@@ -293,11 +293,10 @@
             <StackPanel
                 Orientation="Horizontal"
                 Spacing="6">
-                <icons:PackIconLucide
-                    Width="{StaticResource SmallFontSize}"
-                    Height="{StaticResource SmallFontSize}"
+                <fi:SymbolIcon
+                    FontSize="{StaticResource SmallFontSize}"
                     VerticalAlignment="Center"
-                    Kind="Info" />
+                    Symbol="Info" />
                 <TextBlock
                     Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}"
                     TextWrapping="Wrap" />

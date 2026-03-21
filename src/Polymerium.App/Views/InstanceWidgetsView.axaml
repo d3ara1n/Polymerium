@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -49,10 +50,10 @@
                                     IsEnabled="{Binding SlimTemplate, Converter={x:Static ObjectConverters.IsNotNull}}"
                                     IsChecked="{Binding IsPinned}"
                                     Theme="{StaticResource GhostToggleButtonTheme}">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource SmallFontSize}"
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource SmallFontSize}"
                                         Height="{StaticResource SmallFontSize}"
-                                        Kind="Pin" />
+                                        Symbol="Pin" />
                                 </ToggleButton>
                             </Grid>
                         </Border>

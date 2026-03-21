@@ -7,6 +7,7 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:modals="clr-namespace:Polymerium.App.Modals"
@@ -188,11 +189,10 @@
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="4">
-                                                    <icons:PackIconLucide
-                                                        Width="{StaticResource SmallFontSize}"
-                                                        Height="{StaticResource SmallFontSize}"
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource SmallFontSize}"
                                                         VerticalAlignment="Center"
-                                                        Kind="Ban" />
+                                                        Symbol="Prohibited" />
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
@@ -204,11 +204,10 @@
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="4">
-                                                    <icons:PackIconLucide
-                                                        Width="{StaticResource SmallFontSize}"
-                                                        Height="{StaticResource SmallFontSize}"
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource SmallFontSize}"
                                                         VerticalAlignment="Center"
-                                                        Kind="FileArchive" />
+                                                        Symbol="Archive" />
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
@@ -220,11 +219,10 @@
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="4">
-                                                    <icons:PackIconLucide
-                                                        Width="{StaticResource SmallFontSize}"
-                                                        Height="{StaticResource SmallFontSize}"
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource SmallFontSize}"
                                                         VerticalAlignment="Center"
-                                                        Kind="FolderInput" />
+                                                        Symbol="Folder" />
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Text="{Binding Destination}" />
@@ -240,44 +238,39 @@
                                         <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].EditRuleCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource MediumFontSize}"
-                                                Height="{StaticResource MediumFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                                Kind="Pencil" />
+                                                Symbol="Edit" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleToTopCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource MediumFontSize}"
-                                                Height="{StaticResource MediumFontSize}"
-                                                Kind="ArrowUpToLine" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="AlignTop" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleUpCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource MediumFontSize}"
-                                                Height="{StaticResource MediumFontSize}"
-                                                Kind="ArrowUp" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="ArrowUp" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleDownCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource MediumFontSize}"
-                                                Height="{StaticResource MediumFontSize}"
-                                                Kind="ArrowDown" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="ArrowDown" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].RemoveRuleCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
-                                                Width="{StaticResource MediumFontSize}"
-                                                Height="{StaticResource MediumFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                Kind="Trash2" />
+                                                Symbol="Dismiss" />
                                         </Button>
                                     </husk:ButtonGroup>
                                 </Grid>

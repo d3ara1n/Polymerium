@@ -8,6 +8,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FluentIcons.Common;
 using Huskui.Avalonia.Models;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Exceptions;
@@ -389,23 +390,23 @@ public partial class InstanceViewModel : ViewModelBase
     public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
         // Home
-        new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
+        new(typeof(InstanceHomeView), Symbol.Home),
         // Dashboard
 #if DEBUG
-        new(typeof(InstanceDashboardView), PackIconLucideKind.Activity),
+        new(typeof(InstanceDashboardView), Symbol.PulseSquare),
 #endif
         // Setup
-        new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
+        new(typeof(InstanceSetupView), Symbol.Apps),
         // Assets
-        new(typeof(InstanceAssetsView), PackIconLucideKind.SquareLibrary),
+        new(typeof(InstanceAssetsView), Symbol.Library),
         // Widgets
-        new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
+        new(typeof(InstanceWidgetsView), Symbol.AppFolder),
         // Statistics
-        new(typeof(InstanceActivitiesView), PackIconLucideKind.ChartNoAxesCombined),
+        new(typeof(InstanceActivitiesView), Symbol.DataArea),
         // Storage
-        new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
+        new(typeof(InstanceStorageView), Symbol.ChartMultiple),
         // Properties
-        new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench),
+        new(typeof(InstancePropertiesView), Symbol.Wrench),
     ];
 
     [ObservableProperty]
