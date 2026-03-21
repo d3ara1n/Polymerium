@@ -24,8 +24,8 @@
         <!--  Search Box  -->
         <TextBox
             Grid.Row="0"
-            Text="{Binding $parent[local:PackagePickerDialog].FilterText, Mode=TwoWay}"
-            Watermark="{x:Static lang:Resources.PackagePickerDialog_SearchPlaceholder}">
+            PlaceholderText="{x:Static lang:Resources.PackagePickerDialog_SearchPlaceholder}"
+            Text="{Binding $parent[local:PackagePickerDialog].FilterText, Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <icons:PackIconLucide

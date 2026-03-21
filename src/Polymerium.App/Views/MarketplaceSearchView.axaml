@@ -125,8 +125,8 @@
                         </Button>
                         <TextBox
                             Grid.Column="3"
-                            Text="{Binding QueryText, Mode=TwoWay}"
-                            Watermark="{x:Static lang:Resources.MarketplaceSearchView_SearchBarPlaceholder}">
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchView_SearchBarPlaceholder}"
+                            Text="{Binding QueryText, Mode=TwoWay}">
                             <TextBox.InnerRightContent>
                                 <Button
                                     IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"

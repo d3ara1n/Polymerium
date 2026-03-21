@@ -48,8 +48,8 @@
                         Symbol="MoreHorizontal" />
                 </Button>
                 <TextBox
-                    Text="{Binding $parent[local:PackageListExporterDialog].Result, Mode=TwoWay}"
-                    Watermark="{x:Static lang:Resources.ExportPackageListDialog_PathBarPlaceholder}" />
+                    PlaceholderText="{x:Static lang:Resources.ExportPackageListDialog_PathBarPlaceholder}"
+                    Text="{Binding $parent[local:PackageListExporterDialog].Result, Mode=TwoWay}" />
             </DockPanel>
         </StackPanel>
     </StackPanel>

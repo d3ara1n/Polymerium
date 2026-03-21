@@ -2,6 +2,10 @@
     <Folder Name="/Changelogs/">
         <File Path="changelogs/rolling.md" />
     </Folder>
+    <Folder Name="/Huskui/">
+        <Project Path="submodules/Huskui.Avalonia/src/Huskui.Gallery/Huskui.Gallery.csproj" />
+        <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
+    </Folder>
     <Folder Name="/MirrorChyan/">
         <Project Path="submodules/VelopackExtension.MirrorChyan/src/VelopackExtension.MirrorChyan/VelopackExtension.MirrorChyan.csproj" />
     </Folder>
@@ -13,12 +17,11 @@
         <File Path="GitVersion.yml" />
         <File Path="README.zh.md" />
     </Folder>
-    <Folder Name="/Trident.Net/">
+    <Folder Name="/Trident/">
         <Project Path="submodules\Trident.Net\src\Trident.Abstractions\Trident.Abstractions.csproj" />
         <Project Path="submodules\Trident.Net\src\Trident.Cli\Trident.Cli.csproj" />
         <Project Path="submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" />
         <Project Path="submodules\Trident.Net\src\Trident.Purl\Trident.Purl.csproj" />
     </Folder>
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" />
-    <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
 </Solution>

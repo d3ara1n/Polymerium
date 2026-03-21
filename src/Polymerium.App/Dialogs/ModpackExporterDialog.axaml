@@ -39,8 +39,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}" />
             <TextBox
-                Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}"
-                Watermark="{Binding $parent[local:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}">
+                PlaceholderText="{Binding $parent[local:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}"
+                Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <icons:PackIconLucide
@@ -57,8 +57,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}" />
             <TextBox
-                Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}"
-                Watermark="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}">
+                PlaceholderText="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}"
+                Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <icons:PackIconLucide
@@ -75,8 +75,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}" />
             <TextBox
-                Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}"
-                Watermark="{Binding $parent[local:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}">
+                PlaceholderText="{Binding $parent[local:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}"
+                Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <icons:PackIconLucide

@@ -363,9 +363,9 @@
                     <TextBox
                         Grid.Column="0"
                         MinWidth="168"
+                        PlaceholderText="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}"
                         Text="{Binding FilterText, Mode=OneWayToSource}"
-                        ToolTip.Tip="@Author #Summary !Id Names"
-                        Watermark="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}">
+                        ToolTip.Tip="@Author #Summary !Id Names">
                         <TextBox.InnerRightContent>
                             <StackPanel Orientation="Horizontal">
                                 <Button

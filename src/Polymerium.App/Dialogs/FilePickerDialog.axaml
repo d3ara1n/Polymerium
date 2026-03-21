@@ -46,7 +46,7 @@
             </StackPanel>
         </husk:DropZone>
         <TextBox
-            Text="{Binding $parent[local:FilePickerDialog].Result, Mode=TwoWay}"
-            Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />
+            PlaceholderText="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}"
+            Text="{Binding $parent[local:FilePickerDialog].Result, Mode=TwoWay}" />
     </StackPanel>
 </husk:Dialog>
