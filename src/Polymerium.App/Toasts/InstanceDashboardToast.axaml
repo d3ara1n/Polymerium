@@ -124,8 +124,8 @@
             ColumnDefinitions="Auto,0,*,4,Auto">
             <TextBox
                 Grid.Column="2"
-                Text="{Binding $parent[local:InstanceDashboardToast].FilterText, Mode=TwoWay}"
-                Watermark="Filter by content...">
+                PlaceholderText="Filter by content..."
+                Text="{Binding $parent[local:InstanceDashboardToast].FilterText, Mode=TwoWay}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal">

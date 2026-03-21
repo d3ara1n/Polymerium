@@ -130,8 +130,8 @@
             </Button>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaHomeLabelText}">
                 <TextBox
-                    Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}"
-                    Watermark="{Binding JavaHomeWatermark}">
+                    PlaceholderText="{Binding JavaHomeWatermark}"
+                    Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding $parent[TextBox].Clear}">
@@ -152,8 +152,8 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryLabelText}">
                 <TextBox
-                    Text="{Binding JavaMaxMemoryOverride, Mode=TwoWay}"
-                    Watermark="{Binding JavaMaxMemoryWatermark}">
+                    PlaceholderText="{Binding JavaMaxMemoryWatermark}"
+                    Text="{Binding JavaMaxMemoryOverride, Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
@@ -168,15 +168,15 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaAdditionalArgumentsLabelText}">
                 <TextBox
-                    Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}"
-                    Watermark="{Binding JavaAdditionalArgumentsWatermark}" />
+                    PlaceholderText="{Binding JavaAdditionalArgumentsWatermark}"
+                    Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
-                        Text="{Binding WindowInitialWidthOverride, Mode=TwoWay}"
-                        Watermark="{Binding WindowInitialWidthWatermark}">
+                        PlaceholderText="{Binding WindowInitialWidthWatermark}"
+                        Text="{Binding WindowInitialWidthOverride, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
@@ -190,8 +190,8 @@
                     </TextBox>
                     <TextBox
                         Grid.Column="2"
-                        Text="{Binding WindowInitialHeightOverride, Mode=TwoWay}"
-                        Watermark="{Binding WindowInitialHeightWatermark}">
+                        PlaceholderText="{Binding WindowInitialHeightWatermark}"
+                        Text="{Binding WindowInitialHeightOverride, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
@@ -207,8 +207,8 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_QuickConnectLabelText}">
                 <TextBox
-                    Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}"
-                    Watermark="{Binding QuickConnectAddressWatermark}" />
+                    PlaceholderText="{Binding QuickConnectAddressWatermark}"
+                    Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
@@ -220,10 +220,10 @@
         <!--         </ComboBox> -->
         <!--     </controls:SettingsEntryItem> -->
         <!--     <controls:SettingsEntryItem Header="Folders"> -->
-        <!--         <TextBox Watermark="Replace this with a TokenTextBox!!!" /> -->
+        <!--         <TextBox PlaceholderText="Replace this with a TokenTextBox!!!" /> -->
         <!--     </controls:SettingsEntryItem> -->
         <!--     <controls:SettingsEntryItem Header="Files"> -->
-        <!--         <TextBox Watermark="Replace this with a TokenTextBox!!!" /> -->
+        <!--         <TextBox PlaceholderText="Replace this with a TokenTextBox!!!" /> -->
         <!--     </controls:SettingsEntryItem> -->
         <!-- </controls:SettingsEntry> -->
         <!-- <husk:Divider /> -->

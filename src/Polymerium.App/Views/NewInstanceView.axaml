@@ -124,8 +124,8 @@
                         <StackPanel>
                             <TextBlock Text="{x:Static lang:Resources.NewInstanceView_NameLabelText}" />
                             <TextBox
-                                Text="{Binding DisplayName, Mode=TwoWay}"
-                                Watermark="{Binding VersionName}">
+                                PlaceholderText="{Binding VersionName}"
+                                Text="{Binding DisplayName, Mode=TwoWay}">
                                 <TextBox.InnerLeftContent>
                                     <StackPanel Orientation="Horizontal">
                                         <icons:PackIconLucide

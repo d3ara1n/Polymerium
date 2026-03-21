@@ -198,8 +198,8 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Text="{Binding FilterText, Mode=TwoWay}"
-                    Watermark="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}">
+                    PlaceholderText="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}"
+                    Text="{Binding FilterText, Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <Button
                             IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"

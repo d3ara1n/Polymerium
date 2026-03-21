@@ -124,8 +124,8 @@
                             <TextBox
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyAddress, Mode=TwoWay}"
-                                Watermark="127.0.0.1" />
+                                PlaceholderText="127.0.0.1"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyAddress, Mode=TwoWay}" />
 
                             <!--  Port  -->
                             <TextBlock
@@ -136,8 +136,8 @@
                             <TextBox
                                 Grid.Row="2"
                                 Grid.Column="1"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPort, Mode=TwoWay}"
-                                Watermark="7890" />
+                                PlaceholderText="7890"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPort, Mode=TwoWay}" />
                         </Grid>
 
                         <!--  Authentication Section  -->
@@ -162,8 +162,8 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}"
-                                Watermark="{x:Static lang:Resources.ProxySettingsDialog_UsernamePlaceholder}" />
+                                PlaceholderText="{x:Static lang:Resources.ProxySettingsDialog_UsernamePlaceholder}"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}" />
 
                             <!--  Password  -->
                             <TextBlock
@@ -175,8 +175,8 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 PasswordChar="●"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}"
-                                Watermark="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}" />
+                                PlaceholderText="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}"
+                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}" />
                         </Grid>
 
                         <!--  Test Connection  -->

@@ -315,7 +315,7 @@
                     <!--  搜索框  -->
                     <TextBox
                         Grid.Column="1"
-                        Watermark="搜索日志内容...">
+                        PlaceholderText="搜索日志内容...">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <icons:PackIconLucide

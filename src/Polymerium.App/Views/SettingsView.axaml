@@ -210,7 +210,7 @@
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_FontLabelText}">
                 <TextBox
                     IsEnabled="False"
-                    Watermark="(Builtin)" />
+                    PlaceholderText="(Builtin)" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
@@ -253,8 +253,8 @@
             Summary="{x:Static lang:Resources.SettingsView_GameDefaultsSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaMaxMemoryLabelText}">
                 <TextBox
-                    Text="{Binding JavaMaxMemory, Mode=TwoWay}"
-                    Watermark="{x:Static lang:Resources.SettingsView_JavaMaxMemoryPlaceholder}">
+                    PlaceholderText="{x:Static lang:Resources.SettingsView_JavaMaxMemoryPlaceholder}"
+                    Text="{Binding JavaMaxMemory, Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
@@ -269,15 +269,15 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsLabelText}">
                 <TextBox
-                    Text="{Binding JavaAdditionalArguments, Mode=TwoWay}"
-                    Watermark="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsPlaceholder}" />
+                    PlaceholderText="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsPlaceholder}"
+                    Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
-                        Text="{Binding WindowInitialHeight, Mode=TwoWay}"
-                        Watermark="1270">
+                        PlaceholderText="1270"
+                        Text="{Binding WindowInitialHeight, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
@@ -291,8 +291,8 @@
                     </TextBox>
                     <TextBox
                         Grid.Column="2"
-                        Text="{Binding WindowInitialWidth, Mode=TwoWay}"
-                        Watermark="720">
+                        PlaceholderText="720"
+                        Text="{Binding WindowInitialWidth, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
@@ -564,8 +564,8 @@
                 <StackPanel Spacing="4">
                     <TextBox
                         PasswordChar="*"
-                        Text="{Binding MirrorChyanCdk, Mode=TwoWay}"
-                        Watermark="{x:Static lang:Resources.SettingsView_MirrorChyanCdkPlaceholder}" />
+                        PlaceholderText="{x:Static lang:Resources.SettingsView_MirrorChyanCdkPlaceholder}"
+                        Text="{Binding MirrorChyanCdk, Mode=TwoWay}" />
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
