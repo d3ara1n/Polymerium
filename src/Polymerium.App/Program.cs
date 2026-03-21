@@ -39,9 +39,7 @@ internal static class Program
 #if DEBUG
     public static bool IsDebug => true;
 #else
-    public static bool IsDebug { get; } =
-        Debugger.IsAttached
-        || Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") != "Production";
+    public static bool IsDebug => false;
 #endif
 
     [STAThread]
