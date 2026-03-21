@@ -2179,4 +2179,7 @@
     <data name="ModpackExporterDialog_IncludingTagsLabelText" xml:space="preserve">
         <value>保留包的标签</value>
     </data>
+    <data name="InstanceStorageView_OpenWikiButtonText" xml:space="preserve">
+        <value>标签 import/persist 代表什么？</value>
+    </data>
 </root>

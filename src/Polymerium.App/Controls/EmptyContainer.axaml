@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <ControlTheme
         x:Key="{x:Type controls:EmptyContainer}"

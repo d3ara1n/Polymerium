@@ -9,7 +9,6 @@
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -376,18 +375,21 @@
                                 <Button Classes.Primary="{Binding IsFilterActive, Mode=OneWay}">
                                     <Button.Flyout>
                                         <Flyout>
-                                            <StackPanel
+                                            <Grid
                                                 MinWidth="320"
                                                 MaxWidth="520"
                                                 MaxHeight="360"
                                                 Margin="12"
-                                                Spacing="8">
+                                                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*"
+                                                RowSpacing="8">
                                                 <TextBlock
+                                                    Grid.Row="0"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}" />
                                                 <Grid
+                                                    Grid.Row="1"
                                                     ColumnDefinitions="*,Auto"
                                                     ColumnSpacing="24">
                                                     <TextBlock
@@ -414,8 +416,9 @@
                                                             Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
-                                                <husk:Divider />
+                                                <husk:Divider Grid.Row="2" />
                                                 <Grid
+                                                    Grid.Row="3"
                                                     ColumnDefinitions="*,Auto"
                                                     ColumnSpacing="24">
                                                     <TextBlock
@@ -442,8 +445,9 @@
                                                             Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
-                                                <husk:Divider />
+                                                <husk:Divider Grid.Row="4" />
                                                 <Grid
+                                                    Grid.Row="5"
                                                     ColumnDefinitions="*,Auto"
                                                     ColumnSpacing="24">
                                                     <TextBlock
@@ -476,8 +480,9 @@
                                                             Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
-                                                <husk:Divider />
+                                                <husk:Divider Grid.Row="6" />
                                                 <Grid
+                                                    Grid.Row="7"
                                                     ColumnDefinitions="*,Auto,Auto"
                                                     ColumnSpacing="4">
                                                     <TextBlock
@@ -487,7 +492,9 @@
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{x:Static lang:Resources.InstanceSetupView_TagFilterText}" />
                                                 </Grid>
-                                                <Panel MinHeight="120">
+                                                <Panel
+                                                    Grid.Row="8"
+                                                    MinHeight="120">
                                                     <StackPanel
                                                         VerticalAlignment="Center"
                                                         IsVisible="{Binding TagsView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
@@ -503,39 +510,41 @@
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                             Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                                                     </StackPanel>
-                                                    <ItemsControl ItemsSource="{Binding TagsView}">
-                                                        <ItemsControl.ItemsPanel>
-                                                            <ItemsPanelTemplate>
-                                                                <WrapPanel
-                                                                    ItemSpacing="8"
-                                                                    LineSpacing="8" />
-                                                            </ItemsPanelTemplate>
-                                                        </ItemsControl.ItemsPanel>
-                                                        <ItemsControl.ItemTemplate>
-                                                            <DataTemplate x:DataType="m:InstancePackageFilterTagModel">
-                                                                <Border
-                                                                    Padding="8"
-                                                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                                                    BorderThickness="1"
-                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
-                                                                        <StackPanel
-                                                                            Orientation="Horizontal"
-                                                                            Spacing="4">
-                                                                            <TextBlock Text="{Binding Content}" />
-                                                                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                                                <Run Text="(" />
-                                                                                <Run Text="{Binding RefCount, Mode=OneWay}" />
-                                                                                <Run Text=")" />
-                                                                            </TextBlock>
-                                                                        </StackPanel>
-                                                                    </CheckBox>
-                                                                </Border>
-                                                            </DataTemplate>
-                                                        </ItemsControl.ItemTemplate>
-                                                    </ItemsControl>
+                                                    <ScrollViewer>
+                                                        <ItemsControl ItemsSource="{Binding TagsView}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel
+                                                                        ItemSpacing="8"
+                                                                        LineSpacing="8" />
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate x:DataType="m:InstancePackageFilterTagModel">
+                                                                    <Border
+                                                                        Padding="8"
+                                                                        BorderBrush="{StaticResource ControlBorderBrush}"
+                                                                        BorderThickness="1"
+                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                                                            <StackPanel
+                                                                                Orientation="Horizontal"
+                                                                                Spacing="4">
+                                                                                <TextBlock Text="{Binding Content}" />
+                                                                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                                                    <Run Text="(" />
+                                                                                    <Run Text="{Binding RefCount, Mode=OneWay}" />
+                                                                                    <Run Text=")" />
+                                                                                </TextBlock>
+                                                                            </StackPanel>
+                                                                        </CheckBox>
+                                                                    </Border>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </ScrollViewer>
                                                 </Panel>
-                                            </StackPanel>
+                                            </Grid>
                                         </Flyout>
                                     </Button.Flyout>
                                     <fi:SymbolIcon

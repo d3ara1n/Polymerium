@@ -3354,6 +3354,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What does import/persist mean?.
+        /// </summary>
+        public static string InstanceStorageView_OpenWikiButtonText {
+            get {
+                return ResourceManager.GetString("InstanceStorageView_OpenWikiButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other Files.
         /// </summary>
         public static string InstanceStorageView_OtherLabelText {
