@@ -19,12 +19,9 @@ internal static class Program
 {
     public static readonly string Brand = "Polymerium";
 
-    public static readonly string Version =
-        typeof(Program)
-            .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion.Split('+')[0]
-        ?? typeof(Program).Assembly.GetName().Version?.ToString()
-        ?? "Eternal";
+    public static readonly string Version = GitVersionInformation.SemVer;
+
+    public static readonly string ReleaseDate = GitVersionInformation.CommitDate;
 
     public static readonly string MagicWords = "say u say me";
 
