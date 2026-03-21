@@ -19,6 +19,15 @@ public static class InternalCommands
             }
         });
 
+    public static ICommand OpenStringUriCommand { get; } =
+        new RelayCommand<string>(str =>
+        {
+            if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
+            {
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(new Uri(str));
+            }
+        });
+
     public static ICommand OpenFolderCommand { get; } =
         new RelayCommand<string>(path =>
         {

@@ -5,7 +5,6 @@
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:v="clr-namespace:Polymerium.App.Views"

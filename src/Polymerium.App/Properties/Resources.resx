@@ -2188,4 +2188,7 @@
     <data name="ModpackExporterDialog_IncludingTagsLabelText" xml:space="preserve">
         <value>Include package tags</value>
     </data>
+    <data name="InstanceStorageView_OpenWikiButtonText" xml:space="preserve">
+        <value>What does import/persist mean?</value>
+    </data>
 </root>
