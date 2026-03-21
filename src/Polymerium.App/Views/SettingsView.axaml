@@ -402,7 +402,7 @@
                                 Text="{x:Static app:Program.Brand}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding Source={x:Static app:Program.Version}, StringFormat={}v{0}, FallbackValue=v0.1.0}" />
+                                Text="{Binding Source={x:Static app:Program.Version}, StringFormat={}v{0}, FallbackValue=v0.0.0}" />
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
@@ -428,7 +428,7 @@
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="Eternal" />
+                                    Text="{x:Static app:Program.ReleaseDate}" />
                             </StackPanel>
                         </StackPanel>
                         <DockPanel
