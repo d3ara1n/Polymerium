@@ -93,11 +93,11 @@
                                     StrokeDashArray="4,2"
                                     StrokeThickness="3" />
 
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Name="Icon"
                                     Margin="24"
                                     Foreground="{StaticResource ControlInteractiveBorderBrush}"
-                                    Kind="Image" />
+                                    Symbol="Image" />
                             </Panel>
                         </Panel>
                         <husk:DropZone.Styles>
@@ -112,7 +112,7 @@
                                     <ImageBrush Source="{Binding Thumbnail}" />
                                 </Setter>
                             </Style>
-                            <Style Selector=":drop icons|PackIconLucide#Icon">
+                            <Style Selector=":drop fi|SymbolIcon#Icon">
                                 <Setter Property="IsVisible" Value="False" />
                             </Style>
                         </husk:DropZone.Styles>
@@ -128,12 +128,12 @@
                                 Text="{Binding DisplayName, Mode=TwoWay}">
                                 <TextBox.InnerLeftContent>
                                     <StackPanel Orientation="Horizontal">
-                                        <icons:PackIconLucide
-                                            Height="{StaticResource MediumFontSize}"
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
                                             Margin="10,0"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Kind="Tag" />
+                                            Symbol="Tag" />
                                         <husk:Divider Orientation="Vertical" />
                                     </StackPanel>
                                 </TextBox.InnerLeftContent>
@@ -149,20 +149,20 @@
                                     Text="{Binding VersionName, Mode=TwoWay}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
-                                            <icons:PackIconLucide
-                                                Height="{StaticResource MediumFontSize}"
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
                                                 Margin="10,0"
                                                 VerticalAlignment="Center"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Kind="Compass" />
+                                                Symbol="CompassNorthwest" />
                                             <husk:Divider Orientation="Vertical" />
                                         </StackPanel>
                                     </TextBox.InnerLeftContent>
                                     <TextBox.InnerRightContent>
                                         <Button Command="{Binding PickVersionCommand}">
-                                            <icons:PackIconLucide
-                                                Height="{StaticResource MediumFontSize}"
-                                                Kind="List" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="List" />
                                         </Button>
                                     </TextBox.InnerRightContent>
                                 </TextBox>
@@ -234,10 +234,9 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
-                        <icons:PackIconLucide
-                            Width="18"
-                            Height="18"
-                            Kind="SquarePlus" />
+                        <fi:SymbolIcon
+                            FontSize="18"
+                            Symbol="SquareAdd" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="{x:Static lang:Resources.NewInstanceView_CreateButtonText}" />
@@ -253,10 +252,9 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="18"
-                                Height="18"
-                                Kind="Import" />
+                            <fi:SymbolIcon
+                                FontSize="18"
+                                Symbol="ArrowImport" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Text="{x:Static lang:Resources.NewInstanceView_ImportButtonText}" />
@@ -270,10 +268,9 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="8">
-                            <icons:PackIconLucide
-                                Width="18"
-                                Height="18"
-                                Kind="Store" />
+                            <fi:SymbolIcon
+                                FontSize="18"
+                                Symbol="BuildingStore" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Text="{x:Static lang:Resources.NewInstanceView_DownloadButtonText}" />

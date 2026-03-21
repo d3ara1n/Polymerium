@@ -97,13 +97,12 @@
                                 CommandParameter="mods"
                                 Content="Persists" />
                         </StackPanel>
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Row="0"
                             Grid.Column="0"
-                            Width="32"
-                            Height="32"
+                            FontSize="32"
                             Foreground="{StaticResource ControlAccentForegroundBrush}"
-                            Kind="Boxes" />
+                            Symbol="BoxMultiple" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -163,13 +162,12 @@
                                 CommandParameter="resourcepacks"
                                 Content="Persists" />
                         </StackPanel>
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Row="0"
                             Grid.Column="0"
-                            Width="32"
-                            Height="32"
+                            FontSize="32"
                             Foreground="#9B59B6"
-                            Kind="Package" />
+                            Symbol="Box" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -229,13 +227,12 @@
                                 CommandParameter="shaderpacks"
                                 Content="Persists" />
                         </StackPanel>
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Row="0"
                             Grid.Column="0"
-                            Width="32"
-                            Height="32"
+                            FontSize="32"
                             Foreground="#E67E22"
-                            Kind="Sparkles" />
+                            Symbol="Sparkle" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -295,13 +292,12 @@
                                 CommandParameter="saves"
                                 Content="Persists" />
                         </StackPanel>
-                        <icons:PackIconLucide
+                        <fi:SymbolIcon
                             Grid.Row="0"
                             Grid.Column="0"
-                            Width="32"
-                            Height="32"
+                            FontSize="32"
                             Foreground="#27AE60"
-                            Kind="Globe" />
+                            Symbol="Globe" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -362,13 +358,12 @@
                                 ColumnSpacing="12"
                                 RowDefinitions="Auto,Auto"
                                 RowSpacing="8">
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Width="{StaticResource LargeFontSize}"
-                                    Height="{StaticResource LargeFontSize}"
+                                    FontSize="{StaticResource LargeFontSize}"
                                     Foreground="#3498DB"
-                                    Kind="Image" />
+                                    Symbol="Image" />
                                 <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -424,13 +419,12 @@
                                 ColumnSpacing="12"
                                 RowDefinitions="Auto,Auto"
                                 RowSpacing="8">
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Width="{StaticResource LargeFontSize}"
-                                    Height="{StaticResource LargeFontSize}"
+                                    FontSize="{StaticResource LargeFontSize}"
                                     Foreground="#95A5A6"
-                                    Kind="FileText" />
+                                    Symbol="DocumentText" />
                                 <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -485,13 +479,12 @@
                                 ColumnSpacing="12"
                                 RowDefinitions="Auto,Auto"
                                 RowSpacing="8">
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Width="{StaticResource LargeFontSize}"
-                                    Height="{StaticResource LargeFontSize}"
+                                    FontSize="{StaticResource LargeFontSize}"
                                     Foreground="#E74C3C"
-                                    Kind="TriangleAlert" />
+                                    Symbol="Warning" />
                                 <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -546,13 +539,12 @@
                                 ColumnSpacing="12"
                                 RowDefinitions="Auto,Auto"
                                 RowSpacing="8">
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Width="{StaticResource LargeFontSize}"
-                                    Height="{StaticResource LargeFontSize}"
+                                    FontSize="{StaticResource LargeFontSize}"
                                     Foreground="#F39C12"
-                                    Kind="Settings" />
+                                    Symbol="Settings" />
                                 <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -607,13 +599,12 @@
                                 ColumnSpacing="12"
                                 RowDefinitions="Auto,Auto"
                                 RowSpacing="8">
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Width="{StaticResource LargeFontSize}"
-                                    Height="{StaticResource LargeFontSize}"
+                                    FontSize="{StaticResource LargeFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Kind="FolderTree" />
+                                    Symbol="FolderMultiple" />
                                 <StackPanel
                                     Grid.Row="0"
                                     Grid.Column="1"

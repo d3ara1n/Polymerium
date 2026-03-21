@@ -32,11 +32,10 @@
                 CommandParameter="{Binding}"
                 Header="{x:Static lang:Resources.MarketplaceSearchView_OpenWebsiteMenuText}">
                 <MenuItem.Icon>
-                    <icons:PackIconLucide
-                        Width="{StaticResource MediumFontSize}"
-                        Height="{StaticResource MediumFontSize}"
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
-                        Kind="ExternalLink" />
+                        Symbol="Link" />
                 </MenuItem.Icon>
             </MenuItem>
             <!-- <MenuItem Header="Save to Favorites"> -->
@@ -171,7 +170,7 @@
                                             TrackStrokeWidth="2" />
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="False">
-                                        <icons:PackIconLucide Kind="Search" />
+                                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Search" />
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
                                 <TextBlock
@@ -191,7 +190,7 @@
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <collection:List x:TypeArguments="m:ListTemplateCombinationModel">
-                                    <m:ListTemplateCombinationModel Icon="LayoutList">
+                                    <m:ListTemplateCombinationModel Icon="List">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
@@ -209,7 +208,7 @@
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                     </m:ListTemplateCombinationModel>
-                                    <m:ListTemplateCombinationModel Icon="LayoutGrid">
+                                    <m:ListTemplateCombinationModel Icon="Grid">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
@@ -240,12 +239,11 @@
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
                                 <DataTemplate x:DataType="m:ListTemplateCombinationModel">
-                                    <icons:PackIconLucide
-                                        Width="{StaticResource MediumFontSize}"
-                                        Height="{StaticResource MediumFontSize}"
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Kind="{Binding Icon}" />
+                                        Symbol="{Binding Icon}" />
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>

@@ -119,11 +119,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="SunMoon" />
+                                    Symbol="System" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
                                     Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" />
@@ -133,11 +132,11 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
+                                <fi:SymbolIcon
                                     Width="{StaticResource SmallFontSize}"
                                     Height="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="Sun" />
+                                    Symbol="WeatherSunny" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
                                     Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" />
@@ -147,11 +146,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="Moon" />
+                                    Symbol="WeatherMoon" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
                                     Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" />
