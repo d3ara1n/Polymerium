@@ -183,8 +183,8 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
                             <TextBox
-                                Text="{Binding $parent[modals:ProfileRuleModal].Rule.Destination, Mode=TwoWay}"
-                                Watermark="{x:Static lang:Resources.ProfileRuleModal_DestinationPlaceholder}">
+                                PlaceholderText="{x:Static lang:Resources.ProfileRuleModal_DestinationPlaceholder}"
+                                Text="{Binding $parent[modals:ProfileRuleModal].Rule.Destination, Mode=TwoWay}">
                                 <TextBox.InnerRightContent>
                                     <Button
                                         IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"

@@ -21,8 +21,8 @@
         <!--  输入框  -->
         <TextBox
             Grid.Row="0"
-            Text="{Binding $parent[local:TagPickerDialog].Result, Mode=TwoWay}"
-            Watermark="{x:Static lang:Resources.TagPickerDialog_InputTextBoxPlaceholder}" />
+            PlaceholderText="{x:Static lang:Resources.TagPickerDialog_InputTextBoxPlaceholder}"
+            Text="{Binding $parent[local:TagPickerDialog].Result, Mode=TwoWay}" />
 
         <!--  现有标签标题  -->
         <TextBlock

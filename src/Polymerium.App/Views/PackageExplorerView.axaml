@@ -242,8 +242,8 @@
                         ColumnSpacing="8">
                         <TextBox
                             Grid.Column="0"
-                            Text="{Binding QueryText}"
-                            Watermark="{x:Static lang:Resources.PackageExplorerView_SearchBarPlaceholder}">
+                            PlaceholderText="{x:Static lang:Resources.PackageExplorerView_SearchBarPlaceholder}"
+                            Text="{Binding QueryText}">
                             <TextBox.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
                                     <Button

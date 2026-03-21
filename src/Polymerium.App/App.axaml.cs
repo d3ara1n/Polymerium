@@ -18,6 +18,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Sentry;
+using Page = Huskui.Avalonia.Controls.Page;
 
 namespace Polymerium.App;
 

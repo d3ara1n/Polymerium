@@ -147,12 +147,12 @@ public partial class MainWindow : AppWindow
             if (visible)
             {
                 ExtendClientAreaToDecorationsHint = true;
-                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
+                // ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
             }
             else
             {
                 ExtendClientAreaToDecorationsHint = false;
-                ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
+                // ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
             }
         }
     }

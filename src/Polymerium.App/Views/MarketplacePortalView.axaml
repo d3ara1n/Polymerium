@@ -49,8 +49,8 @@
                     HorizontalContentAlignment="Center"
                     BorderThickness="0,0,0,2"
                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                    Theme="{StaticResource UnderlineTextBoxTheme}"
-                    Watermark="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}" />
+                    PlaceholderText="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}"
+                    Theme="{StaticResource UnderlineTextBoxTheme}" />
                 <Button
                     Classes="Primary"
                     HorizontalAlignment="Center"
