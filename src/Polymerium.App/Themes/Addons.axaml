@@ -1,9 +1,11 @@
-﻿<Styles
+<Styles
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctxt="clr-namespace:ColorTextBlock.Avalonia;assembly=ColorTextBlock.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia">
 
     <Style Selector="TextBox">
         <Setter Property="ContextFlyout">
@@ -40,6 +42,25 @@
     <Style Selector="ToggleSwitch">
         <Setter Property="OffContent" Value="{x:Static lang:Resources.Enum_Off}" />
         <Setter Property="OnContent" Value="{x:Static lang:Resources.Enum_On}" />
+    </Style>
+
+    <Style Selector="ctxt|CTextBlock.Heading1">
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+    </Style>
+    <Style Selector="ctxt|CTextBlock.Heading2">
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+    </Style>
+    <Style Selector="ctxt|CTextBlock.Heading3">
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+    </Style>
+    <Style Selector="ctxt|CTextBlock.Heading4">
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+    </Style>
+    <Style Selector="ctxt|CTextBlock.Heading5">
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+    </Style>
+    <Style Selector="ctxt|CTextBlock.Heading6">
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
     </Style>
 
 </Styles>
