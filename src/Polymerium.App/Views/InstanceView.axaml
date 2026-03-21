@@ -5,6 +5,7 @@
     xmlns:app="clr-namespace:Polymerium.App"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:m="using:Polymerium.App.Models"
@@ -125,12 +126,11 @@
                         Margin="48,36"
                         Opacity="{StaticResource Overlay1Opacity}"
                         Spacing="12">
-                        <icons:PackIconLucide
-                            Width="42"
+                        <fi:SymbolIcon
                             Height="42"
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                            Kind="FilePlus" />
+                            Symbol="DocumentAdd" />
                     </StackPanel>
                 </Panel>
             </husk:DropContainer.Overlay>
@@ -148,7 +148,9 @@
                             Grid.Row="0"
                             Margin="12"
                             Command="{Binding $parent[husk:Frame].GoBackCommand}">
-                            <icons:PackIconLucide Kind="ArrowLeft" />
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="ArrowLeft" />
                         </Button>
                         <ListBox
                             x:Name="EntryBox"
@@ -161,10 +163,10 @@
                             SelectionMode="Single">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceSubpageEntryModel">
-                                    <icons:PackIconLucide
-                                        Height="18"
+                                    <fi:SymbolIcon
+                                        FontSize="18"
                                         HorizontalAlignment="Center"
-                                        Kind="{Binding Icon}" />
+                                        Symbol="{Binding Icon}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.ItemContainerTheme>
@@ -262,10 +264,9 @@
                                             Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
-                                    Kind="FilePlus" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="DocumentAdd" />
                             </Button>
                             <Button
                                 Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
@@ -284,19 +285,17 @@
                                             Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
-                                    Kind="FolderArchive" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="FolderZip" />
                             </Button>
                             <Button
                                 Command="{Binding OpenFolderCommand}"
                                 CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
                                 ToolTip.Tip="Open instance folder">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource MediumFontSize}"
-                                    Height="{StaticResource MediumFontSize}"
-                                    Kind="FolderOpen" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="FolderOpen" />
                             </Button>
                         </StackPanel>
                         <Border

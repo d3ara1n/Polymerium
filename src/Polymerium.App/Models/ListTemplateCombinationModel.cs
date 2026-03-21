@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
+using FluentIcons.Common;
 using IconPacks.Avalonia.Lucide;
 
 namespace Polymerium.App.Models;
@@ -26,10 +27,10 @@ public class ListTemplateCombinationModel : AvaloniaObject
 
     public static readonly DirectProperty<
         ListTemplateCombinationModel,
-        PackIconLucideKind
+        Symbol
     > IconProperty = AvaloniaProperty.RegisterDirect<
         ListTemplateCombinationModel,
-        PackIconLucideKind
+        Symbol
     >(nameof(Icon), o => o.Icon, (o, v) => o.Icon = v);
 
     public static readonly DirectProperty<
@@ -52,11 +53,11 @@ public class ListTemplateCombinationModel : AvaloniaObject
         set => SetAndRaise(ItemsPanelTemplateProperty, ref field, value);
     }
 
-    public PackIconLucideKind Icon
+    public Symbol Icon
     {
         get;
         set => SetAndRaise(IconProperty, ref field, value);
-    } = PackIconLucideKind.House;
+    } = Symbol.Home;
 
     public ControlTheme? ItemContainerTheme
     {

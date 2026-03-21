@@ -81,11 +81,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="File" />
+                                    Symbol="Document" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_SelectButtonText}" />
                             </StackPanel>
                         </Button>
@@ -95,11 +94,10 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <icons:PackIconLucide
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
                                     VerticalAlignment="Center"
-                                    Kind="Trash2" />
+                                    Symbol="Delete" />
                                 <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_RemoveButtonText}" />
                             </StackPanel>
                         </Button>
@@ -135,16 +133,16 @@
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding $parent[TextBox].Clear}">
-                                <icons:PackIconLucide
-                                    Height="{StaticResource SmallFontSize}"
-                                    Kind="Delete" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Symbol="Dismiss" />
                             </Button>
                             <Button
                                 Command="{Binding PickFileCommand}"
                                 CommandParameter="{Binding $parent[TextBox]}">
-                                <icons:PackIconLucide
-                                    Height="{StaticResource MediumFontSize}"
-                                    Kind="FileOutput" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="DocumentArrowLeft" />
                             </Button>
                         </StackPanel>
                     </TextBox.InnerRightContent>
@@ -268,11 +266,11 @@
                     VerticalAlignment="Center"
                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             Height="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
-                            Kind="Info" />
+                            Symbol="Info" />
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
                     </StackPanel>
                 </husk:Card>
@@ -357,11 +355,10 @@
                     VerticalAlignment="Center"
                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
                             HorizontalAlignment="Center"
-                            Kind="Info" />
+                            Symbol="Info" />
                         <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
                     </StackPanel>
                 </husk:Card>

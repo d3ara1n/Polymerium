@@ -115,10 +115,9 @@
                 ColumnSpacing="12">
                 <husk:Card Grid.Column="0">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
-                            Kind="Boxes" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Symbol="Box" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}" />
@@ -141,10 +140,9 @@
                 </husk:Card>
                 <husk:Card Grid.Column="1">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
-                            Kind="Library" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Symbol="Library" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}" />
@@ -162,10 +160,9 @@
                 </husk:Card>
                 <husk:Card Grid.Column="2">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
-                            Kind="CassetteTape" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Symbol="DocumentFlowchart" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}" />
@@ -183,10 +180,9 @@
                 </husk:Card>
                 <husk:Card Grid.Column="3">
                     <StackPanel Spacing="4">
-                        <icons:PackIconLucide
-                            Width="{StaticResource ExtraLargeFontSize}"
-                            Height="{StaticResource ExtraLargeFontSize}"
-                            Kind="ShipWheel" />
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Symbol="HexagonThree" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}" />

@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -59,46 +60,39 @@
                                         VerticalAlignment="Center">
                                         <husk:SwitchPresenter Value="{Binding Type}">
                                             <husk:SwitchCase Value="And">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="Merge" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="Merge" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Or">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="Orbit" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="Org" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Not">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="EqualNot" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="CircleOff" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Purl">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="Link" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="Link" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Repository">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="Warehouse" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="BuildingRetail" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Tag">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="Tag" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="Tag" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Kind">
-                                                <icons:PackIconLucide
-                                                    Width="{StaticResource LargeFontSize}"
-                                                    Height="{StaticResource LargeFontSize}"
-                                                    Kind="Box" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="PuzzlePiece" />
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
                                     </StackPanel>
@@ -236,19 +230,19 @@
                                             Classes="Small"
                                             Command="{Binding $parent[modals:ProfileRuleSelectorsModal].EditSelectorCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
+                                            <fi:SymbolIcon
                                                 Width="{StaticResource MediumFontSize}"
                                                 Height="{StaticResource MediumFontSize}"
-                                                Kind="Pencil" />
+                                                Symbol="Edit" />
                                         </Button>
                                         <Button
                                             Classes="Small"
                                             Command="{Binding $parent[modals:ProfileRuleSelectorsModal].RemoveSelectorCommand}"
                                             CommandParameter="{Binding}">
-                                            <icons:PackIconLucide
+                                            <fi:SymbolIcon
                                                 Width="{StaticResource MediumFontSize}"
                                                 Height="{StaticResource MediumFontSize}"
-                                                Kind="Trash2" />
+                                                Symbol="Delete" />
                                         </Button>
                                     </husk:ButtonGroup>
                                 </Grid>

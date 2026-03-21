@@ -90,9 +90,9 @@
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
                             <StackPanel>
-                                <icons:PackIconLucide
-                                    Height="{StaticResource LargeFontSize}"
-                                    Kind="MessageSquareWarning" />
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="Warning" />
                                 <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}" />
                             </StackPanel>
                         </Border>

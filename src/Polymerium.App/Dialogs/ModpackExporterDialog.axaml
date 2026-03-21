@@ -43,12 +43,12 @@
                 Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
-                        <icons:PackIconLucide
-                            Height="{StaticResource MediumFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
                             Margin="12,0"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Kind="Tag" />
+                            Symbol="Tag" />
                         <husk:Divider Orientation="Vertical" />
                     </StackPanel>
                 </TextBox.InnerLeftContent>
@@ -61,12 +61,12 @@
                 Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
-                        <icons:PackIconLucide
-                            Height="{StaticResource MediumFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
                             Margin="12,0"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Kind="User" />
+                            Symbol="Person" />
                         <husk:Divider Orientation="Vertical" />
                     </StackPanel>
                 </TextBox.InnerLeftContent>
@@ -79,12 +79,12 @@
                 Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
-                        <icons:PackIconLucide
-                            Height="{StaticResource MediumFontSize}"
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
                             Margin="12,0"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Kind="GitBranch" />
+                            Symbol="Branch" />
                         <husk:Divider Orientation="Vertical" />
                     </StackPanel>
                 </TextBox.InnerLeftContent>
