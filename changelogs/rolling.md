@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - 使用新的写法替代原先读取文件获取JAVA版本
+- 导入导出选项添加是否包含包的标签
 
 ### Fixed
 
@@ -20,4 +21,4 @@
 
 ### Removed
 
--
+- 由于 LiveCharts 控件不支持 Avalonia 12 暂时移除相关图表
