@@ -11,7 +11,7 @@
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
-    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
+    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia.Tight"
     xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -269,7 +269,7 @@
                 <DataTemplate DataType="x:String">
                     <mdxaml:MarkdownScrollViewer Markdown="{Binding}">
                         <mdxaml:MarkdownScrollViewer.Engine>
-                            <md:Markdown HyperlinkCommand="{Binding $parent[local:ExhibitModpackToast].NavigateUriCommand}" />
+                            <mdxaml:Markdown HyperlinkCommand="{Binding $parent[local:ExhibitModpackToast].NavigateUriCommand}" />
                         </mdxaml:MarkdownScrollViewer.Engine>
                     </mdxaml:MarkdownScrollViewer>
                 </DataTemplate>
