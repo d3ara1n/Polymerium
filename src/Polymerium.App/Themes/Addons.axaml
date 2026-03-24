@@ -62,5 +62,8 @@
     <Style Selector="ctxt|CTextBlock.Heading6">
         <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
     </Style>
+    <Style Selector="TextBlock.CodeBlock">
+        <Setter Property="FontFamily" Value="Cascadia Code, Consolas, Courier New, monospace" />
+    </Style>
 
 </Styles>

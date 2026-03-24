@@ -10,8 +10,7 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
-    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
+    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia.Tight"
     xmlns:modals="clr-namespace:Polymerium.App.Modals"
     xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
     MinHeight="360"
@@ -718,7 +717,7 @@
                                                 Margin="12"
                                                 Markdown="{Binding}">
                                                 <mdxaml:MarkdownScrollViewer.Engine>
-                                                    <md:Markdown HyperlinkCommand="{Binding $parent[modals:ExhibitPackageModal].NavigateUriCommand}" />
+                                                    <mdxaml:Markdown HyperlinkCommand="{Binding $parent[modals:ExhibitPackageModal].NavigateUriCommand}" />
                                                 </mdxaml:MarkdownScrollViewer.Engine>
                                             </mdxaml:MarkdownScrollViewer>
                                         </DataTemplate>
