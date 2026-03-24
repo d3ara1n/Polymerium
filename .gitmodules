@@ -7,3 +7,6 @@
 [submodule "submodules/VelopackExtension.MirrorChyan"]
 	path = submodules/VelopackExtension.MirrorChyan
 	url = git@github.com:d3ara1n/VelopackExtension.MirrorChyan
+[submodule "submodules/Markdown.Avalonia"]
+	path = submodules/Markdown.Avalonia
+	url = git@github.com:d3ara1n/Markdown.Avalonia
