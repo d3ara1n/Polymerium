@@ -2191,4 +2191,7 @@
     <data name="InstanceStorageView_OpenWikiButtonText" xml:space="preserve">
         <value>What does import/persist mean?</value>
     </data>
+    <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
+        <value>How it works?</value>
+    </data>
 </root>
