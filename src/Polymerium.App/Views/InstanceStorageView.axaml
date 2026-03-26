@@ -40,16 +40,15 @@
                 Grid.Column="1"
                 Orientation="Horizontal"
                 Spacing="8">
-                <Button
+                <HyperlinkButton
                     Classes="Small"
                     VerticalAlignment="Center"
                     Command="{x:Static m:InternalCommands.OpenStringUriCommand}"
-                    CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87"
-                    Theme="{StaticResource OutlineButtonTheme}">
+                    CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87">
                     <husk:IconLabel
                         Icon="BookQuestionMark"
                         Text="{x:Static lang:Resources.InstanceStorageView_OpenWikiButtonText}" />
-                </Button>
+                </HyperlinkButton>
                 <Button
                     Classes="Small"
                     VerticalAlignment="Center"

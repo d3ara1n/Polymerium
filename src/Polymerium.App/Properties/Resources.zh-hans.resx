@@ -2182,4 +2182,7 @@
     <data name="InstanceStorageView_OpenWikiButtonText" xml:space="preserve">
         <value>标签 import/persist 代表什么？</value>
     </data>
+    <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
+        <value>这是怎么运作的？</value>
+    </data>
 </root>

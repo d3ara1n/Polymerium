@@ -4218,6 +4218,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How it works?.
+        /// </summary>
+        public static string ModpackExporterDialog_OpenWikiButtonText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_OpenWikiButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Packages.
         /// </summary>
         public static string ModpackExporterDialog_PackagesLabelText {
