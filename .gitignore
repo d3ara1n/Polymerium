@@ -375,5 +375,8 @@ appsettings.*.json
 build/
 Releases/
 publish/
+
+# AI tooling
 plans/
+.kiro/
 .alma-snapshots
