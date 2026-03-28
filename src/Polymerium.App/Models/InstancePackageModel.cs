@@ -22,7 +22,7 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool isLocke
 
     public Profile.Rice.Entry Entry => entry;
 
-    public MappingCollection<string, string> Tags { get; } = new(entry.Tags, x => x, x => x);
+    public int PersistentIndex { get; set; }
 
     #endregion
 
@@ -38,6 +38,8 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool isLocke
 
     [ObservableProperty]
     public partial InstancePackageInfoModel? Info { get; set; }
+
+    public MappingCollection<string, string> Tags { get; } = new(entry.Tags, x => x, x => x);
 
     #endregion
 }

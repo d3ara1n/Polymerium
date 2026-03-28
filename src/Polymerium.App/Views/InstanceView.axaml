@@ -160,14 +160,14 @@
                             SelectedValue="{Binding SelectedPage}"
                             SelectionChanged="EntryBox_OnSelectionChanged"
                             SelectionMode="Single">
-                            <ListBox.ItemTemplate>
+                            <!-- <ListBox.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceSubpageEntryModel">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
                                         FontSize="18"
                                         Symbol="{Binding Icon}" />
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
+                            </ListBox.ItemTemplate> -->
                             <ListBox.ItemContainerTheme>
                                 <ControlTheme TargetType="ListBoxItem">
                                     <Setter Property="Cursor" Value="Hand" />
@@ -206,7 +206,7 @@
                                                         </Transitions>
                                                     </Border.Transitions>
                                                 </Border>
-                                                <ContentPresenter
+                                                <!-- <ContentPresenter
                                                     Name="PART_ContentPresenter"
                                                     Margin="8"
                                                     Content="{TemplateBinding Content}"
@@ -218,13 +218,23 @@
                                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                         </Transitions>
                                                     </ContentPresenter.Transitions>
-                                                </ContentPresenter>
+                                                </ContentPresenter>-->
+                                                <fi:SymbolIcon
+                                                    Margin="8"
+                                                    HorizontalAlignment="Center"
+                                                    FontSize="18"
+                                                    Symbol="{Binding Icon, RelativeSource={RelativeSource Mode=DataContext}, DataType=m:InstanceSubpageEntryModel}">
+                                                    <fi:SymbolIcon.Transitions>
+                                                        <Transitions>
+                                                            <BrushTransition
+                                                                Property="Foreground"
+                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                        </Transitions>
+                                                    </fi:SymbolIcon.Transitions>
+                                                </fi:SymbolIcon>
                                             </Panel>
                                         </ControlTemplate>
                                     </Setter>
-                                    <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
-                                        <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
-                                    </Style>
                                     <Style Selector="^:pointerover /template/ Border#Indicator">
                                         <Setter Property="Opacity" Value="1" />
                                     </Style>
@@ -234,6 +244,10 @@
                                     <Style Selector="^:selected /template/ Border#Lock">
                                         <Setter Property="Opacity" Value="1" />
                                         <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+                                    </Style>
+                                    <Style Selector="^:selected /template/ fi|SymbolIcon">
+                                        <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+                                        <Setter Property="IconVariant" Value="Filled" />
                                     </Style>
                                 </ControlTheme>
                             </ListBox.ItemContainerTheme>

@@ -124,11 +124,15 @@ public partial class InstanceSetupViewModel(
 
             StageCount = _stageSource.Count;
             _stageSource.Remove(toRemove);
+            var persistentIndex = _stageSource.Count;
             var toAdd = lookup
                 .Select(x => new InstancePackageModel(
                     x,
                     x.Source is not null && x.Source == Basic.Source
-                ))
+                )
+                {
+                    PersistentIndex = persistentIndex++
+                })
                 .ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
@@ -456,6 +460,7 @@ public partial class InstanceSetupViewModel(
             .Filter(kind)
             .Filter(tags)
             .Filter(text)
+            .SortBy(x => x.PersistentIndex)
             .Bind(out var view)
             .Subscribe()
             .DisposeWith(_subscriptions);
@@ -574,13 +579,14 @@ public partial class InstanceSetupViewModel(
             string.IsNullOrEmpty(filter)
             || (
                 x.Info
-                    is {
-                        ProjectId: { } pid,
-                        ProjectName: { } name,
-                        Author: { } author,
-                        Summary: { } summary,
-                        Version: { } version
-                    }
+                    is
+                {
+                    ProjectId: { } pid,
+                    ProjectName: { } name,
+                    Author: { } author,
+                    Summary: { } summary,
+                    Version: { } version
+                }
                 && filter
                     .Split(' ')
                     .All(y =>
@@ -781,11 +787,11 @@ public partial class InstanceSetupViewModel(
                 await overlayService.PopDialogAsync(previewer)
                 && previewer.Result
                     is PackageBulkUpdatePreviewerModel
-                    {
-                        IsEnabledOnly: var enabledOnly,
-                        TagPolicy: var tagPolicy,
-                        Tags: var tags
-                    }
+                {
+                    IsEnabledOnly: var enabledOnly,
+                    TagPolicy: var tagPolicy,
+                    Tags: var tags
+                }
             )
             {
                 var staging = _stageSource
@@ -1338,9 +1344,9 @@ public partial class InstanceSetupViewModel(
                         x.ReleaseType,
                         x.PublishedAt
                     )
-                    {
-                        IsCurrent = x.VersionId == reference.VersionId,
-                    })
+                {
+                    IsCurrent = x.VersionId == reference.VersionId,
+                })
                     .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (

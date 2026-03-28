@@ -262,6 +262,7 @@
                             Symbol="Diversity" />
                         <TextBlock
                             Grid.Column="1"
+                            FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.InstanceHomeView_SetupTitle}" />
                         <Button
