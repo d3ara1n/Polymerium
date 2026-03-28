@@ -120,7 +120,8 @@
                     <fi:SymbolIcon
                         VerticalAlignment="Center"
                         FontSize="{StaticResource MediumFontSize}"
-                        Symbol="AnimalPawPrint" />
+                        Symbol="AnimalPawPrint"
+                        IconVariant="Color" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"
