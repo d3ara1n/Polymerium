@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Humanizer;
+using Huskui.Avalonia;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
 using Trident.Abstractions.FileModels;
@@ -82,6 +83,45 @@ public static class InternalConverters
                     double d => ByteSize.FromBytes(d).Humanize(),
                     _ => v,
                 }
+        );
+
+    public static IValueConverter AccentColorToBrush { get; } =
+        new RelayConverter(
+            (v, _) =>
+                v is AccentColor accent
+                    ? new SolidColorBrush(
+                        accent switch
+                        {
+                            AccentColor.System => Colors.Transparent,
+                            AccentColor.Neutral => Color.FromRgb(0x8D, 0x8D, 0x8D),
+                            AccentColor.Tomato => Color.FromRgb(0xDD, 0x44, 0x25),
+                            AccentColor.Red => Color.FromRgb(0xDC, 0x3E, 0x42),
+                            AccentColor.Ruby => Color.FromRgb(0xDC, 0x3B, 0x5D),
+                            AccentColor.Crimson => Color.FromRgb(0xDF, 0x34, 0x78),
+                            AccentColor.Pink => Color.FromRgb(0xCF, 0x38, 0x97),
+                            AccentColor.Plum => Color.FromRgb(0xAB, 0x4A, 0xBA),
+                            AccentColor.Purple => Color.FromRgb(0x83, 0x47, 0xB9),
+                            AccentColor.Violet => Color.FromRgb(0x6E, 0x56, 0xCF),
+                            AccentColor.Iris => Color.FromRgb(0x51, 0x51, 0xCD),
+                            AccentColor.Indigo => Color.FromRgb(0x33, 0x58, 0xD4),
+                            AccentColor.Blue => Color.FromRgb(0x00, 0x90, 0xFF),
+                            AccentColor.Cyan => Color.FromRgb(0x07, 0x97, 0xB9),
+                            AccentColor.Teal => Color.FromRgb(0x0D, 0x9B, 0x8A),
+                            AccentColor.Jade => Color.FromRgb(0x29, 0xA3, 0x83),
+                            AccentColor.Green => Color.FromRgb(0x2B, 0x9A, 0x66),
+                            AccentColor.Grass => Color.FromRgb(0x3E, 0x9B, 0x4F),
+                            AccentColor.Bronze => Color.FromRgb(0x95, 0x74, 0x68),
+                            AccentColor.Gold => Color.FromRgb(0x8C, 0x7A, 0x5E),
+                            AccentColor.Orange => Color.FromRgb(0xEF, 0x5F, 0x00),
+                            AccentColor.Amber => Color.FromRgb(0xFF, 0xC5, 0x3D),
+                            AccentColor.Yellow => Color.FromRgb(0xFF, 0xDC, 0x00),
+                            AccentColor.Lime => Color.FromRgb(0xBD, 0xEE, 0x63),
+                            AccentColor.Mint => Color.FromRgb(0x7D, 0xE0, 0xCB),
+                            AccentColor.Sky => Color.FromRgb(0x7C, 0xE2, 0xFE),
+                            _ => Colors.Transparent,
+                        }
+                    )
+                    : AvaloniaProperty.UnsetValue
         );
 
     public static IMultiValueConverter LatencyToColorBrush { get; } =

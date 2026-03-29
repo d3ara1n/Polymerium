@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="clr-namespace:Polymerium.App"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:cp="clr-namespace:Polymerium.App.Components"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -125,13 +126,23 @@
                     SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="husk:AccentColor">
-                            <TextBlock Text="{Binding}" />
+                            <DockPanel>
+                                <Border
+                                    DockPanel.Dock="Right"
+                                    Height="12"
+                                    Width="{Binding $self.Bounds.Height}"
+                                    VerticalAlignment="Center"
+                                    Background="{Binding Converter={x:Static converters:InternalConverters.AccentColorToBrush}}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{Binding}" />
+                            </DockPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
-                Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}">
                 <ComboBox
                     ItemsSource="{Binding CornerStyles}"
                     SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
