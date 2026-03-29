@@ -131,7 +131,6 @@
                 </ComboBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem
-                IsVisible="False"
                 Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}">
                 <ComboBox
                     ItemsSource="{Binding CornerStyles}"

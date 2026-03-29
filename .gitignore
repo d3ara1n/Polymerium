@@ -379,4 +379,5 @@ publish/
 # AI tooling
 plans/
 .kiro/
+.kilo/
 .alma-snapshots
