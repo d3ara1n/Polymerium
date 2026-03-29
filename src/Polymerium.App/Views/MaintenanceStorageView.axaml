@@ -115,6 +115,7 @@
                 <husk:Card Grid.Column="0">
                     <StackPanel Spacing="4">
                         <fi:SymbolIcon
+                            HorizontalAlignment="Left"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="Box" />
                         <TextBlock
@@ -140,6 +141,7 @@
                 <husk:Card Grid.Column="1">
                     <StackPanel Spacing="4">
                         <fi:SymbolIcon
+                            HorizontalAlignment="Left"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="Library" />
                         <TextBlock
@@ -160,6 +162,7 @@
                 <husk:Card Grid.Column="2">
                     <StackPanel Spacing="4">
                         <fi:SymbolIcon
+                            HorizontalAlignment="Left"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="DocumentFlowchart" />
                         <TextBlock
@@ -180,6 +183,7 @@
                 <husk:Card Grid.Column="3">
                     <StackPanel Spacing="4">
                         <fi:SymbolIcon
+                            HorizontalAlignment="Left"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="HexagonThree" />
                         <TextBlock
