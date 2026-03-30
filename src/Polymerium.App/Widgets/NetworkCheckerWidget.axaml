@@ -55,7 +55,7 @@
                                         <!--  延迟进度条  -->
                                         <ProgressBar
                                             DockPanel.Dock="Bottom"
-                                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
+                                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}, Converter={x:Static husk:CornerRadiusConverters.Bottom}}"
                                             IsIndeterminate="{Binding IsTesting}"
                                             Maximum="500"
                                             Value="{Binding Latency}">
@@ -70,7 +70,7 @@
                                         <!--  内容区域  -->
                                         <Border
                                             Margin="8,4"
-                                            CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                            CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                             <Grid ColumnDefinitions="*,Auto">
                                                 <!--  网站名称  -->
                                                 <StackPanel

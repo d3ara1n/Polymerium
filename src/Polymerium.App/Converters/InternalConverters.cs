@@ -15,6 +15,17 @@ namespace Polymerium.App.Converters;
 
 public static class InternalConverters
 {
+
+    public static IMultiValueConverter Upper
+    { get; } = new RelayMultiConverter((v, _, _) =>
+    {
+        if(v is [CornerRadius corner])
+        {
+            return new CornerRadius(corner.TopLeft, corner.TopRight, 0 ,0);
+        }
+        return AvaloniaProperty.UnsetValue;
+    });
+
     public static IMultiValueConverter OneOr { get; } =
         new RelayMultiConverter(
             (v, _, _) =>

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="clr-namespace:Polymerium.App"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -167,7 +168,7 @@
                                         FontSize="18"
                                         Symbol="{Binding Icon}" />
                                 </DataTemplate>
-                            </ListBox.ItemTemplate> -->
+                            </ListBox.ItemTemplate>-->
                             <ListBox.ItemContainerTheme>
                                 <ControlTheme TargetType="ListBoxItem">
                                     <Setter Property="Cursor" Value="Hand" />
@@ -263,7 +264,6 @@
                             Spacing="2">
                             <Button
                                 Command="{Binding ImportFromFileCommand}"
-                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}"
                                 ToolTip.Tip="Import asset from file">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -277,6 +277,12 @@
                                             Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
+                                <Button.CornerRadius>
+                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                        <StaticResource ResourceKey="MediumCornerRadius" />
+                                        <StaticResource ResourceKey="ExtraSmallCornerRadius" />
+                                    </MultiBinding>
+                                </Button.CornerRadius>
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="DocumentAdd" />
@@ -284,7 +290,7 @@
                             <Button
                                 Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding Basic.Key}"
-                                CornerRadius="0"
+                                CornerRadius="{StaticResource ExtraSmallCornerRadius}"
                                 ToolTip.Tip="Export modpack to file">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -304,8 +310,13 @@
                             </Button>
                             <Button
                                 Command="{Binding OpenFolderCommand}"
-                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}"
                                 ToolTip.Tip="Open instance folder">
+                                <Button.CornerRadius>
+                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                        <StaticResource ResourceKey="ExtraSmallCornerRadius" />
+                                        <StaticResource ResourceKey="MediumCornerRadius" />
+                                    </MultiBinding>
+                                </Button.CornerRadius>
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="FolderOpen" />

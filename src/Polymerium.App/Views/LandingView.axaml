@@ -288,7 +288,7 @@
                                                 <Border
                                                     DockPanel.Dock="Top"
                                                     Height="56"
-                                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                                     <Border.Background>
                                                         <ImageBrush
                                                             async:ImageBrushLoader.Source="{Binding Thumbnail}"

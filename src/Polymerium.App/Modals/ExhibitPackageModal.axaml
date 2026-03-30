@@ -174,7 +174,7 @@
                 <Border
                     Grid.Row="0"
                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                     <Panel>
                         <Grid
                             Margin="10"

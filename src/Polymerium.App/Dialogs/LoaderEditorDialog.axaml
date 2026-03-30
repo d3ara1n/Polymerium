@@ -32,7 +32,7 @@
                                 <Border
                                     Grid.Column="0"
                                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Left}}">
+                                    CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Left}}">
                                     <Image
                                         Width="36"
                                         Height="36"
