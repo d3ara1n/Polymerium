@@ -761,7 +761,7 @@
                                     Padding="12,6"
                                     HorizontalAlignment="Center"
                                     Command="{Binding SwitchModeCommand}"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
                                     <TextBlock Text="{Binding Mode, Converter={x:Static converters:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button

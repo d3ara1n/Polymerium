@@ -29,9 +29,13 @@
                     <StackPanel
                         Margin="3"
                         Spacing="3">
-                        <Border
-                            Background="{StaticResource OverlaySolidBackgroundBrush}"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}">
+                            <Border.CornerRadius>
+                                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                    <StaticResource ResourceKey="SmallCornerRadius" />
+                                    <StaticResource ResourceKey="ExtraSmallCornerRadius" />
+                                </MultiBinding>
+                            </Border.CornerRadius>
                             <TextBlock
                                 Margin="8"
                                 FontSize="{StaticResource LargeFontSize}"
@@ -43,12 +47,21 @@
                             Classes="Small"
                             Command="{Binding RenameInstanceCommand}"
                             Content="{x:Static lang:Resources.InstancePropertiesView_RenameButtonText}"
-                            Theme="{StaticResource OutlineButtonTheme}" />
+                            Theme="{StaticResource OutlineButtonTheme}">
+                            <Button.CornerRadius>
+                                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                    <StaticResource ResourceKey="ExtraSmallCornerRadius" />
+                                    <StaticResource ResourceKey="SmallCornerRadius" />
+                                </MultiBinding>
+                            </Button.CornerRadius>
+                        </Button>
                     </StackPanel>
                 </Border>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_ThumbnailLabelText}">
-                <Grid ColumnDefinitions="Auto,12,*">
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12">
                     <Border
                         Grid.Column="0"
                         Width="72"
@@ -71,7 +84,7 @@
 
                     </Border>
                     <StackPanel
-                        Grid.Column="2"
+                        Grid.Column="1"
                         VerticalAlignment="Center"
                         Spacing="12">
                         <Button

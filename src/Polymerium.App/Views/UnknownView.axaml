@@ -399,7 +399,7 @@
                                             <Button
                                                 Grid.Column="0"
                                                 Classes="Small"
-                                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Left}}"
+                                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Left}}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -417,7 +417,7 @@
                                             <Button
                                                 Grid.Column="4"
                                                 Classes="Small"
-                                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Right}}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -444,7 +444,7 @@
                                 <Button
                                     DockPanel.Dock="Bottom"
                                     Classes="Small Primary"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
                                     <husk:IconLabel
                                         Icon="HandPoint"
                                         Text="Install" />
@@ -454,7 +454,7 @@
                                     Background="{StaticResource OverlayBackgroundBrush}"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,1,1,0"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                     <StackPanel
                                         VerticalAlignment="Center"
                                         Spacing="8">
@@ -475,7 +475,7 @@
                                     Classes="Small"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,0,1,1"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Lower}}">
+                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
                                     <husk:IconLabel
                                         Icon="HandPoint"
                                         Text="Installed" />
@@ -485,7 +485,7 @@
                                     Background="{StaticResource OverlayBackgroundBrush}"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,1,1,0"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                     <StackPanel
                                         VerticalAlignment="Center"
                                         Spacing="8">

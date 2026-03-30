@@ -215,7 +215,7 @@
                             <Border
                                 Grid.Row="0"
                                 Background="{StaticResource ControlBackgroundBrush}"
-                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Upper}}">
+                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                 <Grid>
                                     <DockPanel Margin="6">
                                         <TextBlock
@@ -282,7 +282,7 @@
                                                         Padding="4,0"
                                                         Command="{Binding $parent[modals:InstancePackageModal].RemoveTagCommand}"
                                                         CommandParameter="{Binding}"
-                                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                                        CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Right}}"
                                                         Theme="{StaticResource GhostButtonTheme}">
                                                         <fi:SymbolIcon
                                                             HorizontalAlignment="Right"
