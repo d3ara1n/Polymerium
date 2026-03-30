@@ -7,10 +7,10 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
         <LangVersion>preview</LangVersion>
-        
+
         <Product>Polymerium</Product>
         <Title>Polymerium</Title>
-        <Description>🐿️ A next-generation Minecraft instance manager that thinks differently about game management</Description>
+        <FileDescription>🐿️ A next-generation Minecraft instance manager that thinks differently about game management</FileDescription>
     </PropertyGroup>
 
     <ItemGroup>
