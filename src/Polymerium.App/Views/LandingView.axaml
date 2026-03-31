@@ -191,22 +191,22 @@
                                         <Button
                                             Grid.Column="0"
                                             Classes="Small"
-                                            Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
-                                            CommandParameter="{Binding Key}"
-                                            Theme="{StaticResource OutlineButtonTheme}">
-                                            <fi:SymbolIcon
-                                                FontSize="{StaticResource SmallFontSize}"
-                                                Symbol="Open" />
-                                        </Button>
-                                        <Button
-                                            Grid.Column="1"
-                                            Classes="Small"
                                             Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).OpenInstanceFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource SmallFontSize}"
                                                 Symbol="FolderOpen" />
+                                        </Button>
+                                        <Button
+                                            Grid.Column="1"
+                                            Classes="Small"
+                                            Command="{Binding $parent[v:LandingView].((vm:LandingViewModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Key}"
+                                            Theme="{StaticResource OutlineButtonTheme}">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="Eye" />
                                         </Button>
                                     </Grid>
                                 </Grid>
