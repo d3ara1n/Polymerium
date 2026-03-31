@@ -1,8 +1,10 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Services;
 using Trident.Core.Utilities;
@@ -11,6 +13,9 @@ namespace Polymerium.App.Components;
 
 public partial class JavaHomeContainer : UserControl
 {
+    private CancellationTokenSource? _captureHomeCts;
+    private int _captureHomeVersion;
+
     public static readonly DirectProperty<JavaHomeContainer, string?> HomeProperty =
         AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
             nameof(Home),
@@ -88,10 +93,11 @@ public partial class JavaHomeContainer : UserControl
         {
             if (change.NewValue is not null)
             {
-                CaptureHome(change.GetNewValue<string>());
+                StartCaptureHome(change.GetNewValue<string>());
             }
             else
             {
+                CancelCaptureHome();
                 Vendor = null;
                 Version = null;
                 Major = null;
@@ -99,17 +105,80 @@ public partial class JavaHomeContainer : UserControl
         }
     }
 
-    private void CaptureHome(string home)
+    private void StartCaptureHome(string home)
     {
+        CancelCaptureHome();
         ClearJavaInfo();
 
-        var info = JavaHelper.ProbeHome(home);
-        if (info.HasValue)
+        var version = unchecked(++_captureHomeVersion);
+        var cts = new CancellationTokenSource();
+        _captureHomeCts = cts;
+
+        _ = CaptureHomeAsync(home, version, cts.Token);
+    }
+
+    private void CancelCaptureHome()
+    {
+        if (_captureHomeCts is { } cts)
         {
-            Vendor = info.Value.Vendor;
-            Version = info.Value.Version;
-            Major = info.Value.Major;
+            _captureHomeCts = null;
+            cts.Cancel();
+            cts.Dispose();
         }
+    }
+
+    private async Task CaptureHomeAsync(string home, int version, CancellationToken cancellationToken)
+    {
+        var shouldCleanup = false;
+
+        try
+        {
+            var info = await JavaHelper
+                .ProbeHomeAsync(home, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+            if (!info.HasValue || cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            await Dispatcher.UIThread.InvokeAsync(
+                () =>
+                {
+                    if (cancellationToken.IsCancellationRequested || version != _captureHomeVersion || Home != home)
+                    {
+                        return;
+                    }
+
+                    Vendor = info.Value.Vendor;
+                    Version = info.Value.Version;
+                    Major = info.Value.Major;
+                },
+                DispatcherPriority.Normal,
+                cancellationToken
+            );
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        finally
+        {
+            shouldCleanup = true;
+        }
+
+        if (!shouldCleanup)
+        {
+            return;
+        }
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            if (_captureHomeCts != null && version == _captureHomeVersion && Home == home)
+            {
+                _captureHomeCts.Dispose();
+                _captureHomeCts = null;
+            }
+        });
     }
 
     private void ClearJavaInfo()

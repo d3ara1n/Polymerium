@@ -289,17 +289,16 @@
 
         <!--  Restart Required Notice  -->
         <husk:InfoBar>
-            <StackPanel
-                Orientation="Horizontal"
-                Spacing="6">
+            <DockPanel HorizontalSpacing="6">
                 <fi:SymbolIcon
+                    DockPanel.Dock="Left"
                     VerticalAlignment="Center"
                     FontSize="{StaticResource SmallFontSize}"
                     Symbol="Info" />
                 <TextBlock
                     Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}"
                     TextWrapping="Wrap" />
-            </StackPanel>
+            </DockPanel>
         </husk:InfoBar>
     </StackPanel>
 </husk:Dialog>
