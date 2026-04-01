@@ -174,7 +174,8 @@
                 <Border
                     Grid.Row="0"
                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                              Converter={x:Static husk:CornerRadiusConverters.Top}}">
                     <Panel>
                         <Grid
                             Margin="10"
@@ -713,13 +714,9 @@
                                 <husk:LazyContainer Source="{Binding $parent[modals:ExhibitPackageModal].LazyDescription}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="x:String">
-                                            <mdxaml:MarkdownScrollViewer
+                                            <husk:MarkdownViewer
                                                 Margin="12"
-                                                Markdown="{Binding}">
-                                                <mdxaml:MarkdownScrollViewer.Engine>
-                                                    <mdxaml:Markdown HyperlinkCommand="{Binding $parent[modals:ExhibitPackageModal].NavigateUriCommand}" />
-                                                </mdxaml:MarkdownScrollViewer.Engine>
-                                            </mdxaml:MarkdownScrollViewer>
+                                                Markdown="{Binding}" />
                                         </DataTemplate>
                                     </husk:LazyContainer.SourceTemplate>
                                 </husk:LazyContainer>
@@ -853,7 +850,7 @@
                                         Source="{Binding $parent[modals:ExhibitPackageModal].LazyChangelog}">
                                         <husk:LazyContainer.SourceTemplate>
                                             <DataTemplate DataType="x:String">
-                                                <mdxaml:MarkdownScrollViewer
+                                                <husk:MarkdownViewer
                                                     Margin="12"
                                                     Markdown="{Binding}" />
                                             </DataTemplate>

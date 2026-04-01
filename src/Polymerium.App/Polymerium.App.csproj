@@ -83,7 +83,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia.Markdown\Huskui.Avalonia.Markdown.csproj" />
         <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
-        <ProjectReference Include="..\..\submodules\Markdown.Avalonia\Markdown.Avalonia.Tight\Markdown.Avalonia.Tight.csproj" />
         <ProjectReference Include="..\..\submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" />
         <ProjectReference Include="..\..\submodules\VelopackExtension.MirrorChyan\src\VelopackExtension.MirrorChyan\VelopackExtension.MirrorChyan.csproj" />
     </ItemGroup>
