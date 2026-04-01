@@ -546,7 +546,7 @@
                 </WrapPanel>
             </TabItem>
             <TabItem Header="Leading">
-                <mdxaml:MarkdownScrollViewer Markdown="{Binding MarkdownContent}" />
+                <husk:MarkdownViewer Markdown="{Binding MarkdownContent}" />
             </TabItem>
         </TabControl>
     </StackPanel>

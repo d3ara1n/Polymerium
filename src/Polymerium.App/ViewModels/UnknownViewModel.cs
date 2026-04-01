@@ -72,10 +72,21 @@ public partial class UnknownViewModel(
 
     #region Helpers
 
-    private static string GetSampleMarkdown() => """
+    private static string GetSampleMarkdown() =>
+        """
 # Markdown 测试文档
 
 这是一个用于测试 Markdown 渲染的示例文档，包含常用样式。
+
+## 0. 二级标题
+
+### 0.0 三级标题
+
+#### 0.0.0 四级标题
+
+##### 0.0.0.0 五级标题
+
+###### 0.0.0.0.0 六级标题
 
 ## 1. 文本样式
 
@@ -139,7 +150,7 @@ public class HelloWorld
 - [ ] 未完成任务
 - [ ] 另一个未完成任务
 
-## 9. 混合内容
+## **9. 混合内容**
 
 这是一个包含 **粗体**、*斜体*、`代码` 和 [链接](https://example.com) 的段落。
 

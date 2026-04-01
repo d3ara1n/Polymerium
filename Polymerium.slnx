@@ -4,7 +4,8 @@
     </Folder>
     <Folder Name="/Huskui.Avalonia/">
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Gallery/Huskui.Gallery.csproj" />
-        <Project Path="submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
+        <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia/Huskui.Avalonia.csproj" />
+        <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Markdown/Huskui.Avalonia.Markdown.csproj" />
     </Folder>
     <Folder Name="/Markdown.Avalonia/">
         <Project Path="submodules/Markdown.Avalonia/ColorDocument.Avalonia/ColorDocument.Avalonia.csproj" />
