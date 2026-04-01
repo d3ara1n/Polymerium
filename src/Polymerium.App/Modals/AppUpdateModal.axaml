@@ -7,7 +7,6 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia.Tight"
     xmlns:modals="clr-namespace:Polymerium.App.Modals"
     Width="560"
     MaxHeight="600"
@@ -127,7 +126,7 @@
                 TargetType="x:Boolean"
                 Value="{Binding $parent[modals:AppUpdateModal].Model.ReleaseNotes, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
                 <husk:SwitchCase Value="{x:True}">
-                    <mdxaml:MarkdownScrollViewer Markdown="{Binding $parent[modals:AppUpdateModal].Model.ReleaseNotes, FallbackValue=No release notes}" />
+                    <husk:MarkdownViewer Markdown="{Binding $parent[modals:AppUpdateModal].Model.ReleaseNotes, FallbackValue=No release notes}" />
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="{x:False}">
                     <StackPanel

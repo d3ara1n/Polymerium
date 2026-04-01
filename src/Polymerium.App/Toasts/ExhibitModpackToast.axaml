@@ -10,8 +10,6 @@
     xmlns:local="clr-namespace:Polymerium.App.Toasts"
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:md="https://github.com/whistyun/Markdown.Avalonia.Tight"
-    xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia.Tight"
     xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -267,11 +265,9 @@
         <husk:LazyContainer Source="{Binding $parent[local:ExhibitModpackToast].LazyDescription, Mode=OneWay}">
             <husk:LazyContainer.SourceTemplate>
                 <DataTemplate DataType="x:String">
-                    <mdxaml:MarkdownScrollViewer Markdown="{Binding}">
-                        <mdxaml:MarkdownScrollViewer.Engine>
-                            <mdxaml:Markdown HyperlinkCommand="{Binding $parent[local:ExhibitModpackToast].NavigateUriCommand}" />
-                        </mdxaml:MarkdownScrollViewer.Engine>
-                    </mdxaml:MarkdownScrollViewer>
+                    <husk:MarkdownViewer
+                        Markdown="{Binding}"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled" />
                 </DataTemplate>
             </husk:LazyContainer.SourceTemplate>
         </husk:LazyContainer>
