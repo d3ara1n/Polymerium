@@ -57,7 +57,8 @@
                                 Grid.Row="1"
                                 Padding="6"
                                 Background="{StaticResource ControlBackgroundBrush}"
-                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
+                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
+                                                                          Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
                                 <Grid
                                     ColumnDefinitions="*,Auto"
                                     ColumnSpacing="4">
@@ -151,7 +152,8 @@
                             Grid.Row="1"
                             Padding="8"
                             Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
+                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                      Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
                             <Grid>
                                 <TextBlock
                                     FontWeight="{StaticResource ControlStrongFontWeight}"

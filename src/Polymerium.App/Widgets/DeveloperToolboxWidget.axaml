@@ -22,7 +22,7 @@
                         Icon="DrinkBottle"
                         Text="JarInJar Dependency Scanner" />
                 </Button>
-                <!--  根据 Commit Diff 比对出更新了的包和修改了的文件，如果是工作空间 Diff 还提供 Commit Message 导出 -->
+                <!--  根据 Commit Diff 比对出更新了的包和修改了的文件，如果是工作空间 Diff 还提供 Commit Message 导出  -->
                 <Button>
                     <husk:IconLabel
                         Icon="Branch"

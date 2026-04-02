@@ -131,7 +131,7 @@ public partial class InstanceSetupViewModel(
                     x.Source is not null && x.Source == Basic.Source
                 )
                 {
-                    PersistentIndex = persistentIndex++
+                    PersistentIndex = persistentIndex++,
                 })
                 .ToList();
             _stageSource.AddOrUpdate(toAdd);
@@ -579,14 +579,13 @@ public partial class InstanceSetupViewModel(
             string.IsNullOrEmpty(filter)
             || (
                 x.Info
-                    is
-                {
-                    ProjectId: { } pid,
-                    ProjectName: { } name,
-                    Author: { } author,
-                    Summary: { } summary,
-                    Version: { } version
-                }
+                    is {
+                        ProjectId: { } pid,
+                        ProjectName: { } name,
+                        Author: { } author,
+                        Summary: { } summary,
+                        Version: { } version
+                    }
                 && filter
                     .Split(' ')
                     .All(y =>
@@ -787,11 +786,11 @@ public partial class InstanceSetupViewModel(
                 await overlayService.PopDialogAsync(previewer)
                 && previewer.Result
                     is PackageBulkUpdatePreviewerModel
-                {
-                    IsEnabledOnly: var enabledOnly,
-                    TagPolicy: var tagPolicy,
-                    Tags: var tags
-                }
+                    {
+                        IsEnabledOnly: var enabledOnly,
+                        TagPolicy: var tagPolicy,
+                        Tags: var tags
+                    }
             )
             {
                 var staging = _stageSource
@@ -1344,9 +1343,9 @@ public partial class InstanceSetupViewModel(
                         x.ReleaseType,
                         x.PublishedAt
                     )
-                {
-                    IsCurrent = x.VersionId == reference.VersionId,
-                })
+                    {
+                        IsCurrent = x.VersionId == reference.VersionId,
+                    })
                     .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (

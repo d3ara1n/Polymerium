@@ -44,7 +44,12 @@ public class Configuration
         { APPLICATION_TITLEBAR_VISIBILITY, OperatingSystem.IsWindows() },
         { APPLICATION_LEFT_PANEL_MODE, OperatingSystem.IsMacOS() },
         { APPLICATION_STYLE_ACCENT, AccentColor.System },
-        { APPLICATION_STYLE_CORNER, OperatingSystem.IsMacOS() ? CornerStyle.Large : (OperatingSystem.IsLinux() ? CornerStyle.None : CornerStyle.Normal) },
+        {
+            APPLICATION_STYLE_CORNER,
+            OperatingSystem.IsMacOS()
+                ? CornerStyle.Large
+                : (OperatingSystem.IsLinux() ? CornerStyle.None : CornerStyle.Normal)
+        },
         { APPLICATION_STYLE_BACKGROUND, 0 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, CultureInfo.InstalledUICulture.Name },
