@@ -710,7 +710,7 @@
                                                                             Height="32"
                                                                             VerticalAlignment="Top"
                                                                             Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}"
-                                                                            CornerRadius="16">
+                                                                            CornerRadius="{StaticResource FullCornerRadius}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                                 Foreground="{StaticResource ControlSuccessForegroundBrush}"
@@ -723,7 +723,7 @@
                                                                             Height="32"
                                                                             VerticalAlignment="Top"
                                                                             Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}"
-                                                                            CornerRadius="16">
+                                                                            CornerRadius="{StaticResource FullCornerRadius}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                                 Foreground="{StaticResource ControlSuccessForegroundBrush}"
@@ -736,7 +736,7 @@
                                                                             Height="32"
                                                                             VerticalAlignment="Top"
                                                                             Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
-                                                                            CornerRadius="16">
+                                                                            CornerRadius="{StaticResource FullCornerRadius}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
@@ -749,7 +749,7 @@
                                                                             Height="32"
                                                                             VerticalAlignment="Top"
                                                                             Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
-                                                                            CornerRadius="16">
+                                                                            CornerRadius="{StaticResource FullCornerRadius}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                                 Foreground="{StaticResource ControlWarningForegroundBrush}"
@@ -762,7 +762,7 @@
                                                                             Height="32"
                                                                             VerticalAlignment="Top"
                                                                             Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
-                                                                            CornerRadius="16">
+                                                                            CornerRadius="{StaticResource FullCornerRadius}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                                 Foreground="{StaticResource ControlAccentForegroundBrush}"
