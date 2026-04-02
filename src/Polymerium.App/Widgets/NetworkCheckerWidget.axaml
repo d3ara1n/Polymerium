@@ -70,7 +70,8 @@
                                         <!--  内容区域  -->
                                         <Border
                                             Margin="8,4"
-                                            CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                                            CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
+                                                                                      Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                             <Grid ColumnDefinitions="*,Auto">
                                                 <!--  网站名称  -->
                                                 <StackPanel

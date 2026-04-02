@@ -7,11 +7,6 @@
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia/Huskui.Avalonia.csproj" />
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Markdown/Huskui.Avalonia.Markdown.csproj" />
     </Folder>
-    <Folder Name="/Markdown.Avalonia/">
-        <Project Path="submodules/Markdown.Avalonia/ColorDocument.Avalonia/ColorDocument.Avalonia.csproj" />
-        <Project Path="submodules/Markdown.Avalonia/ColorTextBlock.Avalonia/ColorTextBlock.Avalonia.csproj" />
-        <Project Path="submodules/Markdown.Avalonia/Markdown.Avalonia.Tight/Markdown.Avalonia.Tight.csproj" />
-    </Folder>
     <Folder Name="/MirrorChyan.Net/">
         <Project Path="submodules/VelopackExtension.MirrorChyan/src/VelopackExtension.MirrorChyan/VelopackExtension.MirrorChyan.csproj" />
     </Folder>

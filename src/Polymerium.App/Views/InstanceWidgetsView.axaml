@@ -26,7 +26,8 @@
                             Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
                             BorderBrush="{StaticResource ControlAccentBorderBrush}"
                             BorderThickness="1"
-                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                      Converter={x:Static husk:CornerRadiusConverters.Top}}">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12">
@@ -62,7 +63,8 @@
                             Background="{StaticResource CardBackgroundBrush}"
                             BorderBrush="{StaticResource ControlBorderBrush}"
                             BorderThickness="1,0,1,1"
-                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
+                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                      Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
                             <ContentControl
                                 Content="{Binding}"
                                 ContentTemplate="{Binding FullTemplate}" />

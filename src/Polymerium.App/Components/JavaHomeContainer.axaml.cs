@@ -127,7 +127,11 @@ public partial class JavaHomeContainer : UserControl
         }
     }
 
-    private async Task CaptureHomeAsync(string home, int version, CancellationToken cancellationToken)
+    private async Task CaptureHomeAsync(
+        string home,
+        int version,
+        CancellationToken cancellationToken
+    )
     {
         var shouldCleanup = false;
 
@@ -145,7 +149,11 @@ public partial class JavaHomeContainer : UserControl
             await Dispatcher.UIThread.InvokeAsync(
                 () =>
                 {
-                    if (cancellationToken.IsCancellationRequested || version != _captureHomeVersion || Home != home)
+                    if (
+                        cancellationToken.IsCancellationRequested
+                        || version != _captureHomeVersion
+                        || Home != home
+                    )
                     {
                         return;
                     }
@@ -158,9 +166,7 @@ public partial class JavaHomeContainer : UserControl
                 cancellationToken
             );
         }
-        catch (OperationCanceledException)
-        {
-        }
+        catch (OperationCanceledException) { }
         finally
         {
             shouldCleanup = true;

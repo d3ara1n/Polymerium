@@ -57,7 +57,8 @@
                                 Padding="4,0"
                                 Command="{Binding $parent[dialogs:PackageBulkUpdatePreviewerDialog].RemoveTagCommand}"
                                 CommandParameter="{Binding}"
-                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
+                                                                          Converter={x:Static husk:CornerRadiusConverters.Right}}"
                                 Theme="{StaticResource GhostButtonTheme}">
                                 <fi:SymbolIcon
                                     HorizontalAlignment="Right"

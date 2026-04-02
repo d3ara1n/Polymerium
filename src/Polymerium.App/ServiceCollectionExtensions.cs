@@ -46,7 +46,11 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddVelopackGithubSource()
         {
             services.AddSingleton<GithubSource>(_ =>
-                new("https://github.com/d3ara1n/Polymerium", null, !string.IsNullOrEmpty(GitVersionInformation.PreReleaseTag))
+                new(
+                    "https://github.com/d3ara1n/Polymerium",
+                    null,
+                    !string.IsNullOrEmpty(GitVersionInformation.PreReleaseTag)
+                )
             );
             services.AddSingleton<IUpdateSource, GithubSource>(sp =>
                 sp.GetRequiredService<GithubSource>()

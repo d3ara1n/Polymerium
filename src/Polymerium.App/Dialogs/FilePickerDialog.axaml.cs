@@ -43,10 +43,14 @@ public partial class FilePickerDialog : Dialog
             var storage = top.StorageProvider;
             if (storage.CanOpen)
             {
-                var files = await storage.OpenFilePickerAsync(new()
-                {
-                    SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads)
-                });
+                var files = await storage.OpenFilePickerAsync(
+                    new()
+                    {
+                        SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(
+                            WellKnownFolder.Downloads
+                        ),
+                    }
+                );
                 var file = files.FirstOrDefault();
                 if (file != null)
                 {

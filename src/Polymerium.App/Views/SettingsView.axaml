@@ -129,8 +129,8 @@
                             <DockPanel>
                                 <Border
                                     DockPanel.Dock="Right"
-                                    Height="12"
                                     Width="{Binding $self.Bounds.Height}"
+                                    Height="12"
                                     VerticalAlignment="Center"
                                     Background="{Binding Converter={x:Static converters:InternalConverters.AccentColorToBrush}}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
