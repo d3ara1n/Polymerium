@@ -3,10 +3,14 @@ name: Release Application
 on:
     push:
         tags:
-            - 'v*'
+            - "v*"
 
 permissions:
     contents: write
+
+defaults:
+    run:
+        shell: bash
 
 jobs:
     build:
@@ -14,191 +18,179 @@ jobs:
         strategy:
             matrix:
                 include:
-                    -   os: windows-latest
-                        runtime: win-x64
-                    -   os: ubuntu-latest
-                        runtime: linux-x64
-                    -   os: macos-latest
-                        runtime: osx-arm64
+                    - os: windows-latest
+                      runtime: win-x64
+                    - os: ubuntu-latest
+                      runtime: linux-x64
+                    - os: macos-latest
+                      runtime: osx-arm64
         runs-on: ${{ matrix.os }}
 
         steps:
-            -   name: Checkout Repository
-                uses: actions/checkout@v4
-                with:
-                    submodules: recursive
-                    fetch-depth: 0
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+              with:
+                  submodules: recursive
+                  fetch-depth: 0
 
-            -   name: Verify tag is on main branch
-                run: |
-                    git fetch origin main
-                    if ! git merge-base --is-ancestor ${{ github.sha }} origin/main; then
-                        echo "::error::Tag must be created from main branch"
-                        exit 1
-                    fi
-                shell: bash
+            - name: Extract .NET version from csproj
+              id: dotnet
+              run: |
+                  dotnet_version=$(grep '<TargetFramework>' src/Polymerium.App/Polymerium.App.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
+                  echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
+                  echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
+                  if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
+                    echo "dotnet_version=$dotnet_version" > release.properties
+                  fi
+              shell: bash
 
-            -   name: Extract .NET version from csproj
-                id: dotnet
-                run: |
-                    dotnet_version=$(grep '<TargetFramework>' src/Polymerium.App/Polymerium.App.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
-                    echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
-                    echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
-                    if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-                      echo "dotnet_version=$dotnet_version" > release.properties
-                    fi
-                shell: bash
+            - name: Setup .NET SDK
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: ${{ steps.dotnet.outputs.dotnet_version }}
+                  cache: true
 
-            -   name: Setup .NET SDK
-                uses: actions/setup-dotnet@v4
-                with:
-                    dotnet-version: ${{ steps.dotnet.outputs.dotnet_version }}
+            - name: Install GitVersion
+              uses: gittools/actions/gitversion/setup@v3.2.1
+              with:
+                  versionSpec: "6.x"
 
-            -   name: Install GitVersion
-                uses: gittools/actions/gitversion/setup@v3.2.1
-                with:
-                    versionSpec: '6.x'
+            - name: Determine Version
+              id: gitversion
+              uses: gittools/actions/gitversion/execute@v3.2.1
+              with:
+                  useConfigFile: true
 
-            -   name: Determine Version
-                id: gitversion
-                uses: gittools/actions/gitversion/execute@v3.2.1
-                with:
-                    useConfigFile: true
+            - name: Install Velopack CLI
+              run: dotnet tool install -g vpk
 
-            -   name: Install Velopack CLI
-                run: dotnet tool install -g vpk
+            - name: Fix for dotnet publish
+              run: |
+                  if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
+                      echo "Renamed zh-hans folder to zh-Hans"
+                      mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
+                         "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
+                  else
+                      echo "Created zh-Hans folder"
+                      mkdir -p "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
+                  fi
 
-            -   name: Fix for dotnet publish
-                run: |
-                    if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
-                        echo "Renamed zh-hans folder to zh-Hans"
-                        mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
-                           "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
-                    else
-                        echo "Created zh-Hans folder"
-                        mkdir -p "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
-                    fi
-                shell: bash
+            - name: Publish Application
+              run: |
+                  dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
 
-            -   name: Publish Application
-                run: |
-                    dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
+            - name: Determine Release Type
+              id: get_version
+              run: |
+                  base_version="${{ steps.gitversion.outputs.MajorMinorPatch }}"
+                  prerelease_tag="${{ steps.gitversion.outputs.preReleaseTag }}"
 
-            -   name: Determine Release Type
-                id: get_version
-                run: |
-                    base_version="${{ steps.gitversion.outputs.MajorMinorPatch }}"
-                    prerelease_tag="${{ steps.gitversion.outputs.preReleaseTag }}"
+                  # Construct version string
+                  if [ -n "$prerelease_tag" ]; then
+                      version="$base_version-$prerelease_tag"
+                      is_prerelease=true
+                      release_name="v$version (Preview)"
+                  else
+                      version="$base_version"
+                      is_prerelease=false
+                      release_name="v$version"
+                  fi
 
-                    # Construct version string
-                    if [ -n "$prerelease_tag" ]; then
-                        version="$base_version-$prerelease_tag"
-                        is_prerelease=true
-                        release_name="v$version (Preview)"
-                    else
-                        version="$base_version"
-                        is_prerelease=false
-                        release_name="v$version"
-                    fi
+                  echo "version=$version" >> $GITHUB_OUTPUT
+                  echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
+                  echo "release_name=$release_name" >> $GITHUB_OUTPUT
+                  if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
+                    echo "is_prerelease=$is_prerelease" >> release.properties
+                    echo "release_name=\"$release_name\"" >> release.properties
+                  fi
 
-                    echo "version=$version" >> $GITHUB_OUTPUT
-                    echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
-                    echo "release_name=$release_name" >> $GITHUB_OUTPUT
-                    if [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-                      echo "is_prerelease=$is_prerelease" >> release.properties
-                      echo "release_name=\"$release_name\"" >> release.properties
-                    fi
-                shell: bash
+            - name: Generate Changelog
+              id: changelog
+              run: |
+                  version="${{ steps.gitversion.outputs.semVer }}"
+                  pwsh scripts/Workflow_Update-Changelog.ps1 -Version "$version"
 
-            -   name: Generate Changelog
-                id: changelog
-                run: |
-                    version="${{ steps.gitversion.outputs.semVer }}"
-                    pwsh scripts/Workflow_Update-Changelog.ps1 -Version "$version"
-                shell: bash
+            - name: Decide Executable Name
+              id: exe_name
+              run: |
+                  if [ "${{ matrix.runtime }}" = "win-x64" ]; then
+                      echo "exe_name=Polymerium.App.exe" >> $GITHUB_OUTPUT
+                  else
+                      echo "exe_name=Polymerium.App" >> $GITHUB_OUTPUT
+                  fi
 
-            -   name: Push Changelog Changes
-                if: matrix.runtime == 'win-x64'
-                run: |
-                    git config user.name "github-actions[bot]"
-                    git config user.email "github-actions[bot]@users.noreply.github.com"
-                    git add changelogs/rolling.md
-                    git add changelogs/v*.md
-                    git commit -m "chore(release): update changelog for ${{ steps.gitversion.outputs.semVer }}"
-                    git push origin HEAD:main
-                shell: bash
+            - name: Pack with Velopack
+              run: |
+                  download_extra_args=""
+                  pack_extra_args=""
+                  if [ "${{ steps.get_version.outputs.is_prerelease }}" = "true" ]; then
+                      download_extra_args="--pre"
+                  fi
+                  if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
+                      pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.png"
+                  elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
+                      pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.icns"
+                  else
+                      pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.icon"
+                  fi
+                  vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} $download_extra_args || echo "No previous release found, skipping"
+                  vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
 
-            -   name: Decide Executable Name
-                id: exe_name
-                run: |
-                    if [ "${{ matrix.runtime }}" = "win-x64" ]; then
-                        echo "exe_name=Polymerium.App.exe" >> $GITHUB_OUTPUT
-                    else
-                        echo "exe_name=Polymerium.App" >> $GITHUB_OUTPUT
-                    fi
-                shell: bash
+            - name: Upload Build Artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: release-assets-${{ matrix.runtime }}
+                  path: Releases
 
-            -   name: Pack with Velopack
-                run: |
-                    download_extra_args=""
-                    pack_extra_args=""
-                    if [ "${{ steps.get_version.outputs.is_prerelease }}" = "true" ]; then
-                        download_extra_args="--pre"
-                    fi
-                    if [ "${{ matrix.runtime }}" = "linux-x64" ]; then
-                        pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.png"
-                    elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-                        pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.icns"
-                    fi
-                    vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} $download_extra_args
-                    vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
-                shell: bash
+            - name: Upload Release Metadata
+              if: matrix.runtime == 'win-x64'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: release-metadata
+                  path: |
+                      release.properties
+                      CHANGELOG.md
 
-            -   name: Upload Build Artifact
-                uses: actions/upload-artifact@v4
-                with:
-                    name: release-assets-${{ matrix.runtime }}
-                    path: Releases
-
-            -   name: Upload Release Metadata
-                if: matrix.runtime == 'osx-arm64'
-                uses: actions/upload-artifact@v4
-                with:
-                    name: release-metadata
-                    path: |
-                        release.properties
-                        CHANGELOG.md
+            - name: Push Changelog Changes
+              if: matrix.runtime == 'win-x64'
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git add changelogs/rolling.md
+                  git add changelogs/v*.md
+                  git commit -m "chore(release): update changelog for ${{ steps.gitversion.outputs.semVer }}"
+                  git push origin HEAD:main
 
     publish:
         name: Publish Release
         needs: build
         runs-on: ubuntu-latest
         steps:
-            -   name: Download artifacts
-                uses: actions/download-artifact@v4
-                with:
-                    path: ./artifacts
+            - name: Download artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: ./artifacts
 
-            -   name: Load release metadata
-                id: metadata
-                run: |
-                    source ./artifacts/release-metadata/release.properties
-                    echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
-                    echo "release_name=$release_name" >> $GITHUB_OUTPUT
+            - name: Load release metadata
+              id: metadata
+              run: |
+                  source ./artifacts/release-metadata/release.properties
+                  echo "is_prerelease=$is_prerelease" >> $GITHUB_OUTPUT
+                  echo "release_name=$release_name" >> $GITHUB_OUTPUT
 
-            -   name: Prepare release assets
-                run: |
-                    mkdir Releases
-                    cp -r ./artifacts/release-assets-*/* ./Releases/
-                    echo "Combined release assets:"
-                    ls -R Releases
+            - name: Prepare release assets
+              run: |
+                  mkdir Releases
+                  cp -r ./artifacts/release-assets-*/* ./Releases/
+                  echo "Combined release assets:"
+                  ls -R Releases
 
-            -   name: Create GitHub Release
-                uses: softprops/action-gh-release@v2
-                with:
-                    body_path: ./artifacts/release-metadata/CHANGELOG.md
-                    files: Releases/*
-                    name: ${{ steps.metadata.outputs.release_name }}
-                    prerelease: ${{ steps.metadata.outputs.is_prerelease }}
-                    tag_name: ${{ github.ref_name }}
-                    draft: true
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  body_path: ./artifacts/release-metadata/CHANGELOG.md
+                  files: Releases/*
+                  name: ${{ steps.metadata.outputs.release_name }}
+                  prerelease: ${{ steps.metadata.outputs.is_prerelease }}
+                  tag_name: ${{ github.ref_name }}
+                  draft: true
