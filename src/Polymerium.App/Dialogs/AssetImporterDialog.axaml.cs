@@ -149,8 +149,10 @@ public partial class AssetImporterDialog : Dialog
         catch (Exception ex)
         {
             Dispatcher.UIThread.Post(() =>
-                NotificationService.PopMessage(ex, "Failed to identify file")
-            );
+            {
+                Model = null;
+                NotificationService.PopMessage(ex, "Failed to identify file");
+            });
         }
     }
 
@@ -166,7 +168,7 @@ public partial class AssetImporterDialog : Dialog
             var package = await DataService.IdentifyVersionAsync(path);
             return new(new(package), new(path));
         }
-        catch (ResourceNotFoundException)
+        catch (Exception)
         {
             return new(null, new(path));
         }

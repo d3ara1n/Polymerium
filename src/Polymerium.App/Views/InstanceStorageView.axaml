@@ -25,6 +25,7 @@
             ColumnDefinitions="*,Auto">
             <StackPanel
                 Grid.Column="0"
+                Orientation="Horizontal"
                 Spacing="4">
                 <TextBlock>
                     <Run
@@ -35,6 +36,11 @@
                         FontSize="18"
                         Text="GiB" />
                 </TextBlock>
+                <husk:ProgressRing
+                    Width="{Binding $self.Bounds.Height}"
+                    Margin="8"
+                    IsVisible="{Binding IsLoading}"
+                    IsIndeterminate="True" />
             </StackPanel>
             <StackPanel
                 Grid.Column="1"
