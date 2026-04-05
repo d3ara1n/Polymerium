@@ -13,7 +13,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
     Title="{x:Static lang:Resources.AssetImporterDialog_Title}"
-    Width="400"
+    Width="420"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
     <husk:PlaceholderPresenter Source="{Binding $parent[local:AssetImporterDialog].Model, Mode=OneWay}">
@@ -115,12 +115,6 @@
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
                                 </RadioButton>
                             </DockPanel>
-                            <StackPanel
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    VerticalAlignment="Bottom"
-                                    Text="{x:Static lang:Resources.AssetImporterDialog_AssetTypeLabelText}" />
                                 <TabStrip
                                     ItemsSource="{Binding Persist.Kinds}"
                                     SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
@@ -130,8 +124,7 @@
                                         </DataTemplate>
                                     </TabStrip.ItemTemplate>
                                 </TabStrip>
-                            </StackPanel>
-                            <StackPanel>
+                            <StackPanel Spacing="4">
                                 <TextBlock
                                     Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}"
                                     TextWrapping="Wrap" />
