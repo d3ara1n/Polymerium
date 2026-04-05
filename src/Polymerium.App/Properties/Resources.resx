@@ -1236,9 +1236,6 @@
     <data name="AssetImporterDialog_AsAssetLabelText" xml:space="preserve">
         <value>As asset file</value>
     </data>
-    <data name="AssetImporterDialog_AssetTypeLabelText" xml:space="preserve">
-        <value>Asset Type:</value>
-    </data>
     <data name="AssetImporterDialog_AsAssetDescription" xml:space="preserve">
         <value>Falls back to traditional mod.jar placement, losing Polymerium's file management benefits.</value>
     </data>

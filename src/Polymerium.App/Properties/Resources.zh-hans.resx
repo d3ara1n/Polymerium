@@ -1227,9 +1227,6 @@
     <data name="AssetImporterDialog_AsAssetLabelText" xml:space="preserve">
         <value>作为资产文件</value>
     </data>
-    <data name="AssetImporterDialog_AssetTypeLabelText" xml:space="preserve">
-        <value>资产类型：</value>
-    </data>
     <data name="AssetImporterDialog_AsAssetDescription" xml:space="preserve">
         <value>抛弃 Polymerium 的文件管理机制，使用传统的 mod.jar 放入 mods 模式。</value>
     </data>
