@@ -88,11 +88,13 @@
                             Padding="12"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
-                            <StackPanel>
+                            <StackPanel Spacing="8">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource LargeFontSize}"
                                     Symbol="Warning" />
-                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}" />
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}"
+                                    TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
                     </husk:PlaceholderPresenter>

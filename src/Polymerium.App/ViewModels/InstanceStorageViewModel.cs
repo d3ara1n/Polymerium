@@ -27,6 +27,9 @@ public partial class InstanceStorageViewModel(
     #region Reactive
 
     [ObservableProperty]
+    public partial bool IsLoading { get; set; } = true;
+
+    [ObservableProperty]
     public partial ulong TotalSize { get; set; }
 
     [ObservableProperty]
@@ -130,6 +133,8 @@ public partial class InstanceStorageViewModel(
         OtherSize = totalDirSize > calculatedTotalSize ? totalDirSize - calculatedTotalSize : 0;
         OtherCount =
             totalDirCount > calculatedTotalCount ? totalDirCount - calculatedTotalCount : 0;
+
+        IsLoading = false;
     }
 
     private (ulong, ulong) CalculateDirectorySize(string folderName)
