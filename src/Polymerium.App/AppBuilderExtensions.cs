@@ -5,7 +5,8 @@ using Avalonia.Media.Fonts;
 namespace Polymerium.App;
 
 public static class AppBuilderExtensions
-{    public static AppBuilder WithFontSetup(this AppBuilder appBuilder)
+{
+    public static AppBuilder WithFontSetup(this AppBuilder appBuilder)
     {
         appBuilder
             .ConfigureFonts(fontManager =>
