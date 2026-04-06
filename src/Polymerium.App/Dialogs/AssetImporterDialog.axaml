@@ -115,15 +115,15 @@
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
                                 </RadioButton>
                             </DockPanel>
-                                <TabStrip
-                                    ItemsSource="{Binding Persist.Kinds}"
-                                    SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
-                                    <TabStrip.ItemTemplate>
-                                        <DataTemplate DataType="resources:ResourceKind">
-                                            <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
-                                        </DataTemplate>
-                                    </TabStrip.ItemTemplate>
-                                </TabStrip>
+                            <TabStrip
+                                ItemsSource="{Binding Persist.Kinds}"
+                                SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
+                                <TabStrip.ItemTemplate>
+                                    <DataTemplate DataType="resources:ResourceKind">
+                                        <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                    </DataTemplate>
+                                </TabStrip.ItemTemplate>
+                            </TabStrip>
                             <StackPanel Spacing="4">
                                 <TextBlock
                                     Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}"
