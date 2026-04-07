@@ -19,13 +19,13 @@
             <husk:SwitchCase Value="{x:True}">
                 <Grid
                     ColumnDefinitions="*,Auto"
-                    ColumnSpacing="3"
-                    ToolTip.Tip="{Binding $parent[cp:JavaHomeContainer].Home}">
+                    ColumnSpacing="3">
                     <Border
                         Grid.Column="0"
                         Padding="12,8"
                         Background="{StaticResource OverlaySolidBackgroundBrush}"
-                        CornerRadius="{StaticResource SmallCornerRadius}">
+                        CornerRadius="{StaticResource SmallCornerRadius}"
+                        ToolTip.Tip="{Binding $parent[cp:JavaHomeContainer].Home}">
                         <Grid
                             ColumnDefinitions="Auto,Auto,*"
                             ColumnSpacing="12">

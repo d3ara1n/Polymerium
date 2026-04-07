@@ -700,15 +700,6 @@
                         Content="FluentIcons.Avalonia"
                         NavigateUri="https://github.com/davidxuang/FluentIcons" />
                     <Run Text=")" />
-                    <Run Text="&amp;" />
-                    <HyperlinkButton
-                        Content="Lucide Icons"
-                        NavigateUri="https://lucide.dev" />
-                    <Run Text="(" />
-                    <HyperlinkButton
-                        Content="IconPacks.Avalonia.Lucide"
-                        NavigateUri="https://github.com/MahApps/IconPacks.Avalonia" />
-                    <Run Text=")" />
                 </TextBlock>
             </StackPanel>
         </Panel>
