@@ -192,21 +192,29 @@
                     </husk:GrowlItem>
                     <Slider Value="{Binding #Notification.Progress, Mode=TwoWay}" />
                     <DockPanel>
-                        <ComboBox
-                            Name="ComboBox"
+                        <StackPanel
                             DockPanel.Dock="Right"
-                            PlaceholderText="这是一个一个">
-                            <ComboBoxItem Content="这是一个 1" />
-                            <ComboBoxItem Content="这是一个 2" />
-                            <ComboBoxItem Content="这是一个 3" />
-                            <ComboBoxItem Content="这是一个 4" />
-                            <ComboBoxItem Content="这是一个 5" />
-                            <ComboBoxItem Content="这是一个 6" />
-                            <ComboBoxItem Content="这是一个 7" />
-                            <ComboBoxItem Content="这是一个 8" />
-                            <ComboBoxItem Content="这是一个 9" />
-                            <ComboBoxItem Content="这是一个 0" />
-                        </ComboBox>
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <CheckBox
+                                Name="EditableBox"
+                                Content="{Binding #ComboBox.Text}" />
+                            <ComboBox
+                                Name="ComboBox"
+                                IsEditable="{Binding #EditableBox.IsChecked}"
+                                PlaceholderText="这是一个一个">
+                                <ComboBoxItem Content="这是一个 1" />
+                                <ComboBoxItem Content="这是一个 2" />
+                                <ComboBoxItem Content="这是一个 3" />
+                                <ComboBoxItem Content="这是一个 4" />
+                                <ComboBoxItem Content="这是一个 5" />
+                                <ComboBoxItem Content="这是一个 6" />
+                                <ComboBoxItem Content="这是一个 7" />
+                                <ComboBoxItem Content="这是一个 8" />
+                                <ComboBoxItem Content="这是一个 9" />
+                                <ComboBoxItem Content="这是一个 0" />
+                            </ComboBox>
+                        </StackPanel>
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="4">
