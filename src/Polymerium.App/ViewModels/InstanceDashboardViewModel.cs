@@ -131,7 +131,11 @@ public partial class InstanceDashboardViewModel(
 
     private void UpdateLogSource(LogSourceModelBase? source)
     {
-        LogCollection?.Clear();
+        if (!IsOnAir)
+        {
+            // 避免清空，因为运行中的 Collection 是共享的外部引入的集合
+            LogCollection?.Clear();
+        }
         _collectionView?.Dispose();
         FilteredLogCollection?.Dispose();
 
