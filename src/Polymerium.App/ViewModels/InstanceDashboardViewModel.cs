@@ -1,22 +1,29 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Input;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.Tasks;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class InstanceDashboardViewModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager
+    ProfileManager profileManager,
+    ScrapService scrapService,
+    NotificationService notificationService
 ) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Overrides
@@ -35,11 +42,7 @@ public partial class InstanceDashboardViewModel(
     {
         tracker.StateUpdated += OnStateUpdated;
         IsOnAir = true;
-        if (SelectedSource is LiveLogSourceModel)
-        {
-            // Attach
-            // Bind
-        }
+        Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
 
         return;
 
@@ -48,13 +51,8 @@ public partial class InstanceDashboardViewModel(
             if (state is TrackerState.Faulted or TrackerState.Finished)
             {
                 tracker.StateUpdated -= OnStateUpdated;
-                if (SelectedSource is LiveLogSourceModel)
-                {
-                    // Detach
-                    // Leave Behind
-                }
-
                 IsOnAir = false;
+                Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
             }
         }
     }
@@ -85,17 +83,17 @@ public partial class InstanceDashboardViewModel(
         // 由于内容是不变的，所以只需要添加一次
         // 这里不在乎是否是哪个实际目录，因为最终都会出现在 build/logs 中
         Sources.Clear();
-        var files = new[] { "latest.log", "debug.log" }
-            .Select(x => new FileLogSourceModel
-            {
-                Path = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs", x),
-            })
-            .ToList();
         var live = new LiveLogSourceModel();
         Sources.Add(live);
-        foreach (var item in files)
+        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
+        if (Directory.Exists(dir))
         {
-            Sources.Add(item);
+            var files = Directory.GetFiles(dir, "*.log", SearchOption.TopDirectoryOnly);
+
+            foreach (var file in files)
+            {
+                Sources.Add(new FileLogSourceModel { Path = file });
+            }
         }
     }
 
@@ -109,14 +107,54 @@ public partial class InstanceDashboardViewModel(
                 {
                     // Attach
                     // Bind
+                    if (scrapService.TryGetBuffer(Basic.Key, out var buffer))
+                    {
+                        LogCollection = buffer;
+                    }
+                }
+                else
+                {
+                    LogCollection = null;
                 }
 
                 break;
-            case FileLogSourceModel:
+            case FileLogSourceModel file:
                 // 使用 DynamicData
                 if (IsOnAir)
                 {
                     // Detach
+                    // 似乎不需要了，因为 ScrapService 会负责这个
+                    // TODO: 此时文件 latest.log 和 debug.log 无法读取
+                    LogCollection = null;
+                }
+                else
+                {
+                    if (File.Exists(file.Path))
+                    {
+                        try
+                        {
+                            var lines = File.ReadAllLines(file.Path);
+                            var container = new List<ScrapModel>();
+                            ScrapModel? last = null;
+                            foreach (var line in lines)
+                            {
+                                var item = ScrapHelper.Parse(line);
+                                var appended = ScrapService.AppendToModel(item, last);
+                                container.Add(appended);
+                                last = appended;
+                            }
+                            LogCollection = container;
+                        }
+                        catch (Exception ex)
+                        {
+                            LogCollection = null;
+                            notificationService.PopMessage(ex, "Read log file failed");
+                        }
+                    }
+                    else
+                    {
+                        LogCollection = null;
+                    }
                 }
 
                 // Set
