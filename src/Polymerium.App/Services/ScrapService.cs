@@ -14,7 +14,7 @@ namespace Polymerium.App.Services;
 public class ScrapService : IDisposable
 {
     public const int CAPACITY = 9527;
-    private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = new();
+    private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = [];
 
     #region Injected
 
@@ -47,27 +47,8 @@ public class ScrapService : IDisposable
         e.ScrapStream.Subscribe(
                 x =>
                 {
-                    if (
-                        x is
-                        { Level: { } level, Time: { } time, Thread: { } thread, Sender: { } sender }
-                    )
-                    {
-                        buffer.AddLast(new(x.Message, level, time, thread, sender));
-                    }
-                    else
-                    {
-                        var last = buffer.LastOrDefault();
-
-                        buffer.AddLast(
-                            new(
-                                x.Message,
-                                last?.Level ?? ScrapLevel.Information,
-                                DateTimeOffset.Now,
-                                null,
-                                null
-                            )
-                        );
-                    }
+                    var appended = AppendToModel(x, buffer.LastOrDefault());
+                    buffer.AddLast(appended);
                 },
                 () =>
                 {
@@ -81,4 +62,22 @@ public class ScrapService : IDisposable
         string key,
         [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer
     ) => _buffers.TryGetValue(key, out buffer);
+
+    public static ScrapModel AppendToModel(Scrap item, ScrapModel? last)
+    {
+        if (item is { Level: { } level, Time: { } time, Thread: { } thread, Sender: { } sender })
+        {
+            return new(item.Message, level, time, thread, sender);
+        }
+        else
+        {
+            return new(
+                item.Message,
+                last?.Level ?? ScrapLevel.Information,
+                DateTimeOffset.Now,
+                null,
+                null
+            );
+        }
+    }
 }

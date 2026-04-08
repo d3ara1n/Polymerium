@@ -11,6 +11,7 @@
     xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="using:Trident.Core"
+    xmlns:v="https://github.com/d3ara1n/Polymerium/Views"
     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
     d:DesignHeight="600"
     d:DesignWidth="800"
@@ -36,6 +37,7 @@
                     <husk:Tag
                         Grid.Column="2"
                         Classes="Small Success"
+                        IsVisible="{Binding $parent[v:InstanceDashboardView].((vm:InstanceDashboardViewModel)DataContext).IsOnAir}"
                         Content="Live" />
                 </Grid>
             </DataTemplate>
@@ -332,9 +334,9 @@
                                     Margin="0,0,8,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="214" />
+                                    <Run Text="{Binding LogCollection.Count}" />
                                     <Run Text="/" />
-                                    <Run Text="214" />
+                                    <Run Text="{Binding LogCollection.Capacity}" />
                                 </TextBlock>
                             </StackPanel>
                         </TextBox.InnerRightContent>
@@ -414,75 +416,60 @@
 
                 <!--  日志内容区域  -->
                 <Panel Grid.Row="2">
-                    <!--  空状态提示  -->
-                    <StackPanel
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Spacing="8">
-                        <fi:SymbolIcon
-                            HorizontalAlignment="Center"
-                            FontSize="48"
-                            Opacity="0.3"
-                            Symbol="DocumentText" />
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="{StaticResource LargeFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
-                    </StackPanel>
-
-                    <!--  日志列表  -->
-                    <ScrollViewer>
-                        <ItemsControl>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="m:ScrapModel">
-                                    <husk:SwitchPresenter TargetType="launching:ScrapLevel">
-                                        <!--  Information 级别  -->
-                                        <husk:SwitchCase Value="Information">
-                                            <Border
-                                                Padding="8,0"
-                                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="3,0,0,0">
-                                                <ContentControl
-                                                    Content="{Binding}"
-                                                    ContentTemplate="{StaticResource LogEntryContentTemplate}" />
-                                            </Border>
-                                        </husk:SwitchCase>
-                                        <!--  Warning 级别  -->
-                                        <husk:SwitchCase Value="Warning">
-                                            <Border
-                                                Padding="8,0"
-                                                Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlWarningBorderBrush}"
-                                                BorderThickness="3,0,0,0">
-                                                <ContentControl
-                                                    Content="{Binding}"
-                                                    ContentTemplate="{StaticResource LogEntryContentTemplate}" />
-                                            </Border>
-                                        </husk:SwitchCase>
-                                        <!--  Error 级别  -->
-                                        <husk:SwitchCase Value="Error">
-                                            <Border
-                                                Padding="8,0"
-                                                Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlDangerBorderBrush}"
-                                                BorderThickness="3,0,0,0">
-                                                <ContentControl
-                                                    Content="{Binding}"
-                                                    ContentTemplate="{StaticResource LogEntryContentTemplate}" />
-                                            </Border>
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                    <controls:EmptyContainer IsEmpty="{Binding LogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
+                        <!--  日志列表  -->
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding LogCollection}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="m:ScrapModel">
+                                        <husk:SwitchPresenter TargetType="launching:ScrapLevel">
+                                            <!--  Information 级别  -->
+                                            <husk:SwitchCase Value="Information">
+                                                <Border
+                                                    Padding="8,0"
+                                                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                                    BorderThickness="3,0,0,0">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                                </Border>
+                                            </husk:SwitchCase>
+                                            <!--  Warning 级别  -->
+                                            <husk:SwitchCase Value="Warning">
+                                                <Border
+                                                    Padding="8,0"
+                                                    Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                                                    BorderThickness="3,0,0,0">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                                </Border>
+                                            </husk:SwitchCase>
+                                            <!--  Error 级别  -->
+                                            <husk:SwitchCase Value="Error">
+                                                <Border
+                                                    Padding="8,0"
+                                                    Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ControlDangerBorderBrush}"
+                                                    BorderThickness="3,0,0,0">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                                </Border>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </controls:EmptyContainer>
                 </Panel>
             </Grid>
         </husk:Card>
