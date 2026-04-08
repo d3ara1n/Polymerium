@@ -2194,4 +2194,40 @@
     <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
         <value>暂无标签</value>
     </data>
+    <data name="InstanceDashboardView_LiveLogLabelText" xml:space="preserve">
+        <value>实时日志</value>
+    </data>
+    <data name="InstanceDashboardView_RunningLabelText" xml:space="preserve">
+        <value>运行中</value>
+    </data>
+    <data name="InstanceDashboardView_DeployingLabelText" xml:space="preserve">
+        <value>部署中</value>
+    </data>
+    <data name="InstanceDashboardView_UpdatingLabelText" xml:space="preserve">
+        <value>更新中</value>
+    </data>
+    <data name="InstanceDashboardView_IdleLabelText" xml:space="preserve">
+        <value>空闲</value>
+    </data>
+    <data name="InstanceDashboardView_SessionCountLabelText" xml:space="preserve">
+        <value>游戏次数</value>
+    </data>
+    <data name="InstanceDashboardView_LogsDirectoryButtonText" xml:space="preserve">
+        <value>日志目录</value>
+    </data>
+    <data name="InstanceDashboardView_CrashCountLabelText" xml:space="preserve">
+        <value>崩溃次数</value>
+    </data>
+    <data name="InstanceDashboardView_CrashReportsButtonText" xml:space="preserve">
+        <value>崩溃报告</value>
+    </data>
+    <data name="InstanceDashboardView_NoDataLabelText" xml:space="preserve">
+        <value>暂无数据</value>
+    </data>
+    <data name="InstanceDashboardView_SuccessRateLabelText" xml:space="preserve">
+        <value>运行成功率</value>
+    </data>
+    <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
+        <value>搜索日志内容...</value>
+    </data>
 </root>

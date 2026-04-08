@@ -4,9 +4,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -25,7 +28,8 @@ public partial class InstanceDashboardViewModel(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     ScrapService scrapService,
-    NotificationService notificationService
+    NotificationService notificationService,
+    PersistenceService persistenceService
 ) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Overrides
@@ -34,6 +38,10 @@ public partial class InstanceDashboardViewModel(
     {
         InitializeLogSources();
         SelectedSource = Sources?.FirstOrDefault();
+
+        SessionCount = persistenceService.GetSessionCount(Basic.Key);
+        CrashCount = persistenceService.GetCrashCount(Basic.Key);
+
         return Task.CompletedTask;
     }
 
@@ -100,11 +108,38 @@ public partial class InstanceDashboardViewModel(
     [ObservableProperty]
     public partial bool IsOnAir { get; set; }
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SuccessRate))]
+    public partial int SessionCount { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SuccessRate))]
+    public partial int CrashCount { get; set; }
+
+    public double SuccessRate =>
+        SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
+
     #endregion
 
     #region Direct
 
     private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
+
+    [RelayCommand]
+    private void OpenLogsDirectory()
+    {
+        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
+        if (Directory.Exists(dir))
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+    }
+
+    [RelayCommand]
+    private void OpenCrashReportsDirectory()
+    {
+        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
+        if (Directory.Exists(dir))
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+    }
 
     #endregion
 
