@@ -2203,4 +2203,43 @@
     <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
         <value>No tags available</value>
     </data>
+    <data name="InstanceDashboardView_LiveLogLabelText" xml:space="preserve">
+        <value>Live Log</value>
+    </data>
+    <data name="InstanceDashboardView_RunningLabelText" xml:space="preserve">
+        <value>Running</value>
+    </data>
+    <data name="InstanceDashboardView_DeployingLabelText" xml:space="preserve">
+        <value>Deploying</value>
+    </data>
+    <data name="InstanceDashboardView_UpdatingLabelText" xml:space="preserve">
+        <value>Updating</value>
+    </data>
+    <data name="InstanceDashboardView_IdleLabelText" xml:space="preserve">
+        <value>Idle</value>
+    </data>
+    <data name="InstanceDashboardView_SessionCountLabelText" xml:space="preserve">
+        <value>Sessions</value>
+    </data>
+    <data name="InstanceDashboardView_LogsDirectoryButtonText" xml:space="preserve">
+        <value>Logs Directory</value>
+    </data>
+    <data name="InstanceDashboardView_CrashCountLabelText" xml:space="preserve">
+        <value>Crashes</value>
+    </data>
+    <data name="InstanceDashboardView_CrashReportsButtonText" xml:space="preserve">
+        <value>Crash Reports</value>
+    </data>
+    <data name="InstanceDashboardView_NoDataLabelText" xml:space="preserve">
+        <value>No Data</value>
+    </data>
+    <data name="InstanceDashboardView_SuccessRateLabelText" xml:space="preserve">
+        <value>Success Rate</value>
+    </data>
+    <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
+        <value>Search logs...</value>
+    </data>
+    <data name="InstanceDashboardView_Test" xml:space="preserve">
+        <value />
+    </data>
 </root>

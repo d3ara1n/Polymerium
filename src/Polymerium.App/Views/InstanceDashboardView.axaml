@@ -33,11 +33,11 @@
                         Symbol="Live" />
                     <TextBlock
                         Grid.Column="1"
-                        Text="实时日志" />
+                        Text="{x:Static lang:Resources.InstanceDashboardView_LiveLogLabelText}" />
                     <husk:Tag
                         Grid.Column="2"
                         Classes="Small Success"
-                        IsVisible="{Binding $parent[v:InstanceDashboardView].((vm:InstanceDashboardViewModel)DataContext).IsOnAir}"
+                        IsVisible="{Binding $parent[v:InstanceDashboardView].((vm:InstanceDashboardViewModel)DataContext)?.IsOnAir, FallbackValue={x:False}}"
                         Content="Live" />
                 </Grid>
             </DataTemplate>
@@ -133,7 +133,7 @@
                                     FontSize="{StaticResource LargeFontSize}"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                    Text="运行中" />
+                                    Text="{x:Static lang:Resources.InstanceDashboardView_RunningLabelText}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -152,7 +152,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="部署中" />
+                                Text="{x:Static lang:Resources.InstanceDashboardView_DeployingLabelText}" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <!--  Updating 状态  -->
@@ -170,7 +170,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="更新中" />
+                                Text="{x:Static lang:Resources.InstanceDashboardView_UpdatingLabelText}" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <!--  Idle 状态  -->
@@ -188,7 +188,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="空闲" />
+                                Text="{x:Static lang:Resources.InstanceDashboardView_IdleLabelText}" />
                         </StackPanel>
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
@@ -207,24 +207,25 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="114" />
+                            Text="{Binding SessionCount}" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="游戏次数" />
+                            Text="{x:Static lang:Resources.InstanceDashboardView_SessionCountLabelText}" />
                     </StackPanel>
                     <Button
                         Grid.Row="1"
                         Classes="Small"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center">
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding OpenLogsDirectoryCommand}">
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="FolderOpen" />
-                            <TextBlock Text="日志目录" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_LogsDirectoryButtonText}" />
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -243,45 +244,73 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="514" />
+                            Text="{Binding CrashCount}" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="崩溃次数" />
+                            Text="{x:Static lang:Resources.InstanceDashboardView_CrashCountLabelText}" />
                     </StackPanel>
                     <Button
                         Grid.Row="1"
                         Classes="Small"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center">
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding OpenCrashReportsDirectoryCommand}">
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="FolderOpen" />
-                            <TextBlock Text="崩溃报告" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_CrashReportsButtonText}" />
                         </StackPanel>
                     </Button>
                 </Grid>
             </husk:Card>
 
-            <!--  待添加卡片  -->
+            <!--  成功率统计卡片  -->
             <husk:Card>
-                <StackPanel
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Spacing="8">
-                    <fi:SymbolIcon
-                        HorizontalAlignment="Center"
-                        FontSize="32"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Symbol="Add" />
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="WIP" />
-                </StackPanel>
+                <husk:SwitchPresenter
+                    TargetType="x:Int32"
+                    Value="{Binding SessionCount}">
+                    <husk:SwitchCase Value="0">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Center"
+                                FontSize="32"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Symbol="ChartMultiple" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_NoDataLabelText}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase>
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Center"
+                                FontSize="32"
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Symbol="ChartMultiple" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{Binding SuccessRate, StringFormat={}{0:F1}%}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_SuccessRateLabelText}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
             </husk:Card>
         </UniformGrid>
 
@@ -309,7 +338,7 @@
                     <!--  搜索框  -->
                     <TextBox
                         Grid.Column="1"
-                        PlaceholderText="搜索日志内容..."
+                        PlaceholderText="{x:Static lang:Resources.InstanceDashboardView_SearchPlaceholder}"
                         Text="{Binding FilterText, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
@@ -335,9 +364,9 @@
                                     Margin="0,0,8,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="{Binding FilteredLogCollection.Count}" />
+                                    <Run Text="{Binding FilteredLogCollection?.Count, FallbackValue=0}" />
                                     <Run Text="/" />
-                                    <Run Text="{Binding LogCollection.Count}" />
+                                    <Run Text="{Binding LogCollection?.Count, FallbackValue=0}" />
                                 </TextBlock>
                             </StackPanel>
                         </TextBox.InnerRightContent>
@@ -460,7 +489,7 @@
                                                     BorderThickness="3,0,0,0">
                                                     <ContentControl
                                                         Content="{Binding}"
-                                                        ContentTemplate="{StaticResource LogEntryContentTemplate}" />
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
                                                 </Border>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
