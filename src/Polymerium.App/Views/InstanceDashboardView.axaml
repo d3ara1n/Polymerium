@@ -225,7 +225,7 @@
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="FolderOpen" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_LogsDirectoryButtonText}" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_LogsButtonText}" />
                         </StackPanel>
                     </Button>
                 </Grid>
