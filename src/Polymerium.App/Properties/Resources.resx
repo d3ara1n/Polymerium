@@ -2221,8 +2221,8 @@
     <data name="InstanceDashboardView_SessionCountLabelText" xml:space="preserve">
         <value>Sessions</value>
     </data>
-    <data name="InstanceDashboardView_LogsDirectoryButtonText" xml:space="preserve">
-        <value>Logs Directory</value>
+    <data name="InstanceDashboardView_LogsButtonText" xml:space="preserve">
+        <value>Logs</value>
     </data>
     <data name="InstanceDashboardView_CrashCountLabelText" xml:space="preserve">
         <value>Crashes</value>

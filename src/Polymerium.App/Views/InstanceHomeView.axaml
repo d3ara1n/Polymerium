@@ -890,7 +890,8 @@
                                     Padding="12,6"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1"
-                                    Command="{Binding OpenDashboardCommand}"
+                                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                                    CommandParameter="{x:Type v:InstanceDashboardView}"
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     Theme="{StaticResource GhostButtonTheme}">
                                     <Grid

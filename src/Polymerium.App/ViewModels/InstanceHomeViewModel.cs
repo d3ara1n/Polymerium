@@ -41,7 +41,6 @@ public partial class InstanceHomeViewModel(
     NotificationService notificationService,
     ConfigurationService configurationService,
     PersistenceService persistenceService,
-    ScrapService scrapService,
     InstanceService instanceService,
     WidgetHostService widgetHostService
 ) : InstanceViewModelBase(bag, instanceManager, profileManager)
@@ -293,24 +292,6 @@ public partial class InstanceHomeViewModel(
         if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker)
         {
             tracker.Abort();
-        }
-    }
-
-    [RelayCommand]
-    private void OpenDashboard()
-    {
-        if (
-            InstanceManager.IsTracking(Basic.Key, out var tracker)
-            && tracker is LaunchTracker launch
-        )
-        {
-            var toast = new InstanceDashboardToast { Header = Basic.Name };
-            if (scrapService.TryGetBuffer(launch.Key, out var buffer))
-            {
-                toast.SetItems(buffer);
-            }
-
-            overlayService.PopToast(toast);
         }
     }
 

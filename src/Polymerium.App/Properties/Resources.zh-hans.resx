@@ -2212,8 +2212,8 @@
     <data name="InstanceDashboardView_SessionCountLabelText" xml:space="preserve">
         <value>游戏次数</value>
     </data>
-    <data name="InstanceDashboardView_LogsDirectoryButtonText" xml:space="preserve">
-        <value>日志目录</value>
+    <data name="InstanceDashboardView_LogsButtonText" xml:space="preserve">
+        <value>日志</value>
     </data>
     <data name="InstanceDashboardView_CrashCountLabelText" xml:space="preserve">
         <value>崩溃次数</value>

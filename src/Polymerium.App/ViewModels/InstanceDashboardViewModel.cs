@@ -125,22 +125,6 @@ public partial class InstanceDashboardViewModel(
 
     private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
 
-    [RelayCommand]
-    private void OpenLogsDirectory()
-    {
-        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
-        if (Directory.Exists(dir))
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
-    }
-
-    [RelayCommand]
-    private void OpenCrashReportsDirectory()
-    {
-        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
-        if (Directory.Exists(dir))
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
-    }
-
     #endregion
 
     #region Other
@@ -276,6 +260,26 @@ public partial class InstanceDashboardViewModel(
 
             return true;
         };
+    }
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void OpenLogsDirectory()
+    {
+        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
+        if (Directory.Exists(dir))
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+    }
+
+    [RelayCommand]
+    private void OpenCrashReportsDirectory()
+    {
+        var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
+        if (Directory.Exists(dir))
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
     }
 
     #endregion
