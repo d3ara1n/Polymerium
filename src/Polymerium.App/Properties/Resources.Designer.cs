@@ -4094,9 +4094,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to These options only take effect when exporting as Trident Portable Instance.
         /// </summary>
-        public static string ModpackExporterDialog_AdvancedOptionsInfoBarText {
+        public static string ModpackExporterDialog_TridentOptionsInfoBarText {
             get {
-                return ResourceManager.GetString("ModpackExporterDialog_AdvancedOptionsInfoBarText", resourceCulture);
+                return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsInfoBarText", resourceCulture);
             }
         }
 
@@ -4142,6 +4142,33 @@ namespace Polymerium.App.Properties {
         public static string ModpackExporterDialog_ConnectServerText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_ConnectServerText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Packages with selected tags will be excluded from export.
+        /// </summary>
+        public static string ModpackExporterDialog_ExcludedTagsDescriptionText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsDescriptionText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No tags available.
+        /// </summary>
+        public static string ModpackExporterDialog_ExcludedTagsEmptyText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsEmptyText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Excluded Tags.
+        /// </summary>
+        public static string ModpackExporterDialog_ExcludedTagsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsLabelText", resourceCulture);
             }
         }
 
@@ -4232,6 +4259,15 @@ namespace Polymerium.App.Properties {
         public static string ModpackExporterDialog_Title {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Trident-specific Options.
+        /// </summary>
+        public static string ModpackExporterDialog_TridentOptionsLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsLabelText", resourceCulture);
             }
         }
 

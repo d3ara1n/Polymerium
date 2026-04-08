@@ -194,9 +194,17 @@ public partial class MainWindowContext : ObservableObject
 
             pack ??= PackData.CreateDefault();
 
+            var availableTags = profile
+                .Setup.Packages.SelectMany(x => x.Tags)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+
             var dialog = new ModpackExporterDialog
             {
                 Pack = pack,
+                AvailableTags = availableTags,
+                OverlayService = _overlayService,
                 NameOriginal = !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
                 LoaderLabel = loaderLabel,
                 PackageCount = profile.Setup.Packages.Count,

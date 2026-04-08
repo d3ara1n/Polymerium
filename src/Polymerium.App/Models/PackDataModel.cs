@@ -13,6 +13,7 @@ public partial class PackDataModel : ModelBase
     public PackDataModel(PackData pack)
     {
         _pack = pack;
+        ExcludedTags = new(_pack.ExcludedTags, x => x, x => x);
         IncludingSource = pack.IncludingSource;
         IncludingTags = pack.IncludingTags;
         JavaMaxMemory = GetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY);
@@ -49,6 +50,8 @@ public partial class PackDataModel : ModelBase
 
     partial void OnConnectServerChanged(bool value) =>
         SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
+
+    public MappingCollection<string, string> ExcludedTags { get; }
 
     #endregion
 

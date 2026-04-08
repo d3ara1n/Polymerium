@@ -1368,8 +1368,8 @@
     <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
         <value>额外选项</value>
     </data>
-    <data name="ModpackExporterDialog_AdvancedOptionsInfoBarText" xml:space="preserve">
-        <value>这些选项只有在导出为 Trident Portable Instance 时才有作用</value>
+    <data name="ModpackExporterDialog_TridentOptionsInfoBarText" xml:space="preserve">
+        <value>这些选项只有在导出为 Trident Portable Instance 时才有作用。</value>
     </data>
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>保留来源信息</value>
@@ -2181,5 +2181,17 @@
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
         <value>这是怎么运作的？</value>
+    </data>
+    <data name="ModpackExporterDialog_TridentOptionsLabelText" xml:space="preserve">
+        <value>Trident 专属选项</value>
+    </data>
+    <data name="ModpackExporterDialog_ExcludedTagsLabelText" xml:space="preserve">
+        <value>排除标签</value>
+    </data>
+    <data name="ModpackExporterDialog_ExcludedTagsDescriptionText" xml:space="preserve">
+        <value>被选中的标签所对应的包将不会出现在导出结果中</value>
+    </data>
+    <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
+        <value>暂无标签</value>
     </data>
 </root>

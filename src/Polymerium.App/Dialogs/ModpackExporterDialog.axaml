@@ -2,6 +2,7 @@
     x:Class="Polymerium.App.Dialogs.ModpackExporterDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -93,10 +94,76 @@
         <!--  额外选项  -->
         <Expander Header="{x:Static lang:Resources.ModpackExporterDialog_AdvancedOptionsLabelText}">
             <StackPanel Spacing="8">
+                <DockPanel>
+                    <Button
+                        DockPanel.Dock="Right"
+                        Classes="Small"
+                        Command="{Binding $parent[local:ModpackExporterDialog].AddTagCommand}"
+                        Theme="{StaticResource GhostButtonTheme}">
+                        <husk:IconLabel
+                            Icon="Add"
+                            Text="{x:Static lang:Resources.InstancePackageModal_AddTagButtonText}" />
+                    </Button>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.ModpackExporterDialog_ExcludedTagsLabelText}" />
+                </DockPanel>
+                <controls:EmptyContainer
+                    Icon="TagMultiple"
+                    IsEmpty="{Binding $parent[local:ModpackExporterDialog].PackData.ExcludedTags.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}">
+                    <ItemsControl ItemsSource="{Binding $parent[local:ModpackExporterDialog].PackData.ExcludedTags}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel
+                                    ItemSpacing="6"
+                                    LineSpacing="6" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Border
+                                    Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                                    BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <DockPanel>
+                                        <Button
+                                            DockPanel.Dock="Right"
+                                            Padding="4,0"
+                                            Command="{Binding $parent[local:ModpackExporterDialog].RemoveTagCommand}"
+                                            CommandParameter="{Binding}"
+                                            CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
+                                                                                      Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                            Theme="{StaticResource GhostButtonTheme}">
+                                            <fi:SymbolIcon
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                FontSize="{Binding $parent[Button].FontSize}"
+                                                Symbol="Dismiss" />
+                                        </Button>
+                                        <TextBlock
+                                            Margin="8,4,0,4"
+                                            Text="{Binding}" />
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </controls:EmptyContainer>
+                <TextBlock
+                    FontSize="{StaticResource SmallFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackExporterDialog_ExcludedTagsDescriptionText}" />
+            </StackPanel>
+        </Expander>
+        <!--  Trident 专属选项  -->
+        <Expander Header="{x:Static lang:Resources.ModpackExporterDialog_TridentOptionsLabelText}">
+            <StackPanel Spacing="8">
                 <husk:InfoBar
                     Classes="Warning"
                     IsVisible="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=trident}"
-                    Content="{x:Static lang:Resources.ModpackExporterDialog_AdvancedOptionsInfoBarText}" />
+                    Content="{x:Static lang:Resources.ModpackExporterDialog_TridentOptionsInfoBarText}" />
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
@@ -205,10 +272,12 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <fi:SymbolIcon
-                        FontSize="{StaticResource MediumFontSize}"
+                        FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Info" />
-                    <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
                         <HyperlinkButton Command="{Binding $parent[local:ModpackExporterDialog].OpenImportFolderCommand}">
                             <TextBlock Text="./import" />
@@ -221,6 +290,7 @@
                     Command="{x:Static m:InternalCommands.OpenStringUriCommand}"
                     CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%95%B4%E5%90%88%E5%8C%85">
                     <husk:IconLabel
+                        FontSize="{StaticResource SmallFontSize}"
                         Icon="BookQuestionMark"
                         Text="{x:Static lang:Resources.ModpackExporterDialog_OpenWikiButtonText}" />
                 </HyperlinkButton>
