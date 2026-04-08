@@ -67,7 +67,7 @@ public partial class InstanceDashboardViewModel(
     public partial LogSourceModelBase SelectedSource { get; set; }
 
     [ObservableProperty]
-    public partial ICollection<ScrapModel>? LogCollection { get; set; }
+    public partial IList<ScrapModel>? LogCollection { get; set; }
 
     partial void OnSelectedSourceChanged(LogSourceModelBase value) => UpdateLogSource(value);
 
