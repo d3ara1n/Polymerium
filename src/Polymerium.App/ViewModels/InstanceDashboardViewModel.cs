@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Avalonia.Input;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.Tasks;
+using Trident.Core.Engines.Launching;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
 using Trident.Core.Utilities;
@@ -31,6 +33,7 @@ public partial class InstanceDashboardViewModel(
     protected override Task OnInitializeAsync()
     {
         InitializeLogSources();
+        SelectedSource = Sources?.FirstOrDefault();
         return Task.CompletedTask;
     }
 
@@ -64,15 +67,44 @@ public partial class InstanceDashboardViewModel(
     public ObservableCollection<LogSourceModelBase> Sources { get; } = [];
 
     [ObservableProperty]
-    public partial LogSourceModelBase SelectedSource { get; set; }
+    public partial LogSourceModelBase? SelectedSource { get; set; }
+
+    partial void OnSelectedSourceChanged(LogSourceModelBase? value) => UpdateLogSource(value);
+
+    [ObservableProperty]
+    public partial string FilterText { get; set; } = string.Empty;
+
+    partial void OnFilterTextChanged(string value) => SetupView();
+
+    [ObservableProperty]
+    public partial bool IsFilterInformation { get; set; } = true;
+
+    partial void OnIsFilterInformationChanged(bool value) => SetupView();
+
+    [ObservableProperty]
+    public partial bool IsFilterWarning { get; set; } = true;
+
+    partial void OnIsFilterWarningChanged(bool value) => SetupView();
+
+    [ObservableProperty]
+    public partial bool IsFilterError { get; set; } = true;
+
+    partial void OnIsFilterErrorChanged(bool value) => SetupView();
 
     [ObservableProperty]
     public partial IList<ScrapModel>? LogCollection { get; set; }
 
-    partial void OnSelectedSourceChanged(LogSourceModelBase value) => UpdateLogSource(value);
+    [ObservableProperty]
+    public partial NotifyCollectionChangedSynchronizedViewList<ScrapModel>? FilteredLogCollection { get; set; }
 
     [ObservableProperty]
     public partial bool IsOnAir { get; set; }
+
+    #endregion
+
+    #region Direct
+
+    private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
 
     #endregion
 
@@ -97,44 +129,38 @@ public partial class InstanceDashboardViewModel(
         }
     }
 
-    private void UpdateLogSource(LogSourceModelBase source)
+    private void UpdateLogSource(LogSourceModelBase? source)
     {
+        LogCollection?.Clear();
+        _collectionView?.Dispose();
+        FilteredLogCollection?.Dispose();
+
         switch (source)
         {
             case LiveLogSourceModel:
-                // 使用 ObservableCollections
                 if (IsOnAir)
                 {
                     // Attach
                     // Bind
                     if (scrapService.TryGetBuffer(Basic.Key, out var buffer))
                     {
+                        _collectionView = buffer.CreateView(x => x);
+                        SetupView(_collectionView);
                         LogCollection = buffer;
+                        FilteredLogCollection = _collectionView.ToNotifyCollectionChanged();
                     }
-                }
-                else
-                {
-                    LogCollection = null;
                 }
 
                 break;
             case FileLogSourceModel file:
-                // 使用 DynamicData
-                if (IsOnAir)
-                {
-                    // Detach
-                    // 似乎不需要了，因为 ScrapService 会负责这个
-                    // TODO: 此时文件 latest.log 和 debug.log 无法读取
-                    LogCollection = null;
-                }
-                else
+                if (!IsOnAir)
                 {
                     if (File.Exists(file.Path))
                     {
                         try
                         {
                             var lines = File.ReadAllLines(file.Path);
-                            var container = new List<ScrapModel>();
+                            var container = new ObservableList<ScrapModel>(lines.Length);
                             ScrapModel? last = null;
                             foreach (var line in lines)
                             {
@@ -143,23 +169,74 @@ public partial class InstanceDashboardViewModel(
                                 container.Add(appended);
                                 last = appended;
                             }
+                            _collectionView = container.CreateView(x => x);
+                            SetupView(_collectionView);
                             LogCollection = container;
+                            FilteredLogCollection = _collectionView.ToNotifyCollectionChanged();
                         }
                         catch (Exception ex)
                         {
-                            LogCollection = null;
                             notificationService.PopMessage(ex, "Read log file failed");
                         }
-                    }
-                    else
-                    {
-                        LogCollection = null;
                     }
                 }
 
                 // Set
                 break;
         }
+    }
+
+    private void SetupView()
+    {
+        if (_collectionView != null)
+            SetupView(_collectionView);
+    }
+
+    private void SetupView(ISynchronizedView<ScrapModel, ScrapModel> view)
+    {
+        var predicate = BuildFilter();
+        if (predicate != null)
+        {
+            view.AttachFilter(predicate);
+        }
+        else
+        {
+            view.ResetFilter();
+        }
+    }
+
+    private Func<ScrapModel, bool>? BuildFilter()
+    {
+        // 如果三个级别全部开启且没有搜索文本 → 无过滤
+        var allLevels = IsFilterError && IsFilterWarning && IsFilterInformation;
+        var hasSearch = !string.IsNullOrWhiteSpace(FilterText);
+
+        if (allLevels && !hasSearch)
+            return null;
+
+        return item =>
+        {
+            if (!IsFilterError && item.Level == ScrapLevel.Error)
+                return false;
+            if (!IsFilterWarning && item.Level == ScrapLevel.Warning)
+                return false;
+            if (!IsFilterInformation && item.Level == ScrapLevel.Information)
+                return false;
+
+            if (hasSearch)
+            {
+                var keyword = FilterText!;
+                return (
+                        item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
+                    )
+                    || (item.Thread?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
+                    || (
+                        item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
+                    );
+            }
+
+            return true;
+        };
     }
 
     #endregion

@@ -309,7 +309,8 @@
                     <!--  搜索框  -->
                     <TextBox
                         Grid.Column="1"
-                        PlaceholderText="搜索日志内容...">
+                        PlaceholderText="搜索日志内容..."
+                        Text="{Binding FilterText, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <fi:SymbolIcon
@@ -334,9 +335,9 @@
                                     Margin="0,0,8,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="{Binding LogCollection.Count}" />
+                                    <Run Text="{Binding FilteredLogCollection.Count}" />
                                     <Run Text="/" />
-                                    <Run Text="{Binding LogCollection.Capacity}" />
+                                    <Run Text="{Binding LogCollection.Count}" />
                                 </TextBlock>
                             </StackPanel>
                         </TextBox.InnerRightContent>
@@ -347,50 +348,10 @@
                         Grid.Column="2"
                         Orientation="Horizontal"
                         Spacing="4">
-                        <!--  Error 过滤  -->
-                        <ToggleButton Classes="Small">
-                            <ToggleButton.Styles>
-                                <Style Selector="ToggleButton:checked">
-                                    <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
-                                    <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
-                                </Style>
-                            </ToggleButton.Styles>
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="4">
-                                <Ellipse
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
-                                    Fill="{StaticResource ControlDangerBackgroundBrush}" />
-                                <TextBlock
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Text="8" />
-                            </StackPanel>
-                        </ToggleButton>
-
-                        <!--  Warning 过滤  -->
-                        <ToggleButton Classes="Small">
-                            <ToggleButton.Styles>
-                                <Style Selector="ToggleButton:checked">
-                                    <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
-                                    <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
-                                </Style>
-                            </ToggleButton.Styles>
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="4">
-                                <Ellipse
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
-                                    Fill="{StaticResource ControlWarningBackgroundBrush}" />
-                                <TextBlock
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Text="111" />
-                            </StackPanel>
-                        </ToggleButton>
-
                         <!--  Information 过滤  -->
-                        <ToggleButton Classes="Small">
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsFilterInformation, Mode=TwoWay}">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked">
                                     <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
@@ -400,13 +361,51 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <Ellipse
-                                    Width="{StaticResource SmallFontSize}"
-                                    Height="{StaticResource SmallFontSize}"
-                                    Fill="{StaticResource ControlBackgroundBrush}" />
-                                <TextBlock
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Text="1021" />
+                                <Border
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Background="{StaticResource ControlBackgroundBrush}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
+                            </StackPanel>
+                        </ToggleButton>
+                        <!--  Warning 过滤  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsFilterWarning, Mode=TwoWay}">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <Border
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Background="{StaticResource ControlWarningBackgroundBrush}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
+                            </StackPanel>
+                        </ToggleButton>
+                        <!--  Error 过滤  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsFilterError, Mode=TwoWay}">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <Border
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Background="{StaticResource ControlDangerBackgroundBrush}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
                             </StackPanel>
                         </ToggleButton>
                     </StackPanel>
@@ -416,10 +415,10 @@
 
                 <!--  日志内容区域  -->
                 <Panel Grid.Row="2">
-                    <controls:EmptyContainer IsEmpty="{Binding LogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
+                    <controls:EmptyContainer IsEmpty="{Binding FilteredLogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
                         <!--  日志列表  -->
                         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding LogCollection}">
+                            <ItemsControl ItemsSource="{Binding FilteredLogCollection}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel />
