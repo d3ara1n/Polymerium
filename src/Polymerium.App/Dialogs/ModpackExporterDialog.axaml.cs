@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -9,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 
@@ -135,6 +138,9 @@ public partial class ModpackExporterDialog : Dialog
         }
     }
 
+    public required IReadOnlyList<string> AvailableTags { get; init; }
+    public required OverlayService OverlayService { get; init; }
+
     #region Overrides
 
     protected override bool ValidateResult(object? result)
@@ -185,6 +191,39 @@ public partial class ModpackExporterDialog : Dialog
                     new(PathDef.Default.DirectoryOfImport(model.Key))
                 );
         }
+    }
+
+    [RelayCommand]
+    private async Task AddTag()
+    {
+        if (PackData is null)
+            return;
+        var dialog = new TagPickerDialog
+        {
+            ExistingTags = [.. AvailableTags.Except(PackData.ExcludedTags)],
+        };
+        if (
+            await OverlayService.PopDialogAsync(dialog)
+            && dialog.Result is string tag
+            && !string.IsNullOrEmpty(tag)
+        )
+        {
+            if (!PackData.ExcludedTags.Contains(tag))
+            {
+                PackData.ExcludedTags.Add(tag);
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void RemoveTag(string? tag)
+    {
+        if (tag == null || PackData == null)
+        {
+            return;
+        }
+
+        PackData.ExcludedTags.Remove(tag);
     }
 
     #endregion

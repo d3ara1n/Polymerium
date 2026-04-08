@@ -1377,8 +1377,8 @@
     <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
         <value>Advanced Options</value>
     </data>
-    <data name="ModpackExporterDialog_AdvancedOptionsInfoBarText" xml:space="preserve">
-        <value>These options only take effect when exporting as Trident Portable Instance</value>
+    <data name="ModpackExporterDialog_TridentOptionsInfoBarText" xml:space="preserve">
+        <value>These options only take effect when exporting as Trident Portable Instance.</value>
     </data>
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>Include source information</value>
@@ -2190,5 +2190,17 @@
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
         <value>How it works?</value>
+    </data>
+    <data name="ModpackExporterDialog_TridentOptionsLabelText" xml:space="preserve">
+        <value>Trident-specific Options</value>
+    </data>
+    <data name="ModpackExporterDialog_ExcludedTagsLabelText" xml:space="preserve">
+        <value>Excluded Tags</value>
+    </data>
+    <data name="ModpackExporterDialog_ExcludedTagsDescriptionText" xml:space="preserve">
+        <value>Packages with selected tags will be excluded from export</value>
+    </data>
+    <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
+        <value>No tags available</value>
     </data>
 </root>
