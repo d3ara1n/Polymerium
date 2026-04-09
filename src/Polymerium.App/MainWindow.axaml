@@ -64,12 +64,13 @@
                             </Style>
                             <Style Selector="husk|Tag">
                                 <Setter Property="FontSize" Value="8" />
-                                <Setter Property="Padding" Value="4,2"/>
+                                <Setter Property="Padding" Value="4,2" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button
-                            Command="{Binding OpenNotificationSidebarCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                        <Button Command="{Binding OpenNotificationSidebarCommand}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
                                 <fi:SymbolIcon Symbol="Alert" />
                                 <husk:Tag
                                     Classes="Small"
