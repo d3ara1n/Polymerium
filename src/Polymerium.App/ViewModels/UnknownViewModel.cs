@@ -181,8 +181,15 @@ public class HelloWorld
         notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Warning);
 
     [RelayCommand]
-    private void ShowDanger() =>
-        notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Danger);
+    private void ShowDanger()
+    {
+        notificationService.PopProgress(
+            "Hello",
+            "Hi there!",
+            GrowlLevel.Danger,
+            actions: new GrowlAction("Info", new RelayCommand(ShowInformation))
+        );
+    }
 
     [RelayCommand]
     private void ShowToast()

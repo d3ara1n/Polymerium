@@ -79,7 +79,7 @@
                                                 Symbol="Person" />
                                             <TextBlock
                                                 VerticalAlignment="Center"
-                                                Text="{Binding Author}" />
+                                                Text="{Binding Author}" TextTrimming="CharacterEllipsis" />
                                         </StackPanel>
                                     </Border>
                                     <StackPanel

@@ -17,7 +17,6 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.App.Widgets;

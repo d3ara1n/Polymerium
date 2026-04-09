@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;

@@ -10,7 +10,6 @@ using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Sentry;
 using Trident.Abstractions;
 using Trident.Abstractions.Exporters;
 using Trident.Abstractions.Importers;

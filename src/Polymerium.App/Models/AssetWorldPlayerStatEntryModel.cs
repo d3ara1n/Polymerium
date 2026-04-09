@@ -1,5 +1,4 @@
 using FluentIcons.Common;
-using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
