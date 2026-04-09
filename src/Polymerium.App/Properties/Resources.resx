@@ -2242,4 +2242,31 @@
     <data name="InstanceDashboardView_Test" xml:space="preserve">
         <value />
     </data>
+    <data name="NotificationSidebar_NotificationsLabelText" xml:space="preserve">
+        <value>Notifications</value>
+    </data>
+    <data name="NotificationSidebar_MarkAllAsReadButtonText" xml:space="preserve">
+        <value>Mark all as read</value>
+    </data>
+    <data name="NotificationSidebar_EmptyTitle" xml:space="preserve">
+        <value>No notifications yet</value>
+    </data>
+    <data name="NotificationSidebar_EmptyPrompt" xml:space="preserve">
+        <value>New growls will stay here until you dismiss them.</value>
+    </data>
+    <data name="NotificationSidebar_UnreadTagText" xml:space="preserve">
+        <value>Unread</value>
+    </data>
+    <data name="NotificationSidebar_CancelledTagText" xml:space="preserve">
+        <value>Cancelled</value>
+    </data>
+    <data name="NotificationSidebar_MarkAsReadMenuText" xml:space="preserve">
+        <value>Mark as read</value>
+    </data>
+    <data name="NotificationSidebar_MarkAsUnreadMenuText" xml:space="preserve">
+        <value>Mark as unread</value>
+    </data>
+    <data name="NotificationSidebar_RemoveMenuText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
 </root>

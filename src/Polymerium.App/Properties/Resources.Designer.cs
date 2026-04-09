@@ -6676,5 +6676,86 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Wednesday", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        public static string NotificationSidebar_CancelledTagText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_CancelledTagText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to New growls will stay here until you dismiss them..
+        /// </summary>
+        public static string NotificationSidebar_EmptyPrompt {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_EmptyPrompt", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No notifications yet.
+        /// </summary>
+        public static string NotificationSidebar_EmptyTitle {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_EmptyTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Mark all as read.
+        /// </summary>
+        public static string NotificationSidebar_MarkAllAsReadButtonText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_MarkAllAsReadButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Mark as read.
+        /// </summary>
+        public static string NotificationSidebar_MarkAsReadMenuText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_MarkAsReadMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Mark as unread.
+        /// </summary>
+        public static string NotificationSidebar_MarkAsUnreadMenuText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_MarkAsUnreadMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string NotificationSidebar_NotificationsLabelText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_NotificationsLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string NotificationSidebar_RemoveMenuText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_RemoveMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unread.
+        /// </summary>
+        public static string NotificationSidebar_UnreadTagText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_UnreadTagText", resourceCulture);
+            }
+        }
     }
 }

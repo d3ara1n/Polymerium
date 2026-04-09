@@ -2230,4 +2230,31 @@
     <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
         <value>搜索日志内容...</value>
     </data>
+    <data name="NotificationSidebar_NotificationsLabelText" xml:space="preserve">
+        <value>通知</value>
+    </data>
+    <data name="NotificationSidebar_MarkAllAsReadButtonText" xml:space="preserve">
+        <value>全部标记为已读</value>
+    </data>
+    <data name="NotificationSidebar_EmptyTitle" xml:space="preserve">
+        <value>还没有通知</value>
+    </data>
+    <data name="NotificationSidebar_EmptyPrompt" xml:space="preserve">
+        <value>新的提示会保留在这里，直到你将其关闭。</value>
+    </data>
+    <data name="NotificationSidebar_UnreadTagText" xml:space="preserve">
+        <value>未读</value>
+    </data>
+    <data name="NotificationSidebar_CancelledTagText" xml:space="preserve">
+        <value>失效</value>
+    </data>
+    <data name="NotificationSidebar_MarkAsReadMenuText" xml:space="preserve">
+        <value>标记为已读</value>
+    </data>
+    <data name="NotificationSidebar_MarkAsUnreadMenuText" xml:space="preserve">
+        <value>标记为未读</value>
+    </data>
+    <data name="NotificationSidebar_RemoveMenuText" xml:space="preserve">
+        <value>移除</value>
+    </data>
 </root>
