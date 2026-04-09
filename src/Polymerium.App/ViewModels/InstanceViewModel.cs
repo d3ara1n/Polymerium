@@ -392,9 +392,7 @@ public partial class InstanceViewModel : ViewModelBase
         // Home
         new(typeof(InstanceHomeView), Symbol.Home),
         // Dashboard
-#if DEBUG
         new(typeof(InstanceDashboardView), Symbol.PulseSquare),
-#endif
         // Setup
         new(typeof(InstanceSetupView), Symbol.Apps),
         // Assets

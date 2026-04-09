@@ -384,6 +384,40 @@
                         <ListBoxItem Content="这是一个 9" />
                         <ListBoxItem Content="这是一个 0" />
                     </ListBox>
+                    <husk:Card
+                        Width="200"
+                        Height="140"
+                        Padding="8"
+                        Background="{StaticResource FlayoutBackgroundBrush}">
+                        <Grid
+                            RowDefinitions="*,Auto"
+                            RowSpacing="8">
+                            <Border
+                                Grid.Row="0"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
+                                <Border.CornerRadius>
+                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                        <Binding
+                                            Path="CornerRadius"
+                                            RelativeSource="{RelativeSource FindAncestor,
+                                                                            AncestorType=husk:Card}" />
+                                        <Binding
+                                            Path="Padding"
+                                            RelativeSource="{RelativeSource FindAncestor,
+                                                                            AncestorType=husk:Card}" />
+                                    </MultiBinding>
+                                </Border.CornerRadius>
+                                <CheckBox
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="Link Start" />
+                            </Border>
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Hello World"
+                                TextAlignment="Center" />
+                        </Grid>
+                    </husk:Card>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Baz">
