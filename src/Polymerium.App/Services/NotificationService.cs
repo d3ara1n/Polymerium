@@ -1,16 +1,22 @@
 using System;
+using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Animation;
+using Avalonia.Collections;
+using Avalonia.Media;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using Polymerium.App.Models;
 
 namespace Polymerium.App.Services;
 
 public class NotificationService
 {
-    private static readonly Animation COUNTDOWN = new()
+    private static readonly Animation Countdown = new()
     {
         Duration = TimeSpan.FromSeconds(7),
         FillMode = FillMode.Forward,
@@ -35,38 +41,57 @@ public class NotificationService
         },
     };
 
-    private Action<GrowlItem>? _handler;
+    private Action<NotificationModel>? _notificationHandler;
+    private Action<GrowlItem>? _growlHandler;
 
-    internal void SetHandler(Action<GrowlItem> handler) => _handler = handler;
+    internal void SetHandler(Action<NotificationModel> handler) => _notificationHandler = handler;
 
-    public void Pop(GrowlItem item) => _handler?.Invoke(item);
+    internal void SetHandler(Action<GrowlItem> handler) => _growlHandler = handler;
+
+    private void Pop(NotificationModel model, GrowlItem item)
+    {
+        item.DismissRequested += OnDismissRequested;
+        _notificationHandler?.Invoke(model);
+        _growlHandler?.Invoke(item);
+        return;
+
+        void OnDismissRequested(object? sender, GrowlItem.DismissRequestedEventArgs args)
+        {
+            item.DismissRequested -= OnDismissRequested;
+            // item.Token 现在是给自己用了，纯 UI 功能，不在和业务相关
+            // 提出 model 的意义就是延长通知的生命周期，至少延长到程序关闭（或 model 被移除），所以 handle.Token 应该是应用的 model.Token，后者只有在被移除时（或手动提前）触发
+            model.IsRead = true;
+        }
+    }
 
     public void PopMessage(
         string message,
         string title = "Notification",
         GrowlLevel level = GrowlLevel.Information,
         bool forceExpire = false,
-        params GrowlAction[] actions
+        params GrowlAction[]? actions
     ) =>
         Dispatcher.UIThread.Post(() =>
         {
-            var item = new GrowlItem
+            var sharedActions = new AvaloniaList<GrowlAction>(actions ?? []);
+            var notification = new NotificationModel
             {
-                Content = message,
                 Title = title,
+                Message = message,
                 Level = level,
+                PublishedAtRaw = DateTimeOffset.Now,
+                AccentBrush = ResolveAccentBrush(level),
+                Thumbnail = null,
+                Actions = sharedActions,
             };
-            item.Actions.AddRange(actions);
-            Pop(item);
-            if (
-                (
-                    level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
-                    && actions is { Length: 0 } or null
-                ) || forceExpire
-            )
+
+            var item = CreateGrowlFromNotificationModel(notification);
+            Pop(notification, item);
+
+            if (ShouldExpire(level, actions, forceExpire))
             {
                 item.IsProgressBarVisible = true;
-                COUNTDOWN
+                Countdown
                     .RunAsync(item, item.Token)
                     .ContinueWith(
                         _ => item.Dismiss(),
@@ -79,7 +104,7 @@ public class NotificationService
         Exception? ex,
         string title = "Operation failed",
         GrowlLevel level = GrowlLevel.Danger,
-        params GrowlAction[] actions
+        params GrowlAction[]? actions
     ) =>
         PopMessage(
             ex is not null
@@ -96,34 +121,104 @@ public class NotificationService
     public ProgressHandle PopProgress(
         string message,
         string title = "Progress",
-        GrowlLevel level = GrowlLevel.Information
+        GrowlLevel level = GrowlLevel.Information,
+        params GrowlAction[]? actions
     ) =>
         Dispatcher.UIThread.Invoke(() =>
         {
-            var item = new GrowlItem
+            var sharedActions = new AvaloniaList<GrowlAction>(actions ?? []);
+            var notification = new NotificationModel
             {
-                Content = message,
                 Title = title,
+                Message = message,
                 Level = level,
+                PublishedAtRaw = DateTimeOffset.Now,
+                AccentBrush = ResolveAccentBrush(level),
+                Actions = sharedActions,
+                Thumbnail = null,
+                Progress = 0,
                 IsProgressBarVisible = true,
+                IsProgressIndeterminate = true,
             };
-            Pop(item);
 
-            return new ProgressHandle(item);
+            var item = CreateGrowlFromNotificationModel(notification);
+            Pop(notification, item);
+
+            return new ProgressHandle(notification, item, sharedActions);
         });
+
+    private GrowlItem CreateGrowlFromNotificationModel(NotificationModel notification)
+    {
+        var item = new GrowlItem
+        {
+            Content = notification.Message,
+            Title = notification.Title,
+            Level = notification.Level,
+            Progress = notification.Progress,
+            IsProgressBarVisible = notification.IsProgressBarVisible,
+            IsProgressIndeterminate = notification.IsProgressIndeterminate,
+            Actions = notification.Actions,
+        };
+        return item;
+    }
+
+    private static bool ShouldExpire(GrowlLevel level, GrowlAction[]? actions, bool forceExpire) =>
+        (
+            level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
+            && actions is { Length: 0 } or null
+        ) || forceExpire;
+
+    private static IBrush ResolveAccentBrush(GrowlLevel level)
+    {
+        var key = level switch
+        {
+            GrowlLevel.Success => "ControlSuccessBorderBrush",
+            GrowlLevel.Warning => "ControlWarningBorderBrush",
+            GrowlLevel.Danger => "ControlDangerBorderBrush",
+            _ => "ControlAccentBorderBrush",
+        };
+
+        if (
+            Application.Current?.TryGetResource(key, null, out var resource) == true
+            && resource is IBrush brush
+        )
+        {
+            return brush;
+        }
+
+        return level switch
+        {
+            GrowlLevel.Success => Brushes.ForestGreen,
+            GrowlLevel.Warning => Brushes.DarkOrange,
+            GrowlLevel.Danger => Brushes.IndianRed,
+            _ => Brushes.DodgerBlue,
+        };
+    }
 
     #region Nested type: ProgressHandle
 
-    public class ProgressHandle(GrowlItem item) : IProgress<double>, IProgress<string>, IDisposable
+    public class ProgressHandle(
+        NotificationModel model,
+        GrowlItem item,
+        AvaloniaList<GrowlAction> actions
+    ) : IProgress<double>, IProgress<string>, IDisposable
     {
         public bool IsDisposed { get; private set; }
+
+        public CancellationToken Token => model.Token;
 
         #region IDisposable Members
 
         public void Dispose()
         {
-            IsDisposed = true;
-            item.Dismiss();
+            if (!IsDisposed)
+            {
+                IsDisposed = true;
+                // 前者时失效
+                model.Cancel();
+                // 后者消失
+                item.Dismiss();
+            }
         }
 
         #endregion
@@ -134,7 +229,19 @@ public class NotificationService
         {
             if (!IsDisposed)
             {
-                item.Progress = value;
+                Dispatcher.UIThread.Post(() =>
+                {
+                    if (IsDisposed)
+                    {
+                        return;
+                    }
+
+                    model.Progress = value;
+                    model.IsProgressIndeterminate = false;
+
+                    item.Progress = value;
+                    item.IsProgressIndeterminate = false;
+                });
             }
         }
 
@@ -146,11 +253,24 @@ public class NotificationService
         {
             if (!IsDisposed)
             {
-                item.Content = value;
+                Dispatcher.UIThread.Post(() =>
+                {
+                    if (IsDisposed)
+                    {
+                        return;
+                    }
+
+                    model.Message = value;
+
+                    item.Content = value;
+                });
             }
         }
 
         #endregion
+
+        // 这个 Action 没法通过构造传入，因为 Action 里可能需要访问构造出来的 Handle 导致提前访问，所以只能用这个别扭的方式
+        public void AppendAction(GrowlAction action) => actions.Add(action);
     }
 
     #endregion

@@ -19,7 +19,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using DynamicData;
 using DynamicData.Binding;
-using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
@@ -809,27 +808,22 @@ public partial class InstanceSetupViewModel(
                     )
                     .ToList();
                 var total = staging.Count;
-                var notification = new GrowlItem
-                {
-                    Title =
-                        Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
-                    Content = Resources
+                var progress = notificationService.PopProgress(
+                    Resources
                         .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace(
                             "{0}",
                             "0"
                         )
                         .Replace("{1}", staging.Count.ToString()),
-                    IsProgressBarVisible = true,
-                    IsCloseButtonVisible = false,
-                };
-                notification.Actions.Add(
-                    new(
+                    Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle
+                );
+
+                progress.AppendAction(
+                    new GrowlAction(
                         Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
                         new RelayCommand(Cancel)
                     )
                 );
-
-                notificationService.Pop(notification);
 
                 var filter = new Filter(
                     Kind: null,
@@ -848,7 +842,7 @@ public partial class InstanceSetupViewModel(
                     var semaphore = new SemaphoreSlim(2);
                     // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
                     // ReSharper disable once AccessToDisposedClosure
-                    var tasks = staging.Select(x => UpdateAsync(x, semaphore, notification.Token));
+                    var tasks = staging.Select(x => UpdateAsync(x, semaphore, progress));
                     await Task.WhenAll(tasks);
                     semaphore.Dispose();
                 }
@@ -862,46 +856,39 @@ public partial class InstanceSetupViewModel(
                     );
                 }
 
-                if (notification.Token.IsCancellationRequested)
+                if (progress.Token.IsCancellationRequested)
                 {
-                    notification.Dismiss();
                     return;
                 }
 
-                // 调用 Dismiss 会让 Token 进入 Cancel 状态
-                notification.Dismiss();
+                // 调用 Dismiss 会让 Token 进入 Cancel 状态，导致 Notification 显示“过期”，Growl 直接消失
+                progress.Dispose();
 
-                var reviewNotification = new GrowlItem
-                {
-                    Title =
-                        Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
-                    Content =
-                        Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage.Replace(
-                            "{0}",
-                            updates.Count.ToString()
-                        ),
-                };
-                reviewNotification.Actions.Add(
-                    new(
+                notificationService.PopMessage(
+                    Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
+                    Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage.Replace(
+                        "{0}",
+                        updates.Count.ToString()
+                    ),
+                    actions: new GrowlAction(
                         Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
                         new AsyncRelayCommand(ReviewAsync, CanReview)
                     )
                 );
-                notificationService.Pop(reviewNotification);
                 return;
 
                 async Task UpdateAsync(
                     InstancePackageModel entry,
                     SemaphoreSlim semaphore,
-                    CancellationToken token
+                    NotificationService.ProgressHandle handle
                 )
                 {
-                    if (token.IsCancellationRequested)
+                    if (handle.Token.IsCancellationRequested)
                     {
                         return;
                     }
 
-                    await semaphore.WaitAsync(token);
+                    await semaphore.WaitAsync(handle.Token);
                     if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
                     {
                         if (result.Vid is not null)
@@ -959,20 +946,30 @@ public partial class InstanceSetupViewModel(
 
                     Dispatcher.UIThread.Post(() =>
                     {
-                        notification.Progress = Math.Min(
-                            100d,
-                            100d * (_stageSource.Items.Count - total) / _stageSource.Items.Count
-                        );
-                        notification.Content = Resources
-                            .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace(
-                                "{0}",
-                                updates.Count.ToString()
+                        handle.Report(
+                            Math.Min(
+                                100d,
+                                100d * (_stageSource.Items.Count - total) / _stageSource.Items.Count
                             )
-                            .Replace("{1}", total.ToString());
+                        );
+                        handle.Report(
+                            Resources
+                                .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace(
+                                    "{0}",
+                                    updates.Count.ToString()
+                                )
+                                .Replace("{1}", total.ToString())
+                        );
                     });
                 }
 
-                void Cancel() => notification.Dismiss();
+                void Cancel()
+                {
+                    if (!progress.IsDisposed)
+                    {
+                        progress.Dispose();
+                    }
+                }
 
                 bool CanReview() => !updates.IsEmpty;
 
@@ -990,7 +987,6 @@ public partial class InstanceSetupViewModel(
                         && dialog.Result is IReadOnlyList<PackageUpdateReviewerModel> results
                     )
                     {
-                        reviewNotification.Dismiss();
                         foreach (var model in results.Where(x => x.IsChecked))
                         {
                             var old = model.Model.Entry.Purl;
@@ -1201,18 +1197,12 @@ public partial class InstanceSetupViewModel(
         var dialog = new PackageListExporterDialog { PackageCount = list.Count, Key = Basic.Key };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
-            var notification = new GrowlItem
-            {
-                Title = "Export package list to file",
-                IsProgressBarVisible = true,
-            };
             var output = new List<ExportedEntry>();
-            notification.ProgressMaximum = list.Count;
-            notificationService.Pop(notification);
+            var progress = notificationService.PopProgress("Export package list to file");
             // 这里用单个解析也没关系，能进入这个页面就说明所有数据都被缓存过了
             foreach (var entry in list)
             {
-                if (notification.Token.IsCancellationRequested)
+                if (progress.IsDisposed)
                 {
                     return;
                 }
@@ -1267,11 +1257,11 @@ public partial class InstanceSetupViewModel(
                         string.Join("|", entry.Tags)
                     )
                 );
-                notification.Progress = output.Count;
-                notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
+                progress.Report(Math.Min(Math.Ceiling((double)output.Count / list.Count), 100d));
+                progress.Report($"Exporting package list...({output.Count}/{list.Count})");
             }
 
-            notification.Dismiss();
+            progress.Dispose();
 
             try
             {

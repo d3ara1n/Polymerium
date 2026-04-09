@@ -3,7 +3,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
@@ -23,6 +22,7 @@
     x:DataType="local:MainWindowContext"
     Icon="/Assets/Icon.ico"
     Loaded="Control_OnLoaded"
+    Unloaded="Control_OnUnloded"
     mc:Ignorable="d">
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
@@ -66,9 +66,7 @@
                                 <Setter Property="FontSize" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button
-                            IsVisible="{x:Static local:Program.IsDebug}"
-                            Command="{Binding OpenNotificationSidebarCommand}">
+                        <Button Command="{Binding OpenNotificationSidebarCommand}">
                             <fi:SymbolIcon Symbol="Alert" />
                         </Button>
                         <Button Click="MinimizeButton_OnClick">

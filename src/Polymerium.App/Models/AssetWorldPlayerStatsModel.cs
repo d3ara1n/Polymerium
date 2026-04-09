@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using FluentIcons.Common;
 using Humanizer;
-using IconPacks.Avalonia.Lucide;
 
 namespace Polymerium.App.Models;
 

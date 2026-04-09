@@ -2,14 +2,20 @@
     x:Class="Polymerium.App.Sidebars.NotificationSidebar"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="clr-namespace:Polymerium.App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:hm="using:Huskui.Avalonia.Models"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:services="using:Polymerium.App.Services"
+    xmlns:sidebars="using:Polymerium.App.Sidebars"
     Width="380"
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="400"
+    x:DataType="{x:Type app:MainWindowContext}"
     mc:Ignorable="d">
     <Grid RowDefinitions="Auto,*">
         <Grid
@@ -26,6 +32,7 @@
             <Button
                 Grid.Column="1"
                 Classes="Small"
+                Command="{Binding MarkAllAsReadCommand}"
                 Theme="{StaticResource OutlineButtonTheme}">
                 <husk:IconLabel
                     Icon="Checkmark"
@@ -34,151 +41,178 @@
             <Button
                 Grid.Column="2"
                 Classes="Small"
-                Click="DimissButton_OnClick">
+                Click="DismissButton_OnClick">
                 <fi:SymbolIcon
                     FontSize="{StaticResource MediumFontSize}"
                     Symbol="Dismiss" />
             </Button>
         </Grid>
-        <!--  临时模板  -->
-        <ScrollViewer Grid.Row="1">
+        <Grid Grid.Row="1">
             <StackPanel
                 Margin="{StaticResource SidebarContentMargin}"
-                Spacing="6">
+                HorizontalAlignment="Center"
+                IsVisible="{Binding Notifications.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                Spacing="8">
                 <Border
-                    MinHeight="64"
-                    BoxShadow="0 0 5 0 #1F000000"
-                    CornerRadius="{StaticResource LargeCornerRadius}">
-                    <Border
-                        Padding="12,8"
-                        Background="{StaticResource OverlaySolidBackgroundBrush}"
-                        BorderBrush="{StaticResource ControlDangerBorderBrush}"
-                        BorderThickness="3,0,0,0"
-                        CornerRadius="{Binding $parent[Border].CornerRadius}">
-                        <Grid
-                            ColumnDefinitions="Auto,*,Auto"
-                            ColumnSpacing="12"
-                            RowDefinitions="Auto,*,Auto"
-                            RowSpacing="8">
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="Hello World" />
-                            <Border
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Width="36"
-                                Height="36"
-                                VerticalAlignment="Top"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                RenderOptions.BitmapInterpolationMode="MediumQuality">
-                                <Border.Background>
-                                    <ImageBrush Source="/Assets/Icons/Desert.png" />
-                                </Border.Background>
-                            </Border>
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
-                                TextWrapping="Wrap" />
-                            <Button
-                                Grid.Row="0"
-                                Grid.RowSpan="2"
-                                Grid.Column="2"
-                                Padding="4"
-                                VerticalAlignment="Top">
-                                <fi:SymbolIcon
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Symbol="MoreVertical" />
-                            </Button>
-                            <StackPanel
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Grid.ColumnSpan="2"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal"
-                                Spacing="8">
-                                <Button
-                                    Classes="Primary Small"
-                                    Content="Read more" />
-                                <Button
-                                    Classes="Small"
-                                    Content="Never again" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                    Width="56"
+                    Height="56"
+                    Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                    CornerRadius="28">
+                    <fi:SymbolIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Symbol="AlertOff" />
                 </Border>
-                <Border
-                    MinHeight="64"
-                    Padding="12,8"
-                    Background="{StaticResource OverlaySolidBackgroundBrush}"
-                    BorderBrush="{StaticResource ControlSuccessBorderBrush}"
-                    BorderThickness="3,0,0,0"
-                    CornerRadius="{StaticResource LargeCornerRadius}">
-                    <Border.Effect>
-                        <DropShadowEffect
-                            BlurRadius="6"
-                            OffsetX="0"
-                            OffsetY="0"
-                            Opacity="0.1" />
-                    </Border.Effect>
-                    <Grid
-                        ColumnDefinitions="Auto,*,Auto"
-                        ColumnSpacing="12"
-                        RowDefinitions="Auto,*,Auto"
-                        RowSpacing="8">
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="Hello World" />
-                        <Border
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Width="36"
-                            Height="36"
-                            VerticalAlignment="Top"
-                            CornerRadius="{StaticResource SmallCornerRadius}"
-                            RenderOptions.BitmapInterpolationMode="MediumQuality">
-                            <Border.Background>
-                                <ImageBrush Source="/Assets/Icons/Desert.png" />
-                            </Border.Background>
-                        </Border>
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Text="Lorem ipsum dolor sit amet."
-                            TextWrapping="Wrap" />
-                        <Button
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="2"
-                            Padding="4"
-                            VerticalAlignment="Top">
-                            <fi:SymbolIcon
-                                FontSize="{StaticResource SmallFontSize}"
-                                Symbol="MoreVertical" />
-                        </Button>
-                        <StackPanel
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal"
-                            Spacing="8">
-                            <Button
-                                Classes="Primary Small"
-                                Content="Read more" />
-                            <Button
-                                Classes="Small"
-                                Content="Never again" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="{StaticResource MediumFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="No notifications yet" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="New growls will stay here until you dismiss them." />
             </StackPanel>
-        </ScrollViewer>
+            <ScrollViewer IsVisible="{Binding Notifications.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
+                <ItemsControl
+                    Margin="{StaticResource SidebarContentMargin}"
+                    ItemsSource="{Binding Notifications}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="m:NotificationModel">
+                            <Border
+                                Margin="4,4,4,4"
+                                BoxShadow="0 0 4 0 #3F000000"
+                                CornerRadius="{StaticResource LargeCornerRadius}">
+                                <Border
+                                    Padding="12,10"
+                                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                    BorderBrush="{Binding AccentBrush}"
+                                    BorderThickness="3,0,0,0"
+                                    CornerRadius="{Binding $parent[Border].CornerRadius}">
+                                    <DockPanel>
+                                        <StackPanel
+                                            DockPanel.Dock="Bottom"
+                                            Margin="0,4,0,0"
+                                            HorizontalAlignment="Right"
+                                            IsVisible="{Binding Actions.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                            <ItemsControl
+                                                IsEnabled="{Binding IsCancelled, Converter={x:Static BoolConverters.Not}}"
+                                                ItemsSource="{Binding Actions}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel
+                                                            ItemSpacing="8"
+                                                            LineSpacing="8" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="hm:GrowlAction">
+                                                        <Button
+                                                            Classes="Small"
+                                                            Command="{Binding Command}"
+                                                            CommandParameter="{Binding Parameter}"
+                                                            Content="{Binding Text}" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                        <Grid
+                                            ColumnDefinitions="Auto,Auto,*,Auto,Auto"
+                                            RowDefinitions="Auto,*"
+                                            RowSpacing="4">
+                                            <Panel
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0">
+                                                <Ellipse
+                                                    Width="28"
+                                                    Height="28"
+                                                    Margin="4"
+                                                    Fill="{Binding AccentBrush}" />
+                                                <husk:ProgressRing
+                                                    Width="32"
+                                                    Height="32"
+                                                    IsVisible="{Binding IsProgressBarVisible}"
+                                                    IsIndeterminate="{Binding IsProgressIndeterminate}"
+                                                    ShowProgressText="False"
+                                                    StrokeWidth="4"
+                                                    Value="{Binding Progress}" />
+                                            </Panel>
+                                            <StackPanel
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Orientation="Horizontal">
+                                                <husk:Tag
+                                                    Classes="Small Primary"
+                                                    Margin="8,0,0,0"
+                                                    IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
+                                                    Content="未读" />
+                                                <husk:Tag
+                                                    Classes="Small"
+                                                    Margin="8,0,0,0"
+                                                    IsVisible="{Binding IsCancelled}"
+                                                    Content="失效" />
+                                            </StackPanel>
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Margin="8,0,0,0"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding Title}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="3"
+                                                Margin="8,0,0,0"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding PublishedAt}" />
+                                            <Button
+                                                Grid.Row="0"
+                                                Grid.Column="4"
+                                                Classes="Small"
+                                                Margin="8,0,0,0"
+                                                Padding="4,2"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Button.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuItem
+                                                            IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
+                                                            Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
+                                                            CommandParameter="{Binding}"
+                                                            Header="Mark as read" />
+                                                        <MenuItem
+                                                            IsVisible="{Binding IsRead}"
+                                                            Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
+                                                            CommandParameter="{Binding}"
+                                                            Header="Mark as unread" />
+                                                        <MenuItem
+                                                            Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
+                                                            CommandParameter="{Binding}"
+                                                            Header="Remove" />
+                                                    </MenuFlyout>
+                                                </Button.Flyout>
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Symbol="MoreVertical" />
+                                            </Button>
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Grid.ColumnSpan="4"
+                                                Margin="8,0,0,0"
+                                                Text="{Binding Message}"
+                                                TextWrapping="Wrap" />
+                                        </Grid>
+                                    </DockPanel>
+                                </Border>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </husk:Sidebar>

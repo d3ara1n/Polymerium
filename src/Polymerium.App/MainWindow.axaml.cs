@@ -1,17 +1,11 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
-using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
-using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
-using Avalonia.Threading;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Views;
@@ -128,6 +122,14 @@ public partial class MainWindow : AppWindow
         if (DataContext is MainWindowContext context)
         {
             context.OnInitialize();
+        }
+    }
+
+    private void Control_OnUnloded(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainWindowContext context)
+        {
+            context.OnDeinitialize();
         }
     }
 

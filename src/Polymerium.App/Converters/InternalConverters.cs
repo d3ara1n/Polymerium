@@ -6,10 +6,6 @@ using Humanizer;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Core.Igniters;
-using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Converters;
 

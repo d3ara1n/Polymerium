@@ -39,6 +39,8 @@ namespace Polymerium.App;
 
 public partial class MainWindowContext : ObservableObject
 {
+    private const int MAX_NOTIFICATION_COUNT = 100;
+
     #region Fields
 
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
@@ -107,12 +109,29 @@ public partial class MainWindowContext : ObservableObject
         }
     }
 
+    public void OnDeinitialize()
+    {
+        foreach (var model in Notifications)
+        {
+            model.OnRemoved();
+        }
+    }
+
     #endregion
 
     #region Other
 
     public void Navigate(Type page, object? parameter) =>
         _navigationService.Navigate(page, parameter);
+
+    public void PopNotification(NotificationModel model)
+    {
+        if (Notifications.Count >= MAX_NOTIFICATION_COUNT)
+        {
+            Notifications.RemoveAt(Notifications.Count - 1);
+        }
+        Notifications.Insert(0, model);
+    }
 
     #endregion
 
@@ -136,6 +155,8 @@ public partial class MainWindowContext : ObservableObject
 
     [ObservableProperty]
     public partial string FilterText { get; set; } = string.Empty;
+
+    public ObservableCollection<NotificationModel> Notifications { get; } = [];
 
     #endregion
 
@@ -425,6 +446,42 @@ public partial class MainWindowContext : ObservableObject
         _overlayService.PopModal(modal);
     }
 
+    [RelayCommand]
+    private void MarkAllAsRead()
+    {
+        foreach (var model in Notifications.Where(x => !x.IsRead))
+        {
+            model.IsRead = true;
+        }
+    }
+
+    [RelayCommand]
+    private void MarkAsRead(NotificationModel? model)
+    {
+        if (model is { IsRead: false })
+        {
+            model.IsRead = true;
+        }
+    }
+
+    [RelayCommand]
+    private void MarkAsUnread(NotificationModel? model)
+    {
+        if (model is { IsRead: true })
+        {
+            model.IsRead = false;
+        }
+    }
+
+    [RelayCommand]
+    private void RemoveNotification(NotificationModel? model)
+    {
+        if (model is not null && Notifications.Contains(model))
+        {
+            Notifications.Remove(model);
+        }
+    }
+
     #endregion
 
     #region Profile Service
@@ -444,8 +501,10 @@ public partial class MainWindowContext : ObservableObject
                 item.Setup.Version,
                 item.Setup.Loader,
                 item.Setup.Source
-            );
-            model.LastPlayedAtRaw = _persistenceService.GetLastActivity(key)?.End;
+            )
+            {
+                LastPlayedAtRaw = _persistenceService.GetLastActivity(key)?.End,
+            };
             list.Add(model);
         }
 

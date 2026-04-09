@@ -3,7 +3,6 @@ using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
 using FluentIcons.Common;
-using IconPacks.Avalonia.Lucide;
 
 namespace Polymerium.App.Models;
 

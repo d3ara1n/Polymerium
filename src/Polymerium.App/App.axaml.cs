@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -11,7 +10,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia;
-using Huskui.Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -238,7 +236,7 @@ public class App : Application
             return new();
         }
 
-        var configuration = Program.Services!.GetRequiredService<ConfigurationService>();
+        var configuration = Program.Services.GetRequiredService<ConfigurationService>();
 
         var window = new MainWindow();
 
@@ -276,7 +274,9 @@ public class App : Application
 
 
         // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
-        window.DataContext = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
+        var viewModel = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
+        window.DataContext = viewModel;
+        notification.SetHandler(viewModel.PopNotification);
 
         // MainWindowContext 没有 InitializeAsync 能力，这里代替进行初始化
         navigation.Navigate<LandingView>();
