@@ -3,9 +3,11 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="clr-namespace:Polymerium.App"
+    xmlns:async="using:AsyncImageLoader"
     xmlns:converters="using:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:fie="using:FluentIcons.Avalonia.Markup"
     xmlns:hm="using:Huskui.Avalonia.Models"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
@@ -180,6 +182,14 @@
                                                         <Ellipse Fill="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchPresenter>
+                                                <Ellipse
+                                                    Width="28"
+                                                    Height="28"
+                                                    Margin="4">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
                                                 <husk:ProgressRing
                                                     Width="32"
                                                     Height="32"
@@ -231,12 +241,14 @@
                                                             IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}" />
+                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}"
+                                                            Icon="{fie:SymbolIcon CheckmarkCircle}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead}"
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}" />
+                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}"
+                                                            Icon="{fie:SymbolIcon DismissCircle}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
@@ -245,7 +257,7 @@
                                                 </Button.Flyout>
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource SmallFontSize}"
-                                                    Symbol="MoreVertical" />
+                                                    Symbol="MoreHorizontal" />
                                             </Button>
                                             <TextBlock
                                                 Grid.Row="1"

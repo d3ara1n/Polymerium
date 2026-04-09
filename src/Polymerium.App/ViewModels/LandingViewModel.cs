@@ -11,6 +11,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Polymerium.App.Toasts;
 using Polymerium.App.Views;
 using Trident.Abstractions;
@@ -183,7 +184,11 @@ public partial class LandingViewModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to open folder");
+                notificationService.PopMessage(
+                    ex,
+                    "Failed to open folder",
+                    thumbnail: ThumbnailHelper.ForInstance(key)
+                );
             }
         }
     }
@@ -229,7 +234,11 @@ public partial class LandingViewModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Failed to launch instance");
+            notificationService.PopMessage(
+                ex,
+                "Failed to launch instance",
+                thumbnail: ThumbnailHelper.ForInstance(key)
+            );
         }
     }
 
@@ -269,7 +278,11 @@ public partial class LandingViewModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to load modpack details");
+                notificationService.PopMessage(
+                    ex,
+                    "Failed to load modpack details",
+                    thumbnail: modpack.Thumbnail
+                );
             }
         }
     }

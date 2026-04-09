@@ -29,6 +29,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Refit;
 using Trident.Abstractions.Extensions;
@@ -367,13 +368,23 @@ public partial class InstanceSetupViewModel(
                 notificationService.PopMessage(
                     ex.Message,
                     Resources.InstanceSetupView_ParsePurlDangerNotificationTitle,
-                    GrowlLevel.Danger
+                    GrowlLevel.Danger,
+                    thumbnail: GetNotificationThumbnail()
                 );
             });
         }
 
         IsRefreshing = false;
     }
+
+    private Uri GetNotificationThumbnail(Uri? preferred = null) =>
+        preferred
+        ?? (
+            Reference?.Value is InstanceReferenceModel reference
+            && reference.Thumbnail is { } thumbnail
+                ? thumbnail
+                : ThumbnailHelper.ForInstance(Basic.Key)
+        );
 
     #endregion
 
@@ -754,7 +765,8 @@ public partial class InstanceSetupViewModel(
                 notificationService.PopMessage(
                     ex,
                     Resources.InstanceSetupView_LoadProjectInformationDangerNotificationTitle,
-                    GrowlLevel.Warning
+                    GrowlLevel.Warning,
+                    thumbnail: GetNotificationThumbnail()
                 );
             }
         }
@@ -815,10 +827,11 @@ public partial class InstanceSetupViewModel(
                             "0"
                         )
                         .Replace("{1}", staging.Count.ToString()),
-                    Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle
+                    Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
+                    thumbnail: GetNotificationThumbnail()
                 );
 
-                progress.AppendAction(
+                progress.AddAction(
                     new GrowlAction(
                         Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
                         new RelayCommand(Cancel)
@@ -852,7 +865,8 @@ public partial class InstanceSetupViewModel(
                     notificationService.PopMessage(
                         ex,
                         Resources.InstanceSetupView_LoadProjectInformationDangerNotificationTitle,
-                        GrowlLevel.Warning
+                        GrowlLevel.Warning,
+                        thumbnail: GetNotificationThumbnail()
                     );
                 }
 
@@ -870,6 +884,7 @@ public partial class InstanceSetupViewModel(
                         "{0}",
                         updates.Count.ToString()
                     ),
+                    thumbnail: GetNotificationThumbnail(),
                     actions: new GrowlAction(
                         Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
                         new AsyncRelayCommand(ReviewAsync, CanReview)
@@ -935,7 +950,8 @@ public partial class InstanceSetupViewModel(
                                 notificationService.PopMessage(
                                     ex,
                                     entry.Info?.ProjectName ?? entry.Entry.Purl,
-                                    GrowlLevel.Warning
+                                    GrowlLevel.Warning,
+                                    thumbnail: GetNotificationThumbnail()
                                 );
                             }
                         }
@@ -1048,7 +1064,8 @@ public partial class InstanceSetupViewModel(
                     notificationService.PopMessage(
                         Resources.InstanceSetupView_ImportListNoPackagesWarningNotificationMessage,
                         Resources.InstanceSetupView_ImportListWarningNotificationTitle,
-                        GrowlLevel.Warning
+                        GrowlLevel.Warning,
+                        thumbnail: GetNotificationThumbnail()
                     );
                     return;
                 }
@@ -1175,7 +1192,8 @@ public partial class InstanceSetupViewModel(
                 notificationService.PopMessage(
                     resultMessage,
                     Resources.InstanceSetupView_ImportListSuccessNotificationTitle,
-                    level
+                    level,
+                    thumbnail: GetNotificationThumbnail()
                 );
             }
             catch (Exception ex)
@@ -1183,7 +1201,8 @@ public partial class InstanceSetupViewModel(
                 logger.LogError(ex, "Failed to import package list from file: {path}", filePath);
                 notificationService.PopMessage(
                     ex,
-                    Resources.InstanceSetupView_ImportListDangerNotificationTitle
+                    Resources.InstanceSetupView_ImportListDangerNotificationTitle,
+                    thumbnail: GetNotificationThumbnail()
                 );
             }
         }
@@ -1198,7 +1217,10 @@ public partial class InstanceSetupViewModel(
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             var output = new List<ExportedEntry>();
-            var progress = notificationService.PopProgress("Export package list to file");
+            var progress = notificationService.PopProgress(
+                "Export package list to file",
+                thumbnail: GetNotificationThumbnail()
+            );
             // 这里用单个解析也没关系，能进入这个页面就说明所有数据都被缓存过了
             foreach (var entry in list)
             {
@@ -1238,7 +1260,8 @@ public partial class InstanceSetupViewModel(
                         notificationService.PopMessage(
                             $"{entry.Purl}: {ex.Message}",
                             Resources.InstanceSetupView_FetchingInformationDangerNotificationTitle,
-                            GrowlLevel.Warning
+                            GrowlLevel.Warning,
+                            thumbnail: GetNotificationThumbnail()
                         );
                     }
                 }
@@ -1288,7 +1311,8 @@ public partial class InstanceSetupViewModel(
                         path
                     ),
                     Resources.InstanceSetupView_ExportListSuccessNotificationTitle,
-                    GrowlLevel.Success
+                    GrowlLevel.Success,
+                    thumbnail: GetNotificationThumbnail()
                 );
             }
             catch (Exception ex)
@@ -1298,7 +1322,8 @@ public partial class InstanceSetupViewModel(
                         .InstanceSetupView_ExportListDangerNotificationMessage.Replace("{0}", path)
                         .Replace("{1}", ex.Message),
                     Resources.InstanceSetupView_ExportListDangerNotificationTitle,
-                    GrowlLevel.Danger
+                    GrowlLevel.Danger,
+                    thumbnail: GetNotificationThumbnail()
                 );
             }
         }
@@ -1351,7 +1376,8 @@ public partial class InstanceSetupViewModel(
                 logger.LogError(ex, "Failed to check update: {}", reference.Purl);
                 notificationService.PopMessage(
                     ex,
-                    Resources.InstanceSetupView_CheckUpdateDangerNotificationTitle
+                    Resources.InstanceSetupView_CheckUpdateDangerNotificationTitle,
+                    thumbnail: GetNotificationThumbnail(reference.Thumbnail)
                 );
             }
         }
@@ -1375,7 +1401,8 @@ public partial class InstanceSetupViewModel(
         {
             notificationService.PopMessage(
                 ex,
-                Resources.InstanceSetupView_UpdateDangerNotificationTitle
+                Resources.InstanceSetupView_UpdateDangerNotificationTitle,
+                thumbnail: GetNotificationThumbnail()
             );
         }
     }
@@ -1398,7 +1425,8 @@ public partial class InstanceSetupViewModel(
                         "{0}",
                         version.ProjectName
                     )
-                    .Replace("{1}", version.VersionName)
+                    .Replace("{1}", version.VersionName),
+                thumbnail: GetNotificationThumbnail()
             );
         }
     }

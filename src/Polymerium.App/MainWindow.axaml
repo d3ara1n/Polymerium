@@ -62,20 +62,17 @@
                             <Style Selector="fi|SymbolIcon">
                                 <Setter Property="FontSize" Value="10" />
                             </Style>
-                            <Style Selector="husk|Tag">
-                                <Setter Property="FontSize" Value="8" />
-                                <Setter Property="Padding" Value="4,2" />
+                            <Style Selector="husk|IconLabel">
+                                <Setter Property="FontSize" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
                         <Button Command="{Binding OpenNotificationSidebarCommand}">
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <fi:SymbolIcon Symbol="Alert" />
-                                <husk:Tag
-                                    Classes="Small"
-                                    Classes.Primary="{Binding UnreadNotificationCount, Converter={x:Static husk:NumberConverters.IsNonZero}}"
-                                    Content="{Binding UnreadNotificationCount}" />
+                                <husk:IconLabel
+                                    Icon="Alert"
+                                    Text="{Binding UnreadNotificationCount}" />
                             </StackPanel>
                         </Button>
                         <Button Click="MinimizeButton_OnClick">

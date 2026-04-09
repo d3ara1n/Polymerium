@@ -41,7 +41,8 @@ public partial class AccountsViewModel(
             notificationService.PopMessage(
                 Resources.AccountsView_AccountAddingDangerNotificationMessage,
                 Resources.AccountsView_AccountAddingDangerNotificationTitle,
-                GrowlLevel.Danger
+                GrowlLevel.Danger,
+                thumbnail: AccountHelper.GetFaceUrl(account.Uuid)
             );
             return false;
         }

@@ -10,6 +10,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
@@ -118,7 +119,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         {
             _notificationService.PopMessage(
                 ex,
-                Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle
+                Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle,
+                thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
             );
         }
     }
@@ -252,11 +254,19 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                 _persistenceService.AppendAction(
                     new(Basic.Key, PersistenceService.ActionKind.Reset, null, null)
                 );
-                _notificationService.PopMessage("Instance reset", Basic.Key, GrowlLevel.Success);
+                _notificationService.PopMessage(
+                    "Instance reset",
+                    Basic.Key,
+                    GrowlLevel.Success,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                );
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex);
+                _notificationService.PopMessage(
+                    ex,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                );
             }
         }
     }
@@ -299,7 +309,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         _notificationService.PopMessage(
             Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
             Basic.Key,
-            GrowlLevel.Success
+            GrowlLevel.Success,
+            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
         );
     }
 
@@ -329,7 +340,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                 _notificationService.PopMessage(
                     Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationMessage,
                     Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
-                    GrowlLevel.Warning
+                    GrowlLevel.Warning,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                 );
             }
         }

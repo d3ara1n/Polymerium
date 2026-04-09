@@ -33,6 +33,9 @@ public partial class NotificationModel : ModelBase
 
     [ObservableProperty]
     public partial bool IsCancelled { get; set; }
+
+    [ObservableProperty]
+    public partial Uri? Thumbnail { get; set; }
     public AvaloniaList<GrowlAction> Actions { get; init; } = [];
 
     #endregion
@@ -43,8 +46,7 @@ public partial class NotificationModel : ModelBase
     public required string Title { get; init; }
     public required GrowlLevel Level { get; init; }
     public required DateTimeOffset PublishedAtRaw { get; init; }
-    public required Bitmap? Thumbnail { get; init; }
-    public string PublishedAt => PublishedAtRaw.ToLocalTime().ToString("MM-dd HH:mm");
+    public string PublishedAt => PublishedAtRaw.ToLocalTime().ToString("HH:mm:ss");
 
     public CancellationToken Token => _cts.Token;
 

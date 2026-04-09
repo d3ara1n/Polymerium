@@ -50,18 +50,9 @@ public class NotificationService
 
     private void Pop(NotificationModel model, GrowlItem item)
     {
-        item.DismissRequested += OnDismissRequested;
         _notificationHandler?.Invoke(model);
         _growlHandler?.Invoke(item);
         return;
-
-        void OnDismissRequested(object? sender, GrowlItem.DismissRequestedEventArgs args)
-        {
-            item.DismissRequested -= OnDismissRequested;
-            // item.Token 现在是给自己用了，纯 UI 功能，不在和业务相关
-            // 提出 model 的意义就是延长通知的生命周期，至少延长到程序关闭（或 model 被移除），所以 handle.Token 应该是应用的 model.Token，后者只有在被移除时（或手动提前）触发
-            model.IsRead = true;
-        }
     }
 
     public void PopMessage(
@@ -69,6 +60,7 @@ public class NotificationService
         string title = "Notification",
         GrowlLevel level = GrowlLevel.Information,
         bool forceExpire = false,
+        Uri? thumbnail = null,
         params GrowlAction[]? actions
     ) =>
         Dispatcher.UIThread.Post(() =>
@@ -80,7 +72,7 @@ public class NotificationService
                 Message = message,
                 Level = level,
                 PublishedAtRaw = DateTimeOffset.Now,
-                Thumbnail = null,
+                Thumbnail = thumbnail,
                 Actions = sharedActions,
             };
 
@@ -103,6 +95,7 @@ public class NotificationService
         Exception? ex,
         string title = "Operation failed",
         GrowlLevel level = GrowlLevel.Danger,
+        Uri? thumbnail = null,
         params GrowlAction[]? actions
     ) =>
         PopMessage(
@@ -114,6 +107,7 @@ public class NotificationService
             title,
             level,
             false,
+            thumbnail,
             actions
         );
 
@@ -121,6 +115,7 @@ public class NotificationService
         string message,
         string title = "Progress",
         GrowlLevel level = GrowlLevel.Information,
+        Uri? thumbnail = null,
         params GrowlAction[]? actions
     ) =>
         Dispatcher.UIThread.Invoke(() =>
@@ -133,7 +128,7 @@ public class NotificationService
                 Level = level,
                 PublishedAtRaw = DateTimeOffset.Now,
                 Actions = sharedActions,
-                Thumbnail = null,
+                Thumbnail = thumbnail,
                 Progress = 0,
                 IsProgressBarVisible = true,
                 IsProgressIndeterminate = true,
@@ -240,8 +235,12 @@ public class NotificationService
 
         #endregion
 
+        #region Other Setters
         // 这个 Action 没法通过构造传入，因为 Action 里可能需要访问构造出来的 Handle 导致提前访问，所以只能用这个别扭的方式
-        public void AppendAction(GrowlAction action) => actions.Add(action);
+        public void AddAction(GrowlAction action) => actions.Add(action);
+
+        public void SetThumbnail(Uri? source) => model.Thumbnail = source;
+        #endregion
     }
 
     #endregion

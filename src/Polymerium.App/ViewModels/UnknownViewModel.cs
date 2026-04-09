@@ -62,9 +62,6 @@ public partial class UnknownViewModel(
     [ObservableProperty]
     public partial AvaloniaList<GrowlAction> NotificationActions { get; set; } = [];
 
-    // TODO: After installing LiveMarkdown package, change type to ObservableStringBuilder
-    // [ObservableProperty]
-    // public partial ObservableStringBuilder MarkdownBuilder { get; set; } = new(GetSampleMarkdown());
     [ObservableProperty]
     public partial string MarkdownContent { get; set; } = GetSampleMarkdown();
 
@@ -170,7 +167,11 @@ public class HelloWorld
     #region Commands
 
     [RelayCommand]
-    private void ShowInformation() => notificationService.PopMessage("Hello", "Hi there!");
+    private void ShowInformation() =>
+        notificationService.PopMessage(
+            "Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~",
+            "Hi there!"
+        );
 
     [RelayCommand]
     private void ShowSuccess() =>

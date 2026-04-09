@@ -219,7 +219,11 @@ public partial class MainWindowContext : ObservableObject
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Unable to read pack config");
+                _notificationService.PopMessage(
+                    ex,
+                    "Unable to read pack config",
+                    thumbnail: ThumbnailHelper.ForInstance(key)
+                );
             }
 
             pack ??= PackData.CreateDefault();
@@ -283,7 +287,8 @@ public partial class MainWindowContext : ObservableObject
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
                             var notification = _notificationService.PopProgress(
                                 name,
-                                "Exporting..."
+                                "Exporting...",
+                                thumbnail: ThumbnailHelper.ForInstance(key)
                             );
                             try
                             {
@@ -307,12 +312,17 @@ public partial class MainWindowContext : ObservableObject
                                 var path = storageItem.TryGetLocalPath();
                                 _notificationService.PopMessage(
                                     path ?? "Unknown",
-                                    "Export successfully"
+                                    "Export successfully",
+                                    thumbnail: ThumbnailHelper.ForInstance(key)
                                 );
                             }
                             catch (Exception ex)
                             {
-                                _notificationService.PopMessage(ex, "Failed to export instance");
+                                _notificationService.PopMessage(
+                                    ex,
+                                    "Failed to export instance",
+                                    thumbnail: ThumbnailHelper.ForInstance(key)
+                                );
                             }
                             finally
                             {
@@ -338,7 +348,11 @@ public partial class MainWindowContext : ObservableObject
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Unable to save pack config");
+                _notificationService.PopMessage(
+                    ex,
+                    "Unable to save pack config",
+                    thumbnail: ThumbnailHelper.ForInstance(key)
+                );
             }
         }
     }
@@ -371,7 +385,8 @@ public partial class MainWindowContext : ObservableObject
                 _notificationService.PopMessage(
                     "Log file not found",
                     "Failed to open log file",
-                    GrowlLevel.Warning
+                    GrowlLevel.Warning,
+                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key)
                 );
             }
         }
@@ -386,7 +401,11 @@ public partial class MainWindowContext : ObservableObject
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Failed to launch instance");
+            _notificationService.PopMessage(
+                ex,
+                "Failed to launch instance",
+                thumbnail: ThumbnailHelper.ForInstance(key)
+            );
         }
     }
 
@@ -399,7 +418,11 @@ public partial class MainWindowContext : ObservableObject
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Failed to deploy instance");
+            _notificationService.PopMessage(
+                ex,
+                "Failed to deploy instance",
+                thumbnail: ThumbnailHelper.ForInstance(key)
+            );
         }
     }
 
@@ -639,7 +662,8 @@ public partial class MainWindowContext : ObservableObject
                             Resources.MainWindow_InstanceInstallingDangerNotificationTitle.Replace(
                                 "{0}",
                                 e.Key
-                            )
+                            ),
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key)
                         );
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -652,12 +676,13 @@ public partial class MainWindowContext : ObservableObject
                             Resources.MainWindow_InstanceInstallingSuccessNotificationMessage,
                             e.Key,
                             GrowlLevel.Success,
+                            forceExpire: true,
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key),
                             actions: new GrowlAction(
                                 Resources.MainWindow_InstanceInstallingSuccessNotificationOpenText,
                                 ViewInstanceCommand,
                                 e.Key
-                            ),
-                            forceExpire: true
+                            )
                         );
                     });
                     _persistenceService.AppendAction(
@@ -721,7 +746,8 @@ public partial class MainWindowContext : ObservableObject
                             Resources.MainWindow_InstanceUpdatingDangerNotificationTitle.Replace(
                                 "{0}",
                                 e.Key
-                            )
+                            ),
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key)
                         );
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -734,8 +760,9 @@ public partial class MainWindowContext : ObservableObject
                             Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
                             e.Key,
                             GrowlLevel.Success,
-                            true,
-                            new GrowlAction(
+                            forceExpire: true,
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key),
+                            actions: new GrowlAction(
                                 Resources.MainWindow_InstanceUpdatingSuccessNotificationOpenText,
                                 ViewInstanceCommand,
                                 e.Key
@@ -804,7 +831,8 @@ public partial class MainWindowContext : ObservableObject
                             Resources.MainWindow_InstanceDeployingNotificationTitle.Replace(
                                 "{0}",
                                 e.Key
-                            )
+                            ),
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key)
                         );
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -816,7 +844,8 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(
                             Resources.MainWindow_InstanceDeployingSuccessNotificationMessage,
                             e.Key,
-                            GrowlLevel.Success
+                            GrowlLevel.Success,
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key)
                         );
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -880,7 +909,11 @@ public partial class MainWindowContext : ObservableObject
                         if (isAccountIssue)
                         {
                             // TODO: Detailed message
-                            _notificationService.PopMessage(e.FailureReason, e.Key);
+                            _notificationService.PopMessage(
+                                e.FailureReason,
+                                e.Key,
+                                thumbnail: ThumbnailHelper.ForInstance(e.Key)
+                            );
                         }
                         else if (isGameCrash)
                         {
@@ -892,6 +925,7 @@ public partial class MainWindowContext : ObservableObject
                                 ),
                                 Resources.MainWindow_InstanceLaunchingDangerNotificationTitle,
                                 GrowlLevel.Danger,
+                                thumbnail: ThumbnailHelper.ForInstance(e.Key),
                                 actions:
                                 [
                                     new(
@@ -905,7 +939,11 @@ public partial class MainWindowContext : ObservableObject
                         else
                         {
                             // Other errors
-                            _notificationService.PopMessage(e.FailureReason, e.Key);
+                            _notificationService.PopMessage(
+                                e.FailureReason,
+                                e.Key,
+                                thumbnail: ThumbnailHelper.ForInstance(e.Key)
+                            );
                         }
                     });
                     _persistenceService.AppendActivity(
@@ -926,7 +964,8 @@ public partial class MainWindowContext : ObservableObject
                         _notificationService.PopMessage(
                             Resources.MainWindow_InstanceLaunchingSuccessNotificationMessage,
                             e.Key,
-                            GrowlLevel.Success
+                            GrowlLevel.Success,
+                            thumbnail: ThumbnailHelper.ForInstance(e.Key)
                         );
                     });
                     _persistenceService.AppendActivity(

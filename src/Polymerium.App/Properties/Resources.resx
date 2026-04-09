@@ -958,7 +958,7 @@
         <value>The instance has been deployed</value>
     </data>
     <data name="MainWindow_InstanceLaunchingSuccessNotificationMessage" xml:space="preserve">
-        <value>The instance has been exited</value>
+        <value>The instance has exited</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
         <value>View Output</value>
