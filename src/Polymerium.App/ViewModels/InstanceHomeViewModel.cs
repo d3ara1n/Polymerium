@@ -238,6 +238,7 @@ public partial class InstanceHomeViewModel(
                 Resources.InstanceHomeView_AccountNotFoundDangerNotificationMessage,
                 Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
                 GrowlLevel.Danger,
+                thumbnail: SelectedAccount?.FaceUrl ?? ThumbnailHelper.ForInstance(Basic.Key),
                 actions:
                 [
                     new(
@@ -251,14 +252,16 @@ public partial class InstanceHomeViewModel(
         {
             notificationService.PopMessage(
                 ex,
-                Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle
+                Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle,
+                thumbnail: SelectedAccount?.FaceUrl ?? ThumbnailHelper.ForInstance(Basic.Key)
             );
         }
         catch (Exception ex)
         {
             notificationService.PopMessage(
                 ex,
-                Resources.InstanceHomeView_DeployDangerNotificationTitle
+                Resources.InstanceHomeView_DeployDangerNotificationTitle,
+                thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
             );
         }
     }

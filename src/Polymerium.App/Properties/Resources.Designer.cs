@@ -4011,7 +4011,7 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The instance has been exited.
+        ///   Looks up a localized string similar to The instance has exited.
         /// </summary>
         public static string MainWindow_InstanceLaunchingSuccessNotificationMessage {
             get {

@@ -241,7 +241,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                     "{0}",
                     exhibit.ProjectName
                 ),
-                exhibit.ProjectName
+                exhibit.ProjectName,
+                thumbnail: exhibit.Thumbnail
             );
         }
     }

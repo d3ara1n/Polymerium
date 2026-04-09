@@ -16,6 +16,7 @@ using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.App.Widgets;
 using Trident.Abstractions;
@@ -166,7 +167,8 @@ public partial class InstanceViewModel : ViewModelBase
                                 );
                                 _notificationService.PopMessage(
                                     $"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
-                                    guard.Key
+                                    guard.Key,
+                                    thumbnail: package.Thumbnail
                                 );
                             }
                             else
@@ -174,7 +176,8 @@ public partial class InstanceViewModel : ViewModelBase
                                 _notificationService.PopMessage(
                                     $"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
                                     "Failed to import as package",
-                                    GrowlLevel.Danger
+                                    GrowlLevel.Danger,
+                                    thumbnail: package.Thumbnail
                                 );
                             }
                         }
@@ -200,7 +203,8 @@ public partial class InstanceViewModel : ViewModelBase
                         File.Copy(persist.Path, target, false);
                         _notificationService.PopMessage(
                             $"File {target} has added to the instance",
-                            Basic.Key
+                            Basic.Key,
+                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                         );
                     }
                     else
@@ -212,7 +216,8 @@ public partial class InstanceViewModel : ViewModelBase
                         _notificationService.PopMessage(
                             $"File {relative} already exists",
                             "Failed to import as solid file",
-                            GrowlLevel.Danger
+                            GrowlLevel.Danger,
+                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                         );
                     }
 

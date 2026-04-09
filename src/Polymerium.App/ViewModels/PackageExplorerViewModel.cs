@@ -454,7 +454,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 _notificationService.PopMessage(
                     ex,
                     "Failed to load project information",
-                    GrowlLevel.Warning
+                    GrowlLevel.Warning,
+                    thumbnail: exhibit.Thumbnail
                 );
             }
         }

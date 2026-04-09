@@ -36,4 +36,16 @@ public static class AccountHelper
 
     public static string ToRaw(IAccount account) =>
         JsonSerializer.Serialize(account, account.GetType());
+
+    public static Uri GetFaceUrl(string uuidOrUsername) =>
+        new(
+            $"https://starlightskins.lunareclipse.studio/render/pixel/{uuidOrUsername}/face",
+            UriKind.Absolute
+        );
+
+    public static Uri GetBodyUrl(string uuidOrUsername) =>
+        new(
+            $"https://starlightskins.lunareclipse.studio/render/default/{uuidOrUsername}/face",
+            UriKind.Absolute
+        );
 }
