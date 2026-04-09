@@ -43,7 +43,6 @@ public partial class NotificationModel : ModelBase
     public required string Title { get; init; }
     public required GrowlLevel Level { get; init; }
     public required DateTimeOffset PublishedAtRaw { get; init; }
-    public required IBrush AccentBrush { get; init; }
     public required Bitmap? Thumbnail { get; init; }
     public string PublishedAt => PublishedAtRaw.ToLocalTime().ToString("MM-dd HH:mm");
 
