@@ -282,7 +282,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="32"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Symbol="ChartMultiple" />
+                                Symbol="DataPie" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -298,7 +298,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="32"
                                 Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                Symbol="ChartMultiple" />
+                                Symbol="DataPie" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource ExtraLargeFontSize}"
