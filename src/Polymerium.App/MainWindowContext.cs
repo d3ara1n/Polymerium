@@ -128,14 +128,15 @@ public partial class MainWindowContext : ObservableObject
     {
         if (Notifications.Count >= MAX_NOTIFICATION_COUNT)
         {
-            var last = Notifications.LastOrDefault();
-            if (last != null)
+            var first = Notifications.FirstOrDefault();
+            if (first != null)
             {
-                last.OnRemoved();
-                Notifications.Remove(last);
+                first.OnRemoved();
+                Notifications.Remove(first);
             }
         }
-        Notifications.Insert(0, model);
+        Notifications.Add(model);
+        UnreadNotificationCount++;
     }
 
     #endregion
@@ -162,6 +163,9 @@ public partial class MainWindowContext : ObservableObject
     public partial string FilterText { get; set; } = string.Empty;
 
     public ObservableCollection<NotificationModel> Notifications { get; } = [];
+
+    [ObservableProperty]
+    public partial int UnreadNotificationCount { get; set; }
 
     #endregion
 
@@ -458,6 +462,7 @@ public partial class MainWindowContext : ObservableObject
         {
             model.IsRead = true;
         }
+        UnreadNotificationCount = 0;
     }
 
     [RelayCommand]
@@ -466,6 +471,7 @@ public partial class MainWindowContext : ObservableObject
         if (model is { IsRead: false })
         {
             model.IsRead = true;
+            UnreadNotificationCount--;
         }
     }
 
@@ -475,6 +481,7 @@ public partial class MainWindowContext : ObservableObject
         if (model is { IsRead: true })
         {
             model.IsRead = false;
+            UnreadNotificationCount++;
         }
     }
 
@@ -485,6 +492,10 @@ public partial class MainWindowContext : ObservableObject
         {
             model.OnRemoved();
             Notifications.Remove(model);
+            if (!model.IsRead)
+            {
+                UnreadNotificationCount--;
+            }
         }
     }
 

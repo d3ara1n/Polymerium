@@ -8,6 +8,7 @@
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:hm="using:Huskui.Avalonia.Models"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:services="using:Polymerium.App.Services"
@@ -29,15 +30,16 @@
                 VerticalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="Notifications" />
+                Text="{x:Static lang:Resources.NotificationSidebar_NotificationsLabelText}" />
             <Button
                 Grid.Column="1"
                 Classes="Small"
+                IsEnabled="{Binding UnreadNotificationCount, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                 Command="{Binding MarkAllAsReadCommand}"
                 Theme="{StaticResource OutlineButtonTheme}">
                 <husk:IconLabel
                     Icon="Checkmark"
-                    Text="Mark all as read" />
+                    Text="{x:Static lang:Resources.NotificationSidebar_MarkAllAsReadButtonText}" />
             </Button>
             <Button
                 Grid.Column="2"
@@ -69,11 +71,11 @@
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource MediumFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="No notifications yet" />
+                    Text="{x:Static lang:Resources.NotificationSidebar_EmptyTitle}" />
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="New growls will stay here until you dismiss them." />
+                    Text="{x:Static lang:Resources.NotificationSidebar_EmptyPrompt}" />
             </StackPanel>
             <ScrollViewer IsVisible="{Binding Notifications.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
                 <ItemsControl
@@ -196,12 +198,12 @@
                                                     Classes="Small Primary"
                                                     Margin="8,0,0,0"
                                                     IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
-                                                    Content="未读" />
+                                                    Content="{x:Static lang:Resources.NotificationSidebar_UnreadTagText}" />
                                                 <husk:Tag
                                                     Classes="Small"
                                                     Margin="8,0,0,0"
                                                     IsVisible="{Binding IsCancelled}"
-                                                    Content="失效" />
+                                                    Content="{x:Static lang:Resources.NotificationSidebar_CancelledTagText}" />
                                             </StackPanel>
                                             <TextBlock
                                                 Grid.Row="0"
@@ -229,16 +231,16 @@
                                                             IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="Mark as read" />
+                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead}"
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="Mark as unread" />
+                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="Remove" />
+                                                            Header="{x:Static lang:Resources.NotificationSidebar_RemoveMenuText}" />
                                                     </MenuFlyout>
                                                 </Button.Flyout>
                                                 <fi:SymbolIcon
