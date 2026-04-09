@@ -2258,7 +2258,7 @@
         <value>Unread</value>
     </data>
     <data name="NotificationSidebar_CancelledTagText" xml:space="preserve">
-        <value>Cancelled</value>
+        <value>Expired</value>
     </data>
     <data name="NotificationSidebar_MarkAsReadMenuText" xml:space="preserve">
         <value>Mark as read</value>
