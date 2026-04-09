@@ -128,7 +128,12 @@ public partial class MainWindowContext : ObservableObject
     {
         if (Notifications.Count >= MAX_NOTIFICATION_COUNT)
         {
-            Notifications.RemoveAt(Notifications.Count - 1);
+            var last = Notifications.LastOrDefault();
+            if (last != null)
+            {
+                last.OnRemoved();
+                Notifications.Remove(last);
+            }
         }
         Notifications.Insert(0, model);
     }
@@ -478,6 +483,7 @@ public partial class MainWindowContext : ObservableObject
     {
         if (model is not null && Notifications.Contains(model))
         {
+            model.OnRemoved();
             Notifications.Remove(model);
         }
     }

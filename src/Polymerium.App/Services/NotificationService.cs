@@ -80,7 +80,6 @@ public class NotificationService
                 Message = message,
                 Level = level,
                 PublishedAtRaw = DateTimeOffset.Now,
-                AccentBrush = ResolveAccentBrush(level),
                 Thumbnail = null,
                 Actions = sharedActions,
             };
@@ -133,7 +132,6 @@ public class NotificationService
                 Message = message,
                 Level = level,
                 PublishedAtRaw = DateTimeOffset.Now,
-                AccentBrush = ResolveAccentBrush(level),
                 Actions = sharedActions,
                 Thumbnail = null,
                 Progress = 0,
@@ -167,33 +165,6 @@ public class NotificationService
             level is GrowlLevel.Information or GrowlLevel.Warning or GrowlLevel.Success
             && actions is { Length: 0 } or null
         ) || forceExpire;
-
-    private static IBrush ResolveAccentBrush(GrowlLevel level)
-    {
-        var key = level switch
-        {
-            GrowlLevel.Success => "ControlSuccessBorderBrush",
-            GrowlLevel.Warning => "ControlWarningBorderBrush",
-            GrowlLevel.Danger => "ControlDangerBorderBrush",
-            _ => "ControlAccentBorderBrush",
-        };
-
-        if (
-            Application.Current?.TryGetResource(key, null, out var resource) == true
-            && resource is IBrush brush
-        )
-        {
-            return brush;
-        }
-
-        return level switch
-        {
-            GrowlLevel.Success => Brushes.ForestGreen,
-            GrowlLevel.Warning => Brushes.DarkOrange,
-            GrowlLevel.Danger => Brushes.IndianRed,
-            _ => Brushes.DodgerBlue,
-        };
-    }
 
     #region Nested type: ProgressHandle
 

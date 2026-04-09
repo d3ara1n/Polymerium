@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="clr-namespace:Polymerium.App"
+    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:hm="using:Huskui.Avalonia.Models"
@@ -84,13 +85,44 @@
                                 Margin="4,4,4,4"
                                 BoxShadow="0 0 4 0 #3F000000"
                                 CornerRadius="{StaticResource LargeCornerRadius}">
-                                <Border
-                                    Padding="12,10"
-                                    Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                    BorderBrush="{Binding AccentBrush}"
-                                    BorderThickness="3,0,0,0"
-                                    CornerRadius="{Binding $parent[Border].CornerRadius}">
-                                    <DockPanel>
+                                <Panel>
+                                    <husk:SwitchPresenter
+                                        TargetType="hm:GrowlLevel"
+                                        Value="{Binding Level}">
+                                        <husk:SwitchCase Value="Information">
+                                            <Border
+                                                Padding="12,10"
+                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Success">
+                                            <Border
+                                                Padding="12,10"
+                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlSuccessBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Warning">
+                                            <Border
+                                                Padding="12,10"
+                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Danger">
+                                            <Border
+                                                Padding="12,10"
+                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlDangerBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchPresenter>
+                                    <DockPanel Margin="12,8">
                                         <StackPanel
                                             DockPanel.Dock="Bottom"
                                             Margin="0,4,0,0"
@@ -127,11 +159,25 @@
                                                 Grid.Row="0"
                                                 Grid.RowSpan="2"
                                                 Grid.Column="0">
-                                                <Ellipse
+                                                <husk:SwitchPresenter
                                                     Width="28"
                                                     Height="28"
                                                     Margin="4"
-                                                    Fill="{Binding AccentBrush}" />
+                                                    TargetType="hm:GrowlLevel"
+                                                    Value="{Binding Level}">
+                                                    <husk:SwitchCase Value="Information">
+                                                        <Ellipse Fill="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Success">
+                                                        <Ellipse Fill="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Warning">
+                                                        <Ellipse Fill="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Danger">
+                                                        <Ellipse Fill="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
                                                 <husk:ProgressRing
                                                     Width="32"
                                                     Height="32"
@@ -139,6 +185,7 @@
                                                     IsIndeterminate="{Binding IsProgressIndeterminate}"
                                                     ShowProgressText="False"
                                                     StrokeWidth="4"
+                                                    TrackStrokeWidth="4"
                                                     Value="{Binding Progress}" />
                                             </Panel>
                                             <StackPanel
@@ -174,7 +221,7 @@
                                                 Grid.Column="4"
                                                 Classes="Small"
                                                 Margin="8,0,0,0"
-                                                Padding="4,2"
+                                                Padding="8,2"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                                 <Button.Flyout>
                                                     <MenuFlyout>
@@ -207,7 +254,7 @@
                                                 TextWrapping="Wrap" />
                                         </Grid>
                                     </DockPanel>
-                                </Border>
+                                </Panel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
