@@ -499,7 +499,7 @@
                                     Background="{StaticResource OverlayBackgroundBrush}"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,1,1,0"
-                                    CornerRadius="{Binding Source={StaticResource MediumCornerRadius}, Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                     <StackPanel
                                         VerticalAlignment="Center"
                                         Spacing="8">
