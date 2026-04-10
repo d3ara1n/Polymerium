@@ -127,7 +127,7 @@
                 Margin="9"
                 ColumnDefinitions="Auto,*,Auto"
                 ColumnSpacing="8"
-                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*,Auto,Auto"
                 RowSpacing="8">
                 <Button
                     Grid.Row="0"
@@ -187,8 +187,38 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3" />
-                <TextBox
+                <Grid
                     Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    ColumnDefinitions="*,Auto"
+                    ColumnSpacing="8">
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="Toolbar" />
+                    <Button
+                        Grid.Column="1"
+                        Classes="Small"
+                        Command="{Binding OpenNotificationSidebarCommand}"
+                        Theme="{StaticResource GhostButtonTheme}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
+                            <husk:IconLabel
+                                VerticalAlignment="Center"
+                                Icon="Alert"
+                                Text="{Binding UnreadNotificationCount}" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <husk:Divider
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3" />
+                <TextBox
+                    Grid.Row="5"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     PlaceholderText="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}"
@@ -203,7 +233,7 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <husk:DropContainer
-                    Grid.Row="4"
+                    Grid.Row="6"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     DragOver="DropContainer_OnDragOver"
@@ -314,36 +344,6 @@
                         </ScrollViewer>
                     </Panel>
                 </husk:DropContainer>
-                <husk:Divider
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3" />
-                <Grid
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    ColumnDefinitions="*,Auto"
-                    ColumnSpacing="8">
-                    <TextBlock
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="Toolbar" />
-                    <Button
-                        Grid.Column="1"
-                        Classes="Small"
-                        Command="{Binding OpenNotificationSidebarCommand}"
-                        Theme="{StaticResource GhostButtonTheme}">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="6">
-                            <husk:IconLabel
-                                VerticalAlignment="Center"
-                                Icon="Alert"
-                                Text="{Binding UnreadNotificationCount}" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
                 <husk:Divider
                     Grid.Row="7"
                     Grid.Column="0"
