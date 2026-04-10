@@ -66,15 +66,6 @@
                                 <Setter Property="FontSize" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button Command="{Binding OpenNotificationSidebarCommand}">
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="4">
-                                <husk:IconLabel
-                                    Icon="Alert"
-                                    Text="{Binding UnreadNotificationCount}" />
-                            </StackPanel>
-                        </Button>
                         <Button Click="MinimizeButton_OnClick">
                             <fi:SymbolIcon Symbol="Subtract" />
                         </Button>
@@ -136,7 +127,7 @@
                 Margin="9"
                 ColumnDefinitions="Auto,*,Auto"
                 ColumnSpacing="8"
-                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto"
+                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto"
                 RowSpacing="8">
                 <Button
                     Grid.Row="0"
@@ -327,8 +318,38 @@
                     Grid.Row="5"
                     Grid.Column="0"
                     Grid.ColumnSpan="3" />
-                <Button
+                <Grid
                     Grid.Row="6"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    ColumnDefinitions="*,Auto"
+                    ColumnSpacing="8">
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="Toolbar" />
+                    <Button
+                        Grid.Column="1"
+                        Classes="Small"
+                        Command="{Binding OpenNotificationSidebarCommand}"
+                        Theme="{StaticResource GhostButtonTheme}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
+                            <husk:IconLabel
+                                VerticalAlignment="Center"
+                                Icon="Alert"
+                                Text="{Binding UnreadNotificationCount}" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <husk:Divider
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3" />
+                <Button
+                    Grid.Row="8"
                     Grid.Column="0"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:SettingsView}"
@@ -339,7 +360,7 @@
                         Symbol="Settings" />
                 </Button>
                 <Button
-                    Grid.Row="6"
+                    Grid.Row="8"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
                     Command="{Binding NavigateCommand}"
