@@ -37,43 +37,55 @@ public class InstanceService(
 
                 if (cooked is MicrosoftAccount msa)
                 {
-                    try
-                    {
-                        _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(
-                            msa.AccessToken
-                        );
-                    }
-                    catch (ApiException ex)
-                    {
-                        if (ex.StatusCode == HttpStatusCode.Unauthorized)
-                        {
-                            var microsoft = await microsoftService.RefreshUserAsync(
-                                msa.RefreshToken
-                            );
-                            var xbox =
-                                await xboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
-                                    microsoft.AccessToken
-                                );
-                            var xsts =
-                                await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
-                                    xbox.Token
-                                );
-                            var minecraft =
-                                await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(
-                                    xsts.Token,
-                                    xsts.DisplayClaims.Xui.First().Uhs
-                                );
+                    var shouldValidateOnline =
+                        msa.AccessTokenExpiresAt is null
+                        || DateTimeOffset.UtcNow >= msa.AccessTokenExpiresAt.Value.AddMinutes(-5);
 
-                            msa.AccessToken = minecraft.AccessToken;
-                            msa.RefreshToken = microsoft.RefreshToken;
-                            persistenceService.UpdateAccount(
-                                account.Uuid,
-                                AccountHelper.ToRaw(msa)
+                    if (shouldValidateOnline)
+                    {
+                        try
+                        {
+                            _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(
+                                msa.AccessToken
                             );
                         }
-                        else
+                        catch (ApiException ex)
                         {
-                            throw new AccountInvalidException(ex.Message, ex);
+                            if (ex.StatusCode == HttpStatusCode.Unauthorized)
+                            {
+                                var microsoft = await microsoftService.RefreshUserAsync(
+                                    msa.RefreshToken
+                                );
+                                var xbox =
+                                    await xboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
+                                        microsoft.AccessToken
+                                    );
+                                var xsts =
+                                    await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
+                                        xbox.Token
+                                    );
+                                var minecraft =
+                                    await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(
+                                        xsts.Token,
+                                        xsts.DisplayClaims.Xui.First().Uhs
+                                    );
+
+                                msa.AccessToken = minecraft.AccessToken;
+                                msa.AccessTokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(
+                                    minecraft.ExpiresIn
+                                );
+                                msa.RefreshToken = !string.IsNullOrEmpty(microsoft.RefreshToken)
+                                    ? microsoft.RefreshToken
+                                    : msa.RefreshToken;
+                                persistenceService.UpdateAccount(
+                                    account.Uuid,
+                                    AccountHelper.ToRaw(msa)
+                                );
+                            }
+                            else
+                            {
+                                throw new AccountInvalidException(ex.Message, ex);
+                            }
                         }
                     }
                 }
