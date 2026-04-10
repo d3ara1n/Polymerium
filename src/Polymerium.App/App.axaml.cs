@@ -263,7 +263,7 @@ public class App : Application
 
         #endregion
 
-        #region Overlay & Notificiation
+        #region Overlay & Notification
 
         var overlay = Program.Services.GetRequiredService<OverlayService>();
         overlay.SetHandler(window.PopToast, window.PopSidebar, window.PopModal, window.PopDialog);
@@ -271,7 +271,6 @@ public class App : Application
         notification.SetHandler(window.PopGrowl);
 
         #endregion
-
 
         // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
         var viewModel = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
