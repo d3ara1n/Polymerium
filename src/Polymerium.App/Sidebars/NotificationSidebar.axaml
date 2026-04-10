@@ -242,17 +242,21 @@
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}"
-                                                            Icon="{fie:SymbolIcon CheckmarkCircle}" />
+                                                            Icon="{fie:SymbolIcon CheckmarkCircle,
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead}"
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}"
-                                                            Icon="{fie:SymbolIcon DismissCircle}" />
+                                                            Icon="{fie:SymbolIcon CheckmarkCircleHint,
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="{x:Static lang:Resources.NotificationSidebar_RemoveMenuText}" />
+                                                            Header="{x:Static lang:Resources.NotificationSidebar_RemoveMenuText}"
+                                                            Icon="{fie:SymbolIcon DismissCircle,
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                     </MenuFlyout>
                                                 </Button.Flyout>
                                                 <fi:SymbolIcon

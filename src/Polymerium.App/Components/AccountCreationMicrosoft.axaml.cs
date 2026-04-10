@@ -118,6 +118,7 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
             Account = new MicrosoftAccount
             {
                 AccessToken = minecraft.AccessToken,
+                AccessTokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(minecraft.ExpiresIn),
                 RefreshToken = microsoft.RefreshToken,
                 Uuid = profile.Id,
                 Username = profile.Name,
