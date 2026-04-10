@@ -330,7 +330,6 @@
                 <Button
                     Grid.Row="6"
                     Grid.Column="0"
-                    DockPanel.Dock="Left"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:SettingsView}"
                     Theme="{StaticResource GhostButtonTheme}">
