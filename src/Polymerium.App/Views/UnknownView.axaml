@@ -119,28 +119,31 @@
                 </TextBlock>
             </TabStripItem>
         </TabStrip>
-        <TabStrip
-            HorizontalAlignment="Right"
-            Background="{StaticResource OverlayBackgroundBrush}"
-            Theme="{StaticResource SegmentedTabStripTheme}">
-            <TabStripItem>
-                <fi:SymbolIcon
-                    FontSize="12"
-                    Symbol="TextAlignJustify" />
-            </TabStripItem>
-            <TabStripItem>
-                <fi:SymbolIcon
-                    FontSize="12"
-                    Symbol="Folder" />
-            </TabStripItem>
-        </TabStrip>
-        <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
-            <TabStripItem Content="Monday" />
-            <TabStripItem Content="Tuesday" />
-            <TabStripItem Content="Wednesday" />
-            <TabStripItem Content="Thursday" />
-            <TabStripItem Content="Friday" />
-        </TabStrip>
+        <DockPanel HorizontalSpacing="8">
+            <TabStrip
+                DockPanel.Dock="Right"
+                HorizontalAlignment="Right"
+                Background="{StaticResource OverlayBackgroundBrush}"
+                Theme="{StaticResource SegmentedTabStripTheme}">
+                <TabStripItem>
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="TextAlignJustify" />
+                </TabStripItem>
+                <TabStripItem>
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="Folder" />
+                </TabStripItem>
+            </TabStrip>
+            <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
+                <TabStripItem Content="Monday" />
+                <TabStripItem Content="Tuesday" />
+                <TabStripItem Content="Wednesday" />
+                <TabStripItem Content="Thursday" />
+                <TabStripItem Content="Friday" />
+            </TabStrip>
+        </DockPanel>
         <TabControl
             Background="{StaticResource CardBackgroundBrush}"
             BorderBrush="{StaticResource ControlBorderBrush}"
@@ -499,7 +502,8 @@
                                     Background="{StaticResource OverlayBackgroundBrush}"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1,1,1,0"
-                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                              Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                     <StackPanel
                                         VerticalAlignment="Center"
                                         Spacing="8">
