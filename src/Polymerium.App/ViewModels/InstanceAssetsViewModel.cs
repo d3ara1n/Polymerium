@@ -439,9 +439,12 @@ public partial class InstanceAssetsViewModel(
     [RelayCommand]
     private async Task LoadServersStatusAsync()
     {
-        foreach (var server in Servers)
+        if (Servers is not null)
         {
-            await LoadServerStatusAsync(server);
+            foreach (var server in Servers)
+            {
+                await LoadServerStatusAsync(server);
+            }
         }
     }
 
