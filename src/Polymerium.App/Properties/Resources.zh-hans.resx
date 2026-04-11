@@ -1338,6 +1338,42 @@
     <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
         <value>玩家</value>
     </data>
+    <data name="InstanceAssetsView_ServerAddressLabelText" xml:space="preserve">
+        <value>地址：</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackPreferenceLabelText" xml:space="preserve">
+        <value>服务器资源包：</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackAcceptText" xml:space="preserve">
+        <value>接受</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackRejectText" xml:space="preserve">
+        <value>拒绝</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackPromptText" xml:space="preserve">
+        <value>每次询问</value>
+    </data>
+    <data name="InstanceAssetsView_ServerLiveStatusLabelText" xml:space="preserve">
+        <value>实时状态</value>
+    </data>
+    <data name="InstanceAssetsView_ServerCheckingText" xml:space="preserve">
+        <value>正在检查服务器...</value>
+    </data>
+    <data name="InstanceAssetsView_ServerMotdLabelText" xml:space="preserve">
+        <value>消息：</value>
+    </data>
+    <data name="InstanceAssetsView_ServerVersionLabelText" xml:space="preserve">
+        <value>版本：</value>
+    </data>
+    <data name="InstanceAssetsView_ServerPlayersLabelText" xml:space="preserve">
+        <value>玩家：</value>
+    </data>
+    <data name="InstanceAssetsView_ServerLatencyLabelText" xml:space="preserve">
+        <value>延迟：</value>
+    </data>
+    <data name="InstanceAssetsView_ServerUnavailableText" xml:space="preserve">
+        <value>服务器不可用</value>
+    </data>
     <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
         <value>标题</value>
     </data>

@@ -1347,6 +1347,42 @@
     <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
         <value>Players</value>
     </data>
+    <data name="InstanceAssetsView_ServerAddressLabelText" xml:space="preserve">
+        <value>Address:</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackPreferenceLabelText" xml:space="preserve">
+        <value>Server Resource Packs:</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackAcceptText" xml:space="preserve">
+        <value>Accept</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackRejectText" xml:space="preserve">
+        <value>Reject</value>
+    </data>
+    <data name="InstanceAssetsView_ServerResourcePackPromptText" xml:space="preserve">
+        <value>Ask Every Time</value>
+    </data>
+    <data name="InstanceAssetsView_ServerLiveStatusLabelText" xml:space="preserve">
+        <value>Live Status</value>
+    </data>
+    <data name="InstanceAssetsView_ServerCheckingText" xml:space="preserve">
+        <value>Checking server...</value>
+    </data>
+    <data name="InstanceAssetsView_ServerMotdLabelText" xml:space="preserve">
+        <value>Message:</value>
+    </data>
+    <data name="InstanceAssetsView_ServerVersionLabelText" xml:space="preserve">
+        <value>Version:</value>
+    </data>
+    <data name="InstanceAssetsView_ServerPlayersLabelText" xml:space="preserve">
+        <value>Players:</value>
+    </data>
+    <data name="InstanceAssetsView_ServerLatencyLabelText" xml:space="preserve">
+        <value>Latency:</value>
+    </data>
+    <data name="InstanceAssetsView_ServerUnavailableText" xml:space="preserve">
+        <value>Server unavailable</value>
+    </data>
     <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
         <value>Name</value>
     </data>

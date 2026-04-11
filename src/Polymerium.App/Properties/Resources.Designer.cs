@@ -1842,6 +1842,114 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Address:.
+        /// </summary>
+        public static string InstanceAssetsView_ServerAddressLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerAddressLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Checking server....
+        /// </summary>
+        public static string InstanceAssetsView_ServerCheckingText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerCheckingText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Latency:.
+        /// </summary>
+        public static string InstanceAssetsView_ServerLatencyLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerLatencyLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Live Status.
+        /// </summary>
+        public static string InstanceAssetsView_ServerLiveStatusLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerLiveStatusLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Message:.
+        /// </summary>
+        public static string InstanceAssetsView_ServerMotdLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerMotdLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Players:.
+        /// </summary>
+        public static string InstanceAssetsView_ServerPlayersLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerPlayersLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string InstanceAssetsView_ServerResourcePackAcceptText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerResourcePackAcceptText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Server Resource Packs:.
+        /// </summary>
+        public static string InstanceAssetsView_ServerResourcePackPreferenceLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerResourcePackPreferenceLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Ask Every Time.
+        /// </summary>
+        public static string InstanceAssetsView_ServerResourcePackPromptText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerResourcePackPromptText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        public static string InstanceAssetsView_ServerResourcePackRejectText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerResourcePackRejectText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Server unavailable.
+        /// </summary>
+        public static string InstanceAssetsView_ServerUnavailableText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerUnavailableText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string InstanceAssetsView_ServerVersionLabelText {
+            get {
+                return ResourceManager.GetString("InstanceAssetsView_ServerVersionLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Source.
         /// </summary>
         public static string InstanceAssetsView_SourceFilterText {
@@ -1923,7 +2031,7 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Logs Directory.
+        ///   Looks up a localized string similar to Logs.
         /// </summary>
         public static string InstanceDashboardView_LogsButtonText {
             get {
@@ -4515,6 +4623,87 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Expired.
+        /// </summary>
+        public static string NotificationSidebar_CancelledTagText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_CancelledTagText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to New growls will stay here until you dismiss them..
+        /// </summary>
+        public static string NotificationSidebar_EmptyPrompt {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_EmptyPrompt", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No notifications yet.
+        /// </summary>
+        public static string NotificationSidebar_EmptyTitle {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_EmptyTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Mark all as read.
+        /// </summary>
+        public static string NotificationSidebar_MarkAllAsReadButtonText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_MarkAllAsReadButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Mark as read.
+        /// </summary>
+        public static string NotificationSidebar_MarkAsReadMenuText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_MarkAsReadMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Mark as unread.
+        /// </summary>
+        public static string NotificationSidebar_MarkAsUnreadMenuText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_MarkAsUnreadMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string NotificationSidebar_NotificationsLabelText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_NotificationsLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string NotificationSidebar_RemoveMenuText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_RemoveMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unread.
+        /// </summary>
+        public static string NotificationSidebar_UnreadTagText {
+            get {
+                return ResourceManager.GetString("NotificationSidebar_UnreadTagText", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Use Git to collaborate on modpack development with portable metadata files.
         /// </summary>
         public static string OobeFeatures_GitIntegration_Description {
@@ -6674,87 +6863,6 @@ namespace Polymerium.App.Properties {
         public static string Week_Wednesday {
             get {
                 return ResourceManager.GetString("Week_Wednesday", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Cancelled.
-        /// </summary>
-        public static string NotificationSidebar_CancelledTagText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_CancelledTagText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to New growls will stay here until you dismiss them..
-        /// </summary>
-        public static string NotificationSidebar_EmptyPrompt {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_EmptyPrompt", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to No notifications yet.
-        /// </summary>
-        public static string NotificationSidebar_EmptyTitle {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_EmptyTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Mark all as read.
-        /// </summary>
-        public static string NotificationSidebar_MarkAllAsReadButtonText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_MarkAllAsReadButtonText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Mark as read.
-        /// </summary>
-        public static string NotificationSidebar_MarkAsReadMenuText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_MarkAsReadMenuText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Mark as unread.
-        /// </summary>
-        public static string NotificationSidebar_MarkAsUnreadMenuText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_MarkAsUnreadMenuText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Notifications.
-        /// </summary>
-        public static string NotificationSidebar_NotificationsLabelText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_NotificationsLabelText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string NotificationSidebar_RemoveMenuText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_RemoveMenuText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Unread.
-        /// </summary>
-        public static string NotificationSidebar_UnreadTagText {
-            get {
-                return ResourceManager.GetString("NotificationSidebar_UnreadTagText", resourceCulture);
             }
         }
     }
