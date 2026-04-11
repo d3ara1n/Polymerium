@@ -8,7 +8,11 @@ using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Models;
 
-public partial class AssetServerModel(string sourceFilePath, Bitmap icon, AssetServerMetadataModel metadata) : ModelBase
+public partial class AssetServerModel(
+    string sourceFilePath,
+    Bitmap icon,
+    AssetServerMetadataModel metadata
+) : ModelBase
 {
     public string SourceFilePath { get; } = sourceFilePath;
 
