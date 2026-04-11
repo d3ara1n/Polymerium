@@ -8,7 +8,8 @@ namespace Polymerium.App.Models;
 public partial class ScrapModel(
     string message,
     ScrapLevel level,
-    DateTimeOffset time,
+    string? date,
+    string? time,
     string? thread,
     string? sender
 ) : ModelBase
@@ -23,7 +24,8 @@ public partial class ScrapModel(
     #region Direct
 
     public ScrapLevel Level => level;
-    public DateTimeOffset Time => time;
+    public string? Date => date;
+    public string? Time => time;
     public string? Thread => thread;
     public string? Sender => sender;
 

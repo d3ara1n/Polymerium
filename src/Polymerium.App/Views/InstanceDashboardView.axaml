@@ -60,13 +60,15 @@
         <DataTemplate
             x:Key="ScrapTemplate"
             DataType="m:ScrapModel">
-            <TextBlock
-                TextTrimming="CharacterEllipsis"
-                ToolTip.Tip="{Binding Message}">
+            <TextBlock TextTrimming="CharacterEllipsis">
                 <Run
                     FontFamily="Cascadia Code, Consolas, monospace"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{Binding Time, StringFormat=HH:mm:ss}" />
+                    Text="{Binding Date}" />
+                <Run
+                    FontFamily="Cascadia Code, Consolas, monospace"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Binding Time}" />
                 <InlineUIContainer BaselineAlignment="Center">
                     <Border
                         Padding="4,2"
