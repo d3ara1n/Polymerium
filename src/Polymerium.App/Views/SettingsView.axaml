@@ -537,7 +537,7 @@
                             <fi:SymbolIcon
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource MediumFontSize}"
-                                Symbol="Gift" />
+                                Symbol="Cloud" />
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
                                 VerticalAlignment="Center"
@@ -551,7 +551,7 @@
                             <fi:SymbolIcon
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource MediumFontSize}"
-                                Symbol="Cloud" />
+                                Symbol="Gift" />
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
                                 VerticalAlignment="Center"
