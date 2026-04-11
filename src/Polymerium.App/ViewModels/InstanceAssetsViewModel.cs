@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
+using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -25,6 +26,7 @@ using Trident.Core.Utilities;
 namespace Polymerium.App.ViewModels;
 
 public partial class InstanceAssetsViewModel(
+    ILogger<InstanceAssetsViewModel> logger,
     ViewBag bag,
     InstanceManager instanceManager,
     ProfileManager profileManager,
@@ -40,6 +42,7 @@ public partial class InstanceAssetsViewModel(
         await Task.Run(LoadModAsync);
         await Task.Run(LoadResourcePacksAsync);
         await Task.Run(LoadDataPacksAsync);
+        await Task.Run(LoadServersAsync);
         await Task.Run(LoadScreenshotsAsync);
         await Task.Run(LoadWorldsAsync);
     }
@@ -97,7 +100,13 @@ public partial class InstanceAssetsViewModel(
     public partial string DataPackSearchText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial ObservableCollection<AssetWorldModel>? Worlds { get; set; }
+    public partial IReadOnlyList<AssetServerModel>? Servers { get; set; }
+
+    [ObservableProperty]
+    public partial AssetServerModel? SelectedServer { get; set; }
+
+    [ObservableProperty]
+    public partial IReadOnlyList<AssetWorldModel>? Worlds { get; set; }
 
     [ObservableProperty]
     public partial AssetWorldModel? SelectedWorld { get; set; }
@@ -353,7 +362,7 @@ public partial class InstanceAssetsViewModel(
 
     private Task LoadWorldsAsync()
     {
-        var worlds = new ObservableCollection<AssetWorldModel>();
+        var worlds = new List<AssetWorldModel>();
         var worldsDir = AssetHelper.ScanNonSymlinkDirectories(Basic.Key, "*", ["saves"]);
         foreach (var worldDir in worldsDir)
         {
@@ -372,7 +381,8 @@ public partial class InstanceAssetsViewModel(
         }
 
         // 按最后游玩时间排序
-        Worlds = new(worlds.OrderByDescending(x => x.LastPlayedRaw));
+        worlds.Sort((a, b) => (int)(a.LastPlayedRaw - b.LastPlayedRaw).TotalSeconds);
+        Worlds = worlds;
 
         // 如果有存档，默认选中第一个
         if (Worlds.Count > 0)
@@ -381,6 +391,82 @@ public partial class InstanceAssetsViewModel(
         }
 
         return Task.CompletedTask;
+    }
+
+    private async Task LoadServersAsync()
+    {
+        var servers = new List<AssetServerModel>();
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var serverFiles = AssetHelper.ScanNonSymlinkFiles(Basic.Key, "servers.dat", []);
+
+        foreach (var file in serverFiles)
+        {
+            foreach (var metadata in AssetServerHelper.ParseMetadata(file.FullName))
+            {
+                var hasName = !string.IsNullOrWhiteSpace(metadata.Name);
+                var hasIp = !string.IsNullOrWhiteSpace(metadata.Ip);
+                if (!hasName && !hasIp)
+                {
+                    continue;
+                }
+
+                var identity = $"{metadata.Name ?? string.Empty}\n{metadata.Ip ?? string.Empty}";
+                if (!seen.Add(identity))
+                {
+                    continue;
+                }
+
+                var model = new AssetServerModel(
+                    file.FullName,
+                    AssetServerHelper.ExtractIcon(metadata.IconBase64)
+                        ?? AssetUriIndex.DirtImageBitmap,
+                    metadata
+                );
+                servers.Add(model);
+            }
+        }
+
+        Servers = servers;
+
+        if (Servers.Count > 0)
+        {
+            SelectedServer = Servers[0];
+        }
+
+        await LoadServersStatusAsync();
+    }
+
+    [RelayCommand]
+    private async Task LoadServersStatusAsync()
+    {
+        foreach (var server in Servers)
+        {
+            await LoadServerStatusAsync(server);
+        }
+    }
+
+    private async Task LoadServerStatusAsync(AssetServerModel server)
+    {
+        if (string.IsNullOrWhiteSpace(server.Metadata.Ip) || server.IsStatusLoading)
+        {
+            return;
+        }
+
+        server.IsStatusLoading = true;
+
+        try
+        {
+            var status = await MinecraftServerStatusHelper.ProbeAsync(server.Metadata.Ip);
+            server.ApplyLiveStatus(status);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error loading server status");
+        }
+        finally
+        {
+            server.IsStatusLoading = false;
+        }
     }
 
     partial void OnSelectedWorldChanged(AssetWorldModel? value)

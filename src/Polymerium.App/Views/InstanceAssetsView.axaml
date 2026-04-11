@@ -585,6 +585,193 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
+                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Server}" />
+                    <husk:PlaceholderPresenter Source="{Binding Servers}">
+                        <husk:PlaceholderPresenter.SourceTemplate>
+                            <DataTemplate DataType="collections:IList">
+                                <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
+                            </DataTemplate>
+                        </husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:ProgressRing
+                            Width="{Binding $parent[TabItem].FontSize}"
+                            Height="{Binding $parent[TabItem].FontSize}"
+                            IsIndeterminate="{Binding Servers, Converter={x:Static ObjectConverters.IsNull}}" />
+                    </husk:PlaceholderPresenter>
+                </StackPanel>
+            </TabItem.Header>
+            <Grid
+                RowDefinitions="Auto,*"
+                RowSpacing="12">
+                <DockPanel
+                    Grid.Row="0"
+                    IsVisible="False">
+                    <DockPanel.Styles>
+                        <Style Selector="Button">
+                            <Setter Property="Classes.Small" Value="True" />
+                        </Style>
+                    </DockPanel.Styles>
+                    <StackPanel>
+                        <Button Command="{Binding LoadServersStatusCommand}">
+                            <husk:IconLabel
+                                Icon="ArrowClockwise"
+                                Text="刷新全部" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <Button Classes="Danger">
+                            <husk:IconLabel
+                                Icon="Delete"
+                                Text="删除" />
+                        </Button>
+                        <Button Classes="Primary">
+                            <husk:IconLabel
+                                Icon="Add"
+                                Text="添加服务器" />
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+
+                <ScrollViewer Grid.Row="1">
+                    <controls:EmptyContainer IsEmpty="{Binding Servers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+                        <ListBox
+                            ItemsSource="{Binding Servers}"
+                            SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
+                            SelectionMode="Single"
+                            Theme="{StaticResource CleanListBoxTheme}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="m:AssetServerModel">
+                                    <DockPanel>
+                                        <StackPanel
+                                            DockPanel.Dock="Bottom"
+                                            Margin="0,8,0,0"
+                                            IsVisible="{Binding HasLiveStatus}"
+                                            Spacing="8">
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="6">
+                                                <husk:Tag>
+                                                    <TextBlock>
+                                                        <Run Text="{Binding OnlinePlayers}" />
+                                                        <Run Text="/" />
+                                                        <Run Text="{Binding MaxPlayers}" />
+                                                    </TextBlock>
+                                                </husk:Tag>
+                                                <husk:Tag Content="{Binding VersionName}" />
+                                                <husk:SwitchPresenter
+                                                    TargetType="x:Boolean"
+                                                    Value="{Binding Metadata.AcceptTextures}">
+                                                    <husk:SwitchCase Value="{x:True}">
+                                                        <husk:Tag>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text=": " />
+                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackAcceptText}" />
+                                                            </TextBlock>
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="{x:False}">
+                                                        <husk:Tag>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text=": " />
+                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackRejectText}" />
+                                                            </TextBlock>
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="{x:Null}">
+                                                        <husk:Tag>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text=": " />
+                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPromptText}" />
+                                                            </TextBlock>
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
+                                            </StackPanel>
+                                            <Border
+                                                Padding="12,8"
+                                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock
+                                                    Text="{Binding Description}"
+                                                    TextWrapping="Wrap" />
+                                            </Border>
+                                        </StackPanel>
+                                        <Grid
+                                            ColumnDefinitions="Auto,*,Auto"
+                                            ColumnSpacing="12"
+                                            RowDefinitions="Auto,Auto"
+                                            RowSpacing="2">
+                                            <Border
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Border.Background>
+                                                    <ImageBrush
+                                                        Source="{Binding Icon}"
+                                                        Stretch="Uniform" />
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding DisplayName}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding Address}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <husk:SwitchPresenter
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                TargetType="x:Boolean"
+                                                Value="{Binding IsStatusLoading}">
+                                                <husk:SwitchCase Value="{x:True}">
+                                                    <husk:Tag Content="{x:Static lang:Resources.InstanceAssetsView_ServerCheckingText}" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="{x:False}">
+                                                    <husk:SwitchPresenter
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding LatencyMilliseconds, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                                        <husk:SwitchCase Value="{x:True}">
+                                                            <husk:Tag
+                                                                Classes="Success"
+                                                                Content="{Binding LatencyMilliseconds, StringFormat={}{0}ms}" />
+                                                        </husk:SwitchCase>
+                                                        <husk:SwitchCase Value="{x:False}">
+                                                            <husk:Tag
+                                                                Classes="Danger"
+                                                                Content="{x:Static lang:Resources.InstanceAssetsView_ServerUnavailableText}" />
+                                                        </husk:SwitchCase>
+                                                    </husk:SwitchPresenter>
+                                                </husk:SwitchCase>
+                                            </husk:SwitchPresenter>
+                                        </Grid>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </controls:EmptyContainer>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_ResourcePack}" />
                     <husk:PlaceholderPresenter Source="{Binding ResourcePacks}">
                         <husk:PlaceholderPresenter.SourceTemplate>
