@@ -186,9 +186,8 @@ public static class Startup
     public static void InitializeUnhostedServices()
     {
         #region SentrySdk Init (only in Debug)
-
 #if !DEBUG
-        SentrySdk.Init(options =>
+        Sentry.SentrySdk.Init(options =>
         {
             options.Dsn =
                 "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
@@ -220,7 +219,7 @@ public static class Startup
     public static void DeinitializeUnhostedServices()
     {
 #if !DEBUG
-        SentrySdk.Close();
+        Sentry.SentrySdk.Close();
 #endif
     }
 }
