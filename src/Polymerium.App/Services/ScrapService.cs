@@ -65,18 +65,9 @@ public class ScrapService : IDisposable
 
     public static ScrapModel AppendToModel(Scrap item, ScrapModel? last)
     {
-        if (
-            item is
-            {
-                Level: { } level,
-                Date: { } date,
-                Time: { } time,
-                Thread: { } thread,
-                Sender: { } sender
-            }
-        )
+        if (item is { Level: { } level, Thread: { } thread, Sender: { } sender })
         {
-            return new(item.Message, level, date, time, thread, sender);
+            return new(item.Message, level, item.Date, item.Time, thread, sender);
         }
         else
         {
