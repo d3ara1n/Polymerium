@@ -1419,6 +1419,9 @@
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>Include source information</value>
     </data>
+    <data name="ModpackExporterDialog_IncludingSourceToolTipText" xml:space="preserve">
+        <value>Source information links the instance to an internet modpack and enables update support.</value>
+    </data>
     <data name="ModpackExporterDialog_ConnectServerText" xml:space="preserve">
         <value>Include server connection settings</value>
     </data>

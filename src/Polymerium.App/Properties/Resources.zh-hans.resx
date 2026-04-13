@@ -1410,6 +1410,9 @@
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>保留来源信息</value>
     </data>
+    <data name="ModpackExporterDialog_IncludingSourceToolTipText" xml:space="preserve">
+        <value>来源信息将实例与互联网整合包相关联，并启用更新能力。</value>
+    </data>
     <data name="ModpackExporterDialog_ConnectServerText" xml:space="preserve">
         <value>包含服务器连接设置</value>
     </data>

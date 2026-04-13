@@ -4407,6 +4407,15 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Source information links the instance to an internet modpack and enables update support.
+        /// </summary>
+        public static string ModpackExporterDialog_IncludingSourceToolTipText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceToolTipText", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Include package tags.
         /// </summary>
         public static string ModpackExporterDialog_IncludingTagsLabelText {
