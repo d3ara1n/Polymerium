@@ -4290,6 +4290,15 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string MainWindow_UpdateAvailableButtonText {
+            get {
+                return ResourceManager.GetString("MainWindow_UpdateAvailableButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Open Folder.
         /// </summary>
         public static string MainWindow_OpenFolderMenuText {
@@ -6737,6 +6746,15 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_UpdateSourceLabelText {
             get {
                 return ResourceManager.GetString("SettingsView_UpdateSourceLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates on startup.
+        /// </summary>
+        public static string SettingsView_UpdateAutoCheckLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_UpdateAutoCheckLabelText", resourceCulture);
             }
         }
 

@@ -181,6 +181,7 @@ public static class Startup
             .AddSingleton<PersistenceService>()
             .AddSingleton<ScrapService>()
             .AddSingleton<InstanceService>()
+            .AddSingleton<UpdateService>()
             .AddSingleton<WidgetHostService>();
     }
 

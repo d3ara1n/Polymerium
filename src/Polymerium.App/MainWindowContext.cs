@@ -33,6 +33,7 @@ using Trident.Core.Igniters;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
 using Trident.Core.Utilities;
+using Velopack;
 using NotificationSidebar = Polymerium.App.Sidebars.NotificationSidebar;
 
 namespace Polymerium.App;
@@ -55,6 +56,8 @@ public partial class MainWindowContext : ObservableObject
         PersistenceService persistenceService,
         InstanceService instanceService,
         OverlayService overlayService,
+        UpdateService updateService,
+        UpdateManager updateManager,
         ExporterAgent exporterAgent,
         ConfigurationService configurationService
     )
@@ -65,8 +68,12 @@ public partial class MainWindowContext : ObservableObject
         _persistenceService = persistenceService;
         _instanceService = instanceService;
         _overlayService = overlayService;
+        _updateService = updateService;
+        _updateManager = updateManager;
         _exporterAgent = exporterAgent;
         _configurationService = configurationService;
+        _updateService.SetHandler(OnUpdateFound);
+        CurrentUpdate = _updateService.CurrentUpdate;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -94,6 +101,11 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnInitialize()
     {
+        if (_configurationService.Value.UpdateAutoCheck)
+        {
+            _ = _updateService.CheckUpdateAsync(true);
+        }
+
         // Show OOBE modal for first-time users
         // OOBE now includes privilege check step on Windows
         if (Program.FirstRun)
@@ -111,6 +123,8 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnDeinitialize()
     {
+        _updateService.SetHandler(null);
+
         foreach (var model in Notifications)
         {
             model.OnRemoved();
@@ -148,6 +162,8 @@ public partial class MainWindowContext : ObservableObject
     private readonly PersistenceService _persistenceService;
     private readonly InstanceService _instanceService;
     private readonly OverlayService _overlayService;
+    private readonly UpdateService _updateService;
+    private readonly UpdateManager _updateManager;
     private readonly ProfileManager _profileManager;
     private readonly ExporterAgent _exporterAgent;
     private readonly ConfigurationService _configurationService;
@@ -166,6 +182,9 @@ public partial class MainWindowContext : ObservableObject
 
     [ObservableProperty]
     public partial int UnreadNotificationCount { get; set; }
+
+    [ObservableProperty]
+    public partial AppUpdateModel? CurrentUpdate { get; set; }
 
     #endregion
 
@@ -465,6 +484,26 @@ public partial class MainWindowContext : ObservableObject
         _overlayService.PopSidebar(sidebar);
     }
 
+    private bool CanOpenUpdateModal(AppUpdateModel? model) => model != null;
+
+    [RelayCommand(CanExecute = nameof(CanOpenUpdateModal))]
+    private void OpenUpdateModal(AppUpdateModel? model)
+    {
+        if (model == null)
+        {
+            return;
+        }
+
+        _overlayService.PopModal(
+            new AppUpdateModal
+            {
+                Model = model,
+                NotificationService = _notificationService,
+                UpdateManager = _updateManager,
+            }
+        );
+    }
+
     [RelayCommand]
     private void DiagnoseGameCrash(LaunchTracker? tracker)
     {
@@ -520,6 +559,15 @@ public partial class MainWindowContext : ObservableObject
                 UnreadNotificationCount--;
             }
         }
+    }
+
+    #endregion
+
+    #region Other reactive
+
+    private void OnUpdateFound(AppUpdateModel? model)
+    {
+        CurrentUpdate = model;
     }
 
     #endregion
