@@ -24,6 +24,9 @@
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
         <value>正在前往：集市</value>
     </data>
+    <data name="MainWindow_UpdateAvailableButtonText" xml:space="preserve">
+        <value>有更新</value>
+    </data>
     <data name="MainWindow_InstanceFilterPlaceholder" xml:space="preserve">
         <value>过滤实例名...</value>
     </data>
@@ -1790,6 +1793,9 @@
     </data>
     <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
         <value>更新源</value>
+    </data>
+    <data name="SettingsView_UpdateAutoCheckLabelText" xml:space="preserve">
+        <value>启动时自动检查更新</value>
     </data>
     <!-- OOBE Modal -->
     <data name="OobeModal_BackButtonText" xml:space="preserve">

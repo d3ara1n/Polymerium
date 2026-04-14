@@ -528,6 +528,9 @@
                     </Grid>
                 </controls:Plaque>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateAutoCheckLabelText}">
+                <ToggleSwitch IsChecked="{Binding AutoCheckUpdates, Mode=TwoWay}" />
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}">
                 <TabStrip SelectedIndex="{Binding UpdateSource, Mode=TwoWay}">
                     <TabStripItem>

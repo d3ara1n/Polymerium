@@ -191,7 +191,7 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    ColumnDefinitions="*,Auto"
+                    ColumnDefinitions="*,Auto,Auto"
                     ColumnSpacing="8">
                     <TextBlock
                         Grid.Column="0"
@@ -200,6 +200,21 @@
                         Text="Toolbar" />
                     <Button
                         Grid.Column="1"
+                        Classes="Small Primary"
+                        IsVisible="{Binding CurrentUpdate, Converter={x:Static ObjectConverters.IsNotNull}}"
+                        Command="{Binding OpenUpdateModalCommand}"
+                        CommandParameter="{Binding CurrentUpdate}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
+                            <husk:IconLabel
+                                VerticalAlignment="Center"
+                                Icon="ArrowUp"
+                                Text="{x:Static lang:Resources.MainWindow_UpdateAvailableButtonText}" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Grid.Column="2"
                         Classes="Small"
                         Command="{Binding OpenNotificationSidebarCommand}"
                         Theme="{StaticResource GhostButtonTheme}">

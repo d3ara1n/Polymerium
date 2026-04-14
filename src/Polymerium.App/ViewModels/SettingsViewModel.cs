@@ -7,7 +7,6 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
-using Microsoft.Extensions.Options;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
@@ -15,7 +14,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Velopack;
-using VelopackExtension.MirrorChyan.Sources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -27,8 +25,8 @@ public partial class SettingsViewModel : ViewModelBase
         NavigationService navigationService,
         NotificationService notificationService,
         PersistenceService persistenceService,
-        UpdateManager updateManager,
-        IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions
+        UpdateService updateService,
+        UpdateManager updateManager
     )
     {
         OverlayService = overlayService;
@@ -36,8 +34,8 @@ public partial class SettingsViewModel : ViewModelBase
         _navigationService = navigationService;
         _notificationService = notificationService;
         _persistenceService = persistenceService;
+        UpdateService = updateService;
         _updateManager = updateManager;
-        _mirrorChyanSourceOptions = mirrorChyanSourceOptions;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -76,6 +74,7 @@ public partial class SettingsViewModel : ViewModelBase
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
+        AutoCheckUpdates = configurationService.Value.UpdateAutoCheck;
         UpdateSource = configurationService.Value.UpdateSource;
         MirrorChyanCdk = configurationService.Value.UpdateMirrorChyanCdk;
 
@@ -90,16 +89,7 @@ public partial class SettingsViewModel : ViewModelBase
         UpdateProxyStatusText();
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
-        UpdateState =
-            updateManager.IsInstalled || Program.IsDebug
-                ? AppUpdateState.Idle
-                : AppUpdateState.Unavailable;
-        // MOTE: 由于只有 SettingsView 有触发更新的过程，所以在这个地方赋值 Cdk 是安全的
-        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(
-            configurationService.Value.UpdateMirrorChyanCdk
-        )
-            ? configurationService.Value.UpdateMirrorChyanCdk
-            : Program.MirrorChyanCdk;
+        SyncUpdateState();
     }
 
     #region SafeCode
@@ -112,6 +102,7 @@ public partial class SettingsViewModel : ViewModelBase
     #region Service Export
 
     public OverlayService OverlayService { get; }
+    public UpdateService UpdateService { get; }
     public bool CanCustomizeTitleBar => !OperatingSystem.IsMacOS();
 
     #endregion
@@ -123,7 +114,6 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly NotificationService _notificationService;
     private readonly PersistenceService _persistenceService;
     private readonly UpdateManager _updateManager;
-    private readonly IOptions<MirrorChyanSourceOptions> _mirrorChyanSourceOptions;
 
     #endregion
 
@@ -158,28 +148,15 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
 
-    private bool CanCheckUpdate() => UpdateState != AppUpdateState.Unavailable;
+    private bool CanCheckUpdate() => UpdateService.IsAvailable;
 
     [RelayCommand(CanExecute = nameof(CanCheckUpdate))]
     private async Task CheckUpdatesAsync()
     {
-        try
-        {
-            var result = await _updateManager.CheckForUpdatesAsync();
-            if (result != null)
-            {
-                UpdateTarget = new(result);
-                UpdateState = AppUpdateState.Found;
-            }
-            else
-            {
-                UpdateState = AppUpdateState.Latest;
-            }
-        }
-        catch (Exception ex)
-        {
-            _notificationService.PopMessage(ex, "Failed to check updates");
-        }
+        await UpdateService.CheckUpdateAsync();
+        SyncUpdateState();
+        CheckUpdatesCommand.NotifyCanExecuteChanged();
+        ViewReleaseCommand.NotifyCanExecuteChanged();
     }
 
     private bool CanViewRelease(AppUpdateModel? model) => model != null;
@@ -239,6 +216,12 @@ public partial class SettingsViewModel : ViewModelBase
     public partial AppUpdateModel? UpdateTarget { get; set; }
 
     [ObservableProperty]
+    public partial bool AutoCheckUpdates { get; set; }
+
+    partial void OnAutoCheckUpdatesChanged(bool value) =>
+        _configurationService.Value.UpdateAutoCheck = value;
+
+    [ObservableProperty]
     public partial int UpdateSource { get; set; }
 
     partial void OnUpdateSourceChanged(int value) =>
@@ -250,9 +233,16 @@ public partial class SettingsViewModel : ViewModelBase
     partial void OnMirrorChyanCdkChanged(string value)
     {
         _configurationService.Value.UpdateMirrorChyanCdk = value;
-        _mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(value)
-            ? value
-            : Program.MirrorChyanCdk;
+    }
+
+    #endregion
+
+    #region Other
+
+    private void SyncUpdateState()
+    {
+        UpdateState = UpdateService.UpdateState;
+        UpdateTarget = UpdateService.CurrentUpdate;
     }
 
     #endregion

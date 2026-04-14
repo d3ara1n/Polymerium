@@ -34,6 +34,7 @@ public class Configuration
     public const string NETWORK_PROXY_PORT = "Network.Proxy.Port";
     public const string NETWORK_PROXY_USERNAME = "Network.Proxy.Username";
     public const string NETWORK_PROXY_PASSWORD = "Network.Proxy.Password";
+    public const string UPDATE_AUTO_CHECK = "Update.AutoCheck";
     public const string UPDATE_SOURCE = "Update.Source";
     public const string UPDATE_MIRRORCHYAN_CDK = "Update.MirrorChyan.Cdk";
 
@@ -70,6 +71,7 @@ public class Configuration
         { NETWORK_PROXY_PORT, 7890u },
         { NETWORK_PROXY_USERNAME, string.Empty },
         { NETWORK_PROXY_PASSWORD, string.Empty },
+        { UPDATE_AUTO_CHECK, true },
         { UPDATE_SOURCE, 1 },
         { UPDATE_MIRRORCHYAN_CDK, string.Empty },
     };
@@ -114,6 +116,7 @@ public class Configuration
         AccessDefault<string>(NETWORK_PROXY_USERNAME);
     public string NetworkProxyPassword { get; set; } =
         AccessDefault<string>(NETWORK_PROXY_PASSWORD);
+    public bool UpdateAutoCheck { get; set; } = AccessDefault<bool>(UPDATE_AUTO_CHECK);
     public int UpdateSource { get; set; } = AccessDefault<int>(UPDATE_SOURCE);
     public string UpdateMirrorChyanCdk { get; set; } =
         AccessDefault<string>(UPDATE_MIRRORCHYAN_CDK);
