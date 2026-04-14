@@ -156,6 +156,7 @@ public static class Startup
             .AddMicrosoft()
             .AddXboxLive()
             .AddMinecraft()
+            .AddMclogs()
             .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>()
             .AddSingleton<ImporterAgent>()
