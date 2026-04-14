@@ -1551,24 +1551,66 @@
     <data name="GameCrashReportModal_OpenGameDirectoryButtonText" xml:space="preserve">
         <value>打开游戏目录</value>
     </data>
-    <data name="GameCrashReportModal_ExportDiagnosticPackageButtonText" xml:space="preserve">
-        <value>导出诊断包</value>
-    </data>
-    <data name="GameCrashReportModal_CopyReportButtonText" xml:space="preserve">
-        <value>复制报告</value>
-    </data>
+  <data name="GameCrashReportModal_ExportButtonText" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="GameCrashReportModal_ExportDiagnosticPackageMenuText" xml:space="preserve">
+    <value>人工诊断包</value>
+  </data>
+  <data name="GameCrashReportModal_ExportAnalysisPackageMenuText" xml:space="preserve">
+    <value>AI 分析包</value>
+  </data>
+  <data name="GameCrashReportModal_CopyReportButtonText" xml:space="preserve">
+    <value>复制报告</value>
+  </data>
     <data name="GameCrashReportModal_CloseButtonText" xml:space="preserve">
         <value>关闭</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationDiagnoseText" xml:space="preserve">
         <value>诊断</value>
     </data>
-    <data name="GameCrashReportModal_ExportDialogTitle" xml:space="preserve">
-        <value>导出诊断包</value>
-    </data>
-    <data name="AppUpdateModal_Title" xml:space="preserve">
-        <value>发现新版本</value>
-    </data>
+  <data name="GameCrashReportModal_ExportDialogTitle" xml:space="preserve">
+    <value>导出诊断包</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportDialogTitle" xml:space="preserve">
+    <value>导出 AI 分析 Markdown</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadingTitle" xml:space="preserve">
+    <value>上传日志中</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadingMessage" xml:space="preserve">
+    <value>正在将崩溃日志上传到 mclo.gs...</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportWritingTitle" xml:space="preserve">
+    <value>导出 Markdown 中</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportWritingMessage" xml:space="preserve">
+    <value>正在写入 AI 分析 Markdown 文件...</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportSuccessTitle" xml:space="preserve">
+    <value>导出完成</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportSuccessMessage" xml:space="preserve">
+    <value>AI 分析 Markdown 已导出。</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportFailedTitle" xml:space="preserve">
+    <value>AI 导出失败</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadFailedTitle" xml:space="preserve">
+    <value>日志上传失败</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadFailedMessage" xml:space="preserve">
+    <value>无法将崩溃日志上传到 mclo.gs。</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportLogUnavailableTitle" xml:space="preserve">
+    <value>日志不可用</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportLogUnavailableMessage" xml:space="preserve">
+    <value>未找到可用于 AI 分析导出的日志内容。</value>
+  </data>
+  <data name="AppUpdateModal_Title" xml:space="preserve">
+    <value>发现新版本</value>
+  </data>
     <data name="AppUpdateModal_CancelButtonText" xml:space="preserve">
         <value>取消</value>
     </data>

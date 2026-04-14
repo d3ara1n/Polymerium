@@ -1563,24 +1563,66 @@
     <data name="GameCrashReportModal_OpenGameDirectoryButtonText" xml:space="preserve">
         <value>Open Game Directory</value>
     </data>
-    <data name="GameCrashReportModal_ExportDiagnosticPackageButtonText" xml:space="preserve">
-        <value>Export Diagnostic Package</value>
-    </data>
-    <data name="GameCrashReportModal_CopyReportButtonText" xml:space="preserve">
-        <value>Copy Report</value>
-    </data>
+  <data name="GameCrashReportModal_ExportButtonText" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="GameCrashReportModal_ExportDiagnosticPackageMenuText" xml:space="preserve">
+    <value>Manual Diagnostic Package</value>
+  </data>
+  <data name="GameCrashReportModal_ExportAnalysisPackageMenuText" xml:space="preserve">
+    <value>AI Analysis Package</value>
+  </data>
+  <data name="GameCrashReportModal_CopyReportButtonText" xml:space="preserve">
+    <value>Copy Report</value>
+  </data>
     <data name="GameCrashReportModal_CloseButtonText" xml:space="preserve">
         <value>Close</value>
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationDiagnoseText" xml:space="preserve">
         <value>Diagnose</value>
     </data>
-    <data name="GameCrashReportModal_ExportDialogTitle" xml:space="preserve">
-        <value>Export Diagnostic Package</value>
-    </data>
-    <data name="AppUpdateModal_Title" xml:space="preserve">
-        <value>Update Available</value>
-    </data>
+  <data name="GameCrashReportModal_ExportDialogTitle" xml:space="preserve">
+    <value>Export Diagnostic Package</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportDialogTitle" xml:space="preserve">
+    <value>Export AI Analysis Markdown</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadingTitle" xml:space="preserve">
+    <value>Uploading Log</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadingMessage" xml:space="preserve">
+    <value>Uploading crash log to mclo.gs...</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportWritingTitle" xml:space="preserve">
+    <value>Exporting Markdown</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportWritingMessage" xml:space="preserve">
+    <value>Writing AI analysis markdown file...</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportSuccessTitle" xml:space="preserve">
+    <value>Export Completed</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportSuccessMessage" xml:space="preserve">
+    <value>AI analysis markdown has been exported.</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportFailedTitle" xml:space="preserve">
+    <value>AI Export Failed</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadFailedTitle" xml:space="preserve">
+    <value>Log Upload Failed</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportUploadFailedMessage" xml:space="preserve">
+    <value>Unable to upload the crash log to mclo.gs.</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportLogUnavailableTitle" xml:space="preserve">
+    <value>Log Unavailable</value>
+  </data>
+  <data name="GameCrashReportModal_AiExportLogUnavailableMessage" xml:space="preserve">
+    <value>No usable crash log was found for AI analysis export.</value>
+  </data>
+  <data name="AppUpdateModal_Title" xml:space="preserve">
+    <value>Update Available</value>
+  </data>
     <data name="AppUpdateModal_CancelButtonText" xml:space="preserve">
         <value>Cancel</value>
     </data>

@@ -1257,11 +1257,29 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Export Diagnostic Package.
+        ///   Looks up a localized string similar to Export.
         /// </summary>
-        public static string GameCrashReportModal_ExportDiagnosticPackageButtonText {
+        public static string GameCrashReportModal_ExportButtonText {
             get {
-                return ResourceManager.GetString("GameCrashReportModal_ExportDiagnosticPackageButtonText", resourceCulture);
+                return ResourceManager.GetString("GameCrashReportModal_ExportButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Manual Diagnostic Package.
+        /// </summary>
+        public static string GameCrashReportModal_ExportDiagnosticPackageMenuText {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_ExportDiagnosticPackageMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AI Analysis Package.
+        /// </summary>
+        public static string GameCrashReportModal_ExportAnalysisPackageMenuText {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_ExportAnalysisPackageMenuText", resourceCulture);
             }
         }
 
@@ -1271,6 +1289,114 @@ namespace Polymerium.App.Properties {
         public static string GameCrashReportModal_ExportDialogTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ExportDialogTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export AI Analysis Markdown.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportDialogTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportDialogTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AI 导出失败.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportFailedTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportFailedTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No usable crash log was found for AI analysis export.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportLogUnavailableMessage {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportLogUnavailableMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Log Unavailable.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportLogUnavailableTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportLogUnavailableTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AI analysis markdown has been exported.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportSuccessMessage {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportSuccessMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export Completed.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportSuccessTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportSuccessTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to upload the crash log to mclo.gs.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportUploadFailedMessage {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportUploadFailedMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Log Upload Failed.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportUploadFailedTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportUploadFailedTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading crash log to mclo.gs....
+        /// </summary>
+        public static string GameCrashReportModal_AiExportUploadingMessage {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportUploadingMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading Log.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportUploadingTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportUploadingTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Writing AI analysis markdown file....
+        /// </summary>
+        public static string GameCrashReportModal_AiExportWritingMessage {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportWritingMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting Markdown.
+        /// </summary>
+        public static string GameCrashReportModal_AiExportWritingTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_AiExportWritingTitle", resourceCulture);
             }
         }
 
