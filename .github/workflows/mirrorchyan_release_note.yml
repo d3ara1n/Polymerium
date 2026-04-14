@@ -25,3 +25,14 @@ jobs:
                     repo: Polymerium
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     upload_token: ${{ secrets.MirrorChyanUploadToken }}
+
+            -   id: uploading_2
+                uses: MirrorChyan/release-note-action@v1
+                with:
+                    mirrorchyan_rid: Polymerium_setup
+                    version_name: ${{ inputs.tag }}
+
+                    owner: d3ara1n
+                    repo: Polymerium
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    upload_token: ${{ secrets.MirrorChyanUploadToken }}

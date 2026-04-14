@@ -52,3 +52,18 @@ jobs:
                     repo: Polymerium
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     upload_token: ${{ secrets.MirrorChyanUploadToken }}
+
+            -   uses: MirrorChyan/uploading-action@v1
+                with:
+                    filetype: latest-release
+                    filename: ${{ fromJson('{"win":"Polymerium-win-Setup.exe","linux":"Polymerium.AppImage","osx":"Polymerium-osx-Setup.pkg"}')[matrix.os] }}
+                    mirrorchyan_rid: Polymerium_setup
+                    tag: ${{ inputs.tag }}
+
+                    os: ${{ matrix.os }}
+                    arch: ${{ matrix.arch }}
+
+                    owner: d3ara1n
+                    repo: Polymerium
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    upload_token: ${{ secrets.MirrorChyanUploadToken }}
