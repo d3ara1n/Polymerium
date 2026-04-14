@@ -78,8 +78,10 @@ public partial class SettingsViewModel : ViewModelBase
         UpdateSource = configurationService.Value.UpdateSource;
         MirrorChyanCdk = configurationService.Value.UpdateMirrorChyanCdk;
 
-        ProxyMode = (ProxyMode)configurationService.Value.NetworkProxyMode;
-        ProxyProtocol = (ProxyProtocol)configurationService.Value.NetworkProxyProtocol;
+        ProxyMode = TryConvertEnum<ProxyMode>(configurationService.Value.NetworkProxyMode);
+        ProxyProtocol = TryConvertEnum<ProxyProtocol>(
+            configurationService.Value.NetworkProxyProtocol
+        );
         ProxyEnabled = configurationService.Value.NetworkProxyEnabled;
         ProxyAddress = configurationService.Value.NetworkProxyAddress;
         ProxyPort = configurationService.Value.NetworkProxyPort;
@@ -243,6 +245,19 @@ public partial class SettingsViewModel : ViewModelBase
     {
         UpdateState = UpdateService.UpdateState;
         UpdateTarget = UpdateService.CurrentUpdate;
+    }
+
+    private T TryConvertEnum<T>(int value, T orDefault = default)
+        where T : struct, Enum
+    {
+        if (Enum.IsDefined(typeof(T), value))
+        {
+            return (T)(object)value;
+        }
+        else
+        {
+            return orDefault;
+        }
     }
 
     #endregion
