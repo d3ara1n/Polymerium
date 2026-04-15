@@ -25,5 +25,3 @@
 ### Removed
 
 -
-
-[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)

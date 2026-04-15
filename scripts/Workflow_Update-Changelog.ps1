@@ -5,7 +5,7 @@
 
 .DESCRIPTION
     This script processes the rolling changelog (changelogs/rolling.md) by:
-    1. Extracting the [Unreleased] section to changelog.md for release notes
+    1. Extracting the [Unreleased] section to separate changelog files for package and release notes
     2. Archiving the [Unreleased] section in rolling.md with the version number and date
     3. Creating a fresh [Unreleased] template in rolling.md
     4. Optionally committing the changes to the repository
@@ -39,7 +39,9 @@ $versionWithV = if ($Version.StartsWith('v')) { $Version } else { "v$Version" }
 
 # File paths
 $rollingChangelog = Join-Path $PSScriptRoot ".." "changelogs" "rolling.md"
-$outputChangelog = Join-Path $PSScriptRoot ".." "CHANGELOG.md"
+$packageChangelog = Join-Path $PSScriptRoot ".." "CHANGELOG.md"
+$releaseChangelog = Join-Path $PSScriptRoot ".." "RELEASE_CHANGELOG.md"
+$sponsorLine = '[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)'
 
 # Determine the version archive file (e.g., v0.1.md for version 0.1.0)
 $versionParts = $normalizedVersion -split '\.'
@@ -69,9 +71,9 @@ if ($content -match $unreleasedPattern) {
         Write-Warning "No changes found in [Unreleased] section. Proceeding anyway..."
     }
 
-    # Create the release notes for changelog.md
+    # Create the package release notes for CHANGELOG.md
     $releaseDate = Get-Date -Format "yyyy-MM-dd"
-    $releaseNotes = @"
+    $packageReleaseNotes = @"
 # Changelog
 
 ## [$normalizedVersion] - $releaseDate
@@ -79,9 +81,22 @@ if ($content -match $unreleasedPattern) {
 $unreleasedSection
 "@
 
-    # Write to changelog.md
-    Set-Content -Path $outputChangelog -Value $releaseNotes -Encoding UTF8 -NoNewline
-    Write-Host "✓ Created CHANGELOG.md with release notes" -ForegroundColor Green
+    # Create the GitHub release notes with sponsor link
+    $releaseNotes = @"
+# Changelog
+
+## [$normalizedVersion] - $releaseDate
+
+$unreleasedSection
+
+$sponsorLine
+"@
+
+    # Write output files
+    Set-Content -Path $packageChangelog -Value $packageReleaseNotes -Encoding UTF8 -NoNewline
+    Set-Content -Path $releaseChangelog -Value $releaseNotes -Encoding UTF8 -NoNewline
+    Write-Host "✓ Created CHANGELOG.md for package release notes" -ForegroundColor Green
+    Write-Host "✓ Created RELEASE_CHANGELOG.md for GitHub release notes" -ForegroundColor Green
 
     # Archive to version file (e.g., v0.0.md)
     $versionEntry = @"
@@ -152,7 +167,8 @@ $unreleasedSection
     Write-Host "✓ Updated rolling.md with archived version and new [Unreleased] template" -ForegroundColor Green
 
     Write-Host "`n✓ Changelog processing complete!" -ForegroundColor Green
-    Write-Host "  - CHANGELOG.md: Release notes for $versionWithV" -ForegroundColor Gray
+    Write-Host "  - CHANGELOG.md: Package release notes for $versionWithV" -ForegroundColor Gray
+    Write-Host "  - RELEASE_CHANGELOG.md: GitHub release notes for $versionWithV" -ForegroundColor Gray
     Write-Host "  - rolling.md: Archived $versionWithV and reset [Unreleased]" -ForegroundColor Gray
     Write-Host "  - $(Split-Path $versionArchiveFile -Leaf): Version archive updated" -ForegroundColor Gray
 

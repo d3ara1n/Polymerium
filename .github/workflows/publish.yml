@@ -42,7 +42,6 @@ jobs:
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
                     echo "dotnet_version=$dotnet_version" > release.properties
                   fi
-              shell: bash
 
             - name: Setup .NET SDK
               uses: actions/setup-dotnet@v4
@@ -150,6 +149,7 @@ jobs:
                   path: |
                       release.properties
                       CHANGELOG.md
+                      RELEASE_CHANGELOG.md
 
             - name: Push Changelog Changes
               if: matrix.runtime == 'win-x64'
@@ -188,7 +188,7 @@ jobs:
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
-                  body_path: ./artifacts/release-metadata/CHANGELOG.md
+                  body_path: ./artifacts/release-metadata/RELEASE_CHANGELOG.md
                   files: Releases/*
                   name: ${{ steps.metadata.outputs.release_name }}
                   prerelease: ${{ steps.metadata.outputs.is_prerelease }}
