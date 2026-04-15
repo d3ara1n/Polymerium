@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.Exporters;
 using Trident.Abstractions.Importers;
+using Trident.Abstractions.Reactive;
 using Trident.Core.Exporters;
 using Trident.Core.Extensions;
 using Trident.Core.Importers;
@@ -180,9 +182,9 @@ public static class Startup
             .AddSingleton<OverlayService>()
             .AddSingleton<DataService>()
             .AddSingleton<PersistenceService>()
-            .AddSingleton<ScrapService>()
+            .AddLifecycleService<ScrapService>()
             .AddSingleton<InstanceService>()
-            .AddSingleton<UpdateService>()
+            .AddLifecycleService<UpdateService>()
             .AddSingleton<WidgetHostService>();
     }
 
@@ -228,11 +230,25 @@ public static class Startup
 
     public static async Task InitializeHostedServicesAsync(IServiceProvider provider)
     {
-        provider.GetRequiredService<ScrapService>().OnInitialize();
+        foreach (var service in provider.GetServices<ILifecycle>() ?? [])
+        {
+            service.OnInitialize();
+        }
+        foreach (var service in provider.GetServices<IAsyncLifecycle>() ?? [])
+        {
+            await service.OnInitializeAsync();
+        }
     }
 
     public static async Task DeinitializeHostedServicesAsync(IServiceProvider provider)
     {
-        provider.GetRequiredService<ScrapService>().OnDeinitialize();
+        foreach (var service in provider.GetServices<IAsyncLifecycle>()?.Reverse() ?? [])
+        {
+            await service.OnDeinitializeAsync();
+        }
+        foreach (var service in provider.GetServices<ILifecycle>().Reverse() ?? [])
+        {
+            service.OnDeinitialize();
+        }
     }
 }
