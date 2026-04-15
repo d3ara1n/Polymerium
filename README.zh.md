@@ -130,11 +130,19 @@
 > [!NOTE]
 > Polymerium 目前正在积极开发中。功能和界面可能在版本之间发生变化。
 
-**📥 下载** → **📂 解压** → **🚀 运行** → **⚙️ 设置**
+| 平台 | 包类型 | 直达下载 |
+| --- | --- | --- |
+| Windows x64 | 安装器 | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
+| Linux x64 | AppImage | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AppImage) |
+| macOS Apple Silicon | PKG 安装器 | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
 
-1. **下载** [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases) 的最新版本
-2. **运行** 安装程序 `Polymerium-[arch]-Setup.exe`
-3. **配置** 设置向导配置您的第一个实例
+[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
+
+**📥 下载** -> **🚀 运行** -> **⚙️ 设置**
+
+1. **下载** 对应平台的安装包
+2. **运行** 安装器或可执行文件
+3. **按照** 向导完成初始配置
 
 ### 🚀 快速开始
 

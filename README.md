@@ -133,10 +133,18 @@ Upgrade to Windows 10+ first 💥
 > [!NOTE]
 > Polymerium is currently in active development. Features and UI may change between releases.
 
-**📥 Download** → **📂 Extract** → **🚀 Run** → **⚙️ Setup**
+| Platform | Package | Direct Download |
+| --- | --- | --- |
+| Windows x64 | Installer | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
+| Linux x64 | AppImage | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AppImage) |
+| macOS Apple Silicon | PKG installer | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
 
-1. **Download** the latest release from [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases)
-2. **Run** installer `Polymerium-[arch]-Setup.exe`
+[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
+
+**📥 Download** -> **🚀 Run** -> **⚙️ Setup**
+
+1. **Download** the package for your platform
+2. **Run** the installer or executable
 3. **Follow** the setup wizard to configure your first instance
 
 ### 🚀 Quick Start
