@@ -72,6 +72,7 @@ public partial class MainWindowContext : ObservableObject
         _updateManager = updateManager;
         _exporterAgent = exporterAgent;
         _configurationService = configurationService;
+
         _updateService.SetHandler(OnUpdateFound);
         CurrentUpdate = _updateService.CurrentUpdate;
 
@@ -101,11 +102,6 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnInitialize()
     {
-        if (_configurationService.Value.UpdateAutoCheck)
-        {
-            _ = _updateService.CheckUpdateAsync(true);
-        }
-
         // Show OOBE modal for first-time users
         // OOBE now includes privilege check step on Windows
         if (Program.FirstRun)

@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using ObservableCollections;
 using Polymerium.App.Models;
 using Trident.Abstractions.Extensions;
+using Trident.Abstractions.Reactive;
 using Trident.Core.Engines.Launching;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
 
 namespace Polymerium.App.Services;
 
-public class ScrapService : IDisposable
+public class ScrapService : ILifecycle
 {
     public const int CAPACITY = 9527;
     private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = [];
@@ -25,13 +27,13 @@ public class ScrapService : IDisposable
     public ScrapService(InstanceManager instanceManager)
     {
         _instanceManager = instanceManager;
-
-        instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
     }
 
-    #region IDisposable Members
+    #region ILifetime Members
+    public void OnInitialize() =>
+        _instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
 
-    public void Dispose() =>
+    public void OnDeinitialize() =>
         _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
 
     #endregion

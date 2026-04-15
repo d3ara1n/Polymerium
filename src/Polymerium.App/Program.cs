@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -40,7 +41,7 @@ internal static class Program
 #endif
 
     [STAThread]
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
 
@@ -83,23 +84,27 @@ internal static class Program
         Startup.ConfigureServices(services, IsDebug);
         Services = services.BuildServiceProvider();
 
+        #region Init
         Startup.InitializeUnhostedServices();
-
         var configurationService = Services.GetRequiredService<ConfigurationService>();
         CultureInfo.CurrentUICulture = GetSafeCultureInfo(
             configurationService.Value.ApplicationLanguage
         );
-        #region Init Application
         Resources.Culture = CultureInfo.CurrentUICulture;
         var httpClient = Services.GetRequiredService<HttpClient>();
         var loader = new SuppressedImageLoader(httpClient);
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
+        await Startup.InitializeHostedServicesAsync(Services);
         #endregion
+
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
+        #region Deinit Application
+        await Startup.DeinitializeHostedServicesAsync(Services);
         Startup.DeinitializeUnhostedServices();
         ((IDisposable)Services).Dispose();
+        #endregion
         exitAction?.Invoke();
     }
 
