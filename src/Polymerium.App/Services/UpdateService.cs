@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Polymerium.App.Models;
+using Trident.Abstractions.Reactive;
 using Velopack;
 using VelopackExtension.MirrorChyan.Sources;
 
@@ -9,10 +10,9 @@ namespace Polymerium.App.Services;
 
 public partial class UpdateService(
     ConfigurationService configurationService,
-    NotificationService notificationService,
     UpdateManager updateManager,
     IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions
-)
+) : IAsyncLifecycle
 {
     private Action<AppUpdateModel?>? _handler;
 
@@ -31,7 +31,7 @@ public partial class UpdateService(
 
     public void SetHandler(Action<AppUpdateModel?>? handler) => _handler = handler;
 
-    public async Task CheckUpdateAsync(bool silent = false)
+    public async Task CheckUpdateAsync()
     {
         if (IsChecking)
         {
@@ -68,17 +68,13 @@ public partial class UpdateService(
             IsUpdateChecked = true;
             _handler?.Invoke(CurrentUpdate);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             if (!IsUpdateChecked)
             {
                 UpdateState = AppUpdateState.Idle;
             }
-
-            if (!silent)
-            {
-                notificationService.PopMessage(ex, "Failed to check updates");
-            }
+            throw;
         }
         finally
         {
@@ -93,4 +89,20 @@ public partial class UpdateService(
             ? cdk
             : Program.MirrorChyanCdk;
     }
+
+    #region IAsyncLifecycle Members
+    public async Task OnInitializeAsync()
+    {
+        try
+        {
+            await CheckUpdateAsync();
+        }
+        catch (Exception)
+        {
+            // slient
+        }
+    }
+
+    public Task OnDeinitializeAsync() => Task.CompletedTask;
+    #endregion
 }

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -223,5 +224,15 @@ public static class Startup
 #if !DEBUG
         Sentry.SentrySdk.Close();
 #endif
+    }
+
+    public static async Task InitializeHostedServicesAsync(IServiceProvider provider)
+    {
+        provider.GetRequiredService<ScrapService>().OnInitialize();
+    }
+
+    public static async Task DeinitializeHostedServicesAsync(IServiceProvider provider)
+    {
+        provider.GetRequiredService<ScrapService>().OnDeinitialize();
     }
 }

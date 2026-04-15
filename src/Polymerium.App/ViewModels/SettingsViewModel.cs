@@ -155,7 +155,14 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanCheckUpdate))]
     private async Task CheckUpdatesAsync()
     {
-        await UpdateService.CheckUpdateAsync();
+        try
+        {
+            await UpdateService.CheckUpdateAsync();
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Failed to check updates");
+        }
         SyncUpdateState();
         CheckUpdatesCommand.NotifyCanExecuteChanged();
         ViewReleaseCommand.NotifyCanExecuteChanged();
