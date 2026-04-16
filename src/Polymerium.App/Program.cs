@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Trident.Abstractions;
+using Trident.Core.Lifetimes;
 using Velopack;
 
 namespace Polymerium.App;
@@ -83,7 +84,7 @@ internal static class Program
         Startup.ConfigureServices(services, IsDebug);
         Services = services.BuildServiceProvider();
 
-        #region Init
+        #region Initialize Application Environment
         Startup.InitializeUnhostedServices();
         var configurationService = Services.GetRequiredService<ConfigurationService>();
         CultureInfo.CurrentUICulture = GetSafeCultureInfo(
@@ -94,12 +95,40 @@ internal static class Program
         var loader = new SuppressedImageLoader(httpClient);
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
+        // PROCEDURE MOVED: Lifetime Services 在 App.OnFrameworkInitialized 中进行延迟初始化而不是 Program 收尾
         #endregion
+
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        #region Deinit
-        Startup.DeinitializeUnhostedServices();
-        ((IDisposable)services).Dispose();
+
+        #region Dispose & Shutdown Services
+        Exception? stopException = null;
+        if (Services.GetService<LifetimeServiceRuntime>() is { } runtime)
+        {
+            try
+            {
+                runtime.StopAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                stopException = ex;
+            }
+        }
+
+        try
+        {
+            Startup.DeinitializeUnhostedServices();
+        }
+        finally
+        {
+            ((IDisposable)services).Dispose();
+        }
+
+        if (stopException is not null)
+        {
+            throw stopException;
+        }
         #endregion
+
         exitAction?.Invoke();
     }
 

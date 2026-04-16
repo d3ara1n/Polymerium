@@ -24,7 +24,6 @@ namespace Polymerium.App;
 public class App : Application
 {
     private static int activatorErrorCount;
-    private static bool lifetimeStopped;
 
     public HuskuiTheme? Theme { get; private set; }
 
@@ -49,7 +48,6 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = ConstructWindow();
-            desktop.Exit += (_, _) => OnExit();
             _ = StartLifetimeServicesAsync(desktop);
         }
 
@@ -73,34 +71,6 @@ public class App : Application
         {
             ShowOrDump(ex, true);
             desktop.Shutdown(-1);
-        }
-    }
-
-    private static async void OnExit()
-    {
-        if (lifetimeStopped || Program.Services is not { } services)
-        {
-            return;
-        }
-
-        lifetimeStopped = true;
-
-        Exception? stopException = null;
-        if (services.GetService<LifetimeServiceRuntime>() is { } runtime)
-        {
-            try
-            {
-                await runtime.StopAsync();
-            }
-            catch (Exception ex)
-            {
-                stopException = ex;
-            }
-        }
-
-        if (stopException is not null)
-        {
-            ShowOrDump(stopException, true);
         }
     }
 
