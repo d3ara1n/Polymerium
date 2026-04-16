@@ -120,7 +120,7 @@ internal static class Program
         }
         finally
         {
-            ((IDisposable)services).Dispose();
+            ((IDisposable)Services).Dispose();
         }
 
         if (stopException is not null)

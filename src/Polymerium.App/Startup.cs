@@ -153,6 +153,7 @@ public static class Startup
             .AddTransient<IProfileExporter, TridentExporter>()
             .AddTransient<IProfileExporter, CurseForgeExporter>()
             .AddTransient<IProfileExporter, ModrinthExporter>()
+            .AddLifetimeRuntime()
             .AddPrismLauncher()
             .AddMojangLauncher()
             .AddMicrosoft()
