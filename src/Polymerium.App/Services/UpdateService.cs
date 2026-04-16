@@ -93,6 +93,11 @@ public partial class UpdateService(
 
     public async ValueTask StartAsync(CancellationToken cancellationToken = default)
     {
+        if (!configurationService.Value.UpdateAutoCheck)
+        {
+            return;
+        }
+
         try
         {
             await CheckUpdateAsync();
