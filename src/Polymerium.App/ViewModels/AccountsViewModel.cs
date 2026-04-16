@@ -101,6 +101,7 @@ public partial class AccountsViewModel(
                 MicrosoftService = microsoftService,
                 XboxLiveService = xboxLiveService,
                 MinecraftService = minecraftService,
+                NotificationService = notificationService,
             }
         );
 
