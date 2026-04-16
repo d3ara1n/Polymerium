@@ -15,7 +15,6 @@ using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.Exporters;
 using Trident.Abstractions.Importers;
-using Trident.Abstractions.Reactive;
 using Trident.Core.Exporters;
 using Trident.Core.Extensions;
 using Trident.Core.Importers;
@@ -182,9 +181,9 @@ public static class Startup
             .AddSingleton<OverlayService>()
             .AddSingleton<DataService>()
             .AddSingleton<PersistenceService>()
-            .AddLifecycleService<ScrapService>()
+            .AddLifetimeService<ScrapService>()
             .AddSingleton<InstanceService>()
-            .AddLifecycleService<UpdateService>()
+            .AddLifetimeService<UpdateService>()
             .AddSingleton<WidgetHostService>();
     }
 
@@ -226,29 +225,5 @@ public static class Startup
 #if !DEBUG
         Sentry.SentrySdk.Close();
 #endif
-    }
-
-    public static async Task InitializeHostedServicesAsync(IServiceProvider provider)
-    {
-        foreach (var service in provider.GetServices<ILifecycle>() ?? [])
-        {
-            service.OnInitialize();
-        }
-        foreach (var service in provider.GetServices<IAsyncLifecycle>() ?? [])
-        {
-            await service.OnInitializeAsync();
-        }
-    }
-
-    public static async Task DeinitializeHostedServicesAsync(IServiceProvider provider)
-    {
-        foreach (var service in provider.GetServices<IAsyncLifecycle>()?.Reverse() ?? [])
-        {
-            await service.OnDeinitializeAsync();
-        }
-        foreach (var service in provider.GetServices<ILifecycle>().Reverse() ?? [])
-        {
-            service.OnDeinitialize();
-        }
     }
 }

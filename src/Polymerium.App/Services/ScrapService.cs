@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ObservableCollections;
 using Polymerium.App.Models;
+using Trident.Abstractions.Lifetimes;
 using Trident.Abstractions.Extensions;
-using Trident.Abstractions.Reactive;
 using Trident.Core.Engines.Launching;
 using Trident.Core.Services;
 using Trident.Core.Services.Instances;
 
 namespace Polymerium.App.Services;
 
-public class ScrapService : ILifecycle
+public class ScrapService : ILifetimeService
 {
     public const int CAPACITY = 9527;
     private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = [];
@@ -29,14 +30,17 @@ public class ScrapService : ILifecycle
         _instanceManager = instanceManager;
     }
 
-    #region ILifetime Members
-    public void OnInitialize() =>
+    public ValueTask StartAsync(CancellationToken cancellationToken = default)
+    {
         _instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
+        return ValueTask.CompletedTask;
+    }
 
-    public void OnDeinitialize() =>
+    public ValueTask StopAsync(CancellationToken cancellationToken = default)
+    {
         _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
-
-    #endregion
+        return ValueTask.CompletedTask;
+    }
 
     private void InstanceManagerOnInstanceLaunching(object? _, LaunchTracker e)
     {
