@@ -563,7 +563,7 @@ public partial class MainWindowContext : ObservableObject
 
     private void OnUpdateFound(AppUpdateModel? model)
     {
-        CurrentUpdate = model;
+        Dispatcher.UIThread.Post(() => CurrentUpdate = model);
     }
 
     #endregion

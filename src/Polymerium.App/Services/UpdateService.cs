@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Polymerium.App.Models;
-using Trident.Abstractions.Reactive;
+using Trident.Abstractions.Lifetimes;
 using Velopack;
 using VelopackExtension.MirrorChyan.Sources;
 
@@ -12,7 +13,7 @@ public partial class UpdateService(
     ConfigurationService configurationService,
     UpdateManager updateManager,
     IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions
-) : IAsyncLifecycle
+) : ILifetimeService
 {
     private Action<AppUpdateModel?>? _handler;
 
@@ -90,8 +91,7 @@ public partial class UpdateService(
             : Program.MirrorChyanCdk;
     }
 
-    #region IAsyncLifecycle Members
-    public async Task OnInitializeAsync()
+    public async ValueTask StartAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -103,6 +103,6 @@ public partial class UpdateService(
         }
     }
 
-    public Task OnDeinitializeAsync() => Task.CompletedTask;
-    #endregion
+    public ValueTask StopAsync(CancellationToken cancellationToken = default) =>
+        ValueTask.CompletedTask;
 }

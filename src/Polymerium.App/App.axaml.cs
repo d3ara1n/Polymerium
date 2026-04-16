@@ -16,6 +16,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Sentry;
+using Trident.Core.Lifetimes;
 using Page = Huskui.Avalonia.Controls.Page;
 
 namespace Polymerium.App;
@@ -23,6 +24,7 @@ namespace Polymerium.App;
 public class App : Application
 {
     private static int activatorErrorCount;
+    private static bool lifetimeStopped;
 
     public HuskuiTheme? Theme { get; private set; }
 
@@ -47,9 +49,59 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = ConstructWindow();
+            desktop.Exit += (_, _) => OnExit();
+            _ = StartLifetimeServicesAsync(desktop);
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private static async Task StartLifetimeServicesAsync(
+        IClassicDesktopStyleApplicationLifetime desktop
+    )
+    {
+        if (Program.Services?.GetService<LifetimeServiceRuntime>() is not { } runtime)
+        {
+            return;
+        }
+
+        try
+        {
+            await runtime.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            ShowOrDump(ex, true);
+            desktop.Shutdown(-1);
+        }
+    }
+
+    private static async void OnExit()
+    {
+        if (lifetimeStopped || Program.Services is not { } services)
+        {
+            return;
+        }
+
+        lifetimeStopped = true;
+
+        Exception? stopException = null;
+        if (services.GetService<LifetimeServiceRuntime>() is { } runtime)
+        {
+            try
+            {
+                await runtime.StopAsync();
+            }
+            catch (Exception ex)
+            {
+                stopException = ex;
+            }
+        }
+
+        if (stopException is not null)
+        {
+            ShowOrDump(stopException, true);
+        }
     }
 
     private static void ShowOrDump(object core, bool critical = false)

@@ -5,7 +5,6 @@ using MirrorChyan.Net;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Trident.Abstractions;
-using Trident.Abstractions.Reactive;
 using Velopack;
 using Velopack.Sources;
 
@@ -19,21 +18,6 @@ public static class ServiceCollectionExtensions
 
     extension(IServiceCollection services)
     {
-        public IServiceCollection AddLifecycleService<T>()
-            where T : class
-        {
-            services.AddSingleton<T>();
-            if (typeof(ILifecycle).IsAssignableFrom(typeof(T)))
-            {
-                services.AddSingleton(sp => (ILifecycle)sp.GetRequiredService<T>());
-            }
-            if (typeof(IAsyncLifecycle).IsAssignableFrom(typeof(T)))
-            {
-                services.AddSingleton(sp => (IAsyncLifecycle)sp.GetRequiredService<T>());
-            }
-            return services;
-        }
-
         public IServiceCollection AddViewFacilities()
         {
             services.AddScoped<ViewBagFactory>().AddScoped<ViewBag>();
