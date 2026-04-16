@@ -13,6 +13,7 @@ using Avalonia.Controls;
 using Avalonia.Input.Platform;
 using Avalonia.Platform;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
@@ -28,9 +29,9 @@ namespace Polymerium.App.Modals;
 
 public partial class GameCrashReportModal : Modal
 {
-    private const int MaxUploadLines = 10_000;
-    private const int MaxUploadBytes = 10 * 1024 * 1024 - 1;
-    private const int MaxCrashReportUploadLines = 25_000;
+    private const int MAX_UPLOAD_LINES = 10_000;
+    private const int MAX_UPLOAD_BYTES = 10 * 1024 * 1024 - 1;
+    private const int MAX_CRASH_REPORT_UPLOAD_LINES = 25_000;
 
     private static readonly Uri AiTemplateUri = new(
         "avares://Polymerium.App/Assets/Templates/CrashAiAnalysis.md"
@@ -52,7 +53,7 @@ public partial class GameCrashReportModal : Modal
     }
 
     [RelayCommand]
-    private void CopyToClipboard()
+    private async Task CopyToClipboardAsync()
     {
         if (Report == null)
         {
@@ -60,7 +61,26 @@ public partial class GameCrashReportModal : Modal
         }
 
         var text = GenerateCrashReportText();
-        TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(text);
+
+        try
+        {
+            var task = TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(text);
+            if (task != null)
+            {
+                await task;
+            }
+            else
+            {
+                _notificationService?.PopMessage(
+                    "Clipboard is unavailable.",
+                    "Failed to copy crash report"
+                );
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService?.PopMessage(ex, "Failed to copy crash report");
+        }
     }
 
     [RelayCommand]
@@ -520,7 +540,7 @@ public partial class GameCrashReportModal : Modal
         {
             return BuildHeadContent(
                 File.ReadLines(Report.CrashReportPath),
-                MaxCrashReportUploadLines
+                MAX_CRASH_REPORT_UPLOAD_LINES
             );
         }
         catch
@@ -531,10 +551,10 @@ public partial class GameCrashReportModal : Modal
 
     private static string? BuildTailLogContent(IEnumerable<string> lines)
     {
-        var tail = new Queue<string>(MaxUploadLines);
+        var tail = new Queue<string>(MAX_UPLOAD_LINES);
         foreach (var line in lines)
         {
-            if (tail.Count == MaxUploadLines)
+            if (tail.Count == MAX_UPLOAD_LINES)
             {
                 tail.Dequeue();
             }
@@ -550,7 +570,7 @@ public partial class GameCrashReportModal : Modal
         while (tail.Count > 0)
         {
             var content = string.Join(Environment.NewLine, tail);
-            if (Encoding.UTF8.GetByteCount(content) <= MaxUploadBytes)
+            if (Encoding.UTF8.GetByteCount(content) <= MAX_UPLOAD_BYTES)
             {
                 return content;
             }
@@ -576,7 +596,7 @@ public partial class GameCrashReportModal : Modal
             if (
                 Encoding.UTF8.GetByteCount(builder.ToString())
                     + Encoding.UTF8.GetByteCount(candidateLine)
-                > MaxUploadBytes
+                > MAX_UPLOAD_BYTES
             )
             {
                 break;

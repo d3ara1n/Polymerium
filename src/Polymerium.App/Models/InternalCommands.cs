@@ -1,10 +1,14 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Input.Platform;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using Polymerium.App.Services;
 
 namespace Polymerium.App.Models;
 
@@ -40,11 +44,21 @@ public static class InternalCommands
         });
 
     public static ICommand CopyToClipboardCommand { get; } =
-        new RelayCommand<string>(text =>
+        new AsyncRelayCommand<string>(async text =>
         {
-            if (text != null)
+            if (string.IsNullOrEmpty(text))
             {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Clipboard?.SetTextAsync(text);
+                return;
             }
+
+            try
+            {
+                var task = TopLevel.GetTopLevel(MainWindow.Instance)?.Clipboard?.SetTextAsync(text);
+                if (task != null)
+                {
+                    await task;
+                }
+            }
+            catch (Exception) { }
         });
 }

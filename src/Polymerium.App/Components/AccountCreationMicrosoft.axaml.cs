@@ -6,9 +6,12 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Trident.Abstractions.Accounts;
 using Trident.Core.Accounts;
 using Trident.Core.Services;
@@ -64,6 +67,8 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
     public required MicrosoftService MicrosoftService { get; init; }
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
+
+    public required NotificationService NotificationService { get; init; }
 
     public override object NextStep() => new AccountCreationPreview { Account = Account };
 
@@ -136,11 +141,28 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
     private void Retry() => _ = LoadModelAsync();
 
     [RelayCommand]
-    private void Copy()
+    private async Task CopyAsync()
     {
-        if (Model is not null)
+        if (Model is null)
         {
-            TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(Model.UserCode);
+            return;
+        }
+
+        try
+        {
+            var task = TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(Model.UserCode);
+            if (task != null)
+            {
+                await task;
+            }
+            else
+            {
+                NotificationService.PopMessage("Clipboard is unavailable.", "Failed to copy code");
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.PopMessage(ex, "Failed to copy code");
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using Avalonia;
 using Polymerium.App.Controls;
+using Polymerium.App.Services;
 using Trident.Core.Services;
 
 namespace Polymerium.App.Components;
@@ -19,6 +20,7 @@ public partial class AccountCreationPortal : AccountCreationStep
     public required MicrosoftService MicrosoftService { get; init; }
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
+    public required NotificationService NotificationService { get; init; }
 
     public bool IsOfflineAvailable
     {
@@ -34,6 +36,7 @@ public partial class AccountCreationPortal : AccountCreationStep
                 MicrosoftService = MicrosoftService,
                 XboxLiveService = XboxLiveService,
                 MinecraftService = MinecraftService,
+                NotificationService = NotificationService,
             },
             1 => new AccountCreationTrial(),
             2 => new AccountCreationOffline(),

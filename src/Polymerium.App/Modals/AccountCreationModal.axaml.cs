@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Components;
 using Polymerium.App.Controls;
+using Polymerium.App.Services;
 using Trident.Abstractions.Accounts;
 using Trident.Core.Services;
 
@@ -48,6 +49,7 @@ public partial class AccountCreationModal : Modal
     public required MicrosoftService MicrosoftService { get; init; }
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
+    public required NotificationService NotificationService { get; init; }
 
     public object? CurrentStep
     {
@@ -86,6 +88,7 @@ public partial class AccountCreationModal : Modal
             MicrosoftService = MicrosoftService,
             XboxLiveService = XboxLiveService,
             MinecraftService = MinecraftService,
+            NotificationService = NotificationService,
         };
     }
 
