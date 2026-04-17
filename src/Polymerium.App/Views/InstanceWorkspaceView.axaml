@@ -1,0 +1,14 @@
+<controls:Subpage
+  x:Class="Polymerium.App.Views.InstanceWorkspaceView"
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="using:Polymerium.App.Controls"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  x:DataType="vm:InstanceWorkspaceViewModel"
+  mc:Ignorable="d">
+  Welcome to Avalonia!
+</controls:Subpage>

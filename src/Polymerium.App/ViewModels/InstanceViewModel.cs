@@ -399,8 +399,12 @@ public partial class InstanceViewModel : ViewModelBase
         new(typeof(InstanceDashboardView), Symbol.PulseSquare),
         // Setup
         new(typeof(InstanceSetupView), Symbol.Apps),
-        // Assets
-        new(typeof(InstanceAssetsView), Symbol.Library),
+        // Files
+        new(typeof(InstanceFilesView), Symbol.DocumentFolder),
+#if DEBUG
+        // Workspace
+        new(typeof(InstanceWorkspaceView), Symbol.ArrowSyncCircle),
+#endif
         // Widgets
         new(typeof(InstanceWidgetsView), Symbol.AppFolder),
         // Statistics

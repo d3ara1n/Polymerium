@@ -68,7 +68,7 @@
                     Classes="Small"
                     VerticalAlignment="Center"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstanceAssetsView}"
+                    CommandParameter="{x:Type v:InstanceFilesView}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <husk:IconLabel
                         Icon="Library"

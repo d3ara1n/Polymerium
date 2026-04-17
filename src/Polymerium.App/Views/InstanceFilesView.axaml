@@ -1,5 +1,5 @@
 ﻿<controls:Subpage
-    x:Class="Polymerium.App.Views.InstanceAssetsView"
+    x:Class="Polymerium.App.Views.InstanceFilesView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
@@ -16,7 +16,7 @@
     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="vm:InstanceAssetsViewModel"
+    x:DataType="vm:InstanceFilesViewModel"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <TabControl Padding="0">
@@ -33,7 +33,7 @@
                                     <TextBlock Text="(" />
                                     <TextBlock Text="{Binding Count, FallbackValue=(0)}" />
                                     <TextBlock
-                                        IsVisible="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).PackageCount, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}"
+                                        IsVisible="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).PackageCount, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}"
                                         Text="+" />
                                     <TextBlock Text=")" />
                                 </StackPanel>
@@ -68,10 +68,10 @@
                         <StackPanel
                             Grid.Column="1"
                             VerticalAlignment="Center">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceAssetsView_ModInfoBarTitle}" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceFilesView_ModInfoBarTitle}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceAssetsView_ModInfoBarText}" />
+                                Text="{x:Static lang:Resources.InstanceFilesView_ModInfoBarText}" />
                         </StackPanel>
                         <Button
                             Grid.Column="2"
@@ -124,7 +124,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_FilterLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_FilterLabelText}" />
 
                                                     <!--  启用与禁用  -->
                                                     <Grid
@@ -133,7 +133,7 @@
                                                         <TextBlock
                                                             Grid.Column="0"
                                                             VerticalAlignment="Bottom"
-                                                            Text="{x:Static lang:Resources.InstanceAssetsView_StatusFilterText}" />
+                                                            Text="{x:Static lang:Resources.InstanceFilesView_StatusFilterText}" />
                                                         <TabStrip
                                                             Grid.Column="1"
                                                             SelectedItem="{Binding ModFilterEnability, Mode=TwoWay}"
@@ -164,7 +164,7 @@
                                                         <TextBlock
                                                             Grid.Column="0"
                                                             VerticalAlignment="Bottom"
-                                                            Text="{x:Static lang:Resources.InstanceAssetsView_SourceFilterText}" />
+                                                            Text="{x:Static lang:Resources.InstanceFilesView_SourceFilterText}" />
                                                         <TabStrip
                                                             Grid.Column="1"
                                                             SelectedItem="{Binding ModFilterLockility, Mode=TwoWay}"
@@ -178,10 +178,10 @@
                                                                 Label="{x:Static lang:Resources.Enum_All}"
                                                                 Value="{x:Null}" />
                                                             <m:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceAssetsView_SourceImportText}"
+                                                                Label="{x:Static lang:Resources.InstanceFilesView_SourceImportText}"
                                                                 Value="{x:True}" />
                                                             <m:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceAssetsView_SourceLocalText}"
+                                                                Label="{x:Static lang:Resources.InstanceFilesView_SourceLocalText}"
                                                                 Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
@@ -195,7 +195,7 @@
                                                         <TextBlock
                                                             Grid.Column="0"
                                                             VerticalAlignment="Bottom"
-                                                            Text="{x:Static lang:Resources.InstanceAssetsView_LoaderFilterText}" />
+                                                            Text="{x:Static lang:Resources.InstanceFilesView_LoaderFilterText}" />
                                                         <TabStrip
                                                             Grid.Column="1"
                                                             SelectedItem="{Binding ModFilterLoader, Mode=TwoWay}"
@@ -401,7 +401,7 @@
                                         <!--  操作按钮  -->
                                         <husk:ButtonGroup>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleModCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).ToggleModCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                                 <husk:SwitchPresenter
                                                     TargetType="x:Boolean"
@@ -419,14 +419,14 @@
                                                 </husk:SwitchPresenter>
                                             </Button>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding FilePath}">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
                                                     Symbol="FolderOpen" />
                                             </Button>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteModCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).DeleteModCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -442,7 +442,7 @@
                                             <StackPanel Spacing="8">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_DescriptionLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_DescriptionLabelText}" />
                                                 <TextBlock
                                                     Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                     TextWrapping="Wrap" />
@@ -454,7 +454,7 @@
                                             <StackPanel Spacing="12">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_DetailsLabelText}" />
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
                                                     ColumnSpacing="16"
@@ -464,7 +464,7 @@
                                                         Grid.Row="0"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileNameLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetFileNameLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="0"
                                                         Grid.Column="1"
@@ -476,7 +476,7 @@
                                                         Grid.Column="0"
                                                         IsVisible="{Binding Metadata.ModId, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetModIdLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetModIdLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="1"
                                                         Grid.Column="1"
@@ -488,7 +488,7 @@
                                                         Grid.Column="0"
                                                         IsVisible="{Binding Metadata.License, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetLicenseLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetLicenseLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="2"
                                                         Grid.Column="1"
@@ -499,7 +499,7 @@
                                                         Grid.Row="3"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileSizeLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetFileSizeLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="3"
                                                         Grid.Column="1"
@@ -509,7 +509,7 @@
                                                         Grid.Row="4"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetLastModifiedLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetLastModifiedLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="4"
                                                         Grid.Column="1"
@@ -519,7 +519,7 @@
                                                         Grid.Row="5"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetStatusLabelText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetStatusLabelText}" />
                                                     <husk:SwitchPresenter
                                                         Grid.Row="5"
                                                         Grid.Column="1"
@@ -552,7 +552,7 @@
                                                     Spacing="8">
                                                     <husk:IconLabel
                                                         Icon="Open"
-                                                        Text="{x:Static lang:Resources.InstanceAssetsView_AssetVisitWebsiteButtonText}" />
+                                                        Text="{x:Static lang:Resources.InstanceFilesView_AssetVisitWebsiteButtonText}" />
                                                 </StackPanel>
                                             </Button>
                                         </husk:Card>
@@ -573,7 +573,7 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}" />
+                                    Text="{x:Static lang:Resources.InstanceFilesView_AssetEmptyPrompt}" />
                             </StackPanel>
                         </husk:PlaceholderPresenter>
                     </ScrollViewer>
@@ -667,27 +667,27 @@
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <husk:Tag>
                                                             <TextBlock>
-                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text="{x:Static lang:Resources.InstanceFilesView_ServerResourcePackPreferenceLabelText}" />
                                                                 <Run Text=": " />
-                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackAcceptText}" />
+                                                                <Run Text="{x:Static lang:Resources.InstanceFilesView_ServerResourcePackAcceptText}" />
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
                                                         <husk:Tag>
                                                             <TextBlock>
-                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text="{x:Static lang:Resources.InstanceFilesView_ServerResourcePackPreferenceLabelText}" />
                                                                 <Run Text=": " />
-                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackRejectText}" />
+                                                                <Run Text="{x:Static lang:Resources.InstanceFilesView_ServerResourcePackRejectText}" />
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:Null}">
                                                         <husk:Tag>
                                                             <TextBlock>
-                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text="{x:Static lang:Resources.InstanceFilesView_ServerResourcePackPreferenceLabelText}" />
                                                                 <Run Text=": " />
-                                                                <Run Text="{x:Static lang:Resources.InstanceAssetsView_ServerResourcePackPromptText}" />
+                                                                <Run Text="{x:Static lang:Resources.InstanceFilesView_ServerResourcePackPromptText}" />
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
@@ -739,7 +739,7 @@
                                                 TargetType="x:Boolean"
                                                 Value="{Binding IsStatusLoading}">
                                                 <husk:SwitchCase Value="{x:True}">
-                                                    <husk:Tag Content="{x:Static lang:Resources.InstanceAssetsView_ServerCheckingText}" />
+                                                    <husk:Tag Content="{x:Static lang:Resources.InstanceFilesView_ServerCheckingText}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="{x:False}">
                                                     <husk:SwitchPresenter
@@ -753,7 +753,7 @@
                                                         <husk:SwitchCase Value="{x:False}">
                                                             <husk:Tag
                                                                 Classes="Danger"
-                                                                Content="{x:Static lang:Resources.InstanceAssetsView_ServerUnavailableText}" />
+                                                                Content="{x:Static lang:Resources.InstanceFilesView_ServerUnavailableText}" />
                                                         </husk:SwitchCase>
                                                     </husk:SwitchPresenter>
                                                 </husk:SwitchCase>
@@ -968,7 +968,7 @@
                                     <!--  操作按钮  -->
                                     <husk:ButtonGroup>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleResourcePackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).ToggleResourcePackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <husk:SwitchPresenter
                                                 TargetType="x:Boolean"
@@ -986,14 +986,14 @@
                                             </husk:SwitchPresenter>
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding FilePath}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="FolderOpen" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteResourcePackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).DeleteResourcePackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -1009,7 +1009,7 @@
                                         <StackPanel Spacing="8">
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{x:Static lang:Resources.InstanceAssetsView_DescriptionLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceFilesView_DescriptionLabelText}" />
                                             <TextBlock
                                                 Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                 TextWrapping="Wrap" />
@@ -1021,7 +1021,7 @@
                                         <StackPanel Spacing="12">
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceFilesView_DetailsLabelText}" />
                                             <Grid
                                                 ColumnDefinitions="Auto,*"
                                                 ColumnSpacing="16"
@@ -1031,7 +1031,7 @@
                                                     Grid.Row="0"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileNameLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_AssetFileNameLabelText}" />
                                                 <TextBlock
                                                     Grid.Row="0"
                                                     Grid.Column="1"
@@ -1042,7 +1042,7 @@
                                                     Grid.Row="1"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetPackFormatLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_AssetPackFormatLabelText}" />
                                                 <TextBlock
                                                     Grid.Row="1"
                                                     Grid.Column="1"
@@ -1052,7 +1052,7 @@
                                                     Grid.Row="2"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetFileSizeLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_AssetFileSizeLabelText}" />
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     Grid.Column="1"
@@ -1062,7 +1062,7 @@
                                                     Grid.Row="3"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetLastModifiedLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_AssetLastModifiedLabelText}" />
                                                 <TextBlock
                                                     Grid.Row="3"
                                                     Grid.Column="1"
@@ -1072,7 +1072,7 @@
                                                     Grid.Row="4"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceAssetsView_AssetStatusLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceFilesView_AssetStatusLabelText}" />
                                                 <husk:SwitchPresenter
                                                     Grid.Row="4"
                                                     Grid.Column="1"
@@ -1109,7 +1109,7 @@
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}" />
+                                Text="{x:Static lang:Resources.InstanceFilesView_AssetEmptyPrompt}" />
                         </StackPanel>
                     </husk:PlaceholderPresenter>
                 </ScrollViewer>
@@ -1317,7 +1317,7 @@
                                     <!--  操作按钮  -->
                                     <husk:ButtonGroup>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ToggleDataPackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).ToggleDataPackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <husk:SwitchPresenter
                                                 TargetType="x:Boolean"
@@ -1335,14 +1335,14 @@
                                             </husk:SwitchPresenter>
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding FilePath}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="FolderOpen" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteDataPackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).DeleteDataPackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -1463,7 +1463,7 @@
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceAssetsView_AssetEmptyPrompt}" />
+                                Text="{x:Static lang:Resources.InstanceFilesView_AssetEmptyPrompt}" />
                         </StackPanel>
                     </husk:PlaceholderPresenter>
                 </ScrollViewer>
@@ -1554,7 +1554,7 @@
                                                                 RowSpacing="8">
                                                                 <Button
                                                                     Grid.Row="0"
-                                                                    Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).ViewImageCommand, FallbackValue={x:Null}}"
+                                                                    Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).ViewImageCommand, FallbackValue={x:Null}}"
                                                                     CommandParameter="{Binding}"
                                                                     RenderOptions.BitmapInterpolationMode="LowQuality">
                                                                     <Button.Theme>
@@ -1605,21 +1605,21 @@
                                                                 <DockPanel Grid.Row="1">
                                                                     <husk:ButtonGroup DockPanel.Dock="Right">
                                                                         <Button
-                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenScreenshotFileCommand, FallbackValue={x:Null}}"
+                                                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenScreenshotFileCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                                 Symbol="DocumentImage" />
                                                                         </Button>
                                                                         <Button
-                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding Image.LocalPath}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                                 Symbol="FolderOpen" />
                                                                         </Button>
                                                                         <Button
-                                                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).DeleteScreenshotCommand, FallbackValue={x:Null}}"
+                                                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).DeleteScreenshotCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource SmallFontSize}"
@@ -1768,19 +1768,19 @@
                                     <!--  操作按钮  -->
                                     <husk:ButtonGroup>
                                         <!--  <Button  -->
-                                        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
+                                        <!--  Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
                                         <!--  CommandParameter="{Binding WorldPath}">  -->
                                         <!--     <husk:IconLabel Icon="Archive" Text="Export" /> -->
                                         <!-- </Button> -->
                                         <Button
-                                            Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding WorldPath}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="FolderOpen" />
                                         </Button>
                                         <!--  <Button  -->
-                                        <!--  Command="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
+                                        <!--  Command="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).OpenFolderCommand,FallbackValue={x:Null}}"  -->
                                         <!--  CommandParameter="{Binding WorldPath}">  -->
                                         <!--  <fi:SymbolIcon Symbol="Delete"  -->
                                         <!--  Foreground="{StaticResource ControlDangerForegroundBrush}"  -->
@@ -1793,7 +1793,7 @@
                                         <StackPanel Spacing="12">
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{x:Static lang:Resources.InstanceAssetsView_DetailsLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceFilesView_DetailsLabelText}" />
                                             <Grid
                                                 ColumnDefinitions="Auto,*"
                                                 ColumnSpacing="16"
@@ -1860,13 +1860,13 @@
                                     <!--  数据包板块  -->
                                     <Expander
                                         Padding="0"
-                                        Header="{x:Static lang:Resources.InstanceAssetsView_DataPacksLabelText}"
+                                        Header="{x:Static lang:Resources.InstanceFilesView_DataPacksLabelText}"
                                         IsExpanded="True">
-                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
+                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).SelectedWorldDataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <ScrollViewer MaxHeight="320">
                                                 <ItemsControl
                                                     Margin="{StaticResource ExpanderContentMargin}"
-                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldDataPacks, FallbackValue={x:Null}}">
+                                                    ItemsSource="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).SelectedWorldDataPacks, FallbackValue={x:Null}}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <StackPanel Spacing="8" />
@@ -1956,17 +1956,17 @@
 
                                     <!--  玩家板块  -->
                                     <Expander
-                                        Header="{x:Static lang:Resources.InstanceAssetsView_PlayersLabelText}"
+                                        Header="{x:Static lang:Resources.InstanceFilesView_PlayersLabelText}"
                                         IsExpanded="True">
-                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
+                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).SelectedWorldPlayers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <Grid
                                                 RowDefinitions="Auto,*"
                                                 RowSpacing="12">
                                                 <!--  玩家头像列表  -->
                                                 <TabStrip
                                                     Grid.Row="0"
-                                                    ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayers, FallbackValue={x:Null}}"
-                                                    SelectedItem="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedWorldPlayer, Mode=TwoWay, FallbackValue={x:Null}}">
+                                                    ItemsSource="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).SelectedWorldPlayers, FallbackValue={x:Null}}"
+                                                    SelectedItem="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).SelectedWorldPlayer, Mode=TwoWay, FallbackValue={x:Null}}">
                                                     <TabStrip.ItemTemplate>
                                                         <DataTemplate DataType="m:AssetWorldPlayerModel">
                                                             <StackPanel
@@ -2001,7 +2001,7 @@
                                                             FontSize="{StaticResource MediumFontSize}"
                                                             FontWeight="{StaticResource ControlStrongFontWeight}"
                                                             Text="Statistics" />
-                                                        <ItemsControl ItemsSource="{Binding $parent[v:InstanceAssetsView].((vm:InstanceAssetsViewModel)DataContext).SelectedPlayerStats, FallbackValue={x:Null}}">
+                                                        <ItemsControl ItemsSource="{Binding $parent[v:InstanceFilesView].((vm:InstanceFilesViewModel)DataContext).SelectedPlayerStats, FallbackValue={x:Null}}">
                                                             <ItemsControl.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <WrapPanel Orientation="Horizontal" />

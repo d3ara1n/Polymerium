@@ -1281,100 +1281,100 @@
     <data name="AssetKind_DataPack" xml:space="preserve">
         <value>数据包</value>
     </data>
-    <data name="InstanceAssetsView_FilterLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_FilterLabelText" xml:space="preserve">
         <value>条件</value>
     </data>
-    <data name="InstanceAssetsView_LoaderFilterText" xml:space="preserve">
+    <data name="InstanceFilesView_LoaderFilterText" xml:space="preserve">
         <value>加载器</value>
     </data>
-    <data name="InstanceAssetsView_SourceFilterText" xml:space="preserve">
+    <data name="InstanceFilesView_SourceFilterText" xml:space="preserve">
         <value>来源</value>
     </data>
-    <data name="InstanceAssetsView_StatusFilterText" xml:space="preserve">
+    <data name="InstanceFilesView_StatusFilterText" xml:space="preserve">
         <value>状态</value>
     </data>
-    <data name="InstanceAssetsView_SourceLocalText" xml:space="preserve">
+    <data name="InstanceFilesView_SourceLocalText" xml:space="preserve">
         <value>本地</value>
     </data>
-    <data name="InstanceAssetsView_SourceImportText" xml:space="preserve">
+    <data name="InstanceFilesView_SourceImportText" xml:space="preserve">
         <value>导入</value>
     </data>
-    <data name="InstanceAssetsView_ModInfoBarTitle" xml:space="preserve">
+    <data name="InstanceFilesView_ModInfoBarTitle" xml:space="preserve">
         <value>本页面只展示实体模组文件</value>
     </data>
-    <data name="InstanceAssetsView_ModInfoBarText" xml:space="preserve">
+    <data name="InstanceFilesView_ModInfoBarText" xml:space="preserve">
         <value>外部包引用需要在其他页面查看并管理。</value>
     </data>
-    <data name="InstanceAssetsView_AssetFileNameLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetFileNameLabelText" xml:space="preserve">
         <value>文件名：</value>
     </data>
-    <data name="InstanceAssetsView_AssetModIdLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetModIdLabelText" xml:space="preserve">
         <value>Mod Id：</value>
     </data>
-    <data name="InstanceAssetsView_AssetLicenseLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetLicenseLabelText" xml:space="preserve">
         <value>许可：</value>
     </data>
-    <data name="InstanceAssetsView_AssetFileSizeLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetFileSizeLabelText" xml:space="preserve">
         <value>文件大小：</value>
     </data>
-    <data name="InstanceAssetsView_AssetLastModifiedLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetLastModifiedLabelText" xml:space="preserve">
         <value>最后修改：</value>
     </data>
-    <data name="InstanceAssetsView_AssetStatusLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetStatusLabelText" xml:space="preserve">
         <value>状态：</value>
     </data>
-    <data name="InstanceAssetsView_AssetVisitWebsiteButtonText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetVisitWebsiteButtonText" xml:space="preserve">
         <value>访问网站</value>
     </data>
-    <data name="InstanceAssetsView_DetailsLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_DetailsLabelText" xml:space="preserve">
         <value>细节</value>
     </data>
-    <data name="InstanceAssetsView_AssetPackFormatLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_AssetPackFormatLabelText" xml:space="preserve">
         <value>包格式：</value>
     </data>
-    <data name="InstanceAssetsView_AssetEmptyPrompt" xml:space="preserve">
+    <data name="InstanceFilesView_AssetEmptyPrompt" xml:space="preserve">
         <value>选择一个项目以查看详情</value>
     </data>
-    <data name="InstanceAssetsView_DataPacksLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_DataPacksLabelText" xml:space="preserve">
         <value>数据包</value>
     </data>
-    <data name="InstanceAssetsView_PlayersLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_PlayersLabelText" xml:space="preserve">
         <value>玩家</value>
     </data>
-    <data name="InstanceAssetsView_ServerAddressLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerAddressLabelText" xml:space="preserve">
         <value>地址：</value>
     </data>
-    <data name="InstanceAssetsView_ServerResourcePackPreferenceLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerResourcePackPreferenceLabelText" xml:space="preserve">
         <value>服务器资源包：</value>
     </data>
-    <data name="InstanceAssetsView_ServerResourcePackAcceptText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerResourcePackAcceptText" xml:space="preserve">
         <value>接受</value>
     </data>
-    <data name="InstanceAssetsView_ServerResourcePackRejectText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerResourcePackRejectText" xml:space="preserve">
         <value>拒绝</value>
     </data>
-    <data name="InstanceAssetsView_ServerResourcePackPromptText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerResourcePackPromptText" xml:space="preserve">
         <value>每次询问</value>
     </data>
-    <data name="InstanceAssetsView_ServerLiveStatusLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerLiveStatusLabelText" xml:space="preserve">
         <value>实时状态</value>
     </data>
-    <data name="InstanceAssetsView_ServerCheckingText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerCheckingText" xml:space="preserve">
         <value>正在检查服务器...</value>
     </data>
-    <data name="InstanceAssetsView_ServerMotdLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerMotdLabelText" xml:space="preserve">
         <value>消息：</value>
     </data>
-    <data name="InstanceAssetsView_ServerVersionLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerVersionLabelText" xml:space="preserve">
         <value>版本：</value>
     </data>
-    <data name="InstanceAssetsView_ServerPlayersLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerPlayersLabelText" xml:space="preserve">
         <value>玩家：</value>
     </data>
-    <data name="InstanceAssetsView_ServerLatencyLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerLatencyLabelText" xml:space="preserve">
         <value>延迟：</value>
     </data>
-    <data name="InstanceAssetsView_ServerUnavailableText" xml:space="preserve">
+    <data name="InstanceFilesView_ServerUnavailableText" xml:space="preserve">
         <value>服务器不可用</value>
     </data>
     <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
@@ -1425,7 +1425,7 @@
     <data name="ModpackExporterDialog_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>包含 JVM 附加参数设置</value>
     </data>
-    <data name="InstanceAssetsView_DescriptionLabelText" xml:space="preserve">
+    <data name="InstanceFilesView_DescriptionLabelText" xml:space="preserve">
         <value>描述</value>
     </data>
     <data name="Account_Microsoft" xml:space="preserve">
