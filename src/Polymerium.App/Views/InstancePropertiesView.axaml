@@ -161,10 +161,12 @@
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryLabelText}">
-                <TextBox
+                <NumericUpDown
+                    Increment="512"
+                    Minimum="0"
                     PlaceholderText="{Binding JavaMaxMemoryWatermark}"
-                    Text="{Binding JavaMaxMemoryOverride, Mode=TwoWay}">
-                    <TextBox.InnerRightContent>
+                    Value="{Binding JavaMaxMemoryOverride, Mode=TwoWay}">
+                    <NumericUpDown.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
@@ -173,8 +175,8 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryUnitText}" />
                         </StackPanel>
-                    </TextBox.InnerRightContent>
-                </TextBox>
+                    </NumericUpDown.InnerRightContent>
+                </NumericUpDown>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaAdditionalArgumentsLabelText}">
                 <TextBox
