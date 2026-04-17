@@ -1280,7 +1280,7 @@ public partial class InstanceSetupViewModel(
                         string.Join("|", entry.Tags)
                     )
                 );
-                progress.Report(Math.Min(Math.Ceiling((double)output.Count / list.Count), 100d));
+                progress.Report(100d * output.Count / list.Count);
                 progress.Report($"Exporting package list...({output.Count}/{list.Count})");
             }
 
