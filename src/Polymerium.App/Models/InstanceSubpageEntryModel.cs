@@ -5,7 +5,7 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceSubpageEntryModel(Type page, Symbol icon) : ModelBase
+public partial class InstanceSubpageEntryModel(Type page, Symbol icon, string label) : ModelBase
 {
     #region Reactive
 
@@ -17,6 +17,8 @@ public partial class InstanceSubpageEntryModel(Type page, Symbol icon) : ModelBa
     #region Direct
 
     public Type Page => page;
+
+    public string Label => label;
 
     #endregion
 }

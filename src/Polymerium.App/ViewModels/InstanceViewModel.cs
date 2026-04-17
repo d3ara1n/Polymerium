@@ -394,25 +394,25 @@ public partial class InstanceViewModel : ViewModelBase
     public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
         // Home
-        new(typeof(InstanceHomeView), Symbol.Home),
+        new(typeof(InstanceHomeView), Symbol.Home, "Home"),
         // Dashboard
-        new(typeof(InstanceDashboardView), Symbol.PulseSquare),
+        new(typeof(InstanceDashboardView), Symbol.PulseSquare, "Dashboard"),
         // Setup
-        new(typeof(InstanceSetupView), Symbol.Apps),
+        new(typeof(InstanceSetupView), Symbol.Apps, "Packages"),
         // Files
-        new(typeof(InstanceFilesView), Symbol.DocumentFolder),
+        new(typeof(InstanceFilesView), Symbol.DocumentFolder, "Files"),
 #if DEBUG
         // Workspace
-        new(typeof(InstanceWorkspaceView), Symbol.ArrowSyncCircle),
+        new(typeof(InstanceWorkspaceView), Symbol.ArrowSyncCircle, "Workspace"),
 #endif
         // Widgets
-        new(typeof(InstanceWidgetsView), Symbol.AppFolder),
+        new(typeof(InstanceWidgetsView), Symbol.AppFolder, "Widgets"),
         // Statistics
-        new(typeof(InstanceActivitiesView), Symbol.DataArea),
+        new(typeof(InstanceActivitiesView), Symbol.DataArea, "Statistics"),
         // Storage
-        new(typeof(InstanceStorageView), Symbol.ChartMultiple),
+        new(typeof(InstanceStorageView), Symbol.ChartMultiple, "Storage"),
         // Properties
-        new(typeof(InstancePropertiesView), Symbol.Wrench),
+        new(typeof(InstancePropertiesView), Symbol.Wrench, "Properties"),
     ];
 
     [ObservableProperty]

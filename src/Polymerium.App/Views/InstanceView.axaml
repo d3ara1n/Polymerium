@@ -161,21 +161,18 @@
                             SelectedValue="{Binding SelectedPage}"
                             SelectionChanged="EntryBox_OnSelectionChanged"
                             SelectionMode="Single">
-                            <!-- <ListBox.ItemTemplate>
-                                <DataTemplate DataType="m:InstanceSubpageEntryModel">
-                                    <fi:SymbolIcon
-                                        HorizontalAlignment="Center"
-                                        FontSize="18"
-                                        Symbol="{Binding Icon}" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>-->
                             <ListBox.ItemContainerTheme>
                                 <ControlTheme TargetType="ListBoxItem">
                                     <Setter Property="Cursor" Value="Hand" />
                                     <Setter Property="ClipToBounds" Value="False" />
                                     <Setter Property="Template">
                                         <ControlTemplate>
-                                            <Panel Background="{StaticResource TransparentBrush}">
+                                            <Panel
+                                                Background="{StaticResource TransparentBrush}"
+                                                ToolTip.Placement="Right"
+                                                ToolTip.HorizontalOffset="10"
+                                                ToolTip.Tip="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, DataType=m:InstanceSubpageEntryModel}"
+                                                ToolTip.VerticalOffset="0">
                                                 <Border
                                                     Name="Indicator"
                                                     Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
