@@ -256,10 +256,12 @@
             Icon="Joystick"
             Summary="{x:Static lang:Resources.SettingsView_GameDefaultsSubtitle}">
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaMaxMemoryLabelText}">
-                <TextBox
+                <NumericUpDown
+                    Increment="512"
+                    Minimum="0"
                     PlaceholderText="{x:Static lang:Resources.SettingsView_JavaMaxMemoryPlaceholder}"
-                    Text="{Binding JavaMaxMemory, Mode=TwoWay}">
-                    <TextBox.InnerRightContent>
+                    Value="{Binding JavaMaxMemory, Mode=TwoWay}">
+                    <NumericUpDown.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
                             <TextBlock
@@ -268,8 +270,8 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.SettingsView_JavaMaxMemoryUnitText}" />
                         </StackPanel>
-                    </TextBox.InnerRightContent>
-                </TextBox>
+                    </NumericUpDown.InnerRightContent>
+                </NumericUpDown>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsLabelText}">
                 <TextBox
