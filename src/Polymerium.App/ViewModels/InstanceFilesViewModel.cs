@@ -25,8 +25,8 @@ using Trident.Core.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceAssetsViewModel(
-    ILogger<InstanceAssetsViewModel> logger,
+public partial class InstanceFilesViewModel(
+    ILogger<InstanceFilesViewModel> logger,
     ViewBag bag,
     InstanceManager instanceManager,
     ProfileManager profileManager,
