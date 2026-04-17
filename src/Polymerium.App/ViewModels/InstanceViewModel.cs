@@ -394,25 +394,25 @@ public partial class InstanceViewModel : ViewModelBase
     public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
         // Home
-        new(typeof(InstanceHomeView), Symbol.Home, "Home"),
+        new(typeof(InstanceHomeView), Symbol.Home, Resources.InstanceView_HomePageText),
         // Dashboard
-        new(typeof(InstanceDashboardView), Symbol.PulseSquare, "Dashboard"),
+        new(typeof(InstanceDashboardView), Symbol.PulseSquare, Resources.InstanceView_DashboardPageText),
         // Setup
-        new(typeof(InstanceSetupView), Symbol.Apps, "Packages"),
+        new(typeof(InstanceSetupView), Symbol.Apps, Resources.InstanceView_SetupPageText),
         // Files
-        new(typeof(InstanceFilesView), Symbol.DocumentFolder, "Files"),
+        new(typeof(InstanceFilesView), Symbol.DocumentFolder, Resources.InstanceView_FilesPageText),
 #if DEBUG
         // Workspace
-        new(typeof(InstanceWorkspaceView), Symbol.ArrowSyncCircle, "Workspace"),
+        new(typeof(InstanceWorkspaceView), Symbol.ArrowSyncCircle, Resources.InstanceView_WorkspacePageText),
 #endif
         // Widgets
-        new(typeof(InstanceWidgetsView), Symbol.AppFolder, "Widgets"),
+        new(typeof(InstanceWidgetsView), Symbol.AppFolder, Resources.InstanceView_WidgetsPageText),
         // Statistics
-        new(typeof(InstanceActivitiesView), Symbol.DataArea, "Statistics"),
+        new(typeof(InstanceActivitiesView), Symbol.DataArea, Resources.InstanceView_StatisticsPageText),
         // Storage
-        new(typeof(InstanceStorageView), Symbol.ChartMultiple, "Storage"),
+        new(typeof(InstanceStorageView), Symbol.ChartMultiple, Resources.InstanceView_StoragePageText),
         // Properties
-        new(typeof(InstancePropertiesView), Symbol.Wrench, "Properties"),
+        new(typeof(InstancePropertiesView), Symbol.Wrench, Resources.InstanceView_PropertiesPageText),
     ];
 
     [ObservableProperty]

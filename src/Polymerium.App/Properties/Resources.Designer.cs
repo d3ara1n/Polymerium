@@ -2355,6 +2355,87 @@ namespace Polymerium.App.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string InstanceView_DashboardPageText {
+            get {
+                return ResourceManager.GetString("InstanceView_DashboardPageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string InstanceView_FilesPageText {
+            get {
+                return ResourceManager.GetString("InstanceView_FilesPageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string InstanceView_HomePageText {
+            get {
+                return ResourceManager.GetString("InstanceView_HomePageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string InstanceView_SetupPageText {
+            get {
+                return ResourceManager.GetString("InstanceView_SetupPageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string InstanceView_PropertiesPageText {
+            get {
+                return ResourceManager.GetString("InstanceView_PropertiesPageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        public static string InstanceView_StatisticsPageText {
+            get {
+                return ResourceManager.GetString("InstanceView_StatisticsPageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Storage.
+        /// </summary>
+        public static string InstanceView_StoragePageText {
+            get {
+                return ResourceManager.GetString("InstanceView_StoragePageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Widgets.
+        /// </summary>
+        public static string InstanceView_WidgetsPageText {
+            get {
+                return ResourceManager.GetString("InstanceView_WidgetsPageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Workspace.
+        /// </summary>
+        public static string InstanceView_WorkspacePageText {
+            get {
+                return ResourceManager.GetString("InstanceView_WorkspacePageText", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Deployment failed.
         /// </summary>
         public static string InstanceHomeView_DeployDangerNotificationTitle {

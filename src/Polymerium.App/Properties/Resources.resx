@@ -126,6 +126,33 @@
     <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
         <value>Dashboard</value>
     </data>
+    <data name="InstanceView_HomePageText" xml:space="preserve">
+        <value>Home</value>
+    </data>
+    <data name="InstanceView_DashboardPageText" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
+    <data name="InstanceView_SetupPageText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="InstanceView_FilesPageText" xml:space="preserve">
+        <value>Files</value>
+    </data>
+    <data name="InstanceView_WorkspacePageText" xml:space="preserve">
+        <value>Workspace</value>
+    </data>
+    <data name="InstanceView_WidgetsPageText" xml:space="preserve">
+        <value>Widgets</value>
+    </data>
+    <data name="InstanceView_StatisticsPageText" xml:space="preserve">
+        <value>Statistics</value>
+    </data>
+    <data name="InstanceView_StoragePageText" xml:space="preserve">
+        <value>Storage</value>
+    </data>
+    <data name="InstanceView_PropertiesPageText" xml:space="preserve">
+        <value>Properties</value>
+    </data>
     <data name="InstancePropertiesView_TitleTitle" xml:space="preserve">
         <value>Title</value>
     </data>

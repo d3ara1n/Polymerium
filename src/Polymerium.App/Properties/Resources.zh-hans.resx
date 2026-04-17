@@ -117,6 +117,33 @@
     <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
         <value>信息面板</value>
     </data>
+    <data name="InstanceView_HomePageText" xml:space="preserve">
+        <value>主页</value>
+    </data>
+    <data name="InstanceView_DashboardPageText" xml:space="preserve">
+        <value>仪表盘</value>
+    </data>
+    <data name="InstanceView_SetupPageText" xml:space="preserve">
+        <value>包管理</value>
+    </data>
+    <data name="InstanceView_FilesPageText" xml:space="preserve">
+        <value>文件</value>
+    </data>
+    <data name="InstanceView_WorkspacePageText" xml:space="preserve">
+        <value>工作区</value>
+    </data>
+    <data name="InstanceView_WidgetsPageText" xml:space="preserve">
+        <value>工具</value>
+    </data>
+    <data name="InstanceView_StatisticsPageText" xml:space="preserve">
+        <value>统计</value>
+    </data>
+    <data name="InstanceView_StoragePageText" xml:space="preserve">
+        <value>存储</value>
+    </data>
+    <data name="InstanceView_PropertiesPageText" xml:space="preserve">
+        <value>属性</value>
+    </data>
     <data name="InstancePropertiesView_TitleTitle" xml:space="preserve">
         <value>标题</value>
     </data>
