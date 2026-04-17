@@ -169,8 +169,8 @@
                                         <ControlTemplate>
                                             <Panel
                                                 Background="{StaticResource TransparentBrush}"
+                                                ToolTip.HorizontalOffset="5"
                                                 ToolTip.Placement="Right"
-                                                ToolTip.HorizontalOffset="10"
                                                 ToolTip.Tip="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, DataType=m:InstanceSubpageEntryModel}"
                                                 ToolTip.VerticalOffset="0">
                                                 <Border
