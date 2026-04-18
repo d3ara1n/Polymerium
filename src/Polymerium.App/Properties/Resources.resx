@@ -2350,6 +2350,15 @@
     <data name="InstanceDashboardView_SuccessRateLabelText" xml:space="preserve">
         <value>Success Rate</value>
     </data>
+    <data name="InstanceDashboardView_CpuUsageLabelText" xml:space="preserve">
+        <value>CPU Usage</value>
+    </data>
+    <data name="InstanceDashboardView_MemoryUsageLabelText" xml:space="preserve">
+        <value>Memory Usage</value>
+    </data>
+    <data name="InstanceDashboardView_UptimeLabelText" xml:space="preserve">
+        <value>Uptime</value>
+    </data>
     <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
         <value>Search logs...</value>
     </data>

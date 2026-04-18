@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -10,6 +11,7 @@
     xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
     xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="using:System"
     xmlns:trident="using:Trident.Core"
     xmlns:v="https://github.com/d3ara1n/Polymerium/Views"
     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
@@ -196,121 +198,193 @@
                 </husk:SwitchPresenter>
             </husk:Card>
 
-            <!--  游戏次数卡片  -->
-            <husk:Card>
-                <Grid
-                    RowDefinitions="*,Auto"
-                    RowSpacing="8">
-                    <StackPanel
-                        Grid.Row="0"
-                        VerticalAlignment="Center"
-                        Spacing="4">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="{StaticResource ExtraLargeFontSize}"
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{Binding SessionCount}" />
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstanceDashboardView_SessionCountLabelText}" />
-                    </StackPanel>
-                    <Button
-                        Grid.Row="1"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Command="{Binding OpenLogsDirectoryCommand}">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="6">
-                            <fi:SymbolIcon
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="FolderOpen" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_LogsButtonText}" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </husk:Card>
-
-            <!--  崩溃次数卡片  -->
-            <husk:Card>
-                <Grid
-                    RowDefinitions="*,Auto"
-                    RowSpacing="8">
-                    <StackPanel
-                        Grid.Row="0"
-                        VerticalAlignment="Center"
-                        Spacing="4">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="{StaticResource ExtraLargeFontSize}"
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{Binding CrashCount}" />
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstanceDashboardView_CrashCountLabelText}" />
-                    </StackPanel>
-                    <Button
-                        Grid.Row="1"
-                        Classes="Small"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Command="{Binding OpenCrashReportsDirectoryCommand}">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="6">
-                            <fi:SymbolIcon
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="FolderOpen" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_CrashReportsButtonText}" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </husk:Card>
-
-            <!--  成功率统计卡片  -->
+            <!--  游戏次数/处理器占用卡片  -->
             <husk:Card>
                 <husk:SwitchPresenter
-                    TargetType="x:Int32"
-                    Value="{Binding SessionCount}">
-                    <husk:SwitchCase Value="0">
-                        <StackPanel
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Spacing="8">
-                            <fi:SymbolIcon
-                                HorizontalAlignment="Center"
-                                FontSize="32"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Symbol="DataPie" />
+                    TargetType="x:Boolean"
+                    Value="{Binding IsOnAir}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock TextAlignment="Center">
+                                <Run
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding CpuPercent, StringFormat={}{0:F0}}" />
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="%" />
+                            </TextBlock>
                             <TextBlock
-                                HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardView_NoDataLabelText}" />
+                                Text="{x:Static lang:Resources.InstanceDashboardView_CpuUsageLabelText}"
+                                TextAlignment="Center" />
                         </StackPanel>
                     </husk:SwitchCase>
-                    <husk:SwitchCase>
-                        <StackPanel
-                            Margin="{StaticResource CardContentMargin}"
-                            VerticalAlignment="Center"
-                            Spacing="8">
-                            <fi:SymbolIcon
-                                HorizontalAlignment="Center"
-                                FontSize="32"
-                                Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                Symbol="DataPie" />
+                    <husk:SwitchCase Value="{x:False}">
+                        <Grid
+                            RowDefinitions="*,Auto"
+                            RowSpacing="8">
+                            <StackPanel
+                                Grid.Row="0"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding SessionCount}" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceDashboardView_SessionCountLabelText}" />
+                            </StackPanel>
+                            <Button
+                                Grid.Row="1"
+                                Classes="Small"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding OpenLogsDirectoryCommand}">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="FolderOpen" />
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_LogsButtonText}" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:Card>
+
+            <!--  崩溃次数/内存占用卡片  -->
+            <husk:Card>
+                <husk:SwitchPresenter
+                    TargetType="x:Boolean"
+                    Value="{Binding IsOnAir}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock TextAlignment="Center">
+                                <Run
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding MemoryUsage}">
+                                    <Run.Foreground>
+                                        <MultiBinding Converter="{x:Static converters:InternalConverters.MemoryUsageToColorBrush}">
+                                            <Binding Path="MemoryUsage" />
+                                            <Binding Path="MemoryAssigned" />
+                                        </MultiBinding>
+                                    </Run.Foreground></Run>
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="/" />
+                                <Run Text="{Binding MemoryAssigned}" />
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="MB" />
+                            </TextBlock>
                             <TextBlock
-                                HorizontalAlignment="Center"
-                                FontSize="{StaticResource ExtraLargeFontSize}"
-                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{Binding SuccessRate, StringFormat={}{0:F1}%}" />
-                            <TextBlock
-                                HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardView_SuccessRateLabelText}" />
+                                Text="{x:Static lang:Resources.InstanceDashboardView_MemoryUsageLabelText}"
+                                TextAlignment="Center" />
                         </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <Grid
+                            RowDefinitions="*,Auto"
+                            RowSpacing="8">
+                            <StackPanel
+                                Grid.Row="0"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding CrashCount}" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceDashboardView_CrashCountLabelText}" />
+                            </StackPanel>
+                            <Button
+                                Grid.Row="1"
+                                Classes="Small"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding OpenCrashReportsDirectoryCommand}">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="FolderOpen" />
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_CrashReportsButtonText}" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:Card>
+
+            <!--  成功率统计/运行时间卡片  -->
+            <husk:Card>
+                <husk:SwitchPresenter
+                    TargetType="x:Boolean"
+                    Value="{Binding IsOnAir}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="{Binding Uptime, StringFormat='{}{0:hh\\:mm\\:ss}'}"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_UptimeLabelText}"
+                                TextAlignment="Center" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <husk:SwitchPresenter
+                            TargetType="x:Int32"
+                            Value="{Binding SessionCount}">
+                            <husk:SwitchCase Value="0">
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Spacing="8">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="32"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="DataPie" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.InstanceDashboardView_NoDataLabelText}" />
+                                </StackPanel>
+                            </husk:SwitchCase>
+                            <husk:SwitchCase>
+                                <StackPanel
+                                    Margin="{StaticResource CardContentMargin}"
+                                    VerticalAlignment="Center"
+                                    Spacing="8">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="32"
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                        Symbol="DataPie" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding SuccessRate, StringFormat={}{0:F1}%}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.InstanceDashboardView_SuccessRateLabelText}" />
+                                </StackPanel>
+                            </husk:SwitchCase>
+                        </husk:SwitchPresenter>
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>

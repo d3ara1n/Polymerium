@@ -171,4 +171,44 @@ public static class InternalConverters
                 return Brushes.Gray;
             }
         );
+
+    public static IMultiValueConverter MemoryUsageToColorBrush { get; } =
+        new RelayMultiConverter(v =>
+        {
+            if (v is [uint current, uint max])
+            {
+                if (max is > 0)
+                {
+                    var percent = (float)current / max;
+                    if (percent > 1.0)
+                    {
+                        return
+                            Application.Current?.TryGetResource(
+                                "ControlDangerBackgroundBrush",
+                                null,
+                                out var resource
+                            ) == true
+                            ? resource as SolidColorBrush
+                            : Brushes.Red;
+                    }
+                    else if (percent > 0.8)
+                    {
+                        return
+                            Application.Current?.TryGetResource(
+                                "ControlWarningBackgroundBrush",
+                                null,
+                                out var resource
+                            ) == true
+                            ? resource as SolidColorBrush
+                            : Brushes.Orange;
+                    }
+                }
+                else
+                {
+                    return AvaloniaProperty.UnsetValue;
+                }
+            }
+
+            return AvaloniaProperty.UnsetValue;
+        });
 }
