@@ -402,23 +402,43 @@ public partial class InstanceViewModel : ViewModelBase
         // Home
         new(typeof(InstanceHomeView), Symbol.Home, Resources.InstanceView_HomePageText),
         // Dashboard
-        new(typeof(InstanceDashboardView), Symbol.PulseSquare, Resources.InstanceView_DashboardPageText),
+        new(
+            typeof(InstanceDashboardView),
+            Symbol.PulseSquare,
+            Resources.InstanceView_DashboardPageText
+        ),
         // Setup
         new(typeof(InstanceSetupView), Symbol.Apps, Resources.InstanceView_SetupPageText),
         // Files
         new(typeof(InstanceFilesView), Symbol.DocumentFolder, Resources.InstanceView_FilesPageText),
 #if DEBUG
         // Workspace
-        new(typeof(InstanceWorkspaceView), Symbol.ArrowSyncCircle, Resources.InstanceView_WorkspacePageText),
+        new(
+            typeof(InstanceWorkspaceView),
+            Symbol.ArrowSyncCircle,
+            Resources.InstanceView_WorkspacePageText
+        ),
 #endif
         // Widgets
         new(typeof(InstanceWidgetsView), Symbol.AppFolder, Resources.InstanceView_WidgetsPageText),
         // Statistics
-        new(typeof(InstanceActivitiesView), Symbol.DataArea, Resources.InstanceView_StatisticsPageText),
+        new(
+            typeof(InstanceActivitiesView),
+            Symbol.DataArea,
+            Resources.InstanceView_StatisticsPageText
+        ),
         // Storage
-        new(typeof(InstanceStorageView), Symbol.ChartMultiple, Resources.InstanceView_StoragePageText),
+        new(
+            typeof(InstanceStorageView),
+            Symbol.ChartMultiple,
+            Resources.InstanceView_StoragePageText
+        ),
         // Properties
-        new(typeof(InstancePropertiesView), Symbol.Wrench, Resources.InstanceView_PropertiesPageText),
+        new(
+            typeof(InstancePropertiesView),
+            Symbol.Wrench,
+            Resources.InstanceView_PropertiesPageText
+        ),
     ];
 
     [ObservableProperty]
