@@ -9,9 +9,6 @@
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Code/Huskui.Avalonia.Code.csproj" />
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Markdown/Huskui.Avalonia.Markdown.csproj" />
     </Folder>
-    <Folder Name="/MirrorChyan.Net/">
-        <Project Path="submodules/VelopackExtension.MirrorChyan/src/VelopackExtension.MirrorChyan/VelopackExtension.MirrorChyan.csproj" />
-    </Folder>
     <Folder Name="/Misc/">
         <File Path="README.md" />
         <File Path=".gitignore" />
