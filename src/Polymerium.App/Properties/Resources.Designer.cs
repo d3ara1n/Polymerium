@@ -9,8 +9,8 @@
 
 namespace Polymerium.App.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,15 +22,15 @@ namespace Polymerium.App.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +44,7 @@ namespace Polymerium.App.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace Polymerium.App.Properties {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Microsoft.
         /// </summary>
@@ -67,7 +67,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Account_Microsoft", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Offline.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Account_Offline", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Trial.
         /// </summary>
@@ -85,7 +85,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Account_Trial", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The account has been linked. Checkout in the next page..
         /// </summary>
@@ -94,7 +94,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_DoneSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Done!.
         /// </summary>
@@ -103,7 +103,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_DoneTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open in the browser.
         /// </summary>
@@ -112,7 +112,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_OpenLinkButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The code will be expired in 15 minutes. Please fill this code in the page:.
         /// </summary>
@@ -121,7 +121,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Retry.
         /// </summary>
@@ -130,7 +130,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_RetryButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Microsoft Authentication.
         /// </summary>
@@ -139,7 +139,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Something went wrong....
         /// </summary>
@@ -148,7 +148,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationMicrosoft_UnavailableLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
@@ -157,7 +157,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationModal_BackButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
@@ -166,7 +166,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationModal_FinishButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
@@ -175,7 +175,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationModal_NextButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
@@ -184,7 +184,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationOffline_NameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name containing spaces or other non-ascii characters may cause issues..
         /// </summary>
@@ -193,7 +193,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationOffline_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick a name.
         /// </summary>
@@ -202,7 +202,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationOffline_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to UUID.
         /// </summary>
@@ -211,7 +211,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationOffline_UuidLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enables all the online features and is the only way to play the game legally..
         /// </summary>
@@ -220,7 +220,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_MicrosoftSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Microsoft.
         /// </summary>
@@ -229,7 +229,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_MicrosoftTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Nothing good but no Internet connection required..
         /// </summary>
@@ -238,7 +238,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_OfflineSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Offline.
         /// </summary>
@@ -247,7 +247,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_OfflineTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Offline account is unavailable if no Microsoft account is linked..
         /// </summary>
@@ -256,7 +256,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick an account type.
         /// </summary>
@@ -265,7 +265,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Play as the preset character if dont have an account..
         /// </summary>
@@ -274,7 +274,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_TrialSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Trial.
         /// </summary>
@@ -283,7 +283,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPortal_TrialTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 🎉It&apos;s nearly done🎉.
         /// </summary>
@@ -292,7 +292,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPreview_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account Preview.
         /// </summary>
@@ -301,7 +301,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationPreview_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick your favorite family guy.
         /// </summary>
@@ -310,7 +310,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountCreationTrial_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enrolled.
         /// </summary>
@@ -319,7 +319,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountEntryModal_EnrolledLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Used.
         /// </summary>
@@ -328,7 +328,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountEntryModal_LastUsedLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This type of account is type of: No use in the past then no use in the future any more..
         /// </summary>
@@ -337,7 +337,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountEntryModal_MicrosoftPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to It&apos;s all set..
         /// </summary>
@@ -346,7 +346,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountEntryModal_OfflinePrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to It&apos;s all set..
         /// </summary>
@@ -355,7 +355,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountEntryModal_TrialPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No account present in the vault.
         /// </summary>
@@ -364,7 +364,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountPickerDialog_EmptyListPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manage Accounts.
         /// </summary>
@@ -373,7 +373,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountPickerDialog_ManageAccountsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Choose a game account.
         /// </summary>
@@ -382,7 +382,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account with the same uuid already exists.
         /// </summary>
@@ -391,7 +391,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountsView_AccountAddingDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account creation failed.
         /// </summary>
@@ -400,7 +400,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountsView_AccountAddingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add Account.
         /// </summary>
@@ -409,7 +409,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountsView_AddAccountButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mark as Default.
         /// </summary>
@@ -418,7 +418,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountsView_MarkAsDefaultMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
@@ -427,7 +427,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountsView_RemoveMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
@@ -436,7 +436,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AccountsView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -445,7 +445,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AppUpdateModal_CancelButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update Now.
         /// </summary>
@@ -454,7 +454,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AppUpdateModal_ConfirmButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No release notes available.
         /// </summary>
@@ -463,7 +463,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AppUpdateModal_NoReleaseNotesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update Available.
         /// </summary>
@@ -472,7 +472,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AppUpdateModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Falls back to traditional mod.jar placement, losing Polymerium&apos;s file management benefits..
         /// </summary>
@@ -481,7 +481,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_AsAssetDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to As asset file.
         /// </summary>
@@ -490,7 +490,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_AsAssetLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Persistent files stay in the persist directory across deployments; portable files are persistent files stored in the import directory that get bundled when exporting modpacks..
         /// </summary>
@@ -499,7 +499,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_AsAssetPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to As package reference.
         /// </summary>
@@ -508,7 +508,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_AsPackageLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Identifying file type....
         /// </summary>
@@ -517,7 +517,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_IdentifyingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Package was not found in the hosting repositories.
         /// </summary>
@@ -526,7 +526,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_PackageNotFoundLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Portable.
         /// </summary>
@@ -535,7 +535,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_PortableLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Physical asset files are not shown in the package list. View them in the File Explorer..
         /// </summary>
@@ -544,7 +544,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add asset or package from file.
         /// </summary>
@@ -553,7 +553,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetImporterDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Config.
         /// </summary>
@@ -562,7 +562,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_Config", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Crash Reports.
         /// </summary>
@@ -571,7 +571,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_CrashReport", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Data Packs.
         /// </summary>
@@ -580,7 +580,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_DataPack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Logs.
         /// </summary>
@@ -589,7 +589,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_Log", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mods.
         /// </summary>
@@ -598,7 +598,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_Mod", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resource Packs.
         /// </summary>
@@ -607,7 +607,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_ResourcePack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Worlds.
         /// </summary>
@@ -616,7 +616,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_Save", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Screenshots.
         /// </summary>
@@ -625,7 +625,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_Screenshot", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Servers.
         /// </summary>
@@ -634,7 +634,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_Server", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Shader Packs.
         /// </summary>
@@ -643,7 +643,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("AssetKind_ShaderPack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Building artifacts....
         /// </summary>
@@ -652,7 +652,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_BuildArtifact", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Checking artifacts....
         /// </summary>
@@ -661,7 +661,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_CheckArtifact", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ensuring runtime....
         /// </summary>
@@ -670,7 +670,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_EnsureRuntime", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Generating manifest....
         /// </summary>
@@ -679,7 +679,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_GenerateManifest", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Installing vanilla....
         /// </summary>
@@ -688,7 +688,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_InstallVanilla", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Processing loader....
         /// </summary>
@@ -697,7 +697,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_ProcessLoader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resolving packages....
         /// </summary>
@@ -706,7 +706,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_ResolvePackage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Solidifying files....
         /// </summary>
@@ -715,7 +715,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("DeployStage_SolidifyManifest", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -724,7 +724,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Dialog_CancelButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
@@ -733,7 +733,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Dialog_ConfirmButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dismiss.
         /// </summary>
@@ -742,7 +742,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Dialog_DismissButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
@@ -751,7 +751,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_All", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Day.
         /// </summary>
@@ -760,7 +760,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Day", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
@@ -769,7 +769,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Disabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
@@ -778,7 +778,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Enabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hour.
         /// </summary>
@@ -787,7 +787,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Hour", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Month.
         /// </summary>
@@ -796,7 +796,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Month", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
@@ -805,7 +805,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_None", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
@@ -814,7 +814,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Off", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to On.
         /// </summary>
@@ -823,7 +823,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_On", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
@@ -832,7 +832,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Unknown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Vanilla.
         /// </summary>
@@ -841,7 +841,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Vanilla", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Week.
         /// </summary>
@@ -850,7 +850,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Week", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Year.
         /// </summary>
@@ -859,7 +859,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Enum_Year", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Network Error.
         /// </summary>
@@ -868,7 +868,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Error_BadNetwork", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to It seems something went wrong....
         /// </summary>
@@ -877,7 +877,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExceptionView_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Died, but not dead....
         /// </summary>
@@ -886,7 +886,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExceptionView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Required.
         /// </summary>
@@ -895,7 +895,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitDependencyButton_RequiredTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
@@ -904,7 +904,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitModpackButton_InstallButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
@@ -913,7 +913,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitModpackToast_InstallButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
@@ -922,7 +922,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_AboutTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add to the instance.
         /// </summary>
@@ -931,7 +931,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_AddButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Adding:.
         /// </summary>
@@ -940,7 +940,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_AddingVersionTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Showing changelog of version:.
         /// </summary>
@@ -949,7 +949,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_ChangelogsTabPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Changlogs.
         /// </summary>
@@ -958,7 +958,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_ChangelogsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Showing dependencies of version:.
         /// </summary>
@@ -967,7 +967,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_DependenciesTabPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dependencies.
         /// </summary>
@@ -976,7 +976,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_DependenciesTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select a Version.
         /// </summary>
@@ -985,7 +985,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_EmptyListLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show compatible versions only.
         /// </summary>
@@ -994,7 +994,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_FilterLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
@@ -1003,7 +1003,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_HistoryTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Installed:.
         /// </summary>
@@ -1012,7 +1012,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_InstalledVersionTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Locked Version.
         /// </summary>
@@ -1021,7 +1021,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_LockedVersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Apply changes.
         /// </summary>
@@ -1030,7 +1030,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_ModifyButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Replacing:.
         /// </summary>
@@ -1039,7 +1039,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_ModifyingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Removing:.
         /// </summary>
@@ -1048,7 +1048,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_RemovingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Restore.
         /// </summary>
@@ -1057,7 +1057,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_RestoreButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unspecified.
         /// </summary>
@@ -1066,7 +1066,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_UnspecifiedVersionTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Specify version....
         /// </summary>
@@ -1075,7 +1075,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_VersionBoxPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
@@ -1084,7 +1084,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitPackageModal_VersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Adding.
         /// </summary>
@@ -1093,7 +1093,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitStatePresenter_AddingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Installed.
         /// </summary>
@@ -1102,7 +1102,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitStatePresenter_EditableTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Locked.
         /// </summary>
@@ -1111,7 +1111,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitStatePresenter_LockedTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Modifying.
         /// </summary>
@@ -1120,7 +1120,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitStatePresenter_ModifyingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Removing.
         /// </summary>
@@ -1129,7 +1129,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExhibitStatePresenter_RemovingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to packages.
         /// </summary>
@@ -1138,7 +1138,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExportPackageListDialog_PackageCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Chooooosen file path.
         /// </summary>
@@ -1147,7 +1147,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExportPackageListDialog_PathBarPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export to.
         /// </summary>
@@ -1156,7 +1156,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExportPackageListDialog_PathLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export package list of the instance into the selected formatted table file.
         /// </summary>
@@ -1165,7 +1165,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExportPackageListDialog_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export package list.
         /// </summary>
@@ -1174,7 +1174,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ExportPackageListDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to File too big makes app crash.
         /// </summary>
@@ -1183,7 +1183,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("FilePickerDialog_AlertPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Browser files....
         /// </summary>
@@ -1192,7 +1192,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("FilePickerDialog_BrowseButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Drag and drop, or.
         /// </summary>
@@ -1201,7 +1201,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("FilePickerDialog_DropZonePrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Chooooosen file path&quot;.
         /// </summary>
@@ -1210,7 +1210,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("FilePickerDialog_PathBarPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick a file.
         /// </summary>
@@ -1219,7 +1219,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("FilePickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export AI Analysis Markdown.
         /// </summary>
@@ -1228,7 +1228,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportDialogTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to AI Export Failed.
         /// </summary>
@@ -1237,7 +1237,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportFailedTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No usable crash log was found for AI analysis export..
         /// </summary>
@@ -1246,7 +1246,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportLogUnavailableMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Log Unavailable.
         /// </summary>
@@ -1255,7 +1255,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportLogUnavailableTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to AI analysis markdown has been exported..
         /// </summary>
@@ -1264,7 +1264,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportSuccessMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export Completed.
         /// </summary>
@@ -1273,7 +1273,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportSuccessTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unable to upload the crash log to mclo.gs..
         /// </summary>
@@ -1282,7 +1282,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadFailedMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Log Upload Failed.
         /// </summary>
@@ -1291,7 +1291,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadFailedTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Uploading crash log to mclo.gs....
         /// </summary>
@@ -1300,7 +1300,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadingMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Uploading Log.
         /// </summary>
@@ -1309,7 +1309,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadingTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Writing AI analysis markdown file....
         /// </summary>
@@ -1318,7 +1318,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportWritingMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Exporting Markdown.
         /// </summary>
@@ -1327,7 +1327,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportWritingTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Allocated Memory:.
         /// </summary>
@@ -1336,7 +1336,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_AllocatedMemoryLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
@@ -1345,7 +1345,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_CloseButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy Report.
         /// </summary>
@@ -1354,7 +1354,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_CopyReportButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Exit Code.
         /// </summary>
@@ -1363,7 +1363,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_ExitCodeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to AI Analysis Package.
         /// </summary>
@@ -1372,7 +1372,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_ExportAnalysisPackageMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
@@ -1381,7 +1381,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_ExportButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manual Diagnostic Package.
         /// </summary>
@@ -1390,7 +1390,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_ExportDiagnosticPackageMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export Diagnostic Package.
         /// </summary>
@@ -1399,7 +1399,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_ExportDialogTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Installed Memory:.
         /// </summary>
@@ -1408,7 +1408,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_InstalledMemoryLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Installed Mods:.
         /// </summary>
@@ -1417,7 +1417,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_InstalledModsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Instance.
         /// </summary>
@@ -1426,7 +1426,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_InstanceSectionTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Path:.
         /// </summary>
@@ -1435,7 +1435,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_JavaPathLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Version:.
         /// </summary>
@@ -1444,7 +1444,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_JavaVersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Log Output.
         /// </summary>
@@ -1453,7 +1453,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_LastLogOutputTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Minecraft Version.
         /// </summary>
@@ -1462,7 +1462,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_MinecraftVersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mod Loader:.
         /// </summary>
@@ -1471,7 +1471,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_ModLoaderLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name:.
         /// </summary>
@@ -1480,7 +1480,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_NameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Crash Report.
         /// </summary>
@@ -1489,7 +1489,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_OpenCrashReportButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Game Directory.
         /// </summary>
@@ -1498,7 +1498,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_OpenGameDirectoryButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Latest Log.
         /// </summary>
@@ -1507,7 +1507,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_OpenLatestLogButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Operating System:.
         /// </summary>
@@ -1516,7 +1516,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_OperatingSystemLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Play Time.
         /// </summary>
@@ -1525,7 +1525,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_PlayTimeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Quick Actions.
         /// </summary>
@@ -1534,7 +1534,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_QuickActionsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 💥 CRASHED!.
         /// </summary>
@@ -1543,7 +1543,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to System Environment.
         /// </summary>
@@ -1552,7 +1552,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_SystemEnvironmentTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to CRASH REPORT.
         /// </summary>
@@ -1561,7 +1561,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameCrashReportModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick a game version.
         /// </summary>
@@ -1570,7 +1570,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameVersionPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filter by version names....
         /// </summary>
@@ -1579,7 +1579,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("GameVersionPickerDialog_VersionBarPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Active Days.
         /// </summary>
@@ -1588,7 +1588,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ActiveDaysLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Avg. Session.
         /// </summary>
@@ -1597,7 +1597,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_AverageSessionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Changelog.
         /// </summary>
@@ -1606,7 +1606,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ChangelogLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Records.
         /// </summary>
@@ -1615,7 +1615,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ClearRecordsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to clear all action records for this instance? This action cannot be undone..
         /// </summary>
@@ -1624,7 +1624,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ClearRecordsConfirmationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Records.
         /// </summary>
@@ -1633,7 +1633,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ClearRecordsConfirmationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Statistics.
         /// </summary>
@@ -1642,7 +1642,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ClearStatisticsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to clear all statistics for this instance? This action cannot be undone..
         /// </summary>
@@ -1651,7 +1651,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ClearStatisticsConfirmationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Statistics.
         /// </summary>
@@ -1660,7 +1660,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ClearStatisticsConfirmationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Crash Count.
         /// </summary>
@@ -1669,7 +1669,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_CrashCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manage statistics and action records for this instance.
         /// </summary>
@@ -1678,7 +1678,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_DataManagementSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Data Management.
         /// </summary>
@@ -1687,7 +1687,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_DataManagementTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to First Played.
         /// </summary>
@@ -1696,7 +1696,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_FirstPlayedLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Health.
         /// </summary>
@@ -1705,7 +1705,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_HealthTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Played.
         /// </summary>
@@ -1714,7 +1714,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_LastPlayedLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Week.
         /// </summary>
@@ -1723,7 +1723,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_LastWeekLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Longest Session.
         /// </summary>
@@ -1732,7 +1732,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_LongestSessionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Playtime Share.
         /// </summary>
@@ -1741,7 +1741,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_PlaytimePercentageLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Playtime.
         /// </summary>
@@ -1750,7 +1750,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_PlaytimeTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Session Count.
         /// </summary>
@@ -1759,7 +1759,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_SessionCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Statistics.
         /// </summary>
@@ -1768,7 +1768,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_StatisticsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Success Rate.
         /// </summary>
@@ -1777,7 +1777,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_SuccessRateLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This Week.
         /// </summary>
@@ -1786,7 +1786,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_ThisWeekLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Total Hours.
         /// </summary>
@@ -1795,7 +1795,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_TotalHoursLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Total Hours Rank.
         /// </summary>
@@ -1804,7 +1804,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_TotalHoursRankLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Trends.
         /// </summary>
@@ -1813,7 +1813,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceActivitiesView_TrendsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to CPU Usage.
         /// </summary>
@@ -1822,7 +1822,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_CpuUsageLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Crashes.
         /// </summary>
@@ -1831,7 +1831,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_CrashCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Crash Reports.
         /// </summary>
@@ -1840,7 +1840,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_CrashReportsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deploying.
         /// </summary>
@@ -1849,7 +1849,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_DeployingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Idle.
         /// </summary>
@@ -1858,7 +1858,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_IdleLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Live Log.
         /// </summary>
@@ -1867,7 +1867,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_LiveLogLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Logs.
         /// </summary>
@@ -1876,7 +1876,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_LogsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Memory Usage.
         /// </summary>
@@ -1885,7 +1885,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_MemoryUsageLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No Data.
         /// </summary>
@@ -1894,7 +1894,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_NoDataLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Running.
         /// </summary>
@@ -1903,7 +1903,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_RunningLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search logs....
         /// </summary>
@@ -1912,7 +1912,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sessions.
         /// </summary>
@@ -1921,7 +1921,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_SessionCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Success Rate.
         /// </summary>
@@ -1930,7 +1930,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_SuccessRateLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -1939,7 +1939,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_Test", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Updating.
         /// </summary>
@@ -1948,7 +1948,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_UpdatingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Uptime.
         /// </summary>
@@ -1957,7 +1957,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceDashboardView_UptimeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to INSTALLING.
         /// </summary>
@@ -1966,7 +1966,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceEntryButton_InstallTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to PREPARING.
         /// </summary>
@@ -1975,7 +1975,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceEntryButton_PreparingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to RUNNING.
         /// </summary>
@@ -1984,7 +1984,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceEntryButton_RunningTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to UPDATING.
         /// </summary>
@@ -1993,7 +1993,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceEntryButton_UpdatingTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select an item to view details.
         /// </summary>
@@ -2002,7 +2002,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetEmptyPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to File Name:.
         /// </summary>
@@ -2011,7 +2011,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetFileNameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to File Size:.
         /// </summary>
@@ -2020,7 +2020,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetFileSizeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Modified:.
         /// </summary>
@@ -2029,7 +2029,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetLastModifiedLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to License:.
         /// </summary>
@@ -2038,7 +2038,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetLicenseLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mod Id:.
         /// </summary>
@@ -2047,7 +2047,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetModIdLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pack Format:.
         /// </summary>
@@ -2056,7 +2056,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetPackFormatLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Status:.
         /// </summary>
@@ -2065,7 +2065,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetStatusLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Visit Website.
         /// </summary>
@@ -2074,7 +2074,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_AssetVisitWebsiteButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Data Packs.
         /// </summary>
@@ -2083,7 +2083,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_DataPacksLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
@@ -2092,7 +2092,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_DescriptionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
@@ -2101,7 +2101,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_DetailsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
@@ -2110,7 +2110,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_FilterLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loader.
         /// </summary>
@@ -2119,7 +2119,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_LoaderFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to External package references are managed separately and not displayed here..
         /// </summary>
@@ -2128,7 +2128,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ModInfoBarText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This page shows physical mod files only.
         /// </summary>
@@ -2137,7 +2137,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ModInfoBarTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Players.
         /// </summary>
@@ -2146,7 +2146,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_PlayersLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Address:.
         /// </summary>
@@ -2155,7 +2155,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerAddressLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Checking server....
         /// </summary>
@@ -2164,7 +2164,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerCheckingText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Latency:.
         /// </summary>
@@ -2173,7 +2173,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerLatencyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Live Status.
         /// </summary>
@@ -2182,7 +2182,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerLiveStatusLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Message:.
         /// </summary>
@@ -2191,7 +2191,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerMotdLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Players:.
         /// </summary>
@@ -2200,7 +2200,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerPlayersLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
@@ -2209,7 +2209,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerResourcePackAcceptText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Server Resource Packs:.
         /// </summary>
@@ -2218,7 +2218,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerResourcePackPreferenceLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ask Every Time.
         /// </summary>
@@ -2227,7 +2227,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerResourcePackPromptText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reject.
         /// </summary>
@@ -2236,7 +2236,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerResourcePackRejectText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Server unavailable.
         /// </summary>
@@ -2245,7 +2245,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerUnavailableText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
@@ -2254,7 +2254,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_ServerVersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Source.
         /// </summary>
@@ -2263,7 +2263,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_SourceFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
@@ -2272,7 +2272,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_SourceImportText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Local.
         /// </summary>
@@ -2281,7 +2281,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_SourceLocalText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
@@ -2290,7 +2290,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceFilesView_StatusFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ABORT.
         /// </summary>
@@ -2299,7 +2299,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AbortButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account authentication failed.
         /// </summary>
@@ -2308,7 +2308,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AccountAuthenticationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unchosen.
         /// </summary>
@@ -2317,7 +2317,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AccountButtonSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
@@ -2326,7 +2326,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AccountButtonTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account is not provided or removed after set.
         /// </summary>
@@ -2335,7 +2335,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select Account.
         /// </summary>
@@ -2344,7 +2344,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account Not Found.
         /// </summary>
@@ -2353,7 +2353,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Activities.
         /// </summary>
@@ -2362,7 +2362,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_ActivitiesTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
@@ -2371,7 +2371,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_DashboardButtonSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Logs.
         /// </summary>
@@ -2380,7 +2380,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_DashboardButtonTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deployment failed.
         /// </summary>
@@ -2389,7 +2389,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_DeployDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Eject.
         /// </summary>
@@ -2398,7 +2398,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_DetachButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Total Hours.
         /// </summary>
@@ -2407,7 +2407,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_HourCountText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to KILL.
         /// </summary>
@@ -2416,7 +2416,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_KillButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to LAUNCH.
         /// </summary>
@@ -2425,7 +2425,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_LaunchButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Launch Pad.
         /// </summary>
@@ -2434,7 +2434,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_LaunchPadTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account is not set yet.
         /// </summary>
@@ -2443,7 +2443,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_NoAccountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
@@ -2452,7 +2452,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_OverviewTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to packages.
         /// </summary>
@@ -2461,7 +2461,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_PackageCountText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Everything is ready.
         /// </summary>
@@ -2470,7 +2470,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_ReadyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to See More.
         /// </summary>
@@ -2479,7 +2479,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_SeeMoreButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
@@ -2488,7 +2488,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_SetupEditButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Setup.
         /// </summary>
@@ -2497,7 +2497,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_SetupTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
@@ -2506,7 +2506,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_SetupTypeText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
@@ -2515,7 +2515,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_SetupVersionText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Widgets.
         /// </summary>
@@ -2524,7 +2524,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceHomeView_WidgetsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto Version.
         /// </summary>
@@ -2533,7 +2533,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageButton_AutoVersionTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
@@ -2542,7 +2542,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageButton_DisabledLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
@@ -2551,7 +2551,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageButton_ImportTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Refs:.
         /// </summary>
@@ -2560,7 +2560,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageDependencyButton_RefCountTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Required.
         /// </summary>
@@ -2569,7 +2569,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageDependencyButton_RequiredTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Automatically select the best compatible version.
         /// </summary>
@@ -2578,7 +2578,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageDependencyModal_AutoVersionSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto Version.
         /// </summary>
@@ -2587,7 +2587,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageDependencyModal_AutoVersionTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Added.
         /// </summary>
@@ -2596,7 +2596,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_AddedLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
@@ -2605,7 +2605,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_AddTagButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Applied Rules.
         /// </summary>
@@ -2614,7 +2614,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_AppliedRulesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto Version.
         /// </summary>
@@ -2623,7 +2623,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_AutoVersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Basics.
         /// </summary>
@@ -2632,7 +2632,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_BasicsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dependants.
         /// </summary>
@@ -2641,7 +2641,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_DependantsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dependencies.
         /// </summary>
@@ -2650,7 +2650,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_DependenciesTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show compatible versions only.
         /// </summary>
@@ -2659,7 +2659,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_FilterLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
@@ -2668,7 +2668,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_HistoryTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Not Editable.
         /// </summary>
@@ -2677,7 +2677,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_LockedVersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No rules matched.
         /// </summary>
@@ -2686,7 +2686,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_NoRulesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Now.
         /// </summary>
@@ -2695,7 +2695,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_NowTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Operation: .
         /// </summary>
@@ -2704,7 +2704,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_OperationLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
@@ -2713,7 +2713,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_OverviewLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Past.
         /// </summary>
@@ -2722,7 +2722,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_PastTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Removed package.
         /// </summary>
@@ -2731,7 +2731,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_RemovedPackageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set to.
         /// </summary>
@@ -2740,7 +2740,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_SetToLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
@@ -2749,7 +2749,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_TagsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Updated to.
         /// </summary>
@@ -2758,7 +2758,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_UpdatedToLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Current Version.
         /// </summary>
@@ -2767,7 +2767,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_VersionBoxLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Or pick a version in the list below..
         /// </summary>
@@ -2776,7 +2776,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_VersionBoxUnspecificSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto Select Version.
         /// </summary>
@@ -2785,7 +2785,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_VersionBoxUnspecificTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Versions.
         /// </summary>
@@ -2794,7 +2794,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePackageModal_VersionsTabText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to How the application acts and chooses strategies.
         /// </summary>
@@ -2803,7 +2803,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_BehaviorsSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Behaviors.
         /// </summary>
@@ -2812,7 +2812,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_BehaviorsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Build in Full Check Mode.
         /// </summary>
@@ -2821,7 +2821,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_CheckIntegrityButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check Integrity.
         /// </summary>
@@ -2830,7 +2830,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_CheckIntegrityLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to These settings are applied instantly and can&apos;t be recovered.
         /// </summary>
@@ -2839,7 +2839,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_DangerZoneSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Danger Zone.
         /// </summary>
@@ -2848,7 +2848,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_DangerZoneTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Having problems? Try these options.
         /// </summary>
@@ -2857,7 +2857,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_DebugSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Debug.
         /// </summary>
@@ -2866,7 +2866,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_DebugTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
@@ -2875,7 +2875,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_DeleteButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Display Name.
         /// </summary>
@@ -2884,7 +2884,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_DisplayNameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Fast Launch.
         /// </summary>
@@ -2893,7 +2893,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_FastLaunchLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to I&apos;m in a hurry.
         /// </summary>
@@ -2902,7 +2902,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_FastLaunchOnText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted..
         /// </summary>
@@ -2911,7 +2911,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_FastLaunchPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The instance is busy now.
         /// </summary>
@@ -2920,7 +2920,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_InoperableLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Additional Arguments.
         /// </summary>
@@ -2929,7 +2929,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_JavaAdditionalArgumentsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to (Empty).
         /// </summary>
@@ -2938,7 +2938,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_JavaAdditionalArgumentsPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Home.
         /// </summary>
@@ -2947,7 +2947,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_JavaHomeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to (Auto decide if unset).
         /// </summary>
@@ -2956,7 +2956,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_JavaHomePlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Max Memory.
         /// </summary>
@@ -2965,7 +2965,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to MiB.
         /// </summary>
@@ -2974,7 +2974,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_JavaMaxMemoryUnitText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Link.
         /// </summary>
@@ -2983,7 +2983,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_LinkerLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages..
         /// </summary>
@@ -2992,7 +2992,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_LinkerPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Entries here will overwrite the global settings.
         /// </summary>
@@ -3001,7 +3001,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_NavigateToGlobalButtonSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Navigate to the global settings page.
         /// </summary>
@@ -3010,7 +3010,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_NavigateToGlobalButtonTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Configuration specified to the instance; leaving blank to refer to the global settings.
         /// </summary>
@@ -3019,7 +3019,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_OverridesSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Game Overrides.
         /// </summary>
@@ -3028,7 +3028,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_OverridesTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Connect At Startup.
         /// </summary>
@@ -3037,7 +3037,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_QuickConnectLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to (Disabled if unset).
         /// </summary>
@@ -3046,7 +3046,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_QuickConnectPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
@@ -3055,7 +3055,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RemoveButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
@@ -3064,7 +3064,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RenameButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe.
         /// </summary>
@@ -3073,7 +3073,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RequestJavaPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select a Java executable.
         /// </summary>
@@ -3082,7 +3082,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RequestJavaTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Give the instance a new name.
         /// </summary>
@@ -3091,7 +3091,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RequestNamePrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rename instance.
         /// </summary>
@@ -3100,7 +3100,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RequestNameTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select a image file.
         /// </summary>
@@ -3109,7 +3109,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RequestThumbnailPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select thumbnail.
         /// </summary>
@@ -3118,7 +3118,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_RequestThumbnailTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
@@ -3127,7 +3127,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_ResetButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Scrifice.
         /// </summary>
@@ -3136,7 +3136,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_SacrificeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
@@ -3145,7 +3145,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_SelectButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Thumbnail.
         /// </summary>
@@ -3154,7 +3154,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_ThumbnailLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Thumbnail saving failed.
         /// </summary>
@@ -3163,7 +3163,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_ThumbnailSavingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Selected file is not a valid image or no file selected..
         /// </summary>
@@ -3172,7 +3172,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set instance thumbnail.
         /// </summary>
@@ -3181,7 +3181,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to How this instance identify itself.
         /// </summary>
@@ -3190,7 +3190,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_TitleSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
@@ -3199,7 +3199,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_TitleTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unlock.
         /// </summary>
@@ -3208,7 +3208,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_UnlockButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The instance is no longer associated to any modpack brand and free to edit..
         /// </summary>
@@ -3217,7 +3217,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_UnlockingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
@@ -3226,7 +3226,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_WindowHeightLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Window Initial Size.
         /// </summary>
@@ -3235,7 +3235,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_WindowInitialSizeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
@@ -3244,7 +3244,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstancePropertiesView_WindowWidthLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Active.
         /// </summary>
@@ -3253,7 +3253,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ActiveMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Batch Update.
         /// </summary>
@@ -3262,7 +3262,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_BatchUpdateMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to check update.
         /// </summary>
@@ -3271,7 +3271,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_CheckUpdateDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dependency Graph.
         /// </summary>
@@ -3280,7 +3280,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_DependencyGraphMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Writing data to file ({0}) failed: {1}.
         /// </summary>
@@ -3289,7 +3289,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ExportListDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export package list to file.
         /// </summary>
@@ -3298,7 +3298,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ExportListDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Explort List.
         /// </summary>
@@ -3307,7 +3307,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ExportListMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Exported package list to file {0}.
         /// </summary>
@@ -3316,7 +3316,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ExportListSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export package list to file.
         /// </summary>
@@ -3325,7 +3325,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ExportListSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to fetching information.
         /// </summary>
@@ -3334,7 +3334,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_FetchingInformationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enter filter string....
         /// </summary>
@@ -3343,7 +3343,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_FilterBarPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
@@ -3352,7 +3352,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_FilterLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get More.
         /// </summary>
@@ -3361,7 +3361,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_GetMoreButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import package list.
         /// </summary>
@@ -3370,7 +3370,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ImportListDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import List.
         /// </summary>
@@ -3379,7 +3379,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ImportListMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No packages found in the file.
         /// </summary>
@@ -3388,7 +3388,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ImportListNoPackagesWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Added: {0}, Updated: {1}, Failed: {2}.
         /// </summary>
@@ -3397,7 +3397,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ImportListSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import package list completed.
         /// </summary>
@@ -3406,7 +3406,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ImportListSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import package list.
         /// </summary>
@@ -3415,7 +3415,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ImportListWarningNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Operating In Progress.
         /// </summary>
@@ -3424,7 +3424,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_InoperableLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0}({1}) has added to install queue.
         /// </summary>
@@ -3433,7 +3433,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_InstallVersionNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mod Loader.
         /// </summary>
@@ -3442,7 +3442,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_LoaderLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to load project information.
         /// </summary>
@@ -3451,7 +3451,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_LoadProjectInformationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Website.
         /// </summary>
@@ -3460,7 +3460,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_OpenWebsiteMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} packages to be updated.
         /// </summary>
@@ -3469,7 +3469,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Review.
         /// </summary>
@@ -3478,7 +3478,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update packages in bulk.
         /// </summary>
@@ -3487,7 +3487,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -3496,7 +3496,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Checking updates...({0}/{1}).
         /// </summary>
@@ -3505,7 +3505,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update packages in bulk.
         /// </summary>
@@ -3514,7 +3514,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to parse purl.
         /// </summary>
@@ -3523,7 +3523,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ParsePurlDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Project Id.
         /// </summary>
@@ -3532,7 +3532,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ProjectIdMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Project Name.
         /// </summary>
@@ -3541,7 +3541,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ProjectNameMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Something went wrong.
         /// </summary>
@@ -3550,7 +3550,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ReferenceUnavailableLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Refreshing....
         /// </summary>
@@ -3559,7 +3559,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_RefreshingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
@@ -3568,7 +3568,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_RemoveMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
@@ -3577,7 +3577,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_ResultCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deployment Rule Count:.
         /// </summary>
@@ -3586,7 +3586,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_RuleCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Source.
         /// </summary>
@@ -3595,7 +3595,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_SourceFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
@@ -3604,7 +3604,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_SourceImportText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Local.
         /// </summary>
@@ -3613,7 +3613,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_SourceLocalText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
@@ -3622,7 +3622,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_StatusFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Switch Version.
         /// </summary>
@@ -3631,7 +3631,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_SwitchVersionButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
@@ -3640,7 +3640,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_TagFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
@@ -3649,7 +3649,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_TypeFilterText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update failed.
         /// </summary>
@@ -3658,7 +3658,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_UpdateDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version Id.
         /// </summary>
@@ -3667,7 +3667,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_VersionIdMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Game Version.
         /// </summary>
@@ -3676,7 +3676,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_VersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version Name.
         /// </summary>
@@ -3685,7 +3685,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceSetupView_VersionNameMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Additional.
         /// </summary>
@@ -3694,7 +3694,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceStorageView_AdditionalLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Breakdown.
         /// </summary>
@@ -3703,7 +3703,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceStorageView_BreakdownLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Go to Resource Explorer.
         /// </summary>
@@ -3712,7 +3712,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceStorageView_GotoExplorerButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Folder.
         /// </summary>
@@ -3721,7 +3721,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceStorageView_OpenFolderButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to What does import/persist mean?.
         /// </summary>
@@ -3730,7 +3730,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceStorageView_OpenWikiButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Other Files.
         /// </summary>
@@ -3739,7 +3739,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceStorageView_OtherLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
@@ -3748,7 +3748,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_DashboardPageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
@@ -3757,7 +3757,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_FilesPageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
@@ -3766,7 +3766,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_HomePageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Key &apos;{0}&apos; to the instance is not found or prepared.
         /// </summary>
@@ -3775,7 +3775,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_KeyNotFoundExceptionMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
@@ -3784,7 +3784,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_PropertiesPageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packages.
         /// </summary>
@@ -3793,7 +3793,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_SetupPageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Statistics.
         /// </summary>
@@ -3802,7 +3802,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_StatisticsPageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Storage.
         /// </summary>
@@ -3811,7 +3811,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_StoragePageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Widgets.
         /// </summary>
@@ -3820,7 +3820,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_WidgetsPageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Workspace.
         /// </summary>
@@ -3829,7 +3829,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceView_WorkspacePageText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
@@ -3838,7 +3838,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("JavaHomeContainer_BrowseButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Detect.
         /// </summary>
@@ -3847,7 +3847,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("JavaHomeContainer_DetectButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bundled or.
         /// </summary>
@@ -3856,7 +3856,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("JavaHomeContainer_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select a Java executable.
         /// </summary>
@@ -3865,7 +3865,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("JavaHomeContainer_ReqeustJavaTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe.
         /// </summary>
@@ -3874,7 +3874,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("JavaHomeContainer_RequestJavaPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
@@ -3883,7 +3883,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("JavaHomeContainer_UnknownLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to load featured modpacks.
         /// </summary>
@@ -3892,7 +3892,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_FeaturedModpacksErrorText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Featured Modpacks.
         /// </summary>
@@ -3901,7 +3901,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_FeaturedModpacksLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to load Minecraft news.
         /// </summary>
@@ -3910,7 +3910,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_MinecraftNewsErrorText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to More.
         /// </summary>
@@ -3919,7 +3919,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_MoreButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Not Played Yet.
         /// </summary>
@@ -3928,7 +3928,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_NoRecentPlayLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
@@ -3937,7 +3937,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_OverviewAccountsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Instances.
         /// </summary>
@@ -3946,7 +3946,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_OverviewInstancesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to I&apos;m Feeling Lucky.
         /// </summary>
@@ -3955,7 +3955,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_RandomPlayButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick one randomly!.
         /// </summary>
@@ -3964,7 +3964,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_RandomPlaySubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Don&apos;t know what to play?.
         /// </summary>
@@ -3973,7 +3973,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_RandomPlayTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
@@ -3982,7 +3982,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_RecentPlayButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Recent Releases.
         /// </summary>
@@ -3991,7 +3991,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_RecentReleasesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Retry.
         /// </summary>
@@ -4000,7 +4000,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_RetryButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Active Days.
         /// </summary>
@@ -4009,7 +4009,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_StatisticsActiveDaysLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Total Play Hours.
         /// </summary>
@@ -4018,7 +4018,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_StatisticsHoursLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sessions.
         /// </summary>
@@ -4027,7 +4027,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_StatisticsSessionsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Quick access to your game world.
         /// </summary>
@@ -4036,7 +4036,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Welcome Back.
         /// </summary>
@@ -4045,7 +4045,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LandingView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Debug.
         /// </summary>
@@ -4054,7 +4054,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LaunchMode_Debug", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Fire &amp; Forget.
         /// </summary>
@@ -4063,7 +4063,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LaunchMode_FireAndForget", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Managed.
         /// </summary>
@@ -4072,7 +4072,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LaunchMode_Managed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add Loader.
         /// </summary>
@@ -4081,7 +4081,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LoaderEditorDialog_AddLoaderButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mods will not function without a loader..
         /// </summary>
@@ -4090,7 +4090,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LoaderEditorDialog_NoLoaderPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No loader selected yet....
         /// </summary>
@@ -4099,7 +4099,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LoaderEditorDialog_NoLoaderText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to More Versions.
         /// </summary>
@@ -4108,7 +4108,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LoaderEditorDialog_VersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick a mod loader.
         /// </summary>
@@ -4117,7 +4117,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("LoaderPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Assets.
         /// </summary>
@@ -4126,7 +4126,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_AssetsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cache.
         /// </summary>
@@ -4135,7 +4135,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_CacheLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cache.
         /// </summary>
@@ -4144,7 +4144,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_CacheTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Instances.
         /// </summary>
@@ -4153,7 +4153,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_InstancesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Instances.
         /// </summary>
@@ -4162,7 +4162,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_InstancesTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Libraries.
         /// </summary>
@@ -4171,7 +4171,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_LibrariesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packages.
         /// </summary>
@@ -4180,7 +4180,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_PackagesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Purge.
         /// </summary>
@@ -4189,7 +4189,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_PurgeButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Runtimes.
         /// </summary>
@@ -4198,7 +4198,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_RuntimesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Storage Maintenance.
         /// </summary>
@@ -4207,7 +4207,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Total.
         /// </summary>
@@ -4216,7 +4216,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MaintenanceStorageView_TotalLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
@@ -4225,7 +4225,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_AccountButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to B-b-b-bird, bird, bird, b-bird&apos;s the word....
         /// </summary>
@@ -4234,7 +4234,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_BackgroundText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deploy.
         /// </summary>
@@ -4243,7 +4243,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_DeployMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Export Modpack.
         /// </summary>
@@ -4252,7 +4252,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_ExportModpackMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
@@ -4261,7 +4261,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_HomeButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to deploy {0}.
         /// </summary>
@@ -4270,7 +4270,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The instance has been deployed.
         /// </summary>
@@ -4279,7 +4279,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filter entries by names....
         /// </summary>
@@ -4288,7 +4288,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceFilterPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to install {0}.
         /// </summary>
@@ -4297,7 +4297,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The instance has been installed.
         /// </summary>
@@ -4306,7 +4306,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
@@ -4315,7 +4315,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationOpenText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Diagnose.
         /// </summary>
@@ -4324,7 +4324,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationDiagnoseText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} exit unexpectedly. Click the link for more details..
         /// </summary>
@@ -4333,7 +4333,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Crashed!.
         /// </summary>
@@ -4342,7 +4342,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to View Output.
         /// </summary>
@@ -4351,7 +4351,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationViewOutputText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The instance has exited.
         /// </summary>
@@ -4360,7 +4360,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to update {0}.
         /// </summary>
@@ -4369,7 +4369,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The instance has been updated.
         /// </summary>
@@ -4378,7 +4378,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
@@ -4387,7 +4387,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationOpenText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Go to Marketplace.
         /// </summary>
@@ -4396,7 +4396,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_MarketplaceButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Folder.
         /// </summary>
@@ -4405,7 +4405,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_OpenFolderMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
@@ -4414,7 +4414,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_PlayMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
@@ -4423,7 +4423,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_PropertiesMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Setup.
         /// </summary>
@@ -4432,7 +4432,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_SetupMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
@@ -4441,7 +4441,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MainWindow_UpdateAvailableButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Everything(mostly) begins here.
         /// </summary>
@@ -4450,7 +4450,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplacePortalView_DiscoveryCenterSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Discovery Center.
         /// </summary>
@@ -4459,7 +4459,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplacePortalView_DiscoveryCenterTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to News.
         /// </summary>
@@ -4468,7 +4468,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplacePortalView_NewsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Learn More.
         /// </summary>
@@ -4477,7 +4477,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplacePortalView_NewsLearnMoreButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
@@ -4486,7 +4486,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplacePortalView_SearchButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Marketplace Portal.
         /// </summary>
@@ -4495,7 +4495,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplacePortalView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install..
         /// </summary>
@@ -4504,7 +4504,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_Message", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} has been added to the queue.
         /// </summary>
@@ -4513,7 +4513,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_ModpackInstallingNotificationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loading project information failed.
         /// </summary>
@@ -4522,7 +4522,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_ModpackLoadingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Website.
         /// </summary>
@@ -4531,7 +4531,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_OpenWebsiteMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to With the keywords in....
         /// </summary>
@@ -4540,7 +4540,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_SearchBarPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
@@ -4549,7 +4549,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_SearchButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search modpacks.
         /// </summary>
@@ -4558,7 +4558,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("MarketplaceSearchView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Advanced Options.
         /// </summary>
@@ -4567,7 +4567,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_AdvancedOptionsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Attachments.
         /// </summary>
@@ -4576,7 +4576,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_AttachmentsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Override file being packed is located at.
         /// </summary>
@@ -4585,7 +4585,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_AttachmentsPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
@@ -4594,7 +4594,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_AuthorLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include server connection settings.
         /// </summary>
@@ -4603,7 +4603,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_ConnectServerText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packages with selected tags will be excluded from export.
         /// </summary>
@@ -4612,7 +4612,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsDescriptionText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No tags available.
         /// </summary>
@@ -4621,7 +4621,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsEmptyText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Excluded Tags.
         /// </summary>
@@ -4630,7 +4630,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Format.
         /// </summary>
@@ -4639,7 +4639,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_FormatLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include source information.
         /// </summary>
@@ -4648,7 +4648,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Source information links the instance to an internet modpack and enables update support..
         /// </summary>
@@ -4657,7 +4657,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceToolTipText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include package tags.
         /// </summary>
@@ -4666,7 +4666,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_IncludingTagsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include JVM additional arguments settings.
         /// </summary>
@@ -4675,7 +4675,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_JavaAdditionalArgumentsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include JVM max memory settings.
         /// </summary>
@@ -4684,7 +4684,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mod Loader.
         /// </summary>
@@ -4693,7 +4693,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_ModLoaderLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
@@ -4702,7 +4702,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_NameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to How it works?.
         /// </summary>
@@ -4711,7 +4711,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_OpenWikiButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packages.
         /// </summary>
@@ -4720,7 +4720,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_PackagesLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packing instance.
         /// </summary>
@@ -4729,7 +4729,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to These options only take effect when exporting as Trident Portable Instance..
         /// </summary>
@@ -4738,7 +4738,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsInfoBarText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Trident-specific Options.
         /// </summary>
@@ -4747,7 +4747,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
@@ -4756,7 +4756,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_VersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Create instance.
         /// </summary>
@@ -4765,7 +4765,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_CreateButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Marketplace.
         /// </summary>
@@ -4774,7 +4774,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_DownloadButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Write icon failed.
         /// </summary>
@@ -4783,7 +4783,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_IconSavingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
@@ -4792,7 +4792,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_ImportButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import failed.
         /// </summary>
@@ -4801,7 +4801,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_ImportDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mod Loader.
         /// </summary>
@@ -4810,7 +4810,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_ModLoaderLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
@@ -4819,7 +4819,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_NameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packages.
         /// </summary>
@@ -4828,7 +4828,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_PackageCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select a compressed modpack file to import.
         /// </summary>
@@ -4837,7 +4837,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_RequestFilePrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import from file.
         /// </summary>
@@ -4846,7 +4846,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_RequestFileTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Or create from.
         /// </summary>
@@ -4855,7 +4855,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_SeparatorLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Create an instance.
         /// </summary>
@@ -4864,7 +4864,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
@@ -4873,7 +4873,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NewInstanceView_VersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Expired.
         /// </summary>
@@ -4882,7 +4882,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_CancelledTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New growls will stay here until you dismiss them..
         /// </summary>
@@ -4891,7 +4891,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_EmptyPrompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No notifications yet.
         /// </summary>
@@ -4900,7 +4900,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_EmptyTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mark all as read.
         /// </summary>
@@ -4909,7 +4909,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_MarkAllAsReadButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mark as read.
         /// </summary>
@@ -4918,7 +4918,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_MarkAsReadMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mark as unread.
         /// </summary>
@@ -4927,7 +4927,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_MarkAsUnreadMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Notifications.
         /// </summary>
@@ -4936,7 +4936,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_NotificationsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
@@ -4945,7 +4945,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_RemoveMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unread.
         /// </summary>
@@ -4954,7 +4954,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("NotificationSidebar_UnreadTagText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Git to collaborate on modpack development with portable metadata files.
         /// </summary>
@@ -4963,7 +4963,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_GitIntegration_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Git Integration.
         /// </summary>
@@ -4972,7 +4972,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_GitIntegration_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Every deployment validates file completeness and correctness.
         /// </summary>
@@ -4981,7 +4981,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_IntegrityCheck_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Integrity Guaranteed.
         /// </summary>
@@ -4990,7 +4990,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_IntegrityCheck_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Native integration with CurseForge and Modrinth.
         /// </summary>
@@ -4999,7 +4999,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_MultiRepository_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Multi-Repository.
         /// </summary>
@@ -5008,7 +5008,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_MultiRepository_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Build your game files on-demand from lightweight metadata.
         /// </summary>
@@ -5017,7 +5017,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_OneClick_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to One-Click Deployment.
         /// </summary>
@@ -5026,7 +5026,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_OneClick_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Share your exact game experience with a simple configuration file.
         /// </summary>
@@ -5035,7 +5035,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_PortableMetadata_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Portable Metadata.
         /// </summary>
@@ -5044,7 +5044,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_PortableMetadata_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Zero file duplication with intelligent symlink distribution.
         /// </summary>
@@ -5053,7 +5053,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_SmartResource_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Smart Resource Management.
         /// </summary>
@@ -5062,7 +5062,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_SmartResource_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Explore the key features that set us apart.
         /// </summary>
@@ -5071,7 +5071,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to What Makes Us Different.
         /// </summary>
@@ -5080,7 +5080,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFeatures_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Start creating your first Minecraft instance and enjoy a new way of game management..
         /// </summary>
@@ -5089,7 +5089,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFinish_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Tip: You can always change these settings later in the Settings page..
         /// </summary>
@@ -5098,7 +5098,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFinish_Tip", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to You&apos;re All Set!.
         /// </summary>
@@ -5107,7 +5107,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeFinish_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
@@ -5116,7 +5116,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeModal_BackButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Started.
         /// </summary>
@@ -5125,7 +5125,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeModal_FinishButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
@@ -5134,7 +5134,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeModal_NextButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Skip.
         /// </summary>
@@ -5143,7 +5143,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeModal_SkipButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to By continuing, you acknowledge and agree to the privacy terms above..
         /// </summary>
@@ -5152,7 +5152,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_AgreementNote", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Our Promise.
         /// </summary>
@@ -5161,7 +5161,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_OurPromiseTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to We never collect your personal information, account credentials, or game content..
         /// </summary>
@@ -5170,7 +5170,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Promise1Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No Personal Data.
         /// </summary>
@@ -5179,7 +5179,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Promise1Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All your game data stays on your computer. Nothing is uploaded without explicit action..
         /// </summary>
@@ -5188,7 +5188,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Promise2Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Local First.
         /// </summary>
@@ -5197,7 +5197,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Promise2Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This is an open-source project. You can review all our code on GitHub..
         /// </summary>
@@ -5206,7 +5206,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Promise3Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Source.
         /// </summary>
@@ -5215,7 +5215,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Promise3Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Your data, your control.
         /// </summary>
@@ -5224,7 +5224,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Privacy Notice.
         /// </summary>
@@ -5233,7 +5233,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to When the application crashes or encounters errors, we may collect error information and diagnostic data to help improve the user experience in future updates..
         /// </summary>
@@ -5242,7 +5242,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_WhatWeCollectDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to What We May Collect.
         /// </summary>
@@ -5251,7 +5251,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivacy_WhatWeCollectTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to What You Get.
         /// </summary>
@@ -5260,7 +5260,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_GrantedBenefitsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Symbolic Link Creation privilege from Windows Developer Mode. This allows Polymerium to create file links instead of copying files, enabling efficient resource management across multiple game instances..
         /// </summary>
@@ -5269,7 +5269,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_GrantedWhatDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to What Permission Was Granted?.
         /// </summary>
@@ -5278,7 +5278,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_GrantedWhatTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 1. Click the button below to open Windows Settings
         ///2. Find &quot;Developer Mode&quot; toggle
@@ -5290,7 +5290,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_InstructionsDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to How to Enable.
         /// </summary>
@@ -5299,7 +5299,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_InstructionsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Developer Settings.
         /// </summary>
@@ -5308,7 +5308,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_OpenSettingsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Developer Mode is a Windows feature that enables symbolic links creation without admin rights. It&apos;s safe for normal use and can be disabled anytime..
         /// </summary>
@@ -5317,7 +5317,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_SafetyDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Is Developer Mode Safe?.
         /// </summary>
@@ -5326,7 +5326,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_SafetyNote", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Symbolic link creation is enabled. You&apos;re all set!.
         /// </summary>
@@ -5335,7 +5335,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_StatusGrantedMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Permission Granted.
         /// </summary>
@@ -5344,7 +5344,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_StatusGrantedTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Developer Mode is needed to create symbolic links for smart resource management..
         /// </summary>
@@ -5353,7 +5353,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_StatusRequiredMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Permission Required.
         /// </summary>
@@ -5362,7 +5362,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_StatusRequiredTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enable Developer Mode for optimal performance.
         /// </summary>
@@ -5371,7 +5371,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Permission Required.
         /// </summary>
@@ -5380,7 +5380,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobePrivilege_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accent Color.
         /// </summary>
@@ -5389,7 +5389,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeQuickSetup_AccentColorLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
@@ -5398,7 +5398,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeQuickSetup_LanguageLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Proxy.
         /// </summary>
@@ -5407,7 +5407,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeQuickSetup_ProxyLabel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get started with your preferences.
         /// </summary>
@@ -5416,7 +5416,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeQuickSetup_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
@@ -5425,7 +5425,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeQuickSetup_ThemeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Quick Setup.
         /// </summary>
@@ -5434,7 +5434,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeQuickSetup_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Experience a new way of managing your Minecraft instances with portable metadata and intelligent resource management..
         /// </summary>
@@ -5443,7 +5443,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeWelcome_Description", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to A next-generation Minecraft instance manager.
         /// </summary>
@@ -5452,7 +5452,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeWelcome_Subtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Welcome to Polymerium.
         /// </summary>
@@ -5461,7 +5461,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("OobeWelcome_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add Tag.
         /// </summary>
@@ -5470,7 +5470,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_AddTagButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enabled Only.
         /// </summary>
@@ -5479,7 +5479,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Tag Policy.
         /// </summary>
@@ -5488,7 +5488,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_TagPolicyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Batch Update Packages.
         /// </summary>
@@ -5497,7 +5497,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Exclude.
         /// </summary>
@@ -5506,7 +5506,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Exclude", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ignore.
         /// </summary>
@@ -5515,7 +5515,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Ignore", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include.
         /// </summary>
@@ -5524,7 +5524,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Include", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update packages in bulk.
         /// </summary>
@@ -5533,7 +5533,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdaterModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update Checked.
         /// </summary>
@@ -5542,7 +5542,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageBulkUpdaterModal_UpdateButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
@@ -5551,7 +5551,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_AddLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Collect.
         /// </summary>
@@ -5560,7 +5560,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_CollectButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Empty.
         /// </summary>
@@ -5569,7 +5569,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_EmptyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Modify.
         /// </summary>
@@ -5578,7 +5578,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_ModifyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pending.
         /// </summary>
@@ -5587,7 +5587,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_PendingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
@@ -5596,7 +5596,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_RemoveLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search by names and names....
         /// </summary>
@@ -5605,7 +5605,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_SearchBarPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
@@ -5614,7 +5614,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerView_SearchButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Search packages....
         /// </summary>
@@ -5623,7 +5623,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackagePickerDialog_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select a Package.
         /// </summary>
@@ -5632,7 +5632,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackagePickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
@@ -5641,7 +5641,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_ChildrenEditButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Child Rules.
         /// </summary>
@@ -5650,16 +5650,16 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_ChildrenLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Data Pack.
+        ///   Looks up a localized string similar to Data Pack(Paxi).
         /// </summary>
         public static string ProfileRuleModal_DataPackMenuText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_DataPackMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Directory Redirection.
         /// </summary>
@@ -5668,7 +5668,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_DestinationLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to (Leave blank to unset).
         /// </summary>
@@ -5677,7 +5677,16 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_DestinationPlaceholder", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize File Name.
+        /// </summary>
+        public static string ProfileRuleModal_NormalizingLabelText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_NormalizingLabelText", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick.
         /// </summary>
@@ -5686,7 +5695,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_PickButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to PointBlank Gun Pack.
         /// </summary>
@@ -5695,7 +5704,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_PointBlankGunPackMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Presets.
         /// </summary>
@@ -5704,7 +5713,16 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_PresetsButtonText", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ProfileRuleModal_ResourcePackMenuText {
+            get {
+                return ResourceManager.GetString("ProfileRuleModal_ResourcePackMenuText", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Rule Type.
         /// </summary>
@@ -5713,7 +5731,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_RuleTypeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Exclude from Deployment.
         /// </summary>
@@ -5722,7 +5740,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_SkippingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to TaC:Z Gun Pack.
         /// </summary>
@@ -5731,7 +5749,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_TaCZGunPackMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit Rule.
         /// </summary>
@@ -5740,7 +5758,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
@@ -5749,16 +5767,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_ChildrenEditButtonText", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Child Selectors.
-        /// </summary>
-        public static string ProfileRuleSelectorModal_ChildrenLabelText {
-            get {
-                return ResourceManager.GetString("ProfileRuleSelectorModal_ChildrenLabelText", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pick.
         /// </summary>
@@ -5767,7 +5776,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_PickButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rule Type.
         /// </summary>
@@ -5776,7 +5785,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_SelectorTypeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit Selector.
         /// </summary>
@@ -5785,7 +5794,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Conditions about how rules are applied.
         /// </summary>
@@ -5794,7 +5803,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_Message", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Selector Count: .
         /// </summary>
@@ -5803,7 +5812,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_SelectorCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Selectors.
         /// </summary>
@@ -5812,7 +5821,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add New Rule.
         /// </summary>
@@ -5821,7 +5830,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRulesModal_AddRuleButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Apply rules to redirect or skip packages during instance launch. Rules are processed top-to-bottom, with later rules taking precedence..
         /// </summary>
@@ -5830,7 +5839,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRulesModal_Message", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rule Count: .
         /// </summary>
@@ -5839,7 +5848,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRulesModal_RuleCountLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deployment Rules.
         /// </summary>
@@ -5848,7 +5857,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProfileRulesModal_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
@@ -5857,7 +5866,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_AddressLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Authentication (Optional).
         /// </summary>
@@ -5866,7 +5875,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_AuthenticationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use System Proxy.
         /// </summary>
@@ -5875,7 +5884,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_AutoDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Automatically detect and use system proxy settings.
         /// </summary>
@@ -5884,7 +5893,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_AutoSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Direct Connection.
         /// </summary>
@@ -5893,7 +5902,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_DisabledDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Connect to the Internet without any proxy.
         /// </summary>
@@ -5902,7 +5911,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_DisabledSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto.
         /// </summary>
@@ -5911,7 +5920,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ModeAutoTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
@@ -5920,7 +5929,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ModeDisabledTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manual.
         /// </summary>
@@ -5929,7 +5938,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ModeManualTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
@@ -5938,7 +5947,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_PasswordLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Port.
         /// </summary>
@@ -5947,7 +5956,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_PortLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Protocol.
         /// </summary>
@@ -5956,7 +5965,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ProtocolLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto.
         /// </summary>
@@ -5965,7 +5974,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Auto", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
@@ -5974,7 +5983,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Disabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manual.
         /// </summary>
@@ -5983,7 +5992,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Manual", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Proxy settings will take effect after restarting the application.
         /// </summary>
@@ -5992,7 +6001,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_RestartRequiredLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Test Connection.
         /// </summary>
@@ -6001,7 +6010,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_TestConnectionButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
@@ -6010,7 +6019,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_TestFailedLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Testing....
         /// </summary>
@@ -6019,7 +6028,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_TestingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Connected.
         /// </summary>
@@ -6028,7 +6037,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_TestSuccessLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Proxy Settings.
         /// </summary>
@@ -6037,7 +6046,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
@@ -6046,7 +6055,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_UsernameLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Leave empty if not required.
         /// </summary>
@@ -6055,7 +6064,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ProxySettingsDialog_UsernamePlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All the mods will be replaced. Configs will be replaced with new ones..
         /// </summary>
@@ -6064,7 +6073,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ReferenceVersionPickerDialog_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Choose a version to upgrade/downgrade to.
         /// </summary>
@@ -6073,7 +6082,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ReferenceVersionPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Alpha.
         /// </summary>
@@ -6082,7 +6091,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ReleaseType_Alpha", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Beta.
         /// </summary>
@@ -6091,7 +6100,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ReleaseType_Beta", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Release.
         /// </summary>
@@ -6100,7 +6109,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ReleaseType_Release", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Data Pack.
         /// </summary>
@@ -6109,7 +6118,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_DataPack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mod.
         /// </summary>
@@ -6118,7 +6127,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_Mod", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Modpack.
         /// </summary>
@@ -6127,7 +6136,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_Modpack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resource Pack.
         /// </summary>
@@ -6136,7 +6145,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_ResourcePack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Shader Pack.
         /// </summary>
@@ -6145,7 +6154,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_ShaderPack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
@@ -6154,7 +6163,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_Unknown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to World.
         /// </summary>
@@ -6163,7 +6172,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ResourceKind_World", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Code:.
         /// </summary>
@@ -6172,7 +6181,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SafeLock_CodeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Repeat.
         /// </summary>
@@ -6181,7 +6190,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SafeLock_RepeatLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Safe Lock.
         /// </summary>
@@ -6190,7 +6199,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SafeLock_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to And Set.
         /// </summary>
@@ -6199,7 +6208,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_And", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resource Kind.
         /// </summary>
@@ -6208,7 +6217,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_Kind", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Not Set.
         /// </summary>
@@ -6217,7 +6226,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_Not", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Or Set.
         /// </summary>
@@ -6226,7 +6235,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_Or", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Package Identifier (Purl).
         /// </summary>
@@ -6235,7 +6244,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_Purl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Repository Label.
         /// </summary>
@@ -6244,7 +6253,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_Repository", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Package Tag.
         /// </summary>
@@ -6253,7 +6262,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SelectorType_Tag", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accent Color.
         /// </summary>
@@ -6262,7 +6271,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_AccentColorLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Acrylic.
         /// </summary>
@@ -6271,7 +6280,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_BackgroundStyleAcrylicText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto.
         /// </summary>
@@ -6280,7 +6289,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_BackgroundStyleAutoText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Blur.
         /// </summary>
@@ -6289,7 +6298,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_BackgroundStyleBlurText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Background Style.
         /// </summary>
@@ -6298,7 +6307,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_BackgroundStyleLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mica.
         /// </summary>
@@ -6307,7 +6316,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_BackgroundStyleMicaText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
@@ -6316,7 +6325,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_BackgroundStyleNoneText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Records.
         /// </summary>
@@ -6325,7 +6334,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ClearRecordsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to clear all action records for all instances? This action cannot be undone..
         /// </summary>
@@ -6334,7 +6343,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ClearRecordsConfirmationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Records.
         /// </summary>
@@ -6343,7 +6352,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ClearRecordsConfirmationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Statistics.
         /// </summary>
@@ -6352,7 +6361,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ClearStatisticsButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to clear all play statistics for all instances? This action cannot be undone..
         /// </summary>
@@ -6361,7 +6370,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ClearStatisticsConfirmationMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Statistics.
         /// </summary>
@@ -6370,7 +6379,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ClearStatisticsConfirmationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Corner Radius.
         /// </summary>
@@ -6379,7 +6388,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_CornerStyleLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Data Management.
         /// </summary>
@@ -6388,7 +6397,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_DataManagementLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The look, the language, the font.
         /// </summary>
@@ -6397,7 +6406,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_DisplaySubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Display and Appearance.
         /// </summary>
@@ -6406,7 +6415,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_DisplayTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Font.
         /// </summary>
@@ -6415,7 +6424,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_FontLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The listing configuration can be override by the instance individually.
         /// </summary>
@@ -6424,7 +6433,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_GameDefaultsSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Game Defaults.
         /// </summary>
@@ -6433,7 +6442,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_GameDefaultsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java 11 Home.
         /// </summary>
@@ -6442,7 +6451,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_Java11LabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java 17 Home.
         /// </summary>
@@ -6451,7 +6460,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_Java17LabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java 21 Home.
         /// </summary>
@@ -6460,7 +6469,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_Java21LabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java 25 Home.
         /// </summary>
@@ -6469,7 +6478,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_Java25LabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java 8 Home.
         /// </summary>
@@ -6478,7 +6487,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_Java8LabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Additional Arguments.
         /// </summary>
@@ -6487,7 +6496,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaAdditionalArgumentsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Less is more.
         /// </summary>
@@ -6496,7 +6505,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaAdditionalArgumentsPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Max Memory.
         /// </summary>
@@ -6505,7 +6514,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bigger is better.
         /// </summary>
@@ -6514,7 +6523,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaMaxMemoryPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to MiB.
         /// </summary>
@@ -6523,7 +6532,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaMaxMemoryUnitText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Instance will select the best match while launching.
         /// </summary>
@@ -6532,7 +6541,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Java Presets.
         /// </summary>
@@ -6541,7 +6550,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_JavaTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
@@ -6550,7 +6559,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_LanguageLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check for updates, clear cache, etc..
         /// </summary>
@@ -6559,7 +6568,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_MaintenanceSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Maintenance.
         /// </summary>
@@ -6568,7 +6577,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_MaintenanceTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get a CDK to support development: .
         /// </summary>
@@ -6577,7 +6586,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_MirrorChyanCdkHint", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to MirrorChyan CDK.
         /// </summary>
@@ -6586,7 +6595,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_MirrorChyanCdkLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to (Optional) Enter your CDK here.
         /// </summary>
@@ -6595,7 +6604,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_MirrorChyanCdkPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Network settings.
         /// </summary>
@@ -6604,7 +6613,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_NetworkSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Network.
         /// </summary>
@@ -6613,7 +6622,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_NetworkTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Current Status.
         /// </summary>
@@ -6622,7 +6631,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ProxyCurrentStatusLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Network Proxy.
         /// </summary>
@@ -6631,7 +6640,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ProxyEnabledLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Leave empty if not required.
         /// </summary>
@@ -6640,7 +6649,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ProxyPasswordPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto (System Proxy).
         /// </summary>
@@ -6649,7 +6658,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ProxyStatusAutoText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disabled (Direct Connection).
         /// </summary>
@@ -6658,7 +6667,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ProxyStatusDisabledText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manual: {0}://{1}:{2}.
         /// </summary>
@@ -6667,7 +6676,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ProxyStatusManualText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Restart is required to take effect..
         /// </summary>
@@ -6676,7 +6685,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_RestartRequiredLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sidebar Placement.
         /// </summary>
@@ -6685,7 +6694,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_SidebarPlacementLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Left.
         /// </summary>
@@ -6694,7 +6703,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_SidebarPlacementLeftText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Right.
         /// </summary>
@@ -6703,7 +6712,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_SidebarPlacementRightText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Manage.
         /// </summary>
@@ -6712,7 +6721,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_StorageManagementButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Storage Management.
         /// </summary>
@@ -6721,7 +6730,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_StorageManagementLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Activate.
         /// </summary>
@@ -6730,7 +6739,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_SuperPowerLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to sudo superpower activate.
         /// </summary>
@@ -6739,7 +6748,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_SuperPowerSubtitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Super Power.
         /// </summary>
@@ -6748,7 +6757,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_SuperPowerTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
@@ -6757,7 +6766,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ThemeVariantDarkText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Theme Variant.
         /// </summary>
@@ -6766,7 +6775,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ThemeVariantLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
@@ -6775,7 +6784,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ThemeVariantLightText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to System.
         /// </summary>
@@ -6784,7 +6793,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_ThemeVariantSystemText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Application Settings.
         /// </summary>
@@ -6793,7 +6802,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Title Bar Visibility.
         /// </summary>
@@ -6802,7 +6811,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_TitleBarVisibilityLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check for updates on startup.
         /// </summary>
@@ -6811,7 +6820,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdateAutoCheckLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check for updates.
         /// </summary>
@@ -6820,7 +6829,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdatesCheckButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update available.
         /// </summary>
@@ -6829,7 +6838,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdatesFoundLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Up to date.
         /// </summary>
@@ -6838,7 +6847,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdatesNotFoundLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to GitHub.
         /// </summary>
@@ -6847,7 +6856,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdateSourceGithubText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update Source.
         /// </summary>
@@ -6856,7 +6865,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdateSourceLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to MirrorChyan.
         /// </summary>
@@ -6865,7 +6874,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdateSourceMirrorChyanText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Update unavailable.
         /// </summary>
@@ -6874,7 +6883,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdatesUnavailableLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to View update.
         /// </summary>
@@ -6883,7 +6892,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_UpdatesViewButtonText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
@@ -6892,7 +6901,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_VersionLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
@@ -6901,7 +6910,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_WindowHeightLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Window Initial Size.
         /// </summary>
@@ -6910,7 +6919,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_WindowInitialSizeLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
@@ -6919,7 +6928,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SettingsView_WindowWidthLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
@@ -6928,7 +6937,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_Copy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
@@ -6937,7 +6946,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_Cut", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No Entries.
         /// </summary>
@@ -6946,7 +6955,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_EmptyListLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to EXTERNAL LINK TO.
         /// </summary>
@@ -6955,7 +6964,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_ExternalLinkLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Fetching....
         /// </summary>
@@ -6964,7 +6973,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_FetchingLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
@@ -6973,7 +6982,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_No", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
@@ -6982,7 +6991,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_Paste", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
@@ -6991,7 +7000,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Shared_Yes", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Existing Tags.
         /// </summary>
@@ -7000,7 +7009,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("TagPickerDialog_ExistingTagsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enter tag name....
         /// </summary>
@@ -7009,7 +7018,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("TagPickerDialog_InputTextBoxPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No existing tags.
         /// </summary>
@@ -7018,7 +7027,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("TagPickerDialog_NoExistingTagsLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enter a new tag or select from existing ones.
         /// </summary>
@@ -7027,7 +7036,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("TagPickerDialog_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add Tag.
         /// </summary>
@@ -7036,7 +7045,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("TagPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Just write something down below....
         /// </summary>
@@ -7045,7 +7054,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("UserInputDialog_Prompt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get something entered.
         /// </summary>
@@ -7054,7 +7063,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("UserInputDialog_Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Fri.
         /// </summary>
@@ -7063,7 +7072,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Friday", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mon.
         /// </summary>
@@ -7072,7 +7081,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Monday", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sat.
         /// </summary>
@@ -7081,7 +7090,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Saturday", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sun.
         /// </summary>
@@ -7090,7 +7099,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Sunday", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Thu.
         /// </summary>
@@ -7099,7 +7108,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Thursday", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Tue.
         /// </summary>
@@ -7108,7 +7117,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("Week_Tuesday", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Wed.
         /// </summary>

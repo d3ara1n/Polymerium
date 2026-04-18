@@ -48,10 +48,21 @@ public partial class ProfileRuleModal : Modal
         Rule.Destination = "datapacks";
     }
 
+    private void TemplateResourcePackButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Kind;
+        Rule.Selector.Kind = ResourceKind.ResourcePack;
+        Rule.Skipping = false;
+        Rule.Normalizing = true;
+        Rule.Destination = string.Empty;
+    }
+
     private void TemplateTaCZButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Tag;
         Rule.Selector.Tag = "TaC:Z";
+        Rule.Skipping = false;
+        Rule.Normalizing = false;
         Rule.Destination = "tacz";
     }
 
@@ -59,6 +70,8 @@ public partial class ProfileRuleModal : Modal
     {
         Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Tag;
         Rule.Selector.Tag = "PointBlank";
+        Rule.Skipping = false;
+        Rule.Normalizing = false;
         Rule.Destination = "pointblank";
     }
 

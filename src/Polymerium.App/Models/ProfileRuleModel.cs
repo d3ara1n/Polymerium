@@ -32,5 +32,10 @@ public partial class ProfileRuleModel(Profile.Rice.Rule owner) : ModelBase
 
     partial void OnSkippingChanged(bool value) => owner.Skipping = value;
 
+    [ObservableProperty]
+    public partial bool Normalizing { get; set; } = owner.Normalizing;
+
+    partial void OnNormalizingChanged(bool value) => owner.Normalizing = value;
+
     #endregion
 }
