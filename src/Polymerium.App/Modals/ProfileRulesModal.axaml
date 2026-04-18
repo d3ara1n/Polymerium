@@ -76,10 +76,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run
-                                                            Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                                                        <Run
-                                                            Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -96,10 +94,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run
-                                                            Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                                                        <Run
-                                                            Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -116,10 +112,8 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run
-                                                            Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                                                        <Run
-                                                            Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
+                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                                                        <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
@@ -220,8 +214,7 @@
                                             </husk:Tag>
 
                                             <!--  目标路径  -->
-                                            <husk:Tag
-                                                IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                            <husk:Tag IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="4">
