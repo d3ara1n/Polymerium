@@ -254,7 +254,7 @@
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
-                                                Symbol="AlignTop" />
+                                                Symbol="PaddingTop" />
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleUpCommand}"
