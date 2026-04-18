@@ -12,6 +12,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -576,15 +577,19 @@ public partial class ExhibitPackageModal : Modal
     }
 
     [RelayCommand]
-    private void NavigateUri(string? url)
+    private Task NavigateUri(string? url)
     {
         if (url is not null && Package.Reference is not null)
         {
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            TopLevel
-                .GetTopLevel(this)
-                ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Package.Reference, rev));
+            return TopLevelHelper.LaunchUriAsync(
+                TopLevel.GetTopLevel(this),
+                rev.IsAbsoluteUri ? rev : new(Package.Reference, rev),
+                "Failed to open package link"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     #endregion

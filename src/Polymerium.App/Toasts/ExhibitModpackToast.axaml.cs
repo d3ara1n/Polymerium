@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -8,6 +9,7 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -134,15 +136,19 @@ public partial class ExhibitModpackToast : Toast
     #region Commands
 
     [RelayCommand]
-    private void NavigateUri(string? url)
+    private Task NavigateUri(string? url)
     {
         if (url is not null)
         {
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            TopLevel
-                .GetTopLevel(this)
-                ?.Launcher.LaunchUriAsync(rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev));
+            return TopLevelHelper.LaunchUriAsync(
+                TopLevel.GetTopLevel(this),
+                rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev),
+                "Failed to open modpack link"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     #endregion

@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 
@@ -177,16 +178,18 @@ public partial class ModpackExporterDialog : Dialog
     #region Commands
 
     [RelayCommand]
-    private void OpenImportFolder()
+    private Task OpenImportFolder()
     {
         if (Result is ModpackExporterModel model)
         {
-            TopLevel
-                .GetTopLevel(MainWindow.Instance)
-                ?.Launcher.LaunchDirectoryInfoAsync(
-                    new(PathDef.Default.DirectoryOfImport(model.Key))
-                );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(PathDef.Default.DirectoryOfImport(model.Key)),
+                "Failed to open import folder"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]

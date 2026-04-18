@@ -9,38 +9,55 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 
 namespace Polymerium.App.Models;
 
 public static class InternalCommands
 {
     public static ICommand OpenUriCommand { get; } =
-        new RelayCommand<Uri>(uri =>
+        new AsyncRelayCommand<Uri>(uri =>
         {
             if (uri != null && uri.IsAbsoluteUri)
             {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(uri);
+                return TopLevelHelper.LaunchUriAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    uri,
+                    "Failed to open link"
+                );
             }
+
+            return Task.CompletedTask;
         });
 
     public static ICommand OpenStringUriCommand { get; } =
-        new RelayCommand<string>(str =>
+        new AsyncRelayCommand<string>(str =>
         {
             if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
             {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(new Uri(str));
+                return TopLevelHelper.LaunchUriAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    new Uri(str),
+                    "Failed to open link"
+                );
             }
+
+            return Task.CompletedTask;
         });
 
     public static ICommand OpenFolderCommand { get; } =
-        new RelayCommand<string>(path =>
+        new AsyncRelayCommand<string>(path =>
         {
             if (path != null && Directory.Exists(path))
             {
-                TopLevel
-                    .GetTopLevel(MainWindow.Instance)
-                    ?.Launcher.LaunchDirectoryInfoAsync(new(path));
+                return TopLevelHelper.LaunchDirectoryInfoAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    new(path),
+                    "Failed to open folder"
+                );
             }
+
+            return Task.CompletedTask;
         });
 
     public static ICommand CopyToClipboardCommand { get; } =
@@ -51,14 +68,10 @@ public static class InternalCommands
                 return;
             }
 
-            try
-            {
-                var task = TopLevel.GetTopLevel(MainWindow.Instance)?.Clipboard?.SetTextAsync(text);
-                if (task != null)
-                {
-                    await task;
-                }
-            }
-            catch (Exception) { }
+            await TopLevelHelper.CopyToClipboardAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                text,
+                "Failed to copy text"
+            );
         });
 }

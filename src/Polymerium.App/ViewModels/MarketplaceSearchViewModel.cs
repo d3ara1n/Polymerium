@@ -14,6 +14,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.App.Utilities;
 using Refit;
 using Semver;
 using Trident.Abstractions.Repositories.Resources;
@@ -294,12 +295,20 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenWebsite(ExhibitModel? exhibit)
+    private Task OpenWebsite(ExhibitModel? exhibit)
     {
         if (exhibit is not null)
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(exhibit.Reference);
+            return TopLevelHelper.LaunchUriAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                exhibit.Reference,
+                "Failed to open project website",
+                _notificationService,
+                thumbnail: exhibit.Thumbnail
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
