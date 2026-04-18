@@ -103,6 +103,10 @@ public class App : Application
 
     private static void Dump(object core)
     {
+        // 只有调试模式才转储错误报告，而 Prod 模式有大概率文件目录是只读的
+        if (!Program.IsDebug)
+            return;
+
         var path = Path.Combine(
             AppContext.BaseDirectory,
             "dumps",
