@@ -33,8 +33,7 @@
             Grid.Row="2"
             HorizontalAlignment="Center"
             ItemsSource="{Binding $parent[local:GameVersionPickerDialog].Types}"
-            SelectedValue="{Binding $parent[local:GameVersionPickerDialog].SelectedType}"
-            Theme="{StaticResource SegmentedTabStripTheme}">
+            SelectedValue="{Binding $parent[local:GameVersionPickerDialog].SelectedType}">
             <TabStrip.ItemTemplate>
                 <DataTemplate DataType="x:String">
                     <TextBlock Text="{Binding}" />

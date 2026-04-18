@@ -2056,7 +2056,7 @@
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="No worlds found" />
+                                Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                         </StackPanel>
                     </husk:PlaceholderPresenter>
                 </ScrollViewer>

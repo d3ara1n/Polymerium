@@ -294,11 +294,8 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                         </StackPanel>
-                        <ScrollViewer Margin="0,0,-8,0">
-                            <ItemsControl
-                                Margin="0,0,8,0"
-                                ClipToBounds="False"
-                                ItemsSource="{Binding View}">
+                        <ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding View}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="m:InstanceEntryModel">
                                         <controls:InstanceEntryButton
