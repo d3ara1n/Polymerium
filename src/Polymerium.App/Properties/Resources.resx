@@ -2194,9 +2194,6 @@
     <data name="ProfileRuleModal_SkippingLabelText" xml:space="preserve">
         <value>Exclude from Deployment</value>
     </data>
-    <data name="ProfileRuleModal_SolidifyingLabelText" xml:space="preserve">
-        <value>Do not Use Symlink</value>
-    </data>
     <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
         <value>Edit</value>
     </data>

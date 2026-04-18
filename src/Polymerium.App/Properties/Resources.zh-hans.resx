@@ -2185,9 +2185,6 @@
     <data name="ProfileRuleModal_SkippingLabelText" xml:space="preserve">
         <value>在部署中排除</value>
     </data>
-    <data name="ProfileRuleModal_SolidifyingLabelText" xml:space="preserve">
-        <value>不使用软链接</value>
-    </data>
     <data name="ProfileRuleModal_ChildrenEditButtonText" xml:space="preserve">
         <value>编辑</value>
     </data>
