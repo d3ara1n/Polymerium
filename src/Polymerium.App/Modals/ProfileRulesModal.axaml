@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -174,7 +175,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Kind}" />
+                                                        Text="{Binding Selector.Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>

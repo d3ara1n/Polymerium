@@ -33,6 +33,7 @@ public static class LocalizedEnumConverters
                 {
                     return kind switch
                     {
+                        ResourceKind.Unknown => Resources.ResourceKind_Unknown,
                         ResourceKind.Modpack => Resources.ResourceKind_Modpack,
                         ResourceKind.Mod => Resources.ResourceKind_Mod,
                         ResourceKind.ResourcePack => Resources.ResourceKind_ResourcePack,
