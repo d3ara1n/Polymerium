@@ -2341,6 +2341,15 @@
     <data name="InstanceDashboardView_SuccessRateLabelText" xml:space="preserve">
         <value>运行成功率</value>
     </data>
+    <data name="InstanceDashboardView_CpuUsageLabelText" xml:space="preserve">
+        <value>CPU 占用</value>
+    </data>
+    <data name="InstanceDashboardView_MemoryUsageLabelText" xml:space="preserve">
+        <value>内存使用</value>
+    </data>
+    <data name="InstanceDashboardView_UptimeLabelText" xml:space="preserve">
+        <value>运行时间</value>
+    </data>
     <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
         <value>搜索日志内容...</value>
     </data>

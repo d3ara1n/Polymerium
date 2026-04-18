@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData.Kernel;
 using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -32,44 +35,6 @@ public partial class InstanceDashboardViewModel(
     PersistenceService persistenceService
 ) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Overrides
-
-    protected override Task OnInitializeAsync()
-    {
-        InitializeLogSources();
-        SelectedSource = Sources?.FirstOrDefault();
-
-        SessionCount = persistenceService.GetSessionCount(Basic.Key);
-        CrashCount = persistenceService.GetCrashCount(Basic.Key);
-
-        return Task.CompletedTask;
-    }
-
-    #endregion
-
-    #region State
-
-    protected override void OnInstanceLaunching(LaunchTracker tracker)
-    {
-        tracker.StateUpdated += OnStateUpdated;
-        IsOnAir = true;
-        Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
-
-        return;
-
-        void OnStateUpdated(TrackerBase _, TrackerState state)
-        {
-            if (state is TrackerState.Faulted or TrackerState.Finished)
-            {
-                tracker.StateUpdated -= OnStateUpdated;
-                IsOnAir = false;
-                Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
-            }
-        }
-    }
-
-    #endregion
-
     #region Reactive
 
     public ObservableCollection<LogSourceModelBase> Sources { get; } = [];
@@ -119,15 +84,110 @@ public partial class InstanceDashboardViewModel(
     public double SuccessRate =>
         SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
 
+    [ObservableProperty]
+    public partial double CpuPercent { get; set; }
+
+    [ObservableProperty]
+    public partial uint MemoryUsage { get; set; }
+
+    [ObservableProperty]
+    public partial uint MemoryAssigned { get; set; }
+
+    [ObservableProperty]
+    public partial TimeSpan Uptime { get; set; }
+
     #endregion
 
-    #region Direct
+    #region Fields
 
     private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
 
+    private CancellationTokenSource? _monitoringTokenSource;
+
+    private Action? _callbackCleanup;
+
+    #endregion
+    #region Overrides
+
+    protected override Task OnInitializeAsync()
+    {
+        InitializeLogSources();
+        SelectedSource = Sources?.FirstOrDefault();
+
+        SessionCount = persistenceService.GetSessionCount(Basic.Key);
+        CrashCount = persistenceService.GetCrashCount(Basic.Key);
+
+        return Task.CompletedTask;
+    }
+
+    protected override Task OnDeinitializeAsync()
+    {
+        CallCleanup();
+
+        return Task.CompletedTask;
+    }
+
     #endregion
 
-    #region Other
+
+    #region State
+
+    protected override void OnInstanceLaunching(LaunchTracker tracker)
+    {
+        CallCleanup();
+
+        if (tracker.Process is { } process)
+        {
+            StartMonitoring(process);
+            Dispatcher.UIThread.Post(() => MemoryAssigned = tracker.Options.MaxMemory);
+        }
+        else
+        {
+            tracker.ProcessAssigned += OnProcessAssigned;
+        }
+        tracker.StateUpdated += OnStateUpdated;
+
+        _callbackCleanup = () =>
+        {
+            tracker.ProcessAssigned -= OnProcessAssigned;
+            tracker.StateUpdated -= OnStateUpdated;
+            StopMonitoring();
+        };
+
+        IsOnAir = true;
+        Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
+        return;
+
+        void OnProcessAssigned(object? sender, Process process)
+        {
+            tracker.ProcessAssigned -= OnProcessAssigned;
+            StartMonitoring(process);
+            Dispatcher.UIThread.Post(() => MemoryAssigned = tracker.Options.MaxMemory);
+        }
+
+        void OnStateUpdated(TrackerBase _, TrackerState state)
+        {
+            if (state is TrackerState.Faulted or TrackerState.Finished)
+            {
+                CallCleanup();
+                IsOnAir = false;
+                StopMonitoring();
+                Dispatcher.UIThread.Post(() =>
+                {
+                    UpdateLogSource(SelectedSource);
+                    SessionCount++;
+                    if (state is TrackerState.Faulted)
+                    {
+                        CrashCount++;
+                    }
+                });
+            }
+        }
+    }
+
+    #endregion
+
+    #region Other: Logs
 
     private void InitializeLogSources()
     {
@@ -260,6 +320,121 @@ public partial class InstanceDashboardViewModel(
 
             return true;
         };
+    }
+
+    #endregion
+
+    #region Other: Metrics
+
+    private void CallCleanup()
+    {
+        _callbackCleanup?.Invoke();
+        _callbackCleanup = null;
+    }
+
+    private void StartMonitoring(Process process)
+    {
+        StopMonitoring();
+
+        _monitoringTokenSource = new();
+        _ = MonitorAsync(process, _monitoringTokenSource.Token);
+    }
+
+    private void StopMonitoring()
+    {
+        if (_monitoringTokenSource is { Token: { IsCancellationRequested: false } })
+        {
+            _monitoringTokenSource.Cancel();
+            _monitoringTokenSource = null;
+        }
+    }
+
+    private async Task MonitorAsync(Process process, CancellationToken token)
+    {
+        process.Refresh();
+        var errorCount = 0;
+        TimeSpan? lastCpuTime = null;
+        var lastSampleTime = DateTime.UtcNow;
+        var cpuCount = Environment.ProcessorCount;
+        while (!token.IsCancellationRequested)
+        {
+            try
+            {
+                (lastSampleTime, lastCpuTime) = await MonitorInternalAsync(
+                    process,
+                    lastSampleTime,
+                    lastCpuTime,
+                    cpuCount
+                );
+
+                if (process.HasExited)
+                {
+                    StopMonitoring();
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                // 针对进程未启动的情况给予三次三秒的宽限
+                errorCount++;
+                if (errorCount > 3)
+                {
+                    StopMonitoring();
+                }
+            }
+            catch (Exception)
+            {
+                StopMonitoring();
+            }
+            finally
+            {
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1), token);
+                }
+                catch (OperationCanceledException) when (token.IsCancellationRequested)
+                {
+                    // 正常退出，不算错误
+                }
+            }
+        }
+    }
+
+    private async Task<(DateTime, TimeSpan)> MonitorInternalAsync(
+        Process process,
+        DateTime lastSampleTime,
+        TimeSpan? lastCpuTime,
+        int cpuCount
+    )
+    {
+        if (process.HasExited)
+        {
+            return (DateTime.Now, TimeSpan.Zero);
+        }
+        process.Refresh();
+
+        // 这一行会因为进程未启动而触发 InvalidOperationException，被外围捕获并进入三秒的失败倒计时
+        var cpuTime = process.TotalProcessorTime;
+        var sampleTime = DateTime.Now;
+
+        var cpuPercent = 0.0d;
+        var memory = process.WorkingSet64 / 1024 / 1024;
+        var uptime = sampleTime - process.StartTime;
+
+        if (lastCpuTime.HasValue)
+        {
+            var cpuDelta = (cpuTime - lastCpuTime.Value).TotalMilliseconds;
+            var elapsed = (sampleTime - lastSampleTime).TotalMilliseconds;
+            cpuPercent = elapsed > 0 ? cpuDelta / (elapsed * cpuCount) * 100.0 : 0.0d;
+        }
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            CpuPercent = cpuPercent;
+            MemoryUsage = (uint)memory;
+            Uptime = uptime;
+        });
+
+        return (sampleTime, cpuTime);
     }
 
     #endregion
