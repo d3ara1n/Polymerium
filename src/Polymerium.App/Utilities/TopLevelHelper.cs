@@ -19,14 +19,15 @@ public static class TopLevelHelper
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
         Uri? thumbnail = null
-    ) => LaunchAsync(
-        topLevel,
-        launcher => launcher.LaunchUriAsync(uri),
-        errorTitle,
-        notificationService,
-        level,
-        thumbnail
-    );
+    ) =>
+        LaunchAsync(
+            topLevel,
+            launcher => launcher.LaunchUriAsync(uri),
+            errorTitle,
+            notificationService,
+            level,
+            thumbnail
+        );
 
     public static Task LaunchFileInfoAsync(
         TopLevel? topLevel,
@@ -35,14 +36,15 @@ public static class TopLevelHelper
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
         Uri? thumbnail = null
-    ) => LaunchAsync(
-        topLevel,
-        launcher => launcher.LaunchFileInfoAsync(file),
-        errorTitle,
-        notificationService,
-        level,
-        thumbnail
-    );
+    ) =>
+        LaunchAsync(
+            topLevel,
+            launcher => launcher.LaunchFileInfoAsync(file),
+            errorTitle,
+            notificationService,
+            level,
+            thumbnail
+        );
 
     public static Task LaunchDirectoryInfoAsync(
         TopLevel? topLevel,
@@ -51,14 +53,15 @@ public static class TopLevelHelper
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
         Uri? thumbnail = null
-    ) => LaunchAsync(
-        topLevel,
-        launcher => launcher.LaunchDirectoryInfoAsync(directory),
-        errorTitle,
-        notificationService,
-        level,
-        thumbnail
-    );
+    ) =>
+        LaunchAsync(
+            topLevel,
+            launcher => launcher.LaunchDirectoryInfoAsync(directory),
+            errorTitle,
+            notificationService,
+            level,
+            thumbnail
+        );
 
     private static async Task LaunchAsync(
         TopLevel? topLevel,
@@ -74,7 +77,12 @@ public static class TopLevelHelper
 
         if (launcher is null)
         {
-            service?.PopMessage("Launcher is unavailable.", errorTitle, level, thumbnail: thumbnail);
+            service?.PopMessage(
+                "Launcher is unavailable.",
+                errorTitle,
+                level,
+                thumbnail: thumbnail
+            );
             return;
         }
 
@@ -102,7 +110,12 @@ public static class TopLevelHelper
 
         if (clipboard is null)
         {
-            service?.PopMessage("Clipboard is unavailable.", errorTitle, level, thumbnail: thumbnail);
+            service?.PopMessage(
+                "Clipboard is unavailable.",
+                errorTitle,
+                level,
+                thumbnail: thumbnail
+            );
             return;
         }
 
