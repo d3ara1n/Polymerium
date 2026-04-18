@@ -80,7 +80,8 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <TextBlock Text="{Binding Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                <TextBlock
+                                    Text="{Binding Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Open" />
@@ -124,7 +125,8 @@
                                                     <fi:SymbolIcon
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Symbol="Filter" />
-                                                    <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AppliedRulesLabelText}" />
+                                                    <TextBlock
+                                                        Text="{x:Static lang:Resources.InstancePackageModal_AppliedRulesLabelText}" />
                                                 </StackPanel>
                                             </DockPanel>
                                             <TextBlock
@@ -135,7 +137,8 @@
                                             <StackPanel
                                                 IsVisible="{Binding Matched}"
                                                 Spacing="4">
-                                                <DockPanel IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                <DockPanel
+                                                    IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                                     <TextBlock
                                                         DockPanel.Dock="Right"
                                                         Foreground="{StaticResource ControlAccentForegroundBrush}"
@@ -167,6 +170,28 @@
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                                                </DockPanel>
+                                                <DockPanel>
+                                                    <husk:SwitchPresenter
+                                                        DockPanel.Dock="Right"
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding Normalizing}">
+                                                        <husk:SwitchCase Value="True">
+                                                            <husk:Tag
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                        <husk:SwitchCase Value="False">
+                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                    </husk:SwitchPresenter>
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
                                                 </DockPanel>
                                             </StackPanel>
                                         </StackPanel>
@@ -215,7 +240,8 @@
                                                 <fi:SymbolIcon
                                                     FontSize="{Binding $parent[Button].FontSize}"
                                                     Symbol="Add" />
-                                                <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AddTagButtonText}" />
+                                                <TextBlock
+                                                    Text="{x:Static lang:Resources.InstancePackageModal_AddTagButtonText}" />
                                             </StackPanel>
                                         </Button>
                                     </DockPanel>
@@ -372,7 +398,8 @@
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="False">
                                 <!--  TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load  -->
-                                <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyVersions}">
+                                <husk:LazyContainer
+                                    Source="{Binding $parent[modals:InstancePackageModal].LazyVersions}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="m:InstancePackageVersionCollection">
                                             <Grid
@@ -413,21 +440,24 @@
                                                                             <husk:Tag
                                                                                 Classes="Success"
                                                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                                <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
+                                                                                <TextBlock
+                                                                                    Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Beta">
                                                                             <husk:Tag
                                                                                 Classes="Warning"
                                                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                                <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
+                                                                                <TextBlock
+                                                                                    Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Alpha">
                                                                             <husk:Tag
                                                                                 Classes="Danger"
                                                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                                <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
+                                                                                <TextBlock
+                                                                                    Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                     </husk:SwitchPresenter>
@@ -440,7 +470,8 @@
                                                                                 Text="{Binding Name, FallbackValue=Display}" />
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="False">
-                                                                            <TextBlock Text="{Binding Name, FallbackValue=Display}" />
+                                                                            <TextBlock
+                                                                                Text="{Binding Name, FallbackValue=Display}" />
                                                                         </husk:SwitchCase>
                                                                     </husk:SwitchPresenter>
                                                                 </DockPanel>
@@ -656,7 +687,8 @@
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                                     </StackPanel>
-                                    <ScrollViewer IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
+                                    <ScrollViewer
+                                        IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
                                         <husk:TimelineControl
                                             ItemsSource="{Binding}"
                                             NowContent="{x:Static lang:Resources.InstancePackageModal_NowTagText}"
@@ -745,8 +777,10 @@
                                                             TargetType="m:InstancePackageModificationKind"
                                                             Value="{Binding Kind}">
                                                             <husk:SwitchCase Value="AddUnversioned">
-                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                <TextBlock
+                                                                    FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                    <Run
+                                                                        Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
                                                                     <InlineUIContainer BaselineAlignment="Bottom">
                                                                         <Panel>
                                                                             <Rectangle
@@ -765,29 +799,37 @@
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="AddVersioned">
-                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                <TextBlock
+                                                                    FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                    <Run
+                                                                        Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
                                                                     <Run
                                                                         Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                                         Text="{Binding VersionName}" />
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Remove">
-                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
+                                                                <TextBlock
+                                                                    FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                    <Run
+                                                                        Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Update">
-                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
+                                                                <TextBlock
+                                                                    FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                    <Run
+                                                                        Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
                                                                     <Run
                                                                         Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                                         Text="{Binding VersionName}" />
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Unset">
-                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
+                                                                <TextBlock
+                                                                    FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                    <Run
+                                                                        Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
                                                                     <InlineUIContainer BaselineAlignment="Bottom">
                                                                         <Panel>
                                                                             <Rectangle

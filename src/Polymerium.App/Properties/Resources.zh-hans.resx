@@ -2198,7 +2198,7 @@
         <value>PointBlank 枪械扩展包</value>
     </data>
     <data name="ProfileRuleModal_DataPackMenuText" xml:space="preserve">
-        <value>数据包</value>
+        <value>数据包（Paxi）</value>
     </data>
     <data name="ProfileRuleModal_DestinationLabelText" xml:space="preserve">
         <value>目录重定向</value>
@@ -2241,9 +2241,6 @@
     </data>
     <data name="ProfileRuleSelectorModal_ChildrenEditButtonText" xml:space="preserve">
         <value>编辑</value>
-    </data>
-    <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
-        <value>子选择器</value>
     </data>
     <data name="InstanceSetupView_RuleCountLabelText" xml:space="preserve">
         <value>部署规则条数：</value>
@@ -2376,5 +2373,11 @@
     </data>
     <data name="NotificationSidebar_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
+    </data>
+    <data name="ProfileRuleModal_NormalizingLabelText" xml:space="preserve">
+        <value>标准化文件名</value>
+    </data>
+    <data name="ProfileRuleModal_ResourcePackMenuText" xml:space="preserve">
+        <value>资源包</value>
     </data>
 </root>

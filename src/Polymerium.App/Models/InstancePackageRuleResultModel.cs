@@ -9,4 +9,5 @@ public class InstancePackageRuleResultModel(RuleHelper.Result result) : ModelBas
     public bool Matched => result.Matched;
     public string? Destination => result.EffectiveRule?.Destination;
     public bool Skipping => result.EffectiveRule?.Skipping ?? false;
+    public bool Normalizing => result.EffectiveRule?.Normalizing ?? false;
 }

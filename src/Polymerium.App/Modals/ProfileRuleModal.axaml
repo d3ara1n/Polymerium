@@ -165,6 +165,14 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
                         </DockPanel>
+                        <DockPanel HorizontalSpacing="6">
+                            <ToggleSwitch
+                                DockPanel.Dock="Right"
+                                IsChecked="{Binding $parent[modals:ProfileRuleModal].Rule.Normalizing, Mode=TwoWay}" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
+                        </DockPanel>
                         <StackPanel Spacing="6">
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -198,6 +206,16 @@
                     Text="{x:Static lang:Resources.ProfileRuleModal_PresetsButtonText}" />
                 <DropDownButton.Flyout>
                     <MenuFlyout>
+                        <MenuItem
+                            Click="TemplateResourcePackButton_OnClick"
+                            Header="{x:Static lang:Resources.ProfileRuleModal_ResourcePackMenuText}">
+                            <MenuItem.Icon>
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="FolderZip" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <MenuItem
                             Click="TemplateDataPackButton_OnClick"
                             Header="{x:Static lang:Resources.ProfileRuleModal_DataPackMenuText}">

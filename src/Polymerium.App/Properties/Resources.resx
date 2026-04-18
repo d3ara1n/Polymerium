@@ -2201,7 +2201,7 @@
         <value>Presets</value>
     </data>
     <data name="ProfileRuleModal_DataPackMenuText" xml:space="preserve">
-        <value>Data Pack</value>
+        <value>Data Pack(Paxi)</value>
     </data>
     <data name="ProfileRuleModal_TaCZGunPackMenuText" xml:space="preserve">
         <value>TaC:Z Gun Pack</value>
@@ -2250,9 +2250,6 @@
     </data>
     <data name="ProfileRuleSelectorModal_ChildrenEditButtonText" xml:space="preserve">
         <value>Edit</value>
-    </data>
-    <data name="ProfileRuleSelectorModal_ChildrenLabelText" xml:space="preserve">
-        <value>Child Selectors</value>
     </data>
     <data name="InstanceSetupView_RuleCountLabelText" xml:space="preserve">
         <value>Deployment Rule Count:</value>
@@ -2388,5 +2385,11 @@
     </data>
     <data name="NotificationSidebar_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
+    </data>
+    <data name="ProfileRuleModal_NormalizingLabelText" xml:space="preserve">
+        <value>Normalize File Name</value>
+    </data>
+    <data name="ProfileRuleModal_ResourcePackMenuText" xml:space="preserve">
+        <value>Resource Pack</value>
     </data>
 </root>
