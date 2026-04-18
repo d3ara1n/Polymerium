@@ -165,14 +165,6 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
                         </DockPanel>
-                        <DockPanel HorizontalSpacing="6">
-                            <ToggleSwitch
-                                DockPanel.Dock="Right"
-                                IsChecked="{Binding $parent[modals:ProfileRuleModal].Rule.Solidifying, Mode=TwoWay}" />
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
-                        </DockPanel>
                         <StackPanel Spacing="6">
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"

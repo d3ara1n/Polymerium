@@ -198,21 +198,6 @@
                                                 </StackPanel>
                                             </husk:Tag>
 
-                                            <!--  固化标记  -->
-                                            <husk:Tag IsVisible="{Binding Solidifying}">
-                                                <StackPanel
-                                                    Orientation="Horizontal"
-                                                    Spacing="4">
-                                                    <fi:SymbolIcon
-                                                        VerticalAlignment="Center"
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Symbol="Archive" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
-                                                </StackPanel>
-                                            </husk:Tag>
-
                                             <!--  目标路径  -->
                                             <husk:Tag IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                                 <StackPanel

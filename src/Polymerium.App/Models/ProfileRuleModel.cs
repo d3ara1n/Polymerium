@@ -32,10 +32,5 @@ public partial class ProfileRuleModel(Profile.Rice.Rule owner) : ModelBase
 
     partial void OnSkippingChanged(bool value) => owner.Skipping = value;
 
-    [ObservableProperty]
-    public partial bool Solidifying { get; set; } = owner.Solidifying;
-
-    partial void OnSolidifyingChanged(bool value) => owner.Solidifying = value;
-
     #endregion
 }

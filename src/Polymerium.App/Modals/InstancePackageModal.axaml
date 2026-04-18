@@ -149,29 +149,6 @@
                                                     <husk:SwitchPresenter
                                                         DockPanel.Dock="Right"
                                                         TargetType="x:Boolean"
-                                                        Value="{Binding Solidifying}">
-                                                        <husk:SwitchCase Value="True">
-                                                            <husk:Tag
-                                                                Classes="Warning"
-                                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                        <husk:SwitchCase Value="False">
-                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SolidifyingLabelText}" />
-                                                </DockPanel>
-                                                <DockPanel>
-                                                    <husk:SwitchPresenter
-                                                        DockPanel.Dock="Right"
-                                                        TargetType="x:Boolean"
                                                         Value="{Binding Skipping}">
                                                         <husk:SwitchCase Value="True">
                                                             <husk:Tag

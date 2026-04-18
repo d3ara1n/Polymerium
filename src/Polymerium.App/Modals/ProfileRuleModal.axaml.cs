@@ -45,7 +45,6 @@ public partial class ProfileRuleModal : Modal
     {
         Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Kind;
         Rule.Selector.Kind = ResourceKind.DataPack;
-        Rule.Solidifying = true;
         Rule.Destination = "datapacks";
     }
 
