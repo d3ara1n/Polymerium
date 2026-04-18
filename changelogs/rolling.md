@@ -10,6 +10,7 @@
 - 修复导出包列表是的进度汇报异常
 - 修复部分界面库升级导致的视觉错误
 - 尝试通过添加异常判断与提示来修复 Sentry/POLYMERIUM-1B
+- 尝试通过移除滚动条 SmoothScroll.Avalonia 包来修复 Sentry/POLYMERIUM-19
 
 ### Added
 

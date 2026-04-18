@@ -13,7 +13,6 @@
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.InlineUIContainerAlignment.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.NoAutoScrollToSelectedItem.axaml" />
-        <smoothScroll:ScrollViewerSmoothTheme />
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>
