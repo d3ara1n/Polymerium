@@ -12,6 +12,7 @@
 - 尝试通过添加异常判断与提示来修复 Sentry/POLYMERIUM-1B
 - 尝试通过移除滚动条平滑动画来修复 Sentry/POLYMERIUM-19
 - 通过移除生产环境的错误转储来修复 Sentry/POLYMERIUM-J
+- 尝试通过重写后台任务的机制来修复 Sentry/POLYMERIUM-16
 
 ### Added
 
