@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
--
+- 修复 Sentry 收集的若干问题
 
 ### Fixed
 
