@@ -604,29 +604,41 @@ public partial class InstanceFilesViewModel(
     }
 
     [RelayCommand]
-    private void OpenScreenshotFile(AssetScreenshotModel? model)
+    private Task OpenScreenshotFile(AssetScreenshotModel? model)
     {
         if (model != null)
         {
-            TopLevel
-                .GetTopLevel(MainWindow.Instance)
-                ?.Launcher.LaunchFileInfoAsync(new(model.Image.LocalPath));
+            return TopLevelHelper.LaunchFileInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(model.Image.LocalPath),
+                "Failed to open screenshot file",
+                notificationService,
+                thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
-    private void OpenFolder(string? filePath)
+    private Task OpenFolder(string? filePath)
     {
         if (filePath != null)
         {
             var dir = Path.GetDirectoryName(filePath);
             if (dir != null && Directory.Exists(dir))
             {
-                TopLevel
-                    .GetTopLevel(MainWindow.Instance)
-                    ?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+                return TopLevelHelper.LaunchDirectoryInfoAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    new(dir),
+                    "Failed to open folder",
+                    notificationService,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                );
             }
         }
+
+        return Task.CompletedTask;
     }
 
     private bool CanDeleteScreenshot(AssetScreenshotModel? model) => model is { IsLocked: false };

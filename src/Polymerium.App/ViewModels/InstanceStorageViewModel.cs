@@ -6,6 +6,7 @@ using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
+using Polymerium.App.Utilities;
 using Trident.Abstractions;
 using Trident.Core.Services;
 using Trident.Core.Utilities;
@@ -158,55 +159,79 @@ public partial class InstanceStorageViewModel(
     #region Commands
 
     [RelayCommand]
-    private void OpenInstanceFolder()
+    private Task OpenInstanceFolder()
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         if (Directory.Exists(dir))
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open instance folder"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     private bool CanOpenBuildFolder(string folderName) =>
         Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), folderName));
 
     [RelayCommand(CanExecute = nameof(CanOpenBuildFolder))]
-    private void OpenBuildFolder(string folderName)
+    private Task OpenBuildFolder(string folderName)
     {
         var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
         var dir = Path.Combine(buildDir, folderName);
         if (Directory.Exists(dir))
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                $"Failed to open {folderName} folder"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     private bool CanOpenImportFolder(string folderName) =>
         Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfImport(Basic.Key), folderName));
 
     [RelayCommand(CanExecute = nameof(CanOpenImportFolder))]
-    private void OpenImportFolder(string folderName)
+    private Task OpenImportFolder(string folderName)
     {
         var import = PathDef.Default.DirectoryOfImport(Basic.Key);
         var dir = Path.Combine(import, folderName);
         if (Directory.Exists(dir))
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                $"Failed to open {folderName} folder"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     private bool CanOpenPersistFolder(string folderName) =>
         Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfPersist(Basic.Key), folderName));
 
     [RelayCommand(CanExecute = nameof(CanOpenPersistFolder))]
-    private void OpenPersistFolder(string folderName)
+    private Task OpenPersistFolder(string folderName)
     {
         var persistDir = PathDef.Default.DirectoryOfPersist(Basic.Key);
         var dir = Path.Combine(persistDir, folderName);
         if (Directory.Exists(dir))
         {
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                $"Failed to open {folderName} folder"
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     #endregion

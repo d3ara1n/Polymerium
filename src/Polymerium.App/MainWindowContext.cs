@@ -382,7 +382,7 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private void ViewLog(LaunchTracker? tracker)
+    private Task ViewLog(LaunchTracker? tracker)
     {
         if (tracker != null)
         {
@@ -393,7 +393,13 @@ public partial class MainWindowContext : ObservableObject
             );
             if (File.Exists(path))
             {
-                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new(path));
+                return TopLevelHelper.LaunchFileInfoAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    new(path),
+                    "Failed to open log file",
+                    _notificationService,
+                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key)
+                );
             }
             else
             {
@@ -405,6 +411,8 @@ public partial class MainWindowContext : ObservableObject
                 );
             }
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
@@ -442,13 +450,21 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private void OpenFolder(string? key)
+    private Task OpenFolder(string? key)
     {
         if (key != null)
         {
             var dir = PathDef.Default.DirectoryOfHome(key);
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open instance folder",
+                _notificationService,
+                thumbnail: ThumbnailHelper.ForInstance(key)
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]

@@ -103,10 +103,16 @@ public partial class InstanceViewModel : ViewModelBase
     #region Commands
 
     [RelayCommand]
-    private void OpenFolder()
+    private Task OpenFolder()
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+        return TopLevelHelper.LaunchDirectoryInfoAsync(
+            TopLevel.GetTopLevel(MainWindow.Instance),
+            new(dir),
+            "Failed to open instance folder",
+            _notificationService,
+            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+        );
     }
 
     [RelayCommand]

@@ -13,6 +13,7 @@ using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Trident.Abstractions;
 using Trident.Abstractions.Tasks;
 using Trident.Core.Engines.Launching;
@@ -266,19 +267,33 @@ public partial class InstanceDashboardViewModel(
     #region Commands
 
     [RelayCommand]
-    private void OpenLogsDirectory()
+    private Task OpenLogsDirectory()
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
         if (Directory.Exists(dir))
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open logs folder",
+                notificationService
+            );
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
-    private void OpenCrashReportsDirectory()
+    private Task OpenCrashReportsDirectory()
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
         if (Directory.Exists(dir))
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new(dir));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open crash reports folder",
+                notificationService
+            );
+
+        return Task.CompletedTask;
     }
 
     #endregion

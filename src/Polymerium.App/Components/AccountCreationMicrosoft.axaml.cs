@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Trident.Abstractions.Accounts;
 using Trident.Core.Accounts;
 using Trident.Core.Services;
@@ -148,22 +149,12 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
             return;
         }
 
-        try
-        {
-            var task = TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(Model.UserCode);
-            if (task != null)
-            {
-                await task;
-            }
-            else
-            {
-                NotificationService.PopMessage("Clipboard is unavailable.", "Failed to copy code");
-            }
-        }
-        catch (Exception ex)
-        {
-            NotificationService.PopMessage(ex, "Failed to copy code");
-        }
+        await TopLevelHelper.CopyToClipboardAsync(
+            TopLevel.GetTopLevel(this),
+            Model.UserCode,
+            "Failed to copy code",
+            NotificationService
+        );
     }
 
     #endregion

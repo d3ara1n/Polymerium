@@ -171,26 +171,21 @@ public partial class LandingViewModel(
     #region Commands
 
     [RelayCommand]
-    private void OpenInstanceFolder(string? key)
+    private Task OpenInstanceFolder(string? key)
     {
         if (key != null)
         {
-            try
-            {
-                var dir = PathDef.Default.DirectoryOfHome(key);
-                TopLevel
-                    .GetTopLevel(MainWindow.Instance)
-                    ?.Launcher.LaunchDirectoryInfoAsync(new(dir));
-            }
-            catch (Exception ex)
-            {
-                notificationService.PopMessage(
-                    ex,
-                    "Failed to open folder",
-                    thumbnail: ThumbnailHelper.ForInstance(key)
-                );
-            }
+            var dir = PathDef.Default.DirectoryOfHome(key);
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open instance folder",
+                notificationService,
+                thumbnail: ThumbnailHelper.ForInstance(key)
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]

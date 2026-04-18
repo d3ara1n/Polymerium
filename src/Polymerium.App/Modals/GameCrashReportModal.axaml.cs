@@ -20,6 +20,7 @@ using Huskui.Avalonia.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using Refit;
 using Trident.Abstractions;
 using Trident.Core.Clients;
@@ -62,54 +63,60 @@ public partial class GameCrashReportModal : Modal
 
         var text = GenerateCrashReportText();
 
-        try
-        {
-            var task = TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(text);
-            if (task != null)
-            {
-                await task;
-            }
-            else
-            {
-                _notificationService?.PopMessage(
-                    "Clipboard is unavailable.",
-                    "Failed to copy crash report"
-                );
-            }
-        }
-        catch (Exception ex)
-        {
-            _notificationService?.PopMessage(ex, "Failed to copy crash report");
-        }
+        await TopLevelHelper.CopyToClipboardAsync(
+            TopLevel.GetTopLevel(this),
+            text,
+            "Failed to copy crash report",
+            _notificationService
+        );
     }
 
     [RelayCommand]
-    private void OpenLogFile()
+    private Task OpenLogFile()
     {
         if (Report?.LogFilePath != null && File.Exists(Report.LogFilePath))
         {
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchFileInfoAsync(new(Report.LogFilePath));
+            return TopLevelHelper.LaunchFileInfoAsync(
+                TopLevel.GetTopLevel(this),
+                new(Report.LogFilePath),
+                "Failed to open log file",
+                _notificationService
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
-    private void OpenCrashReport()
+    private Task OpenCrashReport()
     {
         if (Report?.CrashReportPath != null && File.Exists(Report.CrashReportPath))
         {
-            TopLevel.GetTopLevel(this)?.Launcher.LaunchFileInfoAsync(new(Report.CrashReportPath));
+            return TopLevelHelper.LaunchFileInfoAsync(
+                TopLevel.GetTopLevel(this),
+                new(Report.CrashReportPath),
+                "Failed to open crash report",
+                _notificationService
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
-    private void OpenGameDirectory()
+    private Task OpenGameDirectory()
     {
         if (Report?.GameDirectory != null && Directory.Exists(Report.GameDirectory))
         {
-            TopLevel
-                .GetTopLevel(this)
-                ?.Launcher.LaunchDirectoryInfoAsync(new(Report.GameDirectory));
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(this),
+                new(Report.GameDirectory),
+                "Failed to open game directory",
+                _notificationService
+            );
         }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
