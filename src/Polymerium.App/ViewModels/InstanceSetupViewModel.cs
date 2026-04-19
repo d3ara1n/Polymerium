@@ -1527,7 +1527,7 @@ public partial class InstanceSetupViewModel(
         public partial int LayoutIndex { get; set; }
 
         #region For PackageBulkUpdatePreviewerDialog
-        public bool LastChosenIsEnabledOnly { get; set; }
+        public bool LastChosenIsEnabledOnly { get; set; } = true;
         public IReadOnlyList<string>? LastChosenTags { get; set; }
         public PackageBulkUpdatePreviewerTagPolicy LastChosenTagPolicy { get; set; }
         #endregion
