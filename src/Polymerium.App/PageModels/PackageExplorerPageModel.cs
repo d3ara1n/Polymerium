@@ -548,7 +548,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
                                 Old = old,
-                                New = model.Installed.Purl
+                                New = model.Installed.Purl,
                             }
                         );
                         model.State = ExhibitState.Editable;
