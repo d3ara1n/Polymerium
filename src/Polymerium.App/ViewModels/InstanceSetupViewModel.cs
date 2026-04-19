@@ -53,9 +53,10 @@ public partial class InstanceSetupViewModel(
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
-    PersistenceService persistenceService,
-    ConfigurationService configurationService
-) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService
+)
+    : InstanceViewModelBase(bag, instanceManager, profileManager),
+        IStatedViewModel<InstanceSetupViewModel.StateView>
 {
     #region Nested type: ExportedEntry
 
@@ -505,7 +506,7 @@ public partial class InstanceSetupViewModel(
 
     #endregion
 
-    #region State
+    #region Instance State
 
     protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
@@ -658,7 +659,13 @@ public partial class InstanceSetupViewModel(
                     if (old != lurl)
                     {
                         persistenceService.AppendAction(
-                            new(Basic.Key, PersistenceService.ActionKind.EditLoader, old, lurl)
+                            new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditLoader,
+                                Old = old,
+                                New = lurl,
+                            }
                         );
                     }
                 }
@@ -669,7 +676,12 @@ public partial class InstanceSetupViewModel(
                     if (old != null)
                     {
                         persistenceService.AppendAction(
-                            new(Basic.Key, PersistenceService.ActionKind.EditLoader, old, null)
+                            new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditLoader,
+                                Old = old,
+                            }
                         );
                     }
                 }
@@ -848,7 +860,7 @@ public partial class InstanceSetupViewModel(
                         : null
                 );
 
-                var updates = new ConcurrentBag<PackageUpdateReviewerModel>();
+                var updates = new ConcurrentBag<PackageBulkUpdateReviewerModel>();
                 try
                 {
                     // 值设置太大会触发 API 限制
@@ -931,7 +943,7 @@ public partial class InstanceSetupViewModel(
                                             Filter.None
                                         )
                                         .ConfigureAwait(false);
-                                    var model = new PackageUpdateReviewerModel(
+                                    var model = new PackageBulkUpdateReviewerModel(
                                         entry,
                                         package,
                                         package.Thumbnail ?? AssetUriIndex.DirtImage,
@@ -1000,7 +1012,7 @@ public partial class InstanceSetupViewModel(
                     var dialog = new PackageBulkUpdateReviewerDialog { Result = updates.ToList() };
                     if (
                         await overlayService.PopDialogAsync(dialog)
-                        && dialog.Result is IReadOnlyList<PackageUpdateReviewerModel> results
+                        && dialog.Result is IReadOnlyList<PackageBulkUpdateReviewerModel> results
                     )
                     {
                         foreach (var model in results.Where(x => x.IsChecked))
@@ -1025,12 +1037,13 @@ public partial class InstanceSetupViewModel(
                                 );
                             // 设置 Version 会同步到 Entry.Purl
                             persistenceService.AppendAction(
-                                new(
-                                    Basic.Key,
-                                    PersistenceService.ActionKind.EditPackage,
-                                    old,
-                                    model.Model.Entry.Purl
-                                )
+                                new()
+                                {
+                                    Key = Basic.Key,
+                                    Kind = PersistenceService.ActionKind.EditPackage,
+                                    Old = old,
+                                    New = model.Model.Entry.Purl,
+                                }
                             );
                         }
                     }
@@ -1135,12 +1148,13 @@ public partial class InstanceSetupViewModel(
                                     if (oldPurl != importedEntry.Purl)
                                     {
                                         persistenceService.AppendAction(
-                                            new(
-                                                Basic.Key,
-                                                PersistenceService.ActionKind.EditPackage,
-                                                oldPurl,
-                                                importedEntry.Purl
-                                            )
+                                            new()
+                                            {
+                                                Key = Basic.Key,
+                                                Kind = PersistenceService.ActionKind.EditPackage,
+                                                Old = oldPurl,
+                                                New = importedEntry.Purl,
+                                            }
                                         );
                                     }
 
@@ -1157,12 +1171,12 @@ public partial class InstanceSetupViewModel(
                                     };
                                     guard.Value.Setup.Packages.Add(newEntry);
                                     persistenceService.AppendAction(
-                                        new(
-                                            Basic.Key,
-                                            PersistenceService.ActionKind.EditPackage,
-                                            null,
-                                            importedEntry.Purl
-                                        )
+                                        new()
+                                        {
+                                            Key = Basic.Key,
+                                            Kind = PersistenceService.ActionKind.EditPackage,
+                                            New = importedEntry.Purl,
+                                        }
                                     );
                                     addedCount++;
                                 }
@@ -1440,12 +1454,12 @@ public partial class InstanceSetupViewModel(
             {
                 guard.Value.Setup.Packages.Remove(model.Entry);
                 persistenceService.AppendAction(
-                    new(
-                        Basic.Key,
-                        PersistenceService.ActionKind.EditPackage,
-                        model.Entry.Purl,
-                        null
-                    )
+                    new()
+                    {
+                        Key = Basic.Key,
+                        Kind = PersistenceService.ActionKind.EditPackage,
+                        Old = model.Entry.Purl,
+                    }
                 );
             }
         }
@@ -1454,12 +1468,6 @@ public partial class InstanceSetupViewModel(
     #endregion
 
     #region Reactive
-
-    [ObservableProperty]
-    public partial int LayoutIndex { get; set; } = configurationService.Value.InterfaceSetupLayout;
-
-    partial void OnLayoutIndexChanged(int value) =>
-        configurationService.Value.InterfaceSetupLayout = value;
 
     [ObservableProperty]
     public partial LazyObject? Reference { get; set; }
@@ -1503,5 +1511,17 @@ public partial class InstanceSetupViewModel(
     [ObservableProperty]
     public partial bool IsFilterActive { get; set; }
 
+    [ObservableProperty]
+    public partial StateView? ViewState { get; set; }
+
+    #endregion
+
+
+    #region Nested type: StateData
+    public partial class StateView : ModelBase
+    {
+        [ObservableProperty]
+        public partial int LayoutIndex { get; set; }
+    }
     #endregion
 }

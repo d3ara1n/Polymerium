@@ -197,7 +197,13 @@ public partial class InstancePackageDependencyModal : Modal
 
         // 记录操作
         PersistenceService.AppendAction(
-            new(Guard.Key, PersistenceService.ActionKind.EditPackage, null, purl)
+            new()
+            {
+                Key = Guard.Key,
+                Kind = PersistenceService.ActionKind.EditPackage,
+                Old = null,
+                New = purl,
+            }
         );
 
         // NOTE: 这里有个非常别扭的地方就是如果想要被视为本地包，那么这个 InstancePackageModel.Info 必须已被赋值

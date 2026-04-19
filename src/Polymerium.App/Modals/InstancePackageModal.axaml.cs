@@ -520,12 +520,13 @@ public partial class InstancePackageModal : Modal
         if (Model.Owner.Entry.Purl != _old)
         {
             PersistenceService.AppendAction(
-                new(
-                    Guard.Key,
-                    PersistenceService.ActionKind.EditPackage,
-                    _old,
-                    Model.Owner.Entry.Purl
-                )
+                new()
+                {
+                    Key = Guard.Key,
+                    Kind = PersistenceService.ActionKind.EditPackage,
+                    Old = _old,
+                    New = Model.Owner.Entry.Purl,
+                }
             );
         }
 

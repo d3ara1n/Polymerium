@@ -26,99 +26,94 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Nested type: Account
 
-    public class Account(
-        string uuid,
-        string kind,
-        string data,
-        DateTime enrolledAt,
-        DateTime? lastUsedAt,
-        bool isDefault
-    )
+    public class Account
     {
         [Column(IsPrimary = true)]
-        public string Uuid { get; set; } = uuid;
+        public required string Uuid { get; set; }
 
-        public string Kind { get; set; } = kind;
+        public required string Kind { get; set; }
 
         [Column(DbType = "BLOB")]
-        public string Data { get; set; } = data;
+        public required string Data { get; set; }
 
-        public DateTime EnrolledAt { get; set; } = enrolledAt;
-        public DateTime? LastUsedAt { get; set; } = lastUsedAt;
-        public bool IsDefault { get; set; } = isDefault;
+        public required DateTime EnrolledAt { get; set; }
+        public required DateTime? LastUsedAt { get; set; }
+        public required bool IsDefault { get; set; }
     }
 
     #endregion
 
     #region Nested type: AccountSelector
 
-    public class AccountSelector(string key, string uuid)
+    public class AccountSelector
     {
         [Column(IsPrimary = true)]
-        public string Key { get; set; } = key;
+        public required string Key { get; set; }
 
-        public string Uuid { get; set; } = uuid;
+        public required string Uuid { get; set; }
     }
 
     #endregion
 
     #region Nested type: Action
 
-    public class Action(string key, ActionKind kind, string? old, string? @new)
+    public class Action
     {
         public DateTime At { get; set; } = DateTime.Now;
-        public string Key { get; set; } = key;
+        public required string Key { get; set; }
 
-        public ActionKind Kind { get; set; } = kind;
-        public string? Old { get; set; } = old;
-        public string? New { get; set; } = @new;
+        public required ActionKind Kind { get; set; }
+        public string? Old { get; set; }
+        public string? New { get; set; }
     }
 
     #endregion
 
     #region Nested type: Activity
 
-    public class Activity(
-        string key,
-        DateTimeOffset begin,
-        DateTimeOffset end,
-        string accountId,
-        bool dieInPeace
-    )
+    public class Activity
     {
-        public string Key { get; set; } = key;
+        public required string Key { get; set; }
 
-        public DateTime Begin { get; set; } = begin.DateTime;
-        public DateTime End { get; set; } = end.DateTime;
-        public string AccountId { get; set; } = accountId;
-        public bool DieInPeace { get; set; } = dieInPeace;
+        public required DateTime Begin { get; set; }
+        public required DateTime End { get; set; }
+        public required string AccountId { get; set; }
+        public required bool DieInPeace { get; set; }
     }
 
     #endregion
+
 
     #region Nested type: WidgetLocalSection
 
-    public class WidgetLocalSection(string key, string widgetId, string indicator, string data)
+    public class WidgetLocalSection
     {
         [Column(IsPrimary = true)]
-        public string Key { get; set; } = key;
+        public required string Key { get; set; }
 
         [Column(IsPrimary = true)]
-        public string WidgetId { get; set; } = widgetId;
+        public required string WidgetId { get; set; }
 
         [Column(IsPrimary = true)]
-        public string Indicator { get; set; } = indicator;
+        public required string Indicator { get; set; }
 
         [Column(DbType = "BLOB")]
-        public string Data { get; set; } = data;
+        public required string Data { get; set; }
     }
 
     #endregion
 
-    // Preferences
-    // Activities
+    #region Nested type: ViewState
+    public class ViewState
+    {
+        [Column(IsPrimary = true)]
+        public required string Key { get; set; }
 
-    // Preferences 会用 Key-PreferenceId-PreferenceValue 的形式储存
+        [Column(DbType = "BLOB")]
+        public required string Data { get; set; }
+    }
+    #endregion
+
 
     #region Actions
 
@@ -320,7 +315,7 @@ public class PersistenceService(IFreeSql freeSql)
             }
             else
             {
-                freeSql.Insert(new AccountSelector(key, uuid)).ExecuteAffrows();
+                freeSql.Insert(new AccountSelector { Key = key, Uuid = uuid }).ExecuteAffrows();
             }
         });
 
@@ -340,9 +335,32 @@ public class PersistenceService(IFreeSql freeSql)
     public void SetWidgetLocalData<T>(string key, string widgetId, string indicator, T data)
     {
         var serializedData = JsonSerializer.Serialize(data);
-        var widgetSection = new WidgetLocalSection(key, widgetId, indicator, serializedData);
+        var widgetSection = new WidgetLocalSection
+        {
+            Key = key,
+            WidgetId = widgetId,
+            Indicator = indicator,
+            Data = serializedData,
+        };
 
         freeSql.InsertOrUpdate<WidgetLocalSection>().SetSource(widgetSection).ExecuteAffrows();
+    }
+
+    #endregion
+
+    #region ViewStates
+
+    public object? GetViewState(string key, Type type)
+    {
+        var data = freeSql.Select<ViewState>().Where(x => x.Key == key).First();
+        return data == null ? default : JsonSerializer.Deserialize(data.Data, type);
+    }
+
+    public void SetViewState(string key, object data)
+    {
+        var serializedData = JsonSerializer.Serialize(data);
+        var state = new ViewState() { Key = key, Data = serializedData };
+        freeSql.InsertOrUpdate<ViewState>().SetSource(state).ExecuteAffrows();
     }
 
     #endregion

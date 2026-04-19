@@ -23,7 +23,9 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class MarketplaceSearchViewModel : ViewModelBase
+public partial class MarketplaceSearchViewModel
+    : ViewModelBase,
+        IStatedViewModel<MarketplaceSearchViewModel.State>
 {
     public MarketplaceSearchViewModel(
         ViewBag bag,
@@ -41,8 +43,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         _overlayService = overlayService;
         _dataService = dataService;
         _configurationService = configurationService;
-
-        LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
 
         var r = agent
             .Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper()))
@@ -124,12 +124,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial int LayoutIndex { get; set; }
-
-    partial void OnLayoutIndexChanged(int value) =>
-        _configurationService.Value.InterfaceMarketplaceLayout = value;
-
-    [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
 
     partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
@@ -158,6 +152,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial State? ViewState { get; set; }
 
     #endregion
 
@@ -333,5 +330,13 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         }
     }
 
+    #endregion
+
+    #region Nested type: State
+    public partial class State : ModelBase
+    {
+        [ObservableProperty]
+        public partial int LayoutIndex { get; set; }
+    }
     #endregion
 }

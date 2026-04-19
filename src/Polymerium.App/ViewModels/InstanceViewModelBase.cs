@@ -44,11 +44,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     #region Nested type: InstanceContextParameter
 
-    #region NestedType: InstanceContextParameter
-
     public record InstanceContextParameter(InstanceBasicModel Basic, WidgetBase[] Widgets);
-
-    #endregion
 
     #endregion
 
@@ -79,7 +75,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     #region Tracking
 
-    public override async Task InitializeAsync()
+    public override Task InitializeAsync()
     {
         InstanceManager.InstanceUpdating += OnInstanceUpdating;
         InstanceManager.InstanceDeploying += OnInstanceDeploying;
@@ -112,16 +108,16 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
         OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
 
-        await OnInitializeAsync();
+        return base.InitializeAsync();
     }
 
-    public override async Task DeinitializeAsync()
+    public override Task DeinitializeAsync()
     {
         InstanceManager.InstanceUpdating -= OnInstanceUpdating;
         InstanceManager.InstanceDeploying -= OnInstanceDeploying;
         InstanceManager.InstanceLaunching -= OnInstanceLaunching;
         ProfileManager.ProfileUpdated -= OnProfileUpdated;
-        await OnDeinitializeAsync();
+        return base.DeinitializeAsync();
     }
 
     private void OnInstanceUpdating(object? sender, UpdateTracker tracker)

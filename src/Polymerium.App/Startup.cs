@@ -182,6 +182,7 @@ public static class Startup
             .AddSingleton<OverlayService>()
             .AddSingleton<DataService>()
             .AddSingleton<PersistenceService>()
+            .AddSingleton<ViewStateService>()
             .AddLifetimeService<ScrapService>()
             .AddSingleton<InstanceService>()
             .AddLifetimeService<UpdateService>()
