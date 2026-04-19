@@ -13,7 +13,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.Repositories;
 
-namespace Polymerium.App.Modals;
+namespace Polymerium.App.Dialogs;
 
 public partial class AssetImporterDialog : Dialog
 {

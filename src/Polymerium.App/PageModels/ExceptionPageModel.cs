@@ -1,0 +1,27 @@
+using System;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Polymerium.App.Facilities;
+
+namespace Polymerium.App.PageModels;
+
+public partial class ExceptionPageModel : ViewModelBase
+{
+    public ExceptionPageModel(ViewBag bag)
+    {
+        if (bag.Parameter is Exception exception)
+        {
+            Message = exception.Message;
+            StackTrace = exception.StackTrace ?? "No details provided.";
+        }
+    }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial string Message { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string StackTrace { get; set; } = string.Empty;
+
+    #endregion
+}

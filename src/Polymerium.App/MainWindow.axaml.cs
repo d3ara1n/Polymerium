@@ -8,7 +8,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
-using Polymerium.App.Views;
+using Polymerium.App.Pages;
 
 namespace Polymerium.App;
 
@@ -111,7 +111,7 @@ public partial class MainWindow : AppWindow
                 var path = file.TryGetLocalPath();
                 if (path != null && DataContext is MainWindowContext context)
                 {
-                    context.Navigate(typeof(NewInstanceView), path);
+                    context.Navigate(typeof(NewInstancePage), path);
                 }
             }
         }

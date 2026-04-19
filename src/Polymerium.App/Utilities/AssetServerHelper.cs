@@ -5,7 +5,7 @@ using Avalonia.Media.Imaging;
 using fNbt;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Services;
+namespace Polymerium.App.Utilities;
 
 public static class AssetServerHelper
 {

@@ -8,7 +8,7 @@ using fNbt;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Services;
+namespace Polymerium.App.Utilities;
 
 /// <summary>
 ///     存档数据解析器

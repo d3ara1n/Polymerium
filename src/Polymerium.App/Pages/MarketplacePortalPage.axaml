@@ -1,0 +1,77 @@
+﻿<husk:Page
+    x:Class="Polymerium.App.Pages.MarketplacePortalPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pm="using:Polymerium.App.PageModels"
+    Padding="0"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="pm:MarketplacePortalPageModel"
+    Header="{x:Static lang:Resources.MarketplacePortalView_Title}"
+    mc:Ignorable="d">
+    <Grid RowDefinitions="Auto,0">
+        <Panel
+            Grid.Row="0"
+            Height="{Binding $parent[husk:Page].Bounds.Height, Mode=OneWay}"
+            Margin="{StaticResource PageToplessBottomlessContentMargin}">
+            <StackPanel
+                MaxWidth="1270"
+                VerticalAlignment="Center"
+                Spacing="24">
+                <TextBlock
+                    FontSize="{StaticResource ExtraLargeFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterTitle}"
+                    TextAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect
+                            BlurRadius="6"
+                            Opacity="0.1" />
+                    </TextBlock.Effect>
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                            <!-- <GradientStop Offset="0" Color="#f6d365" /> -->
+                            <!-- <GradientStop Offset="1" Color="#fda085" /> -->
+                            <GradientStop Offset="0" Color="{DynamicResource Accent6Color}" />
+                            <GradientStop Offset="1" Color="{DynamicResource Accent9Color}" />
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+                <TextBox
+                    Name="QueryBox"
+                    Margin="36,0"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    BorderThickness="0,0,0,2"
+                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                    PlaceholderText="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}"
+                    Theme="{StaticResource UnderlineTextBoxTheme}" />
+                <Button
+                    Classes="Primary"
+                    HorizontalAlignment="Center"
+                    Command="{Binding GotoSearchViewCommand}"
+                    CommandParameter="{Binding #QueryBox.Text}"
+                    IsDefault="True"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    <StackPanel
+                        Margin="8,4"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <fi:SymbolIcon
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="Search" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Panel>
+    </Grid>
+</husk:Page>

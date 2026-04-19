@@ -9,8 +9,8 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
+using Polymerium.App.PageModels;
 using Polymerium.App.Services;
-using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Dialogs;
 
@@ -42,10 +42,10 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
 
     public static readonly DirectProperty<
         PackageBulkUpdatePreviewerDialog,
-        InstanceSetupViewModel.StateView?
+        InstanceSetupPageModel.StateView?
     > ViewStateProperty = AvaloniaProperty.RegisterDirect<
         PackageBulkUpdatePreviewerDialog,
-        InstanceSetupViewModel.StateView?
+        InstanceSetupPageModel.StateView?
     >(nameof(ViewState), o => o.ViewState, (o, v) => o.ViewState = v);
 
     public PackageBulkUpdatePreviewerDialog()
@@ -67,7 +67,7 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
         set => SetAndRaise(TagsProperty, ref field, value);
     }
 
-    public required InstanceSetupViewModel.StateView? ViewState
+    public required InstanceSetupPageModel.StateView? ViewState
     {
         get;
         set => SetAndRaise(ViewStateProperty, ref field, value);
