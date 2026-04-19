@@ -130,7 +130,7 @@ public partial class InstanceDashboardViewModel(
     #endregion
 
 
-    #region State
+    #region Instance State
 
     protected override void OnInstanceLaunching(LaunchTracker tracker)
     {

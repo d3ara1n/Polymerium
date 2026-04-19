@@ -252,7 +252,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                 }
 
                 _persistenceService.AppendAction(
-                    new(Basic.Key, PersistenceService.ActionKind.Reset, null, null)
+                    new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.Reset }
                 );
                 _notificationService.PopMessage(
                     "Instance reset",
@@ -304,7 +304,12 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         var oldSource = Basic.Source;
         Basic.Source = null;
         _persistenceService.AppendAction(
-            new(Basic.Key, PersistenceService.ActionKind.Unlock, oldSource, null)
+            new()
+            {
+                Key = Basic.Key,
+                Kind = PersistenceService.ActionKind.Unlock,
+                Old = oldSource,
+            }
         );
         _notificationService.PopMessage(
             Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
@@ -361,7 +366,12 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             NameOverwrite = name;
             _owned.Value.Name = name;
             _persistenceService.AppendAction(
-                new(Basic.Key, PersistenceService.ActionKind.Rename, oldName, name)
+                new()
+                {
+                    Key = Basic.Key,
+                    Kind = PersistenceService.ActionKind.Rename,
+                    Old = oldName, New = name
+                }
             );
         }
     }

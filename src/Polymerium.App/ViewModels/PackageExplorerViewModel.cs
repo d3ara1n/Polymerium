@@ -495,12 +495,12 @@ public partial class PackageExplorerViewModel : ViewModelBase
                             Source = null,
                         };
                         _persistenceService.AppendAction(
-                            new(
-                                Basic.Key,
-                                PersistenceService.ActionKind.EditPackage,
-                                null,
-                                entry.Purl
-                            )
+                            new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                New = entry.Purl,
+                            }
                         );
                         guard.Value.Setup.Packages.Add(entry);
                         model.State = ExhibitState.Editable;
@@ -520,12 +520,12 @@ public partial class PackageExplorerViewModel : ViewModelBase
                         }
 
                         _persistenceService.AppendAction(
-                            new(
-                                Basic.Key,
-                                PersistenceService.ActionKind.EditPackage,
-                                model.Installed.Purl,
-                                null
-                            )
+                            new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Old = model.Installed.Purl,
+                            }
                         );
                         model.State = null;
                         model.Installed = null;
@@ -543,12 +543,13 @@ public partial class PackageExplorerViewModel : ViewModelBase
                             model.PendingVersionId
                         );
                         _persistenceService.AppendAction(
-                            new(
-                                Basic.Key,
-                                PersistenceService.ActionKind.EditPackage,
-                                old,
-                                model.Installed.Purl
-                            )
+                            new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Old = old,
+                                New = model.Installed.Purl
+                            }
                         );
                         model.State = ExhibitState.Editable;
                         model.InstalledVersionName = model.PendingVersionName;

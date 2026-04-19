@@ -672,7 +672,7 @@ public partial class MainWindowContext : ObservableObject
 
     #endregion
 
-    #region State Service
+    #region Instance State
 
     internal void SubscribeState(InstanceManager manager)
     {
@@ -746,7 +746,12 @@ public partial class MainWindowContext : ObservableObject
                         );
                     });
                     _persistenceService.AppendAction(
-                        new(e.Key, PersistenceService.ActionKind.Install, null, e.Reference)
+                        new()
+                        {
+                            Key = e.Key,
+                            Kind = PersistenceService.ActionKind.Install,
+                            New = e.Reference,
+                        }
                     );
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -830,7 +835,13 @@ public partial class MainWindowContext : ObservableObject
                         );
                     });
                     _persistenceService.AppendAction(
-                        new(e.Key, PersistenceService.ActionKind.Update, e.OldSource, e.NewSource)
+                        new()
+                        {
+                            Key = e.Key,
+                            Kind = PersistenceService.ActionKind.Update,
+                            Old = e.OldSource,
+                            New = e.NewSource,
+                        }
                     );
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -1007,13 +1018,14 @@ public partial class MainWindowContext : ObservableObject
                         }
                     });
                     _persistenceService.AppendActivity(
-                        new(
-                            e.Key,
-                            e.StartedAt,
-                            DateTimeOffset.Now,
-                            e.Options.Account?.Uuid ?? string.Empty,
-                            false
-                        )
+                        new()
+                        {
+                            Key = e.Key,
+                            AccountId = e.Options.Account?.Uuid ?? string.Empty,
+                            DieInPeace = false,
+                            Begin = e.StartedAt.DateTime,
+                            End = DateTime.Now,
+                        }
                     );
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -1029,13 +1041,14 @@ public partial class MainWindowContext : ObservableObject
                         );
                     });
                     _persistenceService.AppendActivity(
-                        new(
-                            e.Key,
-                            e.StartedAt,
-                            DateTimeOffset.Now,
-                            e.Options.Account?.Uuid ?? string.Empty,
-                            true
-                        )
+                        new()
+                        {
+                            Key = e.Key,
+                            AccountId = e.Options.Account?.Uuid ?? string.Empty,
+                            Begin = e.StartedAt.DateTime,
+                            End = DateTime.Now,
+                            DieInPeace = true,
+                        }
                     );
                     e.StateUpdated -= OnStateChanged;
                     break;

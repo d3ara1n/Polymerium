@@ -25,14 +25,15 @@ public static class AccountHelper
         DateTimeOffset? lastUsedAt,
         bool isDefault
     ) =>
-        new(
-            account.Uuid,
-            account.GetType().Name,
-            JsonSerializer.Serialize(account, account.GetType()),
-            enrolledAt.DateTime,
-            lastUsedAt?.DateTime,
-            isDefault
-        );
+        new()
+        {
+            Uuid = account.Uuid,
+            IsDefault = isDefault,
+            EnrolledAt = enrolledAt.DateTime,
+            LastUsedAt = lastUsedAt?.DateTime,
+            Data = JsonSerializer.Serialize(account, account.GetType()),
+            Kind = account.GetType().Name,
+        };
 
     public static string ToRaw(IAccount account) =>
         JsonSerializer.Serialize(account, account.GetType());

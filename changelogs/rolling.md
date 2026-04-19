@@ -11,10 +11,11 @@
 ### Added
 
 - 平滑滚动包 SmoothScroll.Avalonia 回归
+- 添加更多页面的持久化视图状态
 
 ### Changed
 
--
+- 重构视图状态机制以允许保存更多页面的视图状态(#POLY-64)
 
 ### Removed
 

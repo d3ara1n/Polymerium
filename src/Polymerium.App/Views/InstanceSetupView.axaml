@@ -606,7 +606,7 @@
                         </Border>
                         <TabStrip
                             Name="LayoutSelector"
-                            SelectedIndex="{Binding LayoutIndex, Mode=TwoWay}"
+                            SelectedIndex="{Binding ViewState.LayoutIndex, Mode=TwoWay}"
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <generic:List x:TypeArguments="m:ListTemplateCombinationModel">

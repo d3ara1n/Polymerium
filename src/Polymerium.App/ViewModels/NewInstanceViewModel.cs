@@ -190,7 +190,12 @@ public partial class NewInstanceViewModel(
         profileManager.Add(key, profile);
 
         persistenceService.AppendAction(
-            new(key.Key, PersistenceService.ActionKind.Install, null, ImportedPack?.Path)
+            new()
+            {
+                Key = key.Key,
+                Kind = PersistenceService.ActionKind.Install,
+                New = ImportedPack?.Path,
+            }
         );
 
         navigationService.Navigate<InstanceView>(key.Key);

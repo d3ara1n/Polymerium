@@ -164,12 +164,12 @@ public partial class InstanceViewModel : ViewModelBase
                                     }
                                 );
                                 _persistenceService.AppendAction(
-                                    new(
-                                        Basic.Key,
-                                        PersistenceService.ActionKind.EditPackage,
-                                        null,
-                                        purl
-                                    )
+                                    new()
+                                    {
+                                        Key = Basic.Key,
+                                        Kind = PersistenceService.ActionKind.EditPackage,
+                                        New = purl,
+                                    }
                                 );
                                 _notificationService.PopMessage(
                                     $"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
