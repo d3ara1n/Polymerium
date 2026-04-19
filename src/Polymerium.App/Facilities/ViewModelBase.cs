@@ -24,7 +24,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
         {
             var stateType = statedInterface.GetGenericArguments().First();
             var viewStateService = Program.Services!.GetRequiredService<ViewStateService>();
-            var state = viewStateService.RetrieveForView(GetType(), stateType);
+            var state = viewStateService.RetrieveForView(this, stateType);
             statedInterface
                 .GetProperty(nameof(IStatedViewModel<>.ViewState))!
                 .SetValue(this, state);
@@ -45,7 +45,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
         {
             var stateType = statedInterface.GetGenericArguments().First();
             var viewStateService = Program.Services!.GetRequiredService<ViewStateService>();
-            viewStateService.ReleaseForView(GetType());
+            viewStateService.ReleaseForView(this);
         }
 
         return OnDeinitializeAsync();

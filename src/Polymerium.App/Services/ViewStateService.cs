@@ -2,16 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Services;
 
 public class ViewStateService(PersistenceService persistenceService) : IDisposable
 {
-    private IDictionary<Type, ViewData> _cache = new Dictionary<Type, ViewData>();
+    private IDictionary<string, ViewData> _cache = new Dictionary<string, ViewData>();
 
-    public object RetrieveForView(Type owner, Type type)
+    public object RetrieveForView(ViewModelBase owner, Type type)
     {
-        if (_cache.TryGetValue(owner, out var data))
+        string? customKey = null;
+        if (owner is IStatedViewModelKeyGetter getter)
+        {
+            customKey = getter.ViewStateKey;
+        }
+        var key = Id(owner.GetType(), customKey);
+        if (_cache.TryGetValue(key, out var data))
         {
             if (data.Type == type)
             {
@@ -28,40 +35,48 @@ public class ViewStateService(PersistenceService persistenceService) : IDisposab
         }
         else
         {
-            var got = persistenceService.GetViewState(Id(owner), type);
+            var got = persistenceService.GetViewState(key, type);
             var val = got is not null ? got : Activator.CreateInstance(type)!;
-            _cache.Add(owner, new ViewData(type, val));
+            _cache.Add(key, new ViewData(type, val));
             return val;
         }
     }
 
-    public void ReleaseForView(Type owner)
+    public void ReleaseForView(ViewModelBase owner)
     {
-        if (_cache.TryGetValue(owner, out var data))
+        string? customKey = null;
+        if (owner is IStatedViewModelKeyGetter getter)
+        {
+            customKey = getter.ViewStateKey;
+        }
+        var key = Id(owner.GetType(), customKey);
+        if (_cache.TryGetValue(key, out var data))
         {
             data.@Ref--;
             if (data.@Ref <= 0)
             {
-                persistenceService.SetViewState(Id(owner), data.Value);
-                _cache.Remove(owner);
+                persistenceService.SetViewState(key, data.Value);
+                _cache.Remove(key);
             }
         }
     }
 
-    private static string Id(Type type)
+    private static string Id(Type type, string? custom = null)
     {
         var assemblyName = type.Assembly.GetName().Name!;
         var fullName = type.FullName ?? type.Name;
-        return $"{assemblyName}|{fullName}";
+        return custom is not null
+            ? $"{assemblyName}|{fullName}|{custom}"
+            : $"{assemblyName}|{fullName}";
     }
 
     public void Dispose()
     {
         if (_cache.Count > 0)
         {
-            foreach (var (owner, data) in _cache)
+            foreach (var (key, data) in _cache)
             {
-                persistenceService.SetViewState(Id(owner), data.Value);
+                persistenceService.SetViewState(key, data.Value);
             }
         }
     }
