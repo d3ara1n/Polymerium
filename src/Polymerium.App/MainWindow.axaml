@@ -11,7 +11,7 @@
     xmlns:local="using:Polymerium.App"
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:v="using:Polymerium.App.Views"
+    xmlns:v="clr-namespace:Polymerium.App.Pages"
     Title="{x:Static local:Program.Brand}"
     Width="1111"
     Height="666"
@@ -135,7 +135,7 @@
                     Grid.ColumnSpan="2"
                     Height="48"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:LandingView}"
+                    CommandParameter="{x:Type v:LandingPage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <StackPanel
                         Orientation="Horizontal"
@@ -156,7 +156,7 @@
                     Width="48"
                     Height="48"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:NewInstanceView}"
+                    CommandParameter="{x:Type v:NewInstancePage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <fi:SymbolIcon
                         FontSize="18"
@@ -170,7 +170,7 @@
                     Classes="Primary"
                     Height="36"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:MarketplacePortalView}">
+                    CommandParameter="{x:Type v:MarketplacePortalPage}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
@@ -364,7 +364,7 @@
                     Grid.Row="8"
                     Grid.Column="0"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:SettingsView}"
+                    CommandParameter="{x:Type v:SettingsPage}"
                     Theme="{StaticResource GhostButtonTheme}">
                     <fi:SymbolIcon
                         FontSize="18"
@@ -376,7 +376,7 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:AccountsView}"
+                    CommandParameter="{x:Type v:AccountsPage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <StackPanel
                         Orientation="Horizontal"

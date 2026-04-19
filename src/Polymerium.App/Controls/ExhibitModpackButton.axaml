@@ -7,8 +7,8 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="clr-namespace:Polymerium.App.Models"
-    xmlns:v="clr-namespace:Polymerium.App.Views"
-    xmlns:vm="clr-namespace:Polymerium.App.ViewModels">
+    xmlns:pm="using:Polymerium.App.PageModels"
+    xmlns:v="clr-namespace:Polymerium.App.Pages">
     <Design.PreviewWith>
         <Panel Background="White">
             <StackPanel Margin="24">
@@ -142,7 +142,7 @@
                                 Spacing="8">
                                 <Button
                                     Classes="Primary Small"
-                                    Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -255,7 +255,7 @@
                                     Grid.Row="1"
                                     Classes="Primary Small"
                                     BackgroundSizing="InnerBorderEdge"
-                                    Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
                                     <StackPanel
                                         Orientation="Horizontal"

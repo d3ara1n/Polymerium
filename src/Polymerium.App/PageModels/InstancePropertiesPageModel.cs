@@ -1,0 +1,481 @@
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Models;
+using Polymerium.App.Assets;
+using Polymerium.App.Facilities;
+using Polymerium.App.Pages;
+using Polymerium.App.Properties;
+using Polymerium.App.Services;
+using Polymerium.App.Utilities;
+using Trident.Abstractions;
+using Trident.Abstractions.FileModels;
+using Trident.Core.Services;
+using Trident.Core.Services.Profiles;
+using Trident.Core.Utilities;
+
+namespace Polymerium.App.PageModels;
+
+public partial class InstancePropertiesPageModel : InstancePageModelBase
+{
+    private ProfileGuard? _owned;
+
+    public InstancePropertiesPageModel(
+        ViewBag bag,
+        ProfileManager profileManager,
+        InstanceManager instanceManager,
+        OverlayService overlayService,
+        NotificationService notificationService,
+        NavigationService navigationService,
+        ConfigurationService configurationService,
+        PersistenceService persistenceService,
+        InstanceService instanceService
+    )
+        : base(bag, instanceManager, profileManager)
+    {
+        _overlayService = overlayService;
+        _notificationService = notificationService;
+        _navigationService = navigationService;
+        _configurationService = configurationService;
+        _persistenceService = persistenceService;
+        _instanceService = instanceService;
+
+        SafeCode = Random.Shared.Next(1000, 9999).ToString();
+    }
+
+    #region Other
+
+    private string AccessOverrideString(string key)
+    {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (
+            _owned != null
+            && _owned.Value.Overrides.TryGetValue(key, out var result)
+            && result != null
+        )
+        {
+            return result.ToString() ?? string.Empty;
+        }
+
+        return string.Empty;
+    }
+
+    private bool AccessOverrideBoolean(string key)
+    {
+        if (
+            _owned != null
+            && _owned.Value.Overrides.TryGetValue(key, out var result)
+            && result is bool rv
+        )
+        {
+            return rv;
+        }
+
+        return false;
+    }
+
+    private void WriteOverride(string key, object? value)
+    {
+        if (_owned == null)
+        {
+            return;
+        }
+
+        if (value is not null and not "")
+        {
+            _owned.Value.Overrides[key] = value;
+        }
+        else
+        {
+            _owned.Value.Overrides.Remove(key);
+        }
+    }
+
+    private async Task WriteIconAsync()
+    {
+        // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
+        try
+        {
+            var path = InstanceHelper.PickIcon(Basic.Key);
+            if (path != null && File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            using var stream = new MemoryStream();
+            ThumbnailOverwrite.Save(stream);
+            stream.Position = 0;
+            var extension = FileHelper.GuessBitmapExtension(stream);
+            stream.Position = 0;
+            var iconPath = PathDef.Default.FileOfIcon(Basic.Key, extension);
+            await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
+            await stream.CopyToAsync(writer);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(
+                ex,
+                Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle,
+                thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+            );
+        }
+    }
+
+    #endregion
+
+    #region Overrides
+
+    protected override void OnModelUpdated(string key, Profile profile)
+    {
+        base.OnModelUpdated(key, profile);
+
+        NameOverwrite = profile.Name;
+        ThumbnailOverwrite = Basic.Thumbnail;
+    }
+
+    protected override Task OnInitializeAsync()
+    {
+        if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            _owned = guard;
+        }
+
+        #region Update Overrides & Perferences
+
+        JavaHomeOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_HOME);
+        JavaHomeWatermark = Resources.InstancePropertiesView_JavaHomePlaceholder;
+        JavaMaxMemoryOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_MAX_MEMORY);
+        JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
+        JavaAdditionalArgumentsOverride = AccessOverrideString(
+            Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS
+        );
+        JavaAdditionalArgumentsWatermark = !string.IsNullOrEmpty(
+            _configurationService.Value.GameJavaAdditionalArguments
+        )
+            ? _configurationService.Value.GameJavaAdditionalArguments
+            : Resources.InstancePropertiesView_JavaAdditionalArgumentsPlaceholder;
+        WindowInitialHeightOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_HEIGHT);
+        WindowInitialHeightWatermark =
+            _configurationService.Value.GameWindowInitialHeight.ToString();
+        WindowInitialWidthOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_WIDTH);
+        WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
+        BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
+        BehaviorResolveDependency = AccessOverrideBoolean(
+            Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY
+        );
+        QuickConnectAddressOverride = AccessOverrideString(
+            Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
+        );
+        QuickConnectAddressWatermark = Resources.InstancePropertiesView_QuickConnectPlaceholder;
+
+        #endregion
+
+        return base.OnInitializeAsync();
+    }
+
+    protected override async Task OnDeinitializeAsync()
+    {
+        if (_owned != null)
+        {
+            await _owned.DisposeAsync();
+        }
+
+        await Task.CompletedTask;
+    }
+
+    #endregion
+
+    #region Injected
+
+    private readonly OverlayService _overlayService;
+    private readonly NotificationService _notificationService;
+    private readonly NavigationService _navigationService;
+    private readonly ConfigurationService _configurationService;
+    private readonly PersistenceService _persistenceService;
+    private readonly InstanceService _instanceService;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private async Task PickFile(TextBox? box)
+    {
+        if (box != null)
+        {
+            var path = await _overlayService.RequestFileAsync(
+                Resources.InstancePropertiesView_RequestJavaPrompt,
+                Resources.InstancePropertiesView_RequestJavaTitle
+            );
+            if (path != null && File.Exists(path))
+            {
+                var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
+                if (dir != null)
+                {
+                    box.Text = dir;
+                }
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void CheckIntegrity() =>
+        _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
+
+    [RelayCommand]
+    private void ResetInstance()
+    {
+        if (!InstanceManager.IsInUse(Basic.Key))
+        {
+            var build = PathDef.Default.DirectoryOfBuild(Basic.Key);
+            var live = PathDef.Default.DirectoryOfLive(Basic.Key);
+            var file = PathDef.Default.FileOfLockData(Basic.Key);
+            try
+            {
+                if (Directory.Exists(build))
+                {
+                    Directory.Delete(build, true);
+                }
+
+                if (Directory.Exists(live))
+                {
+                    Directory.Delete(live, true);
+                }
+
+                if (File.Exists(file))
+                {
+                    File.Delete(file);
+                }
+
+                _persistenceService.AppendAction(
+                    new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.Reset }
+                );
+                _notificationService.PopMessage(
+                    "Instance reset",
+                    Basic.Key,
+                    GrowlLevel.Success,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                );
+            }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage(
+                    ex,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                );
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void DeleteInstance()
+    {
+        var path = PathDef.Default.FileOfBomb(Basic.Key);
+        var dir = Path.GetDirectoryName(path);
+        if (dir != null && !Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+        }
+
+        File.WriteAllText(path, Program.MagicWords);
+        ProfileManager.Remove(Basic.Key);
+        // 保留该 Key 避免单个会话中安装同一个整合包而导致 Key 被复用
+        ProfileManager.RequestKey(Basic.Key);
+
+        if (_navigationService.CanGoBack)
+        {
+            _navigationService.GoBack();
+        }
+        else
+        {
+            _navigationService.Navigate<LandingPage>();
+        }
+    }
+
+    [RelayCommand]
+    private void UnlockInstance()
+    {
+        _owned?.Value.Setup.Source = null;
+
+        var oldSource = Basic.Source;
+        Basic.Source = null;
+        _persistenceService.AppendAction(
+            new()
+            {
+                Key = Basic.Key,
+                Kind = PersistenceService.ActionKind.Unlock,
+                Old = oldSource,
+            }
+        );
+        _notificationService.PopMessage(
+            Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
+            Basic.Key,
+            GrowlLevel.Success,
+            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+        );
+    }
+
+    [RelayCommand]
+    private async Task RemoveThumbnailAsync()
+    {
+        ThumbnailOverwrite = AssetUriIndex.DirtImageBitmap;
+        await WriteIconAsync();
+    }
+
+    [RelayCommand]
+    private async Task SelectThumbnailAsync()
+    {
+        var path = await _overlayService.RequestFileAsync(
+            Resources.InstancePropertiesView_RequestThumbnailPrompt,
+            Resources.InstancePropertiesView_RequestThumbnailTitle
+        );
+        if (path != null)
+        {
+            if (FileHelper.IsBitmapFile(path))
+            {
+                ThumbnailOverwrite = new(path);
+                await WriteIconAsync();
+            }
+            else
+            {
+                _notificationService.PopMessage(
+                    Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationMessage,
+                    Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
+                    GrowlLevel.Warning,
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                );
+            }
+        }
+    }
+
+    [RelayCommand]
+    private async Task RenameInstance()
+    {
+        var name = await _overlayService.RequestInputAsync(
+            Resources.InstancePropertiesView_RequestNamePrompt,
+            Resources.InstancePropertiesView_RequestNameTitle,
+            Basic.Name
+        );
+        if (name != null && _owned != null && !string.Equals(name, Basic.Name))
+        {
+            var oldName = NameOverwrite;
+            NameOverwrite = name;
+            _owned.Value.Name = name;
+            _persistenceService.AppendAction(
+                new()
+                {
+                    Key = Basic.Key,
+                    Kind = PersistenceService.ActionKind.Rename,
+                    Old = oldName, New = name
+                }
+            );
+        }
+    }
+
+    [RelayCommand]
+    private void GotoSettings() => _navigationService.Navigate<SettingsPage>();
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public required partial Bitmap ThumbnailOverwrite { get; set; }
+
+    [ObservableProperty]
+    public required partial string NameOverwrite { get; set; }
+
+    [ObservableProperty]
+    public partial string SafeCode { get; set; }
+
+    #endregion
+
+    #region Properties
+
+    [ObservableProperty]
+    public partial string JavaHomeOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string JavaHomeWatermark { get; set; } = string.Empty;
+
+    partial void OnJavaHomeOverrideChanged(string value) =>
+        WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
+
+    [ObservableProperty]
+    public partial string JavaMaxMemoryOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string JavaMaxMemoryWatermark { get; set; } = string.Empty;
+
+    partial void OnJavaMaxMemoryOverrideChanged(string value) =>
+        WriteOverride(
+            Profile.OVERRIDE_JAVA_MAX_MEMORY,
+            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
+        );
+
+    [ObservableProperty]
+    public partial string JavaAdditionalArgumentsOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string JavaAdditionalArgumentsWatermark { get; set; } = string.Empty;
+
+    partial void OnJavaAdditionalArgumentsOverrideChanged(string value) =>
+        WriteOverride(
+            Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+            !string.IsNullOrEmpty(value) ? value : null
+        );
+
+    [ObservableProperty]
+    public partial string WindowInitialHeightOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string WindowInitialHeightWatermark { get; set; } = string.Empty;
+
+    partial void OnWindowInitialHeightOverrideChanged(string value) =>
+        WriteOverride(
+            Profile.OVERRIDE_WINDOW_HEIGHT,
+            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
+        );
+
+    [ObservableProperty]
+    public partial string WindowInitialWidthOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string WindowInitialWidthWatermark { get; set; } = string.Empty;
+
+    partial void OnWindowInitialWidthOverrideChanged(string value) =>
+        WriteOverride(
+            Profile.OVERRIDE_WINDOW_WIDTH,
+            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
+        );
+
+    [ObservableProperty]
+    public partial string QuickConnectAddressOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string QuickConnectAddressWatermark { get; set; } = string.Empty;
+
+    partial void OnQuickConnectAddressOverrideChanged(string value) =>
+        WriteOverride(
+            Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER,
+            !string.IsNullOrEmpty(value) ? value : null
+        );
+
+    [ObservableProperty]
+    public partial bool BehaviorResolveDependency { get; set; }
+
+    partial void OnBehaviorResolveDependencyChanged(bool value) =>
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, value);
+
+    [ObservableProperty]
+    public partial bool BehaviorDeployFastMode { get; set; }
+
+    partial void OnBehaviorDeployFastModeChanged(bool value) =>
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, value);
+
+    #endregion
+}

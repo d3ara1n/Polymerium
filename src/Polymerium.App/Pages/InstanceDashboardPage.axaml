@@ -1,0 +1,581 @@
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Pages.InstanceDashboardPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
+    xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pm="using:Polymerium.App.PageModels"
+    xmlns:system="using:System"
+    xmlns:trident="using:Trident.Core"
+    xmlns:v="clr-namespace:Polymerium.App.Pages"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    x:DataType="pm:InstanceDashboardPageModel"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
+    <controls:Subpage.Resources>
+        <husk:RelayDataTemplate
+            x:Key="LogSourceTemplate"
+            x:DataType="m:LogSourceModelBase">
+            <DataTemplate DataType="m:LiveLogSourceModel">
+                <Grid
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="8">
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
+                        Symbol="Live" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="{x:Static lang:Resources.InstanceDashboardView_LiveLogLabelText}" />
+                    <husk:Tag
+                        Grid.Column="2"
+                        Classes="Small Success"
+                        IsVisible="{Binding $parent[v:InstanceDashboardPage].((pm:InstanceDashboardPageModel)DataContext)?.IsOnAir, FallbackValue={x:False}}"
+                        Content="Live" />
+                </Grid>
+            </DataTemplate>
+            <DataTemplate DataType="m:FileLogSourceModel">
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="8">
+                    <fi:SymbolIcon
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
+                        Symbol="Document" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="{Binding Name}" />
+                </Grid>
+            </DataTemplate>
+        </husk:RelayDataTemplate>
+        <!--  日志条目内容模板  -->
+        <DataTemplate
+            x:Key="ScrapTemplate"
+            DataType="m:ScrapModel">
+            <TextBlock TextTrimming="CharacterEllipsis">
+                <Run
+                    FontFamily="Cascadia Code, Consolas, monospace"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Binding Date}" />
+                <Run
+                    FontFamily="Cascadia Code, Consolas, monospace"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Binding Time}" />
+                <InlineUIContainer BaselineAlignment="Center">
+                    <Border
+                        Padding="4,2"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="2">
+                        <Border.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                <Binding
+                                    Converter="{x:Static StringConverters.IsNotNullOrEmpty}"
+                                    Path="Thread" />
+                                <Binding
+                                    Converter="{x:Static StringConverters.IsNotNullOrEmpty}"
+                                    Path="Sender" />
+                            </MultiBinding>
+                        </Border.IsVisible>
+                        <TextBlock
+                            FontFamily="Cascadia Code, Consolas, monospace"
+                            FontSize="{StaticResource ExtraSmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run Text="[" />
+                            <Run Text="{Binding Thread, FallbackValue=?}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding Sender, FallbackValue=?}" />
+                            <Run Text="]" />
+                        </TextBlock>
+                    </Border>
+                </InlineUIContainer>
+                <Run Text="{Binding Message}" />
+            </TextBlock>
+        </DataTemplate>
+    </controls:Subpage.Resources>
+
+    <Grid
+        RowDefinitions="Auto,*"
+        RowSpacing="12">
+        <!--  顶部统计卡片区域  -->
+        <UniformGrid
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            ColumnSpacing="12"
+            Columns="4"
+            Rows="1">
+            <!--  运行状态卡片  -->
+            <husk:Card Padding="0">
+                <husk:SwitchPresenter
+                    TargetType="trident:InstanceState"
+                    Value="{Binding State}">
+                    <!--  Running 状态  -->
+                    <husk:SwitchCase Value="Running">
+                        <Border
+                            Padding="12"
+                            Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    HorizontalAlignment="Center"
+                                    FontSize="32"
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Symbol="Play" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceDashboardView_RunningLabelText}" />
+                            </StackPanel>
+                        </Border>
+                    </husk:SwitchCase>
+                    <!--  Deploying 状态  -->
+                    <husk:SwitchCase Value="Deploying">
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <husk:ProgressRing
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_DeployingLabelText}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <!--  Updating 状态  -->
+                    <husk:SwitchCase Value="Updating">
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <husk:ProgressRing
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_UpdatingLabelText}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <!--  Idle 状态  -->
+                    <husk:SwitchCase Value="Idle">
+                        <StackPanel
+                            Margin="{StaticResource CardContentMargin}"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Center"
+                                FontSize="32"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Symbol="Pause" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_IdleLabelText}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:Card>
+
+            <!--  游戏次数/处理器占用卡片  -->
+            <husk:Card>
+                <husk:SwitchPresenter
+                    TargetType="x:Boolean"
+                    Value="{Binding IsOnAir}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock TextAlignment="Center">
+                                <Run
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding CpuPercent, StringFormat={}{0:F0}}" />
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="%" />
+                            </TextBlock>
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_CpuUsageLabelText}"
+                                TextAlignment="Center" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <Grid
+                            RowDefinitions="*,Auto"
+                            RowSpacing="8">
+                            <StackPanel
+                                Grid.Row="0"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding SessionCount}" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceDashboardView_SessionCountLabelText}" />
+                            </StackPanel>
+                            <Button
+                                Grid.Row="1"
+                                Classes="Small"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding OpenLogsDirectoryCommand}">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="FolderOpen" />
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_LogsButtonText}" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:Card>
+
+            <!--  崩溃次数/内存占用卡片  -->
+            <husk:Card>
+                <husk:SwitchPresenter
+                    TargetType="x:Boolean"
+                    Value="{Binding IsOnAir}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock TextAlignment="Center">
+                                <Run
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding MemoryUsage}">
+                                    <Run.Foreground>
+                                        <MultiBinding Converter="{x:Static converters:InternalConverters.MemoryUsageToColorBrush}">
+                                            <Binding Path="MemoryUsage" />
+                                            <Binding Path="MemoryAssigned" />
+                                        </MultiBinding>
+                                    </Run.Foreground></Run>
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="/" />
+                                <Run Text="{Binding MemoryAssigned}" />
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="MB" />
+                            </TextBlock>
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_MemoryUsageLabelText}"
+                                TextAlignment="Center" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <Grid
+                            RowDefinitions="*,Auto"
+                            RowSpacing="8">
+                            <StackPanel
+                                Grid.Row="0"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding CrashCount}" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstanceDashboardView_CrashCountLabelText}" />
+                            </StackPanel>
+                            <Button
+                                Grid.Row="1"
+                                Classes="Small"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding OpenCrashReportsDirectoryCommand}">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="FolderOpen" />
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceDashboardView_CrashReportsButtonText}" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:Card>
+
+            <!--  成功率统计/运行时间卡片  -->
+            <husk:Card>
+                <husk:SwitchPresenter
+                    TargetType="x:Boolean"
+                    Value="{Binding IsOnAir}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="{Binding Uptime, StringFormat='{}{0:hh\\:mm\\:ss}'}"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.InstanceDashboardView_UptimeLabelText}"
+                                TextAlignment="Center" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <husk:SwitchPresenter
+                            TargetType="x:Int32"
+                            Value="{Binding SessionCount}">
+                            <husk:SwitchCase Value="0">
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Spacing="8">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="32"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="DataPie" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.InstanceDashboardView_NoDataLabelText}" />
+                                </StackPanel>
+                            </husk:SwitchCase>
+                            <husk:SwitchCase>
+                                <StackPanel
+                                    Margin="{StaticResource CardContentMargin}"
+                                    VerticalAlignment="Center"
+                                    Spacing="8">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="32"
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                        Symbol="DataPie" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding SuccessRate, StringFormat={}{0:F1}%}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.InstanceDashboardView_SuccessRateLabelText}" />
+                                </StackPanel>
+                            </husk:SwitchCase>
+                        </husk:SwitchPresenter>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+            </husk:Card>
+        </UniformGrid>
+
+        <!--  日志查看器区域  -->
+        <husk:Card
+            Grid.Row="1"
+            Padding="0"
+            ClipToBounds="True">
+            <Grid RowDefinitions="Auto,Auto,*">
+                <!--  控制区域  -->
+                <Grid
+                    Grid.Row="0"
+                    Margin="8"
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="8">
+                    <!--  数据源选择  -->
+                    <ComboBox
+                        Grid.Column="0"
+                        MinWidth="180"
+                        ItemTemplate="{StaticResource LogSourceTemplate}"
+                        ItemsSource="{Binding Sources}"
+                        SelectedIndex="0"
+                        SelectedItem="{Binding SelectedSource, Mode=TwoWay}" />
+
+                    <!--  搜索框  -->
+                    <TextBox
+                        Grid.Column="1"
+                        PlaceholderText="{x:Static lang:Resources.InstanceDashboardView_SearchPlaceholder}"
+                        Text="{Binding FilterText, Mode=TwoWay}">
+                        <TextBox.InnerLeftContent>
+                            <StackPanel Orientation="Horizontal">
+                                <fi:SymbolIcon
+                                    Margin="12,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Symbol="Search" />
+                                <husk:Divider Orientation="Vertical" />
+                            </StackPanel>
+                        </TextBox.InnerLeftContent>
+                        <TextBox.InnerRightContent>
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    Command="{Binding $parent[TextBox].Clear}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Symbol="Dismiss" />
+                                </Button>
+                                <TextBlock
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                    <Run Text="{Binding FilteredLogCollection?.Count, FallbackValue=0}" />
+                                    <Run Text="/" />
+                                    <Run Text="{Binding LogCollection?.Count, FallbackValue=0}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </TextBox.InnerRightContent>
+                    </TextBox>
+
+                    <!--  日志级别过滤器  -->
+                    <StackPanel
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <!--  Information 过滤  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsFilterInformation, Mode=TwoWay}">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <Border
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Background="{StaticResource ControlBackgroundBrush}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
+                            </StackPanel>
+                        </ToggleButton>
+                        <!--  Warning 过滤  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsFilterWarning, Mode=TwoWay}">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <Border
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Background="{StaticResource ControlWarningBackgroundBrush}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
+                            </StackPanel>
+                        </ToggleButton>
+                        <!--  Error 过滤  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsFilterError, Mode=TwoWay}">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <Border
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    Background="{StaticResource ControlDangerBackgroundBrush}"
+                                    CornerRadius="{StaticResource FullCornerRadius}" />
+                            </StackPanel>
+                        </ToggleButton>
+                    </StackPanel>
+                </Grid>
+
+                <husk:Divider Grid.Row="1" />
+
+                <!--  日志内容区域  -->
+                <Panel Grid.Row="2">
+                    <controls:EmptyContainer IsEmpty="{Binding FilteredLogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
+                        <!--  日志列表  -->
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding FilteredLogCollection}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="m:ScrapModel">
+                                        <husk:SwitchPresenter TargetType="launching:ScrapLevel">
+                                            <!--  Information 级别  -->
+                                            <husk:SwitchCase Value="Information">
+                                                <Border
+                                                    Padding="8,0"
+                                                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                                    BorderThickness="3,0,0,0">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                                </Border>
+                                            </husk:SwitchCase>
+                                            <!--  Warning 级别  -->
+                                            <husk:SwitchCase Value="Warning">
+                                                <Border
+                                                    Padding="8,0"
+                                                    Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                                                    BorderThickness="3,0,0,0">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                                </Border>
+                                            </husk:SwitchCase>
+                                            <!--  Error 级别  -->
+                                            <husk:SwitchCase Value="Error">
+                                                <Border
+                                                    Padding="8,0"
+                                                    Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
+                                                    BorderBrush="{StaticResource ControlDangerBorderBrush}"
+                                                    BorderThickness="3,0,0,0">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource ScrapTemplate}" />
+                                                </Border>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </controls:EmptyContainer>
+                </Panel>
+            </Grid>
+        </husk:Card>
+    </Grid>
+</controls:Subpage>

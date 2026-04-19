@@ -4,7 +4,7 @@ using System.Text.Json;
 using Avalonia.Media.Imaging;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Services;
+namespace Polymerium.App.Utilities;
 
 /// <summary>
 ///     资源包元数据解析器

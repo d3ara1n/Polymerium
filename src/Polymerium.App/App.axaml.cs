@@ -14,8 +14,8 @@ using Huskui.Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
+using Polymerium.App.Pages;
 using Polymerium.App.Services;
-using Polymerium.App.Views;
 using Sentry;
 using Trident.Core.Lifetimes;
 using Page = Huskui.Avalonia.Controls.Page;
@@ -94,7 +94,7 @@ public class App : Application
             && Program.Services?.GetService<NavigationService>() is { } navigation
         )
         {
-            Dispatcher.UIThread.Post(() => navigation.Navigate<ExceptionView>(ex));
+            Dispatcher.UIThread.Post(() => navigation.Navigate<ExceptionPage>(ex));
         }
         else
         {
@@ -199,7 +199,7 @@ public class App : Application
                 );
             }
 
-            var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
+            var name = view.FullName!.Replace("Page", "PageModel", StringComparison.Ordinal);
             var type = Type.GetType(name);
 
             var page = Activator.CreateInstance(view) as Page;
@@ -239,7 +239,7 @@ public class App : Application
             // 避免又产生异常而导致无限循环
             if (activatorErrorCount++ < 3)
             {
-                return ActivatePage(typeof(PageNotReachedView), ex.Message);
+                return ActivatePage(typeof(PageNotReachedPage), ex.Message);
             }
 
             throw;
@@ -249,7 +249,7 @@ public class App : Application
             // 避免又产生异常而导致无限循环
             if (activatorErrorCount++ < 3)
             {
-                return ActivatePage(typeof(ExceptionView), ex);
+                return ActivatePage(typeof(ExceptionPage), ex);
             }
 
             throw;
@@ -305,7 +305,7 @@ public class App : Application
         notification.SetHandler(viewModel.PopNotification);
 
         // MainWindowContext 没有 InitializeAsync 能力，这里代替进行初始化
-        navigation.Navigate<LandingView>();
+        navigation.Navigate<LandingPage>();
 
         return window;
     }
