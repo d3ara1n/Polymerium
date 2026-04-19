@@ -370,7 +370,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
                 {
                     Key = Basic.Key,
                     Kind = PersistenceService.ActionKind.Rename,
-                    Old = oldName, New = name
+                    Old = oldName,
+                    New = name,
                 }
             );
         }
