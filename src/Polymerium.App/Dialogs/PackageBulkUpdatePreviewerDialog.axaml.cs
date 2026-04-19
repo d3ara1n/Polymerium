@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Dialogs;
 
@@ -36,9 +40,19 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
         PackageBulkUpdatePreviewerTagPolicy
     >(nameof(TagPolicy), o => o.TagPolicy, (o, v) => o.TagPolicy = v);
 
+    public static readonly DirectProperty<
+        PackageBulkUpdatePreviewerDialog,
+        InstanceSetupViewModel.StateView?
+    > ViewStateProperty = AvaloniaProperty.RegisterDirect<
+        PackageBulkUpdatePreviewerDialog,
+        InstanceSetupViewModel.StateView?
+    >(nameof(ViewState), o => o.ViewState, (o, v) => o.ViewState = v);
+
     public PackageBulkUpdatePreviewerDialog()
     {
         InitializeComponent();
+        AddHandler(LoadedEvent, OnLoadedHandler);
+        AddHandler(UnloadedEvent, OnUnloadedHandler);
     }
 
     public bool IsEnabledOnly
@@ -51,6 +65,12 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
     {
         get;
         set => SetAndRaise(TagsProperty, ref field, value);
+    }
+
+    public required InstanceSetupViewModel.StateView? ViewState
+    {
+        get;
+        set => SetAndRaise(ViewStateProperty, ref field, value);
     }
 
     public PackageBulkUpdatePreviewerTagPolicy TagPolicy
@@ -109,5 +129,37 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
         Tags?.Remove(tag);
     }
 
+    #endregion
+
+    #region Event Handlers
+    private void OnLoadedHandler(object? sender, RoutedEventArgs args)
+    {
+        if (ViewState?.LastChosenIsEnabledOnly is { } enabledOnly)
+        {
+            IsEnabledOnly = enabledOnly;
+        }
+        if (ViewState?.LastChosenTagPolicy is { } policy)
+        {
+            TagPolicy = policy;
+        }
+        if (ViewState?.LastChosenTags is { } tags)
+        {
+            Tags ??= [];
+            foreach (var tag in tags)
+            {
+                if (!Tags.Contains(tag))
+                {
+                    Tags.Add(tag);
+                }
+            }
+        }
+    }
+
+    public void OnUnloadedHandler(object? sender, RoutedEventArgs args)
+    {
+        ViewState?.LastChosenIsEnabledOnly = IsEnabledOnly;
+        ViewState?.LastChosenTagPolicy = TagPolicy;
+        ViewState?.LastChosenTags = Tags;
+    }
     #endregion
 }

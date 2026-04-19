@@ -56,7 +56,8 @@ public partial class InstanceSetupViewModel(
     PersistenceService persistenceService
 )
     : InstanceViewModelBase(bag, instanceManager, profileManager),
-        IStatedViewModel<InstanceSetupViewModel.StateView>
+        IStatedViewModel<InstanceSetupViewModel.StateView>,
+        IStatedViewModelKeyGetter
 {
     #region Nested type: ExportedEntry
 
@@ -804,6 +805,7 @@ public partial class InstanceSetupViewModel(
                 ExistingTags = existingTags,
                 OverlayService = overlayService,
                 IsEnabledOnly = true,
+                ViewState = ViewState,
             };
             if (
                 await overlayService.PopDialogAsync(previewer)
@@ -1513,6 +1515,7 @@ public partial class InstanceSetupViewModel(
 
     [ObservableProperty]
     public partial StateView? ViewState { get; set; }
+    public string ViewStateKey => Basic.Key;
 
     #endregion
 
@@ -1522,6 +1525,12 @@ public partial class InstanceSetupViewModel(
     {
         [ObservableProperty]
         public partial int LayoutIndex { get; set; }
+
+        #region For PackageBulkUpdatePreviewerDialog
+        public bool LastChosenIsEnabledOnly { get; set; }
+        public IReadOnlyList<string>? LastChosenTags { get; set; }
+        public PackageBulkUpdatePreviewerTagPolicy LastChosenTagPolicy { get; set; }
+        #endregion
     }
     #endregion
 }
