@@ -22,5 +22,6 @@
         <ResourceInclude Source="/Controls/InstancePackageDependencyButton.axaml" />
         <ResourceInclude Source="/Controls/InstanceActionCard.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
+        <ResourceInclude Source="/Controls/FancyListBox.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -4,6 +4,6 @@ public enum WorkspaceChangeKind
 {
     Same,
     Updated,
-    Outupdated,
+    Outdated,
     Deleted,
 }

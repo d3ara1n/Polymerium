@@ -9,63 +9,73 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:InstanceWorkspacePageModel"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="12">
         <!--  Status Bar  -->
-        <Grid DockPanel.Dock="Top" />
+        <Grid DockPanel.Dock="Top">
+            <husk:InfoBar
+                Classes="Warning"
+                Content="该实例导入自整合包，你将无法在整合包初始文件上应用修改。" />
+        </Grid>
         <!--  Nav Bar  -->
         <TabControl>
             <TabItem Header="Changes">
                 <Grid ColumnDefinitions="*,Auto,*">
-                    <ListBox
-                        Grid.Column="0"
-                        ItemsSource="{Binding Changes}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate x:DataType="app:WorkspaceChangeModel">
-                                <Grid
-                                    ColumnDefinitions="*,Auto"
-                                    RowDefinitions="Auto,Auto">
-                                    <TextBlock
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        Text="{Binding Name}"
-                                        TextTrimming="CharacterEllipsis" />
-                                    <husk:SwitchPresenter
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        TargetType="app:WorkspaceChangeKind"
-                                        Value="{Binding Kind}">
-                                        <husk:SwitchCase Value="Same">
-                                            <husk:Tag
-                                                Classes="Small Success"
-                                                Content="Same" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="Outdated">
-                                            <husk:Tag
-                                                Classes="Small Warning"
-                                                Content="Outdated" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="Updated">
-                                            <husk:Tag
-                                                Classes="Small Warning"
-                                                Content="Updated" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="Deleted">
-                                            <husk:Tag
-                                                Classes="Small Danger"
-                                                Content="Deleted" />
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                    <TextBlock
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="2"
-                                        FontSize="{StaticResource SmallFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding RelativePath}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <DockPanel>
+                        <ListBox
+                            Grid.Column="0"
+                            ItemsSource="{Binding Changes}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="app:WorkspaceChangeModel">
+                                    <Grid
+                                        ColumnDefinitions="*,Auto"
+                                        RowDefinitions="Auto,Auto">
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Text="{Binding Name}"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <husk:SwitchPresenter
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            TargetType="app:WorkspaceChangeKind"
+                                            Value="{Binding Kind}">
+                                            <husk:SwitchCase Value="Same">
+                                                <husk:Tag
+                                                    Classes="Small Success"
+                                                    Content="相同" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Outdated">
+                                                <husk:Tag
+                                                    Classes="Small Warning"
+                                                    Content="已过时"
+                                                    ToolTip.Tip="该文件的初始版本发生变更，通常是由整合包更新引起。" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Updated">
+                                                <husk:Tag
+                                                    Classes="Small Warning"
+                                                    Content="已更新"
+                                                    ToolTip.Tip="该文件被客户端所修改。 " />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Deleted">
+                                                <husk:Tag
+                                                    Classes="Small Danger"
+                                                    Content="已删除"
+                                                    ToolTip.Tip="该文件的初始版本被移除，通常是由整合包更新引起。" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="2"
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="{Binding RelativePath}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
                     <GridSplitter Grid.Column="1" />
                     <Grid Grid.Column="2" />
                 </Grid>
