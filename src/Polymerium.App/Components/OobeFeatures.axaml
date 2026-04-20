@@ -1,14 +1,12 @@
-﻿<controls:OobeStep
+﻿<app:OobeStep
     x:Class="Polymerium.App.Components.OobeFeatures"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:components="clr-namespace:Polymerium.App.Components"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:Polymerium.App.Models"
     d:DesignHeight="400"
     d:DesignWidth="480"
     mc:Ignorable="d">
@@ -46,14 +44,14 @@
         </StackPanel>
 
         <!--  Feature Cards Grid  -->
-        <ItemsControl ItemsSource="{Binding $parent[components:OobeFeatures].Features}">
+        <ItemsControl ItemsSource="{Binding $parent[app:OobeFeatures].Features}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="2" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="models:OobeFeatureModel">
+                <DataTemplate DataType="app:OobeFeatureModel">
                     <Border
                         Margin="4"
                         Padding="12"
@@ -80,4 +78,4 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
-</controls:OobeStep>
+</app:OobeStep>

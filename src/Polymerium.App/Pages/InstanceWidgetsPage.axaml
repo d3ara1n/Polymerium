@@ -1,24 +1,22 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceWidgetsPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
     d:DesignHeight="400"
     d:DesignWidth="600"
-    x:DataType="pm:InstanceWidgetsPageModel"
+    x:DataType="app:InstanceWidgetsPageModel"
     mc:Ignorable="d">
     <Grid>
         <ItemsControl
             VerticalAlignment="Top"
             ItemsSource="{Binding Widgets, Mode=OneTime}">
             <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="widgets:WidgetBase">
+                <DataTemplate x:DataType="app:WidgetBase">
                     <Grid RowDefinitions="Auto,*">
                         <Border
                             Grid.Row="0"
@@ -89,4 +87,4 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
     </Grid>
-</controls:Subpage>
+</app:Subpage>

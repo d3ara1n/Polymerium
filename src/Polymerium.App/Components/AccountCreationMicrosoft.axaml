@@ -1,14 +1,12 @@
-﻿<controls:AccountCreationStep
+﻿<app:AccountCreationStep
     x:Class="Polymerium.App.Components.AccountCreationMicrosoft"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-    xmlns:cp="clr-namespace:Polymerium.App.Components"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignWidth="256"
     Header="{x:Static lang:Resources.AccountCreationMicrosoft_Title}"
@@ -16,7 +14,7 @@
     mc:Ignorable="d">
     <husk:SwitchPresenter
         TargetType="x:Boolean"
-        Value="{Binding $parent[cp:AccountCreationMicrosoft].ErrorMessage, Converter={x:Static ObjectConverters.IsNull}, FallbackValue={x:False}}">
+        Value="{Binding $parent[app:AccountCreationMicrosoft].ErrorMessage, Converter={x:Static ObjectConverters.IsNull}, FallbackValue={x:False}}">
         <husk:SwitchCase Value="{x:False}">
             <StackPanel
                 Margin="0,12"
@@ -34,11 +32,11 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{Binding $parent[cp:AccountCreationMicrosoft].ErrorMessage}"
+                    Text="{Binding $parent[app:AccountCreationMicrosoft].ErrorMessage}"
                     TextWrapping="Wrap" />
                 <Button
                     HorizontalAlignment="Center"
-                    Command="{Binding $parent[cp:AccountCreationMicrosoft].RetryCommand}">
+                    Command="{Binding $parent[app:AccountCreationMicrosoft].RetryCommand}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="10">
@@ -50,7 +48,7 @@
         <husk:SwitchCase Value="{x:True}">
             <husk:SwitchPresenter
                 TargetType="x:Boolean"
-                Value="{Binding $parent[cp:AccountCreationMicrosoft].Account, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
+                Value="{Binding $parent[app:AccountCreationMicrosoft].Account, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
                 <husk:SwitchCase Value="{x:True}">
                     <StackPanel
                         Margin="0,12"
@@ -73,7 +71,7 @@
                     </StackPanel>
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="{x:False}">
-                    <husk:SkeletonContainer IsLoading="{Binding $parent[cp:AccountCreationMicrosoft].Model, Converter={x:Static ObjectConverters.IsNull}}">
+                    <husk:SkeletonContainer IsLoading="{Binding $parent[app:AccountCreationMicrosoft].Model, Converter={x:Static ObjectConverters.IsNull}}">
                         <StackPanel Spacing="12">
                             <Border
                                 Padding="12"
@@ -84,12 +82,12 @@
                                         HorizontalAlignment="Center"
                                         FontSize="{StaticResource ExtraLargeFontSize}"
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{Binding $parent[cp:AccountCreationMicrosoft].Model.UserCode, FallbackValue=A1B2C3D4}" />
+                                        Text="{Binding $parent[app:AccountCreationMicrosoft].Model.UserCode, FallbackValue=A1B2C3D4}" />
                                     <Button
                                         Padding="6"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Command="{Binding $parent[cp:AccountCreationMicrosoft].CopyCommand}"
+                                        Command="{Binding $parent[app:AccountCreationMicrosoft].CopyCommand}"
                                         Theme="{StaticResource GhostButtonTheme}">
                                         <fi:SymbolIcon
                                             HorizontalAlignment="Center"
@@ -110,8 +108,8 @@
                             </StackPanel>
                             <Button
                                 Classes="Primary"
-                                Command="{Binding Source={x:Static m:InternalCommands.OpenUriCommand}}"
-                                CommandParameter="{Binding $parent[cp:AccountCreationMicrosoft].Model.VerificationUri, FallbackValue={x:Null}}"
+                                Command="{Binding Source={x:Static app:InternalCommands.OpenUriCommand}}"
+                                CommandParameter="{Binding $parent[app:AccountCreationMicrosoft].Model.VerificationUri, FallbackValue={x:Null}}"
                                 Content="{x:Static lang:Resources.AccountCreationMicrosoft_OpenLinkButtonText}" />
                         </StackPanel>
                     </husk:SkeletonContainer>
@@ -119,4 +117,4 @@
             </husk:SwitchPresenter>
         </husk:SwitchCase>
     </husk:SwitchPresenter>
-</controls:AccountCreationStep>
+</app:AccountCreationStep>

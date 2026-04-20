@@ -2,14 +2,11 @@
     x:Class="Polymerium.App.Dialogs.ModpackExporterDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Dialogs"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static lang:Resources.ModpackExporterDialog_Title}"
     Width="450"
@@ -23,8 +20,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}" />
             <TabStrip
-                ItemsSource="{Binding $parent[local:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}"
-                SelectedItem="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
+                ItemsSource="{Binding $parent[app:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}"
+                SelectedItem="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TabStrip.ItemTemplate>
                     <DataTemplate x:DataType="x:String">
                         <husk:IconLabel
@@ -40,8 +37,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}" />
             <TextBox
-                PlaceholderText="{Binding $parent[local:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}"
-                Text="{Binding $parent[local:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}">
+                PlaceholderText="{Binding $parent[app:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}"
+                Text="{Binding $parent[app:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <fi:SymbolIcon
@@ -58,8 +55,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}" />
             <TextBox
-                PlaceholderText="{Binding $parent[local:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}"
-                Text="{Binding $parent[local:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}">
+                PlaceholderText="{Binding $parent[app:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}"
+                Text="{Binding $parent[app:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <fi:SymbolIcon
@@ -76,8 +73,8 @@
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}" />
             <TextBox
-                PlaceholderText="{Binding $parent[local:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}"
-                Text="{Binding $parent[local:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}">
+                PlaceholderText="{Binding $parent[app:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}"
+                Text="{Binding $parent[app:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <fi:SymbolIcon
@@ -98,7 +95,7 @@
                     <Button
                         DockPanel.Dock="Right"
                         Classes="Small"
-                        Command="{Binding $parent[local:ModpackExporterDialog].AddTagCommand}"
+                        Command="{Binding $parent[app:ModpackExporterDialog].AddTagCommand}"
                         Theme="{StaticResource GhostButtonTheme}">
                         <husk:IconLabel
                             Icon="Add"
@@ -109,10 +106,10 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.ModpackExporterDialog_ExcludedTagsLabelText}" />
                 </DockPanel>
-                <controls:EmptyContainer
+                <app:EmptyContainer
                     Icon="TagMultiple"
-                    IsEmpty="{Binding $parent[local:ModpackExporterDialog].PackData.ExcludedTags.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}">
-                    <ItemsControl ItemsSource="{Binding $parent[local:ModpackExporterDialog].PackData.ExcludedTags}">
+                    IsEmpty="{Binding $parent[app:ModpackExporterDialog].PackData.ExcludedTags.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}">
+                    <ItemsControl ItemsSource="{Binding $parent[app:ModpackExporterDialog].PackData.ExcludedTags}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel
@@ -131,7 +128,7 @@
                                         <Button
                                             DockPanel.Dock="Right"
                                             Padding="4,0"
-                                            Command="{Binding $parent[local:ModpackExporterDialog].RemoveTagCommand}"
+                                            Command="{Binding $parent[app:ModpackExporterDialog].RemoveTagCommand}"
                                             CommandParameter="{Binding}"
                                             CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
                                                                                       Converter={x:Static husk:CornerRadiusConverters.Right}}"
@@ -150,7 +147,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </controls:EmptyContainer>
+                </app:EmptyContainer>
                 <TextBlock
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -162,12 +159,12 @@
             <StackPanel Spacing="8">
                 <husk:InfoBar
                     Classes="Warning"
-                    IsVisible="{Binding $parent[local:ModpackExporterDialog].SelectedExporterLabel, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=trident}"
+                    IsVisible="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=trident}"
                     Content="{x:Static lang:Resources.ModpackExporterDialog_TridentOptionsInfoBarText}" />
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.IncludingSource, FallbackValue=false}" />
+                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.IncludingSource, FallbackValue=false}" />
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="6">
@@ -186,7 +183,7 @@
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.IncludingTags, FallbackValue=false}" />
+                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.IncludingTags, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
                         Text="{x:Static lang:Resources.ModpackExporterDialog_IncludingTagsLabelText}" />
@@ -194,7 +191,7 @@
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.ConnectServer, FallbackValue=false}" />
+                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.ConnectServer, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
                         Text="{x:Static lang:Resources.ModpackExporterDialog_ConnectServerText}" />
@@ -202,7 +199,7 @@
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.JavaMaxMemory, FallbackValue=false}" />
+                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.JavaMaxMemory, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
                         Text="{x:Static lang:Resources.ModpackExporterDialog_JavaMaxMemoryLabelText}" />
@@ -210,7 +207,7 @@
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[local:ModpackExporterDialog].PackData.JavaAdditionalArguments, FallbackValue=false}" />
+                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.JavaAdditionalArguments, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
                         Text="{x:Static lang:Resources.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}" />
@@ -261,7 +258,7 @@
                                     Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}" />
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
-                                    Text="{Binding $parent[local:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
+                                    Text="{Binding $parent[app:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
                             </StackPanel>
                         </Grid>
                         <husk:Divider
@@ -273,7 +270,7 @@
                                 Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding $parent[local:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
+                                Text="{Binding $parent[app:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -290,7 +287,7 @@
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
-                        <HyperlinkButton Command="{Binding $parent[local:ModpackExporterDialog].OpenImportFolderCommand}">
+                        <HyperlinkButton Command="{Binding $parent[app:ModpackExporterDialog].OpenImportFolderCommand}">
                             <TextBlock Text="./import" />
                         </HyperlinkButton>
                     </TextBlock>
@@ -298,7 +295,7 @@
                 <HyperlinkButton
                     Classes="Small"
                     VerticalAlignment="Center"
-                    Command="{x:Static m:InternalCommands.OpenStringUriCommand}"
+                    Command="{x:Static app:InternalCommands.OpenStringUriCommand}"
                     CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%95%B4%E5%90%88%E5%8C%85">
                     <husk:IconLabel
                         FontSize="{StaticResource SmallFontSize}"

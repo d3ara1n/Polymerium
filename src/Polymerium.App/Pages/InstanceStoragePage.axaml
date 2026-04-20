@@ -1,20 +1,16 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceStoragePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="pm:InstanceStoragePageModel"
+    x:DataType="app:InstanceStoragePageModel"
     mc:Ignorable="d">
     <Grid
         RowDefinitions="Auto,Auto,*"
@@ -31,7 +27,7 @@
                     <Run
                         FontSize="36"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{Binding TotalSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=0.00}" />
+                        Text="{Binding TotalSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=0.00}" />
                     <Run
                         FontSize="18"
                         Text="GiB" />
@@ -49,7 +45,7 @@
                 <HyperlinkButton
                     Classes="Small"
                     VerticalAlignment="Center"
-                    Command="{x:Static m:InternalCommands.OpenStringUriCommand}"
+                    Command="{x:Static app:InternalCommands.OpenStringUriCommand}"
                     CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87">
                     <husk:IconLabel
                         Icon="BookQuestionMark"
@@ -67,8 +63,8 @@
                 <Button
                     Classes="Small"
                     VerticalAlignment="Center"
-                    Command="{Binding $parent[v:InstancePage].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstanceFilesPage}"
+                    Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                    CommandParameter="{x:Type app:InstanceFilesPage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <husk:IconLabel
                         Icon="Library"
@@ -139,7 +135,7 @@
                                 Symbol="Document" />
                             <Run Text="{Binding ModsCount}" />
                             <Run Text="/" />
-                            <Run Text="{Binding ModsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
+                            <Run Text="{Binding ModsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
                             <Run Text="MiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #ModsProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -205,7 +201,7 @@
                                 Symbol="Document" />
                             <Run Text="{Binding ResourcePacksCount, Mode=OneWay}" />
                             <Run Text="/" />
-                            <Run Text="{Binding ResourcePacksSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
+                            <Run Text="{Binding ResourcePacksSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
                             <Run Text="MiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #ResourcePacksProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -271,7 +267,7 @@
                                 Symbol="Document" />
                             <Run Text="{Binding ShaderPacksCount, Mode=OneWay}" />
                             <Run Text="/" />
-                            <Run Text="{Binding ShaderPacksSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
+                            <Run Text="{Binding ShaderPacksSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
                             <Run Text="MiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #ShaderPacksProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -337,7 +333,7 @@
                                 Symbol="Document" />
                             <Run Text="{Binding WorldsCount, Mode=OneWay}" />
                             <Run Text="/" />
-                            <Run Text="{Binding WorldsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
+                            <Run Text="{Binding WorldsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, Mode=OneWay, FallbackValue=0.00}" />
                             <Run Text="MiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #WorldsProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -394,7 +390,7 @@
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                        <Run Text="{Binding ScreenshotsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
+                                        <Run Text="{Binding ScreenshotsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
                                         <Run Text="{Binding ScreenshotsCount, FallbackValue=0}" />
@@ -455,7 +451,7 @@
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                        <Run Text="{Binding LogsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
+                                        <Run Text="{Binding LogsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
                                         <Run Text="{Binding LogsCount, FallbackValue=0}" />
@@ -515,7 +511,7 @@
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                        <Run Text="{Binding CrashReportsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
+                                        <Run Text="{Binding CrashReportsSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
                                         <Run Text="{Binding CrashReportsCount, FallbackValue=0}" />
@@ -575,7 +571,7 @@
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                        <Run Text="{Binding ConfigSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
+                                        <Run Text="{Binding ConfigSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
                                         <Run Text="{Binding ConfigCount, FallbackValue=0}" />
@@ -635,7 +631,7 @@
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                        <Run Text="{Binding OtherSize, Mode=OneWay, StringFormat=F2, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
+                                        <Run Text="{Binding OtherSize, Mode=OneWay, StringFormat=F2, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=0.00}" />
                                         <Run Text="MiB" />
                                         <Run Text="·" />
                                         <Run Text="{Binding OtherCount, FallbackValue=0}" />
@@ -657,4 +653,4 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-</controls:Subpage>
+</app:Subpage>

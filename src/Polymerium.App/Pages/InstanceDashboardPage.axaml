@@ -1,30 +1,26 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceDashboardPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:system="using:System"
     xmlns:trident="using:Trident.Core"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
+    xmlns:v="https://github.com/d3ara1n/Polymerium/Pages"
     d:DesignHeight="600"
     d:DesignWidth="800"
-    x:DataType="pm:InstanceDashboardPageModel"
+    x:DataType="app:InstanceDashboardPageModel"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <controls:Subpage.Resources>
+    <app:Subpage.Resources>
         <husk:RelayDataTemplate
             x:Key="LogSourceTemplate"
-            x:DataType="m:LogSourceModelBase">
-            <DataTemplate DataType="m:LiveLogSourceModel">
+            x:DataType="app:LogSourceModelBase">
+            <DataTemplate DataType="app:LiveLogSourceModel">
                 <Grid
                     ColumnDefinitions="Auto,*,Auto"
                     ColumnSpacing="8">
@@ -39,11 +35,11 @@
                     <husk:Tag
                         Grid.Column="2"
                         Classes="Small Success"
-                        IsVisible="{Binding $parent[v:InstanceDashboardPage].((pm:InstanceDashboardPageModel)DataContext)?.IsOnAir, FallbackValue={x:False}}"
+                        IsVisible="{Binding $parent[app:InstanceDashboardPage].((app:InstanceDashboardPageModel)DataContext)?.IsOnAir, FallbackValue={x:False}}"
                         Content="Live" />
                 </Grid>
             </DataTemplate>
-            <DataTemplate DataType="m:FileLogSourceModel">
+            <DataTemplate DataType="app:FileLogSourceModel">
                 <Grid
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="8">
@@ -61,7 +57,7 @@
         <!--  日志条目内容模板  -->
         <DataTemplate
             x:Key="ScrapTemplate"
-            DataType="m:ScrapModel">
+            DataType="app:ScrapModel">
             <TextBlock TextTrimming="CharacterEllipsis">
                 <Run
                     FontFamily="Cascadia Code, Consolas, monospace"
@@ -101,7 +97,7 @@
                 <Run Text="{Binding Message}" />
             </TextBlock>
         </DataTemplate>
-    </controls:Subpage.Resources>
+    </app:Subpage.Resources>
 
     <Grid
         RowDefinitions="Auto,*"
@@ -269,7 +265,7 @@
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding MemoryUsage}">
                                     <Run.Foreground>
-                                        <MultiBinding Converter="{x:Static converters:InternalConverters.MemoryUsageToColorBrush}">
+                                        <MultiBinding Converter="{x:Static app:InternalConverters.MemoryUsageToColorBrush}">
                                             <Binding Path="MemoryUsage" />
                                             <Binding Path="MemoryAssigned" />
                                         </MultiBinding>
@@ -520,7 +516,7 @@
 
                 <!--  日志内容区域  -->
                 <Panel Grid.Row="2">
-                    <controls:EmptyContainer IsEmpty="{Binding FilteredLogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
+                    <app:EmptyContainer IsEmpty="{Binding FilteredLogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
                         <!--  日志列表  -->
                         <ScrollViewer HorizontalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding FilteredLogCollection}">
@@ -530,7 +526,7 @@
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="m:ScrapModel">
+                                    <DataTemplate DataType="app:ScrapModel">
                                         <husk:SwitchPresenter TargetType="launching:ScrapLevel">
                                             <!--  Information 级别  -->
                                             <husk:SwitchCase Value="Information">
@@ -573,9 +569,9 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                    </controls:EmptyContainer>
+                    </app:EmptyContainer>
                 </Panel>
             </Grid>
         </husk:Card>
     </Grid>
-</controls:Subpage>
+</app:Subpage>

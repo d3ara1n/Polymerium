@@ -2,13 +2,12 @@
     x:Class="Polymerium.App.Modals.ProfileRuleModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modals="clr-namespace:Polymerium.App.Modals"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -28,21 +27,21 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.ProfileRuleModal_RuleTypeLabelText}" />
                     <ComboBox
-                        ItemsSource="{Binding $parent[modals:ProfileRuleModal].SelectorTypes}"
-                        SelectedItem="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Type, Mode=TwoWay}">
+                        ItemsSource="{Binding $parent[app:ProfileRuleModal].SelectorTypes}"
+                        SelectedItem="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Type, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedSelectorType}}" />
+                                <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedSelectorType}}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <husk:SwitchPresenter Value="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Type, FallbackValue={x:Null}, Mode=OneWay}">
+                    <husk:SwitchPresenter Value="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Type, FallbackValue={x:Null}, Mode=OneWay}">
                         <husk:SwitchCase Value="Purl">
                             <StackPanel Spacing="6">
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.SelectorType_Purl}" />
-                                <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Purl, Mode=TwoWay}">
+                                <TextBox Text="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Purl, Mode=TwoWay}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
@@ -54,7 +53,7 @@
                                         </StackPanel>
                                     </TextBox.InnerLeftContent>
                                     <TextBox.InnerRightContent>
-                                        <Button Command="{Binding $parent[modals:ProfileRuleModal].PickPackageCommand}">
+                                        <Button Command="{Binding $parent[app:ProfileRuleModal].PickPackageCommand}">
                                             <husk:IconLabel
                                                 Icon="Shortpick"
                                                 Text="{x:Static lang:Resources.ProfileRuleModal_PickButtonText}" />
@@ -68,7 +67,7 @@
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.SelectorType_Repository}" />
-                                <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Repository, Mode=TwoWay}">
+                                <TextBox Text="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Repository, Mode=TwoWay}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
@@ -87,7 +86,7 @@
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.SelectorType_Tag}" />
-                                <TextBox Text="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Tag, Mode=TwoWay}">
+                                <TextBox Text="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Tag, Mode=TwoWay}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon
@@ -99,7 +98,7 @@
                                         </StackPanel>
                                     </TextBox.InnerLeftContent>
                                     <TextBox.InnerRightContent>
-                                        <Button Command="{Binding $parent[modals:ProfileRuleModal].PickTagCommand}">
+                                        <Button Command="{Binding $parent[app:ProfileRuleModal].PickTagCommand}">
                                             <husk:IconLabel
                                                 Icon="Shortpick"
                                                 Text="{x:Static lang:Resources.ProfileRuleModal_PickButtonText}" />
@@ -114,11 +113,11 @@
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.SelectorType_Kind}" />
                                 <ComboBox
-                                    ItemsSource="{Binding $parent[modals:ProfileRuleModal].Kinds}"
-                                    SelectedItem="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Kind, Mode=TwoWay}">
+                                    ItemsSource="{Binding $parent[app:ProfileRuleModal].Kinds}"
+                                    SelectedItem="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Kind, Mode=TwoWay}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                            <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
@@ -132,7 +131,7 @@
                                 <Button
                                     DockPanel.Dock="Right"
                                     Classes="Small"
-                                    Command="{Binding $parent[modals:ProfileRuleModal].EditSelectorsCommand}">
+                                    Command="{Binding $parent[app:ProfileRuleModal].EditSelectorsCommand}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="6">
@@ -143,7 +142,7 @@
                                         <TextBlock Text="{x:Static lang:Resources.ProfileRuleModal_ChildrenEditButtonText}" />
                                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                             <Run Text="(" />
-                                            <Run Text="{Binding $parent[modals:ProfileRuleModal].Rule.Selector.Children.Count, FallbackValue=N/A}" />
+                                            <Run Text="{Binding $parent[app:ProfileRuleModal].Rule.Selector.Children.Count, FallbackValue=N/A}" />
                                             <Run Text=")" />
                                         </TextBlock>
                                     </StackPanel>
@@ -160,7 +159,7 @@
                         <DockPanel HorizontalSpacing="6">
                             <ToggleSwitch
                                 DockPanel.Dock="Right"
-                                IsChecked="{Binding $parent[modals:ProfileRuleModal].Rule.Skipping, Mode=TwoWay}" />
+                                IsChecked="{Binding $parent[app:ProfileRuleModal].Rule.Skipping, Mode=TwoWay}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
@@ -168,7 +167,7 @@
                         <DockPanel HorizontalSpacing="6">
                             <ToggleSwitch
                                 DockPanel.Dock="Right"
-                                IsChecked="{Binding $parent[modals:ProfileRuleModal].Rule.Normalizing, Mode=TwoWay}" />
+                                IsChecked="{Binding $parent[app:ProfileRuleModal].Rule.Normalizing, Mode=TwoWay}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
@@ -179,7 +178,7 @@
                                 Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
                             <TextBox
                                 PlaceholderText="{x:Static lang:Resources.ProfileRuleModal_DestinationPlaceholder}"
-                                Text="{Binding $parent[modals:ProfileRuleModal].Rule.Destination, Mode=TwoWay}">
+                                Text="{Binding $parent[app:ProfileRuleModal].Rule.Destination, Mode=TwoWay}">
                                 <TextBox.InnerRightContent>
                                     <Button
                                         IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"

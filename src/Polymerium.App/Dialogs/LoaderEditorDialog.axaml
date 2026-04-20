@@ -2,19 +2,18 @@
     x:Class="Polymerium.App.Dialogs.LoaderEditorDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Dialogs"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignWidth="460"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
     <husk:SwitchPresenter
         TargetType="x:Boolean"
-        Value="{Binding $parent[local:LoaderEditorDialog].SelectedLoader, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
+        Value="{Binding $parent[app:LoaderEditorDialog].SelectedLoader, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
         <husk:SwitchCase Value="True">
             <Grid RowDefinitions="*,12,Auto,4,Auto">
                 <Border
@@ -38,7 +37,7 @@
                                         Width="36"
                                         Height="36"
                                         Margin="12"
-                                        Source="{Binding $parent[local:LoaderEditorDialog].Loader.Thumbnail, FallbackValue={x:Null}}" />
+                                        Source="{Binding $parent[app:LoaderEditorDialog].Loader.Thumbnail, FallbackValue={x:Null}}" />
                                 </Border>
                                 <StackPanel
                                     Grid.Column="1"
@@ -47,10 +46,10 @@
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{Binding $parent[local:LoaderEditorDialog].Loader.Display, FallbackValue=Loader}" />
+                                        Text="{Binding $parent[app:LoaderEditorDialog].Loader.Display, FallbackValue=Loader}" />
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding $parent[local:LoaderEditorDialog].Loader.Id, FallbackValue=Identity}" />
+                                        Text="{Binding $parent[app:LoaderEditorDialog].Loader.Id, FallbackValue=Identity}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -73,15 +72,15 @@
                 <husk:LazyContainer
                     Grid.Row="4"
                     MinHeight="36"
-                    Source="{Binding $parent[local:LoaderEditorDialog].LazyVersions}">
+                    Source="{Binding $parent[app:LoaderEditorDialog].LazyVersions}">
                     <husk:LazyContainer.SourceTemplate>
-                        <DataTemplate DataType="m:LoaderCandidateVersionCollectionModel">
+                        <DataTemplate DataType="app:LoaderCandidateVersionCollectionModel">
                             <ComboBox
                                 ItemsSource="{Binding Versions}"
-                                SelectedValue="{Binding $parent[local:LoaderEditorDialog].SelectedVersion, Mode=TwoWay}"
+                                SelectedValue="{Binding $parent[app:LoaderEditorDialog].SelectedVersion, Mode=TwoWay}"
                                 SelectedValueBinding="{Binding Version}">
                                 <ComboBox.ItemTemplate>
-                                    <DataTemplate DataType="m:LoaderCandidateVersionModel">
+                                    <DataTemplate DataType="app:LoaderCandidateVersionModel">
                                         <husk:SwitchPresenter
                                             TargetType="x:Boolean"
                                             Value="{Binding IsRecommended}">

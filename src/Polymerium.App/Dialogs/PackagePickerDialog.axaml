@@ -2,14 +2,11 @@
     x:Class="Polymerium.App.Dialogs.PackagePickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App.Dialogs"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static lang:Resources.PackagePickerDialog_Title}"
     Width="600"
@@ -24,7 +21,7 @@
         <TextBox
             Grid.Row="0"
             PlaceholderText="{x:Static lang:Resources.PackagePickerDialog_SearchPlaceholder}"
-            Text="{Binding $parent[local:PackagePickerDialog].FilterText, Mode=TwoWay}">
+            Text="{Binding $parent[app:PackagePickerDialog].FilterText, Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <fi:SymbolIcon
@@ -50,13 +47,13 @@
         <!--  Package List  -->
         <Panel Grid.Row="1">
             <!--  Empty State  -->
-            <controls:EmptyContainer IsEmpty="{Binding $parent[local:PackagePickerDialog].View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+            <app:EmptyContainer IsEmpty="{Binding $parent[app:PackagePickerDialog].View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
                 <!--  Package List  -->
                 <ListBox
-                    ItemsSource="{Binding $parent[local:PackagePickerDialog].View}"
-                    SelectedItem="{Binding $parent[local:PackagePickerDialog].Result, Mode=OneWayToSource}">
+                    ItemsSource="{Binding $parent[app:PackagePickerDialog].View}"
+                    SelectedItem="{Binding $parent[app:PackagePickerDialog].Result, Mode=OneWayToSource}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="m:InstancePackageModel">
+                        <DataTemplate DataType="app:InstancePackageModel">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12"
@@ -103,7 +100,7 @@
                                     Spacing="8">
                                     <husk:Tag
                                         IsVisible="{Binding Info, Converter={x:Static ObjectConverters.IsNotNull}}"
-                                        Content="{Binding Info.Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Unknown}"
+                                        Content="{Binding Info.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Unknown}"
                                         CornerRadius="{StaticResource SmallCornerRadius}" />
                                     <husk:Tag
                                         Content="{Binding Info.Label, Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=N/A}"
@@ -114,7 +111,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </controls:EmptyContainer>
+            </app:EmptyContainer>
         </Panel>
     </Grid>
 </husk:Dialog>

@@ -1,15 +1,14 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:local="clr-namespace:Polymerium.App.Controls"
-    xmlns:m="clr-namespace:Polymerium.App.Models">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme
-        x:Key="{x:Type local:InstanceActionCard}"
-        TargetType="local:InstanceActionCard">
+        x:Key="{x:Type app:InstanceActionCard}"
+        TargetType="app:InstanceActionCard">
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:InstanceActionModel">
+            <ControlTemplate x:DataType="app:InstanceActionModel">
                 <DockPanel HorizontalSpacing="6">
                     <Button
                         DockPanel.Dock="Right"
@@ -51,7 +50,7 @@
                                     Text="{Binding ProjectName}" />
                                 <husk:SwitchPresenter
                                     Grid.Row="1"
-                                    TargetType="m:InstanceActionKind"
+                                    TargetType="app:InstanceActionKind"
                                     Value="{Binding Kind}">
                                     <husk:SwitchCase Value="Add">
                                         <husk:Tag Classes="Status Small Success">
@@ -84,7 +83,7 @@
                             <husk:SwitchPresenter
                                 Grid.Column="2"
                                 VerticalAlignment="Center"
-                                TargetType="m:InstanceActionKind"
+                                TargetType="app:InstanceActionKind"
                                 Value="{Binding Kind}">
                                 <husk:SwitchCase Value="Add">
                                     <TextBlock

@@ -2,11 +2,10 @@
     x:Class="Polymerium.App.Dialogs.ReferenceVersionPickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App.Dialogs"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
     Title="{x:Static lang:Resources.ReferenceVersionPickerDialog_Title}"
@@ -17,10 +16,10 @@
     mc:Ignorable="d">
     <ListBox
         MinHeight="64"
-        ItemsSource="{Binding $parent[local:ReferenceVersionPickerDialog].Versions}"
-        SelectedItem="{Binding $parent[local:ReferenceVersionPickerDialog].Result, Mode=OneWayToSource}">
+        ItemsSource="{Binding $parent[app:ReferenceVersionPickerDialog].Versions}"
+        SelectedItem="{Binding $parent[app:ReferenceVersionPickerDialog].Result, Mode=OneWayToSource}">
         <ListBox.ItemTemplate>
-            <DataTemplate DataType="m:InstanceReferenceVersionModel">
+            <DataTemplate DataType="app:InstanceReferenceVersionModel">
                 <StackPanel>
                     <husk:SwitchPresenter
                         TargetType="x:Boolean"

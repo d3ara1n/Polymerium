@@ -2,19 +2,15 @@
     x:Class="Polymerium.App.Pages.MaintenanceStoragePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:Polymerium.App.Models"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="pm:MaintenanceStoragePageModel"
+    x:DataType="app:MaintenanceStoragePageModel"
     Header="{x:Static lang:Resources.MaintenanceStorageView_Title}"
     mc:Ignorable="d">
     <!-- <husk:Card HorizontalAlignment="Left" VerticalAlignment="Top"> -->
@@ -22,7 +18,7 @@
     <!--         <TextBlock Text="Total" /> -->
     <!--         <TextBlock> -->
     <!--  <Run  -->
-    <!--  Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"  -->
+    <!--  Text="{Binding TotalSize,Mode=OneWay,StringFormat=F1,Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter},FallbackValue=114.5}"  -->
     <!--  FontSize="36" FontWeight="{StaticResource ControlStrongFontWeight}" />  -->
     <!--             <Run Text="GiB" FontSize="18" /> -->
     <!--         </TextBlock> -->
@@ -44,7 +40,7 @@
                     <Run
                         FontSize="36"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{Binding TotalSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
+                        Text="{Binding TotalSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
                     <Run
                         FontSize="18"
                         Text="GiB" />
@@ -63,7 +59,7 @@
                         <Run
                             FontSize="36"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{Binding CacheSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
+                            Text="{Binding CacheSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
                         <Run
                             FontSize="18"
                             Text="GiB" />
@@ -81,7 +77,7 @@
                         <Run
                             FontSize="36"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{Binding InstanceSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
+                            Text="{Binding InstanceSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, FallbackValue=114.5}" />
                         <Run
                             FontSize="18"
                             Text="GiB" />
@@ -122,7 +118,7 @@
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_PackagesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run Text="{Binding PackageSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
+                            <Run Text="{Binding PackageSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #PackageProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -148,7 +144,7 @@
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_LibrariesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run Text="{Binding LibrarySize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
+                            <Run Text="{Binding LibrarySize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #LibraryProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -169,7 +165,7 @@
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_AssetsLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run Text="{Binding AssetSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
+                            <Run Text="{Binding AssetSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #AssetProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -190,7 +186,7 @@
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{x:Static lang:Resources.MaintenanceStorageView_RuntimesLabelText}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run Text="{Binding RuntimeSize, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
+                            <Run Text="{Binding RuntimeSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
                             <Run Text=" / " />
                             <Run Text="{Binding #RuntimeProgressBar.Percentage, StringFormat={}{0:0.0}%}" />
@@ -219,11 +215,11 @@
             </DockPanel>
             <ItemsControl ItemsSource="{Binding Instances}">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="models:StorageInstanceModel">
-                        <controls:StorageInstanceButton
-                            Command="{Binding $parent[v:MaintenanceStoragePage].((pm:MaintenanceStoragePageModel)DataContext).GotoInstanceCommand, Mode=OneWay, FallbackValue={x:Null}}"
+                    <DataTemplate DataType="app:StorageInstanceModel">
+                        <app:StorageInstanceButton
+                            Command="{Binding $parent[app:MaintenanceStoragePage].((app:MaintenanceStoragePageModel)DataContext).GotoInstanceCommand, Mode=OneWay, FallbackValue={x:Null}}"
                             CommandParameter="{Binding}"
-                            TotalSize="{Binding $parent[v:MaintenanceStoragePage].((pm:MaintenanceStoragePageModel)DataContext).InstanceSize, FallbackValue=0}" />
+                            TotalSize="{Binding $parent[app:MaintenanceStoragePage].((app:MaintenanceStoragePageModel)DataContext).InstanceSize, FallbackValue=0}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>

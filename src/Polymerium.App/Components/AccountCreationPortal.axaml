@@ -1,12 +1,11 @@
-﻿<controls:AccountCreationStep
+﻿<app:AccountCreationStep
     x:Class="Polymerium.App.Components.AccountCreationPortal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="320"
     d:DesignWidth="256"
@@ -42,7 +41,7 @@
                         TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
-            <TabStripItem IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, FallbackValue=False}">
+            <TabStripItem IsEnabled="{Binding $parent[app:AccountCreationPortal].IsOfflineAvailable, FallbackValue=False}">
                 <StackPanel>
                     <TextBlock
                         FontSize="{StaticResource LargeFontSize}"
@@ -55,7 +54,7 @@
             </TabStripItem>
         </TabStrip>
         <husk:InfoBar
-            IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
+            IsVisible="{Binding $parent[app:AccountCreationPortal].IsOfflineAvailable, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
             Content="{x:Static lang:Resources.AccountCreationPortal_Prompt}" />
     </StackPanel>
-</controls:AccountCreationStep>
+</app:AccountCreationStep>

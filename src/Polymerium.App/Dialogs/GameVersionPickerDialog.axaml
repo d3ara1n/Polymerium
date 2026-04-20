@@ -2,12 +2,11 @@
     x:Class="Polymerium.App.Dialogs.GameVersionPickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App.Dialogs"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static lang:Resources.GameVersionPickerDialog_Title}"
     IsPrimaryButtonVisible="True"
@@ -16,7 +15,7 @@
         <TextBox
             Grid.Row="0"
             PlaceholderText="{x:Static lang:Resources.GameVersionPickerDialog_VersionBarPlaceholder}"
-            Text="{Binding $parent[local:GameVersionPickerDialog].FilterText, Mode=TwoWay}">
+            Text="{Binding $parent[app:GameVersionPickerDialog].FilterText, Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <fi:SymbolIcon
@@ -32,8 +31,8 @@
         <TabStrip
             Grid.Row="2"
             HorizontalAlignment="Center"
-            ItemsSource="{Binding $parent[local:GameVersionPickerDialog].Types}"
-            SelectedValue="{Binding $parent[local:GameVersionPickerDialog].SelectedType}">
+            ItemsSource="{Binding $parent[app:GameVersionPickerDialog].Types}"
+            SelectedValue="{Binding $parent[app:GameVersionPickerDialog].SelectedType}">
             <TabStrip.ItemTemplate>
                 <DataTemplate DataType="x:String">
                     <TextBlock Text="{Binding}" />
@@ -45,7 +44,7 @@
             MinHeight="128">
             <StackPanel
                 VerticalAlignment="Center"
-                IsVisible="{Binding $parent[local:GameVersionPickerDialog].View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                IsVisible="{Binding $parent[app:GameVersionPickerDialog].View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                 Spacing="8">
                 <fi:SymbolIcon
                     HorizontalAlignment="Center"
@@ -60,10 +59,10 @@
             </StackPanel>
             <ListBox
                 MinHeight="64"
-                ItemsSource="{Binding $parent[local:GameVersionPickerDialog].View}"
-                SelectedItem="{Binding $parent[local:GameVersionPickerDialog].Result, Mode=OneWayToSource}">
+                ItemsSource="{Binding $parent[app:GameVersionPickerDialog].View}"
+                SelectedItem="{Binding $parent[app:GameVersionPickerDialog].Result, Mode=OneWayToSource}">
                 <ListBox.ItemTemplate>
-                    <DataTemplate DataType="m:GameVersionModel">
+                    <DataTemplate DataType="app:GameVersionModel">
                         <Grid ColumnDefinitions="*,4,Auto">
                             <TextBlock
                                 Grid.Column="0"

@@ -2,19 +2,14 @@
     x:Class="Polymerium.App.Sidebars.NotificationSidebar"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="clr-namespace:Polymerium.App"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="using:AsyncImageLoader"
-    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:fie="using:FluentIcons.Avalonia.Markup"
-    xmlns:hm="using:Huskui.Avalonia.Models"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:services="using:Polymerium.App.Services"
-    xmlns:sidebars="using:Polymerium.App.Sidebars"
     Width="380"
     Padding="0"
     d:DesignHeight="600"
@@ -84,14 +79,14 @@
                     Margin="{StaticResource SidebarContentMargin}"
                     ItemsSource="{Binding Notifications}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:NotificationModel">
+                        <DataTemplate x:DataType="app:NotificationModel">
                             <Border
                                 Margin="4,4,4,4"
                                 BoxShadow="0 0 4 0 #3F000000"
                                 CornerRadius="{StaticResource LargeCornerRadius}">
                                 <Panel>
                                     <husk:SwitchPresenter
-                                        TargetType="hm:GrowlLevel"
+                                        TargetType="husk:GrowlLevel"
                                         Value="{Binding Level}">
                                         <husk:SwitchCase Value="Information">
                                             <Border
@@ -145,7 +140,7 @@
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="hm:GrowlAction">
+                                                    <DataTemplate x:DataType="husk:GrowlAction">
                                                         <Button
                                                             Classes="Small"
                                                             Command="{Binding Command}"
@@ -167,7 +162,7 @@
                                                     Width="28"
                                                     Height="28"
                                                     Margin="4"
-                                                    TargetType="hm:GrowlLevel"
+                                                    TargetType="husk:GrowlLevel"
                                                     Value="{Binding Level}">
                                                     <husk:SwitchCase Value="Information">
                                                         <Ellipse Fill="{StaticResource ControlTranslucentFullBackgroundBrush}" />
@@ -239,20 +234,20 @@
                                                     <MenuFlyout>
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
-                                                            Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
+                                                            Command="{Binding $parent[app:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}"
                                                             Icon="{fie:SymbolIcon CheckmarkCircle,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead}"
-                                                            Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
+                                                            Command="{Binding $parent[app:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}"
                                                             Icon="{fie:SymbolIcon CheckmarkCircleHint,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
-                                                            Command="{Binding $parent[sidebars:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
+                                                            Command="{Binding $parent[app:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_RemoveMenuText}"
                                                             Icon="{fie:SymbolIcon DismissCircle,

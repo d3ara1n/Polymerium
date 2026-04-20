@@ -2,13 +2,13 @@
     x:Class="Polymerium.App.Modals.InstancePackageDependencyModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modals="using:Polymerium.App.Modals"
     xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
     MinWidth="360"
     Margin="64"
@@ -124,7 +124,7 @@
                         </StackPanel>
                         <ToggleSwitch
                             Grid.Column="2"
-                            IsChecked="{Binding $parent[modals:InstancePackageDependencyModal].IsAutoVersion, Mode=TwoWay}"
+                            IsChecked="{Binding $parent[app:InstancePackageDependencyModal].IsAutoVersion, Mode=TwoWay}"
                             OffContent=""
                             OnContent="" />
                     </Grid>
@@ -132,19 +132,19 @@
                 <!--  Filter Checkbox  -->
                 <CheckBox
                     Grid.Row="1"
-                    IsVisible="{Binding $parent[modals:InstancePackageDependencyModal].IsAutoVersion, Converter={x:Static BoolConverters.Not}}"
+                    IsVisible="{Binding $parent[app:InstancePackageDependencyModal].IsAutoVersion, Converter={x:Static BoolConverters.Not}}"
                     Content="{x:Static lang:Resources.InstancePackageModal_FilterLabelText}"
-                    IsChecked="{Binding $parent[modals:InstancePackageDependencyModal].IsFilterEnabled, Mode=TwoWay}" />
+                    IsChecked="{Binding $parent[app:InstancePackageDependencyModal].IsFilterEnabled, Mode=TwoWay}" />
                 <!--  Version ListBox  -->
                 <husk:LazyContainer
                     Grid.Row="2"
-                    IsVisible="{Binding $parent[modals:InstancePackageDependencyModal].IsAutoVersion, Converter={x:Static BoolConverters.Not}}"
-                    Source="{Binding $parent[modals:InstancePackageDependencyModal].LazyVersions}">
+                    IsVisible="{Binding $parent[app:InstancePackageDependencyModal].IsAutoVersion, Converter={x:Static BoolConverters.Not}}"
+                    Source="{Binding $parent[app:InstancePackageDependencyModal].LazyVersions}">
                     <husk:LazyContainer.SourceTemplate>
                         <DataTemplate DataType="m:InstancePackageVersionCollection">
                             <ListBox
                                 ItemsSource="{Binding}"
-                                SelectedItem="{Binding $parent[modals:InstancePackageDependencyModal].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}">
+                                SelectedItem="{Binding $parent[app:InstancePackageDependencyModal].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="m:InstancePackageVersionModel">
                                         <StackPanel Spacing="4">
@@ -224,7 +224,7 @@
                 <Button
                     Grid.Column="0"
                     Classes="Primary"
-                    Command="{Binding $parent[modals:InstancePackageDependencyModal].InstallCommand}">
+                    Command="{Binding $parent[app:InstancePackageDependencyModal].InstallCommand}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
@@ -236,7 +236,7 @@
                 </Button>
                 <Button
                     Grid.Column="1"
-                    Command="{Binding $parent[modals:InstancePackageDependencyModal].Dismiss}"
+                    Command="{Binding $parent[app:InstancePackageDependencyModal].Dismiss}"
                     Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
                     IsCancel="True" />
             </Grid>

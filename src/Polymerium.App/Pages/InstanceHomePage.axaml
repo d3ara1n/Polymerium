@@ -1,26 +1,20 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceHomePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:assets="clr-namespace:Polymerium.App.Assets"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
     xmlns:trident="using:Trident.Core"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
-    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
     d:DesignHeight="660"
     d:DesignWidth="880"
-    x:DataType="pm:InstanceHomePageModel"
+    x:DataType="app:InstanceHomePageModel"
     mc:Ignorable="d">
-    <controls:Subpage.Resources>
+    <app:Subpage.Resources>
         <ControlTheme
             x:Key="SectionHeaderButtonTheme"
             BasedOn="{StaticResource GhostButtonTheme}"
@@ -133,7 +127,7 @@
                 <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
             </Style>
         </ControlTheme>
-    </controls:Subpage.Resources>
+    </app:Subpage.Resources>
     <Grid
         ColumnSpacing="24"
         RowDefinitions="*,*,Auto"
@@ -267,8 +261,8 @@
                             Text="{x:Static lang:Resources.InstanceHomeView_SetupTitle}" />
                         <Button
                             Grid.Column="2"
-                            Command="{Binding $parent[v:InstancePage].NavigateCommand}"
-                            CommandParameter="{x:Type v:InstanceSetupPage}"
+                            Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                            CommandParameter="{x:Type app:InstanceSetupPage}"
                             Theme="{StaticResource SectionHeaderButtonTheme}">
                             <StackPanel
                                 Orientation="Horizontal"
@@ -368,8 +362,8 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
-                    Command="{Binding $parent[v:InstancePage].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstanceActivitiesPage}"
+                    Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                    CommandParameter="{x:Type app:InstanceActivitiesPage}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel
                         Orientation="Horizontal"
@@ -488,8 +482,8 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
-                    Command="{Binding $parent[v:InstancePage].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstanceWidgetsPage}"
+                    Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                    CommandParameter="{x:Type app:InstanceWidgetsPage}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel
                         Orientation="Horizontal"
@@ -524,7 +518,7 @@
                     VerticalScrollBarVisibility="Disabled">
                     <ItemsControl ItemsSource="{Binding PinnedWidgets, Mode=OneTime}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="widgets:WidgetBase">
+                            <DataTemplate x:DataType="app:WidgetBase">
                                 <husk:Card>
                                     <Grid
                                         RowDefinitions="Auto,*"
@@ -763,7 +757,7 @@
                                     Command="{Binding SwitchModeCommand}"
                                     CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
                                                                               Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
-                                    <TextBlock Text="{Binding Mode, Converter={x:Static converters:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
+                                    <TextBlock Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Margin="0,8,8,8"
@@ -799,7 +793,7 @@
                                             </Grid>
                                         </husk:PlaceholderPresenter.Placeholder>
                                         <husk:PlaceholderPresenter.SourceTemplate>
-                                            <DataTemplate x:DataType="m:AccountModel">
+                                            <DataTemplate x:DataType="app:AccountModel">
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
                                                     ColumnSpacing="8"
@@ -812,7 +806,7 @@
                                                         Height="28"
                                                         CornerRadius="{StaticResource SmallCornerRadius}">
                                                         <Border.Background>
-                                                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
+                                                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
                                                         </Border.Background>
                                                     </Border>
                                                     <TextBlock
@@ -890,8 +884,8 @@
                                     Padding="12,6"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
                                     BorderThickness="1"
-                                    Command="{Binding $parent[v:InstancePage].NavigateCommand}"
-                                    CommandParameter="{x:Type v:InstanceDashboardPage}"
+                                    Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                                    CommandParameter="{x:Type app:InstanceDashboardPage}"
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     Theme="{StaticResource GhostButtonTheme}">
                                     <Grid
@@ -923,4 +917,4 @@
             </husk:Card>
         </Grid>
     </Grid>
-</controls:Subpage>
+</app:Subpage>

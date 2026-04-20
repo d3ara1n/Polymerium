@@ -1,12 +1,10 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
-    xmlns:local="clr-namespace:Polymerium.App.Controls"
-    xmlns:m="clr-namespace:Polymerium.App.Models">
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
     <ControlTheme
-        x:Key="{x:Type local:StorageInstanceButton}"
-        TargetType="local:StorageInstanceButton">
+        x:Key="{x:Type app:StorageInstanceButton}"
+        TargetType="app:StorageInstanceButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
@@ -14,7 +12,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:StorageInstanceModel">
+            <ControlTemplate x:DataType="app:StorageInstanceModel">
                 <Border
                     x:Name="Background"
                     Padding="{TemplateBinding Padding}"
@@ -47,7 +45,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                            <Run Text="{Binding Size, Mode=OneWay, StringFormat=F1, Converter={x:Static converters:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=12.4}" />
+                            <Run Text="{Binding Size, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToMiBDoubleConverter}, FallbackValue=12.4}" />
                             <Run Text="MiB" />
                         </TextBlock>
                         <ProgressBar

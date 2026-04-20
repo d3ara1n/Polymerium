@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Polymerium.App.Controls">
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
     <ControlTheme
-        x:Key="{x:Type local:SettingsEntryItem}"
-        TargetType="local:SettingsEntryItem">
+        x:Key="{x:Type app:SettingsEntryItem}"
+        TargetType="app:SettingsEntryItem">
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>

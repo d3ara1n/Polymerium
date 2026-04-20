@@ -1,15 +1,13 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:components="clr-namespace:Polymerium.App.Components"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Controls"
-    xmlns:m="clr-namespace:Polymerium.App.Models">
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <ControlTheme
-        x:Key="{x:Type local:ExhibitDependencyButton}"
-        TargetType="local:ExhibitDependencyButton">
+        x:Key="{x:Type app:ExhibitDependencyButton}"
+        TargetType="app:ExhibitDependencyButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Padding" Value="12,10" />
@@ -18,7 +16,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:ExhibitDependencyModel">
+            <ControlTemplate x:DataType="app:ExhibitDependencyModel">
                 <Panel Name="Container">
                     <Panel Margin="4,2">
                         <Border
@@ -68,7 +66,7 @@
                                     VerticalAlignment="Center"
                                     IsVisible="{Binding IsRequired}"
                                     Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}" />
-                                <components:ExhibitStatePresenter
+                                <app:ExhibitStatePresenter
                                     IsVisible="{TemplateBinding IsChecked}"
                                     State="{Binding Exhibit.State}" />
                             </StackPanel>

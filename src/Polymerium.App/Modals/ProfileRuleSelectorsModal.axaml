@@ -2,15 +2,12 @@
     x:Class="Polymerium.App.Modals.ProfileRuleSelectorsModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modals="clr-namespace:Polymerium.App.Modals"
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="450"
@@ -31,21 +28,21 @@
                 Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_Message}"
                 TextWrapping="Wrap" />
         </StackPanel>
-        <controls:EmptyContainer
+        <app:EmptyContainer
             Grid.Row="1"
             Icon="Ruler"
-            IsEmpty="{Binding $parent[modals:ProfileRuleSelectorsModal].Selectors.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+            IsEmpty="{Binding $parent[app:ProfileRuleSelectorsModal].Selectors.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
             <ScrollViewer>
                 <ItemsControl
                     Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.Horizontal}}"
-                    ItemsSource="{Binding $parent[modals:ProfileRuleSelectorsModal].Selectors}">
+                    ItemsSource="{Binding $parent[app:ProfileRuleSelectorsModal].Selectors}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="8" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:ProfileRuleSelectorModel">
+                        <DataTemplate x:DataType="app:ProfileRuleSelectorModel">
                             <Border
                                 Padding="12"
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
@@ -215,7 +212,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                                        Text="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
@@ -227,7 +224,7 @@
                                         VerticalAlignment="Center">
                                         <Button
                                             Classes="Small"
-                                            Command="{Binding $parent[modals:ProfileRuleSelectorsModal].EditSelectorCommand}"
+                                            Command="{Binding $parent[app:ProfileRuleSelectorsModal].EditSelectorCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 Width="{StaticResource MediumFontSize}"
@@ -236,7 +233,7 @@
                                         </Button>
                                         <Button
                                             Classes="Small"
-                                            Command="{Binding $parent[modals:ProfileRuleSelectorsModal].RemoveSelectorCommand}"
+                                            Command="{Binding $parent[app:ProfileRuleSelectorsModal].RemoveSelectorCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 Width="{StaticResource MediumFontSize}"
@@ -250,7 +247,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-        </controls:EmptyContainer>
+        </app:EmptyContainer>
         <Grid
             Grid.Row="2"
             Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutTop}}"
@@ -259,7 +256,7 @@
             <Button
                 Grid.Column="0"
                 Classes="Primary"
-                Command="{Binding $parent[modals:ProfileRuleSelectorsModal].AddSelectorCommand}">
+                Command="{Binding $parent[app:ProfileRuleSelectorsModal].AddSelectorCommand}">
                 <husk:IconLabel
                     Icon="Add"
                     Text="添加新选择器" />
@@ -269,7 +266,7 @@
                 VerticalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                 <Run Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_SelectorCountLabelText}" />
-                <Run Text="{Binding $parent[modals:ProfileRuleSelectorsModal].Selectors.Count, FallbackValue=0}" />
+                <Run Text="{Binding $parent[app:ProfileRuleSelectorsModal].Selectors.Count, FallbackValue=0}" />
             </TextBlock>
             <Button
                 Grid.Column="3"

@@ -2,18 +2,17 @@
     x:Class="Polymerium.App.Toasts.ExhibitModpackToast"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="using:AsyncImageLoader"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Toasts"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="m:ExhibitModpackModel"
+    x:DataType="app:ExhibitModpackModel"
     Header="{Binding ProjectName, FallbackValue=Display}"
     mc:Ignorable="d">
     <StackPanel Spacing="24">
@@ -25,16 +24,16 @@
             CornerRadius="{StaticResource MediumCornerRadius}">
             <husk:LazyContainer
                 MinHeight="100"
-                Source="{Binding $parent[local:ExhibitModpackToast].LazyVersions, Mode=OneWay}">
+                Source="{Binding $parent[app:ExhibitModpackToast].LazyVersions, Mode=OneWay}">
                 <husk:LazyContainer.SourceTemplate>
-                    <DataTemplate DataType="m:ExhibitVersionCollection">
+                    <DataTemplate DataType="app:ExhibitVersionCollection">
                         <StackPanel Spacing="12">
                             <Grid
                                 ColumnDefinitions="*,Auto,Auto"
                                 ColumnSpacing="8">
                                 <ItemsControl
                                     Grid.Column="0"
-                                    ItemsSource="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Tags, FallbackValue={x:Null}}">
+                                    ItemsSource="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackModel)DataContext).Tags, FallbackValue={x:Null}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="x:String">
                                             <husk:Tag
@@ -54,10 +53,10 @@
                                 <TextBlock
                                     Grid.Column="1"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).AuthorName, StringFormat={}@{0}, FallbackValue=Author}" />
+                                    Text="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackModel)DataContext).AuthorName, StringFormat={}@{0}, FallbackValue=Author}" />
                                 <HyperlinkButton
                                     Grid.Column="2"
-                                    NavigateUri="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Reference, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}">
+                                    NavigateUri="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackModel)DataContext).Reference, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}">
                                     <ToolTip.Tip>
                                         <StackPanel Spacing="2">
                                             <Grid
@@ -80,7 +79,7 @@
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
-                                        <TextBlock Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                        <TextBlock Text="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackModel)DataContext).Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Open" />
@@ -88,7 +87,7 @@
                                 </HyperlinkButton>
                             </Grid>
                             <TextBlock
-                                Text="{Binding $parent[local:ExhibitModpackToast].((m:ExhibitModpackModel)DataContext).Summary, FallbackValue=Display}"
+                                Text="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackModel)DataContext).Summary, FallbackValue=Display}"
                                 TextWrapping="Wrap" />
                             <Grid
                                 ColumnDefinitions="Auto,Auto,*"
@@ -96,8 +95,8 @@
                                 <Button
                                     Grid.Column="0"
                                     Classes="Primary"
-                                    Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
-                                    CommandParameter="{Binding $parent[local:ExhibitModpackToast].SelectedVersion, Mode=OneWay, FallbackValue={x:Null}}">
+                                    Command="{Binding $parent[app:ExhibitModpackToast].InstallCommand}"
+                                    CommandParameter="{Binding $parent[app:ExhibitModpackToast].SelectedVersion, Mode=OneWay, FallbackValue={x:Null}}">
                                     <StackPanel
                                         Margin="6,0"
                                         Orientation="Horizontal"
@@ -119,9 +118,9 @@
                                     Name="VersionBox"
                                     Grid.Column="2"
                                     ItemsSource="{Binding}"
-                                    SelectedItem="{Binding $parent[local:ExhibitModpackToast].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}">
+                                    SelectedItem="{Binding $parent[app:ExhibitModpackToast].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}">
                                     <ComboBox.SelectionBoxItemTemplate>
-                                        <DataTemplate DataType="m:ExhibitVersionModel">
+                                        <DataTemplate DataType="app:ExhibitVersionModel">
                                             <Grid
                                                 ColumnDefinitions="Auto,*,Auto"
                                                 ColumnSpacing="4">
@@ -165,7 +164,7 @@
                                         </DataTemplate>
                                     </ComboBox.SelectionBoxItemTemplate>
                                     <ComboBox.ItemTemplate>
-                                        <DataTemplate DataType="m:ExhibitVersionModel">
+                                        <DataTemplate DataType="app:ExhibitVersionModel">
                                             <StackPanel Spacing="4">
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
@@ -262,7 +261,7 @@
                 </Border>
             </Panel>
         </husk:ConstrainedBox>
-        <husk:LazyContainer Source="{Binding $parent[local:ExhibitModpackToast].LazyDescription, Mode=OneWay}">
+        <husk:LazyContainer Source="{Binding $parent[app:ExhibitModpackToast].LazyDescription, Mode=OneWay}">
             <husk:LazyContainer.SourceTemplate>
                 <DataTemplate DataType="x:String">
                     <husk:MarkdownViewer

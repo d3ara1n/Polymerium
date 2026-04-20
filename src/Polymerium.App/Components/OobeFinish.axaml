@@ -1,8 +1,8 @@
-﻿<controls:OobeStep
+﻿<app:OobeStep
     x:Class="Polymerium.App.Components.OobeFinish"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
@@ -68,4 +68,4 @@
             </StackPanel>
         </Border>
     </StackPanel>
-</controls:OobeStep>
+</app:OobeStep>

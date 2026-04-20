@@ -1,9 +1,8 @@
-﻿<controls:OobeStep
+﻿<app:OobeStep
     x:Class="Polymerium.App.Components.OobePrivilege"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:components="clr-namespace:Polymerium.App.Components"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -48,7 +47,7 @@
         <!--  Status Card - Changes based on privilege state  -->
         <husk:SwitchPresenter
             TargetType="x:Boolean"
-            Value="{Binding $parent[components:OobePrivilege].IsPrivilegeGranted}">
+            Value="{Binding $parent[app:OobePrivilege].IsPrivilegeGranted}">
             <!--  Privilege Granted - Success Card  -->
             <husk:SwitchCase Value="{x:True}">
                 <Border
@@ -106,7 +105,7 @@
                         <Button
                             Grid.Column="3"
                             Classes="Small"
-                            Command="{Binding $parent[components:OobePrivilege].CheckPrivilegeCommand}"
+                            Command="{Binding $parent[app:OobePrivilege].CheckPrivilegeCommand}"
                             Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource SmallFontSize}"
@@ -161,4 +160,4 @@
             <Run Text="{x:Static lang:Resources.OobePrivilege_SafetyDescription}" />
         </TextBlock>
     </StackPanel>
-</controls:OobeStep>
+</app:OobeStep>

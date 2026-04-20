@@ -1,20 +1,16 @@
-﻿<controls:ScopedPage
+﻿<app:ScopedPage
     x:Class="Polymerium.App.Pages.InstancePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="clr-namespace:Polymerium.App"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="700"
-    x:DataType="pm:InstancePageModel"
+    x:DataType="app:InstancePageModel"
     Context="{Binding Context, Mode=OneWay}"
     IsHeaderVisible="False"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -171,7 +167,7 @@
                                                 Background="{StaticResource TransparentBrush}"
                                                 ToolTip.HorizontalOffset="5"
                                                 ToolTip.Placement="Right"
-                                                ToolTip.Tip="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, DataType=m:InstanceSubpageEntryModel}"
+                                                ToolTip.Tip="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}"
                                                 ToolTip.VerticalOffset="0">
                                                 <Border
                                                     Name="Indicator"
@@ -221,7 +217,7 @@
                                                     Margin="8"
                                                     HorizontalAlignment="Center"
                                                     FontSize="18"
-                                                    Symbol="{Binding Icon, RelativeSource={RelativeSource Mode=DataContext}, DataType=m:InstanceSubpageEntryModel}">
+                                                    Symbol="{Binding Icon, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}">
                                                     <fi:SymbolIcon.Transitions>
                                                         <Transitions>
                                                             <BrushTransition
@@ -340,4 +336,4 @@
             </Grid>
         </husk:DropContainer>
     </Panel>
-</controls:ScopedPage>
+</app:ScopedPage>

@@ -1,15 +1,13 @@
-﻿<controls:OobeStep
+﻿<app:OobeStep
     x:Class="Polymerium.App.Components.OobeQuickSetup"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:components="clr-namespace:Polymerium.App.Components"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:Polymerium.App.Models"
     d:DesignHeight="380"
     d:DesignWidth="520"
     mc:Ignorable="d">
@@ -67,10 +65,10 @@
                     <StackPanel Grid.Column="4">
                         <ComboBox
                             MinWidth="160"
-                            ItemsSource="{Binding $parent[components:OobeQuickSetup].Languages}"
-                            SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedLanguage, Mode=TwoWay}">
+                            ItemsSource="{Binding $parent[app:OobeQuickSetup].Languages}"
+                            SelectedItem="{Binding $parent[app:OobeQuickSetup].SelectedLanguage, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="models:LanguageModel">
+                                <DataTemplate DataType="app:LanguageModel">
                                     <Grid ColumnDefinitions="*,4,Auto">
                                         <TextBlock
                                             Grid.Column="0"
@@ -112,7 +110,7 @@
                         Text="{x:Static lang:Resources.OobeQuickSetup_ThemeLabelText}" />
                     <TabStrip
                         Grid.Column="4"
-                        SelectedIndex="{Binding $parent[components:OobeQuickSetup].DarkModeIndex, Mode=TwoWay}"
+                        SelectedIndex="{Binding $parent[app:OobeQuickSetup].DarkModeIndex, Mode=TwoWay}"
                         Theme="{StaticResource SegmentedTabStripTheme}">
                         <TabStripItem>
                             <StackPanel
@@ -177,8 +175,8 @@
                     <ComboBox
                         Grid.Column="4"
                         MinWidth="120"
-                        ItemsSource="{Binding $parent[components:OobeQuickSetup].AccentColors}"
-                        SelectedItem="{Binding $parent[components:OobeQuickSetup].SelectedAccentColor, Mode=TwoWay}">
+                        ItemsSource="{Binding $parent[app:OobeQuickSetup].AccentColors}"
+                        SelectedItem="{Binding $parent[app:OobeQuickSetup].SelectedAccentColor, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="husk:AccentColor">
                                 <TextBlock Text="{Binding}" />
@@ -209,11 +207,11 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{Binding $parent[components:OobeQuickSetup].ProxyStatusText}" />
+                        Text="{Binding $parent[app:OobeQuickSetup].ProxyStatusText}" />
                     <Button
                         Grid.Column="6"
                         Classes="Small"
-                        Command="{Binding $parent[components:OobeQuickSetup].OpenProxySettingsCommand}"
+                        Command="{Binding $parent[app:OobeQuickSetup].OpenProxySettingsCommand}"
                         Theme="{StaticResource GhostButtonTheme}">
                         <fi:SymbolIcon
                             FontSize="{StaticResource SmallFontSize}"
@@ -223,4 +221,4 @@
             </Border>
         </StackPanel>
     </StackPanel>
-</controls:OobeStep>
+</app:OobeStep>
