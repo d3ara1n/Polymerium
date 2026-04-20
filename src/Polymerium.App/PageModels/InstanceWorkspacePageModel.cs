@@ -10,8 +10,11 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
-public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
-    : InstancePageModelBase(bag, instanceManager, profileManager)
+public class InstanceWorkspacePageModel(
+    ViewBag bag,
+    InstanceManager instanceManager,
+    ProfileManager profileManager
+) : InstancePageModelBase(bag, instanceManager, profileManager)
 {
     #region Reactive
 
@@ -86,7 +89,6 @@ public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceMan
         {
             var ltime = File.GetLastWriteTimeUtc(live);
             var itime = File.GetLastWriteTimeUtc(import);
-
 
             if (ltime > itime)
             {
