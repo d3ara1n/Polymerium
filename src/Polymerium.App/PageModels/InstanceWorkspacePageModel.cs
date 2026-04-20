@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DynamicData;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Trident.Abstractions;
@@ -10,11 +11,8 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
-public class InstanceWorkspacePageModel(
-    ViewBag bag,
-    InstanceManager instanceManager,
-    ProfileManager profileManager
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
+    : InstancePageModelBase(bag, instanceManager, profileManager)
 {
     #region Reactive
 
@@ -24,9 +22,12 @@ public class InstanceWorkspacePageModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync() => base.OnInitializeAsync();
+    protected override Task OnInitializeAsync()
+    {
+        GenerateChangeList();
 
-    protected override Task OnDeinitializeAsync() => base.OnDeinitializeAsync();
+        return base.OnInitializeAsync();
+    }
 
     #endregion
 
@@ -53,13 +54,21 @@ public class InstanceWorkspacePageModel(
             {
                 changes.Add(new() { RelativePath = liveEntry, Name = Path.GetFileName(livePath) });
             }
+            else
+            {
+                // TODO: remove
+                changes.Add(new() { RelativePath = liveEntry, Name = Path.GetFileName(livePath) });
+            }
         }
+
+        Changes.AddRange(changes);
     }
 
     #endregion
 
     private IReadOnlyList<string> ScanFolder(string folder)
     {
+        // FIX: 忘记处理子目录了，应该用递归写法，把 relativeParent 传进去
         var queue = new Queue<DirectoryInfo>();
         var rv = new List<string>();
         queue.Enqueue(new(folder));
