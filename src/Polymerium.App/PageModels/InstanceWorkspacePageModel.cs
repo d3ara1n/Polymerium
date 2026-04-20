@@ -11,8 +11,11 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
-public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
-    : InstancePageModelBase(bag, instanceManager, profileManager)
+public class InstanceWorkspacePageModel(
+    ViewBag bag,
+    InstanceManager instanceManager,
+    ProfileManager profileManager
+) : InstancePageModelBase(bag, instanceManager, profileManager)
 {
     #region Reactive
 
@@ -52,12 +55,14 @@ public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceMan
             var kind = Diff(livePath, importPath);
             if (kind != WorkspaceChangeKind.Same)
             {
-                changes.Add(new() { RelativePath = liveEntry, Name = Path.GetFileName(livePath) });
-            }
-            else
-            {
-                // TODO: remove
-                changes.Add(new() { RelativePath = liveEntry, Name = Path.GetFileName(livePath) });
+                changes.Add(
+                    new()
+                    {
+                        RelativePath = liveEntry,
+                        Name = Path.GetFileName(livePath),
+                        Kind = kind,
+                    }
+                );
             }
         }
 
@@ -68,27 +73,17 @@ public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceMan
 
     private IReadOnlyList<string> ScanFolder(string folder)
     {
-        // FIX: 忘记处理子目录了，应该用递归写法，把 relativeParent 传进去
-        var queue = new Queue<DirectoryInfo>();
-        var rv = new List<string>();
-        queue.Enqueue(new(folder));
-        while (queue.TryDequeue(out var dir))
+        var root = new DirectoryInfo(folder);
+        if (!root.Exists)
         {
-            if (!dir.Exists)
-            {
-                continue;
-            }
-
-            var files = dir.GetFiles();
-            rv.AddRange(files.Select(x => x.Name));
-            var dirs = dir.GetDirectories();
-            foreach (var d in dirs)
-            {
-                queue.Enqueue(d);
-            }
+            return [];
         }
 
-        return rv;
+        return
+        [
+            .. root.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(file => Path.GetRelativePath(folder, file.FullName)),
+        ];
     }
 
     private WorkspaceChangeKind Diff(string live, string import)
@@ -96,16 +91,16 @@ public class InstanceWorkspacePageModel(ViewBag bag, InstanceManager instanceMan
         // 这里使用 mtime 而不是哈希，live 的文件是从 import 复制的，atime, ctime, mtime 都是相同的
         if (File.Exists(import))
         {
-            var ltime = File.GetLastWriteTimeUtc(live);
-            var itime = File.GetLastWriteTimeUtc(import);
+            var liveTime = File.GetLastWriteTimeUtc(live);
+            var importTime = File.GetLastWriteTimeUtc(import);
 
-            if (ltime > itime)
+            if (liveTime > importTime)
             {
                 return WorkspaceChangeKind.Updated;
             }
-            else if (ltime < itime)
+            else if (liveTime < importTime)
             {
-                return WorkspaceChangeKind.Outupdated;
+                return WorkspaceChangeKind.Outdated;
             }
             else
             {

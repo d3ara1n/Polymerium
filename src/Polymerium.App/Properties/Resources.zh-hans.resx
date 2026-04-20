@@ -76,7 +76,7 @@
         <value>总时数</value>
     </data>
     <data name="InstanceHomeView_WidgetsTitle" xml:space="preserve">
-        <value>工具</value>
+        <value>微件</value>
     </data>
     <data name="InstanceHomeView_LaunchPadTitle" xml:space="preserve">
         <value>发射台</value>
@@ -133,7 +133,7 @@
         <value>工作区</value>
     </data>
     <data name="InstanceView_WidgetsPageText" xml:space="preserve">
-        <value>工具</value>
+        <value>微件</value>
     </data>
     <data name="InstanceView_StatisticsPageText" xml:space="preserve">
         <value>统计</value>

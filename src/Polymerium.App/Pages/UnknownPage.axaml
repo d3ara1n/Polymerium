@@ -374,7 +374,7 @@
                             StartAngle="-90"
                             SweepAngle="270" />
                     </StackPanel>
-                    <ListBox>
+                    <ListBox Theme="{StaticResource FancyListBoxTheme}">
                         <ListBoxItem Content="这是一个 1" />
                         <ListBoxItem Content="这是一个 2" />
                         <ListBoxItem Content="这是一个 3" />
