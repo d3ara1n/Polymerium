@@ -109,11 +109,9 @@
                             BlurRadius="6"
                             Opacity="0.1" />
                     </StackPanel.Effect>
-                    <fi:SymbolIcon
+                    <TextBlock
                         VerticalAlignment="Center"
-                        FontSize="{StaticResource MediumFontSize}"
-                        IconVariant="Color"
-                        Symbol="AnimalPawPrint" />
+                        Text="🐿" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"

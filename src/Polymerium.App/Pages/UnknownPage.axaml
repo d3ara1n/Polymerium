@@ -552,6 +552,43 @@
                             </DockPanel>
                         </StackPanel>
                     </Expander>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <husk:Tag
+                            Classes="Success"
+                            Content="Huskui.Avalonia" />
+                        <husk:Tag
+                            Classes="Warning"
+                            Content="Huskui.Avalonia" />
+                        <husk:Tag
+                            Classes="Danger"
+                            Content="Huskui.Avalonia" />
+                    </StackPanel>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <husk:Tag
+                            Classes="Outline Success"
+                            Content="Huskui.Avalonia" />
+                        <husk:Tag
+                            Classes="Outline Warning"
+                            Content="Huskui.Avalonia" />
+                        <husk:Tag
+                            Classes="Outline Danger"
+                            Content="Huskui.Avalonia" />
+                    </StackPanel>
+                    <husk:Tag
+                        Classes="Outline Status Primary"
+                        Padding="20,8">
+                        <StackPanel>
+                            <TextBlock FontSize="{StaticResource LargeFontSize}">
+                                <Run Text="🐿" />
+                                <Run Text="{x:Static app:Program.Brand}" />
+                            </TextBlock>
+                            <TextBlock Text="{Binding Source={x:Static app:Program.Version}, StringFormat={}v{0}}" />
+                        </StackPanel>
+                    </husk:Tag>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Drag">

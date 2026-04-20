@@ -67,6 +67,7 @@
                                         </husk:SwitchPresenter>
                                         <TextBlock
                                             Grid.Row="1"
+                                            Grid.Column="0"
                                             Grid.ColumnSpan="2"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
