@@ -2,22 +2,19 @@
     x:Class="Polymerium.App.Pages.MarketplaceSearchPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     x:Name="Exhibition"
     Padding="0"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="pm:MarketplaceSearchPageModel"
+    x:DataType="app:MarketplaceSearchPageModel"
     Background="{x:Null}"
     IsHeaderVisible="False"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -25,9 +22,9 @@
     <husk:Page.Resources>
         <MenuFlyout
             x:Key="ExhibitModpackButtonFlyout"
-            x:DataType="m:ExhibitModel">
+            x:DataType="app:ExhibitModel">
             <MenuItem
-                Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).OpenWebsiteCommand, FallbackValue={x:Null}}"
+                Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).OpenWebsiteCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Header="{x:Static lang:Resources.MarketplaceSearchView_OpenWebsiteMenuText}">
                 <MenuItem.Icon>
@@ -107,7 +104,7 @@
                             PlaceholderText="Loader"
                             SelectedItem="{Binding FilteredLoader, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="m:LoaderBasicModel">
+                                <DataTemplate DataType="app:LoaderBasicModel">
                                     <TextBlock Text="{Binding DisplayName}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
@@ -139,7 +136,7 @@
                             ItemsSource="{Binding Repositories}"
                             SelectedItem="{Binding SelectedRepository, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="m:RepositoryBasicModel">
+                                <DataTemplate DataType="app:RepositoryBasicModel">
                                     <TextBlock Text="{Binding Name}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
@@ -190,56 +187,56 @@
                             SelectedIndex="{Binding ViewState.LayoutIndex, Mode=TwoWay}"
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
-                                <collection:List x:TypeArguments="m:ListTemplateCombinationModel">
-                                    <m:ListTemplateCombinationModel Icon="List">
-                                        <m:ListTemplateCombinationModel.ItemTemplate>
-                                            <DataTemplate x:DataType="m:ExhibitModel">
-                                                <controls:ExhibitModpackButton
-                                                    Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
+                                <collection:List x:TypeArguments="app:ListTemplateCombinationModel">
+                                    <app:ListTemplateCombinationModel Icon="List">
+                                        <app:ListTemplateCombinationModel.ItemTemplate>
+                                            <DataTemplate x:DataType="app:ExhibitModel">
+                                                <app:ExhibitModpackButton
+                                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding}"
                                                     ContextFlyout="{StaticResource ExhibitModpackButtonFlyout}"
                                                     Theme="{StaticResource ListExhibitModpackButtonTheme}" />
                                             </DataTemplate>
-                                        </m:ListTemplateCombinationModel.ItemTemplate>
-                                        <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        </app:ListTemplateCombinationModel.ItemTemplate>
+                                        <app:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
                                                 <StackPanel
                                                     Margin="8"
                                                     Spacing="6" />
                                             </ItemsPanelTemplate>
-                                        </m:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                    </m:ListTemplateCombinationModel>
-                                    <m:ListTemplateCombinationModel Icon="Grid">
-                                        <m:ListTemplateCombinationModel.ItemTemplate>
-                                            <DataTemplate x:DataType="m:ExhibitModel">
-                                                <controls:ExhibitModpackButton
-                                                    Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
+                                        </app:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                    </app:ListTemplateCombinationModel>
+                                    <app:ListTemplateCombinationModel Icon="Grid">
+                                        <app:ListTemplateCombinationModel.ItemTemplate>
+                                            <DataTemplate x:DataType="app:ExhibitModel">
+                                                <app:ExhibitModpackButton
+                                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding}"
                                                     ContextFlyout="{StaticResource ExhibitModpackButtonFlyout}"
                                                     Theme="{StaticResource GridExhibitModpackButtonTheme}" />
                                             </DataTemplate>
-                                        </m:ListTemplateCombinationModel.ItemTemplate>
-                                        <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        </app:ListTemplateCombinationModel.ItemTemplate>
+                                        <app:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
                                                 <husk:FlexWrapPanel
                                                     Margin="8"
                                                     ColumnSpacing="8"
                                                     RowSpacing="8" />
                                             </ItemsPanelTemplate>
-                                        </m:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                        <m:ListTemplateCombinationModel.ItemContainerTheme>
+                                        </app:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        <app:ListTemplateCombinationModel.ItemContainerTheme>
                                             <ControlTheme TargetType="ContentPresenter">
                                                 <Setter Property="MaxWidth" Value="396" />
                                                 <Setter Property="MinWidth" Value="198" />
                                                 <Setter Property="MaxHeight" Value="256" />
                                                 <Setter Property="MinHeight" Value="128" />
                                             </ControlTheme>
-                                        </m:ListTemplateCombinationModel.ItemContainerTheme>
-                                    </m:ListTemplateCombinationModel>
+                                        </app:ListTemplateCombinationModel.ItemContainerTheme>
+                                    </app:ListTemplateCombinationModel>
                                 </collection:List>
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
-                                <DataTemplate x:DataType="m:ListTemplateCombinationModel">
+                                <DataTemplate x:DataType="app:ListTemplateCombinationModel">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
@@ -253,9 +250,9 @@
             </StackPanel>
             <Panel Grid.Row="1">
                 <husk:InfiniteScrollView
-                    ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme, FallbackValue={x:Null}}"
-                    ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate, FallbackValue={x:Null}}"
-                    ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate, FallbackValue={x:Null}}"
+                    ItemContainerTheme="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme, FallbackValue={x:Null}}"
+                    ItemTemplate="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemTemplate, FallbackValue={x:Null}}"
+                    ItemsPanel="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate, FallbackValue={x:Null}}"
                     ItemsSource="{Binding Exhibits}">
                     <husk:InfiniteScrollView.PendingContent>
                         <StackPanel

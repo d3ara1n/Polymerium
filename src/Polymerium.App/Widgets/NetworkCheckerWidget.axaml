@@ -1,20 +1,18 @@
-﻿<local:WidgetBase
+﻿<app:WidgetBase
     x:Class="Polymerium.App.Widgets.NetworkCheckerWidget"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:local="clr-namespace:Polymerium.App.Widgets"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Network Checker"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Icon="NetworkCheck"
     mc:Ignorable="d">
-    <local:WidgetBase.FullTemplate>
-        <DataTemplate DataType="local:NetworkCheckerWidget">
+    <app:WidgetBase.FullTemplate>
+        <DataTemplate DataType="app:NetworkCheckerWidget">
             <DockPanel VerticalSpacing="12">
                 <!--  操作按钮  -->
                 <Button
@@ -45,7 +43,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="m:ConnectionTestSiteModel">
+                            <DataTemplate DataType="app:ConnectionTestSiteModel">
                                 <Border
                                     Margin="2"
                                     Background="{StaticResource OverlaySolidBackgroundBrush}"
@@ -60,7 +58,7 @@
                                             Maximum="500"
                                             Value="{Binding Latency}">
                                             <ProgressBar.Background>
-                                                <MultiBinding Converter="{x:Static converters:InternalConverters.LatencyToColorBrush}">
+                                                <MultiBinding Converter="{x:Static app:InternalConverters.LatencyToColorBrush}">
                                                     <Binding Path="Latency" />
                                                     <Binding Path="Status" />
                                                 </MultiBinding>
@@ -92,21 +90,21 @@
                                                     <!--  延迟显示  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}"
+                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Success}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{Binding Latency, StringFormat={}{0:F0}ms}" />
 
                                                     <!--  错误消息  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}"
+                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Failed}}"
                                                         Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                         Text="{Binding ErrorMessage}" />
 
                                                     <!--  等待中  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}"
+                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Pending}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="Waiting..." />
 
@@ -127,11 +125,11 @@
                 </ScrollViewer>
             </DockPanel>
         </DataTemplate>
-    </local:WidgetBase.FullTemplate>
+    </app:WidgetBase.FullTemplate>
 
     <!--  Slim 模板：紧凑视图  -->
-    <local:WidgetBase.SlimTemplate>
-        <DataTemplate DataType="local:NetworkCheckerWidget">
+    <app:WidgetBase.SlimTemplate>
+        <DataTemplate DataType="app:NetworkCheckerWidget">
             <Grid
                 RowDefinitions="*,Auto"
                 RowSpacing="8">
@@ -144,7 +142,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="m:ConnectionTestSiteModel">
+                            <DataTemplate DataType="app:ConnectionTestSiteModel">
                                 <Grid
                                     Margin="4,2"
                                     ColumnDefinitions="*,Auto">
@@ -161,7 +159,7 @@
                                         <!--  成功状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Success}}"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Success}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
                                             Text="{Binding Latency, StringFormat={}{0:F0}ms}" />
@@ -169,7 +167,7 @@
                                         <!--  失败状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Failed}}"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Failed}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
                                             Text="✗" />
@@ -177,7 +175,7 @@
                                         <!--  等待状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static m:ConnectionTestStatus.Pending}}"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Pending}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Text="—" />
@@ -199,5 +197,5 @@
                 </Button>
             </Grid>
         </DataTemplate>
-    </local:WidgetBase.SlimTemplate>
-</local:WidgetBase>
+    </app:WidgetBase.SlimTemplate>
+</app:WidgetBase>

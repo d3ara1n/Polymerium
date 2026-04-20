@@ -2,24 +2,21 @@
     x:Class="Polymerium.App.Dialogs.AssetImporterDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dialogs="clr-namespace:Polymerium.App.Dialogs"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Modals"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
     Title="{x:Static lang:Resources.AssetImporterDialog_Title}"
     Width="420"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
-    <husk:PlaceholderPresenter Source="{Binding $parent[dialogs:AssetImporterDialog].Model, Mode=OneWay}">
+    <husk:PlaceholderPresenter Source="{Binding $parent[app:AssetImporterDialog].Model, Mode=OneWay}">
         <husk:PlaceholderPresenter.SourceTemplate>
-            <DataTemplate DataType="m:AssetIdentificationModel">
+            <DataTemplate DataType="app:AssetIdentificationModel">
                 <Grid
                     ColumnDefinitions="*,*"
                     ColumnSpacing="8"
@@ -31,7 +28,7 @@
                         Grid.ColumnSpan="2"
                         Source="{Binding Package}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate DataType="m:AssetIdentificationPackageModel">
+                            <DataTemplate DataType="app:AssetIdentificationPackageModel">
                                 <Border
                                     Padding="4"
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -45,7 +42,7 @@
                                                 Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 NavigateUri="{Binding Reference}" />
-                                            <RadioButton IsChecked="{Binding $parent[dialogs:AssetImporterDialog].IsPackageSelected, Mode=TwoWay}">
+                                            <RadioButton IsChecked="{Binding $parent[app:AssetImporterDialog].IsPackageSelected, Mode=TwoWay}">
                                                 <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsPackageLabelText}" />
                                             </RadioButton>
                                         </DockPanel>
@@ -112,7 +109,7 @@
                                     IsChecked="{Binding Persist.IsInImportMode, Mode=TwoWay}">
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PortableLabelText}" />
                                 </CheckBox>
-                                <RadioButton IsChecked="{Binding $parent[dialogs:AssetImporterDialog].IsAssetSelected, Mode=TwoWay}">
+                                <RadioButton IsChecked="{Binding $parent[app:AssetImporterDialog].IsAssetSelected, Mode=TwoWay}">
                                     <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
                                 </RadioButton>
                             </DockPanel>
@@ -121,7 +118,7 @@
                                 SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate DataType="resources:ResourceKind">
-                                        <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                        <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                     </DataTemplate>
                                 </TabStrip.ItemTemplate>
                             </TabStrip>
@@ -148,13 +145,13 @@
             <husk:DropZone
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                IsEnabled="{Binding $parent[dialogs:AssetImporterDialog].PathAccepted, Mode=OneWay, Converter={x:Static ObjectConverters.IsNull}}"
+                IsEnabled="{Binding $parent[app:AssetImporterDialog].PathAccepted, Mode=OneWay, Converter={x:Static ObjectConverters.IsNull}}"
                 DragOver="DropZone_OnDragOver"
                 Drop="DropZone_OnDrop"
-                Model="{Binding $parent[dialogs:AssetImporterDialog].PathAccepted, Mode=OneWayToSource}">
+                Model="{Binding $parent[app:AssetImporterDialog].PathAccepted, Mode=OneWayToSource}">
                 <husk:SwitchPresenter
                     TargetType="x:Boolean"
-                    Value="{Binding $parent[dialogs:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
+                    Value="{Binding $parent[app:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
                     <husk:SwitchCase Value="{x:True}">
                         <StackPanel
                             HorizontalAlignment="Center"

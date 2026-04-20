@@ -2,14 +2,13 @@
     x:Class="Polymerium.App.Modals.InstancePackageModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modals="using:Polymerium.App.Modals"
     xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
     MinWidth="360"
     Margin="64"
@@ -103,7 +102,7 @@
                     <DockPanel>
                         <husk:LazyContainer
                             DockPanel.Dock="Bottom"
-                            Source="{Binding $parent[modals:InstancePackageModal].LazyRules}">
+                            Source="{Binding $parent[app:InstancePackageModal].LazyRules}">
                             <husk:LazyContainer.SourceTemplate>
                                 <DataTemplate DataType="m:InstancePackageRuleResultModel">
                                     <Border
@@ -228,7 +227,7 @@
                                         <Button
                                             Classes="Small"
                                             HorizontalAlignment="Left"
-                                            Command="{Binding $parent[modals:InstancePackageModal].AddTagCommand}"
+                                            Command="{Binding $parent[app:InstancePackageModal].AddTagCommand}"
                                             Theme="{StaticResource GhostButtonTheme}">
                                             <StackPanel
                                                 Orientation="Horizontal"
@@ -279,7 +278,7 @@
                                                     <Button
                                                         DockPanel.Dock="Right"
                                                         Padding="4,0"
-                                                        Command="{Binding $parent[modals:InstancePackageModal].RemoveTagCommand}"
+                                                        Command="{Binding $parent[app:InstancePackageModal].RemoveTagCommand}"
                                                         CommandParameter="{Binding}"
                                                         CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
                                                                                                   Converter={x:Static husk:CornerRadiusConverters.Right}}"
@@ -361,8 +360,8 @@
                                                 Classes="Small"
                                                 Margin="4,0,0,0"
                                                 Padding="6"
-                                                IsVisible="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageInfoModel)DataContext).Owner.IsLocked, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
-                                                Command="{Binding $parent[modals:InstancePackageModal].RemoveVersionCommand}"
+                                                IsVisible="{Binding $parent[app:InstancePackageModal].((m:InstancePackageInfoModel)DataContext).Owner.IsLocked, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
+                                                Command="{Binding $parent[app:InstancePackageModal].RemoveVersionCommand}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -393,7 +392,7 @@
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="False">
                                 <!--  TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load  -->
-                                <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyVersions}">
+                                <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyVersions}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="m:InstancePackageVersionCollection">
                                             <Grid
@@ -405,7 +404,7 @@
                                                     <CheckBox
                                                         Grid.Column="0"
                                                         Content="{x:Static lang:Resources.InstancePackageModal_FilterLabelText}"
-                                                        IsChecked="{Binding $parent[modals:InstancePackageModal].IsFilterEnabled, Mode=TwoWay}" />
+                                                        IsChecked="{Binding $parent[app:InstancePackageModal].IsFilterEnabled, Mode=TwoWay}" />
                                                     <Button
                                                         Grid.Column="1"
                                                         Padding="6"
@@ -421,7 +420,7 @@
                                                     Name="VersionBox"
                                                     Grid.Row="1"
                                                     ItemsSource="{Binding}"
-                                                    SelectedItem="{Binding $parent[modals:InstancePackageModal].SelectedVersionProxy, Mode=TwoWay, FallbackValue={x:Null}}">
+                                                    SelectedItem="{Binding $parent[app:InstancePackageModal].SelectedVersionProxy, Mode=TwoWay, FallbackValue={x:Null}}">
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate DataType="m:InstancePackageVersionModel">
                                                             <StackPanel Spacing="4">
@@ -510,7 +509,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependenciesTabText}">
-                    <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyDependencies}">
+                    <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyDependencies}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="m:InstancePackageDependencyCollection">
                                 <Grid
@@ -569,8 +568,8 @@
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
-                                                        <controls:InstancePackageDependencyButton
-                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
+                                                        <app:InstancePackageDependencyButton
+                                                            Command="{Binding $parent[app:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
                                                             CommandParameter="{Binding}"
                                                             IsChecked="{Binding Installed, Converter={x:Static ObjectConverters.IsNotNull}}" />
                                                     </DataTemplate>
@@ -584,7 +583,7 @@
                     </husk:LazyContainer>
                 </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependantsTabText}">
-                    <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyDependants}">
+                    <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyDependants}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="m:InstancePackageDependencyCollection">
                                 <Grid
@@ -643,8 +642,8 @@
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
-                                                        <controls:InstancePackageDependencyButton
-                                                            Command="{Binding $parent[modals:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
+                                                        <app:InstancePackageDependencyButton
+                                                            Command="{Binding $parent[app:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
                                                             CommandParameter="{Binding}"
                                                             IsChecked="{Binding Installed, Converter={x:Static ObjectConverters.IsNotNull}}" />
                                                     </DataTemplate>
@@ -658,7 +657,7 @@
                     </husk:LazyContainer>
                 </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_HistoryTabText}">
-                    <husk:LazyContainer Source="{Binding $parent[modals:InstancePackageModal].LazyHistory}">
+                    <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyHistory}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="m:InstancePackageModificationCollection">
                                 <Panel>
@@ -877,11 +876,11 @@
                         <husk:SwitchPresenter
                             IsVisible="False"
                             TargetType="x:Boolean"
-                            Value="{Binding $parent[modals:InstancePackageModal].IsDeleting, Mode=OneWay}">
+                            Value="{Binding $parent[app:InstancePackageModal].IsDeleting, Mode=OneWay}">
                             <husk:SwitchCase Value="{x:False}">
                                 <Button
                                     Classes="Danger Small"
-                                    Command="{Binding $parent[modals:InstancePackageModal].DeleteCommand}"
+                                    Command="{Binding $parent[app:InstancePackageModal].DeleteCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource SmallFontSize}"
@@ -891,7 +890,7 @@
                             <husk:SwitchCase Value="{x:True}">
                                 <Button
                                     Classes="Small"
-                                    Command="{Binding $parent[modals:InstancePackageModal].UndeleteCommand}"
+                                    Command="{Binding $parent[app:InstancePackageModal].UndeleteCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource SmallFontSize}"
@@ -910,7 +909,7 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <Button
-                        Command="{Binding $parent[modals:InstancePackageModal].Dismiss}"
+                        Command="{Binding $parent[app:InstancePackageModal].Dismiss}"
                         Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
                         IsCancel="True" />
                 </StackPanel>

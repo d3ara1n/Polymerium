@@ -2,21 +2,15 @@
     x:Class="Polymerium.App.Pages.SettingsPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="clr-namespace:Polymerium.App"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
-    xmlns:cp="clr-namespace:Polymerium.App.Components"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="pm:SettingsPageModel"
+    x:DataType="app:SettingsPageModel"
     Header="{x:Static lang:Resources.SettingsView_Title}"
     mc:Ignorable="d">
     <StackPanel
@@ -24,32 +18,32 @@
         Margin="24"
         Spacing="12">
         <!--  Super Power  -->
-        <controls:SettingsEntry
+        <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsView_SuperPowerTitle}"
             Icon="Wand"
             Summary="{x:Static lang:Resources.SettingsView_SuperPowerSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SuperPowerLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SuperPowerLabelText}">
                 <ToggleSwitch
                     IsChecked="{Binding SuperPowerActivated, Mode=TwoWay}"
                     OffContent="{x:Static lang:Resources.Enum_Off}"
                     OnContent="{x:Static lang:Resources.Enum_On}" />
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
+            </app:SettingsEntryItem>
+        </app:SettingsEntry>
         <husk:Divider />
         <!--  Display  -->
-        <controls:SettingsEntry
+        <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsView_DisplayTitle}"
             Icon="LocalLanguage"
             Summary="{x:Static lang:Resources.SettingsView_DisplaySubtitle}">
-            <controls:SettingsEntryItem
+            <app:SettingsEntryItem
                 IsVisible="{Binding CanCustomizeTitleBar}"
                 Header="{x:Static lang:Resources.SettingsView_TitleBarVisibilityLabelText}">
                 <ToggleSwitch
                     IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}"
                     OffContent="{x:Static lang:Resources.Enum_Off}"
                     OnContent="{x:Static lang:Resources.Enum_On}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SidebarPlacementLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SidebarPlacementLabelText}">
                 <TabStrip SelectedIndex="{Binding SidebarPlacement, Mode=TwoWay}">
                     <TabStripItem>
                         <StackPanel
@@ -80,8 +74,8 @@
                         </StackPanel>
                     </TabStripItem>
                 </TabStrip>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem
                 HorizontalContentAlignment="Left"
                 Header="{x:Static lang:Resources.SettingsView_ThemeVariantLabelText}">
                 <TabStrip SelectedIndex="{Binding DarkMode, Mode=TwoWay}">
@@ -119,8 +113,8 @@
                         </StackPanel>
                     </TabStripItem>
                 </TabStrip>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_AccentColorLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_AccentColorLabelText}">
                 <ComboBox
                     ItemsSource="{Binding AccentColors}"
                     SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
@@ -132,7 +126,7 @@
                                     Width="{Binding $self.Bounds.Height}"
                                     Height="12"
                                     VerticalAlignment="Center"
-                                    Background="{Binding Converter={x:Static converters:InternalConverters.AccentColorToBrush}}"
+                                    Background="{Binding Converter={x:Static app:InternalConverters.AccentColorToBrush}}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
                                 <TextBlock
                                     VerticalAlignment="Center"
@@ -141,8 +135,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_CornerStyleLabelText}">
                 <ComboBox
                     ItemsSource="{Binding CornerStyles}"
                     SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
@@ -152,13 +146,13 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_BackgroundStyleLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_BackgroundStyleLabelText}">
                 <ComboBox
                     ItemsSource="{Binding BackgroundStyles}"
                     SelectedItem="{Binding BackgroundMode, Mode=TwoWay}">
                     <ComboBox.SelectionBoxItemTemplate>
-                        <DataTemplate DataType="m:BackgroundStyleModel">
+                        <DataTemplate DataType="app:BackgroundStyleModel">
                             <DockPanel>
                                 <husk:Tag
                                     DockPanel.Dock="Right"
@@ -170,7 +164,7 @@
                         </DataTemplate>
                     </ComboBox.SelectionBoxItemTemplate>
                     <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="m:BackgroundStyleModel">
+                        <DataTemplate DataType="app:BackgroundStyleModel">
                             <DockPanel>
                                 <husk:Tag
                                     DockPanel.Dock="Right"
@@ -182,14 +176,14 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_LanguageLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_LanguageLabelText}">
                 <StackPanel>
                     <ComboBox
                         ItemsSource="{Binding Languages}"
                         SelectedItem="{Binding Language, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="m:LanguageModel">
+                            <DataTemplate DataType="app:LanguageModel">
                                 <Grid ColumnDefinitions="*,4,Auto">
                                     <TextBlock
                                         Grid.Column="0"
@@ -210,52 +204,52 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}" />
                 </StackPanel>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_FontLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_FontLabelText}">
                 <TextBox
                     IsEnabled="False"
                     PlaceholderText="(Builtin)" />
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
+            </app:SettingsEntryItem>
+        </app:SettingsEntry>
         <husk:Divider />
         <!--  Java  -->
-        <controls:SettingsEntry
+        <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsView_JavaTitle}"
             Icon="DrinkCoffee"
             Summary="{x:Static lang:Resources.SettingsView_JavaSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java8LabelText}">
-                <cp:JavaHomeContainer
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java8LabelText}">
+                <app:JavaHomeContainer
                     Home="{Binding JavaHome8, Mode=TwoWay}"
                     OverlayService="{Binding OverlayService}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java11LabelText}">
-                <cp:JavaHomeContainer
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java11LabelText}">
+                <app:JavaHomeContainer
                     Home="{Binding JavaHome11, Mode=TwoWay}"
                     OverlayService="{Binding OverlayService}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java17LabelText}">
-                <cp:JavaHomeContainer
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java17LabelText}">
+                <app:JavaHomeContainer
                     Home="{Binding JavaHome17, Mode=TwoWay}"
                     OverlayService="{Binding OverlayService}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java21LabelText}">
-                <cp:JavaHomeContainer
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java21LabelText}">
+                <app:JavaHomeContainer
                     Home="{Binding JavaHome21, Mode=TwoWay}"
                     OverlayService="{Binding OverlayService}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java25LabelText}">
-                <cp:JavaHomeContainer
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_Java25LabelText}">
+                <app:JavaHomeContainer
                     Home="{Binding JavaHome25, Mode=TwoWay}"
                     OverlayService="{Binding OverlayService}" />
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
+            </app:SettingsEntryItem>
+        </app:SettingsEntry>
         <husk:Divider />
         <!--  Game Defaults  -->
-        <controls:SettingsEntry
+        <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsView_GameDefaultsTitle}"
             Icon="Joystick"
             Summary="{x:Static lang:Resources.SettingsView_GameDefaultsSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaMaxMemoryLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaMaxMemoryLabelText}">
                 <NumericUpDown
                     Increment="512"
                     Minimum="0"
@@ -272,13 +266,13 @@
                         </StackPanel>
                     </NumericUpDown.InnerRightContent>
                 </NumericUpDown>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsLabelText}">
                 <TextBox
                     PlaceholderText="{x:Static lang:Resources.SettingsView_JavaAdditionalArgumentsPlaceholder}"
                     Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_WindowInitialSizeLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
@@ -311,15 +305,15 @@
                         </TextBox.InnerLeftContent>
                     </TextBox>
                 </Grid>
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
+            </app:SettingsEntryItem>
+        </app:SettingsEntry>
         <husk:Divider />
         <!--  Network  -->
-        <controls:SettingsEntry
+        <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsView_NetworkTitle}"
             Icon="TopSpeed"
             Summary="{x:Static lang:Resources.SettingsView_NetworkSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyEnabledLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_ProxyEnabledLabelText}">
                 <StackPanel Spacing="4">
                     <Border
                         Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -359,17 +353,17 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}" />
                 </StackPanel>
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
+            </app:SettingsEntryItem>
+        </app:SettingsEntry>
         <husk:Divider />
         <!--  Maintenance  -->
-        <controls:SettingsEntry
+        <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsView_MaintenanceTitle}"
             Icon="Wrench"
             Summary="{x:Static lang:Resources.SettingsView_MaintenanceSubtitle}">
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_VersionLabelText}">
-                <controls:Plaque>
-                    <controls:Plaque.Header>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_VersionLabelText}">
+                <app:Plaque>
+                    <app:Plaque.Header>
                         <husk:SwitchPresenter
                             TargetType="x:Boolean"
                             Value="{Binding UpdateTarget, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
@@ -402,7 +396,7 @@
                                 </Button>
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>
-                    </controls:Plaque.Header>
+                    </app:Plaque.Header>
                     <Grid
                         ColumnDefinitions="*,Auto"
                         ColumnSpacing="6">
@@ -450,7 +444,7 @@
                             <husk:SwitchPresenter
                                 DockPanel.Dock="Top"
                                 HorizontalAlignment="Right"
-                                TargetType="m:AppUpdateState"
+                                TargetType="app:AppUpdateState"
                                 Value="{Binding UpdateState}">
                                 <husk:SwitchCase Value="Idle" />
                                 <husk:SwitchCase Value="Unavailable">
@@ -489,7 +483,7 @@
                             </husk:SwitchPresenter>
                             <husk:PlaceholderPresenter Source="{Binding UpdateTarget}">
                                 <husk:PlaceholderPresenter.SourceTemplate>
-                                    <DataTemplate DataType="m:AppUpdateModel">
+                                    <DataTemplate DataType="app:AppUpdateModel">
                                         <StackPanel Spacing="4">
                                             <TextBlock
                                                 HorizontalAlignment="Right"
@@ -528,12 +522,12 @@
                             </husk:PlaceholderPresenter>
                         </DockPanel>
                     </Grid>
-                </controls:Plaque>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateAutoCheckLabelText}">
+                </app:Plaque>
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateAutoCheckLabelText}">
                 <ToggleSwitch IsChecked="{Binding AutoCheckUpdates, Mode=TwoWay}" />
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_UpdateSourceLabelText}">
                 <TabStrip SelectedIndex="{Binding UpdateSource, Mode=TwoWay}">
                     <TabStripItem>
                         <StackPanel
@@ -564,8 +558,8 @@
                         </StackPanel>
                     </TabStripItem>
                 </TabStrip>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem
                 IsVisible="{Binding UpdateSource, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=1}"
                 Header="{x:Static lang:Resources.SettingsView_MirrorChyanCdkLabelText}">
                 <StackPanel Spacing="4">
@@ -587,19 +581,19 @@
                             NavigateUri="https://mirrorchyan.com" />
                     </TextBlock>
                 </StackPanel>
-            </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
+            </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_StorageManagementLabelText}">
                 <Button
                     Classes="Small"
                     HorizontalAlignment="Left"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:MaintenanceStoragePage}"
+                    CommandParameter="{x:Type app:MaintenanceStoragePage}"
                     Content="{x:Static lang:Resources.SettingsView_StorageManagementButtonText}" />
-            </controls:SettingsEntryItem>
-            <cp:SafeLock
+            </app:SettingsEntryItem>
+            <app:SafeLock
                 Name="Lock"
                 SafeCode="{Binding SafeCode}" />
-            <controls:SettingsEntryItem
+            <app:SettingsEntryItem
                 IsEnabled="{Binding #Lock.IsUnlocked}"
                 Header="{x:Static lang:Resources.SettingsView_DataManagementLabelText}">
                 <StackPanel
@@ -614,8 +608,8 @@
                         Command="{Binding ClearRecordsCommand}"
                         Content="{x:Static lang:Resources.SettingsView_ClearRecordsButtonText}" />
                 </StackPanel>
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
+            </app:SettingsEntryItem>
+        </app:SettingsEntry>
         <husk:Divider />
         <!--  About  -->
         <Panel>

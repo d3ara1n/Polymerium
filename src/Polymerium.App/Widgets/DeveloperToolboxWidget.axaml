@@ -1,18 +1,18 @@
-﻿<widgets:WidgetBase
+﻿<app:WidgetBase
     x:Class="Polymerium.App.Widgets.DeveloperToolboxWidget"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
     Title="Developer Toolbox"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Icon="Toolbox"
     mc:Ignorable="d">
-    <widgets:WidgetBase.FullTemplate>
-        <DataTemplate DataType="widgets:DeveloperToolboxWidget">
+    <app:WidgetBase.FullTemplate>
+        <DataTemplate DataType="app:DeveloperToolboxWidget">
             <WrapPanel
                 ItemSpacing="8"
                 LineSpacing="8">
@@ -30,5 +30,5 @@
                 </Button>
             </WrapPanel>
         </DataTemplate>
-    </widgets:WidgetBase.FullTemplate>
-</widgets:WidgetBase>
+    </app:WidgetBase.FullTemplate>
+</app:WidgetBase>

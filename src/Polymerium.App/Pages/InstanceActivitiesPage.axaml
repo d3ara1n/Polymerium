@@ -1,20 +1,16 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceActivitiesPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="pm:InstanceActivitiesPageModel"
+    x:DataType="app:InstanceActivitiesPageModel"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <Grid
@@ -620,7 +616,7 @@
                     </Grid>
                     <husk:LazyContainer Source="{Binding PagedActions}">
                         <husk:LazyContainer.SourceTemplate>
-                            <DataTemplate DataType="m:InstanceActionCollection">
+                            <DataTemplate DataType="app:InstanceActionCollection">
                                 <Panel>
                                     <StackPanel
                                         VerticalAlignment="Center"
@@ -647,8 +643,8 @@
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
-                                                <DataTemplate DataType="m:InstanceActionModel">
-                                                    <controls:InstanceActionCard />
+                                                <DataTemplate DataType="app:InstanceActionModel">
+                                                    <app:InstanceActionCard />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -661,4 +657,4 @@
             </husk:Card>
         </Grid>
     </Grid>
-</controls:Subpage>
+</app:Subpage>

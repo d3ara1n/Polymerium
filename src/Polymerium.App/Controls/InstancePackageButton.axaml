@@ -1,33 +1,31 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App.Controls"
-    xmlns:m="using:Polymerium.App.Models">
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <Design.PreviewWith>
         <Panel>
             <StackPanel
                 Margin="24"
                 Spacing="12">
-                <local:InstancePackageButton />
+                <app:InstancePackageButton />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
     <ControlTheme
         x:Key="BasePackageEntryButtonTheme"
-        TargetType="local:InstancePackageButton">
+        TargetType="app:InstancePackageButton">
         <Setter Property="Cursor" Value="Hand" />
     </ControlTheme>
 
     <ControlTheme
         x:Key="ListPackageEntryButtonTheme"
         BasedOn="{StaticResource BasePackageEntryButtonTheme}"
-        TargetType="local:InstancePackageButton">
+        TargetType="app:InstancePackageButton">
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:InstancePackageModel">
+            <ControlTemplate x:DataType="app:InstancePackageModel">
                 <husk:Card
                     Name="Background"
                     Height="68"
@@ -35,7 +33,7 @@
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
-                        <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
+                        <MultiBinding Converter="{x:Static app:InternalConverters.OneOr}">
                             <Binding
                                 Mode="OneWay"
                                 Path="IsEnabled" />
@@ -67,7 +65,7 @@
                             RenderTransform="scaleX(1.2)"
                             Text="{x:Static lang:Resources.InstancePackageButton_DisabledLabelText}">
                             <TextBlock.Opacity>
-                                <MultiBinding Converter="{x:Static converters:InternalConverters.ZeroOr}">
+                                <MultiBinding Converter="{x:Static app:InternalConverters.ZeroOr}">
                                     <Binding
                                         Mode="OneWay"
                                         Path="IsEnabled" />
@@ -85,7 +83,7 @@
                         </TextBlock>
                         <husk:PlaceholderPresenter Source="{Binding Info}">
                             <husk:PlaceholderPresenter.SourceTemplate>
-                                <DataTemplate DataType="m:InstancePackageInfoModel">
+                                <DataTemplate DataType="app:InstancePackageInfoModel">
                                     <Grid
                                         Margin="{StaticResource CardContentMargin}"
                                         ColumnDefinitions="Auto,*"
@@ -120,7 +118,7 @@
                                                         Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock Text="{Binding Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Kind}" />
+                                                    <TextBlock Text="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Kind}" />
                                                 </husk:Tag>
                                             </StackPanel>
                                             <TextBlock
@@ -175,12 +173,12 @@
                                                 VerticalAlignment="Center"
                                                 Content="{Binding Version}">
                                                 <ContentControl.DataTemplates>
-                                                    <DataTemplate DataType="m:InstancePackageVersionModel">
+                                                    <DataTemplate DataType="app:InstancePackageVersionModel">
                                                         <TextBlock
                                                             FontWeight="{StaticResource ControlStrongFontWeight}"
                                                             Text="{Binding Name, FallbackValue=Version}" />
                                                     </DataTemplate>
-                                                    <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
+                                                    <DataTemplate DataType="app:InstancePackageUnspecifiedVersionModel">
                                                         <husk:Tag Classes="Primary Small">
                                                             <StackPanel
                                                                 Orientation="Horizontal"
@@ -227,16 +225,16 @@
     <ControlTheme
         x:Key="GridPackageEntryButtonTheme"
         BasedOn="{StaticResource BasePackageEntryButtonTheme}"
-        TargetType="local:InstancePackageButton">
+        TargetType="app:InstancePackageButton">
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:InstancePackageModel">
+            <ControlTemplate x:DataType="app:InstancePackageModel">
                 <husk:Card
                     Name="Background"
                     Padding="0"
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
-                        <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
+                        <MultiBinding Converter="{x:Static app:InternalConverters.OneOr}">
                             <Binding
                                 Mode="OneWay"
                                 Path="IsEnabled" />
@@ -261,7 +259,7 @@
                     </husk:Card.Transitions>
                     <husk:PlaceholderPresenter Source="{Binding Info}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate x:DataType="m:InstancePackageInfoModel">
+                            <DataTemplate x:DataType="app:InstancePackageInfoModel">
                                 <Border
                                     Width="64"
                                     Height="64"

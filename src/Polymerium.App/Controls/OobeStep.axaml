@@ -3,10 +3,10 @@
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls">
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
     <ControlTheme
-        x:Key="{x:Type controls:OobeStep}"
-        TargetType="controls:OobeStep">
+        x:Key="{x:Type app:OobeStep}"
+        TargetType="app:OobeStep">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

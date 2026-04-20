@@ -1,20 +1,19 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:local="clr-namespace:Polymerium.App.Controls"
-    xmlns:m="clr-namespace:Polymerium.App.Models">
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24">
-                <local:AccountEntryButton />
+                <app:AccountEntryButton />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
     <ControlTheme
-        x:Key="{x:Type local:AccountEntryButton}"
-        TargetType="local:AccountEntryButton">
+        x:Key="{x:Type app:AccountEntryButton}"
+        TargetType="app:AccountEntryButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
@@ -23,7 +22,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:AccountModel">
+            <ControlTemplate x:DataType="app:AccountModel">
                 <Border
                     Name="Background"
                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

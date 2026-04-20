@@ -1,35 +1,31 @@
-﻿<controls:ScopedPage
+﻿<app:ScopedPage
     x:Class="Polymerium.App.Pages.PackageExplorerPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:converters="clr-namespace:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
     xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     Padding="0"
     d:DesignHeight="450"
     d:DesignWidth="600"
-    x:DataType="pm:PackageExplorerPageModel"
+    x:DataType="app:PackageExplorerPageModel"
     IsHeaderVisible="False"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <controls:ScopedPage.Resources>
+    <app:ScopedPage.Resources>
         <DataTemplate
             x:Key="ExhibitModelTemplate"
-            x:DataType="m:ExhibitModel">
-            <controls:ExhibitPendingPackageButton
-                Command="{Binding $parent[v:PackageExplorerPage].((pm:PackageExplorerPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+            x:DataType="app:ExhibitModel">
+            <app:ExhibitPendingPackageButton
+                Command="{Binding $parent[app:PackageExplorerPage].((app:PackageExplorerPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}" />
         </DataTemplate>
-    </controls:ScopedPage.Resources>
+    </app:ScopedPage.Resources>
     <Grid
         ColumnDefinitions="Auto,Auto,*"
         RowDefinitions="Auto,Auto,*">
@@ -316,7 +312,7 @@
                                 Theme="{StaticResource SegmentedTabStripTheme}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate x:DataType="resources:ResourceKind">
-                                        <TextBlock Text="{Binding Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                        <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                     </DataTemplate>
                                 </TabStrip.ItemTemplate>
                             </TabStrip>
@@ -335,7 +331,7 @@
                         </Style>
                     </TabStrip.Styles>
                     <TabStrip.ItemTemplate>
-                        <DataTemplate x:DataType="m:RepositoryBasicModel">
+                        <DataTemplate x:DataType="app:RepositoryBasicModel">
                             <TextBlock Text="{Binding Name}" />
                         </DataTemplate>
                     </TabStrip.ItemTemplate>
@@ -402,9 +398,9 @@
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
                 <husk:InfiniteScrollView.ItemTemplate>
-                    <DataTemplate x:DataType="m:ExhibitModel">
-                        <controls:ExhibitPackageButton
-                            Command="{Binding $parent[v:PackageExplorerPage].((pm:PackageExplorerPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+                    <DataTemplate x:DataType="app:ExhibitModel">
+                        <app:ExhibitPackageButton
+                            Command="{Binding $parent[app:PackageExplorerPage].((app:PackageExplorerPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
                             CommandParameter="{Binding}" />
                     </DataTemplate>
                 </husk:InfiniteScrollView.ItemTemplate>
@@ -419,4 +415,4 @@
             </husk:InfiniteScrollView>
         </Panel>
     </Grid>
-</controls:ScopedPage>
+</app:ScopedPage>

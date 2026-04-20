@@ -1,10 +1,8 @@
-﻿<controls:OobeStep
+﻿<app:OobeStep
     x:Class="Polymerium.App.Components.OobeWelcome"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="clr-namespace:Polymerium.App"
-    xmlns:assets="clr-namespace:Polymerium.App.Assets"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -23,7 +21,7 @@
             ClipToBounds="True"
             CornerRadius="{StaticResource LargeCornerRadius}">
             <Image
-                Source="{x:Static assets:AssetUriIndex.IconBitmap}"
+                Source="{x:Static app:AssetUriIndex.IconBitmap}"
                 Stretch="UniformToFill" />
         </Border>
 
@@ -62,4 +60,4 @@
             TextAlignment="Center"
             TextWrapping="Wrap" />
     </StackPanel>
-</controls:OobeStep>
+</app:OobeStep>

@@ -1,22 +1,19 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceFilesPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="pm:InstanceFilesPageModel"
+    x:DataType="app:InstanceFilesPageModel"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <TabControl Padding="0">
@@ -33,7 +30,7 @@
                                     <TextBlock Text="(" />
                                     <TextBlock Text="{Binding Count, FallbackValue=(0)}" />
                                     <TextBlock
-                                        IsVisible="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).PackageCount, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}"
+                                        IsVisible="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).PackageCount, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}"
                                         Text="+" />
                                     <TextBlock Text=")" />
                                 </StackPanel>
@@ -78,8 +75,8 @@
                             Classes="Primary"
                             Padding="12,6"
                             VerticalAlignment="Center"
-                            Command="{Binding $parent[v:InstancePage].NavigateCommand}"
-                            CommandParameter="{x:Type v:InstanceSetupPage}">
+                            Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                            CommandParameter="{x:Type app:InstanceSetupPage}">
                             <husk:IconLabel
                                 FontSize="{StaticResource MediumFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -139,17 +136,17 @@
                                                             SelectedItem="{Binding ModFilterEnability, Mode=TwoWay}"
                                                             Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
-                                                                <DataTemplate DataType="m:FilterModel">
+                                                                <DataTemplate DataType="app:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_All}"
                                                                 Value="{x:Null}" />
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_Enabled}"
                                                                 Value="{x:True}" />
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_Disabled}"
                                                                 Value="{x:False}" />
                                                         </TabStrip>
@@ -170,17 +167,17 @@
                                                             SelectedItem="{Binding ModFilterLockility, Mode=TwoWay}"
                                                             Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
-                                                                <DataTemplate DataType="m:FilterModel">
+                                                                <DataTemplate DataType="app:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_All}"
                                                                 Value="{x:Null}" />
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.InstanceFilesView_SourceImportText}"
                                                                 Value="{x:True}" />
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.InstanceFilesView_SourceLocalText}"
                                                                 Value="{x:False}" />
                                                         </TabStrip>
@@ -201,25 +198,25 @@
                                                             SelectedItem="{Binding ModFilterLoader, Mode=TwoWay}"
                                                             Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
-                                                                <DataTemplate DataType="m:FilterModel">
+                                                                <DataTemplate DataType="app:FilterModel">
                                                                     <TextBlock Text="{Binding Label}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="{x:Static lang:Resources.Enum_All}"
                                                                 Value="{x:Null}" />
-                                                            <m:FilterModel
+                                                            <app:FilterModel
                                                                 Label="Fabric"
-                                                                Value="{x:Static m:ModLoaderKind.Fabric}" />
-                                                            <m:FilterModel
+                                                                Value="{x:Static app:ModLoaderKind.Fabric}" />
+                                                            <app:FilterModel
                                                                 Label="Forge"
-                                                                Value="{x:Static m:ModLoaderKind.Forge}" />
-                                                            <m:FilterModel
+                                                                Value="{x:Static app:ModLoaderKind.Forge}" />
+                                                            <app:FilterModel
                                                                 Label="Quilt"
-                                                                Value="{x:Static m:ModLoaderKind.Quilt}" />
-                                                            <m:FilterModel
+                                                                Value="{x:Static app:ModLoaderKind.Quilt}" />
+                                                            <app:FilterModel
                                                                 Label="NeoForge"
-                                                                Value="{x:Static m:ModLoaderKind.NeoForge}" />
+                                                                Value="{x:Static app:ModLoaderKind.NeoForge}" />
                                                         </TabStrip>
                                                     </Grid>
                                                 </StackPanel>
@@ -237,7 +234,7 @@
                         <!--  Mod 列表  -->
                         <ScrollViewer Grid.Row="1">
 
-                            <controls:EmptyContainer IsEmpty="{Binding Mods.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+                            <app:EmptyContainer IsEmpty="{Binding Mods.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
 
                                 <!--  Mod 列表  -->
                                 <ListBox
@@ -246,7 +243,7 @@
                                     SelectionMode="Single"
                                     Theme="{StaticResource CleanListBoxTheme}">
                                     <ListBox.ItemTemplate>
-                                        <DataTemplate DataType="m:AssetModModel">
+                                        <DataTemplate DataType="app:AssetModModel">
                                             <Grid
                                                 ColumnDefinitions="Auto,*,Auto"
                                                 ColumnSpacing="12">
@@ -337,7 +334,7 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                            </controls:EmptyContainer>
+                            </app:EmptyContainer>
                         </ScrollViewer>
                     </Grid>
 
@@ -350,7 +347,7 @@
                     <ScrollViewer Grid.Column="2">
                         <husk:PlaceholderPresenter Source="{Binding SelectedMod}">
                             <husk:PlaceholderPresenter.SourceTemplate>
-                                <DataTemplate DataType="m:AssetModModel">
+                                <DataTemplate DataType="app:AssetModModel">
                                     <StackPanel Spacing="8">
                                         <!--  Mod 头部  -->
                                         <Grid
@@ -401,7 +398,7 @@
                                         <!--  操作按钮  -->
                                         <husk:ButtonGroup>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).ToggleModCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ToggleModCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                                 <husk:SwitchPresenter
                                                     TargetType="x:Boolean"
@@ -419,14 +416,14 @@
                                                 </husk:SwitchPresenter>
                                             </Button>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding FilePath}">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
                                                     Symbol="FolderOpen" />
                                             </Button>
                                             <Button
-                                                Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).DeleteModCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).DeleteModCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -545,7 +542,7 @@
                                             IsVisible="{Binding Metadata.Homepage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                             BorderThickness="0">
                                             <Button
-                                                Command="{x:Static m:InternalCommands.OpenUriCommand}"
+                                                Command="{x:Static app:InternalCommands.OpenUriCommand}"
                                                 CommandParameter="{Binding Metadata.Homepage}">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -636,14 +633,14 @@
                 </DockPanel>
 
                 <ScrollViewer Grid.Row="1">
-                    <controls:EmptyContainer IsEmpty="{Binding Servers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+                    <app:EmptyContainer IsEmpty="{Binding Servers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
                         <ListBox
                             ItemsSource="{Binding Servers}"
                             SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
                             SelectionMode="Single"
                             Theme="{StaticResource CleanListBoxTheme}">
                             <ListBox.ItemTemplate>
-                                <DataTemplate DataType="m:AssetServerModel">
+                                <DataTemplate DataType="app:AssetServerModel">
                                     <DockPanel>
                                         <StackPanel
                                             DockPanel.Dock="Bottom"
@@ -763,7 +760,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </controls:EmptyContainer>
+                    </app:EmptyContainer>
                 </ScrollViewer>
             </Grid>
         </TabItem>
@@ -812,7 +809,7 @@
 
                     <!--  资源包列表  -->
                     <ScrollViewer Grid.Row="1">
-                        <controls:EmptyContainer IsEmpty="{Binding ResourcePacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+                        <app:EmptyContainer IsEmpty="{Binding ResourcePacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
 
                             <!--  资源包列表  -->
                             <ListBox
@@ -821,7 +818,7 @@
                                 SelectionMode="Single"
                                 Theme="{StaticResource CleanListBoxTheme}">
                                 <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="m:AssetResourcePackModel">
+                                    <DataTemplate DataType="app:AssetResourcePackModel">
                                         <Grid
                                             ColumnDefinitions="Auto,*"
                                             ColumnSpacing="12">
@@ -911,7 +908,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                        </controls:EmptyContainer>
+                        </app:EmptyContainer>
                     </ScrollViewer>
                 </Grid>
 
@@ -924,7 +921,7 @@
                 <ScrollViewer Grid.Column="2">
                     <husk:PlaceholderPresenter Source="{Binding SelectedResourcePack}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate DataType="m:AssetResourcePackModel">
+                            <DataTemplate DataType="app:AssetResourcePackModel">
                                 <StackPanel Spacing="8">
                                     <!--  资源包头部  -->
                                     <Grid
@@ -968,7 +965,7 @@
                                     <!--  操作按钮  -->
                                     <husk:ButtonGroup>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).ToggleResourcePackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ToggleResourcePackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <husk:SwitchPresenter
                                                 TargetType="x:Boolean"
@@ -986,14 +983,14 @@
                                             </husk:SwitchPresenter>
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding FilePath}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="FolderOpen" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).DeleteResourcePackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).DeleteResourcePackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -1160,7 +1157,7 @@
 
                     <!--  数据包列表  -->
                     <ScrollViewer Grid.Row="1">
-                        <controls:EmptyContainer IsEmpty="{Binding DataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+                        <app:EmptyContainer IsEmpty="{Binding DataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
 
                             <!--  数据包列表  -->
                             <ListBox
@@ -1169,7 +1166,7 @@
                                 SelectionMode="Single"
                                 Theme="{StaticResource CleanListBoxTheme}">
                                 <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="m:AssetDataPackModel">
+                                    <DataTemplate DataType="app:AssetDataPackModel">
                                         <Grid
                                             ColumnDefinitions="Auto,*,Auto"
                                             ColumnSpacing="12">
@@ -1260,7 +1257,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                        </controls:EmptyContainer>
+                        </app:EmptyContainer>
                     </ScrollViewer>
                 </Grid>
 
@@ -1273,7 +1270,7 @@
                 <ScrollViewer Grid.Column="2">
                     <husk:PlaceholderPresenter Source="{Binding SelectedDataPack}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate DataType="m:AssetDataPackModel">
+                            <DataTemplate DataType="app:AssetDataPackModel">
                                 <StackPanel Spacing="8">
                                     <!--  数据包头部  -->
                                     <Grid
@@ -1317,7 +1314,7 @@
                                     <!--  操作按钮  -->
                                     <husk:ButtonGroup>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).ToggleDataPackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ToggleDataPackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <husk:SwitchPresenter
                                                 TargetType="x:Boolean"
@@ -1335,14 +1332,14 @@
                                             </husk:SwitchPresenter>
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding FilePath}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="FolderOpen" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).DeleteDataPackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).DeleteDataPackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -1477,7 +1474,7 @@
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
                     <husk:PlaceholderPresenter Source="{Binding ScreenshotGroups}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate DataType="m:AssetScreenshotCollection">
+                            <DataTemplate DataType="app:AssetScreenshotCollection">
                                 <TextBlock Text="{Binding ScreenshotCount, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
                         </husk:PlaceholderPresenter.SourceTemplate>
@@ -1517,7 +1514,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="m:AssetScreenshotGroupModel">
+                            <DataTemplate DataType="app:AssetScreenshotGroupModel">
                                 <Border
                                     Width="256"
                                     Margin="2"
@@ -1541,7 +1538,7 @@
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="m:AssetScreenshotModel">
+                                                    <DataTemplate DataType="app:AssetScreenshotModel">
                                                         <Border
                                                             Height="178"
                                                             Padding="8"
@@ -1554,7 +1551,7 @@
                                                                 RowSpacing="8">
                                                                 <Button
                                                                     Grid.Row="0"
-                                                                    Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).ViewImageCommand, FallbackValue={x:Null}}"
+                                                                    Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ViewImageCommand, FallbackValue={x:Null}}"
                                                                     CommandParameter="{Binding}"
                                                                     RenderOptions.BitmapInterpolationMode="LowQuality">
                                                                     <Button.Theme>
@@ -1605,21 +1602,21 @@
                                                                 <DockPanel Grid.Row="1">
                                                                     <husk:ButtonGroup DockPanel.Dock="Right">
                                                                         <Button
-                                                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).OpenScreenshotFileCommand, FallbackValue={x:Null}}"
+                                                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenScreenshotFileCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                                 Symbol="DocumentImage" />
                                                                         </Button>
                                                                         <Button
-                                                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding Image.LocalPath}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                                 Symbol="FolderOpen" />
                                                                         </Button>
                                                                         <Button
-                                                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).DeleteScreenshotCommand, FallbackValue={x:Null}}"
+                                                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).DeleteScreenshotCommand, FallbackValue={x:Null}}"
                                                                             CommandParameter="{Binding}">
                                                                             <fi:SymbolIcon
                                                                                 FontSize="{StaticResource SmallFontSize}"
@@ -1685,7 +1682,7 @@
                         ItemsSource="{Binding Worlds}"
                         SelectedItem="{Binding SelectedWorld, Mode=TwoWay}">
                         <TabStrip.ItemTemplate>
-                            <DataTemplate DataType="m:AssetWorldModel">
+                            <DataTemplate DataType="app:AssetWorldModel">
                                 <Grid
                                     ColumnDefinitions="Auto,*"
                                     ColumnSpacing="6">
@@ -1720,7 +1717,7 @@
                 <ScrollViewer Grid.Row="1">
                     <husk:PlaceholderPresenter Source="{Binding SelectedWorld}">
                         <husk:PlaceholderPresenter.SourceTemplate>
-                            <DataTemplate DataType="m:AssetWorldModel">
+                            <DataTemplate DataType="app:AssetWorldModel">
                                 <StackPanel Spacing="12">
                                     <!--  存档头部  -->
                                     <Grid
@@ -1773,7 +1770,7 @@
                                         <!--     <husk:IconLabel Icon="Archive" Text="Export" /> -->
                                         <!-- </Button> -->
                                         <Button
-                                            Command="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding WorldPath}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -1862,18 +1859,18 @@
                                         Padding="0"
                                         Header="{x:Static lang:Resources.InstanceFilesView_DataPacksLabelText}"
                                         IsExpanded="True">
-                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).SelectedWorldDataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
+                                        <app:EmptyContainer IsEmpty="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldDataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <ScrollViewer MaxHeight="320">
                                                 <ItemsControl
                                                     Margin="{StaticResource ExpanderContentMargin}"
-                                                    ItemsSource="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).SelectedWorldDataPacks, FallbackValue={x:Null}}">
+                                                    ItemsSource="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldDataPacks, FallbackValue={x:Null}}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <StackPanel Spacing="8" />
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
-                                                        <DataTemplate DataType="m:AssetWorldDataPackModel">
+                                                        <DataTemplate DataType="app:AssetWorldDataPackModel">
                                                             <Grid
                                                                 ColumnDefinitions="Auto,*"
                                                                 ColumnSpacing="12">
@@ -1951,24 +1948,24 @@
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
                                             </ScrollViewer>
-                                        </controls:EmptyContainer>
+                                        </app:EmptyContainer>
                                     </Expander>
 
                                     <!--  玩家板块  -->
                                     <Expander
                                         Header="{x:Static lang:Resources.InstanceFilesView_PlayersLabelText}"
                                         IsExpanded="True">
-                                        <controls:EmptyContainer IsEmpty="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).SelectedWorldPlayers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
+                                        <app:EmptyContainer IsEmpty="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldPlayers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <Grid
                                                 RowDefinitions="Auto,*"
                                                 RowSpacing="12">
                                                 <!--  玩家头像列表  -->
                                                 <TabStrip
                                                     Grid.Row="0"
-                                                    ItemsSource="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).SelectedWorldPlayers, FallbackValue={x:Null}}"
-                                                    SelectedItem="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).SelectedWorldPlayer, Mode=TwoWay, FallbackValue={x:Null}}">
+                                                    ItemsSource="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldPlayers, FallbackValue={x:Null}}"
+                                                    SelectedItem="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldPlayer, Mode=TwoWay, FallbackValue={x:Null}}">
                                                     <TabStrip.ItemTemplate>
-                                                        <DataTemplate DataType="m:AssetWorldPlayerModel">
+                                                        <DataTemplate DataType="app:AssetWorldPlayerModel">
                                                             <StackPanel
                                                                 Margin="8,4"
                                                                 Spacing="4">
@@ -2001,14 +1998,14 @@
                                                             FontSize="{StaticResource MediumFontSize}"
                                                             FontWeight="{StaticResource ControlStrongFontWeight}"
                                                             Text="Statistics" />
-                                                        <ItemsControl ItemsSource="{Binding $parent[v:InstanceFilesPage].((pm:InstanceFilesPageModel)DataContext).SelectedPlayerStats, FallbackValue={x:Null}}">
+                                                        <ItemsControl ItemsSource="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedPlayerStats, FallbackValue={x:Null}}">
                                                             <ItemsControl.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <WrapPanel Orientation="Horizontal" />
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate DataType="m:AssetWorldPlayerStatEntryModel">
+                                                                <DataTemplate DataType="app:AssetWorldPlayerStatEntryModel">
                                                                     <Border
                                                                         MinWidth="120"
                                                                         Margin="0,0,8,8"
@@ -2037,7 +2034,7 @@
                                                     </StackPanel>
                                                 </StackPanel>
                                             </Grid>
-                                        </controls:EmptyContainer>
+                                        </app:EmptyContainer>
                                     </Expander>
                                 </StackPanel>
                             </DataTemplate>
@@ -2063,4 +2060,4 @@
             </Grid>
         </TabItem>
     </TabControl>
-</controls:Subpage>
+</app:Subpage>

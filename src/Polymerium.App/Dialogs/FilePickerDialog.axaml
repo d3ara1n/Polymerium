@@ -2,11 +2,11 @@
     x:Class="Polymerium.App.Dialogs.FilePickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static lang:Resources.FilePickerDialog_Title}"
     Width="300"
@@ -17,7 +17,7 @@
             Padding="16"
             DragOver="DropZone_OnDragOver"
             Drop="DropZone_OnDrop"
-            Model="{Binding $parent[local:FilePickerDialog].Result, Mode=OneWayToSource}">
+            Model="{Binding $parent[app:FilePickerDialog].Result, Mode=OneWayToSource}">
             <StackPanel HorizontalAlignment="Center">
                 <StackPanel
                     Orientation="Horizontal"
@@ -47,6 +47,6 @@
         </husk:DropZone>
         <TextBox
             PlaceholderText="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}"
-            Text="{Binding $parent[local:FilePickerDialog].Result, Mode=TwoWay}" />
+            Text="{Binding $parent[app:FilePickerDialog].Result, Mode=TwoWay}" />
     </StackPanel>
 </husk:Dialog>

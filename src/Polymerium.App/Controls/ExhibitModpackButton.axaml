@@ -1,18 +1,15 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages">
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <Design.PreviewWith>
         <Panel Background="White">
             <StackPanel Margin="24">
-                <controls:ExhibitModpackButton
+                <app:ExhibitModpackButton
                     MaxWidth="256"
                     Theme="{StaticResource GridExhibitModpackButtonTheme}" />
             </StackPanel>
@@ -21,16 +18,16 @@
 
     <ControlTheme
         x:Key="BaseExhibitModpackButtonTheme"
-        TargetType="controls:ExhibitModpackButton">
+        TargetType="app:ExhibitModpackButton">
         <Setter Property="Cursor" Value="Hand" />
     </ControlTheme>
 
     <ControlTheme
         x:Key="ListExhibitModpackButtonTheme"
         BasedOn="{StaticResource BaseExhibitModpackButtonTheme}"
-        TargetType="controls:ExhibitModpackButton">
+        TargetType="app:ExhibitModpackButton">
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:ExhibitModel">
+            <ControlTemplate x:DataType="app:ExhibitModel">
                 <husk:Card
                     Name="Background"
                     Background="{StaticResource LayerBackgroundBrush}"
@@ -142,7 +139,7 @@
                                 Spacing="8">
                                 <Button
                                     Classes="Primary Small"
-                                    Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -196,9 +193,9 @@
     <ControlTheme
         x:Key="GridExhibitModpackButtonTheme"
         BasedOn="{StaticResource BaseExhibitModpackButtonTheme}"
-        TargetType="controls:ExhibitModpackButton">
+        TargetType="app:ExhibitModpackButton">
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:ExhibitModel">
+            <ControlTemplate x:DataType="app:ExhibitModel">
                 <husk:Card
                     Name="Background"
                     Padding="0"
@@ -255,7 +252,7 @@
                                     Grid.Row="1"
                                     Classes="Primary Small"
                                     BackgroundSizing="InnerBorderEdge"
-                                    Command="{Binding $parent[v:MarketplaceSearchPage].((pm:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
                                     <StackPanel
                                         Orientation="Horizontal"

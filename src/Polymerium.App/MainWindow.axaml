@@ -2,24 +2,21 @@
     x:Class="Polymerium.App.MainWindow"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
-    Title="{x:Static local:Program.Brand}"
+    Title="{x:Static app:Program.Brand}"
     Width="1111"
     Height="666"
     MinWidth="600"
     MinHeight="460"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="local:MainWindowContext"
+    x:DataType="app:MainWindowContext"
     Icon="/Assets/Icon.ico"
     Loaded="Control_OnLoaded"
     Unloaded="Control_OnUnloded"
@@ -45,7 +42,7 @@
             <Grid
                 x:Name="TitleBar"
                 DockPanel.Dock="Top"
-                IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}"
+                IsVisible="{Binding $parent[app:MainWindow].IsTitleBarVisible, Mode=OneWay}"
                 ColumnDefinitions="*,Auto">
                 <Border
                     Grid.Column="0"
@@ -135,7 +132,7 @@
                     Grid.ColumnSpan="2"
                     Height="48"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:LandingPage}"
+                    CommandParameter="{x:Type app:LandingPage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <StackPanel
                         Orientation="Horizontal"
@@ -156,7 +153,7 @@
                     Width="48"
                     Height="48"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:NewInstancePage}"
+                    CommandParameter="{x:Type app:NewInstancePage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <fi:SymbolIcon
                         FontSize="18"
@@ -170,7 +167,7 @@
                     Classes="Primary"
                     Height="36"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:MarketplacePortalPage}">
+                    CommandParameter="{x:Type app:MarketplacePortalPage}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="8">
@@ -297,54 +294,54 @@
                         <ScrollViewer>
                             <ItemsControl ItemsSource="{Binding View}">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="m:InstanceEntryModel">
-                                        <controls:InstanceEntryButton
-                                            Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
+                                    <DataTemplate DataType="app:InstanceEntryModel">
+                                        <app:InstanceEntryButton
+                                            Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Basic.Key}"
                                             State="{Binding State, Mode=OneWay}">
-                                            <controls:InstanceEntryButton.ContextFlyout>
+                                            <app:InstanceEntryButton.ContextFlyout>
                                                 <MenuFlyout>
                                                     <MenuItem
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).PlayCommand, FallbackValue={x:Null}}"
+                                                        Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).PlayCommand, FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=Rocket,
                                                                               FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).DeployCommand, FallbackValue={x:Null}}"
+                                                        Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).DeployCommand, FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
                                                                               FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem Header="-" />
                                                     <MenuItem
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                                        Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=FolderZip,
                                                                               FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                        Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=FolderOpen,
                                                                               FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem Header="-" />
                                                     <MenuItem
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
+                                                        Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=BoxMultiple,
                                                                               FontSize={StaticResource MediumFontSize}}" />
                                                     <MenuItem
-                                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
+                                                        Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
                                                         CommandParameter="{Binding Basic.Key}"
                                                         Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
                                                         Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
                                                                               FontSize={StaticResource MediumFontSize}}" />
                                                 </MenuFlyout>
-                                            </controls:InstanceEntryButton.ContextFlyout>
-                                        </controls:InstanceEntryButton>
+                                            </app:InstanceEntryButton.ContextFlyout>
+                                        </app:InstanceEntryButton>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                                 <ItemsControl.ItemsPanel>
@@ -364,7 +361,7 @@
                     Grid.Row="8"
                     Grid.Column="0"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:SettingsPage}"
+                    CommandParameter="{x:Type app:SettingsPage}"
                     Theme="{StaticResource GhostButtonTheme}">
                     <fi:SymbolIcon
                         FontSize="18"
@@ -376,7 +373,7 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="{x:Type v:AccountsPage}"
+                    CommandParameter="{x:Type app:AccountsPage}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <StackPanel
                         Orientation="Horizontal"

@@ -1,30 +1,29 @@
-﻿<controls:AccountCreationStep
+﻿<app:AccountCreationStep
     x:Class="Polymerium.App.Components.AccountCreationOffline"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Components"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Header="{x:Static lang:Resources.AccountCreationOffline_Title}"
     mc:Ignorable="d">
     <StackPanel Spacing="12">
         <StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AccountCreationOffline_NameLabelText}" />
-            <TextBox Text="{Binding $parent[local:AccountCreationOffline].UserName, Mode=TwoWay}" />
+            <TextBox Text="{Binding $parent[app:AccountCreationOffline].UserName, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AccountCreationOffline_UuidLabelText}" />
             <TextBox
-                PlaceholderText="{Binding $parent[local:AccountCreationOffline].Uuid, Mode=OneWay}"
-                Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite, Mode=TwoWay}" />
+                PlaceholderText="{Binding $parent[app:AccountCreationOffline].Uuid, Mode=OneWay}"
+                Text="{Binding $parent[app:AccountCreationOffline].UuidOverwrite, Mode=TwoWay}" />
         </StackPanel>
         <husk:InfoBar
             Classes="Warning"
-            IsVisible="{Binding $parent[local:AccountCreationOffline].IsWarned, FallbackValue=False}"
+            IsVisible="{Binding $parent[app:AccountCreationOffline].IsWarned, FallbackValue=False}"
             Content="{x:Static lang:Resources.AccountCreationOffline_Prompt}"
             Header="Warning" />
     </StackPanel>
-</controls:AccountCreationStep>
+</app:AccountCreationStep>

@@ -2,21 +2,18 @@
     x:Class="Polymerium.App.Pages.LandingPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     Padding="{StaticResource PageHeaderlessContentMargin}"
     d:DesignHeight="600"
     d:DesignWidth="800"
-    x:DataType="pm:LandingPageModel"
+    x:DataType="app:LandingPageModel"
     Background="Transparent"
     IsHeaderVisible="False"
     mc:Ignorable="d">
@@ -127,7 +124,7 @@
                 Grid.Column="0"
                 Source="{Binding RecentPlay}">
                 <husk:PlaceholderPresenter.SourceTemplate>
-                    <DataTemplate DataType="m:RecentPlayModel">
+                    <DataTemplate DataType="app:RecentPlayModel">
                         <husk:Card
                             BorderBrush="{StaticResource ControlAccentBorderBrush}"
                             BorderThickness="2"
@@ -178,7 +175,7 @@
                                         Grid.Row="0"
                                         Classes="Primary"
                                         Padding="12,8"
-                                        Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
+                                        Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
                                         CommandParameter="{Binding Key}">
                                         <husk:IconLabel
                                             Icon="Play"
@@ -191,7 +188,7 @@
                                         <Button
                                             Grid.Column="0"
                                             Classes="Small"
-                                            Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).OpenInstanceFolderCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).OpenInstanceFolderCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
                                             <fi:SymbolIcon
@@ -201,7 +198,7 @@
                                         <Button
                                             Grid.Column="1"
                                             Classes="Small"
-                                            Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Key}"
                                             Theme="{StaticResource OutlineButtonTheme}">
                                             <fi:SymbolIcon
@@ -244,7 +241,7 @@
                     <Button
                         DockPanel.Dock="Right"
                         Classes="Small"
-                        Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).GotoMarketplaceCommand, FallbackValue={x:Null}}"
+                        Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).GotoMarketplaceCommand, FallbackValue={x:Null}}"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel
                             Orientation="Horizontal"
@@ -274,12 +271,12 @@
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="m:FeaturedModpackModel">
+                                    <DataTemplate DataType="app:FeaturedModpackModel">
                                         <Button
                                             Padding="0"
                                             HorizontalContentAlignment="Stretch"
                                             VerticalContentAlignment="Stretch"
-                                            Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).ViewFeaturedModpackCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).ViewFeaturedModpackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}"
                                             CornerRadius="{StaticResource MediumCornerRadius}"
                                             Theme="{StaticResource OutlineButtonTheme}"
@@ -331,7 +328,7 @@
                                 <Button
                                     Classes="Small"
                                     HorizontalAlignment="Center"
-                                    Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).RefreshFeaturedModpacksCommand}"
+                                    Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).RefreshFeaturedModpacksCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <husk:IconLabel
                                         Icon="ArrowClockwise"
@@ -485,11 +482,11 @@
                         <ItemsControl ItemsSource="{Binding}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <controls:WaterfallPanel ColumnWidth="262" />
+                                    <app:WaterfallPanel ColumnWidth="262" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="m:MinecraftReleasePatchModel">
+                                <DataTemplate DataType="app:MinecraftReleasePatchModel">
                                     <husk:Card>
                                         <Grid
                                             RowDefinitions="Auto,*"
@@ -549,7 +546,7 @@
                             <Button
                                 Classes="Small"
                                 HorizontalAlignment="Center"
-                                Command="{Binding $parent[v:LandingPage].((pm:LandingPageModel)DataContext).RefreshMinecraftNewsCommand}"
+                                Command="{Binding $parent[app:LandingPage].((app:LandingPageModel)DataContext).RefreshMinecraftNewsCommand}"
                                 Theme="{StaticResource OutlineButtonTheme}">
                                 <husk:IconLabel
                                     Icon="ArrowClockwise"

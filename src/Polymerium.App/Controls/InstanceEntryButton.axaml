@@ -1,21 +1,20 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="using:Polymerium.App.Controls"
-    xmlns:m="clr-namespace:Polymerium.App.Models">
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
 
     <ControlTheme
-        x:Key="{x:Type local:InstanceEntryButton}"
-        TargetType="local:InstanceEntryButton">
+        x:Key="{x:Type app:InstanceEntryButton}"
+        TargetType="app:InstanceEntryButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
-            <ControlTemplate x:DataType="m:InstanceEntryModel">
+            <ControlTemplate x:DataType="app:InstanceEntryModel">
                 <Border
                     Name="Container"
                     Background="{TemplateBinding Background}"

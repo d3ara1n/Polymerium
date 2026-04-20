@@ -2,11 +2,11 @@
     x:Class="Polymerium.App.Dialogs.ProxySettingsDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:local="clr-namespace:Polymerium.App.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static lang:Resources.ProxySettingsDialog_Title}"
     Width="420"
@@ -14,7 +14,7 @@
     mc:Ignorable="d">
     <StackPanel Spacing="12">
         <!--  Mode Selection TabStrip  -->
-        <TabStrip SelectedIndex="{Binding $parent[local:ProxySettingsDialog].SelectedModeIndex, Mode=TwoWay}">
+        <TabStrip SelectedIndex="{Binding $parent[app:ProxySettingsDialog].SelectedModeIndex, Mode=TwoWay}">
             <TabStripItem>
                 <StackPanel
                     Orientation="Horizontal"
@@ -56,7 +56,7 @@
         <!--  Content Area with SwitchPresenter  -->
         <husk:SwitchPresenter
             TargetType="x:Int32"
-            Value="{Binding $parent[local:ProxySettingsDialog].SelectedModeIndex}">
+            Value="{Binding $parent[app:ProxySettingsDialog].SelectedModeIndex}">
             <!--  Auto Mode  -->
             <husk:SwitchCase Value="0">
                 <Border
@@ -108,7 +108,7 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 HorizontalAlignment="Stretch"
-                                SelectedIndex="{Binding $parent[local:ProxySettingsDialog].SelectedProtocolIndex, Mode=TwoWay}">
+                                SelectedIndex="{Binding $parent[app:ProxySettingsDialog].SelectedProtocolIndex, Mode=TwoWay}">
                                 <ComboBoxItem Content="HTTP" />
                                 <ComboBoxItem Content="SOCKS4" />
                                 <ComboBoxItem Content="SOCKS5" />
@@ -124,7 +124,7 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 PlaceholderText="127.0.0.1"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyAddress, Mode=TwoWay}" />
+                                Text="{Binding $parent[app:ProxySettingsDialog].ProxyAddress, Mode=TwoWay}" />
 
                             <!--  Port  -->
                             <TextBlock
@@ -136,7 +136,7 @@
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 PlaceholderText="7890"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPort, Mode=TwoWay}" />
+                                Text="{Binding $parent[app:ProxySettingsDialog].ProxyPort, Mode=TwoWay}" />
                         </Grid>
 
                         <!--  Authentication Section  -->
@@ -162,7 +162,7 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 PlaceholderText="{x:Static lang:Resources.ProxySettingsDialog_UsernamePlaceholder}"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}" />
+                                Text="{Binding $parent[app:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}" />
 
                             <!--  Password  -->
                             <TextBlock
@@ -175,7 +175,7 @@
                                 Grid.Column="1"
                                 PasswordChar="●"
                                 PlaceholderText="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}"
-                                Text="{Binding $parent[local:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}" />
+                                Text="{Binding $parent[app:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}" />
                         </Grid>
 
                         <!--  Test Connection  -->
@@ -186,8 +186,8 @@
                             <Button
                                 Grid.Column="0"
                                 Classes="Small"
-                                IsEnabled="{Binding $parent[local:ProxySettingsDialog].IsTesting, Converter={x:Static BoolConverters.Not}}"
-                                Command="{Binding $parent[local:ProxySettingsDialog].TestConnectionCommand}">
+                                IsEnabled="{Binding $parent[app:ProxySettingsDialog].IsTesting, Converter={x:Static BoolConverters.Not}}"
+                                Command="{Binding $parent[app:ProxySettingsDialog].TestConnectionCommand}">
                                 <husk:IconLabel
                                     Icon="PlugConnected"
                                     Text="{x:Static lang:Resources.ProxySettingsDialog_TestConnectionButtonText}" />
@@ -198,7 +198,7 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
                                 TargetType="x:Int32"
-                                Value="{Binding $parent[local:ProxySettingsDialog].TestState}">
+                                Value="{Binding $parent[app:ProxySettingsDialog].TestState}">
                                 <!--  Idle (0)  -->
                                 <husk:SwitchCase Value="0">
                                     <TextBlock />
@@ -231,7 +231,7 @@
                                             Symbol="CheckmarkCircle" />
                                         <TextBlock
                                             Foreground="{StaticResource SuccessForegroundBrush}"
-                                            Text="{Binding $parent[local:ProxySettingsDialog].TestResultMessage}" />
+                                            Text="{Binding $parent[app:ProxySettingsDialog].TestResultMessage}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
 
@@ -248,7 +248,7 @@
                                         <TextBlock
                                             MaxWidth="200"
                                             Foreground="{StaticResource DangerForegroundBrush}"
-                                            Text="{Binding $parent[local:ProxySettingsDialog].TestResultMessage}"
+                                            Text="{Binding $parent[app:ProxySettingsDialog].TestResultMessage}"
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
                                 </husk:SwitchCase>

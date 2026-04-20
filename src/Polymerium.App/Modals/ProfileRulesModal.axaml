@@ -2,15 +2,12 @@
     x:Class="Polymerium.App.Modals.ProfileRulesModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Polymerium.App.Controls"
-    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="https://github.com/d3ara1n/Polymerium/Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modals="clr-namespace:Polymerium.App.Modals"
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="450"
@@ -31,21 +28,21 @@
                 Text="{x:Static lang:Resources.ProfileRulesModal_Message}"
                 TextWrapping="Wrap" />
         </StackPanel>
-        <controls:EmptyContainer
+        <app:EmptyContainer
             Grid.Row="1"
             Icon="Ruler"
-            IsEmpty="{Binding $parent[modals:ProfileRulesModal].Rules.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
+            IsEmpty="{Binding $parent[app:ProfileRulesModal].Rules.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
             <ScrollViewer>
                 <ItemsControl
                     Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.Horizontal}}"
-                    ItemsSource="{Binding $parent[modals:ProfileRulesModal].Rules}">
+                    ItemsSource="{Binding $parent[app:ProfileRulesModal].Rules}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Spacing="8" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:ProfileRuleModel">
+                        <DataTemplate x:DataType="app:ProfileRuleModel">
                             <Border
                                 Padding="12"
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
@@ -175,7 +172,7 @@
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Kind, Converter={x:Static converters:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                                        Text="{Binding Selector.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
@@ -236,7 +233,7 @@
                                         Grid.Column="2"
                                         VerticalAlignment="Center">
                                         <Button
-                                            Command="{Binding $parent[modals:ProfileRulesModal].EditRuleCommand}"
+                                            Command="{Binding $parent[app:ProfileRulesModal].EditRuleCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -244,28 +241,28 @@
                                                 Symbol="Edit" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleToTopCommand}"
+                                            Command="{Binding $parent[app:ProfileRulesModal].MoveRuleToTopCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="PaddingTop" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleUpCommand}"
+                                            Command="{Binding $parent[app:ProfileRulesModal].MoveRuleUpCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="ArrowUp" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[modals:ProfileRulesModal].MoveRuleDownCommand}"
+                                            Command="{Binding $parent[app:ProfileRulesModal].MoveRuleDownCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="ArrowDown" />
                                         </Button>
                                         <Button
-                                            Command="{Binding $parent[modals:ProfileRulesModal].RemoveRuleCommand}"
+                                            Command="{Binding $parent[app:ProfileRulesModal].RemoveRuleCommand}"
                                             CommandParameter="{Binding}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -279,7 +276,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-        </controls:EmptyContainer>
+        </app:EmptyContainer>
         <Grid
             Grid.Row="2"
             Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutTop}}"
@@ -288,7 +285,7 @@
             <Button
                 Grid.Column="0"
                 Classes="Primary"
-                Command="{Binding $parent[modals:ProfileRulesModal].AddRuleCommand}">
+                Command="{Binding $parent[app:ProfileRulesModal].AddRuleCommand}">
                 <husk:IconLabel
                     Icon="Add"
                     Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />
@@ -298,7 +295,7 @@
                 VerticalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                 <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
-                <Run Text="{Binding $parent[modals:ProfileRulesModal].Rules.Count, FallbackValue=0}" />
+                <Run Text="{Binding $parent[app:ProfileRulesModal].Rules.Count, FallbackValue=0}" />
             </TextBlock>
             <Button
                 Grid.Column="3"

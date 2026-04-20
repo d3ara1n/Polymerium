@@ -1,30 +1,27 @@
-﻿<controls:Subpage
+﻿<app:Subpage
     x:Class="Polymerium.App.Pages.InstanceSetupPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pm="using:Polymerium.App.PageModels"
     xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
-    xmlns:v="clr-namespace:Polymerium.App.Pages"
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="800"
-    x:DataType="pm:InstanceSetupPageModel"
+    x:DataType="app:InstanceSetupPageModel"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <controls:Subpage.Resources>
+    <app:Subpage.Resources>
         <MenuFlyout
             x:Key="InstancePackageButtonFlyout"
-            x:DataType="m:InstancePackageModel">
+            x:DataType="app:InstancePackageModel">
             <MenuItem
                 Header="{x:Static lang:Resources.InstanceSetupView_ActiveMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Star,
@@ -33,7 +30,7 @@
                 ToggleType="CheckBox" />
             <MenuItem Header="-" />
             <MenuItem
-                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
                 CommandParameter="{Binding Info.ProjectName, FallbackValue=Project Name}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
                                       FontSize={StaticResource MediumFontSize}}">
@@ -47,7 +44,7 @@
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem
-                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
                 CommandParameter="{Binding Info.ProjectId, FallbackValue=Pid}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
                                       FontSize={StaticResource MediumFontSize}}">
@@ -61,9 +58,9 @@
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem
-                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}"
-                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
-                CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}"
+                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type app:InstancePackageVersionModel}, FallbackValue={x:False}}"
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Info.((app:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
@@ -71,14 +68,14 @@
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionNameMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Binding Info.((m:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
+                            Text="{Binding Info.((app:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem
-                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type m:InstancePackageVersionModel}, FallbackValue={x:False}}"
-                Command="{x:Static m:InternalCommands.CopyToClipboardCommand}"
-                CommandParameter="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}"
+                IsVisible="{Binding Info.Version, Converter={x:Static husk:ObjectConverters.Is}, ConverterParameter={x:Type app:InstancePackageVersionModel}, FallbackValue={x:False}}"
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Info.((app:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
@@ -86,13 +83,13 @@
                         <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionIdMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Binding Info.((m:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
+                            Text="{Binding Info.((app:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem Header="-" />
             <MenuItem
-                Command="{x:Static m:InternalCommands.OpenUriCommand}"
+                Command="{x:Static app:InternalCommands.OpenUriCommand}"
                 CommandParameter="{Binding Info.Reference, FallbackValue={x:Null}}"
                 Header="{x:Static lang:Resources.InstanceSetupView_OpenWebsiteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Open,
@@ -104,14 +101,14 @@
             <MenuItem Header="-" />
             <MenuItem
                 IsEnabled="{Binding IsLocked, Converter={x:Static BoolConverters.Not}}"
-                Command="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Foreground="{StaticResource ControlDangerForegroundBrush}"
                 Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
-    </controls:Subpage.Resources>
+    </app:Subpage.Resources>
     <husk:BusyContainer>
         <husk:BusyContainer.IsBusy>
             <MultiBinding Converter="{x:Static BoolConverters.Or}">
@@ -247,13 +244,13 @@
                         </husk:Card>
                     </husk:LazyContainer.FaultContent>
                     <husk:LazyContainer.SourceTemplate>
-                        <DataTemplate x:DataType="m:InstanceReferenceModel">
+                        <DataTemplate x:DataType="app:InstanceReferenceModel">
                             <Border
                                 MaxWidth="320"
                                 Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                 CornerRadius="{StaticResource MediumCornerRadius}">
-                                <controls:Plaque>
-                                    <controls:Plaque.Header>
+                                <app:Plaque>
+                                    <app:Plaque.Header>
                                         <Grid
                                             Grid.Row="1"
                                             ColumnDefinitions="Auto,*,Auto"
@@ -272,11 +269,11 @@
                                             <Button
                                                 Grid.Column="2"
                                                 Classes="Small"
-                                                Command="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
                                                 Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
                                                 Theme="{StaticResource OutlineButtonTheme}" />
                                         </Grid>
-                                    </controls:Plaque.Header>
+                                    </app:Plaque.Header>
                                     <Grid
                                         ColumnDefinitions="Auto,*,Auto"
                                         ColumnSpacing="8">
@@ -335,14 +332,14 @@
                                             Grid.Column="2"
                                             Padding="8"
                                             VerticalAlignment="Center"
-                                            Command="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
+                                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
                                             CornerRadius="{StaticResource FullCornerRadius}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 Symbol="ArrowRight" />
                                         </Button>
                                     </Grid>
-                                </controls:Plaque>
+                                </app:Plaque>
                             </Border>
                         </DataTemplate>
                     </husk:LazyContainer.SourceTemplate>
@@ -401,17 +398,17 @@
                                                         SelectedItem="{Binding FilterEnability, Mode=TwoWay}"
                                                         Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
-                                                            <DataTemplate DataType="m:FilterModel">
+                                                            <DataTemplate DataType="app:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
                                                             Value="{x:Null}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_Enabled}"
                                                             Value="{x:True}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_Disabled}"
                                                             Value="{x:False}" />
                                                     </TabStrip>
@@ -430,17 +427,17 @@
                                                         SelectedItem="{Binding FilterLockility, Mode=TwoWay}"
                                                         Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
-                                                            <DataTemplate DataType="m:FilterModel">
+                                                            <DataTemplate DataType="app:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
                                                             Value="{x:Null}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
                                                             Value="{x:True}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
                                                             Value="{x:False}" />
                                                     </TabStrip>
@@ -459,23 +456,23 @@
                                                         SelectedItem="{Binding FilterKind, Mode=TwoWay}"
                                                         Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
-                                                            <DataTemplate DataType="m:FilterModel">
+                                                            <DataTemplate DataType="app:FilterModel">
                                                                 <TextBlock Text="{Binding Label}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.Enum_All}"
                                                             Value="{x:Null}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_Mod}"
                                                             Value="{x:Static resources:ResourceKind.Mod}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
                                                             Value="{x:Static resources:ResourceKind.ResourcePack}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
                                                             Value="{x:Static resources:ResourceKind.ShaderPack}" />
-                                                        <m:FilterModel
+                                                        <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_DataPack}"
                                                             Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
@@ -520,7 +517,7 @@
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate x:DataType="m:InstancePackageFilterTagModel">
+                                                                <DataTemplate x:DataType="app:InstancePackageFilterTagModel">
                                                                     <Border
                                                                         Padding="8"
                                                                         BorderBrush="{StaticResource ControlBorderBrush}"
@@ -609,57 +606,57 @@
                             SelectedIndex="{Binding ViewState.LayoutIndex, Mode=TwoWay}"
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
-                                <generic:List x:TypeArguments="m:ListTemplateCombinationModel">
-                                    <m:ListTemplateCombinationModel Icon="List">
-                                        <m:ListTemplateCombinationModel.ItemTemplate>
-                                            <DataTemplate x:DataType="m:InstancePackageModel">
-                                                <controls:InstancePackageButton
+                                <generic:List x:TypeArguments="app:ListTemplateCombinationModel">
+                                    <app:ListTemplateCombinationModel Icon="List">
+                                        <app:ListTemplateCombinationModel.ItemTemplate>
+                                            <DataTemplate x:DataType="app:InstancePackageModel">
+                                                <app:InstancePackageButton
                                                     Margin="0,3"
-                                                    Command="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+                                                    Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding Info}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    IsRefreshing="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
+                                                    IsRefreshing="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
                                                     Theme="{StaticResource ListPackageEntryButtonTheme}" />
                                             </DataTemplate>
-                                        </m:ListTemplateCombinationModel.ItemTemplate>
-                                        <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        </app:ListTemplateCombinationModel.ItemTemplate>
+                                        <app:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
                                                 <VirtualizingStackPanel />
                                             </ItemsPanelTemplate>
-                                        </m:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                    </m:ListTemplateCombinationModel>
-                                    <m:ListTemplateCombinationModel Icon="Grid">
-                                        <m:ListTemplateCombinationModel.ItemTemplate>
-                                            <DataTemplate x:DataType="m:InstancePackageModel">
-                                                <controls:InstancePackageButton
-                                                    Command="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+                                        </app:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                    </app:ListTemplateCombinationModel>
+                                    <app:ListTemplateCombinationModel Icon="Grid">
+                                        <app:ListTemplateCombinationModel.ItemTemplate>
+                                            <DataTemplate x:DataType="app:InstancePackageModel">
+                                                <app:InstancePackageButton
+                                                    Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding Info}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    IsRefreshing="{Binding $parent[v:InstanceSetupPage].((pm:InstanceSetupPageModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
+                                                    IsRefreshing="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
                                                     Theme="{StaticResource GridPackageEntryButtonTheme}"
                                                     ToolTip.Tip="{Binding Info.ProjectName, FallbackValue=Name}" />
                                             </DataTemplate>
-                                        </m:ListTemplateCombinationModel.ItemTemplate>
-                                        <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        </app:ListTemplateCombinationModel.ItemTemplate>
+                                        <app:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
                                                 <husk:FlexWrapPanel
                                                     ColumnSpacing="6"
                                                     RowSpacing="6" />
                                             </ItemsPanelTemplate>
-                                        </m:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                        <m:ListTemplateCombinationModel.ItemContainerTheme>
+                                        </app:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        <app:ListTemplateCombinationModel.ItemContainerTheme>
                                             <ControlTheme TargetType="ContentPresenter">
                                                 <Setter Property="MaxWidth" Value="144" />
                                                 <Setter Property="MinWidth" Value="90" />
                                                 <Setter Property="MaxHeight" Value="144" />
                                                 <Setter Property="MinHeight" Value="90" />
                                             </ControlTheme>
-                                        </m:ListTemplateCombinationModel.ItemContainerTheme>
-                                    </m:ListTemplateCombinationModel>
+                                        </app:ListTemplateCombinationModel.ItemContainerTheme>
+                                    </app:ListTemplateCombinationModel>
                                 </generic:List>
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
-                                <DataTemplate x:DataType="m:ListTemplateCombinationModel">
+                                <DataTemplate x:DataType="app:ListTemplateCombinationModel">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
@@ -729,13 +726,13 @@
                     <ScrollViewer>
                         <ItemsControl
                             Margin="{StaticResource PageToplessContentMargin}"
-                            ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme, FallbackValue={x:Null}}"
-                            ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate, FallbackValue={x:Null}}"
-                            ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate, FallbackValue={x:Null}}"
+                            ItemContainerTheme="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme, FallbackValue={x:Null}}"
+                            ItemTemplate="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemTemplate, FallbackValue={x:Null}}"
+                            ItemsPanel="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate, FallbackValue={x:Null}}"
                             ItemsSource="{Binding StageView}" />
                     </ScrollViewer>
                 </Panel>
             </Grid>
         </Grid>
     </husk:BusyContainer>
-</controls:Subpage>
+</app:Subpage>

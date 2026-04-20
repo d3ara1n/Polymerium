@@ -2,15 +2,13 @@
     x:Class="Polymerium.App.Toasts.InstanceDashboardToast"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
-    xmlns:local="using:Polymerium.App.Toasts"
-    xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:services="clr-namespace:Polymerium.App.Services"
     Padding="0"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -20,7 +18,7 @@
     <husk:Toast.Resources>
         <DataTemplate
             x:Key="ScrapTemplate"
-            DataType="m:ScrapModel">
+            DataType="app:ScrapModel">
             <TextBlock
                 TextTrimming="CharacterEllipsis"
                 ToolTip.Tip="{Binding Message}">
@@ -64,9 +62,9 @@
             <ScrollViewer
                 x:Name="Viewer"
                 Margin="0,72,0,0">
-                <ItemsControl ItemsSource="{Binding $parent[local:InstanceDashboardToast].Bindable}">
+                <ItemsControl ItemsSource="{Binding $parent[app:InstanceDashboardToast].Bindable}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:ScrapModel">
+                        <DataTemplate x:DataType="app:ScrapModel">
                             <husk:SwitchPresenter
                                 TargetType="launching:ScrapLevel"
                                 Value="{Binding Level}">
@@ -124,7 +122,7 @@
             <TextBox
                 Grid.Column="2"
                 PlaceholderText="Filter by content..."
-                Text="{Binding $parent[local:InstanceDashboardToast].FilterText, Mode=TwoWay}">
+                Text="{Binding $parent[app:InstanceDashboardToast].FilterText, Mode=TwoWay}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal">
@@ -143,9 +141,9 @@
                         <TextBlock
                             Margin="0,0,8,0"
                             VerticalAlignment="Center">
-                            <Run Text="{Binding $parent[local:InstanceDashboardToast].Bindable.Count, Mode=OneWay, FallbackValue=0}" />
+                            <Run Text="{Binding $parent[app:InstanceDashboardToast].Bindable.Count, Mode=OneWay, FallbackValue=0}" />
                             <Run Text="/" />
-                            <Run Text="{Binding Source={x:Static services:ScrapService.CAPACITY}}" />
+                            <Run Text="{Binding Source={x:Static app:ScrapService.CAPACITY}}" />
                         </TextBlock>
                         <Button
                             IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
@@ -159,7 +157,7 @@
             <ToggleButton
                 Grid.Column="4"
                 Classes="Small"
-                IsChecked="{Binding $parent[local:InstanceDashboardToast].IsAutoScroll, Mode=TwoWay}">
+                IsChecked="{Binding $parent[app:InstanceDashboardToast].IsAutoScroll, Mode=TwoWay}">
                 <fi:SymbolIcon
                     FontSize="{StaticResource LargeFontSize}"
                     Symbol="TextBoxAlignBottom" />
