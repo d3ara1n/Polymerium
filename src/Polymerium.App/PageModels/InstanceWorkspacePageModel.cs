@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DynamicData;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -11,7 +12,7 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
-public class InstanceWorkspacePageModel(
+public partial class InstanceWorkspacePageModel(
     ViewBag bag,
     InstanceManager instanceManager,
     ProfileManager profileManager
@@ -19,7 +20,10 @@ public class InstanceWorkspacePageModel(
 {
     #region Reactive
 
-    public ObservableCollection<object> Changes { get; } = [];
+    public ObservableCollection<WorkspaceChangeModel> Changes { get; } = [];
+
+    [ObservableProperty]
+    public partial WorkspaceChangeModel? SelectedChange { get; set; }
 
     #endregion
 
