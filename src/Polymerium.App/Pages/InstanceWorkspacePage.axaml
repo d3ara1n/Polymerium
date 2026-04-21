@@ -16,12 +16,15 @@
         <Grid DockPanel.Dock="Top">
             <husk:InfoBar
                 Classes="Warning"
+                IsVisible="{Binding IsLocked}"
                 Content="该实例导入自整合包，你将无法在整合包初始文件上应用修改。" />
         </Grid>
         <!--  Nav Bar  -->
         <TabControl>
             <TabItem Header="Changes">
-                <Grid ColumnDefinitions="*,Auto,*">
+                <Grid
+                    ColumnDefinitions="*,4,*"
+                    ColumnSpacing="12">
                     <DockPanel>
                         <ListBox
                             ItemsSource="{Binding Changes}"
@@ -44,7 +47,7 @@
                                             <husk:SwitchCase Value="Same">
                                                 <husk:Tag
                                                     Classes="Small Success"
-                                                    Content="相同" />
+                                                    Content="无变化" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Outdated">
                                                 <husk:Tag
@@ -77,83 +80,234 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </DockPanel>
-                    <GridSplitter Grid.Column="1" />
-                    <Grid
-                        Grid.Column="2"
-                        RowDefinitions="Auto,*">
-                        <husk:SwitchPresenter
-                            Grid.Row="0"
-                            Margin="4,2"
-                            TargetType="app:WorkspaceChangeModel"
-                            Value="{Binding SelectedChange?.Kind}">
-                            <husk:SwitchCase Value="Outdated">
-                                <husk:InfoBar Classes="Warning">
-                                    <DockPanel>
-                                        <StackPanel
-                                            DockPanel.Dock="Right"
-                                            Orientation="Horizontal"
-                                            Spacing="4">
-                                            <Button Classes="Small Primary">
-                                                <husk:IconLabel
-                                                    Icon="ArrowExport"
-                                                    Text="覆盖" />
-                                            </Button>
-                                            <Button Classes="Small">
-                                                <husk:IconLabel
-                                                    Icon="ArrowImport"
-                                                    Text="更新" />
-                                            </Button>
-                                        </StackPanel>
-                                        <TextBlock Text="这份文件内容落后于原始版本。" />
-                                    </DockPanel>
-                                </husk:InfoBar>
-                            </husk:SwitchCase>
-                            <husk:SwitchCase Value="Updated">
-                                <husk:InfoBar Classes="Success">
-                                    <DockPanel>
-                                        <StackPanel
-                                            DockPanel.Dock="Right"
-                                            Orientation="Horizontal"
-                                            Spacing="4">
-                                            <Button Classes="Small Primary">
-                                                <husk:IconLabel
-                                                    Icon="ArrowExport"
-                                                    Text="应用" />
-                                            </Button>
-                                            <Button Classes="Small">
-                                                <husk:IconLabel
-                                                    Icon="ArrowImport"
-                                                    Text="放弃" />
-                                            </Button>
-                                        </StackPanel>
-                                        <TextBlock Text="这份文件自原始版本后被更新。" />
-                                    </DockPanel>
-                                </husk:InfoBar>
-                            </husk:SwitchCase>
-                            <husk:SwitchCase Value="Deleted">
-                                <husk:InfoBar Classes="Danger">
-                                    <DockPanel>
-                                        <StackPanel
-                                            DockPanel.Dock="Right"
-                                            Orientation="Horizontal"
-                                            Spacing="4">
-                                            <Button Classes="Small Primary">
-                                                <husk:IconLabel
-                                                    Icon="ArrowExport"
-                                                    Text="覆盖" />
-                                            </Button>
-                                            <Button Classes="Small">
-                                                <husk:IconLabel
-                                                    Icon="ArrowImport"
-                                                    Text="更新" />
-                                            </Button>
-                                        </StackPanel>
-                                        <TextBlock Text="这份文件的原始版本已被移除。" />
-                                    </DockPanel>
-                                </husk:InfoBar>
-                            </husk:SwitchCase>
-                        </husk:SwitchPresenter>
-                    </Grid>
+                    <GridSplitter
+                        Grid.Column="1"
+                        ResizeDirection="Columns" />
+                    <ScrollViewer Grid.Column="2">
+                        <husk:PlaceholderPresenter Source="{Binding SelectedChange}">
+                            <husk:PlaceholderPresenter.SourceTemplate>
+                                <DataTemplate x:DataType="app:WorkspaceChangeModel">
+                                    <StackPanel Spacing="12">
+                                        <husk:Card BorderThickness="0">
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <husk:SwitchPresenter
+                                                    Grid.Column="0"
+                                                    Width="4"
+                                                    TargetType="app:WorkspaceChangeKind"
+                                                    Value="{Binding Kind}">
+                                                    <husk:SwitchCase Value="Updated">
+                                                        <Border
+                                                            Background="{StaticResource ControlSuccessBackgroundBrush}"
+                                                            CornerRadius="2" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Outdated">
+                                                        <Border
+                                                            Background="{StaticResource ControlWarningBackgroundBrush}"
+                                                            CornerRadius="2" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Deleted">
+                                                        <Border
+                                                            Background="{StaticResource ControlDangerBackgroundBrush}"
+                                                            CornerRadius="2" />
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Same">
+                                                        <Border
+                                                            Background="{StaticResource ControlAccentBackgroundBrush}"
+                                                            CornerRadius="2" />
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
+                                                <StackPanel
+                                                    Grid.Column="1"
+                                                    Margin="12,0,0,0"
+                                                    Spacing="8">
+                                                    <StackPanel Spacing="4">
+                                                        <TextBlock
+                                                            FontSize="{StaticResource ExtraLargeFontSize}"
+                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                            Text="{Binding Name}"
+                                                            TextWrapping="Wrap" />
+                                                        <TextBlock
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{Binding RelativePath}"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                    <WrapPanel
+                                                        ItemSpacing="6"
+                                                        LineSpacing="6">
+                                                        <husk:Tag Content="{Binding FileType, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                                        <husk:SwitchPresenter
+                                                            TargetType="app:WorkspaceChangeKind"
+                                                            Value="{Binding Kind}">
+                                                            <husk:SwitchCase Value="Updated">
+                                                                <husk:Tag
+                                                                    Classes="Warning"
+                                                                    Content="已更新" />
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="Outdated">
+                                                                <husk:Tag
+                                                                    Classes="Warning"
+                                                                    Content="已过时" />
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="Deleted">
+                                                                <husk:Tag
+                                                                    Classes="Danger"
+                                                                    Content="已删除" />
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="Same">
+                                                                <husk:Tag
+                                                                    Classes="Success"
+                                                                    Content="无变化" />
+                                                            </husk:SwitchCase>
+                                                        </husk:SwitchPresenter>
+                                                    </WrapPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </husk:Card>
+
+                                        <husk:Card BorderThickness="0">
+                                            <StackPanel Spacing="12">
+                                                <TextBlock
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                    Text="快速信息" />
+                                                <Grid
+                                                    ColumnDefinitions="Auto,*"
+                                                    ColumnSpacing="16"
+                                                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                                    RowSpacing="8">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="类型" />
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        Text="{Binding FileType}" />
+
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="最后修改" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="1">
+                                                        <Run Text="{Binding FileLastModifiedRaw, Converter={x:Static app:HumanizerConverters.DateTime}}" />
+                                                        <Run
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="•" />
+                                                        <Run
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{Binding FileLastModifiedRaw, StringFormat={}{0:g}}" />
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        Grid.Row="2"
+                                                        Grid.Column="0"
+                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                        Text="文件大小" />
+                                                    <TextBlock
+                                                        Grid.Row="2"
+                                                        Grid.Column="1"
+                                                        Text="{Binding FileSizeRaw, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </husk:Card>
+
+                                        <husk:Card BorderThickness="0">
+                                            <StackPanel Spacing="10">
+                                                <TextBlock
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                    Text="建议操作" />
+                                                <husk:SwitchPresenter
+                                                    TargetType="app:WorkspaceChangeKind"
+                                                    Value="{Binding Kind}">
+                                                    <husk:SwitchCase Value="Updated">
+                                                        <StackPanel Spacing="10">
+                                                            <Button
+                                                                Classes="Primary"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}">
+                                                                <husk:IconLabel
+                                                                    Icon="ArrowExport"
+                                                                    Text="应用" />
+                                                            </Button>
+                                                            <Button
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}">
+                                                                <husk:IconLabel
+                                                                    Icon="ArrowImport"
+                                                                    Text="放弃" />
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Outdated">
+                                                        <StackPanel Spacing="10">
+                                                            <Button
+                                                                Classes="Primary"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}">
+                                                                <husk:IconLabel
+                                                                    Icon="ArrowExport"
+                                                                    Text="覆盖" />
+                                                            </Button>
+                                                            <Button
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}">
+                                                                <husk:IconLabel
+                                                                    Icon="ArrowImport"
+                                                                    Text="更新" />
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Deleted">
+                                                        <StackPanel Spacing="10">
+                                                            <Button
+                                                                Classes="Danger"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}">
+                                                                <husk:IconLabel
+                                                                    Icon="ArrowExport"
+                                                                    Text="删除" />
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
+                                                <husk:ButtonGroup>
+                                                    <Button
+                                                        Command="{x:Static app:InternalCommands.OpenFolderCommand}"
+                                                        CommandParameter="{Binding LivePath}">
+                                                        <husk:IconLabel
+                                                            Icon="FolderOpen"
+                                                            Text="打开位置" />
+                                                    </Button>
+                                                    <Button
+                                                        Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                                                        CommandParameter="{Binding RelativePath}">
+                                                        <husk:IconLabel
+                                                            Icon="DocumentCopy"
+                                                            Text="复制路径" />
+                                                    </Button>
+                                                </husk:ButtonGroup>
+                                            </StackPanel>
+                                        </husk:Card>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </husk:PlaceholderPresenter.SourceTemplate>
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="8">
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="选择一个文件" />
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="右侧会显示文件信息和可用操作。" />
+                            </StackPanel>
+                        </husk:PlaceholderPresenter>
+                    </ScrollViewer>
 
                 </Grid>
             </TabItem>

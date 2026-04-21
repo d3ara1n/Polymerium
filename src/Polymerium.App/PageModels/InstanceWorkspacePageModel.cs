@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -15,9 +17,14 @@ namespace Polymerium.App.PageModels;
 public partial class InstanceWorkspacePageModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+    ProfileManager profileManager) : InstancePageModelBase(bag, instanceManager, profileManager)
 {
+    #region Direct
+
+    public bool IsLocked => Basic.Source is not null;
+
+    #endregion
+
     #region Reactive
 
     public ObservableCollection<WorkspaceChangeModel> Changes { get; } = [];
@@ -59,14 +66,19 @@ public partial class InstanceWorkspacePageModel(
             var kind = Diff(livePath, importPath);
             if (kind != WorkspaceChangeKind.Same)
             {
-                changes.Add(
-                    new()
-                    {
-                        RelativePath = liveEntry,
-                        Name = Path.GetFileName(livePath),
-                        Kind = kind,
-                    }
-                );
+                var file = new FileInfo(livePath);
+                var type = Path.GetExtension(livePath).TrimStart('.');
+                changes.Add(new()
+                {
+                    RelativePath = liveEntry,
+                    Name = Path.GetFileName(livePath),
+                    Kind = kind,
+                    LivePath = livePath,
+                    ImportPath = importPath,
+                    FileType = type,
+                    FileSizeRaw = file.Length,
+                    FileLastModifiedRaw = file.LastWriteTimeUtc
+                });
             }
         }
 
@@ -85,8 +97,9 @@ public partial class InstanceWorkspacePageModel(
 
         return
         [
-            .. root.EnumerateFiles("*", SearchOption.AllDirectories)
-                .Select(file => Path.GetRelativePath(folder, file.FullName)),
+            .. root
+              .EnumerateFiles("*", SearchOption.AllDirectories)
+              .Select(file => Path.GetRelativePath(folder, file.FullName)),
         ];
     }
 
@@ -114,4 +127,17 @@ public partial class InstanceWorkspacePageModel(
 
         return WorkspaceChangeKind.Deleted;
     }
+
+    #region Commands
+
+    [RelayCommand]
+    private void Stage(WorkspaceChangeModel? model) { }
+
+    [RelayCommand]
+    private void Restore(WorkspaceChangeModel? model) { }
+
+    [RelayCommand]
+    private void Delete(WorkspaceChangeModel? model) { }
+
+    #endregion
 }

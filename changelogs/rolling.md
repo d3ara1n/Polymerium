@@ -12,6 +12,7 @@
 
 - 平滑滚动包 SmoothScroll.Avalonia 回归
 - 添加更多页面的持久化视图状态
+- 恢复位于实例统计页面的图表
 
 ### Changed
 
