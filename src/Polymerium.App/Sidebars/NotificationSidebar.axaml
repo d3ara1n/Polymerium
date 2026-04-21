@@ -85,7 +85,7 @@
                                 BoxShadow="0 0 4 0 #3F000000"
                                 CornerRadius="{StaticResource LargeCornerRadius}">
                                 <Panel>
-                                    <husk:SwitchPresenter
+                                    <husk:SwitchContainer
                                         TargetType="husk:GrowlLevel"
                                         Value="{Binding Level}">
                                         <husk:SwitchCase Value="Information">
@@ -120,7 +120,7 @@
                                                 BorderThickness="3,0,0,0"
                                                 CornerRadius="{Binding $parent[Border].CornerRadius}" />
                                         </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
+                                    </husk:SwitchContainer>
                                     <DockPanel Margin="12,8">
                                         <StackPanel
                                             DockPanel.Dock="Bottom"
@@ -158,7 +158,7 @@
                                                 Grid.Row="0"
                                                 Grid.RowSpan="2"
                                                 Grid.Column="0">
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     Width="28"
                                                     Height="28"
                                                     Margin="4"
@@ -176,7 +176,7 @@
                                                     <husk:SwitchCase Value="Danger">
                                                         <Ellipse Fill="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                                 <Ellipse
                                                     Width="28"
                                                     Height="28"

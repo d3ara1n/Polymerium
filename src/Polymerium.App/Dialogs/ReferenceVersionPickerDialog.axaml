@@ -21,7 +21,7 @@
         <ListBox.ItemTemplate>
             <DataTemplate DataType="app:InstanceReferenceVersionModel">
                 <StackPanel>
-                    <husk:SwitchPresenter
+                    <husk:SwitchContainer
                         TargetType="x:Boolean"
                         Value="{Binding IsCurrent, FallbackValue=False}">
                         <husk:SwitchCase Value="True">
@@ -32,14 +32,14 @@
                         <husk:SwitchCase Value="False">
                             <TextBlock Text="{Binding Display, FallbackValue=Display}" />
                         </husk:SwitchCase>
-                    </husk:SwitchPresenter>
+                    </husk:SwitchContainer>
                     <DockPanel>
                         <StackPanel
                             DockPanel.Dock="Right"
                             Orientation="Horizontal">
                             <TextBlock Text="{Binding UpdatedAt}" />
                         </StackPanel>
-                        <husk:SwitchPresenter
+                        <husk:SwitchContainer
                             TargetType="trident:ReleaseType"
                             Value="{Binding ReleaseTypeRaw, FallbackValue=Release}">
                             <husk:SwitchCase Value="Release">
@@ -63,7 +63,7 @@
                                     <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
-                        </husk:SwitchPresenter>
+                        </husk:SwitchContainer>
                     </DockPanel>
                 </StackPanel>
             </DataTemplate>

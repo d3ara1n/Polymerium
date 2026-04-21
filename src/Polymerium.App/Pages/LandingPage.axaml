@@ -119,11 +119,11 @@
             RowSpacing="12">
 
             <!--  Continue Play  -->
-            <husk:PlaceholderPresenter
+            <husk:PlaceholderContainer
                 Grid.Row="0"
                 Grid.Column="0"
                 Source="{Binding RecentPlay}">
-                <husk:PlaceholderPresenter.SourceTemplate>
+                <husk:PlaceholderContainer.SourceTemplate>
                     <DataTemplate DataType="app:RecentPlayModel">
                         <husk:Card
                             BorderBrush="{StaticResource ControlAccentBorderBrush}"
@@ -210,8 +210,8 @@
                             </Grid>
                         </husk:Card>
                     </DataTemplate>
-                </husk:PlaceholderPresenter.SourceTemplate>
-                <husk:PlaceholderPresenter.Placeholder>
+                </husk:PlaceholderContainer.SourceTemplate>
+                <husk:PlaceholderContainer.Placeholder>
                     <husk:Card CornerRadius="{StaticResource MediumCornerRadius}">
                         <StackPanel
                             HorizontalAlignment="Center"
@@ -229,8 +229,8 @@
                                 Text="{x:Static lang:Resources.LandingView_NoRecentPlayLabelText}" />
                         </StackPanel>
                     </husk:Card>
-                </husk:PlaceholderPresenter.Placeholder>
-            </husk:PlaceholderPresenter>
+                </husk:PlaceholderContainer.Placeholder>
+            </husk:PlaceholderContainer>
 
             <!--  Featured Modpacks  -->
             <DockPanel

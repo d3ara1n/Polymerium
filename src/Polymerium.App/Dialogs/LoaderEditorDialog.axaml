@@ -11,7 +11,7 @@
     d:DesignWidth="460"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
-    <husk:SwitchPresenter
+    <husk:SwitchContainer
         TargetType="x:Boolean"
         Value="{Binding $parent[app:LoaderEditorDialog].SelectedLoader, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
         <husk:SwitchCase Value="True">
@@ -81,7 +81,7 @@
                                 SelectedValueBinding="{Binding Version}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="app:LoaderCandidateVersionModel">
-                                        <husk:SwitchPresenter
+                                        <husk:SwitchContainer
                                             TargetType="x:Boolean"
                                             Value="{Binding IsRecommended}">
                                             <husk:SwitchCase Value="True">
@@ -95,7 +95,7 @@
                                                     VerticalAlignment="Center"
                                                     Text="{Binding Version}" />
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
@@ -146,5 +146,5 @@
                 </Button>
             </Grid>
         </husk:SwitchCase>
-    </husk:SwitchPresenter>
+    </husk:SwitchContainer>
 </husk:Dialog>

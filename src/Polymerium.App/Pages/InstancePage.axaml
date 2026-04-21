@@ -16,7 +16,7 @@
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <Panel>
-        <!-- <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState"> -->
+        <!-- <husk:SwitchContainer Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState"> -->
         <!--     <husk:SwitchCase Value="Idle" /> -->
         <!--     <husk:SwitchCase Value="Updating"> -->
         <!--         <Rectangle Margin="-250" Opacity="0.2"> -->
@@ -101,7 +101,7 @@
         <!--             </Rectangle.Styles> -->
         <!--         </Rectangle> -->
         <!--     </husk:SwitchCase> -->
-        <!-- </husk:SwitchPresenter> -->
+        <!-- </husk:SwitchContainer> -->
         <husk:DropContainer
             DragOver="DropContainer_OnDragOver"
             Drop="DropContainer_OnDrop">

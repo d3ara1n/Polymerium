@@ -54,7 +54,7 @@
                                     <StackPanel
                                         Grid.Column="0"
                                         VerticalAlignment="Center">
-                                        <husk:SwitchPresenter Value="{Binding Type}">
+                                        <husk:SwitchContainer Value="{Binding Type}">
                                             <husk:SwitchCase Value="And">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource LargeFontSize}"
@@ -90,7 +90,7 @@
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     Symbol="PuzzlePiece" />
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </StackPanel>
 
                                     <!--  选择器信息  -->
@@ -98,7 +98,7 @@
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         Spacing="4">
-                                        <husk:SwitchPresenter Value="{Binding Type}">
+                                        <husk:SwitchContainer Value="{Binding Type}">
                                             <husk:SwitchCase Value="And">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -215,7 +215,7 @@
                                                         Text="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </StackPanel>
 
                                     <!--  操作按钮  -->

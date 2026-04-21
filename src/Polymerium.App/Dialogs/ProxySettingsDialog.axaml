@@ -54,7 +54,7 @@
         </TabStrip>
 
         <!--  Content Area with SwitchPresenter  -->
-        <husk:SwitchPresenter
+        <husk:SwitchContainer
             TargetType="x:Int32"
             Value="{Binding $parent[app:ProxySettingsDialog].SelectedModeIndex}">
             <!--  Auto Mode  -->
@@ -194,7 +194,7 @@
                             </Button>
 
                             <!--  Test Result Display  -->
-                            <husk:SwitchPresenter
+                            <husk:SwitchContainer
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
                                 TargetType="x:Int32"
@@ -252,7 +252,7 @@
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
                                 </husk:SwitchCase>
-                            </husk:SwitchPresenter>
+                            </husk:SwitchContainer>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -285,7 +285,7 @@
                     </StackPanel>
                 </Border>
             </husk:SwitchCase>
-        </husk:SwitchPresenter>
+        </husk:SwitchContainer>
 
         <!--  Restart Required Notice  -->
         <husk:InfoBar>

@@ -67,7 +67,7 @@
                             <fi:SymbolIcon Symbol="Subtract" />
                         </Button>
                         <Button Click="ToggleMaximizeButton_OnClick">
-                            <husk:SwitchPresenter
+                            <husk:SwitchContainer
                                 TargetType="x:Boolean"
                                 Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}">
                                 <husk:SwitchCase Value="True">
@@ -76,7 +76,7 @@
                                 <husk:SwitchCase Value="False">
                                     <fi:SymbolIcon Symbol="Maximize" />
                                 </husk:SwitchCase>
-                            </husk:SwitchPresenter>
+                            </husk:SwitchContainer>
                         </Button>
                         <Button Click="CloseButton_OnClick">
                             <Button.Styles>

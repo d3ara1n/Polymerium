@@ -35,7 +35,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <husk:SwitchPresenter Value="{Binding $parent[app:ProfileRuleSelectorModal].Selector.Type, FallbackValue={x:Null}, Mode=OneWay}">
+                    <husk:SwitchContainer Value="{Binding $parent[app:ProfileRuleSelectorModal].Selector.Type, FallbackValue={x:Null}, Mode=OneWay}">
                         <husk:SwitchCase Value="Purl">
                             <StackPanel Spacing="6">
                                 <TextBlock
@@ -149,7 +149,7 @@
                                 </Button>
                             </StackPanel>
                         </husk:SwitchCase>
-                    </husk:SwitchPresenter>
+                    </husk:SwitchContainer>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

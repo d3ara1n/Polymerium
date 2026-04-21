@@ -60,7 +60,7 @@
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         Spacing="4">
-                                        <husk:SwitchPresenter Value="{Binding Selector.Type}">
+                                        <husk:SwitchContainer Value="{Binding Selector.Type}">
                                             <husk:SwitchCase Value="And">
                                                 <StackPanel
                                                     Orientation="Horizontal"
@@ -175,7 +175,7 @@
                                                         Text="{Binding Selector.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
 
                                         <!--  规则效果  -->
                                         <StackPanel

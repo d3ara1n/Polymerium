@@ -145,7 +145,7 @@
                                                         Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
                                                 </DockPanel>
                                                 <DockPanel>
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         DockPanel.Dock="Right"
                                                         TargetType="x:Boolean"
                                                         Value="{Binding Skipping}">
@@ -161,14 +161,14 @@
                                                                 <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
                                                 </DockPanel>
                                                 <DockPanel>
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         DockPanel.Dock="Right"
                                                         TargetType="x:Boolean"
                                                         Value="{Binding Normalizing}">
@@ -182,7 +182,7 @@
                                                                 <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -372,7 +372,7 @@
                                 </ContentControl.DataTemplates>
                             </ContentControl>
                         </Border>
-                        <husk:SwitchPresenter
+                        <husk:SwitchContainer
                             Grid.Row="1"
                             TargetType="x:Boolean"
                             Value="{Binding Owner.IsLocked}">
@@ -425,7 +425,7 @@
                                                         <DataTemplate DataType="m:InstancePackageVersionModel">
                                                             <StackPanel Spacing="4">
                                                                 <DockPanel>
-                                                                    <husk:SwitchPresenter
+                                                                    <husk:SwitchContainer
                                                                         DockPanel.Dock="Right"
                                                                         TargetType="trident:ReleaseType"
                                                                         Value="{Binding ReleaseTypeRaw, FallbackValue=Release}">
@@ -450,8 +450,8 @@
                                                                                 <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
-                                                                    </husk:SwitchPresenter>
-                                                                    <husk:SwitchPresenter
+                                                                    </husk:SwitchContainer>
+                                                                    <husk:SwitchContainer
                                                                         TargetType="x:Boolean"
                                                                         Value="{Binding IsCurrent, FallbackValue=False}">
                                                                         <husk:SwitchCase Value="True">
@@ -462,7 +462,7 @@
                                                                         <husk:SwitchCase Value="False">
                                                                             <TextBlock Text="{Binding Name, FallbackValue=Display}" />
                                                                         </husk:SwitchCase>
-                                                                    </husk:SwitchPresenter>
+                                                                    </husk:SwitchContainer>
                                                                 </DockPanel>
                                                                 <Grid
                                                                     ColumnDefinitions="Auto,Auto,Auto,*,Auto"
@@ -505,7 +505,7 @@
                                     </husk:LazyContainer.SourceTemplate>
                                 </husk:LazyContainer>
                             </husk:SwitchCase>
-                        </husk:SwitchPresenter>
+                        </husk:SwitchContainer>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependenciesTabText}">
@@ -683,7 +683,7 @@
                                             PastContent="{x:Static lang:Resources.InstancePackageModal_PastTagText}">
                                             <husk:TimelineControl.HeaderTemplate>
                                                 <DataTemplate DataType="m:InstancePackageModificationModel">
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         TargetType="m:InstancePackageModificationKind"
                                                         Value="{Binding Kind}">
                                                         <husk:SwitchCase Value="AddUnversioned">
@@ -751,7 +751,7 @@
                                                                     Symbol="Sparkle" />
                                                             </Border>
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
                                                 </DataTemplate>
                                             </husk:TimelineControl.HeaderTemplate>
                                             <husk:TimelineControl.ItemTemplate>
@@ -760,7 +760,7 @@
                                                         RowDefinitions="Auto,Auto"
                                                         RowSpacing="4">
                                                         <!--  Action description  -->
-                                                        <husk:SwitchPresenter
+                                                        <husk:SwitchContainer
                                                             Grid.Row="0"
                                                             TargetType="m:InstancePackageModificationKind"
                                                             Value="{Binding Kind}">
@@ -825,7 +825,7 @@
                                                                     </InlineUIContainer>
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
-                                                        </husk:SwitchPresenter>
+                                                        </husk:SwitchContainer>
 
                                                         <!--  Timestamp  -->
                                                         <Grid
@@ -873,7 +873,7 @@
                         <TextBlock
                             VerticalAlignment="Center"
                             Text="{x:Static lang:Resources.InstancePackageModal_OperationLabelText}" />
-                        <husk:SwitchPresenter
+                        <husk:SwitchContainer
                             IsVisible="False"
                             TargetType="x:Boolean"
                             Value="{Binding $parent[app:InstancePackageModal].IsDeleting, Mode=OneWay}">
@@ -897,7 +897,7 @@
                                         Symbol="ArrowReset" />
                                 </Button>
                             </husk:SwitchCase>
-                        </husk:SwitchPresenter>
+                        </husk:SwitchContainer>
                         <ToggleSwitch
                             IsChecked="{Binding Owner.IsEnabled, Mode=TwoWay}"
                             OffContent="{x:Static lang:Resources.Enum_Disabled}"

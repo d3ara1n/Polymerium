@@ -81,8 +81,8 @@
                                 </Transitions>
                             </TextBlock.Transitions>
                         </TextBlock>
-                        <husk:PlaceholderPresenter Source="{Binding Info}">
-                            <husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:PlaceholderContainer Source="{Binding Info}">
+                            <husk:PlaceholderContainer.SourceTemplate>
                                 <DataTemplate DataType="app:InstancePackageInfoModel">
                                     <Grid
                                         Margin="{StaticResource CardContentMargin}"
@@ -196,14 +196,14 @@
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>
-                            </husk:PlaceholderPresenter.SourceTemplate>
-                            <husk:PlaceholderPresenter.Placeholder>
+                            </husk:PlaceholderContainer.SourceTemplate>
+                            <husk:PlaceholderContainer.Placeholder>
                                 <husk:SkeletonContainer
                                     CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}"
                                     IsAnimated="{TemplateBinding IsRefreshing}"
                                     IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
-                            </husk:PlaceholderPresenter.Placeholder>
-                        </husk:PlaceholderPresenter>
+                            </husk:PlaceholderContainer.Placeholder>
+                        </husk:PlaceholderContainer>
                     </Panel>
                 </husk:Card>
             </ControlTemplate>
@@ -257,8 +257,8 @@
                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </husk:Card.Transitions>
-                    <husk:PlaceholderPresenter Source="{Binding Info}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding Info}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate x:DataType="app:InstancePackageInfoModel">
                                 <Border
                                     Width="64"
@@ -271,14 +271,14 @@
                                     </Border.Background>
                                 </Border>
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
-                        <husk:PlaceholderPresenter.Placeholder>
+                        </husk:PlaceholderContainer.SourceTemplate>
+                        <husk:PlaceholderContainer.Placeholder>
                             <husk:SkeletonContainer
                                 CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}"
                                 IsAnimated="{TemplateBinding IsRefreshing}"
                                 IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
-                        </husk:PlaceholderPresenter.Placeholder>
-                    </husk:PlaceholderPresenter>
+                        </husk:PlaceholderContainer.Placeholder>
+                    </husk:PlaceholderContainer>
                 </husk:Card>
             </ControlTemplate>
         </Setter>

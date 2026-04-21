@@ -45,7 +45,7 @@
         </StackPanel>
 
         <!--  Status Card - Changes based on privilege state  -->
-        <husk:SwitchPresenter
+        <husk:SwitchContainer
             TargetType="x:Boolean"
             Value="{Binding $parent[app:OobePrivilege].IsPrivilegeGranted}">
             <!--  Privilege Granted - Success Card  -->
@@ -114,7 +114,7 @@
                     </Grid>
                 </Border>
             </husk:SwitchCase>
-        </husk:SwitchPresenter>
+        </husk:SwitchContainer>
 
         <!--  Instructions Card (always visible)  -->
         <Border

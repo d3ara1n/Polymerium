@@ -72,7 +72,7 @@
                     BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="{StaticResource SmallCornerRadius}">
-                    <husk:SwitchPresenter Value="{Binding Type}">
+                    <husk:SwitchContainer Value="{Binding Type}">
                         <husk:SwitchCase Value="{x:Type accounts:TrialAccount}">
                             <StackPanel Spacing="8">
                                 <TextBlock
@@ -136,7 +136,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </husk:SwitchCase>
-                    </husk:SwitchPresenter>
+                    </husk:SwitchContainer>
                 </Border>
             </StackPanel>
         </Border>
