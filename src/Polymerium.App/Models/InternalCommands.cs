@@ -15,54 +15,68 @@ namespace Polymerium.App.Models;
 
 public static class InternalCommands
 {
-    public static ICommand OpenUriCommand { get; } = new AsyncRelayCommand<Uri>(uri =>
-    {
-        if (uri != null && uri.IsAbsoluteUri)
+    public static ICommand OpenUriCommand { get; } =
+        new AsyncRelayCommand<Uri>(uri =>
         {
-            return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(MainWindow.Instance), uri, "Failed to open link");
-        }
+            if (uri != null && uri.IsAbsoluteUri)
+            {
+                return TopLevelHelper.LaunchUriAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    uri,
+                    "Failed to open link"
+                );
+            }
 
-        return Task.CompletedTask;
-    });
+            return Task.CompletedTask;
+        });
 
-    public static ICommand OpenStringUriCommand { get; } = new AsyncRelayCommand<string>(str =>
-    {
-        if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
+    public static ICommand OpenStringUriCommand { get; } =
+        new AsyncRelayCommand<string>(str =>
         {
-            return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(MainWindow.Instance),
-                                                 new Uri(str),
-                                                 "Failed to open link");
-        }
+            if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
+            {
+                return TopLevelHelper.LaunchUriAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    new Uri(str),
+                    "Failed to open link"
+                );
+            }
 
-        return Task.CompletedTask;
-    });
+            return Task.CompletedTask;
+        });
 
-    public static ICommand OpenFolderCommand { get; } = new AsyncRelayCommand<string>(path =>
-    {
-        if (File.Exists(path))
+    public static ICommand OpenFolderCommand { get; } =
+        new AsyncRelayCommand<string>(path =>
         {
-            path = Path.GetDirectoryName(path);
-        }
+            if (File.Exists(path))
+            {
+                path = Path.GetDirectoryName(path);
+            }
 
-        if (path != null && Directory.Exists(path))
+            if (path != null && Directory.Exists(path))
+            {
+                return TopLevelHelper.LaunchDirectoryInfoAsync(
+                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    new(path),
+                    "Failed to open folder"
+                );
+            }
+
+            return Task.CompletedTask;
+        });
+
+    public static ICommand CopyToClipboardCommand { get; } =
+        new AsyncRelayCommand<string>(async text =>
         {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
-                                                           new(path),
-                                                           "Failed to open folder");
-        }
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
 
-        return Task.CompletedTask;
-    });
-
-    public static ICommand CopyToClipboardCommand { get; } = new AsyncRelayCommand<string>(async text =>
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return;
-        }
-
-        await TopLevelHelper.CopyToClipboardAsync(TopLevel.GetTopLevel(MainWindow.Instance),
-                                                  text,
-                                                  "Failed to copy text");
-    });
+            await TopLevelHelper.CopyToClipboardAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                text,
+                "Failed to copy text"
+            );
+        });
 }

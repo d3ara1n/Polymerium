@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -17,7 +17,8 @@ namespace Polymerium.App.PageModels;
 public partial class InstanceWorkspacePageModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager) : InstancePageModelBase(bag, instanceManager, profileManager)
+    ProfileManager profileManager
+) : InstancePageModelBase(bag, instanceManager, profileManager)
 {
     #region Direct
 
@@ -68,17 +69,19 @@ public partial class InstanceWorkspacePageModel(
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                changes.Add(new()
-                {
-                    RelativePath = liveEntry,
-                    Name = Path.GetFileName(livePath),
-                    Kind = kind,
-                    LivePath = livePath,
-                    ImportPath = importPath,
-                    FileType = type,
-                    FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTimeUtc
-                });
+                changes.Add(
+                    new()
+                    {
+                        RelativePath = liveEntry,
+                        Name = Path.GetFileName(livePath),
+                        Kind = kind,
+                        LivePath = livePath,
+                        ImportPath = importPath,
+                        FileType = type,
+                        FileSizeRaw = file.Length,
+                        FileLastModifiedRaw = file.LastWriteTimeUtc,
+                    }
+                );
             }
         }
 
@@ -97,9 +100,8 @@ public partial class InstanceWorkspacePageModel(
 
         return
         [
-            .. root
-              .EnumerateFiles("*", SearchOption.AllDirectories)
-              .Select(file => Path.GetRelativePath(folder, file.FullName)),
+            .. root.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(file => Path.GetRelativePath(folder, file.FullName)),
         ];
     }
 
