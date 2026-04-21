@@ -29,8 +29,8 @@
                 FontWeight="{StaticResource ControlStrongFontWeight}"
                 Text="Jar In Jar Scanner" />
         </DockPanel>
-        <husk:PlaceholderPresenter Margin="16">
-            <husk:PlaceholderPresenter.Placeholder>
+        <husk:PlaceholderContainer Margin="16">
+            <husk:PlaceholderContainer.Placeholder>
                 <DockPanel
                     VerticalAlignment="Center"
                     VerticalSpacing="12">
@@ -58,7 +58,7 @@
                         <TextBlock Text="Scanning jar files...(0/0)" />
                     </DockPanel>
                 </DockPanel>
-            </husk:PlaceholderPresenter.Placeholder>
-        </husk:PlaceholderPresenter>
+            </husk:PlaceholderContainer.Placeholder>
+        </husk:PlaceholderContainer>
     </DockPanel>
 </husk:Modal>

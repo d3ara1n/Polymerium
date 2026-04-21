@@ -48,7 +48,7 @@
                                     Grid.Row="0"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Text="{Binding ProjectName}" />
-                                <husk:SwitchPresenter
+                                <husk:SwitchContainer
                                     Grid.Row="1"
                                     TargetType="app:InstanceActionKind"
                                     Value="{Binding Kind}">
@@ -78,9 +78,9 @@
                                             Classes="Status Small"
                                             Content="Unknown" />
                                     </husk:SwitchCase>
-                                </husk:SwitchPresenter>
+                                </husk:SwitchContainer>
                             </Grid>
-                            <husk:SwitchPresenter
+                            <husk:SwitchContainer
                                 Grid.Column="2"
                                 VerticalAlignment="Center"
                                 TargetType="app:InstanceActionKind"
@@ -105,7 +105,7 @@
                                             Text="{Binding OldVersionName}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
-                            </husk:SwitchPresenter>
+                            </husk:SwitchContainer>
                             <StackPanel Grid.Column="3">
                                 <TextBlock
                                     HorizontalAlignment="Right"

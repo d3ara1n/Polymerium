@@ -151,7 +151,7 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="6">
-                                <husk:SwitchPresenter
+                                <husk:SwitchContainer
                                     Width="{StaticResource MediumFontSize}"
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
@@ -170,7 +170,7 @@
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Search" />
                                     </husk:SwitchCase>
-                                </husk:SwitchPresenter>
+                                </husk:SwitchContainer>
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{x:Static lang:Resources.MarketplaceSearchView_SearchButtonText}" />

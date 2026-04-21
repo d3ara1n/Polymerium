@@ -575,11 +575,11 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="0">
-                    <husk:SwitchPresenter
+                    <husk:SwitchContainer
                         TargetType="trident:InstanceState"
                         Value="{Binding State}">
                         <husk:SwitchCase Value="Idle">
-                            <husk:SwitchPresenter
+                            <husk:SwitchContainer
                                 TargetType="x:Boolean"
                                 Value="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay, FallbackValue={x:False}}">
                                 <husk:SwitchCase Value="{x:True}">
@@ -616,7 +616,7 @@
                                             Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
-                            </husk:SwitchPresenter>
+                            </husk:SwitchContainer>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="Deploying">
                             <Panel Margin="8">
@@ -704,14 +704,14 @@
                                     Unloaded="Timer_OnUnloaded" />
                             </Panel>
                         </husk:SwitchCase>
-                    </husk:SwitchPresenter>
+                    </husk:SwitchContainer>
                 </husk:Card>
 
             </Grid>
             <husk:Card
                 Grid.Column="1"
                 Padding="0">
-                <husk:SwitchPresenter
+                <husk:SwitchContainer
                     TargetType="trident:InstanceState"
                     Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
@@ -765,8 +765,8 @@
                                     Command="{Binding SwitchAccountCommand}"
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     Theme="{StaticResource OutlineButtonTheme}">
-                                    <husk:PlaceholderPresenter Source="{Binding SelectedAccount}">
-                                        <husk:PlaceholderPresenter.Placeholder>
+                                    <husk:PlaceholderContainer Source="{Binding SelectedAccount}">
+                                        <husk:PlaceholderContainer.Placeholder>
                                             <Grid
                                                 ColumnDefinitions="Auto,*"
                                                 ColumnSpacing="8"
@@ -791,8 +791,8 @@
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonSubtitle}" />
                                             </Grid>
-                                        </husk:PlaceholderPresenter.Placeholder>
-                                        <husk:PlaceholderPresenter.SourceTemplate>
+                                        </husk:PlaceholderContainer.Placeholder>
+                                        <husk:PlaceholderContainer.SourceTemplate>
                                             <DataTemplate x:DataType="app:AccountModel">
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
@@ -823,8 +823,8 @@
                                                         Text="{Binding TypeName, FallbackValue=Legacy}" />
                                                 </Grid>
                                             </DataTemplate>
-                                        </husk:PlaceholderPresenter.SourceTemplate>
-                                    </husk:PlaceholderPresenter>
+                                        </husk:PlaceholderContainer.SourceTemplate>
+                                    </husk:PlaceholderContainer>
                                 </Button>
                             </DockPanel>
                         </DockPanel>
@@ -913,7 +913,7 @@
                             </Grid>
                         </Grid>
                     </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                </husk:SwitchContainer>
             </husk:Card>
         </Grid>
     </Grid>

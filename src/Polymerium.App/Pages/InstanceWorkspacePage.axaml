@@ -39,7 +39,7 @@
                                             Grid.Column="0"
                                             Text="{Binding Name}"
                                             TextTrimming="CharacterEllipsis" />
-                                        <husk:SwitchPresenter
+                                        <husk:SwitchContainer
                                             Grid.Row="0"
                                             Grid.Column="1"
                                             TargetType="app:WorkspaceChangeKind"
@@ -67,7 +67,7 @@
                                                     Content="已删除"
                                                     ToolTip.Tip="该文件的初始版本被移除，通常是由整合包更新引起。" />
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                         <TextBlock
                                             Grid.Row="1"
                                             Grid.Column="0"
@@ -84,13 +84,13 @@
                         Grid.Column="1"
                         ResizeDirection="Columns" />
                     <ScrollViewer Grid.Column="2">
-                        <husk:PlaceholderPresenter Source="{Binding SelectedChange}">
-                            <husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:PlaceholderContainer Source="{Binding SelectedChange}">
+                            <husk:PlaceholderContainer.SourceTemplate>
                                 <DataTemplate x:DataType="app:WorkspaceChangeModel">
                                     <StackPanel Spacing="12">
                                         <husk:Card BorderThickness="0">
                                             <Grid ColumnDefinitions="Auto,*">
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     Grid.Column="0"
                                                     Width="4"
                                                     TargetType="app:WorkspaceChangeKind"
@@ -115,7 +115,7 @@
                                                             Background="{StaticResource ControlAccentBackgroundBrush}"
                                                             CornerRadius="2" />
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                                 <StackPanel
                                                     Grid.Column="1"
                                                     Margin="12,0,0,0"
@@ -135,7 +135,7 @@
                                                         ItemSpacing="6"
                                                         LineSpacing="6">
                                                         <husk:Tag Content="{Binding FileType, Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                                        <husk:SwitchPresenter
+                                                        <husk:SwitchContainer
                                                             TargetType="app:WorkspaceChangeKind"
                                                             Value="{Binding Kind}">
                                                             <husk:SwitchCase Value="Updated">
@@ -158,7 +158,7 @@
                                                                     Classes="Success"
                                                                     Content="无变化" />
                                                             </husk:SwitchCase>
-                                                        </husk:SwitchPresenter>
+                                                        </husk:SwitchContainer>
                                                     </WrapPanel>
                                                 </StackPanel>
                                             </Grid>
@@ -219,7 +219,7 @@
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                                     Text="建议操作" />
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     TargetType="app:WorkspaceChangeKind"
                                                     Value="{Binding Kind}">
                                                     <husk:SwitchCase Value="Updated">
@@ -272,7 +272,7 @@
                                                             </Button>
                                                         </StackPanel>
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                                 <husk:ButtonGroup>
                                                     <Button
                                                         Command="{x:Static app:InternalCommands.OpenFolderCommand}"
@@ -293,7 +293,7 @@
                                         </husk:Card>
                                     </StackPanel>
                                 </DataTemplate>
-                            </husk:PlaceholderPresenter.SourceTemplate>
+                            </husk:PlaceholderContainer.SourceTemplate>
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -306,7 +306,7 @@
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="右侧会显示文件信息和可用操作。" />
                             </StackPanel>
-                        </husk:PlaceholderPresenter>
+                        </husk:PlaceholderContainer>
                     </ScrollViewer>
 
                 </Grid>

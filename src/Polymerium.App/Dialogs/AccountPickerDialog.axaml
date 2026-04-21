@@ -13,7 +13,7 @@
     Width="256"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
-    <husk:SwitchPresenter
+    <husk:SwitchContainer
         TargetType="x:Boolean"
         Value="{Binding $parent[app:AccountPickerDialog].AccountsSource.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
         <husk:SwitchCase Value="{x:False}">
@@ -86,5 +86,5 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </husk:SwitchCase>
-    </husk:SwitchPresenter>
+    </husk:SwitchContainer>
 </husk:Dialog>

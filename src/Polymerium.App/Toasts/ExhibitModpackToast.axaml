@@ -124,7 +124,7 @@
                                             <Grid
                                                 ColumnDefinitions="Auto,*,Auto"
                                                 ColumnSpacing="4">
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     Grid.Column="0"
                                                     TargetType="trident:ReleaseType"
                                                     Value="{Binding TypeRaw, FallbackValue=Release}">
@@ -149,7 +149,7 @@
                                                             <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     Text="{Binding VersionName, FallbackValue=Display}" />
@@ -169,7 +169,7 @@
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
                                                     ColumnSpacing="4">
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         Grid.Column="0"
                                                         TargetType="trident:ReleaseType"
                                                         Value="{Binding TypeRaw, FallbackValue=Release}">
@@ -194,7 +194,7 @@
                                                                 <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         Text="{Binding VersionName, FallbackValue=Display}"

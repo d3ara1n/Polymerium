@@ -122,7 +122,7 @@
             Padding="12"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
-            <husk:SwitchPresenter
+            <husk:SwitchContainer
                 TargetType="x:Boolean"
                 Value="{Binding $parent[app:AppUpdateModal].Model.ReleaseNotes, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
                 <husk:SwitchCase Value="{x:True}">
@@ -144,7 +144,7 @@
                             Text="{x:Static lang:Resources.AppUpdateModal_NoReleaseNotesLabelText}" />
                     </StackPanel>
                 </husk:SwitchCase>
-            </husk:SwitchPresenter>
+            </husk:SwitchContainer>
         </Border>
     </DockPanel>
 </husk:Modal>

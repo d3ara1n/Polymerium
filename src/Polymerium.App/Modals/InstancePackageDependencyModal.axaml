@@ -149,7 +149,7 @@
                                     <DataTemplate DataType="m:InstancePackageVersionModel">
                                         <StackPanel Spacing="4">
                                             <DockPanel>
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     DockPanel.Dock="Right"
                                                     TargetType="trident:ReleaseType"
                                                     Value="{Binding ReleaseTypeRaw, FallbackValue=Release}">
@@ -174,7 +174,7 @@
                                                             <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                                 <TextBlock Text="{Binding Name, FallbackValue=Display}" />
                                             </DockPanel>
                                             <Grid

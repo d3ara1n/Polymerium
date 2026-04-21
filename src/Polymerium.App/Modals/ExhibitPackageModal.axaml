@@ -81,7 +81,7 @@
                                                         <Grid
                                                             ColumnDefinitions="Auto,*"
                                                             ColumnSpacing="4">
-                                                            <husk:SwitchPresenter
+                                                            <husk:SwitchContainer
                                                                 Grid.Column="0"
                                                                 TargetType="trident:ReleaseType"
                                                                 Value="{Binding TypeRaw, FallbackValue=Release}">
@@ -106,7 +106,7 @@
                                                                         <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                                     </husk:Tag>
                                                                 </husk:SwitchCase>
-                                                            </husk:SwitchPresenter>
+                                                            </husk:SwitchContainer>
                                                             <TextBlock
                                                                 Grid.Column="1"
                                                                 Text="{Binding VersionName, FallbackValue=Display}"
@@ -287,7 +287,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <husk:SwitchPresenter
+                    <husk:SwitchContainer
                         Grid.Row="2"
                         TargetType="app:ExhibitState"
                         Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
@@ -337,7 +337,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="MailInbox" />
-                                        <husk:SwitchPresenter
+                                        <husk:SwitchContainer
                                             TargetType="x:Boolean"
                                             Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
@@ -354,7 +354,7 @@
                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </StackPanel>
                                 </husk:Tag>
                                 <ContentControl
@@ -432,7 +432,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="AddCircle" />
-                                        <husk:SwitchPresenter
+                                        <husk:SwitchContainer
                                             TargetType="x:Boolean"
                                             Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
@@ -449,7 +449,7 @@
                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </StackPanel>
                                 </husk:Tag>
                                 <ContentControl
@@ -501,7 +501,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="MailInbox" />
-                                        <husk:SwitchPresenter
+                                        <husk:SwitchContainer
                                             TargetType="x:Boolean"
                                             Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
@@ -518,7 +518,7 @@
                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </StackPanel>
                                 </husk:Tag>
                                 <husk:Tag
@@ -531,7 +531,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="Pen" />
-                                        <husk:SwitchPresenter
+                                        <husk:SwitchContainer
                                             TargetType="x:Boolean"
                                             Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
@@ -548,7 +548,7 @@
                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </StackPanel>
                                 </husk:Tag>
                                 <ContentControl
@@ -635,7 +635,7 @@
                                 </Grid>
                             </Grid>
                         </husk:SwitchCase>
-                    </husk:SwitchPresenter>
+                    </husk:SwitchContainer>
                 </Grid>
             </Grid>
         </Border>
@@ -927,7 +927,7 @@
                                                                         Fill="{StaticResource ControlBorderBrush}" />
 
                                                                     <!--  Action icon with colored background  -->
-                                                                    <husk:SwitchPresenter
+                                                                    <husk:SwitchContainer
                                                                         Grid.Row="1"
                                                                         TargetType="app:InstancePackageModificationKind"
                                                                         Value="{Binding Kind}">
@@ -996,7 +996,7 @@
                                                                                     Symbol="Sparkle" />
                                                                             </Border>
                                                                         </husk:SwitchCase>
-                                                                    </husk:SwitchPresenter>
+                                                                    </husk:SwitchContainer>
 
                                                                     <!--  Bottom connector line  -->
                                                                     <Rectangle
@@ -1017,7 +1017,7 @@
                                                                         RowDefinitions="Auto,Auto"
                                                                         RowSpacing="4">
                                                                         <!--  Action description  -->
-                                                                        <husk:SwitchPresenter
+                                                                        <husk:SwitchContainer
                                                                             Grid.Row="0"
                                                                             TargetType="app:InstancePackageModificationKind"
                                                                             Value="{Binding Kind}">
@@ -1082,7 +1082,7 @@
                                                                                     </InlineUIContainer>
                                                                                 </TextBlock>
                                                                             </husk:SwitchCase>
-                                                                        </husk:SwitchPresenter>
+                                                                        </husk:SwitchContainer>
 
                                                                         <!--  Timestamp  -->
                                                                         <Grid

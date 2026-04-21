@@ -23,8 +23,8 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Mod}" />
-                    <husk:PlaceholderPresenter Source="{Binding Mods}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding Mods}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="(" />
@@ -35,12 +35,12 @@
                                     <TextBlock Text=")" />
                                 </StackPanel>
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <husk:ProgressRing
                             Width="{Binding $parent[TabItem].FontSize}"
                             Height="{Binding $parent[TabItem].FontSize}"
                             IsIndeterminate="{Binding Mods, Converter={x:Static ObjectConverters.IsNull}}" />
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </StackPanel>
             </TabItem.Header>
             <Grid
@@ -267,7 +267,7 @@
                                                     <DockPanel>
 
                                                         <!--  状态指示器  -->
-                                                        <husk:SwitchPresenter
+                                                        <husk:SwitchContainer
                                                             DockPanel.Dock="Right"
                                                             Width="8"
                                                             Height="8"
@@ -275,7 +275,7 @@
                                                             TargetType="x:Boolean"
                                                             Value="{Binding IsLocked}">
                                                             <husk:SwitchCase Value="{x:False}">
-                                                                <husk:SwitchPresenter
+                                                                <husk:SwitchContainer
                                                                     Width="8"
                                                                     Height="8"
                                                                     TargetType="x:Boolean"
@@ -290,14 +290,14 @@
                                                                             Background="{StaticResource ControlDangerBackgroundBrush}"
                                                                             CornerRadius="4" />
                                                                     </husk:SwitchCase>
-                                                                </husk:SwitchPresenter>
+                                                                </husk:SwitchContainer>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="{x:True}">
                                                                 <Border
                                                                     Background="{StaticResource ControlWarningBackgroundBrush}"
                                                                     CornerRadius="4" />
                                                             </husk:SwitchCase>
-                                                        </husk:SwitchPresenter>
+                                                        </husk:SwitchContainer>
 
                                                         <!--  模组名  -->
                                                         <TextBlock
@@ -345,8 +345,8 @@
 
                     <!--  右侧：详细信息面板  -->
                     <ScrollViewer Grid.Column="2">
-                        <husk:PlaceholderPresenter Source="{Binding SelectedMod}">
-                            <husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:PlaceholderContainer Source="{Binding SelectedMod}">
+                            <husk:PlaceholderContainer.SourceTemplate>
                                 <DataTemplate DataType="app:AssetModModel">
                                     <StackPanel Spacing="8">
                                         <!--  Mod 头部  -->
@@ -400,7 +400,7 @@
                                             <Button
                                                 Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ToggleModCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     TargetType="x:Boolean"
                                                     Value="{Binding IsEnabled}">
                                                     <husk:SwitchCase Value="{x:True}">
@@ -413,7 +413,7 @@
                                                             Icon="Power"
                                                             Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                             </Button>
                                             <Button
                                                 Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
@@ -517,7 +517,7 @@
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{x:Static lang:Resources.InstanceFilesView_AssetStatusLabelText}" />
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         Grid.Row="5"
                                                         Grid.Column="1"
                                                         TargetType="x:Boolean"
@@ -532,7 +532,7 @@
                                                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                                 Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
                                                 </Grid>
                                             </StackPanel>
                                         </husk:Card>
@@ -555,7 +555,7 @@
                                         </husk:Card>
                                     </StackPanel>
                                 </DataTemplate>
-                            </husk:PlaceholderPresenter.SourceTemplate>
+                            </husk:PlaceholderContainer.SourceTemplate>
 
                             <!--  空状态  -->
                             <StackPanel
@@ -572,7 +572,7 @@
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{x:Static lang:Resources.InstanceFilesView_AssetEmptyPrompt}" />
                             </StackPanel>
-                        </husk:PlaceholderPresenter>
+                        </husk:PlaceholderContainer>
                     </ScrollViewer>
                 </Grid>
             </Grid>
@@ -583,17 +583,17 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Server}" />
-                    <husk:PlaceholderPresenter Source="{Binding Servers}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding Servers}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
                                 <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <husk:ProgressRing
                             Width="{Binding $parent[TabItem].FontSize}"
                             Height="{Binding $parent[TabItem].FontSize}"
                             IsIndeterminate="{Binding Servers, Converter={x:Static ObjectConverters.IsNull}}" />
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </StackPanel>
             </TabItem.Header>
             <Grid
@@ -658,7 +658,7 @@
                                                     </TextBlock>
                                                 </husk:Tag>
                                                 <husk:Tag Content="{Binding VersionName}" />
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     TargetType="x:Boolean"
                                                     Value="{Binding Metadata.AcceptTextures}">
                                                     <husk:SwitchCase Value="{x:True}">
@@ -688,7 +688,7 @@
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                             </StackPanel>
                                             <Border
                                                 Padding="12,8"
@@ -729,7 +729,7 @@
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                 Text="{Binding Address}"
                                                 TextTrimming="CharacterEllipsis" />
-                                            <husk:SwitchPresenter
+                                            <husk:SwitchContainer
                                                 Grid.Row="0"
                                                 Grid.RowSpan="2"
                                                 Grid.Column="2"
@@ -739,7 +739,7 @@
                                                     <husk:Tag Content="{x:Static lang:Resources.InstanceFilesView_ServerCheckingText}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="{x:False}">
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         TargetType="x:Boolean"
                                                         Value="{Binding LatencyMilliseconds, Converter={x:Static ObjectConverters.IsNotNull}}">
                                                         <husk:SwitchCase Value="{x:True}">
@@ -752,9 +752,9 @@
                                                                 Classes="Danger"
                                                                 Content="{x:Static lang:Resources.InstanceFilesView_ServerUnavailableText}" />
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
                                                 </husk:SwitchCase>
-                                            </husk:SwitchPresenter>
+                                            </husk:SwitchContainer>
                                         </Grid>
                                     </DockPanel>
                                 </DataTemplate>
@@ -770,17 +770,17 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_ResourcePack}" />
-                    <husk:PlaceholderPresenter Source="{Binding ResourcePacks}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding ResourcePacks}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
                                 <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <husk:ProgressRing
                             Width="{Binding $parent[TabItem].FontSize}"
                             Height="{Binding $parent[TabItem].FontSize}"
                             IsIndeterminate="{Binding ResourcePacks, Converter={x:Static ObjectConverters.IsNull}}" />
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </StackPanel>
             </TabItem.Header>
             <Grid
@@ -842,7 +842,7 @@
                                                 <DockPanel>
 
                                                     <!--  状态指示器  -->
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         DockPanel.Dock="Right"
                                                         Width="8"
                                                         Height="8"
@@ -850,7 +850,7 @@
                                                         TargetType="x:Boolean"
                                                         Value="{Binding IsLocked}">
                                                         <husk:SwitchCase Value="{x:False}">
-                                                            <husk:SwitchPresenter
+                                                            <husk:SwitchContainer
                                                                 Width="8"
                                                                 Height="8"
                                                                 TargetType="x:Boolean"
@@ -865,14 +865,14 @@
                                                                         Background="{StaticResource ControlDangerBackgroundBrush}"
                                                                         CornerRadius="4" />
                                                                 </husk:SwitchCase>
-                                                            </husk:SwitchPresenter>
+                                                            </husk:SwitchContainer>
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="{x:True}">
                                                             <Border
                                                                 Background="{StaticResource ControlWarningBackgroundBrush}"
                                                                 CornerRadius="4" />
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
 
                                                     <!--  资源包名  -->
                                                     <TextBlock
@@ -919,8 +919,8 @@
 
                 <!--  右侧：详细信息面板  -->
                 <ScrollViewer Grid.Column="2">
-                    <husk:PlaceholderPresenter Source="{Binding SelectedResourcePack}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding SelectedResourcePack}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="app:AssetResourcePackModel">
                                 <StackPanel Spacing="8">
                                     <!--  资源包头部  -->
@@ -967,7 +967,7 @@
                                         <Button
                                             Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ToggleResourcePackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
-                                            <husk:SwitchPresenter
+                                            <husk:SwitchContainer
                                                 TargetType="x:Boolean"
                                                 Value="{Binding IsEnabled}">
                                                 <husk:SwitchCase Value="{x:True}">
@@ -980,7 +980,7 @@
                                                         Icon="Power"
                                                         Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                 </husk:SwitchCase>
-                                            </husk:SwitchPresenter>
+                                            </husk:SwitchContainer>
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
@@ -1070,7 +1070,7 @@
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="{x:Static lang:Resources.InstanceFilesView_AssetStatusLabelText}" />
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     Grid.Row="4"
                                                     Grid.Column="1"
                                                     TargetType="x:Boolean"
@@ -1085,13 +1085,13 @@
                                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                             Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                             </Grid>
                                         </StackPanel>
                                     </husk:Card>
                                 </StackPanel>
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
 
                         <!--  空状态  -->
                         <StackPanel
@@ -1108,7 +1108,7 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.InstanceFilesView_AssetEmptyPrompt}" />
                         </StackPanel>
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </ScrollViewer>
             </Grid>
         </TabItem>
@@ -1118,17 +1118,17 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_DataPack}" />
-                    <husk:PlaceholderPresenter Source="{Binding DataPacks}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding DataPacks}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
                                 <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <husk:ProgressRing
                             Width="{Binding $parent[TabItem].FontSize}"
                             Height="{Binding $parent[TabItem].FontSize}"
                             IsIndeterminate="{Binding DataPacks, Converter={x:Static ObjectConverters.IsNull}}" />
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </StackPanel>
             </TabItem.Header>
             <Grid
@@ -1191,7 +1191,7 @@
                                                 <DockPanel>
 
                                                     <!--  状态指示器  -->
-                                                    <husk:SwitchPresenter
+                                                    <husk:SwitchContainer
                                                         DockPanel.Dock="Right"
                                                         Width="8"
                                                         Height="8"
@@ -1199,7 +1199,7 @@
                                                         TargetType="x:Boolean"
                                                         Value="{Binding IsLocked}">
                                                         <husk:SwitchCase Value="{x:False}">
-                                                            <husk:SwitchPresenter
+                                                            <husk:SwitchContainer
                                                                 Width="8"
                                                                 Height="8"
                                                                 TargetType="x:Boolean"
@@ -1214,14 +1214,14 @@
                                                                         Background="{StaticResource ControlDangerBackgroundBrush}"
                                                                         CornerRadius="4" />
                                                                 </husk:SwitchCase>
-                                                            </husk:SwitchPresenter>
+                                                            </husk:SwitchContainer>
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="{x:True}">
                                                             <Border
                                                                 Background="{StaticResource ControlWarningBackgroundBrush}"
                                                                 CornerRadius="4" />
                                                         </husk:SwitchCase>
-                                                    </husk:SwitchPresenter>
+                                                    </husk:SwitchContainer>
 
                                                     <!--  数据包名称  -->
                                                     <TextBlock
@@ -1268,8 +1268,8 @@
 
                 <!--  右侧：详细信息面板  -->
                 <ScrollViewer Grid.Column="2">
-                    <husk:PlaceholderPresenter Source="{Binding SelectedDataPack}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding SelectedDataPack}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="app:AssetDataPackModel">
                                 <StackPanel Spacing="8">
                                     <!--  数据包头部  -->
@@ -1316,7 +1316,7 @@
                                         <Button
                                             Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).ToggleDataPackCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}">
-                                            <husk:SwitchPresenter
+                                            <husk:SwitchContainer
                                                 TargetType="x:Boolean"
                                                 Value="{Binding IsEnabled}">
                                                 <husk:SwitchCase Value="{x:True}">
@@ -1329,7 +1329,7 @@
                                                         Icon="Power"
                                                         Text="{x:Static lang:Resources.Enum_Enabled}" />
                                                 </husk:SwitchCase>
-                                            </husk:SwitchPresenter>
+                                            </husk:SwitchContainer>
                                         </Button>
                                         <Button
                                             Command="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
@@ -1424,7 +1424,7 @@
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="Status:" />
-                                                <husk:SwitchPresenter
+                                                <husk:SwitchContainer
                                                     Grid.Row="4"
                                                     Grid.Column="1"
                                                     TargetType="x:Boolean"
@@ -1439,13 +1439,13 @@
                                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                             Text="{x:Static lang:Resources.Enum_Disabled}" />
                                                     </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
+                                                </husk:SwitchContainer>
                                             </Grid>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
 
                         <!--  空状态  -->
                         <StackPanel
@@ -1462,7 +1462,7 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.InstanceFilesView_AssetEmptyPrompt}" />
                         </StackPanel>
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </ScrollViewer>
             </Grid>
         </TabItem>
@@ -1472,17 +1472,17 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
-                    <husk:PlaceholderPresenter Source="{Binding ScreenshotGroups}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding ScreenshotGroups}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="app:AssetScreenshotCollection">
                                 <TextBlock Text="{Binding ScreenshotCount, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <husk:ProgressRing
                             Width="{Binding $parent[TabItem].FontSize}"
                             Height="{Binding $parent[TabItem].FontSize}"
                             IsIndeterminate="{Binding ScreenshotGroups, Converter={x:Static ObjectConverters.IsNull}}" />
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </StackPanel>
             </TabItem.Header>
             <Panel>
@@ -1657,17 +1657,17 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <TextBlock Text="{x:Static lang:Resources.AssetKind_Save}" />
-                    <husk:PlaceholderPresenter Source="{Binding Worlds}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding Worlds}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
                                 <TextBlock Text="{Binding Count, StringFormat={}({0}), FallbackValue=(0)}" />
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <husk:ProgressRing
                             Width="{Binding $parent[TabItem].FontSize}"
                             Height="{Binding $parent[TabItem].FontSize}"
                             IsIndeterminate="{Binding Worlds, Converter={x:Static ObjectConverters.IsNull}}" />
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </StackPanel>
             </TabItem.Header>
             <Grid
@@ -1715,8 +1715,8 @@
 
                 <!--  存档详情  -->
                 <ScrollViewer Grid.Row="1">
-                    <husk:PlaceholderPresenter Source="{Binding SelectedWorld}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                    <husk:PlaceholderContainer Source="{Binding SelectedWorld}">
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="app:AssetWorldModel">
                                 <StackPanel Spacing="12">
                                     <!--  存档头部  -->
@@ -1894,7 +1894,7 @@
                                                                     <DockPanel>
 
                                                                         <!--  状态指示器  -->
-                                                                        <husk:SwitchPresenter
+                                                                        <husk:SwitchContainer
                                                                             DockPanel.Dock="Right"
                                                                             Width="8"
                                                                             Height="8"
@@ -1911,7 +1911,7 @@
                                                                                     Background="{StaticResource ControlDangerBackgroundBrush}"
                                                                                     CornerRadius="4" />
                                                                             </husk:SwitchCase>
-                                                                        </husk:SwitchPresenter>
+                                                                        </husk:SwitchContainer>
 
                                                                         <!--  数据包名称  -->
                                                                         <TextBlock
@@ -2038,7 +2038,7 @@
                                     </Expander>
                                 </StackPanel>
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
 
                         <!--  空状态  -->
                         <StackPanel
@@ -2055,7 +2055,7 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                         </StackPanel>
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                 </ScrollViewer>
             </Grid>
         </TabItem>

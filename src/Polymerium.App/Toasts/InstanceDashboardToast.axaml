@@ -65,7 +65,7 @@
                 <ItemsControl ItemsSource="{Binding $parent[app:InstanceDashboardToast].Bindable}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="app:ScrapModel">
-                            <husk:SwitchPresenter
+                            <husk:SwitchContainer
                                 TargetType="launching:ScrapLevel"
                                 Value="{Binding Level}">
                                 <!--  Information 级别  -->
@@ -104,7 +104,7 @@
                                             ContentTemplate="{StaticResource ScrapTemplate}" />
                                     </Border>
                                 </husk:SwitchCase>
-                            </husk:SwitchPresenter>
+                            </husk:SwitchContainer>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>

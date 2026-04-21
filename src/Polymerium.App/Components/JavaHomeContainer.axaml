@@ -13,7 +13,7 @@
         Padding="3"
         Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
         CornerRadius="{StaticResource MediumCornerRadius}">
-        <husk:SwitchPresenter
+        <husk:SwitchContainer
             TargetType="x:Boolean"
             Value="{Binding $parent[app:JavaHomeContainer].Home, Converter={x:Static ObjectConverters.IsNotNull}}">
             <husk:SwitchCase Value="{x:True}">
@@ -29,21 +29,21 @@
                         <Grid
                             ColumnDefinitions="Auto,Auto,*"
                             ColumnSpacing="12">
-                            <husk:PlaceholderPresenter
+                            <husk:PlaceholderContainer
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Source="{Binding $parent[app:JavaHomeContainer].Major}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource ExtraLargeFontSize}"
                                     Symbol="Question" />
-                                <husk:PlaceholderPresenter.SourceTemplate>
+                                <husk:PlaceholderContainer.SourceTemplate>
                                     <DataTemplate x:DataType="x:Int32">
                                         <TextBlock
                                             FontSize="{StaticResource ExtraLargeFontSize}"
                                             Text="{Binding}" />
                                     </DataTemplate>
-                                </husk:PlaceholderPresenter.SourceTemplate>
-                            </husk:PlaceholderPresenter>
+                                </husk:PlaceholderContainer.SourceTemplate>
+                            </husk:PlaceholderContainer>
                             <husk:Divider
                                 Grid.Column="1"
                                 Orientation="Vertical" />
@@ -52,17 +52,17 @@
                                 ColumnDefinitions="Auto,*"
                                 ColumnSpacing="8"
                                 RowDefinitions="*,*">
-                                <husk:PlaceholderPresenter
+                                <husk:PlaceholderContainer
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Source="{Binding $parent[app:JavaHomeContainer].Vendor}">
                                     <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_UnknownLabelText}" />
-                                    <husk:PlaceholderPresenter.SourceTemplate>
+                                    <husk:PlaceholderContainer.SourceTemplate>
                                         <DataTemplate x:DataType="x:String">
                                             <TextBlock Text="{Binding}" />
                                         </DataTemplate>
-                                    </husk:PlaceholderPresenter.SourceTemplate>
-                                </husk:PlaceholderPresenter>
+                                    </husk:PlaceholderContainer.SourceTemplate>
+                                </husk:PlaceholderContainer>
                                 <husk:Tag
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -136,6 +136,6 @@
                     </Button>
                 </StackPanel>
             </husk:SwitchCase>
-        </husk:SwitchPresenter>
+        </husk:SwitchContainer>
     </Border>
 </UserControl>

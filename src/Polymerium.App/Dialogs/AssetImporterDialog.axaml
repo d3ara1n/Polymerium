@@ -14,20 +14,20 @@
     Width="420"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
-    <husk:PlaceholderPresenter Source="{Binding $parent[app:AssetImporterDialog].Model, Mode=OneWay}">
-        <husk:PlaceholderPresenter.SourceTemplate>
+    <husk:PlaceholderContainer Source="{Binding $parent[app:AssetImporterDialog].Model, Mode=OneWay}">
+        <husk:PlaceholderContainer.SourceTemplate>
             <DataTemplate DataType="app:AssetIdentificationModel">
                 <Grid
                     ColumnDefinitions="*,*"
                     ColumnSpacing="8"
                     RowDefinitions="*,*,Auto"
                     RowSpacing="8">
-                    <husk:PlaceholderPresenter
+                    <husk:PlaceholderContainer
                         Grid.Row="0"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Source="{Binding Package}">
-                        <husk:PlaceholderPresenter.SourceTemplate>
+                        <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="app:AssetIdentificationPackageModel">
                                 <Border
                                     Padding="4"
@@ -81,7 +81,7 @@
                                     </Grid>
                                 </Border>
                             </DataTemplate>
-                        </husk:PlaceholderPresenter.SourceTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
                         <Border
                             Padding="12"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -95,7 +95,7 @@
                                     TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
-                    </husk:PlaceholderPresenter>
+                    </husk:PlaceholderContainer>
                     <husk:Card
                         Grid.Row="1"
                         Grid.Column="0"
@@ -140,7 +140,7 @@
                         Content="{x:Static lang:Resources.AssetImporterDialog_Prompt}" />
                 </Grid>
             </DataTemplate>
-        </husk:PlaceholderPresenter.SourceTemplate>
+        </husk:PlaceholderContainer.SourceTemplate>
         <husk:ConstrainedBox AspectRatio="16:9">
             <husk:DropZone
                 HorizontalContentAlignment="Center"
@@ -149,7 +149,7 @@
                 DragOver="DropZone_OnDragOver"
                 Drop="DropZone_OnDrop"
                 Model="{Binding $parent[app:AssetImporterDialog].PathAccepted, Mode=OneWayToSource}">
-                <husk:SwitchPresenter
+                <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding $parent[app:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
                     <husk:SwitchCase Value="{x:True}">
@@ -193,8 +193,8 @@
                                 Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
                         </StackPanel>
                     </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                </husk:SwitchContainer>
             </husk:DropZone>
         </husk:ConstrainedBox>
-    </husk:PlaceholderPresenter>
+    </husk:PlaceholderContainer>
 </husk:Dialog>

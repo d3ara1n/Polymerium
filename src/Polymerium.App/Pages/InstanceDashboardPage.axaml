@@ -111,7 +111,7 @@
             Rows="1">
             <!--  运行状态卡片  -->
             <husk:Card Padding="0">
-                <husk:SwitchPresenter
+                <husk:SwitchContainer
                     TargetType="trident:InstanceState"
                     Value="{Binding State}">
                     <!--  Running 状态  -->
@@ -191,12 +191,12 @@
                                 Text="{x:Static lang:Resources.InstanceDashboardView_IdleLabelText}" />
                         </StackPanel>
                     </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                </husk:SwitchContainer>
             </husk:Card>
 
             <!--  游戏次数/处理器占用卡片  -->
             <husk:Card>
-                <husk:SwitchPresenter
+                <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding IsOnAir}">
                     <husk:SwitchCase Value="{x:True}">
@@ -250,12 +250,12 @@
                             </Button>
                         </Grid>
                     </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                </husk:SwitchContainer>
             </husk:Card>
 
             <!--  崩溃次数/内存占用卡片  -->
             <husk:Card>
-                <husk:SwitchPresenter
+                <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding IsOnAir}">
                     <husk:SwitchCase Value="{x:True}">
@@ -319,12 +319,12 @@
                             </Button>
                         </Grid>
                     </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                </husk:SwitchContainer>
             </husk:Card>
 
             <!--  成功率统计/运行时间卡片  -->
             <husk:Card>
-                <husk:SwitchPresenter
+                <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding IsOnAir}">
                     <husk:SwitchCase Value="{x:True}">
@@ -340,7 +340,7 @@
                         </StackPanel>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
-                        <husk:SwitchPresenter
+                        <husk:SwitchContainer
                             TargetType="x:Int32"
                             Value="{Binding SessionCount}">
                             <husk:SwitchCase Value="0">
@@ -380,9 +380,9 @@
                                         Text="{x:Static lang:Resources.InstanceDashboardView_SuccessRateLabelText}" />
                                 </StackPanel>
                             </husk:SwitchCase>
-                        </husk:SwitchPresenter>
+                        </husk:SwitchContainer>
                     </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                </husk:SwitchContainer>
             </husk:Card>
         </UniformGrid>
 
@@ -527,7 +527,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="app:ScrapModel">
-                                        <husk:SwitchPresenter TargetType="launching:ScrapLevel">
+                                        <husk:SwitchContainer TargetType="launching:ScrapLevel">
                                             <!--  Information 级别  -->
                                             <husk:SwitchCase Value="Information">
                                                 <Border
@@ -564,7 +564,7 @@
                                                         ContentTemplate="{StaticResource ScrapTemplate}" />
                                                 </Border>
                                             </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
+                                        </husk:SwitchContainer>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
