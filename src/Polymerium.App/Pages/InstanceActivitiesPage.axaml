@@ -7,6 +7,7 @@
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -139,19 +140,11 @@
                                     Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimeTabText}" />
                             </StackPanel>
                         </TabItem.Header>
-                        <!-- <lvc:CartesianChart
+                        <lvc:CartesianChart
                             Margin="12"
                             Series="{Binding WeekSeries}"
                             XAxes="{Binding XAxes}"
-                            YAxes="{Binding YAxes}" />-->
-                        <Border
-                            Padding="12,8"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                            <TextBlock Text="Removed due to Avalonia 12 incompatibility" />
-                        </Border>
+                            YAxes="{Binding YAxes}" />
                     </TabItem>
 
                     <!--  Tab 2: Health - 健康度统计  -->
