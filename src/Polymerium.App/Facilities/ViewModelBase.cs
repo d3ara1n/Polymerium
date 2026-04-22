@@ -12,39 +12,9 @@ public abstract class ViewModelBase : ObservableObject, IViewModel
 {
     #region IViewModel Members
 
-    public virtual Task InitializeAsync(CancellationToken cancellationToken)
-    {
-        // 判断是否是 IStatedViewModel<T> 并注入 IStatedViewModel<T>.ViewState
-        var statedInterface = GetType()
-                             .GetInterfaces()
-                             .FirstOrDefault(x => x.IsGenericType
-                                               && x.GetGenericTypeDefinition() == typeof(IStatedViewModel<>));
-        if (statedInterface is not null)
-        {
-            var stateType = statedInterface.GetGenericArguments().First();
-            var viewStateService = Program.Services!.GetRequiredService<ViewStateService>();
-            var state = viewStateService.RetrieveForView(this, stateType);
-            statedInterface.GetProperty(nameof(IStatedViewModel<>.ViewState))!.SetValue(this, state);
-        }
+    public virtual Task InitializeAsync(CancellationToken cancellationToken) => OnInitializeAsync(cancellationToken);
 
-        return OnInitializeAsync(cancellationToken);
-    }
-
-    public virtual Task DeinitializeAsync()
-    {
-        // 判断是否是 IStatedViewModel<T> 并尝试释放
-        var statedInterface = GetType()
-                             .GetInterfaces()
-                             .FirstOrDefault(x => x.IsGenericType
-                                               && x.GetGenericTypeDefinition() == typeof(IStatedViewModel<>));
-        if (statedInterface is not null)
-        {
-            var viewStateService = Program.Services!.GetRequiredService<ViewStateService>();
-            viewStateService.ReleaseForView(this);
-        }
-
-        return OnDeinitializeAsync();
-    }
+    public virtual Task DeinitializeAsync() => OnDeinitializeAsync();
 
     #endregion
 

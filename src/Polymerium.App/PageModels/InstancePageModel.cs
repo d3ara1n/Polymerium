@@ -10,6 +10,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -32,7 +34,7 @@ namespace Polymerium.App.PageModels;
 public partial class InstancePageModel : ViewModelBase
 {
     public InstancePageModel(
-        ViewBag bag,
+        IViewContext context,
         OverlayService overlayService,
         ProfileManager profileManager,
         InstanceManager instanceManager,
@@ -49,13 +51,13 @@ public partial class InstancePageModel : ViewModelBase
         _dataService = dataService;
         _persistenceService = persistenceService;
         SelectedPage =
-            bag.Parameter switch
+            context.Parameter switch
             {
                 CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
                 _ => null,
             } ?? PageEntries.FirstOrDefault();
 
-        var key = bag.Parameter switch
+        var key = context.Parameter switch
         {
             CompositeParameter p => p.Key,
             string s => s,

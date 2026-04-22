@@ -8,6 +8,8 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -23,7 +25,7 @@ using Trident.Core.Utilities;
 namespace Polymerium.App.PageModels;
 
 public partial class NewInstancePageModel(
-    ViewBag bag,
+    IViewContext<string> context,
     OverlayService overlayService,
     ProfileManager profileManager,
     NavigationService navigationService,
@@ -42,7 +44,7 @@ public partial class NewInstancePageModel(
             return;
         }
 
-        if (bag.Parameter is string path)
+        if (context.Parameter is {} path)
         {
             await TryImportFromFileAsync(path);
         }

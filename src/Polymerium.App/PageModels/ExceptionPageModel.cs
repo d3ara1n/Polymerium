@@ -1,27 +1,26 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.PageModels;
 
 public partial class ExceptionPageModel : ViewModelBase
 {
-    public ExceptionPageModel(ViewBag bag)
+    public ExceptionPageModel(IViewContext<Exception> context)
     {
-        if (bag.Parameter is Exception exception)
-        {
-            Message = exception.Message;
-            StackTrace = exception.StackTrace ?? "No details provided.";
-        }
+        Message = context.Parameter.Message;
+        StackTrace = context.Parameter.StackTrace ?? "No details provided.";
     }
 
     #region Reactive
 
     [ObservableProperty]
-    public partial string Message { get; set; } = string.Empty;
+    public partial string Message { get; set; }
 
     [ObservableProperty]
-    public partial string StackTrace { get; set; } = string.Empty;
+    public partial string StackTrace { get; set; }
 
     #endregion
 }

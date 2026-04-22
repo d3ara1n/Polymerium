@@ -8,23 +8,22 @@ using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Mixins;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Pages;
 
 namespace Polymerium.App;
 
 public partial class MainWindow : AppWindow
 {
-    public static readonly StyledProperty<bool> IsLeftPanelModeProperty = AvaloniaProperty.Register<
-        MainWindow,
-        bool
-    >(nameof(IsLeftPanelMode));
+    public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
+        AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
 
     public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MainWindow, bool>(
-            nameof(IsTitleBarVisible),
-            o => o.IsTitleBarVisible,
-            (o, v) => o.IsTitleBarVisible = v
-        );
+        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
+                                                          o => o.IsTitleBarVisible,
+                                                          (o, v) => o.IsTitleBarVisible = v);
 
     public MainWindow()
     {
@@ -46,11 +45,7 @@ public partial class MainWindow : AppWindow
 
     public static MainWindow Instance { get; private set; } = null!;
 
-    public Frame.PageActivatorDelegate PageActivator
-    {
-        get => Root.PageActivator;
-        set => Root.PageActivator = value;
-    }
+    internal void SetFrameActivator(IViewActivator activator) => FrameActivationMixin.Install(Root, activator);
 
     internal void SetTransparencyLevelHintByIndex(int index) =>
         TransparencyLevelHint = index switch

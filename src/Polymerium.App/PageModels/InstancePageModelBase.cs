@@ -2,6 +2,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -17,18 +19,16 @@ namespace Polymerium.App.PageModels;
 public abstract partial class InstancePageModelBase : ViewModelBase
 {
     protected InstancePageModelBase(
-        ViewBag bag,
+        IViewContext<InstanceContextParameter> context,
         InstanceManager instanceManager,
-        ProfileManager profileManager
-    )
+        ProfileManager profileManager)
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;
-
-        if (bag.Parameter is InstanceContextParameter context)
+        if (context.Parameter is not null)
         {
-            Basic = context.Basic;
-            Widgets = context.Widgets;
+            Basic = context.Parameter.Basic;
+            Widgets = context.Parameter.Widgets;
         }
         else
         {

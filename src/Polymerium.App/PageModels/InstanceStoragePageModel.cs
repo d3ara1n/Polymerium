@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Utilities;
 using Trident.Abstractions;
@@ -14,10 +16,10 @@ using Trident.Core.Utilities;
 namespace Polymerium.App.PageModels;
 
 public partial class InstanceStoragePageModel(
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     ProfileManager profileManager
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Overrides
 

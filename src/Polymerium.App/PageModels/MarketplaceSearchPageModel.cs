@@ -9,6 +9,9 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
+using Huskui.Avalonia.Mvvm.States;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -24,19 +27,16 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
-public partial class MarketplaceSearchPageModel
-    : ViewModelBase,
-        IStatedViewModel<MarketplaceSearchPageModel.State>
+public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewModel<MarketplaceSearchPageModel.State>
 {
     public MarketplaceSearchPageModel(
-        ViewBag bag,
+        IViewContext<SearchArguments> context,
         RepositoryAgent agent,
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
         DataService dataService,
-        ConfigurationService configurationService
-    )
+        ConfigurationService configurationService)
     {
         _agent = agent;
         _instanceManager = instanceManager;
@@ -45,11 +45,9 @@ public partial class MarketplaceSearchPageModel
         _dataService = dataService;
         _configurationService = configurationService;
 
-        var r = agent
-            .Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper()))
-            .ToList();
+        var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
-        if (bag.Parameter is SearchArguments arguments)
+        if (context.Parameter is { } arguments)
         {
             QueryText = arguments.Query ?? string.Empty;
             SelectedRepository = r.FirstOrDefault(x => x.Label == arguments.Label) ?? r.First();
@@ -84,20 +82,16 @@ public partial class MarketplaceSearchPageModel
                 var status = await _dataService.CheckStatusAsync(repository.Label);
                 repository.Loaders =
                 [
-                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(
-                        x,
-                        LoaderHelper.ToDisplayName(x)
-                    )),
+                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x, LoaderHelper.ToDisplayName(x))),
                 ];
                 repository.Versions =
                 [
-                    .. status.SupportedVersions.OrderByDescending(
-                        x =>
-                            SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
-                                ? sem
-                                : new(0, 0, 0),
-                        SemVersion.SortOrderComparer
-                    ),
+                    .. status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x,
+                                                                           SemVersionStyles.OptionalPatch,
+                                                                           out var sem)
+                                                                           ? sem
+                                                                           : new(0, 0, 0),
+                                                                  SemVersion.SortOrderComparer),
                 ];
             }
         }
@@ -173,47 +167,38 @@ public partial class MarketplaceSearchPageModel
     {
         try
         {
-            var handle = await _agent.SearchAsync(
-                SelectedRepository.Label,
-                QueryText,
-                new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack)
-            );
-            var source = new InfiniteCollection<ExhibitModel>(
-                async (i, token) =>
+            var handle = await _agent.SearchAsync(SelectedRepository.Label,
+                                                  QueryText,
+                                                  new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
+            var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
+            {
+                handle.PageIndex = (uint)(i < 0 ? 0 : i);
+                try
                 {
-                    handle.PageIndex = (uint)(i < 0 ? 0 : i);
-                    try
-                    {
-                        var rv = await handle.FetchAsync(token);
-                        var tasks = rv.Select(x => new ExhibitModel(
-                                x.Label,
-                                x.Namespace,
-                                x.Pid,
-                                x.Name,
-                                x.Summary,
-                                x.Thumbnail ?? AssetUriIndex.DirtImage,
-                                x.Author,
-                                x.Tags,
-                                x.UpdatedAt,
-                                x.DownloadCount,
-                                x.Reference
-                            ))
-                            .ToArray();
-                        return tasks;
-                    }
-                    catch (ApiException ex)
-                    {
-                        _notificationService.PopMessage(
-                            ex,
-                            Resources.Error_BadNetwork,
-                            GrowlLevel.Warning
-                        );
-                        Debug.WriteLine(ex);
-                    }
-
-                    return [];
+                    var rv = await handle.FetchAsync(token);
+                    var tasks = rv
+                               .Select(x => new ExhibitModel(x.Label,
+                                                             x.Namespace,
+                                                             x.Pid,
+                                                             x.Name,
+                                                             x.Summary,
+                                                             x.Thumbnail ?? AssetUriIndex.DirtImage,
+                                                             x.Author,
+                                                             x.Tags,
+                                                             x.UpdatedAt,
+                                                             x.DownloadCount,
+                                                             x.Reference))
+                               .ToArray();
+                    return tasks;
                 }
-            );
+                catch (ApiException ex)
+                {
+                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    Debug.WriteLine(ex);
+                }
+
+                return [];
+            });
             Exhibits = source;
         }
         catch (ApiException ex)
@@ -228,21 +213,11 @@ public partial class MarketplaceSearchPageModel
     {
         if (exhibit is not null)
         {
-            _instanceManager.Install(
-                exhibit.ProjectName,
-                exhibit.Label,
-                exhibit.Namespace,
-                exhibit.ProjectId,
-                null
-            );
-            _notificationService.PopMessage(
-                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
-                    "{0}",
-                    exhibit.ProjectName
-                ),
-                exhibit.ProjectName,
-                thumbnail: exhibit.Thumbnail
-            );
+            _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Namespace, exhibit.ProjectId, null);
+            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage
+                                                     .Replace("{0}", exhibit.ProjectName),
+                                            exhibit.ProjectName,
+                                            thumbnail: exhibit.Thumbnail);
         }
     }
 
@@ -253,41 +228,31 @@ public partial class MarketplaceSearchPageModel
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(
-                    exhibit.Label,
-                    exhibit.Namespace,
-                    exhibit.ProjectId
-                );
-                var model = new ExhibitModpackModel(
-                    project.Label,
-                    project.Namespace,
-                    project.ProjectId,
-                    project.ProjectName,
-                    project.Author,
-                    project.Reference,
-                    project.Tags,
-                    project.DownloadCount,
-                    project.Summary,
-                    project.UpdatedAt,
-                    [.. project.Gallery.Select(x => x.Url)]
-                );
-                _overlayService.PopToast(
-                    new ExhibitModpackToast
-                    {
-                        DataService = _dataService,
-                        DataContext = model,
-                        InstallCommand = InstallVersionCommand,
-                    }
-                );
+                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
+                                                    project.Author,
+                                                    project.Reference,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.UpdatedAt,
+                                                    [.. project.Gallery.Select(x => x.Url)]);
+                _overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataService = _dataService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand,
+                });
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(
-                    ex,
-                    Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
-                    GrowlLevel.Warning
-                );
+                _notificationService.PopMessage(ex,
+                                                Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
+                                                GrowlLevel.Warning);
             }
         }
     }
@@ -297,13 +262,11 @@ public partial class MarketplaceSearchPageModel
     {
         if (exhibit is not null)
         {
-            return TopLevelHelper.LaunchUriAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
-                exhibit.Reference,
-                "Failed to open project website",
-                _notificationService,
-                thumbnail: exhibit.Thumbnail
-            );
+            return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+                                                 exhibit.Reference,
+                                                 "Failed to open project website",
+                                                 _notificationService,
+                                                 thumbnail: exhibit.Thumbnail);
         }
 
         return Task.CompletedTask;
@@ -314,30 +277,26 @@ public partial class MarketplaceSearchPageModel
     {
         if (version is not null)
         {
-            _instanceManager.Install(
-                version.ProjectName,
-                version.Label,
-                version.Namespace,
-                version.ProjectId,
-                version.VersionId
-            );
-            _notificationService.PopMessage(
-                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
-                    "{0}",
-                    version.VersionName
-                ),
-                version.ProjectName
-            );
+            _instanceManager.Install(version.ProjectName,
+                                     version.Label,
+                                     version.Namespace,
+                                     version.ProjectId,
+                                     version.VersionId);
+            _notificationService.PopMessage(Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage
+                                                     .Replace("{0}", version.VersionName),
+                                            version.ProjectName);
         }
     }
 
     #endregion
 
     #region Nested type: State
+
     public partial class State : ModelBase
     {
         [ObservableProperty]
         public partial int LayoutIndex { get; set; }
     }
+
     #endregion
 }

@@ -10,6 +10,8 @@ using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -25,13 +27,12 @@ using Trident.Core.Utilities;
 namespace Polymerium.App.PageModels;
 
 public partial class InstanceDashboardPageModel(
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     ScrapService scrapService,
     NotificationService notificationService,
-    PersistenceService persistenceService
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Reactive
 
@@ -79,8 +80,7 @@ public partial class InstanceDashboardPageModel(
     [NotifyPropertyChangedFor(nameof(SuccessRate))]
     public partial int CrashCount { get; set; }
 
-    public double SuccessRate =>
-        SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
+    public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
 
     [ObservableProperty]
     public partial double CpuPercent { get; set; }
@@ -143,6 +143,7 @@ public partial class InstanceDashboardPageModel(
         {
             tracker.ProcessAssigned += OnProcessAssigned;
         }
+
         tracker.StateUpdated += OnStateUpdated;
 
         _callbackCleanup = () =>
@@ -156,10 +157,10 @@ public partial class InstanceDashboardPageModel(
         Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
         return;
 
-        void OnProcessAssigned(object? sender, Process process)
+        void OnProcessAssigned(object? sender, Process got)
         {
             tracker.ProcessAssigned -= OnProcessAssigned;
-            StartMonitoring(process);
+            StartMonitoring(got);
             Dispatcher.UIThread.Post(() => MemoryAssigned = tracker.Options.MaxMemory);
         }
 
@@ -213,6 +214,7 @@ public partial class InstanceDashboardPageModel(
             // 避免清空，因为运行中的 Collection 是共享的外部引入的集合
             LogCollection?.Clear();
         }
+
         _collectionView?.Dispose();
         FilteredLogCollection?.Dispose();
 
@@ -250,6 +252,7 @@ public partial class InstanceDashboardPageModel(
                                 container.Add(appended);
                                 last = appended;
                             }
+
                             _collectionView = container.CreateView(x => x);
                             SetupView(_collectionView);
                             LogCollection = container;
@@ -307,13 +310,9 @@ public partial class InstanceDashboardPageModel(
             if (hasSearch)
             {
                 var keyword = FilterText!;
-                return (
-                        item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
-                    )
+                return (item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
                     || (item.Thread?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
-                    || (
-                        item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
-                    );
+                    || (item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false);
             }
 
             return true;
@@ -358,12 +357,8 @@ public partial class InstanceDashboardPageModel(
         {
             try
             {
-                (lastSampleTime, lastCpuTime) = await MonitorInternalAsync(
-                    process,
-                    lastSampleTime,
-                    lastCpuTime,
-                    cpuCount
-                );
+                (lastSampleTime, lastCpuTime) =
+                    await MonitorInternalAsync(process, lastSampleTime, lastCpuTime, cpuCount);
 
                 if (process.HasExited)
                 {
@@ -401,13 +396,13 @@ public partial class InstanceDashboardPageModel(
         Process process,
         DateTime lastSampleTime,
         TimeSpan? lastCpuTime,
-        int cpuCount
-    )
+        int cpuCount)
     {
         if (process.HasExited)
         {
             return (DateTime.Now, TimeSpan.Zero);
         }
+
         process.Refresh();
 
         // 这一行会因为进程未启动而触发 InvalidOperationException，被外围捕获并进入三秒的失败倒计时
@@ -444,12 +439,10 @@ public partial class InstanceDashboardPageModel(
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
         if (Directory.Exists(dir))
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
-                new(dir),
-                "Failed to open logs folder",
-                notificationService
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+                                                           new(dir),
+                                                           "Failed to open logs folder",
+                                                           notificationService);
 
         return Task.CompletedTask;
     }
@@ -459,12 +452,10 @@ public partial class InstanceDashboardPageModel(
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
         if (Directory.Exists(dir))
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
-                new(dir),
-                "Failed to open crash reports folder",
-                notificationService
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+                                                           new(dir),
+                                                           "Failed to open crash reports folder",
+                                                           notificationService);
 
         return Task.CompletedTask;
     }

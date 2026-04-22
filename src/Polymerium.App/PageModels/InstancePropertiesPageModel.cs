@@ -7,8 +7,9 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Assets;
-using Polymerium.App.Facilities;
 using Polymerium.App.Pages;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
@@ -26,7 +27,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     private ProfileGuard? _owned;
 
     public InstancePropertiesPageModel(
-        ViewBag bag,
+        IViewContext<InstanceContextParameter> context,
         ProfileManager profileManager,
         InstanceManager instanceManager,
         OverlayService overlayService,
@@ -36,8 +37,9 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         PersistenceService persistenceService,
         InstanceService instanceService
     )
-        : base(bag, instanceManager, profileManager)
+        : base(context, instanceManager, profileManager)
     {
+        _context = context ?? throw new ArgumentNullException(nameof(context));
         _overlayService = overlayService;
         _notificationService = notificationService;
         _navigationService = navigationService;
@@ -192,6 +194,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
     #region Injected
 
+    private readonly IViewContext<InstanceContextParameter> _context;
     private readonly OverlayService _overlayService;
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;

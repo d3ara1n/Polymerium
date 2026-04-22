@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Huskui.Avalonia.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
 using Polly;
+using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions;
@@ -28,110 +30,101 @@ public static class Startup
     public static void ConfigureServices(IServiceCollection services, bool debug)
     {
         services
-            .AddHttpClient()
-            .ConfigureHttpClientDefaults(builder =>
-                builder
-                    .RemoveAllLoggers()
-                    .ConfigurePrimaryHttpMessageHandler(serviceProvider =>
-                    {
-                        var handler = new HttpClientHandler();
+           .AddHttpClient()
+           .ConfigureHttpClientDefaults(builder => builder
+                                                  .RemoveAllLoggers()
+                                                  .ConfigurePrimaryHttpMessageHandler(serviceProvider =>
+                                                   {
+                                                       var handler = new HttpClientHandler();
 
-                        // Try to get configuration service to apply proxy settings
-                        var configService = serviceProvider.GetService<ConfigurationService>();
-                        try
-                        {
-                            if (configService != null)
-                            {
-                                var config = configService.Value;
-                                var proxyMode = (ProxyMode)config.NetworkProxyMode;
+                                                       // Try to get configuration service to apply proxy settings
+                                                       var configService = serviceProvider
+                                                          .GetService<ConfigurationService>();
+                                                       try
+                                                       {
+                                                           if (configService != null)
+                                                           {
+                                                               var config = configService.Value;
+                                                               var proxyMode = (ProxyMode)config.NetworkProxyMode;
 
-                                switch (proxyMode)
-                                {
-                                    case ProxyMode.Auto:
-                                        // Use system proxy (default behavior)
-                                        handler.UseProxy = true;
-                                        handler.UseDefaultCredentials = true;
-                                        break;
+                                                               switch (proxyMode)
+                                                               {
+                                                                   case ProxyMode.Auto:
+                                                                       // Use system proxy (default behavior)
+                                                                       handler.UseProxy = true;
+                                                                       handler.UseDefaultCredentials = true;
+                                                                       break;
 
-                                    case ProxyMode.Manual:
-                                        // Use manually configured proxy
-                                        if (!string.IsNullOrEmpty(config.NetworkProxyAddress))
-                                        {
-                                            var protocol = (ProxyProtocol)
-                                                config.NetworkProxyProtocol;
-                                            var proxyUri = protocol switch
-                                            {
-                                                ProxyProtocol.Socks4 => new(
-                                                    $"socks4://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"
-                                                ),
-                                                ProxyProtocol.Socks5 => new(
-                                                    $"socks5://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"
-                                                ),
-                                                _ => new Uri(
-                                                    $"http://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"
-                                                ),
-                                            };
+                                                                   case ProxyMode.Manual:
+                                                                       // Use manually configured proxy
+                                                                       if (!string.IsNullOrEmpty(config
+                                                                              .NetworkProxyAddress))
+                                                                       {
+                                                                           var protocol = (ProxyProtocol)config
+                                                                              .NetworkProxyProtocol;
+                                                                           var proxyUri = protocol switch
+                                                                           {
+                                                                               ProxyProtocol.Socks4 =>
+                                                                                   new($"socks4://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
+                                                                               ProxyProtocol.Socks5 =>
+                                                                                   new($"socks5://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
+                                                                               _ => new
+                                                                                   Uri($"http://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
+                                                                           };
 
-                                            var proxy = new WebProxy(proxyUri);
+                                                                           var proxy = new WebProxy(proxyUri);
 
-                                            // Set credentials if username is provided
-                                            if (!string.IsNullOrEmpty(config.NetworkProxyUsername))
-                                            {
-                                                proxy.Credentials = new NetworkCredential(
-                                                    config.NetworkProxyUsername,
-                                                    config.NetworkProxyPassword
-                                                );
-                                            }
+                                                                           // Set credentials if username is provided
+                                                                           if (!string.IsNullOrEmpty(config
+                                                                                  .NetworkProxyUsername))
+                                                                           {
+                                                                               proxy.Credentials =
+                                                                                   new NetworkCredential(config
+                                                                                          .NetworkProxyUsername,
+                                                                                       config.NetworkProxyPassword);
+                                                                           }
 
-                                            handler.Proxy = proxy;
-                                            handler.UseProxy = true;
-                                        }
+                                                                           handler.Proxy = proxy;
+                                                                           handler.UseProxy = true;
+                                                                       }
 
-                                        break;
+                                                                       break;
 
-                                    case ProxyMode.Disabled:
-                                        // Direct connection, no proxy
-                                        handler.UseProxy = false;
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                // Default: use system proxy
-                                handler.UseProxy = true;
-                                handler.UseDefaultCredentials = true;
-                            }
-                        }
-                        catch
-                        {
-                            // ignore
-                        }
+                                                                   case ProxyMode.Disabled:
+                                                                       // Direct connection, no proxy
+                                                                       handler.UseProxy = false;
+                                                                       break;
+                                                               }
+                                                           }
+                                                           else
+                                                           {
+                                                               // Default: use system proxy
+                                                               handler.UseProxy = true;
+                                                               handler.UseDefaultCredentials = true;
+                                                           }
+                                                       }
+                                                       catch
+                                                       {
+                                                           // ignore
+                                                       }
 
-                        return handler;
-                    })
-                    .ConfigureHttpClient(client =>
-                        client.DefaultRequestHeaders.UserAgent.Add(
-                            new(Program.Brand, Program.Version)
-                        )
-                    )
-                    .AddTransientHttpErrorPolicy(configure =>
-                        configure.WaitAndRetryAsync(
-                            3,
-                            retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
-                        )
-                    )
-            )
-            .AddLogging(logging =>
-                logging
-                    .AddConsole()
-                    .AddDebug()
-                    .AddFilter<ConsoleLoggerProvider>(
-                        null,
-                        debug ? LogLevel.Debug : LogLevel.Information
-                    )
-                    .AddFilter<DebugLoggerProvider>(null, LogLevel.Trace)
-            )
-            .AddSqliteCache(setup =>
+                                                       return handler;
+                                                   })
+                                                  .ConfigureHttpClient(client =>
+                                                                           client.DefaultRequestHeaders.UserAgent
+                                                                              .Add(new(Program.Brand, Program.Version)))
+                                                  .AddTransientHttpErrorPolicy(configure =>
+                                                                                   configure.WaitAndRetryAsync(3,
+                                                                                       retryAttempt =>
+                                                                                           TimeSpan.FromSeconds(Math
+                                                                                              .Pow(2,
+                                                                                                   retryAttempt)))))
+           .AddLogging(logging => logging
+                                 .AddConsole()
+                                 .AddDebug()
+                                 .AddFilter<ConsoleLoggerProvider>(null, debug ? LogLevel.Debug : LogLevel.Information)
+                                 .AddFilter<DebugLoggerProvider>(null, LogLevel.Trace))
+           .AddSqliteCache(setup =>
             {
                 setup.MemoryOnly = false;
                 var dir = PathDef.Default.PrivateDirectory(Program.Brand);
@@ -143,56 +136,57 @@ public static class Startup
 
                 setup.CachePath = path;
             })
-            .AddMemoryCache();
+           .AddMemoryCache();
 
         // Trident
         services
-            .AddTransient<IProfileImporter, TridentImporter>()
-            .AddTransient<IProfileImporter, CurseForgeImporter>()
-            .AddTransient<IProfileImporter, ModrinthImporter>()
-            .AddTransient<IProfileExporter, TridentExporter>()
-            .AddTransient<IProfileExporter, CurseForgeExporter>()
-            .AddTransient<IProfileExporter, ModrinthExporter>()
-            .AddLifetimeRuntime()
-            .AddPrismLauncher()
-            .AddMojangLauncher()
-            .AddMicrosoft()
-            .AddXboxLive()
-            .AddMinecraft()
-            .AddMclogs()
-            .AddSingleton<ProfileManager>()
-            .AddSingleton<RepositoryAgent>()
-            .AddSingleton<ImporterAgent>()
-            .AddSingleton<ExporterAgent>()
-            .AddSingleton<InstanceManager>();
+           .AddTransient<IProfileImporter, TridentImporter>()
+           .AddTransient<IProfileImporter, CurseForgeImporter>()
+           .AddTransient<IProfileImporter, ModrinthImporter>()
+           .AddTransient<IProfileExporter, TridentExporter>()
+           .AddTransient<IProfileExporter, CurseForgeExporter>()
+           .AddTransient<IProfileExporter, ModrinthExporter>()
+           .AddLifetimeRuntime()
+           .AddPrismLauncher()
+           .AddMojangLauncher()
+           .AddMicrosoft()
+           .AddXboxLive()
+           .AddMinecraft()
+           .AddMclogs()
+           .AddSingleton<ProfileManager>()
+           .AddSingleton<RepositoryAgent>()
+           .AddSingleton<ImporterAgent>()
+           .AddSingleton<ExporterAgent>()
+           .AddSingleton<InstanceManager>();
 
         // App
         services
-            .AddViewFacilities()
-            .AddFreeSql()
-            .AddMirrorChyan()
-            .AddVelopackGithubSource()
-            .AddVelopackMirrorChyanSource()
-            .AddVelopack()
-            .AddTransient<IRepositoryProviderAccessor, BuiltinRepositoryProviderAccessor>()
-            .AddTransient<IRepositoryProviderAccessor, UserRepositoryProviderAccessor>()
-            .AddSingleton<ConfigurationService>()
-            .AddSingleton<NotificationService>()
-            .AddSingleton<NavigationService>()
-            .AddSingleton<OverlayService>()
-            .AddSingleton<DataService>()
-            .AddSingleton<PersistenceService>()
-            .AddSingleton<ViewStateService>()
-            .AddLifetimeService<ScrapService>()
-            .AddSingleton<InstanceService>()
-            .AddLifetimeService<UpdateService>()
-            .AddSingleton<WidgetHostService>();
+           .AddViewModelActivation<SimpleViewActivator>()
+           .AddViewState(builder => builder.WithStatePersistence<SimpleViewStatePersistence>())
+           .AddFreeSql()
+           .AddMirrorChyan()
+           .AddVelopackGithubSource()
+           .AddVelopackMirrorChyanSource()
+           .AddVelopack()
+           .AddTransient<IRepositoryProviderAccessor, BuiltinRepositoryProviderAccessor>()
+           .AddTransient<IRepositoryProviderAccessor, UserRepositoryProviderAccessor>()
+           .AddSingleton<ConfigurationService>()
+           .AddSingleton<NotificationService>()
+           .AddSingleton<NavigationService>()
+           .AddSingleton<OverlayService>()
+           .AddSingleton<DataService>()
+           .AddSingleton<PersistenceService>()
+           .AddLifetimeService<ScrapService>()
+           .AddSingleton<InstanceService>()
+           .AddLifetimeService<UpdateService>()
+           .AddSingleton<WidgetHostService>();
     }
 
     public static void InitializeUnhostedServices()
     {
         #region SentrySdk Init (only in Debug)
-#if !DEBUG
+
+        #if !DEBUG
         Sentry.SentrySdk.Init(options =>
         {
             options.Dsn =
@@ -217,15 +211,15 @@ public static class Startup
 
             options.SendDefaultPii = true;
         });
-#endif
+        #endif
 
         #endregion
     }
 
     public static void DeinitializeUnhostedServices()
     {
-#if !DEBUG
+        #if !DEBUG
         Sentry.SentrySdk.Close();
-#endif
+        #endif
     }
 }

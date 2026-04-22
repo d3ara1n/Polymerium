@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -17,10 +19,10 @@ using Trident.Core.Services;
 namespace Polymerium.App.PageModels;
 
 public partial class InstanceWorkspacePageModel(
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     NotificationService notificationService,
-    ProfileManager profileManager) : InstancePageModelBase(bag, instanceManager, profileManager)
+    ProfileManager profileManager) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Direct
 

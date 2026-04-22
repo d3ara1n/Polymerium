@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Services;
@@ -16,13 +18,13 @@ using Polymerium.App.Services;
 namespace Polymerium.App.PageModels;
 
 public partial class UnknownPageModel(
-    ViewBag bag,
+    IViewContext<string> context,
     NotificationService notificationService,
     OverlayService overlayService,
     ConfigurationService configurationService
 ) : ViewModelBase
 {
-    public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
+    public string Title { get; } = $"User's Unknown Playground({context.Parameter ?? "None"})";
 
     #region Overrides
 

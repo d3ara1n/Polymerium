@@ -20,6 +20,9 @@ using CsvHelper.Configuration;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
+using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
@@ -45,7 +48,7 @@ using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 namespace Polymerium.App.PageModels;
 
 public partial class InstanceSetupPageModel(
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     ILogger<InstanceSetupPageModel> logger,
     ProfileManager profileManager,
     NotificationService notificationService,
@@ -55,9 +58,9 @@ public partial class InstanceSetupPageModel(
     NavigationService navigationService,
     PersistenceService persistenceService
 )
-    : InstancePageModelBase(bag, instanceManager, profileManager),
-        IStatedViewModel<InstanceSetupPageModel.StateView>,
-        IStatedViewModelKeyGetter
+    : InstancePageModelBase(context, instanceManager, profileManager),
+        IStatefulViewModel<InstanceSetupPageModel.StateView>,
+        IViewStateKeyProvider
 {
     #region Nested type: ExportedEntry
 
