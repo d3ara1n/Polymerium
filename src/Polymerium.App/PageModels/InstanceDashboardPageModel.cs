@@ -105,9 +105,10 @@ public partial class InstanceDashboardPageModel(
     private Action? _callbackCleanup;
 
     #endregion
+
     #region Overrides
 
-    protected override Task OnInitializeAsync()
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         InitializeLogSources();
         SelectedSource = Sources?.FirstOrDefault();
@@ -126,7 +127,6 @@ public partial class InstanceDashboardPageModel(
     }
 
     #endregion
-
 
     #region Instance State
 

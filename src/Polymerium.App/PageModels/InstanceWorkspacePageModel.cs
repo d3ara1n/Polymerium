@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Core.Services;
 
@@ -17,8 +19,8 @@ namespace Polymerium.App.PageModels;
 public partial class InstanceWorkspacePageModel(
     ViewBag bag,
     InstanceManager instanceManager,
-    ProfileManager profileManager
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+    NotificationService notificationService,
+    ProfileManager profileManager) : InstancePageModelBase(bag, instanceManager, profileManager)
 {
     #region Direct
 
@@ -37,11 +39,11 @@ public partial class InstanceWorkspacePageModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync()
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         GenerateChangeList();
 
-        return base.OnInitializeAsync();
+        return base.OnInitializeAsync(token);
     }
 
     #endregion
@@ -69,19 +71,17 @@ public partial class InstanceWorkspacePageModel(
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                changes.Add(
-                    new()
-                    {
-                        RelativePath = liveEntry,
-                        Name = Path.GetFileName(livePath),
-                        Kind = kind,
-                        LivePath = livePath,
-                        ImportPath = importPath,
-                        FileType = type,
-                        FileSizeRaw = file.Length,
-                        FileLastModifiedRaw = file.LastWriteTimeUtc,
-                    }
-                );
+                changes.Add(new()
+                {
+                    RelativePath = liveEntry,
+                    Name = Path.GetFileName(livePath),
+                    Kind = kind,
+                    LivePath = livePath,
+                    ImportPath = importPath,
+                    FileType = type,
+                    FileSizeRaw = file.Length,
+                    FileLastModifiedRaw = file.LastWriteTimeUtc,
+                });
             }
         }
 
@@ -100,8 +100,9 @@ public partial class InstanceWorkspacePageModel(
 
         return
         [
-            .. root.EnumerateFiles("*", SearchOption.AllDirectories)
-                .Select(file => Path.GetRelativePath(folder, file.FullName)),
+            .. root
+              .EnumerateFiles("*", SearchOption.AllDirectories)
+              .Select(file => Path.GetRelativePath(folder, file.FullName)),
         ];
     }
 
@@ -132,14 +133,73 @@ public partial class InstanceWorkspacePageModel(
 
     #region Commands
 
-    [RelayCommand]
-    private void Stage(WorkspaceChangeModel? model) { }
+    private bool CanOpenDiffer(WorkspaceChangeModel? model) => model is not null;
 
-    [RelayCommand]
-    private void Restore(WorkspaceChangeModel? model) { }
+    [RelayCommand(CanExecute = nameof(CanOpenDiffer))]
+    private void OpenDiffer(WorkspaceChangeModel? model)
+    {
 
-    [RelayCommand]
-    private void Delete(WorkspaceChangeModel? model) { }
+    }
+
+    private bool CanStage(WorkspaceChangeModel? model) => !IsLocked && model is not null && File.Exists(model.LivePath);
+
+    [RelayCommand(CanExecute = nameof(CanStage))]
+    private void Stage(WorkspaceChangeModel? model)
+    {
+        if (model == null || !File.Exists(model.LivePath))
+        {
+            return;
+        }
+
+        if (File.Exists(model.ImportPath))
+        {
+            // Overwrite
+            try
+            {
+                File.Copy(model.LivePath, model.ImportPath, true);
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to perform file staging");
+            }
+        }
+        else
+        {
+            // Is Deleted
+            try
+            {
+                File.Delete(model.LivePath);
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to perform file staging");
+            }
+        }
+    }
+
+    private bool CanRestore(WorkspaceChangeModel? model) => model is not null && File.Exists(model.ImportPath);
+
+    [RelayCommand(CanExecute = nameof(CanRestore))]
+    private void Restore(WorkspaceChangeModel? model)
+    {
+        if (model == null || !File.Exists(model.ImportPath))
+        {
+            return;
+        }
+
+        if (File.Exists(model.LivePath))
+        {
+            // Restore
+            try
+            {
+                File.Copy(model.ImportPath, model.LivePath, true);
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, "Failed to perform file staging");
+            }
+        }
+    }
 
     #endregion
 }

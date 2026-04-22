@@ -432,10 +432,10 @@ public partial class InstanceSetupPageModel(
         UpdatingProgress = 0;
     }
 
-    protected override Task OnInitializeAsync()
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
-        _lifetimeToken = PageToken;
-        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(PageToken);
+        _lifetimeToken = token;
+        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
 
         _stageSource
             .Connect()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -27,7 +28,7 @@ public partial class MaintenanceStoragePageModel(
 
     #endregion
 
-    protected override async Task OnInitializeAsync() => await Task.Run(Calculate);
+    protected override async Task OnInitializeAsync(CancellationToken token) => await Task.Run(Calculate, token);
 
     #region Other
 

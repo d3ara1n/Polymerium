@@ -5,6 +5,7 @@
     <Folder Name="/Huskui.Avalonia/">
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Gallery.Desktop/Huskui.Gallery.Desktop.csproj" />
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Gallery/Huskui.Gallery.csproj" />
+        <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Mvvm/Huskui.Avalonia.Mvvm.csproj" />
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia/Huskui.Avalonia.csproj" />
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Code/Huskui.Avalonia.Code.csproj" />
         <Project Path="submodules/Huskui.Avalonia/src/Huskui.Avalonia.Markdown/Huskui.Avalonia.Markdown.csproj" />

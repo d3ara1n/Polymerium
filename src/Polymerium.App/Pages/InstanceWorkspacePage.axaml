@@ -300,7 +300,7 @@
                                                         <StackPanel Spacing="10">
                                                             <Button
                                                                 Classes="Danger"
-                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"

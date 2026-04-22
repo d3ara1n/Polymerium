@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -36,14 +37,14 @@ public partial class InstanceFilesPageModel(
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync()
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        await Task.Run(LoadModAsync);
-        await Task.Run(LoadResourcePacksAsync);
-        await Task.Run(LoadDataPacksAsync);
-        await Task.Run(LoadServersAsync);
-        await Task.Run(LoadScreenshotsAsync);
-        await Task.Run(LoadWorldsAsync);
+        await Task.Run(LoadModAsync, token);
+        await Task.Run(LoadResourcePacksAsync, token);
+        await Task.Run(LoadDataPacksAsync, token);
+        await Task.Run(LoadServersAsync, token);
+        await Task.Run(LoadScreenshotsAsync, token);
+        await Task.Run(LoadWorldsAsync, token);
     }
 
     #endregion
