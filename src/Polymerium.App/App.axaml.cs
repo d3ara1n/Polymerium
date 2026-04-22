@@ -12,7 +12,9 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Mixins;
+using Huskui.Avalonia.Mvvm.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -26,8 +28,6 @@ namespace Polymerium.App;
 
 public class App : Application
 {
-    private static int activatorErrorCount;
-
     public HuskuiTheme? Theme { get; private set; }
 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
@@ -169,65 +169,6 @@ public class App : Application
         }
     }
 
-    private static object? ActivatePage(Type view, object? parameter)
-    {
-        try
-        {
-            if (!view.IsAssignableTo(typeof(Page)))
-            {
-                throw new ArgumentOutOfRangeException(nameof(view), view, "Parameter view must be derived from Page");
-            }
-
-            var name = view.FullName!.Replace("Page", "PageModel", StringComparison.Ordinal);
-            var type = Type.GetType(name);
-
-            var page = Activator.CreateInstance(view) as Page;
-
-            if (page is not null && type is not null)
-            {
-                if (!type.IsAssignableTo(typeof(ObservableObject)))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(view),
-                                                          type,
-                                                          $"{view.Name} was bound to a view model which is not derived from ObservableObject");
-                }
-
-                using var scope = Program.Services!.CreateScope();
-
-                var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
-                factory.Bag = parameter;
-
-                var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
-
-                page.DataContext = viewModel;
-                ViewModelAttachableMixin.Attach(page);
-            }
-
-            activatorErrorCount = 0;
-            return page;
-        }
-        catch (NavigationFailedException ex)
-        {
-            // 避免又产生异常而导致无限循环
-            if (activatorErrorCount++ < 3)
-            {
-                return ActivatePage(typeof(PageNotReachedPage), ex.Message);
-            }
-
-            throw;
-        }
-        catch (Exception ex)
-        {
-            // 避免又产生异常而导致无限循环
-            if (activatorErrorCount++ < 3)
-            {
-                return ActivatePage(typeof(ExceptionPage), ex);
-            }
-
-            throw;
-        }
-    }
-
     private static Window ConstructWindow()
     {
         if (Program.Services is null)
@@ -252,8 +193,9 @@ public class App : Application
         // Link navigation service
         var navigation = Program.Services.GetRequiredService<NavigationService>();
         navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
-        // Closure captures Program.AppHost.Services
-        window.PageActivator = ActivatePage;
+
+        var activator = Program.Services.GetRequiredService<IViewActivator>();
+        window.SetFrameActivator(activator);
 
         #endregion
 

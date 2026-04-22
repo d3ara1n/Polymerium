@@ -12,6 +12,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
@@ -27,13 +29,13 @@ namespace Polymerium.App.PageModels;
 
 public partial class InstanceFilesPageModel(
     ILogger<InstanceFilesPageModel> logger,
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     OverlayService overlayService,
     NotificationService notificationService,
     PersistenceService persistenceService
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Overrides
 

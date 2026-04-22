@@ -7,6 +7,7 @@ using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
+using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
@@ -34,11 +35,11 @@ internal static class Program
 
     public static bool FirstRun { get; private set; }
 
-#if DEBUG
+    #if DEBUG
     public static bool IsDebug => true;
-#else
+    #else
     public static bool IsDebug => false;
-#endif
+    #endif
 
     [STAThread]
     public static void Main(string[] args)
@@ -47,18 +48,12 @@ internal static class Program
 
         #region Before lifetime configuration
 
-        var overrideFile = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".trident.home"
-        );
+        var overrideFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                                        ".trident.home");
         if (File.Exists(overrideFile))
         {
             var firstLine = File.ReadLines(overrideFile).FirstOrDefault();
-            if (
-                !string.IsNullOrWhiteSpace(firstLine)
-                && Path.IsPathRooted(firstLine)
-                && !File.Exists(firstLine)
-            )
+            if (!string.IsNullOrWhiteSpace(firstLine) && Path.IsPathRooted(firstLine) && !File.Exists(firstLine))
             {
                 PathDef.Default = new(firstLine);
             }
@@ -85,22 +80,23 @@ internal static class Program
         Services = services.BuildServiceProvider();
 
         #region Initialize Application Environment
+
         Startup.InitializeUnhostedServices();
         var configurationService = Services.GetRequiredService<ConfigurationService>();
-        CultureInfo.CurrentUICulture = GetSafeCultureInfo(
-            configurationService.Value.ApplicationLanguage
-        );
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configurationService.Value.ApplicationLanguage);
         Resources.Culture = CultureInfo.CurrentUICulture;
         var httpClient = Services.GetRequiredService<HttpClient>();
         var loader = new SuppressedImageLoader(httpClient);
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
         // PROCEDURE MOVED: Lifetime Services 在 App.OnFrameworkInitialized 中进行延迟初始化而不是 Program 收尾
+
         #endregion
 
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
         #region Dispose & Shutdown Services
+
         Exception? stopException = null;
         if (Services.GetService<LifetimeServiceRuntime>() is { } runtime)
         {
@@ -116,6 +112,7 @@ internal static class Program
 
         try
         {
+            Services.GetRequiredService<IViewStateStore>().Flush();
             Startup.DeinitializeUnhostedServices();
         }
         finally
@@ -127,6 +124,7 @@ internal static class Program
         {
             throw stopException;
         }
+
         #endregion
 
         exitAction?.Invoke();
@@ -135,10 +133,7 @@ internal static class Program
     public static void Terminate(Action? beforeDie)
     {
         exitAction = beforeDie;
-        if (
-            Application.Current?.ApplicationLifetime
-            is IClassicDesktopStyleApplicationLifetime desktop
-        )
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.Shutdown();
         }
@@ -164,15 +159,15 @@ internal static class Program
     public static AppBuilder BuildAvaloniaApp()
     {
         var builder = AppBuilder
-            .Configure<App>()
-#if DEBUG
-            .WithDeveloperTools()
-            .LogToTextWriter(Console.Out)
-#else
+                     .Configure<App>()
+                      #if DEBUG
+                     .WithDeveloperTools()
+                     .LogToTextWriter(Console.Out)
+                      #else
         .LogToTrace()
-#endif
-            .UsePlatformDetect()
-            .WithFontSetup();
+                      #endif
+                     .UsePlatformDetect()
+                     .WithFontSetup();
 
         return builder;
     }

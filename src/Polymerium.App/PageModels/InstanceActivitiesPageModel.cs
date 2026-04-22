@@ -8,6 +8,8 @@ using Avalonia;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
@@ -24,12 +26,12 @@ using Trident.Core.Services;
 namespace Polymerium.App.PageModels;
 
 public partial class InstanceActivitiesPageModel(
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     DataService dataService,
     PersistenceService persistenceService
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Other
 

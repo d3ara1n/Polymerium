@@ -12,6 +12,8 @@ using CommunityToolkit.Mvvm.Input;
 using Humanizer;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Exceptions;
@@ -33,7 +35,7 @@ using Resources = Polymerium.App.Properties.Resources;
 namespace Polymerium.App.PageModels;
 
 public partial class InstanceHomePageModel(
-    ViewBag bag,
+    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     ProfileManager profileManager,
     OverlayService overlayService,
     InstanceManager instanceManager,
@@ -43,7 +45,7 @@ public partial class InstanceHomePageModel(
     PersistenceService persistenceService,
     InstanceService instanceService,
     WidgetHostService widgetHostService
-) : InstancePageModelBase(bag, instanceManager, profileManager)
+) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     // Launch Lifecycle
     private CompositeDisposable? _subscription;

@@ -1,13 +1,15 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.PageModels;
 
 public partial class PageNotReachedPageModel : ViewModelBase
 {
-    public PageNotReachedPageModel(ViewBag bag)
+    public PageNotReachedPageModel(IViewContext<string> context)
     {
-        if (bag.Parameter is string message)
+        if (context.Parameter is {} message)
         {
             Message = message;
         }

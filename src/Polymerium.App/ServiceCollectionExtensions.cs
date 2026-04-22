@@ -18,11 +18,6 @@ public static class ServiceCollectionExtensions
 
     extension(IServiceCollection services)
     {
-        public IServiceCollection AddViewFacilities()
-        {
-            services.AddScoped<ViewBagFactory>().AddScoped<ViewBag>();
-            return services;
-        }
 
         public IServiceCollection AddFreeSql()
         {
