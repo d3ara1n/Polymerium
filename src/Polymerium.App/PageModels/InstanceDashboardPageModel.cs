@@ -32,7 +32,8 @@ public partial class InstanceDashboardPageModel(
     ProfileManager profileManager,
     ScrapService scrapService,
     NotificationService notificationService,
-    PersistenceService persistenceService) : InstancePageModelBase(context, instanceManager, profileManager)
+    PersistenceService persistenceService
+) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Reactive
 
@@ -80,7 +81,8 @@ public partial class InstanceDashboardPageModel(
     [NotifyPropertyChangedFor(nameof(SuccessRate))]
     public partial int CrashCount { get; set; }
 
-    public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
+    public double SuccessRate =>
+        SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
 
     [ObservableProperty]
     public partial double CpuPercent { get; set; }
@@ -310,9 +312,13 @@ public partial class InstanceDashboardPageModel(
             if (hasSearch)
             {
                 var keyword = FilterText!;
-                return (item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
+                return (
+                        item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
+                    )
                     || (item.Thread?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
-                    || (item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false);
+                    || (
+                        item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
+                    );
             }
 
             return true;
@@ -357,8 +363,12 @@ public partial class InstanceDashboardPageModel(
         {
             try
             {
-                (lastSampleTime, lastCpuTime) =
-                    await MonitorInternalAsync(process, lastSampleTime, lastCpuTime, cpuCount);
+                (lastSampleTime, lastCpuTime) = await MonitorInternalAsync(
+                    process,
+                    lastSampleTime,
+                    lastCpuTime,
+                    cpuCount
+                );
 
                 if (process.HasExited)
                 {
@@ -396,7 +406,8 @@ public partial class InstanceDashboardPageModel(
         Process process,
         DateTime lastSampleTime,
         TimeSpan? lastCpuTime,
-        int cpuCount)
+        int cpuCount
+    )
     {
         if (process.HasExited)
         {
@@ -439,10 +450,12 @@ public partial class InstanceDashboardPageModel(
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
         if (Directory.Exists(dir))
-            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
-                                                           new(dir),
-                                                           "Failed to open logs folder",
-                                                           notificationService);
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open logs folder",
+                notificationService
+            );
 
         return Task.CompletedTask;
     }
@@ -452,10 +465,12 @@ public partial class InstanceDashboardPageModel(
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
         if (Directory.Exists(dir))
-            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
-                                                           new(dir),
-                                                           "Failed to open crash reports folder",
-                                                           notificationService);
+            return TopLevelHelper.LaunchDirectoryInfoAsync(
+                TopLevel.GetTopLevel(MainWindow.Instance),
+                new(dir),
+                "Failed to open crash reports folder",
+                notificationService
+            );
 
         return Task.CompletedTask;
     }

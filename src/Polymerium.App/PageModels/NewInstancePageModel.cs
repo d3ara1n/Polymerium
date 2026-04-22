@@ -44,7 +44,7 @@ public partial class NewInstancePageModel(
             return;
         }
 
-        if (context.Parameter is {} path)
+        if (context.Parameter is { } path)
         {
             await TryImportFromFileAsync(path);
         }

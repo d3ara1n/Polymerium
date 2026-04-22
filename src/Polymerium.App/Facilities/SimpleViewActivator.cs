@@ -66,8 +66,10 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
             return Type.GetType(view.FullName!.Replace("Toast", "ToastModel"))!;
         }
 
-        throw new ArgumentOutOfRangeException(nameof(view),
-                                              view,
-                                              "Parameter view must be derived from Page/Dialog/Sidebar/Toast");
+        throw new ArgumentOutOfRangeException(
+            nameof(view),
+            view,
+            "Parameter view must be derived from Page/Dialog/Sidebar/Toast"
+        );
     }
 }

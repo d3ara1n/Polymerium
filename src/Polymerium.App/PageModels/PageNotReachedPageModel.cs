@@ -9,7 +9,7 @@ public partial class PageNotReachedPageModel : ViewModelBase
 {
     public PageNotReachedPageModel(IViewContext<string> context)
     {
-        if (context.Parameter is {} message)
+        if (context.Parameter is { } message)
         {
             Message = message;
         }

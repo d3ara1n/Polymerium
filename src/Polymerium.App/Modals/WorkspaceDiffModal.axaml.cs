@@ -12,4 +12,3 @@ public partial class WorkspaceDiffModal : Modal
         InitializeComponent();
     }
 }
-

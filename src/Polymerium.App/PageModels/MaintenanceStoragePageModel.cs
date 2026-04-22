@@ -28,7 +28,8 @@ public partial class MaintenanceStoragePageModel(
 
     #endregion
 
-    protected override async Task OnInitializeAsync(CancellationToken token) => await Task.Run(Calculate, token);
+    protected override async Task OnInitializeAsync(CancellationToken token) =>
+        await Task.Run(Calculate, token);
 
     #region Other
 
