@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -117,9 +118,9 @@ public partial class PackageExplorerPageModel : ViewModelBase
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync()
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        if (PageToken.IsCancellationRequested)
+        if (token.IsCancellationRequested)
         {
             return;
         }

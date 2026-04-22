@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -137,7 +138,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         ThumbnailOverwrite = Basic.Thumbnail;
     }
 
-    protected override Task OnInitializeAsync()
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
@@ -174,7 +175,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
         #endregion
 
-        return base.OnInitializeAsync();
+        return base.OnInitializeAsync(token);
     }
 
     protected override async Task OnDeinitializeAsync()

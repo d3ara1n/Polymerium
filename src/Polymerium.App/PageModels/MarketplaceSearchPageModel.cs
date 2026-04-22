@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -67,9 +68,9 @@ public partial class MarketplaceSearchPageModel
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync()
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        if (PageToken.IsCancellationRequested)
+        if (token.IsCancellationRequested)
         {
             return;
         }

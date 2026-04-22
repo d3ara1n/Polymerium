@@ -98,6 +98,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia.Markdown\Huskui.Avalonia.Markdown.csproj" />
+        <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia.Mvvm\Huskui.Avalonia.Mvvm.csproj" />
         <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
         <ProjectReference Include="..\..\submodules\Trident.Net\src\Trident.Core\Trident.Core.csproj" />
     </ItemGroup>

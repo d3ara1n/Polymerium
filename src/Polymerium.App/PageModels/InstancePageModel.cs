@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
@@ -242,7 +243,7 @@ public partial class InstancePageModel : ViewModelBase
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync()
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         // 终究还是得有个 InstanceStateAggregator
         _instanceManager.InstanceUpdating += OnProfileUpdating;

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Collections;
@@ -25,7 +26,7 @@ public partial class UnknownPageModel(
 
     #region Overrides
 
-    protected override async Task OnInitializeAsync()
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
         if (Application.Current is { PlatformSettings: not null })
         {
@@ -43,7 +44,7 @@ public partial class UnknownPageModel(
             new("Danger", ShowDangerCommand),
         ]);
 
-        await Task.Delay(TimeSpan.FromSeconds(7), PageToken);
+        await Task.Delay(TimeSpan.FromSeconds(7), token);
     }
 
     #endregion

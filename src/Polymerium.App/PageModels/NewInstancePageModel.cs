@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
@@ -34,9 +35,9 @@ public partial class NewInstancePageModel(
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync()
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        if (PageToken.IsCancellationRequested)
+        if (token.IsCancellationRequested)
         {
             return;
         }

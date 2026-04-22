@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -80,7 +81,7 @@ public partial class InstanceHomePageModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync()
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         var selector = persistenceService.GetAccountSelector(Basic.Key);
         if (selector != null)
@@ -108,7 +109,7 @@ public partial class InstanceHomePageModel(
             PinnedWidgets.Add(widget);
         }
 
-        return base.OnInitializeAsync();
+        return base.OnInitializeAsync(token);
     }
 
     protected override Task OnDeinitializeAsync()

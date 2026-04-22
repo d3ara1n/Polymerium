@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -63,7 +64,7 @@ public partial class AccountsPageModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync()
+    protected override Task OnInitializeAsync(CancellationToken token)
     {
         var defaultAccount = persistenceService.GetDefaultAccount();
         foreach (var account in persistenceService.GetAccounts())
@@ -82,7 +83,7 @@ public partial class AccountsPageModel(
             Accounts.Add(model);
         }
 
-        return base.OnInitializeAsync();
+        return base.OnInitializeAsync(token);
     }
 
     #endregion

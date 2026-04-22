@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,7 +21,7 @@ public partial class InstanceStoragePageModel(
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync() => await Task.Run(Calculate);
+    protected override async Task OnInitializeAsync(CancellationToken token) => await Task.Run(Calculate, token);
 
     #endregion
 
