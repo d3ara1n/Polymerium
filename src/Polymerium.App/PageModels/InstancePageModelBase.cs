@@ -21,7 +21,8 @@ public abstract partial class InstancePageModelBase : ViewModelBase
     protected InstancePageModelBase(
         IViewContext<InstanceContextParameter> context,
         InstanceManager instanceManager,
-        ProfileManager profileManager)
+        ProfileManager profileManager
+    )
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;

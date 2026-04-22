@@ -23,7 +23,8 @@ public partial class InstanceStoragePageModel(
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token) => await Task.Run(Calculate, token);
+    protected override async Task OnInitializeAsync(CancellationToken token) =>
+        await Task.Run(Calculate, token);
 
     #endregion
 

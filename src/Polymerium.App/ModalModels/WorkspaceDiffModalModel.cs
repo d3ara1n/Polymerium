@@ -2,7 +2,4 @@
 
 namespace Polymerium.App.ModalModels;
 
-public class WorkspaceDiffModalModel: ViewModelBase
-{
-
-}
+public class WorkspaceDiffModalModel : ViewModelBase { }

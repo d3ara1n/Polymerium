@@ -12,7 +12,8 @@ public abstract class ViewModelBase : ObservableObject, IViewModel
 {
     #region IViewModel Members
 
-    public virtual Task InitializeAsync(CancellationToken cancellationToken) => OnInitializeAsync(cancellationToken);
+    public virtual Task InitializeAsync(CancellationToken cancellationToken) =>
+        OnInitializeAsync(cancellationToken);
 
     public virtual Task DeinitializeAsync() => OnDeinitializeAsync();
 

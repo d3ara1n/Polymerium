@@ -22,7 +22,8 @@ public partial class InstanceWorkspacePageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     NotificationService notificationService,
-    ProfileManager profileManager) : InstancePageModelBase(context, instanceManager, profileManager)
+    ProfileManager profileManager
+) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Direct
 
@@ -73,17 +74,19 @@ public partial class InstanceWorkspacePageModel(
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                changes.Add(new()
-                {
-                    RelativePath = liveEntry,
-                    Name = Path.GetFileName(livePath),
-                    Kind = kind,
-                    LivePath = livePath,
-                    ImportPath = importPath,
-                    FileType = type,
-                    FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTimeUtc,
-                });
+                changes.Add(
+                    new()
+                    {
+                        RelativePath = liveEntry,
+                        Name = Path.GetFileName(livePath),
+                        Kind = kind,
+                        LivePath = livePath,
+                        ImportPath = importPath,
+                        FileType = type,
+                        FileSizeRaw = file.Length,
+                        FileLastModifiedRaw = file.LastWriteTimeUtc,
+                    }
+                );
             }
         }
 
@@ -102,9 +105,8 @@ public partial class InstanceWorkspacePageModel(
 
         return
         [
-            .. root
-              .EnumerateFiles("*", SearchOption.AllDirectories)
-              .Select(file => Path.GetRelativePath(folder, file.FullName)),
+            .. root.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(file => Path.GetRelativePath(folder, file.FullName)),
         ];
     }
 
@@ -138,12 +140,10 @@ public partial class InstanceWorkspacePageModel(
     private bool CanOpenDiffer(WorkspaceChangeModel? model) => model is not null;
 
     [RelayCommand(CanExecute = nameof(CanOpenDiffer))]
-    private void OpenDiffer(WorkspaceChangeModel? model)
-    {
+    private void OpenDiffer(WorkspaceChangeModel? model) { }
 
-    }
-
-    private bool CanStage(WorkspaceChangeModel? model) => !IsLocked && model is not null && File.Exists(model.LivePath);
+    private bool CanStage(WorkspaceChangeModel? model) =>
+        !IsLocked && model is not null && File.Exists(model.LivePath);
 
     [RelayCommand(CanExecute = nameof(CanStage))]
     private void Stage(WorkspaceChangeModel? model)
@@ -179,7 +179,8 @@ public partial class InstanceWorkspacePageModel(
         }
     }
 
-    private bool CanRestore(WorkspaceChangeModel? model) => model is not null && File.Exists(model.ImportPath);
+    private bool CanRestore(WorkspaceChangeModel? model) =>
+        model is not null && File.Exists(model.ImportPath);
 
     [RelayCommand(CanExecute = nameof(CanRestore))]
     private void Restore(WorkspaceChangeModel? model)

@@ -17,13 +17,17 @@ namespace Polymerium.App;
 
 public partial class MainWindow : AppWindow
 {
-    public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
-        AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
+    public static readonly StyledProperty<bool> IsLeftPanelModeProperty = AvaloniaProperty.Register<
+        MainWindow,
+        bool
+    >(nameof(IsLeftPanelMode));
 
     public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
-                                                          o => o.IsTitleBarVisible,
-                                                          (o, v) => o.IsTitleBarVisible = v);
+        AvaloniaProperty.RegisterDirect<MainWindow, bool>(
+            nameof(IsTitleBarVisible),
+            o => o.IsTitleBarVisible,
+            (o, v) => o.IsTitleBarVisible = v
+        );
 
     public MainWindow()
     {
@@ -45,7 +49,8 @@ public partial class MainWindow : AppWindow
 
     public static MainWindow Instance { get; private set; } = null!;
 
-    internal void SetFrameActivator(IViewActivator activator) => FrameActivationMixin.Install(Root, activator);
+    internal void SetFrameActivator(IViewActivator activator) =>
+        FrameActivationMixin.Install(Root, activator);
 
     internal void SetTransparencyLevelHintByIndex(int index) =>
         TransparencyLevelHint = index switch
