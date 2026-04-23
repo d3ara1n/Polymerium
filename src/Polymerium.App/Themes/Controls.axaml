@@ -23,5 +23,6 @@
         <ResourceInclude Source="/Controls/InstanceActionCard.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
         <ResourceInclude Source="/Controls/FancyListBox.axaml" />
+        <ResourceInclude Source="/Controls/DiffView.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

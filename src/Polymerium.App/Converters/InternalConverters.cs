@@ -172,6 +172,26 @@ public static class InternalConverters
             }
         );
 
+    private static readonly IBrush DiffAddedBrush = new SolidColorBrush(Color.FromArgb(40, 0x40, 0xA0, 0x40));
+    private static readonly IBrush DiffRemovedBrush = new SolidColorBrush(Color.FromArgb(40, 0xA0, 0x40, 0x40));
+    private static readonly IBrush DiffEmptyBrush = new SolidColorBrush(Color.FromArgb(20, 0x80, 0x80, 0x80));
+    private static readonly IBrush DiffModifiedBrush = new SolidColorBrush(Color.FromArgb(40, 0x40, 0x80, 0xC0));
+
+    public static IValueConverter DiffLineKindToBackground { get; } =
+        new RelayConverter(
+            (v, _) =>
+                v is DiffLineKind kind
+                    ? kind switch
+                    {
+                        DiffLineKind.Added => DiffAddedBrush,
+                        DiffLineKind.Removed => DiffRemovedBrush,
+                        DiffLineKind.Empty => DiffEmptyBrush,
+                        DiffLineKind.Modified => DiffModifiedBrush,
+                        _ => Brushes.Transparent,
+                    }
+                    : AvaloniaProperty.UnsetValue
+        );
+
     public static IMultiValueConverter MemoryUsageToColorBrush { get; } =
         new RelayMultiConverter(v =>
         {
