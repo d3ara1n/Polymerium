@@ -92,8 +92,6 @@ public partial class InstanceWorkspacePageModel(
         Changes.AddRange(changes);
     }
 
-    #endregion
-
     private IReadOnlyList<string> ScanFolder(string folder)
     {
         var root = new DirectoryInfo(folder);
@@ -135,6 +133,8 @@ public partial class InstanceWorkspacePageModel(
         return WorkspaceChangeKind.Deleted;
     }
 
+    #endregion
+
     #region Commands
 
     private bool CanOpenDiffer(WorkspaceChangeModel? model) => model is not null;
@@ -163,12 +163,14 @@ public partial class InstanceWorkspacePageModel(
             return;
         }
 
+        var suc = false;
         if (File.Exists(model.ImportPath))
         {
             // Overwrite
             try
             {
                 File.Copy(model.LivePath, model.ImportPath, true);
+                suc = true;
             }
             catch (Exception ex)
             {
@@ -181,11 +183,17 @@ public partial class InstanceWorkspacePageModel(
             try
             {
                 File.Delete(model.LivePath);
+                suc = true;
             }
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex, "Failed to perform file staging");
             }
+        }
+
+        if (suc)
+        {
+            model.Kind = WorkspaceChangeKind.Same;
         }
     }
 
@@ -204,17 +212,24 @@ public partial class InstanceWorkspacePageModel(
             return;
         }
 
+        var suc = false;
         if (File.Exists(model.LivePath))
         {
             // Restore
             try
             {
                 File.Copy(model.ImportPath, model.LivePath, true);
+                suc = true;
             }
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex, "Failed to perform file staging");
             }
+        }
+
+        if (suc)
+        {
+            model.Kind = WorkspaceChangeKind.Same;
         }
     }
 

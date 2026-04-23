@@ -46,24 +46,24 @@
                                             Value="{Binding Kind}">
                                             <husk:SwitchCase Value="Same">
                                                 <husk:Tag
-                                                    Classes="Small Primary"
+                                                    Classes="Primary"
                                                     Content="无变化" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Outdated">
                                                 <husk:Tag
-                                                    Classes="Small Warning"
+                                                    Classes="Warning"
                                                     Content="已过时"
                                                     ToolTip.Tip="该文件的初始版本发生变更，通常是由整合包更新引起。" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Updated">
                                                 <husk:Tag
-                                                    Classes="Small Success"
+                                                    Classes="Success"
                                                     Content="已更新"
                                                     ToolTip.Tip="该文件被客户端所修改。 " />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="Deleted">
                                                 <husk:Tag
-                                                    Classes="Small Danger"
+                                                    Classes="Danger"
                                                     Content="已删除"
                                                     ToolTip.Tip="该文件的初始版本被移除，通常是由整合包更新引起。" />
                                             </husk:SwitchCase>
@@ -241,7 +241,7 @@
                                                             <Button
                                                                 Grid.Row="1"
                                                                 Grid.Column="0"
-                                                                Classes="Primary"
+                                                                Classes.Primary="{Binding !((app:InstanceWorkspacePageModel)DataContext).IsLocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:False}}"
                                                                 Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
@@ -251,6 +251,7 @@
                                                             <Button
                                                                 Grid.Row="1"
                                                                 Grid.Column="1"
+                                                                Classes.Primary="{Binding ((app:InstanceWorkspacePageModel)DataContext).IsLocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:False}}"
                                                                 Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
@@ -278,7 +279,7 @@
                                                             <Button
                                                                 Grid.Row="1"
                                                                 Grid.Column="0"
-                                                                Classes="Primary"
+                                                                Classes.Primary="{Binding !((app:InstanceWorkspacePageModel)DataContext).IsLocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:False}}"
                                                                 Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
@@ -288,6 +289,7 @@
                                                             <Button
                                                                 Grid.Row="1"
                                                                 Grid.Column="1"
+                                                                Classes.Primary="{Binding ((app:InstanceWorkspacePageModel)DataContext).IsLocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:False}}"
                                                                 Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
