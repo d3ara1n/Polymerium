@@ -37,7 +37,7 @@
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Text="{Binding Name}"
+                                            Text="{Binding FileName}"
                                             TextTrimming="CharacterEllipsis" />
                                         <husk:SwitchContainer
                                             Grid.Row="0"
@@ -124,7 +124,7 @@
                                                         <TextBlock
                                                             FontSize="{StaticResource ExtraLargeFontSize}"
                                                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                            Text="{Binding Name}"
+                                                            Text="{Binding FileName}"
                                                             TextWrapping="Wrap" />
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -232,7 +232,7 @@
                                                                 Grid.Row="0"
                                                                 Grid.Column="0"
                                                                 Grid.ColumnSpan="2"
-                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).OpenDifferCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="SplitVertical"

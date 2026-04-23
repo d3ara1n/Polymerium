@@ -2,11 +2,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.App.Dialogs;
 
 namespace Polymerium.App.Services;
 
-public class OverlayService
+public class OverlayService(IViewActivator activator)
 {
     private Action<Dialog>? _dialogHandler;
     private Action<Sidebar>? _drawerHandler;
@@ -17,8 +18,7 @@ public class OverlayService
         Action<Toast> toastHandler,
         Action<Sidebar> drawerHandler,
         Action<Modal> modalHandler,
-        Action<Dialog> dialogHandler
-    )
+        Action<Dialog> dialogHandler)
     {
         _toastHandler = toastHandler;
         _drawerHandler = drawerHandler;
@@ -42,6 +42,12 @@ public class OverlayService
 
     public void PopModal(Modal modal) => _modalHandler?.Invoke(modal);
 
+    public void PopModal<TModal>(object? parameter = null) where TModal : Modal
+    {
+        var modal = (TModal)activator.Activate(typeof(TModal), parameter)!;
+        PopModal(modal);
+    }
+
     #endregion
 
     #region Dialogs
@@ -50,12 +56,7 @@ public class OverlayService
 
     public void PopMessage(string message, string title)
     {
-        var dialog = new MessageDialog
-        {
-            Title = title,
-            Message = message,
-            IsPrimaryButtonVisible = false,
-        };
+        var dialog = new MessageDialog { Title = title, Message = message, IsPrimaryButtonVisible = false, };
         PopDialog(dialog);
     }
 
@@ -66,11 +67,7 @@ public class OverlayService
         return await source.Task;
     }
 
-    public async Task<string?> RequestInputAsync(
-        string? message = null,
-        string? title = null,
-        string? watermark = null
-    )
+    public async Task<string?> RequestInputAsync(string? message = null, string? title = null, string? watermark = null)
     {
         var dialog = new UserInputDialog();
         if (title != null)
