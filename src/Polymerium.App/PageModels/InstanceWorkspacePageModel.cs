@@ -84,7 +84,7 @@ public partial class InstanceWorkspacePageModel(
                     ImportPath = importPath,
                     FileType = type,
                     FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTimeUtc,
+                    FileLastModifiedRaw = file.LastWriteTime,
                 });
             }
         }

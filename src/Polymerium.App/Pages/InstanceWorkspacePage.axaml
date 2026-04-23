@@ -21,11 +21,13 @@
         </Grid>
         <!--  Nav Bar  -->
         <TabControl>
-            <TabItem Header="Changes">
+            <TabItem Header="变更">
                 <Grid
                     ColumnDefinitions="*,4,*"
                     ColumnSpacing="12">
-                    <DockPanel>
+                    <app:EmptyContainer
+                        Grid.Column="0"
+                        IsEmpty="{Binding Changes.Count, Converter={x:Static husk:NumberConverters.IsZero}}">
                         <ListBox
                             ItemsSource="{Binding Changes}"
                             SelectedItem="{Binding SelectedChange, Mode=TwoWay}">
@@ -79,7 +81,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </DockPanel>
+                    </app:EmptyContainer>
                     <GridSplitter
                         Grid.Column="1"
                         ResizeDirection="Columns" />
@@ -346,7 +348,6 @@
                             </StackPanel>
                         </husk:PlaceholderContainer>
                     </ScrollViewer>
-
                 </Grid>
             </TabItem>
         </TabControl>
