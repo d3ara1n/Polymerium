@@ -2,12 +2,54 @@
     x:Class="Polymerium.App.Modals.WorkspaceDiffModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    x:DataType="app:WorkspaceDiffModalModel"
     mc:Ignorable="d">
-    Welcome to Avalonia!
+    <DockPanel VerticalSpacing="12">
+        <StackPanel
+            DockPanel.Dock="Bottom"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding $parent[app:WorkspaceDiffModal].Dismiss}"
+                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+        </StackPanel>
+        <Grid
+            ColumnDefinitions="*,*"
+            ColumnSpacing="12"
+            RowDefinitions="Auto,Auto,*"
+            RowSpacing="8">
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <TextBlock
+                    FontSize="{StaticResource LargeFontSize}"
+                    Text="{Binding Model.FileName}" />
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Binding Model.RelativePath}" />
+            </StackPanel>
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0">
+                <husk:Tag
+                    Classes="Primary"
+                    Content="Live" />
+            </StackPanel>
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1">
+                <husk:Tag
+                    Classes="Primary"
+                    Content="Import" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </husk:Modal>
-
