@@ -269,7 +269,7 @@
                                                                 Grid.Row="0"
                                                                 Grid.Column="0"
                                                                 Grid.ColumnSpan="2"
-                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).OpenDifferCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="SplitVertical"

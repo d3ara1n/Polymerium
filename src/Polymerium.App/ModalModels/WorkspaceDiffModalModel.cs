@@ -1,4 +1,6 @@
-﻿using Huskui.Avalonia.Mvvm.Activation;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 
@@ -13,6 +15,13 @@ public class WorkspaceDiffModalModel(IViewContext<WorkspaceChangeModel> context)
     #endregion
 
     #region Reactive
+
+    #endregion
+
+    #region Overrides
+
+    public override Task InitializeAsync(CancellationToken cancellationToken) =>
+        base.InitializeAsync(cancellationToken);
 
     #endregion
 }
