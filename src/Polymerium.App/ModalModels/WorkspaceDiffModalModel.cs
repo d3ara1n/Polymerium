@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,10 +20,10 @@ public partial class WorkspaceDiffModalModel(IViewContext<WorkspaceChangeModel> 
     #region Reactive
 
     [ObservableProperty]
-    public partial string? OldText { get; private set; }
+    public partial string? ImportText { get; private set; }
 
     [ObservableProperty]
-    public partial string? NewText { get; private set; }
+    public partial string? LiveText { get; private set; }
 
     #endregion
 
@@ -32,13 +33,11 @@ public partial class WorkspaceDiffModalModel(IViewContext<WorkspaceChangeModel> 
     {
         await base.InitializeAsync(cancellationToken);
 
-        OldText = File.Exists(Model.ImportPath)
-            ? await File.ReadAllTextAsync(Model.ImportPath, cancellationToken).ConfigureAwait(false)
-            : null;
+        LiveText = File.Exists(Model.LivePath) ? await File.ReadAllTextAsync(Model.LivePath, cancellationToken) : null;
 
-        NewText = File.Exists(Model.LivePath)
-            ? await File.ReadAllTextAsync(Model.LivePath, cancellationToken).ConfigureAwait(false)
-            : null;
+        ImportText = File.Exists(Model.ImportPath)
+                         ? await File.ReadAllTextAsync(Model.ImportPath, cancellationToken)
+                         : null;
     }
 
     #endregion

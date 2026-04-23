@@ -1,11 +1,7 @@
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
-
-    <x:Double x:Key="DiffLineHeight">22</x:Double>
-    <x:Double x:Key="DiffFontSize">13</x:Double>
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
 
     <ControlTheme
         x:Key="{x:Type app:DiffView}"
@@ -17,74 +13,92 @@
                     BorderBrush="{StaticResource ControlBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="{StaticResource SmallCornerRadius}">
-                    <ScrollViewer
-                        HorizontalScrollBarVisibility="Auto"
-                        VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{TemplateBinding Lines}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="app:DiffLineModel">
-                                    <Grid MinHeight="{StaticResource DiffLineHeight}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition MinWidth="48" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="1" />
-                                            <ColumnDefinition Width="48" />
-                                            <ColumnDefinition MinWidth="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border
-                                            Grid.Column="0"
-                                            BorderBrush="{StaticResource ControlBorderBrush}"
-                                            BorderThickness="0,0,1,0">
-                                            <TextBlock
-                                                Margin="8,2"
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                FontSize="{StaticResource DiffFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{Binding LeftLineNumber}" />
-                                        </Border>
-                                        <Border
-                                            Grid.Column="1"
-                                            Background="{Binding LeftKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}">
-                                            <TextBlock
-                                                Margin="8,2"
-                                                VerticalAlignment="Center"
-                                                FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                FontSize="{StaticResource DiffFontSize}"
-                                                Text="{Binding LeftText}" />
-                                        </Border>
-                                        <Border
-                                            Grid.Column="2"
-                                            Background="{StaticResource ControlBorderBrush}" />
-                                        <Border
-                                            Grid.Column="3"
-                                            BorderBrush="{StaticResource ControlBorderBrush}"
-                                            BorderThickness="0,0,1,0">
-                                            <TextBlock
-                                                Margin="8,2"
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                FontSize="{StaticResource DiffFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{Binding RightLineNumber}" />
-                                        </Border>
-                                        <Border
-                                            Grid.Column="4"
-                                            Background="{Binding RightKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}">
-                                            <TextBlock
-                                                Margin="8,2"
-                                                VerticalAlignment="Center"
-                                                FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                FontSize="{StaticResource DiffFontSize}"
-                                                Text="{Binding RightText}" />
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                    <Panel>
+                        <ScrollViewer
+                            x:Name="PART_ScrollViewer"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{TemplateBinding Lines}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="app:DiffLineModel">
+                                        <Grid MinHeight="{x:Static app:DiffView.LINE_HEIGHT}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="48" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="1" />
+                                                <ColumnDefinition Width="48" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border
+                                                Grid.Column="0"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="0,0,1,0">
+                                                <TextBlock
+                                                    Margin="8,2"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding LeftLineNumber}" />
+                                            </Border>
+                                            <Border
+                                                Grid.Column="1"
+                                                Background="{Binding LeftKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}"
+                                                ClipToBounds="True">
+                                                <TextBlock
+                                                    Margin="8,2"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                    Text="{Binding LeftText}">
+                                                    <TextBlock.RenderTransform>
+                                                        <TranslateTransform X="{Binding $parent[app:DiffView].HorizontalOffset}" />
+                                                    </TextBlock.RenderTransform>
+                                                </TextBlock>
+                                            </Border>
+                                            <Border
+                                                Grid.Column="2"
+                                                Background="{StaticResource ControlBorderBrush}" />
+                                            <Border
+                                                Grid.Column="3"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="0,0,1,0">
+                                                <TextBlock
+                                                    Margin="8,2"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding RightLineNumber}" />
+                                            </Border>
+                                            <Border
+                                                Grid.Column="4"
+                                                Background="{Binding RightKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}"
+                                                ClipToBounds="True">
+                                                <TextBlock
+                                                    Margin="8,2"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                    Text="{Binding RightText}">
+                                                    <TextBlock.RenderTransform>
+                                                        <TranslateTransform X="{Binding $parent[app:DiffView].HorizontalOffset}" />
+                                                    </TextBlock.RenderTransform>
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <ScrollBar
+                            x:Name="PART_HScrollBar"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal"
+                            Visibility="Hidden" />
+                    </Panel>
                 </Border>
             </ControlTemplate>
         </Setter>
