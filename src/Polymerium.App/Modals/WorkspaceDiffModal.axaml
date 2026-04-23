@@ -22,38 +22,111 @@
                 Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
         </StackPanel>
         <Grid
-            RowDefinitions="Auto,*"
+            RowDefinitions="Auto,Auto,*"
             RowSpacing="8">
             <Grid
                 Grid.Row="0"
-                ColumnDefinitions="*,*"
+                ColumnDefinitions="*,Auto"
                 ColumnSpacing="12">
                 <StackPanel Grid.Column="0">
                     <TextBlock
-                        FontSize="{StaticResource LargeFontSize}"
+                        FontSize="{StaticResource ExtraLargeFontSize}"
                         Text="{Binding Model.FileName}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{Binding Model.RelativePath}" />
                 </StackPanel>
-                <StackPanel
+                <husk:SwitchContainer
                     Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal"
-                    Spacing="8">
+                    TargetType="x:Boolean">
+                    <husk:SwitchContainer.Value>
+                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                            <Binding
+                                ElementName="DiffView"
+                                Path="LeftHasDifference" />
+                            <Binding
+                                ElementName="DiffView"
+                                Path="RightHasDifference" />
+                        </MultiBinding>
+                    </husk:SwitchContainer.Value>
+                    <husk:SwitchCase Value="{x:True}">
+                        <Border
+                            Padding="12,8"
+                            Background="{StaticResource ControlWarningTranslucentFullBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                            BorderThickness="1,1,4,1"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <StackPanel>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Foreground="{StaticResource ControlWarningForegroundBrush}"
+                                    Text="存在差异" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="基于内容的判断" />
+                            </StackPanel>
+                        </Border>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <Border
+                            Padding="12,8"
+                            Background="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlSuccessBorderBrush}"
+                            BorderThickness="1,1,4,1"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <StackPanel>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                    Text="完全相同" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="基于内容的判断" />
+                            </StackPanel>
+                        </Border>
+                    </husk:SwitchCase>
+                </husk:SwitchContainer>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12">
+                <DockPanel Grid.Column="0">
+                    <TextBlock
+                        DockPanel.Dock="Right"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <Run Text="{Binding #DiffView.LeftLineCount}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding #DiffView.TotalLineCount}" />
+                        <Run Text="Ln." />
+                    </TextBlock>
                     <husk:Tag
-                        Classes="Small Primary"
-                        Content="Import" />
-                    <husk:Tag
-                        Classes="Small Warning"
+                        Classes="Primary"
                         Content="Live" />
-                </StackPanel>
+                </DockPanel>
+                <DockPanel Grid.Column="1">
+                    <TextBlock
+                        DockPanel.Dock="Right"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <Run Text="{Binding #DiffView.RightLineCount}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding #DiffView.TotalLineCount}" />
+                        <Run Text="Ln." />
+                    </TextBlock>
+                    <husk:Tag
+                        Classes="Primary"
+                        Content="Import" />
+                </DockPanel>
             </Grid>
             <controls:DiffView
-                Grid.Row="1"
-                OldText="{Binding OldText}"
-                NewText="{Binding NewText}" />
+                x:Name="DiffView"
+                Grid.Row="2"
+                LeftText="{Binding LiveText}"
+                RightText="{Binding ImportText}" />
         </Grid>
     </DockPanel>
 </husk:Modal>

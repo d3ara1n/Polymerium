@@ -10,8 +10,8 @@ public partial class ExceptionPageModel : ViewModelBase
 {
     public ExceptionPageModel(IViewContext<Exception> context)
     {
-        Message = context.Parameter.Message;
-        StackTrace = context.Parameter.StackTrace ?? "No details provided.";
+        Message = context.GetRequiredParameter().Message;
+        StackTrace = context.GetRequiredParameter().StackTrace ?? "No details provided.";
     }
 
     #region Reactive
