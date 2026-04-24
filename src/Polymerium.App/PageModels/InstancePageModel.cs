@@ -41,7 +41,8 @@ public partial class InstancePageModel : ViewModelBase
         WidgetHostService widgetHostService,
         NotificationService notificationService,
         DataService dataService,
-        PersistenceService persistenceService)
+        PersistenceService persistenceService
+    )
     {
         _profileManager = profileManager;
         _overlayService = overlayService;
@@ -49,36 +50,49 @@ public partial class InstancePageModel : ViewModelBase
         _notificationService = notificationService;
         _dataService = dataService;
         _persistenceService = persistenceService;
-        SelectedPage = context.Parameter switch
-                       {
-                           CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
-                           _ => null,
-                       }
-                    ?? PageEntries.FirstOrDefault();
+        SelectedPage =
+            context.Parameter switch
+            {
+                CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
+                _ => null,
+            } ?? PageEntries.FirstOrDefault();
 
         var key = context.Parameter switch
         {
             CompositeParameter p => p.Key,
             string s => s,
-            _ => throw new PageNotReachedException(typeof(InstancePage), "Key to the instance is not provided"),
+            _ => throw new PageNotReachedException(
+                typeof(InstancePage),
+                "Key to the instance is not provided"
+            ),
         };
         if (profileManager.TryGetImmutable(key, out var profile))
         {
-            Basic = new(key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source);
-            Context = new(Basic,
-            [
-                .. widgetHostService.WidgetTypes.Select(type =>
-                {
-                    var widget = (WidgetBase)Activator.CreateInstance(type)!;
-                    widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
-                    return widget;
-                }),
-            ]);
+            Basic = new(
+                key,
+                profile.Name,
+                profile.Setup.Version,
+                profile.Setup.Loader,
+                profile.Setup.Source
+            );
+            Context = new(
+                Basic,
+                [
+                    .. widgetHostService.WidgetTypes.Select(type =>
+                    {
+                        var widget = (WidgetBase)Activator.CreateInstance(type)!;
+                        widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
+                        return widget;
+                    }),
+                ]
+            );
         }
         else
         {
-            throw new PageNotReachedException(typeof(InstancePage),
-                                              Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key));
+            throw new PageNotReachedException(
+                typeof(InstancePage),
+                Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key)
+            );
         }
     }
 
@@ -94,11 +108,13 @@ public partial class InstancePageModel : ViewModelBase
     private Task OpenFolder()
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
-                                                       new(dir),
-                                                       "Failed to open instance folder",
-                                                       _notificationService,
-                                                       thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
+        return TopLevelHelper.LaunchDirectoryInfoAsync(
+            TopLevel.GetTopLevel(MainWindow.Instance),
+            new(dir),
+            "Failed to open instance folder",
+            _notificationService,
+            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+        );
     }
 
     [RelayCommand]
@@ -111,7 +127,9 @@ public partial class InstancePageModel : ViewModelBase
         //  or AssetIdentificationPersistModel { IsInImportMode: true } import
         var dialog = new AssetImporterDialog
         {
-            PathAccepted = initialPath, DataService = _dataService, NotificationService = _notificationService,
+            PathAccepted = initialPath,
+            DataService = _dataService,
+            NotificationService = _notificationService,
         };
         if (await _overlayService.PopDialogAsync(dialog))
         {
@@ -122,47 +140,66 @@ public partial class InstancePageModel : ViewModelBase
                     {
                         await using (guard)
                         {
-                            if (!guard.Value.Setup.Packages.Any(x => PackageHelper.IsMatched(x.Purl,
-                                                                    package.Package.Label,
-                                                                    package.Package.Namespace,
-                                                                    package.Package.ProjectId)))
+                            if (
+                                !guard.Value.Setup.Packages.Any(x =>
+                                    PackageHelper.IsMatched(
+                                        x.Purl,
+                                        package.Package.Label,
+                                        package.Package.Namespace,
+                                        package.Package.ProjectId
+                                    )
+                                )
+                            )
                             {
-                                var purl = PackageHelper.ToPurl(package.Package.Label,
-                                                                package.Package.Namespace,
-                                                                package.Package.ProjectId,
-                                                                package.Package.VersionId);
-                                guard.Value.Setup.Packages.Add(new() { Purl = purl, Enabled = true, Source = null, });
-                                _persistenceService.AppendAction(new()
-                                {
-                                    Key = Basic.Key,
-                                    Kind = PersistenceService.ActionKind
-                                                             .EditPackage,
-                                    New = purl,
-                                });
-                                _notificationService
-                                   .PopMessage($"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
-                                               guard.Key,
-                                               thumbnail: package.Thumbnail);
+                                var purl = PackageHelper.ToPurl(
+                                    package.Package.Label,
+                                    package.Package.Namespace,
+                                    package.Package.ProjectId,
+                                    package.Package.VersionId
+                                );
+                                guard.Value.Setup.Packages.Add(
+                                    new()
+                                    {
+                                        Purl = purl,
+                                        Enabled = true,
+                                        Source = null,
+                                    }
+                                );
+                                _persistenceService.AppendAction(
+                                    new()
+                                    {
+                                        Key = Basic.Key,
+                                        Kind = PersistenceService.ActionKind.EditPackage,
+                                        New = purl,
+                                    }
+                                );
+                                _notificationService.PopMessage(
+                                    $"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
+                                    guard.Key,
+                                    thumbnail: package.Thumbnail
+                                );
                             }
                             else
                             {
-                                _notificationService
-                                   .PopMessage($"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
-                                               "Failed to import as package",
-                                               GrowlLevel.Danger,
-                                               thumbnail: package.Thumbnail);
+                                _notificationService.PopMessage(
+                                    $"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
+                                    "Failed to import as package",
+                                    GrowlLevel.Danger,
+                                    thumbnail: package.Thumbnail
+                                );
                             }
                         }
                     }
 
                     break;
                 case AssetIdentificationPersistModel persist:
-                    var target =
-                        Path.Combine(persist.IsInImportMode
-                                         ? PathDef.Default.DirectoryOfImport(Basic.Key)
-                                         : PathDef.Default.DirectoryOfPersist(Basic.Key),
-                                     FileHelper.GetAssetFolderName(persist.Kind),
-                                     Path.GetFileName(persist.Path));
+                    var target = Path.Combine(
+                        persist.IsInImportMode
+                            ? PathDef.Default.DirectoryOfImport(Basic.Key)
+                            : PathDef.Default.DirectoryOfPersist(Basic.Key),
+                        FileHelper.GetAssetFolderName(persist.Kind),
+                        Path.GetFileName(persist.Path)
+                    );
                     if (!File.Exists(target))
                     {
                         var dir = Path.GetDirectoryName(target);
@@ -172,17 +209,24 @@ public partial class InstancePageModel : ViewModelBase
                         }
 
                         File.Copy(persist.Path, target, false);
-                        _notificationService.PopMessage($"File {target} has added to the instance",
-                                                        Basic.Key,
-                                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
+                        _notificationService.PopMessage(
+                            $"File {target} has added to the instance",
+                            Basic.Key,
+                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                        );
                     }
                     else
                     {
-                        var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
-                        _notificationService.PopMessage($"File {relative} already exists",
-                                                        "Failed to import as solid file",
-                                                        GrowlLevel.Danger,
-                                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
+                        var relative = Path.GetRelativePath(
+                            PathDef.Default.DirectoryOfHome(Basic.Key),
+                            target
+                        );
+                        _notificationService.PopMessage(
+                            $"File {relative} already exists",
+                            "Failed to import as solid file",
+                            GrowlLevel.Danger,
+                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
+                        );
                     }
 
                     break;
@@ -360,21 +404,41 @@ public partial class InstancePageModel : ViewModelBase
         // Home
         new(typeof(InstanceHomePage), Symbol.Home, Resources.InstancePage_HomePageText),
         // Dashboard
-        new(typeof(InstanceDashboardPage), Symbol.PulseSquare, Resources.InstancePage_DashboardPageText),
+        new(
+            typeof(InstanceDashboardPage),
+            Symbol.PulseSquare,
+            Resources.InstancePage_DashboardPageText
+        ),
         // Setup
         new(typeof(InstanceSetupPage), Symbol.Apps, Resources.InstancePage_SetupPageText),
         // Files
         new(typeof(InstanceFilesPage), Symbol.DocumentFolder, Resources.InstancePage_FilesPageText),
         // Workspace
-        new(typeof(InstanceWorkspacePage), Symbol.ArrowSyncCircle, Resources.InstancePage_WorkspacePageText),
+        new(
+            typeof(InstanceWorkspacePage),
+            Symbol.ArrowSyncCircle,
+            Resources.InstancePage_WorkspacePageText
+        ),
         // Widgets
         new(typeof(InstanceWidgetsPage), Symbol.AppFolder, Resources.InstancePage_WidgetsPageText),
         // Statistics
-        new(typeof(InstanceActivitiesPage), Symbol.DataArea, Resources.InstancePage_StatisticsPageText),
+        new(
+            typeof(InstanceActivitiesPage),
+            Symbol.DataArea,
+            Resources.InstancePage_StatisticsPageText
+        ),
         // Storage
-        new(typeof(InstanceStoragePage), Symbol.ChartMultiple, Resources.InstancePage_StoragePageText),
+        new(
+            typeof(InstanceStoragePage),
+            Symbol.ChartMultiple,
+            Resources.InstancePage_StoragePageText
+        ),
         // Properties
-        new(typeof(InstancePropertiesPage), Symbol.Wrench, Resources.InstancePage_PropertiesPageText),
+        new(
+            typeof(InstancePropertiesPage),
+            Symbol.Wrench,
+            Resources.InstancePage_PropertiesPageText
+        ),
     ];
 
     [ObservableProperty]

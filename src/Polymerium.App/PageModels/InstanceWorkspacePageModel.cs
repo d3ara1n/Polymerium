@@ -37,13 +37,20 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
-        ProfileManager profileManager) : base(context, instanceManager, profileManager)
+        ProfileManager profileManager
+    )
+        : base(context, instanceManager, profileManager)
     {
         _notificationService = notificationService;
         _overlayService = overlayService;
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
-        _changesSource.Connect().Filter(filter).Bind(out var view).Subscribe().DisposeWith(_subscriptions);
+        _changesSource
+            .Connect()
+            .Filter(filter)
+            .Bind(out var view)
+            .Subscribe()
+            .DisposeWith(_subscriptions);
         ChangesView = view;
     }
 
@@ -51,7 +58,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private readonly CompositeDisposable _subscriptions = new();
     private CancellationToken? _initToken;
-    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x => x.RelativePath);
+    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x =>
+        x.RelativePath
+    );
 
     #endregion
 
@@ -95,7 +104,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     #region Other
 
     private static Func<WorkspaceChangeModel, bool> BuildFilter(string? text) =>
-        x => string.IsNullOrEmpty(text) || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
+        x =>
+            string.IsNullOrEmpty(text)
+            || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
 
     private async Task GenerateChangeListAsync(CancellationToken token)
     {
@@ -122,17 +133,19 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                batch.Add(new()
-                {
-                    RelativePath = liveEntry,
-                    FileName = Path.GetFileName(livePath),
-                    Kind = kind,
-                    LivePath = livePath,
-                    ImportPath = importPath,
-                    FileType = type,
-                    FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTime,
-                });
+                batch.Add(
+                    new()
+                    {
+                        RelativePath = liveEntry,
+                        FileName = Path.GetFileName(livePath),
+                        Kind = kind,
+                        LivePath = livePath,
+                        ImportPath = importPath,
+                        FileType = type,
+                        FileSizeRaw = file.Length,
+                        FileLastModifiedRaw = file.LastWriteTime,
+                    }
+                );
                 if (batch.Count >= 100)
                 {
                     var toAdd = batch.ToArray();
@@ -213,9 +226,12 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     {
         if (model != null)
         {
-            if (model.FileSizeRaw > 1024 * 1024 * 1024
-             && !await _overlayService
-                    .RequestConfirmationAsync("File is too large. It may take time to compute and render diff."))
+            if (
+                model.FileSizeRaw > 1024 * 1024 * 1024
+                && !await _overlayService.RequestConfirmationAsync(
+                    "File is too large. It may take time to compute and render diff."
+                )
+            )
             {
                 // 文件大且用户拒绝
                 return;
@@ -225,7 +241,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanStage(WorkspaceChangeModel? model) => !IsLocked && model is not null && File.Exists(model.LivePath);
+    private bool CanStage(WorkspaceChangeModel? model) =>
+        !IsLocked && model is not null && File.Exists(model.LivePath);
 
     [RelayCommand(CanExecute = nameof(CanStage))]
     private async Task Stage(WorkspaceChangeModel? model)
@@ -235,7 +252,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync("This will overwrite the file from the modpack"))
+        if (
+            !await _overlayService.RequestConfirmationAsync(
+                "This will overwrite the file from the modpack"
+            )
+        )
         {
             return;
         }
@@ -284,7 +305,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync("This will discard the changes from game playing"))
+        if (
+            !await _overlayService.RequestConfirmationAsync(
+                "This will discard the changes from game playing"
+            )
+        )
         {
             return;
         }
