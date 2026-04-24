@@ -849,10 +849,10 @@ public partial class InstanceSetupPageModel(
                 );
 
                 progress.AddAction(
-                    new GrowlAction(
+                    new(
                         Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText,
                         new RelayCommand(Cancel)
-                    )
+                       )
                 );
 
                 var filter = new Filter(

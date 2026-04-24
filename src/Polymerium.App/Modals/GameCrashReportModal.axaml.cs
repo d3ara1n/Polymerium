@@ -386,7 +386,7 @@ public partial class GameCrashReportModal : Modal
         try
         {
             return await _mclogsClient.CreateLogAsync(
-                new CreateLogRequest(
+                new(
                     content,
                     $"{Program.Brand}/{Program.Version}",
                     [
@@ -398,11 +398,11 @@ public partial class GameCrashReportModal : Modal
                             Report?.MinecraftVersion,
                             "Minecraft Version",
                             true
-                        ),
+                           ),
                         new("loader", Report?.LoaderLabel, "Loader", true),
                         new("operating_system", Report?.OperatingSystem, "Operating System", true),
                     ]
-                )
+                   )
             );
         }
         catch (ApiException ex)
