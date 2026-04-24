@@ -57,8 +57,8 @@ public class ProxySettingsModel
     public string GetStatusDisplayText() =>
         Mode switch
         {
-            ProxyMode.Auto => Resources.SettingsView_ProxyStatusAutoText,
-            ProxyMode.Disabled => Resources.SettingsView_ProxyStatusDisabledText,
+            ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
+            ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
             ProxyMode.Manual => Protocol == ProxyProtocol.Socks5
                 ? $"socks5://{Address}:{Port}"
                 : $"{Address}:{Port}",

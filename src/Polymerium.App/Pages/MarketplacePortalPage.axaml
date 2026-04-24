@@ -12,7 +12,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:MarketplacePortalPageModel"
-    Header="{x:Static lang:Resources.MarketplacePortalView_Title}"
+    Header="{x:Static lang:Resources.MarketplacePortalPage_Title}"
     mc:Ignorable="d">
     <Grid RowDefinitions="Auto,0">
         <Panel
@@ -26,7 +26,7 @@
                 <TextBlock
                     FontSize="{StaticResource ExtraLargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterTitle}"
+                    Text="{x:Static lang:Resources.MarketplacePortalPage_DiscoveryCenterTitle}"
                     TextAlignment="Center">
                     <TextBlock.Effect>
                         <DropShadowEffect
@@ -49,7 +49,7 @@
                     HorizontalContentAlignment="Center"
                     BorderThickness="0,0,0,2"
                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                    PlaceholderText="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}"
+                    PlaceholderText="{x:Static lang:Resources.MarketplacePortalPage_DiscoveryCenterSubtitle}"
                     Theme="{StaticResource UnderlineTextBoxTheme}" />
                 <Button
                     Classes="Primary"
@@ -68,7 +68,7 @@
                             Symbol="Search" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}" />
+                            Text="{x:Static lang:Resources.MarketplacePortalPage_SearchButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>

@@ -165,7 +165,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // Basic 是 InstanceViewModel 维护的，理论上会先在 ProfileUpdated 时更新，但不可靠
+        // Basic 是 InstancePageModel 维护的，理论上会先在 ProfileUpdated 时更新，但不可靠
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             if (profile.Setup.Source is not null)
@@ -372,7 +372,7 @@ public partial class InstanceSetupPageModel(
             {
                 notificationService.PopMessage(
                     ex.Message,
-                    Resources.InstanceSetupView_ParsePurlDangerNotificationTitle,
+                    Resources.InstanceSetupPage_ParsePurlDangerNotificationTitle,
                     GrowlLevel.Danger,
                     thumbnail: GetNotificationThumbnail()
                 );
@@ -533,7 +533,7 @@ public partial class InstanceSetupPageModel(
         )
         // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
         //  但该 TrackerBase.StateChanged 事件未接触订阅
-        //  实际是状态订阅有三层，第一层由 InstanceViewModelBase 维护，且正确工作
+        //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
         //  第二层是第一层的订阅事件中创建，由事件处理函数维护
         //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
         //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
@@ -780,7 +780,7 @@ public partial class InstanceSetupPageModel(
             {
                 notificationService.PopMessage(
                     ex,
-                    Resources.InstanceSetupView_LoadProjectInformationDangerNotificationTitle,
+                    Resources.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
                     GrowlLevel.Warning,
                     thumbnail: GetNotificationThumbnail()
                 );
@@ -789,7 +789,7 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private void GotoPackageExplorerView() =>
+    private void GotoPackageExplorerPage() =>
         navigationService.Navigate<PackageExplorerPage>(Basic.Key);
 
     [RelayCommand]
@@ -839,18 +839,18 @@ public partial class InstanceSetupPageModel(
                 var total = staging.Count;
                 var progress = notificationService.PopProgress(
                     Resources
-                        .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace(
+                        .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage.Replace(
                             "{0}",
                             "0"
                         )
                         .Replace("{1}", staging.Count.ToString()),
-                    Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle,
+                    Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle,
                     thumbnail: GetNotificationThumbnail()
                 );
 
                 progress.AddAction(
                     new GrowlAction(
-                        Resources.InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText,
+                        Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText,
                         new RelayCommand(Cancel)
                     )
                 );
@@ -881,7 +881,7 @@ public partial class InstanceSetupPageModel(
                 {
                     notificationService.PopMessage(
                         ex,
-                        Resources.InstanceSetupView_LoadProjectInformationDangerNotificationTitle,
+                        Resources.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
                         GrowlLevel.Warning,
                         thumbnail: GetNotificationThumbnail()
                     );
@@ -896,14 +896,14 @@ public partial class InstanceSetupPageModel(
                 progress.Dispose();
 
                 notificationService.PopMessage(
-                    Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle,
-                    Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage.Replace(
+                    Resources.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle,
+                    Resources.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage.Replace(
                         "{0}",
                         updates.Count.ToString()
                     ),
                     thumbnail: GetNotificationThumbnail(),
                     actions: new GrowlAction(
-                        Resources.InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText,
+                        Resources.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText,
                         new AsyncRelayCommand(ReviewAsync, CanReview)
                     )
                 );
@@ -987,7 +987,7 @@ public partial class InstanceSetupPageModel(
                         );
                         handle.Report(
                             Resources
-                                .InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage.Replace(
+                                .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage.Replace(
                                     "{0}",
                                     updates.Count.ToString()
                                 )
@@ -1080,8 +1080,8 @@ public partial class InstanceSetupPageModel(
                 if (importedEntries.Count == 0)
                 {
                     notificationService.PopMessage(
-                        Resources.InstanceSetupView_ImportListNoPackagesWarningNotificationMessage,
-                        Resources.InstanceSetupView_ImportListWarningNotificationTitle,
+                        Resources.InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage,
+                        Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
                         GrowlLevel.Warning,
                         thumbnail: GetNotificationThumbnail()
                     );
@@ -1201,7 +1201,7 @@ public partial class InstanceSetupPageModel(
 
                 // 显示结果通知
                 var resultMessage = Resources
-                    .InstanceSetupView_ImportListSuccessNotificationMessage.Replace(
+                    .InstanceSetupPage_ImportListSuccessNotificationMessage.Replace(
                         "{0}",
                         addedCount.ToString()
                     )
@@ -1210,7 +1210,7 @@ public partial class InstanceSetupPageModel(
                 var level = failedCount > 0 ? GrowlLevel.Warning : GrowlLevel.Success;
                 notificationService.PopMessage(
                     resultMessage,
-                    Resources.InstanceSetupView_ImportListSuccessNotificationTitle,
+                    Resources.InstanceSetupPage_ImportListSuccessNotificationTitle,
                     level,
                     thumbnail: GetNotificationThumbnail()
                 );
@@ -1220,7 +1220,7 @@ public partial class InstanceSetupPageModel(
                 logger.LogError(ex, "Failed to import package list from file: {path}", filePath);
                 notificationService.PopMessage(
                     ex,
-                    Resources.InstanceSetupView_ImportListDangerNotificationTitle,
+                    Resources.InstanceSetupPage_ImportListDangerNotificationTitle,
                     thumbnail: GetNotificationThumbnail()
                 );
             }
@@ -1278,7 +1278,7 @@ public partial class InstanceSetupPageModel(
                         logger.LogError(ex, "Failed to exporting: {}", entry.Purl);
                         notificationService.PopMessage(
                             $"{entry.Purl}: {ex.Message}",
-                            Resources.InstanceSetupView_FetchingInformationDangerNotificationTitle,
+                            Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
                             GrowlLevel.Warning,
                             thumbnail: GetNotificationThumbnail()
                         );
@@ -1325,11 +1325,11 @@ public partial class InstanceSetupPageModel(
                 }
 
                 notificationService.PopMessage(
-                    Resources.InstanceSetupView_ExportListSuccessNotificationMessage.Replace(
+                    Resources.InstanceSetupPage_ExportListSuccessNotificationMessage.Replace(
                         "{0}",
                         path
                     ),
-                    Resources.InstanceSetupView_ExportListSuccessNotificationTitle,
+                    Resources.InstanceSetupPage_ExportListSuccessNotificationTitle,
                     GrowlLevel.Success,
                     thumbnail: GetNotificationThumbnail()
                 );
@@ -1338,9 +1338,9 @@ public partial class InstanceSetupPageModel(
             {
                 notificationService.PopMessage(
                     Resources
-                        .InstanceSetupView_ExportListDangerNotificationMessage.Replace("{0}", path)
+                        .InstanceSetupPage_ExportListDangerNotificationMessage.Replace("{0}", path)
                         .Replace("{1}", ex.Message),
-                    Resources.InstanceSetupView_ExportListDangerNotificationTitle,
+                    Resources.InstanceSetupPage_ExportListDangerNotificationTitle,
                     GrowlLevel.Danger,
                     thumbnail: GetNotificationThumbnail()
                 );
@@ -1395,7 +1395,7 @@ public partial class InstanceSetupPageModel(
                 logger.LogError(ex, "Failed to check update: {}", reference.Purl);
                 notificationService.PopMessage(
                     ex,
-                    Resources.InstanceSetupView_CheckUpdateDangerNotificationTitle,
+                    Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
                     thumbnail: GetNotificationThumbnail(reference.Thumbnail)
                 );
             }
@@ -1420,7 +1420,7 @@ public partial class InstanceSetupPageModel(
         {
             notificationService.PopMessage(
                 ex,
-                Resources.InstanceSetupView_UpdateDangerNotificationTitle,
+                Resources.InstanceSetupPage_UpdateDangerNotificationTitle,
                 thumbnail: GetNotificationThumbnail()
             );
         }
@@ -1440,7 +1440,7 @@ public partial class InstanceSetupPageModel(
             );
             notificationService.PopMessage(
                 Resources
-                    .InstanceSetupView_InstallVersionNotificationMessage.Replace(
+                    .InstanceSetupPage_InstallVersionNotificationMessage.Replace(
                         "{0}",
                         version.ProjectName
                     )

@@ -88,8 +88,8 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
-        <Compile Update="Views\InstanceFilesView.axaml.cs">
-            <DependentUpon>InstanceFilesView.axaml</DependentUpon>
+        <Compile Update="Views\InstanceFilesPage.axaml.cs">
+            <DependentUpon>InstanceFilesPage.axaml</DependentUpon>
         </Compile>
         <EmbeddedResource Update="Properties\Resources.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

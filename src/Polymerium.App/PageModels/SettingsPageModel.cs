@@ -127,8 +127,8 @@ public partial class SettingsPageModel : ViewModelBase
         if (box != null)
         {
             var path = await OverlayService.RequestFileAsync(
-                Resources.InstancePropertiesView_RequestJavaPrompt,
-                Resources.InstancePropertiesView_RequestJavaTitle
+                Resources.InstancePropertiesPage_RequestJavaPrompt,
+                Resources.InstancePropertiesPage_RequestJavaTitle
             );
             if (path != null && File.Exists(path))
             {
@@ -192,8 +192,8 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearStatisticsAsync()
     {
         var confirmed = await OverlayService.RequestConfirmationAsync(
-            Resources.SettingsView_ClearStatisticsConfirmationMessage,
-            Resources.SettingsView_ClearStatisticsConfirmationTitle
+            Resources.SettingsPage_ClearStatisticsConfirmationMessage,
+            Resources.SettingsPage_ClearStatisticsConfirmationTitle
         );
         if (confirmed)
         {
@@ -205,8 +205,8 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearRecordsAsync()
     {
         var confirmed = await OverlayService.RequestConfirmationAsync(
-            Resources.SettingsView_ClearRecordsConfirmationMessage,
-            Resources.SettingsView_ClearRecordsConfirmationTitle
+            Resources.SettingsPage_ClearRecordsConfirmationMessage,
+            Resources.SettingsPage_ClearRecordsConfirmationTitle
         );
         if (confirmed)
         {
@@ -349,11 +349,11 @@ public partial class SettingsPageModel : ViewModelBase
 
     public BackgroundStyleModel[] BackgroundStyles { get; } =
     [
-        new(0, Resources.SettingsView_BackgroundStyleAutoText),
-        new(1, Resources.SettingsView_BackgroundStyleMicaText, "Windows 11+"),
-        new(2, Resources.SettingsView_BackgroundStyleAcrylicText, "Windows 10+"),
-        new(3, Resources.SettingsView_BackgroundStyleBlurText, "macOS/Linux"),
-        new(4, Resources.SettingsView_BackgroundStyleNoneText),
+        new(0, Resources.SettingsPage_BackgroundStyleAutoText),
+        new(1, Resources.SettingsPage_BackgroundStyleMicaText, "Windows 11+"),
+        new(2, Resources.SettingsPage_BackgroundStyleAcrylicText, "Windows 10+"),
+        new(3, Resources.SettingsPage_BackgroundStyleBlurText, "macOS/Linux"),
+        new(4, Resources.SettingsPage_BackgroundStyleNoneText),
     ];
 
     #endregion
@@ -524,10 +524,10 @@ public partial class SettingsPageModel : ViewModelBase
     private void UpdateProxyStatusText() =>
         ProxyStatusText = ProxyMode switch
         {
-            ProxyMode.Auto => Resources.SettingsView_ProxyStatusAutoText,
-            ProxyMode.Disabled => Resources.SettingsView_ProxyStatusDisabledText,
+            ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
+            ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
             ProxyMode.Manual => Resources
-                .SettingsView_ProxyStatusManualText.Replace(
+                .SettingsPage_ProxyStatusManualText.Replace(
                     "{0}",
                     ProxyProtocol.ToString().ToLower()
                 )

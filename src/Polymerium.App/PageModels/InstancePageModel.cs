@@ -91,7 +91,7 @@ public partial class InstancePageModel : ViewModelBase
         {
             throw new PageNotReachedException(
                 typeof(InstancePage),
-                Resources.InstanceView_KeyNotFoundExceptionMessage.Replace("{0}", key)
+                Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key)
             );
         }
     }
@@ -402,44 +402,44 @@ public partial class InstancePageModel : ViewModelBase
     public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
         // Home
-        new(typeof(InstanceHomePage), Symbol.Home, Resources.InstanceView_HomePageText),
+        new(typeof(InstanceHomePage), Symbol.Home, Resources.InstancePage_HomePageText),
         // Dashboard
         new(
             typeof(InstanceDashboardPage),
             Symbol.PulseSquare,
-            Resources.InstanceView_DashboardPageText
+            Resources.InstancePage_DashboardPageText
         ),
         // Setup
-        new(typeof(InstanceSetupPage), Symbol.Apps, Resources.InstanceView_SetupPageText),
+        new(typeof(InstanceSetupPage), Symbol.Apps, Resources.InstancePage_SetupPageText),
         // Files
-        new(typeof(InstanceFilesPage), Symbol.DocumentFolder, Resources.InstanceView_FilesPageText),
+        new(typeof(InstanceFilesPage), Symbol.DocumentFolder, Resources.InstancePage_FilesPageText),
 #if DEBUG
         // Workspace
         new(
             typeof(InstanceWorkspacePage),
             Symbol.ArrowSyncCircle,
-            Resources.InstanceView_WorkspacePageText
+            Resources.InstancePage_WorkspacePageText
         ),
 #endif
         // Widgets
-        new(typeof(InstanceWidgetsPage), Symbol.AppFolder, Resources.InstanceView_WidgetsPageText),
+        new(typeof(InstanceWidgetsPage), Symbol.AppFolder, Resources.InstancePage_WidgetsPageText),
         // Statistics
         new(
             typeof(InstanceActivitiesPage),
             Symbol.DataArea,
-            Resources.InstanceView_StatisticsPageText
+            Resources.InstancePage_StatisticsPageText
         ),
         // Storage
         new(
             typeof(InstanceStoragePage),
             Symbol.ChartMultiple,
-            Resources.InstanceView_StoragePageText
+            Resources.InstancePage_StoragePageText
         ),
         // Properties
         new(
             typeof(InstancePropertiesPage),
             Symbol.Wrench,
-            Resources.InstanceView_PropertiesPageText
+            Resources.InstancePage_PropertiesPageText
         ),
     ];
 

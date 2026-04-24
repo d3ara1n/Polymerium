@@ -26,7 +26,7 @@
             <MenuItem
                 Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).OpenWebsiteCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.MarketplaceSearchView_OpenWebsiteMenuText}">
+                Header="{x:Static lang:Resources.MarketplaceSearchPage_OpenWebsiteMenuText}">
                 <MenuItem.Icon>
                     <fi:SymbolIcon
                         VerticalAlignment="Center"
@@ -72,10 +72,10 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{x:Static lang:Resources.MarketplaceSearchView_Title}" />
+                                Text="{x:Static lang:Resources.MarketplaceSearchPage_Title}" />
                             <TextBlock
                                 Opacity="0.8"
-                                Text="{x:Static lang:Resources.MarketplaceSearchView_Message}"
+                                Text="{x:Static lang:Resources.MarketplaceSearchPage_Message}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </DockPanel>
@@ -120,7 +120,7 @@
                         </Button>
                         <TextBox
                             Grid.Column="3"
-                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchView_SearchBarPlaceholder}"
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchPage_SearchBarPlaceholder}"
                             Text="{Binding QueryText, Mode=TwoWay}">
                             <TextBox.InnerRightContent>
                                 <Button
@@ -173,7 +173,7 @@
                                 </husk:SwitchContainer>
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.MarketplaceSearchView_SearchButtonText}" />
+                                    Text="{x:Static lang:Resources.MarketplaceSearchPage_SearchButtonText}" />
                                 <husk:Tag
                                     Classes="Status"
                                     Background="{StaticResource LayerBackgroundBrush}"

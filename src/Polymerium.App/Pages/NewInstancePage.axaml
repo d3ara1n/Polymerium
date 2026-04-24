@@ -48,7 +48,7 @@
                 </Button>
                 <TextBlock
                     Grid.Column="2"
-                    Text="{x:Static lang:Resources.NewInstanceView_Title}"
+                    Text="{x:Static lang:Resources.NewInstancePage_Title}"
                     Theme="{StaticResource PageHeaderTextBlockTheme}" />
             </Grid>
             <StackPanel
@@ -120,7 +120,7 @@
                         VerticalAlignment="Center"
                         Spacing="12">
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_NameLabelText}" />
+                            <TextBlock Text="{x:Static lang:Resources.NewInstancePage_NameLabelText}" />
                             <TextBox
                                 PlaceholderText="{Binding VersionName}"
                                 Text="{Binding DisplayName, Mode=TwoWay}">
@@ -138,7 +138,7 @@
                             </TextBox>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_VersionLabelText}" />
+                            <TextBlock Text="{x:Static lang:Resources.NewInstancePage_VersionLabelText}" />
                             <husk:SkeletonContainer
                                 CornerRadius="{StaticResource SmallCornerRadius}"
                                 IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
@@ -204,7 +204,7 @@
                                     <StackPanel Grid.Column="1">
                                         <TextBlock
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.NewInstanceView_PackageCountLabelText}" />
+                                            Text="{x:Static lang:Resources.NewInstancePage_PackageCountLabelText}" />
                                         <TextBlock
                                             FontSize="{StaticResource LargeFontSize}"
                                             Text="{Binding ImportedPack.PackageCount, FallbackValue=114514}" />
@@ -216,7 +216,7 @@
                                 <StackPanel Grid.Column="2">
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.NewInstanceView_ModLoaderLabelText}" />
+                                        Text="{x:Static lang:Resources.NewInstancePage_ModLoaderLabelText}" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
                                         Text="{Binding ImportedPack.LoaderLabel, FallbackValue=None}" />
@@ -237,10 +237,10 @@
                             Symbol="SquareAdd" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.NewInstanceView_CreateButtonText}" />
+                            Text="{x:Static lang:Resources.NewInstancePage_CreateButtonText}" />
                     </StackPanel>
                 </Button>
-                <husk:Divider Content="{x:Static lang:Resources.NewInstanceView_SeparatorLabelText}" />
+                <husk:Divider Content="{x:Static lang:Resources.NewInstancePage_SeparatorLabelText}" />
                 <Grid ColumnDefinitions="*,12,*">
                     <Button
                         Grid.Column="0"
@@ -255,7 +255,7 @@
                                 Symbol="FolderZip" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.NewInstanceView_ImportButtonText}" />
+                                Text="{x:Static lang:Resources.NewInstancePage_ImportButtonText}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -271,7 +271,7 @@
                                 Symbol="BuildingStore" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.NewInstanceView_DownloadButtonText}" />
+                                Text="{x:Static lang:Resources.NewInstancePage_DownloadButtonText}" />
                         </StackPanel>
                     </Button>
                 </Grid>

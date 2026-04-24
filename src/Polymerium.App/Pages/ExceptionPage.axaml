@@ -11,7 +11,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:ExceptionPageModel"
-    Header="{x:Static lang:Resources.ExceptionView_Title}"
+    Header="{x:Static lang:Resources.ExceptionPage_Title}"
     mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel
@@ -19,7 +19,7 @@
             Spacing="8">
             <TextBlock
                 FontSize="{StaticResource ExtraLargeFontSize}"
-                Text="{x:Static lang:Resources.ExceptionView_Subtitle}"
+                Text="{x:Static lang:Resources.ExceptionPage_Subtitle}"
                 TextWrapping="Wrap" />
             <TextBlock
                 Text="{Binding Message}"

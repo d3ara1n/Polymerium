@@ -87,7 +87,7 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.SettingsView_RestartRequiredLabelText}" />
+                            Text="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -122,7 +122,7 @@
                                     Symbol="System" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.SettingsView_ThemeVariantSystemText}" />
+                                    Text="{x:Static lang:Resources.SettingsPage_ThemeVariantSystemText}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
@@ -136,7 +136,7 @@
                                     Symbol="WeatherSunny" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.SettingsView_ThemeVariantLightText}" />
+                                    Text="{x:Static lang:Resources.SettingsPage_ThemeVariantLightText}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
@@ -149,7 +149,7 @@
                                     Symbol="WeatherMoon" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.SettingsView_ThemeVariantDarkText}" />
+                                    Text="{x:Static lang:Resources.SettingsPage_ThemeVariantDarkText}" />
                             </StackPanel>
                         </TabStripItem>
                     </TabStrip>

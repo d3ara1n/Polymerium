@@ -83,7 +83,7 @@ public partial class NewInstancePageModel(
         {
             notificationService.PopMessage(
                 e,
-                Resources.NewInstanceView_ImportDangerNotificationTitle
+                Resources.NewInstancePage_ImportDangerNotificationTitle
             );
         }
     }
@@ -113,8 +113,8 @@ public partial class NewInstancePageModel(
     private async Task OpenImportDialog()
     {
         var path = await overlayService.RequestFileAsync(
-            Resources.NewInstanceView_RequestFilePrompt,
-            Resources.NewInstanceView_RequestFileTitle
+            Resources.NewInstancePage_RequestFilePrompt,
+            Resources.NewInstancePage_RequestFileTitle
         );
         if (path != null)
         {
@@ -184,7 +184,7 @@ public partial class NewInstancePageModel(
                 Dispatcher.UIThread.Post(() =>
                     notificationService.PopMessage(
                         ex,
-                        Resources.NewInstanceView_IconSavingDangerNotificationTitle
+                        Resources.NewInstancePage_IconSavingDangerNotificationTitle
                     )
                 );
             }
