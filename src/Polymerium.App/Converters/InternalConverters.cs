@@ -167,36 +167,36 @@ public static class InternalConverters
         DiffTheme = Application.Current?.ActualThemeVariant;
         DiffAddedBrush =
             Application.Current?.TryGetResource(
-                "ControlSuccessTranslucentHalfBackgroundBrush",
+                "ControlSuccessTranslucentFullBackgroundBrush",
                 null,
                 out var res1
             ) == true
                 ? res1 as IBrush
-                : new SolidColorBrush(Color.FromArgb(40, 0x40, 0xA0, 0x40));
+                : new SolidColorBrush(Color.FromArgb(80, 0x40, 0xA0, 0x40));
         DiffRemovedBrush =
             Application.Current?.TryGetResource(
-                "ControlDangerTranslucentHalfBackgroundBrush",
+                "ControlDangerTranslucentFullBackgroundBrush",
                 null,
                 out var res2
             ) == true
                 ? res2 as IBrush
-                : new SolidColorBrush(Color.FromArgb(40, 0xA0, 0x40, 0x40));
+                : new SolidColorBrush(Color.FromArgb(80, 0xA0, 0x40, 0x40));
         DiffEmptyBrush =
             Application.Current?.TryGetResource(
-                "ControlTranslucentHalfBackgroundBrush",
+                "ControlTranslucentFullBackgroundBrush",
                 null,
                 out var res3
             ) == true
                 ? res3 as IBrush
-                : new SolidColorBrush(Color.FromArgb(20, 0x80, 0x80, 0x80));
+                : new SolidColorBrush(Color.FromArgb(40, 0x80, 0x80, 0x80));
         DiffModifiedBrush =
             Application.Current?.TryGetResource(
-                "ControlAccentTranslucentHalfBackgroundBrush",
+                "ControlAccentTranslucentFullBackgroundBrush",
                 null,
                 out var res4
             ) == true
                 ? res4 as IBrush
-                : new SolidColorBrush(Color.FromArgb(40, 0x40, 0x80, 0xC0));
+                : new SolidColorBrush(Color.FromArgb(80, 0x40, 0x80, 0xC0));
     }
 
     public static IValueConverter DiffLineKindToBackground { get; } =

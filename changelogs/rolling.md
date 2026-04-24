@@ -6,7 +6,7 @@
 
 ### Fixed
 
--
+- 修复实例同步页面 Diff View 新旧文本基准配置不正确的问题
 
 ### Added
 
@@ -15,7 +15,7 @@
 
 ### Changed
 
--
+- 优化实例同步页面 Diff View 的配色
 
 ### Removed
 
