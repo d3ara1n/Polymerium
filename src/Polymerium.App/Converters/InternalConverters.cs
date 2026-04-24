@@ -14,15 +14,6 @@ namespace Polymerium.App.Converters;
 
 public static class InternalConverters
 {
-    public static IMultiValueConverter Upper { get; } = new RelayMultiConverter((v, _, _) =>
-    {
-        if (v is [CornerRadius corner])
-        {
-            return new CornerRadius(corner.TopLeft, corner.TopRight, 0, 0);
-        }
-
-        return AvaloniaProperty.UnsetValue;
-    });
 
     public static IMultiValueConverter OneOr { get; } = new RelayMultiConverter((v, _, _) =>
     {
@@ -63,15 +54,6 @@ public static class InternalConverters
     public static IValueConverter UnsignedLongToGiBDoubleConverter { get; } = new RelayConverter(v => v switch
     {
         ulong l => (double)l / 1024 / 1024 / 1024,
-        _ => v,
-    });
-
-    public static IValueConverter ByteSizeConverter { get; } = new RelayConverter((v, _) => v switch
-    {
-        int i => ByteSize.FromBytes(i).Humanize(),
-        long l => ByteSize.FromBytes(l).Humanize(),
-        float f => ByteSize.FromBytes(f).Humanize(),
-        double d => ByteSize.FromBytes(d).Humanize(),
         _ => v,
     });
 
@@ -169,7 +151,7 @@ public static class InternalConverters
                 ? res3 as IBrush
                 : new SolidColorBrush(Color.FromArgb(20, 0x80, 0x80, 0x80));
         DiffModifiedBrush =
-            Application.Current?.TryGetResource("ControlPrimaryTranslucentHalfBackgroundBrush", null, out var res4) == true
+            Application.Current?.TryGetResource("ControlAccentTranslucentHalfBackgroundBrush", null, out var res4) == true
                 ? res4 as IBrush
                 : new SolidColorBrush(Color.FromArgb(40, 0x40, 0x80, 0xC0));
     }
@@ -210,10 +192,6 @@ public static class InternalConverters
                                ? resource as SolidColorBrush
                                : Brushes.Orange;
                 }
-            }
-            else
-            {
-                return AvaloniaProperty.UnsetValue;
             }
         }
 

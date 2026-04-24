@@ -98,6 +98,7 @@
                 <DockPanel Grid.Column="0">
                     <TextBlock
                         DockPanel.Dock="Right"
+                        VerticalAlignment="Bottom"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="{Binding #DiffView.LeftLineCount}" />
                         <Run Text="/" />
@@ -111,6 +112,7 @@
                 <DockPanel Grid.Column="1">
                     <TextBlock
                         DockPanel.Dock="Right"
+                        VerticalAlignment="Bottom"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="{Binding #DiffView.RightLineCount}" />
                         <Run Text="/" />
