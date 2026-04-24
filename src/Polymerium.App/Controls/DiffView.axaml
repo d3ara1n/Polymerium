@@ -19,6 +19,11 @@
                             HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{TemplateBinding Lines}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="app:DiffLineModel">
                                         <Grid MinHeight="{x:Static app:DiffView.LINE_HEIGHT}">

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -43,18 +45,16 @@ public partial class InstanceWorkspacePageModel(
 
     #region Overrides
 
-    protected override Task OnInitializeAsync(CancellationToken token)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        GenerateChangeList();
-
-        return base.OnInitializeAsync(token);
+        await GenerateChangeListAsync(token);
     }
 
     #endregion
 
     #region Other
 
-    private void GenerateChangeList()
+    private async Task GenerateChangeListAsync(CancellationToken token)
     {
         // live / import 的变更
         // 由于 import -> live 是全量文件复制，live 的文件只会比 import 多（但存在 .keep 映射了目录时，游戏会往目录里塞东西）
@@ -63,10 +63,8 @@ public partial class InstanceWorkspacePageModel(
         var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
         var importDir = PathDef.Default.DirectoryOfImport(Basic.Key);
 
-        var liveEntries = ScanFolder(liveDir);
-
-        var changes = new List<WorkspaceChangeModel>();
-        foreach (var liveEntry in liveEntries)
+        var batch = new List<WorkspaceChangeModel>(200);
+        foreach (var liveEntry in ScanFolder(liveDir, token))
         {
             var livePath = Path.Combine(liveDir, liveEntry);
             var importPath = Path.Combine(importDir, liveEntry);
@@ -75,7 +73,7 @@ public partial class InstanceWorkspacePageModel(
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                changes.Add(new()
+                batch.Add(new()
                 {
                     RelativePath = liveEntry,
                     FileName = Path.GetFileName(livePath),
@@ -86,26 +84,35 @@ public partial class InstanceWorkspacePageModel(
                     FileSizeRaw = file.Length,
                     FileLastModifiedRaw = file.LastWriteTime,
                 });
+                if (batch.Count >= 100)
+                {
+                    var toAdd = batch.ToArray();
+                    batch.Clear();
+                    await Dispatcher.UIThread.InvokeAsync(() => Changes.AddRange(toAdd));
+                }
             }
         }
 
-        Changes.AddRange(changes);
+        if (batch.Count > 0)
+        {
+            await Dispatcher.UIThread.InvokeAsync(() => Changes.AddRange(batch));
+        }
     }
 
-    private IReadOnlyList<string> ScanFolder(string folder)
+    private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
     {
         var root = new DirectoryInfo(folder);
         if (!root.Exists)
         {
-            return [];
+            yield break;
         }
 
-        return
-        [
-            .. root
-              .EnumerateFiles("*", SearchOption.AllDirectories)
-              .Select(file => Path.GetRelativePath(folder, file.FullName)),
-        ];
+        foreach (var file in root.EnumerateFiles("*", SearchOption.AllDirectories))
+        {
+            if (token.IsCancellationRequested)
+                yield break;
+            yield return Path.GetRelativePath(folder, file.FullName);
+        }
     }
 
     private WorkspaceChangeKind Diff(string live, string import)
@@ -140,10 +147,18 @@ public partial class InstanceWorkspacePageModel(
     private bool CanOpenDiffer(WorkspaceChangeModel? model) => model is not null;
 
     [RelayCommand(CanExecute = nameof(CanOpenDiffer))]
-    private void OpenDiffer(WorkspaceChangeModel? model)
+    private async Task OpenDiffer(WorkspaceChangeModel? model)
     {
         if (model != null)
         {
+            if (model.FileSizeRaw > 1024 * 1024 * 1024
+             && !await overlayService
+                    .RequestConfirmationAsync("File is too large. It may take time to compute and render diff."))
+            {
+                // 文件大且用户拒绝
+                return;
+            }
+
             overlayService.PopModal<WorkspaceDiffModal>(model);
         }
     }

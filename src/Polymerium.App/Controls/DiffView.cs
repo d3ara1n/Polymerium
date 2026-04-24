@@ -142,7 +142,13 @@ public class DiffView : TemplatedControl
 
     private void UpdateDiff()
     {
-        var diff = SideBySideDiffBuilder.Instance.BuildDiffModel(LeftText ?? string.Empty, RightText ?? string.Empty);
+        if (LeftText is null || RightText is null)
+        {
+            // 存在 null，等文本全部准备完毕时才触发（至少也要赋值为 string.Empty）
+            return;
+        }
+
+        var diff = SideBySideDiffBuilder.Instance.BuildDiffModel(LeftText, RightText);
 
         var leftLines = diff.OldText.Lines;
         var rightLines = diff.NewText.Lines;
