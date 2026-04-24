@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
@@ -25,63 +27,99 @@
                 <Grid
                     ColumnDefinitions="*,4,*"
                     ColumnSpacing="12">
-                    <app:EmptyContainer
+                    <DockPanel
                         Grid.Column="0"
-                        IsEmpty="{Binding Changes.Count, Converter={x:Static husk:NumberConverters.IsZero}}">
-                        <ListBox
-                            ItemsSource="{Binding Changes}"
-                            SelectedItem="{Binding SelectedChange, Mode=TwoWay}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate x:DataType="app:WorkspaceChangeModel">
-                                    <Grid
-                                        ColumnDefinitions="*,Auto"
-                                        RowDefinitions="Auto,Auto">
+                        VerticalSpacing="8">
+                        <DockPanel
+                            Dock="Top"
+                            HorizontalSpacing="8">
+                            <Button
+                                DockPanel.Dock="Right"
+                                Command="{Binding RefreshCommand}">
+                                <husk:IconLabel
+                                    Icon="ArrowReset"
+                                    Text="刷新" />
+                            </Button>
+                            <TextBox
+                                PlaceholderText="搜索文件路径..."
+                                Text="{Binding FilterText, Mode=TwoWay}">
+                                <TextBox.InnerRightContent>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                            Command="{Binding $parent[TextBox].Clear}">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="Dismiss" />
+                                        </Button>
                                         <TextBlock
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            Text="{Binding FileName}"
-                                            TextTrimming="CharacterEllipsis" />
-                                        <husk:SwitchContainer
-                                            Grid.Row="0"
-                                            Grid.Column="1"
-                                            TargetType="app:WorkspaceChangeKind"
-                                            Value="{Binding Kind}">
-                                            <husk:SwitchCase Value="Same">
-                                                <husk:Tag
-                                                    Classes="Primary"
-                                                    Content="无变化" />
-                                            </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Outdated">
-                                                <husk:Tag
-                                                    Classes="Warning"
-                                                    Content="已过时"
-                                                    ToolTip.Tip="该文件的初始版本发生变更，通常是由整合包更新引起。" />
-                                            </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Updated">
-                                                <husk:Tag
-                                                    Classes="Success"
-                                                    Content="已更新"
-                                                    ToolTip.Tip="该文件被客户端所修改。 " />
-                                            </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Deleted">
-                                                <husk:Tag
-                                                    Classes="Danger"
-                                                    Content="已删除"
-                                                    ToolTip.Tip="该文件的初始版本被移除，通常是由整合包更新引起。" />
-                                            </husk:SwitchCase>
-                                        </husk:SwitchContainer>
-                                        <TextBlock
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            Grid.ColumnSpan="2"
-                                            FontSize="{StaticResource SmallFontSize}"
-                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{Binding RelativePath}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </app:EmptyContainer>
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                            <Run Text="{Binding ChangesView.Count, FallbackValue=0}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding ChangesCount, FallbackValue=0}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </TextBox.InnerRightContent>
+                            </TextBox>
+                        </DockPanel>
+                        <app:EmptyContainer IsEmpty="{Binding ChangesView.Count, Converter={x:Static husk:NumberConverters.IsZero}}">
+                            <ListBox
+                                ItemsSource="{Binding ChangesView}"
+                                SelectedItem="{Binding SelectedChange, Mode=TwoWay}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="app:WorkspaceChangeModel">
+                                        <Grid
+                                            ColumnDefinitions="*,Auto"
+                                            RowDefinitions="Auto,Auto">
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Text="{Binding FileName}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <husk:SwitchContainer
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                TargetType="app:WorkspaceChangeKind"
+                                                Value="{Binding Kind}">
+                                                <husk:SwitchCase Value="Same">
+                                                    <husk:Tag
+                                                        Classes="Primary"
+                                                        Content="无变化" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="Outdated">
+                                                    <husk:Tag
+                                                        Classes="Warning"
+                                                        Content="已过时"
+                                                        ToolTip.Tip="该文件的初始版本发生变更，通常是由整合包更新引起。" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="Updated">
+                                                    <husk:Tag
+                                                        Classes="Success"
+                                                        Content="已更新"
+                                                        ToolTip.Tip="该文件被客户端所修改。 " />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="Deleted">
+                                                    <husk:Tag
+                                                        Classes="Danger"
+                                                        Content="已删除"
+                                                        ToolTip.Tip="该文件的初始版本被移除，通常是由整合包更新引起。" />
+                                                </husk:SwitchCase>
+                                            </husk:SwitchContainer>
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding RelativePath}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </app:EmptyContainer>
+                    </DockPanel>
                     <GridSplitter
                         Grid.Column="1"
                         ResizeDirection="Columns" />
