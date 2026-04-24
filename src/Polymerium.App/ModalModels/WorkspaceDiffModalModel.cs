@@ -9,7 +9,8 @@ using Polymerium.App.Models;
 
 namespace Polymerium.App.ModalModels;
 
-public partial class WorkspaceDiffModalModel(IViewContext<WorkspaceChangeModel> context) : ViewModelBase
+public partial class WorkspaceDiffModalModel(IViewContext<WorkspaceChangeModel> context)
+    : ViewModelBase
 {
     #region Direct
 
@@ -33,11 +34,13 @@ public partial class WorkspaceDiffModalModel(IViewContext<WorkspaceChangeModel> 
     {
         await base.InitializeAsync(cancellationToken);
 
-        LiveText = File.Exists(Model.LivePath) ? await File.ReadAllTextAsync(Model.LivePath, cancellationToken) : null;
+        LiveText = File.Exists(Model.LivePath)
+            ? await File.ReadAllTextAsync(Model.LivePath, cancellationToken)
+            : null;
 
         ImportText = File.Exists(Model.ImportPath)
-                         ? await File.ReadAllTextAsync(Model.ImportPath, cancellationToken)
-                         : null;
+            ? await File.ReadAllTextAsync(Model.ImportPath, cancellationToken)
+            : null;
     }
 
     #endregion
