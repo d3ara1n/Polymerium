@@ -51,16 +51,21 @@
                                                 Grid.Column="1"
                                                 Background="{Binding LeftKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}"
                                                 ClipToBounds="True">
-                                                <TextBlock
-                                                    Margin="8,2"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
-                                                    Text="{Binding LeftText}">
-                                                    <TextBlock.RenderTransform>
+                                                <Border
+                                                    Width="{Binding $parent[app:DiffView].ContentWidth}"
+                                                    HorizontalAlignment="Left">
+                                                    <Border.RenderTransform>
                                                         <TranslateTransform X="{Binding $parent[app:DiffView].HorizontalOffset}" />
-                                                    </TextBlock.RenderTransform>
-                                                </TextBlock>
+                                                    </Border.RenderTransform>
+                                                    <TextBlock
+                                                        Margin="8,2"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                        FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                        Text="{Binding LeftText}"
+                                                        TextWrapping="NoWrap" />
+                                                </Border>
                                             </Border>
                                             <Border
                                                 Grid.Column="2"
@@ -82,16 +87,21 @@
                                                 Grid.Column="4"
                                                 Background="{Binding RightKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}"
                                                 ClipToBounds="True">
-                                                <TextBlock
-                                                    Margin="8,2"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
-                                                    Text="{Binding RightText}">
-                                                    <TextBlock.RenderTransform>
+                                                <Border
+                                                    Width="{Binding $parent[app:DiffView].ContentWidth}"
+                                                    HorizontalAlignment="Left">
+                                                    <Border.RenderTransform>
                                                         <TranslateTransform X="{Binding $parent[app:DiffView].HorizontalOffset}" />
-                                                    </TextBlock.RenderTransform>
-                                                </TextBlock>
+                                                    </Border.RenderTransform>
+                                                    <TextBlock
+                                                        Margin="8,2"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                        FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                        Text="{Binding RightText}"
+                                                        TextWrapping="NoWrap" />
+                                                </Border>
                                             </Border>
                                         </Grid>
                                     </DataTemplate>

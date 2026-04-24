@@ -337,11 +337,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (!TryOpenGitRepository(out var repository))
         {
             await ResetGitStatusAsync();
-            _notificationService.PopMessage(
-                Resources.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage,
-                Resources.InstanceWorkspacePage_GitErrorWarningNotificationTitle,
-                GrowlLevel.Warning
-            );
+            _notificationService.PopMessage(Resources.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage,
+                                            Resources.InstanceWorkspacePage_GitErrorWarningNotificationTitle,
+                                            GrowlLevel.Warning);
             return;
         }
 
@@ -349,7 +347,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         try
         {
             using var openedRepository = repository
-                ?? throw new InvalidOperationException("Git repository was not opened.");
+                                      ?? throw new InvalidOperationException("Git repository was not opened.");
             await operation(openedRepository);
         }
         catch (Exception ex)
@@ -402,10 +400,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private static string BuildRestoreConfirmationMessage(int unstagedCount)
     {
-        return Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace(
-            "{0}",
-            unstagedCount.ToString()
-        );
+        return Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace("{0}", unstagedCount.ToString());
     }
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
@@ -473,8 +468,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (model != null)
         {
             if (model.FileSizeRaw > 1024 * 1024 * 1024
-             && !await _overlayService
-                    .RequestConfirmationAsync(Resources.InstanceWorkspacePage_LargeDiffConfirmationMessage))
+             && !await _overlayService.RequestConfirmationAsync(Resources
+                                                                   .InstanceWorkspacePage_LargeDiffConfirmationMessage))
             {
                 // 文件大且用户拒绝
                 return;
@@ -579,136 +574,144 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanCommitGit() =>
-        IsGitRepository && !GitIsBusy && !GitIsDetachedHead && GitChangedCount > 0;
+    private bool CanCommitGit() => IsGitRepository && !GitIsBusy && !GitIsDetachedHead && GitChangedCount > 0;
 
     [RelayCommand(CanExecute = nameof(CanCommitGit))]
     private async Task CommitGit()
     {
-        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle, async repository =>
-        {
-            var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
-            if (signature is null)
-            {
-                _notificationService.PopMessage(
-                    Resources.InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage,
-                    Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
-                    GrowlLevel.Warning
-                );
-                return;
-            }
+        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                                   async repository =>
+                                   {
+                                       var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
+                                       if (signature is null)
+                                       {
+                                           _notificationService.PopMessage(Resources
+                                                                              .InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage,
+                                                                           Resources
+                                                                              .InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                                                                           GrowlLevel.Warning);
+                                           return;
+                                       }
 
-            var message = await _overlayService.RequestInputAsync(
-                Resources.InstanceWorkspacePage_GitCommitPrompt,
-                Resources.InstanceWorkspacePage_GitCommitPromptTitle,
-                Resources.InstanceWorkspacePage_GitCommitDefaultMessage.Replace("{0}", Basic.Name)
-            );
-            if (message is null)
-            {
-                return;
-            }
+                                       var message =
+                                           await _overlayService.RequestInputAsync(Resources
+                                                  .InstanceWorkspacePage_GitCommitPrompt,
+                                               Resources.InstanceWorkspacePage_GitCommitPromptTitle,
+                                               Resources.InstanceWorkspacePage_GitCommitDefaultMessage
+                                                        .Replace("{0}", Basic.Name),
+                                               true);
+                                       if (message is null)
+                                       {
+                                           return;
+                                       }
 
-            var trimmedMessage = message.Trim();
-            if (string.IsNullOrEmpty(trimmedMessage))
-            {
-                _notificationService.PopMessage(
-                    Resources.InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage,
-                    Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
-                    GrowlLevel.Warning
-                );
-                return;
-            }
+                                       var trimmedMessage = message.Trim();
+                                       if (string.IsNullOrEmpty(trimmedMessage))
+                                       {
+                                           _notificationService.PopMessage(Resources
+                                                                              .InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage,
+                                                                           Resources
+                                                                              .InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                                                                           GrowlLevel.Warning);
+                                           return;
+                                       }
 
-            var paths = repository
-                .RetrieveStatus(new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true })
-                .Select(entry => entry.FilePath)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .ToArray();
-            if (paths.Length == 0)
-            {
-                _notificationService.PopMessage(
-                    Resources.InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
-                    Resources.InstanceWorkspacePage_GitCommitPromptTitle,
-                    GrowlLevel.Information
-                );
-                return;
-            }
+                                       var paths = repository
+                                                  .RetrieveStatus(new StatusOptions
+                                                   {
+                                                       IncludeIgnored = false,
+                                                       RecurseUntrackedDirs = true
+                                                   })
+                                                  .Select(entry => entry.FilePath)
+                                                  .Distinct(StringComparer.OrdinalIgnoreCase)
+                                                  .ToArray();
+                                       if (paths.Length == 0)
+                                       {
+                                           _notificationService.PopMessage(Resources
+                                                                              .InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
+                                                                           Resources
+                                                                              .InstanceWorkspacePage_GitCommitPromptTitle,
+                                                                           GrowlLevel.Information);
+                                           return;
+                                       }
 
-            Commands.Stage(repository, paths);
+                                       Commands.Stage(repository, paths);
 
-            var commit = repository.Commit(trimmedMessage, signature, signature);
-            _notificationService.PopMessage(
-                Resources.InstanceWorkspacePage_GitCommitSuccessNotificationMessage.Replace(
-                    "{0}",
-                    commit.Sha[..7]
-                ),
-                Resources.InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
-                GrowlLevel.Success
-            );
-        });
+                                       var commit = repository.Commit(trimmedMessage, signature, signature);
+                                       _notificationService.PopMessage(Resources
+                                                                      .InstanceWorkspacePage_GitCommitSuccessNotificationMessage
+                                                                      .Replace("{0}", commit.Sha[..7]),
+                                                                       Resources
+                                                                          .InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
+                                                                       GrowlLevel.Success);
+                                   });
     }
 
-    private bool CanRestoreGitChanges() =>
-        IsGitRepository && !GitIsBusy && GitStagedCount == 0 && GitUnstagedCount > 0;
+    private bool CanRestoreGitChanges() => IsGitRepository && !GitIsBusy && GitStagedCount == 0 && GitUnstagedCount > 0;
 
     [RelayCommand(CanExecute = nameof(CanRestoreGitChanges))]
     private async Task RestoreGitChanges()
     {
-        if (!await _overlayService.RequestConfirmationAsync(
-                BuildRestoreConfirmationMessage(GitUnstagedCount),
-                Resources.InstanceWorkspacePage_GitRestoreConfirmationTitle
-            ))
+        if (!await _overlayService.RequestConfirmationAsync(BuildRestoreConfirmationMessage(GitUnstagedCount),
+                                                            Resources
+                                                               .InstanceWorkspacePage_GitRestoreConfirmationTitle))
         {
             return;
         }
 
-        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitRestoreDangerNotificationTitle, repository =>
-        {
-            var status = repository.RetrieveStatus(
-                new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true }
-            );
+        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitRestoreDangerNotificationTitle,
+                                   repository =>
+                                   {
+                                       var status = repository.RetrieveStatus(new StatusOptions
+                                       {
+                                           IncludeIgnored = false,
+                                           RecurseUntrackedDirs = true
+                                       });
 
-            var trackedPaths = status
-                .Where(entry => IsUnstaged(entry.State) && !entry.State.HasFlag(FileStatus.NewInWorkdir))
-                .Select(entry => entry.FilePath)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .ToArray();
-            if (trackedPaths.Length > 0)
-            {
-                if (repository.Head.Tip is null)
-                {
-                    throw new InvalidOperationException("Cannot restore tracked files because HEAD does not exist.");
-                }
+                                       var trackedPaths = status
+                                                         .Where(entry => IsUnstaged(entry.State)
+                                                                      && !entry.State.HasFlag(FileStatus.NewInWorkdir))
+                                                         .Select(entry => entry.FilePath)
+                                                         .Distinct(StringComparer.OrdinalIgnoreCase)
+                                                         .ToArray();
+                                       if (trackedPaths.Length > 0)
+                                       {
+                                           if (repository.Head.Tip is null)
+                                           {
+                                               throw new
+                                                   InvalidOperationException("Cannot restore tracked files because HEAD does not exist.");
+                                           }
 
-                foreach (var path in trackedPaths)
-                {
-                    Commands.Checkout(
-                        repository,
-                        repository.Head.Tip.Tree,
-                        new CheckoutOptions { CheckoutModifiers = CheckoutModifiers.Force },
-                        path
-                    );
-                }
-            }
+                                           foreach (var path in trackedPaths)
+                                           {
+                                               Commands.Checkout(repository,
+                                                                 repository.Head.Tip.Tree,
+                                                                 new CheckoutOptions
+                                                                 {
+                                                                     CheckoutModifiers = CheckoutModifiers.Force
+                                                                 },
+                                                                 path);
+                                           }
+                                       }
 
-            foreach (
-                var relativePath in status
-                    .Where(entry => entry.State.HasFlag(FileStatus.NewInWorkdir))
-                    .Select(entry => entry.FilePath)
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .OrderByDescending(path => path.Length)
-            )
-            {
-                DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
-            }
+                                       foreach (var relativePath in status
+                                                                   .Where(entry =>
+                                                                              entry.State.HasFlag(FileStatus
+                                                                                 .NewInWorkdir))
+                                                                   .Select(entry => entry.FilePath)
+                                                                   .Distinct(StringComparer.OrdinalIgnoreCase)
+                                                                   .OrderByDescending(path => path.Length))
+                                       {
+                                           DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
+                                       }
 
-            _notificationService.PopMessage(
-                Resources.InstanceWorkspacePage_GitRestoreSuccessNotificationMessage,
-                Resources.InstanceWorkspacePage_GitRestoreSuccessNotificationTitle,
-                GrowlLevel.Success
-            );
-            return Task.CompletedTask;
-        });
+                                       _notificationService.PopMessage(Resources
+                                                                          .InstanceWorkspacePage_GitRestoreSuccessNotificationMessage,
+                                                                       Resources
+                                                                          .InstanceWorkspacePage_GitRestoreSuccessNotificationTitle,
+                                                                       GrowlLevel.Success);
+                                       return Task.CompletedTask;
+                                   });
     }
 
     #endregion

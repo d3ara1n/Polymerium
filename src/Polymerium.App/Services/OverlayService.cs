@@ -18,8 +18,7 @@ public class OverlayService(IViewActivator activator)
         Action<Toast> toastHandler,
         Action<Sidebar> drawerHandler,
         Action<Modal> modalHandler,
-        Action<Dialog> dialogHandler
-    )
+        Action<Dialog> dialogHandler)
     {
         _toastHandler = toastHandler;
         _drawerHandler = drawerHandler;
@@ -43,8 +42,7 @@ public class OverlayService(IViewActivator activator)
 
     public void PopModal(Modal modal) => _modalHandler?.Invoke(modal);
 
-    public void PopModal<TModal>(object? parameter = null)
-        where TModal : Modal
+    public void PopModal<TModal>(object? parameter = null) where TModal : Modal
     {
         var modal = (TModal)activator.Activate(typeof(TModal), parameter)!;
         PopModal(modal);
@@ -58,12 +56,7 @@ public class OverlayService(IViewActivator activator)
 
     public void PopMessage(string message, string title)
     {
-        var dialog = new MessageDialog
-        {
-            Title = title,
-            Message = message,
-            IsPrimaryButtonVisible = false,
-        };
+        var dialog = new MessageDialog { Title = title, Message = message, IsPrimaryButtonVisible = false, };
         PopDialog(dialog);
     }
 
@@ -77,8 +70,8 @@ public class OverlayService(IViewActivator activator)
     public async Task<string?> RequestInputAsync(
         string? message = null,
         string? title = null,
-        string? placeholder = null
-    )
+        string? placeholder = null,
+        bool multiLine = false)
     {
         var dialog = new UserInputDialog();
         if (title != null)
@@ -96,6 +89,8 @@ public class OverlayService(IViewActivator activator)
             dialog.PlaceholderText = placeholder;
             dialog.PresetText = placeholder;
         }
+
+        dialog.AllowMultiLine = multiLine;
 
         if (await PopDialogAsync(dialog) && dialog.Result is string input)
         {
