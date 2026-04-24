@@ -16,13 +16,72 @@
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="12">
         <!--  Status Bar  -->
-        <Grid DockPanel.Dock="Top">
+        <StackPanel DockPanel.Dock="Top">
+            <!--  Lock Info  -->
             <husk:InfoBar
                 Classes="Warning"
                 IsVisible="{Binding IsLocked}"
                 Content="{x:Static lang:Resources.InstanceWorkspacePage_LockedInfoBarText}" />
-        </Grid>
-        <!--  Nav Bar  -->
+
+            <!--  Git Bar  -->
+            <Border
+                Padding="12,8"
+                IsVisible="{Binding IsGitRepository}"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="Git 仓库" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding GitBranchName}" />
+                        </StackPanel>
+                        <husk:Divider Orientation="Vertical" />
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Spacing="2">
+                            <TextBlock Text="暂存" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}">
+                                    <Run Text="±" />
+                                    <Run Text="{Binding GitStagedCount}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Spacing="2">
+                            <TextBlock Text="变更" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}">
+                                    <Run Text="±" />
+                                    <Run Text="{Binding GitUnstagedCount}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <Button
+                            Classes="Primary"
+                            Content="提交" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
         <TabControl>
             <TabItem Header="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabText}">
                 <Grid
@@ -38,7 +97,7 @@
                                 DockPanel.Dock="Right"
                                 Command="{Binding RefreshCommand}">
                                 <husk:IconLabel
-                                    Icon="ArrowReset"
+                                    Icon="ArrowCounterclockwise"
                                     Text="{x:Static lang:Resources.InstanceWorkspacePage_RefreshButtonText}" />
                             </Button>
                             <TextBox
