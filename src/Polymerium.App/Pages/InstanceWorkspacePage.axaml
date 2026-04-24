@@ -34,17 +34,17 @@
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="仓库" />
+                                Text="{x:Static lang:Resources.InstanceWorkspacePage_GitBarTitleText}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="Git" />
+                                Text="{x:Static lang:Resources.InstanceWorkspacePage_GitBarSubtitleText}" />
                         </StackPanel>
                         <husk:Divider Orientation="Vertical" />
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="提交" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceWorkspacePage_GitCommitSectionText}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{Binding GitHeadSummary}" />
@@ -53,16 +53,16 @@
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="工作区" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceWorkspacePage_GitWorkingTreeSectionText}" />
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="8">
                                 <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}">
-                                    <Run Text="暂存" />
+                                    <Run Text="{x:Static lang:Resources.InstanceWorkspacePage_GitStagedCountLabelText}" />
                                     <Run Text="{Binding GitStagedCount}" />
                                 </TextBlock>
                                 <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}">
-                                    <Run Text="未暂存" />
+                                    <Run Text="{x:Static lang:Resources.InstanceWorkspacePage_GitUnstagedCountLabelText}" />
                                     <Run Text="{Binding GitUnstagedCount}" />
                                 </TextBlock>
                             </StackPanel>
@@ -71,7 +71,7 @@
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="同步" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceWorkspacePage_GitSyncSectionText}" />
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="8">
@@ -96,16 +96,16 @@
                         <SplitButton
                             Classes="Primary"
                             Command="{Binding CommitGitCommand}"
-                            ToolTip.Tip="提交当前全部变更">
+                            ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_GitCommitButtonToolTip}">
                             <husk:IconLabel
                                 Icon="Checkmark"
-                                Text="提交" />
+                                Text="{x:Static lang:Resources.InstanceWorkspacePage_GitCommitButtonText}" />
                             <SplitButton.Flyout>
                                 <MenuFlyout>
                                     <MenuItem
                                         Command="{Binding RestoreGitChangesCommand}"
-                                        Header="还原"
-                                        ToolTip.Tip="丢弃未暂存改动并删除未跟踪文件" />
+                                        Header="{x:Static lang:Resources.InstanceWorkspacePage_GitRestoreMenuText}"
+                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_GitRestoreMenuToolTip}" />
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                         </SplitButton>
