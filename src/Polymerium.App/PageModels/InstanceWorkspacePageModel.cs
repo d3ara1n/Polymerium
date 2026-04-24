@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Reactive.Disposables;
+using System.Reactive.Disposables.Fluent;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using DynamicData.Binding;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
-using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -21,13 +22,39 @@ using Trident.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
-public partial class InstanceWorkspacePageModel(
-    IViewContext<InstancePageModelBase.InstanceContextParameter> context,
-    InstanceManager instanceManager,
-    NotificationService notificationService,
-    OverlayService overlayService,
-    ProfileManager profileManager) : InstancePageModelBase(context, instanceManager, profileManager)
+public partial class InstanceWorkspacePageModel : InstancePageModelBase
 {
+    #region Injected
+
+    private readonly NotificationService _notificationService;
+    private readonly OverlayService _overlayService;
+
+    #endregion
+
+    /// <inheritdoc/>
+    public InstanceWorkspacePageModel(
+        IViewContext<InstanceContextParameter> context,
+        InstanceManager instanceManager,
+        NotificationService notificationService,
+        OverlayService overlayService,
+        ProfileManager profileManager) : base(context, instanceManager, profileManager)
+    {
+        _notificationService = notificationService;
+        _overlayService = overlayService;
+
+        var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
+        _changesSource.Connect().Filter(filter).Bind(out var view).Subscribe().DisposeWith(_subscriptions);
+        ChangesView = view;
+    }
+
+    #region Fields
+
+    private readonly CompositeDisposable _subscriptions = new();
+    private CancellationToken? _initToken;
+    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x => x.RelativePath);
+
+    #endregion
+
     #region Direct
 
     public bool IsLocked => Basic.Source is not null;
@@ -36,10 +63,16 @@ public partial class InstanceWorkspacePageModel(
 
     #region Reactive
 
-    public ObservableCollection<WorkspaceChangeModel> Changes { get; } = [];
+    public ReadOnlyObservableCollection<WorkspaceChangeModel> ChangesView { get; }
 
     [ObservableProperty]
     public partial WorkspaceChangeModel? SelectedChange { get; set; }
+
+    [ObservableProperty]
+    public partial string FilterText { get; set; }
+
+    [ObservableProperty]
+    public partial int ChangesCount { get; set; }
 
     #endregion
 
@@ -47,12 +80,22 @@ public partial class InstanceWorkspacePageModel(
 
     protected override async Task OnInitializeAsync(CancellationToken token)
     {
+        _initToken = token;
         await GenerateChangeListAsync(token);
+    }
+
+    protected override Task OnDeinitializeAsync()
+    {
+        _subscriptions.Dispose();
+        return Task.CompletedTask;
     }
 
     #endregion
 
     #region Other
+
+    private static Func<WorkspaceChangeModel, bool> BuildFilter(string? text) =>
+        x => string.IsNullOrEmpty(text) || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
 
     private async Task GenerateChangeListAsync(CancellationToken token)
     {
@@ -62,6 +105,12 @@ public partial class InstanceWorkspacePageModel(
 
         var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
         var importDir = PathDef.Default.DirectoryOfImport(Basic.Key);
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            _changesSource.Clear();
+            ChangesCount = _changesSource.Count;
+        });
 
         var batch = new List<WorkspaceChangeModel>(200);
         foreach (var liveEntry in ScanFolder(liveDir, token))
@@ -88,15 +137,17 @@ public partial class InstanceWorkspacePageModel(
                 {
                     var toAdd = batch.ToArray();
                     batch.Clear();
-                    await Dispatcher.UIThread.InvokeAsync(() => Changes.AddRange(toAdd));
+                    await Dispatcher.UIThread.InvokeAsync(() => _changesSource.AddOrUpdate(toAdd));
                 }
             }
         }
 
         if (batch.Count > 0)
         {
-            await Dispatcher.UIThread.InvokeAsync(() => Changes.AddRange(batch));
+            await Dispatcher.UIThread.InvokeAsync(() => _changesSource.AddOrUpdate(batch));
         }
+
+        await Dispatcher.UIThread.InvokeAsync(() => ChangesCount = _changesSource.Count);
     }
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
@@ -144,6 +195,17 @@ public partial class InstanceWorkspacePageModel(
 
     #region Commands
 
+    [RelayCommand]
+    private async Task RefreshAsync()
+    {
+        if (_initToken is not null && _initToken.Value.IsCancellationRequested)
+        {
+            return;
+        }
+
+        await GenerateChangeListAsync(_initToken ?? CancellationToken.None);
+    }
+
     private bool CanOpenDiffer(WorkspaceChangeModel? model) => model is not null;
 
     [RelayCommand(CanExecute = nameof(CanOpenDiffer))]
@@ -152,14 +214,14 @@ public partial class InstanceWorkspacePageModel(
         if (model != null)
         {
             if (model.FileSizeRaw > 1024 * 1024 * 1024
-             && !await overlayService
+             && !await _overlayService
                     .RequestConfirmationAsync("File is too large. It may take time to compute and render diff."))
             {
                 // 文件大且用户拒绝
                 return;
             }
 
-            overlayService.PopModal<WorkspaceDiffModal>(model);
+            _overlayService.PopModal<WorkspaceDiffModal>(model);
         }
     }
 
@@ -173,7 +235,7 @@ public partial class InstanceWorkspacePageModel(
             return;
         }
 
-        if (!await overlayService.RequestConfirmationAsync("This will overwrite the file from the modpack"))
+        if (!await _overlayService.RequestConfirmationAsync("This will overwrite the file from the modpack"))
         {
             return;
         }
@@ -189,7 +251,7 @@ public partial class InstanceWorkspacePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to perform file staging");
+                _notificationService.PopMessage(ex, "Failed to perform file staging");
             }
         }
         else
@@ -202,7 +264,7 @@ public partial class InstanceWorkspacePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to perform file staging");
+                _notificationService.PopMessage(ex, "Failed to perform file staging");
             }
         }
 
@@ -222,7 +284,7 @@ public partial class InstanceWorkspacePageModel(
             return;
         }
 
-        if (!await overlayService.RequestConfirmationAsync("This will discard the changes from game playing"))
+        if (!await _overlayService.RequestConfirmationAsync("This will discard the changes from game playing"))
         {
             return;
         }
@@ -238,7 +300,7 @@ public partial class InstanceWorkspacePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to perform file staging");
+                _notificationService.PopMessage(ex, "Failed to perform file staging");
             }
         }
 
