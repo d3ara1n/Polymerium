@@ -239,7 +239,7 @@ public partial class MarketplaceSearchPageModel
                 null
             );
             _notificationService.PopMessage(
-                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
+                Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage.Replace(
                     "{0}",
                     exhibit.ProjectName
                 ),
@@ -288,7 +288,7 @@ public partial class MarketplaceSearchPageModel
             {
                 _notificationService.PopMessage(
                     ex,
-                    Resources.MarketplaceSearchView_ModpackLoadingDangerNotificationTitle,
+                    Resources.MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle,
                     GrowlLevel.Warning
                 );
             }
@@ -325,7 +325,7 @@ public partial class MarketplaceSearchPageModel
                 version.VersionId
             );
             _notificationService.PopMessage(
-                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
+                Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage.Replace(
                     "{0}",
                     version.VersionName
                 ),

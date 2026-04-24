@@ -171,7 +171,7 @@
                     <husk:Tag
                         Grid.Row="0"
                         Grid.Column="0"
-                        Content="{x:Static lang:Resources.InstanceHomeView_OverviewTitle}" />
+                        Content="{x:Static lang:Resources.InstanceHomePage_OverviewTitle}" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
@@ -243,7 +243,7 @@
                             Margin="4"
                             VerticalAlignment="Bottom"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstanceHomeView_PackageCountText}" />
+                            Text="{x:Static lang:Resources.InstanceHomePage_PackageCountText}" />
                     </StackPanel>
                     <Grid
                         Grid.Row="0"
@@ -258,7 +258,7 @@
                             Grid.Column="1"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.InstanceHomeView_SetupTitle}" />
+                            Text="{x:Static lang:Resources.InstanceHomePage_SetupTitle}" />
                         <Button
                             Grid.Column="2"
                             Command="{Binding $parent[app:InstancePage].NavigateCommand}"
@@ -269,7 +269,7 @@
                                 Spacing="8">
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.InstanceHomeView_SetupEditButtonText}" />
+                                    Text="{x:Static lang:Resources.InstanceHomePage_SetupEditButtonText}" />
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource SmallFontSize}"
                                     Symbol="ArrowRight" />
@@ -302,7 +302,7 @@
                                 <TextBlock
                                     Grid.Row="0"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceHomeView_SetupTypeText}" />
+                                    Text="{x:Static lang:Resources.InstanceHomePage_SetupTypeText}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     HorizontalAlignment="Center"
@@ -320,7 +320,7 @@
                                 <TextBlock
                                     Grid.Row="0"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceHomeView_SetupVersionText}" />
+                                    Text="{x:Static lang:Resources.InstanceHomePage_SetupVersionText}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     HorizontalAlignment="Center"
@@ -358,7 +358,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.InstanceHomeView_ActivitiesTitle}" />
+                    Text="{x:Static lang:Resources.InstanceHomePage_ActivitiesTitle}" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
@@ -370,7 +370,7 @@
                         Spacing="8">
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
-                            Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
+                            Text="{x:Static lang:Resources.InstanceHomePage_SeeMoreButtonText}" />
                         <fi:SymbolIcon
                             FontSize="{StaticResource SmallFontSize}"
                             Symbol="ArrowRight" />
@@ -395,7 +395,7 @@
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 HorizontalAlignment="Center"
-                                Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />
+                                Text="{x:Static lang:Resources.InstanceHomePage_HourCountText}" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource ExtraLargeFontSize}"
@@ -478,7 +478,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.InstanceHomeView_WidgetsTitle}" />
+                    Text="{x:Static lang:Resources.InstanceHomePage_WidgetsTitle}" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
@@ -490,7 +490,7 @@
                         Spacing="8">
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
-                            Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
+                            Text="{x:Static lang:Resources.InstanceHomePage_SeeMoreButtonText}" />
                         <fi:SymbolIcon
                             FontSize="{StaticResource SmallFontSize}"
                             Symbol="ArrowRight" />
@@ -570,7 +570,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.InstanceHomeView_LaunchPadTitle}" />
+                    Text="{x:Static lang:Resources.InstanceHomePage_LaunchPadTitle}" />
                 <husk:Card
                     Grid.Row="1"
                     Grid.Column="0"
@@ -596,7 +596,7 @@
                                             Symbol="CheckmarkCircle" />
                                         <TextBlock
                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomeView_ReadyLabelText}" />
+                                            Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="{x:False}">
@@ -613,7 +613,7 @@
                                             Symbol="DismissCircle" />
                                         <TextBlock
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
+                                            Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                             </husk:SwitchContainer>
@@ -745,7 +745,7 @@
                                         Symbol="Rocket" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
-                                        Text="{x:Static lang:Resources.InstanceHomeView_LaunchButtonText}" />
+                                        Text="{x:Static lang:Resources.InstanceHomePage_LaunchButtonText}" />
                                 </StackPanel>
                             </Button>
                             <DockPanel>
@@ -783,13 +783,13 @@
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource MediumFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonTitle}" />
+                                                    Text="{x:Static lang:Resources.InstanceHomePage_AccountButtonTitle}" />
                                                 <TextBlock
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonSubtitle}" />
+                                                    Text="{x:Static lang:Resources.InstanceHomePage_AccountButtonSubtitle}" />
                                             </Grid>
                                         </husk:PlaceholderContainer.Placeholder>
                                         <husk:PlaceholderContainer.SourceTemplate>
@@ -843,7 +843,7 @@
                                     Symbol="Stop" />
                                 <TextBlock
                                     HorizontalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstanceHomeView_AbortButtonText}" />
+                                    Text="{x:Static lang:Resources.InstanceHomePage_AbortButtonText}" />
                             </StackPanel>
                         </Button>
                     </husk:SwitchCase>
@@ -865,7 +865,7 @@
                                         Symbol="Rocket" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
-                                        Text="{x:Static lang:Resources.InstanceHomeView_KillButtonText}" />
+                                        Text="{x:Static lang:Resources.InstanceHomePage_KillButtonText}" />
                                 </StackPanel>
                             </Button>
                             <Grid
@@ -876,7 +876,7 @@
                                     Classes="Small"
                                     Margin="0,8,8,0"
                                     Command="{Binding EjectCommand}">
-                                    <TextBlock Text="{x:Static lang:Resources.InstanceHomeView_DetachButtonText}" />
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceHomePage_DetachButtonText}" />
                                 </Button>
                                 <Button
                                     Grid.Row="1"
@@ -902,12 +902,12 @@
                                             Grid.Row="0"
                                             Grid.Column="2"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                                            Text="{x:Static lang:Resources.InstanceHomeView_DashboardButtonTitle}" />
+                                            Text="{x:Static lang:Resources.InstanceHomePage_DashboardButtonTitle}" />
                                         <TextBlock
                                             Grid.Row="2"
                                             Grid.Column="2"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomeView_DashboardButtonSubtitle}" />
+                                            Text="{x:Static lang:Resources.InstanceHomePage_DashboardButtonSubtitle}" />
                                     </Grid>
                                 </Button>
                             </Grid>

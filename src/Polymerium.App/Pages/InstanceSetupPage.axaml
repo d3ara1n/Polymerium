@@ -23,7 +23,7 @@
             x:Key="InstancePackageButtonFlyout"
             x:DataType="app:InstancePackageModel">
             <MenuItem
-                Header="{x:Static lang:Resources.InstanceSetupView_ActiveMenuText}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_ActiveMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Star,
                                       FontSize={StaticResource MediumFontSize}}"
                 IsChecked="{Binding IsEnabled, Mode=TwoWay}"
@@ -36,7 +36,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectNameMenuText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectNameMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.ProjectName, FallbackValue=Project Name}" />
@@ -50,7 +50,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ProjectIdMenuText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectIdMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.ProjectId, FallbackValue=Pid}" />
@@ -65,7 +65,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionNameMenuText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_VersionNameMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.((app:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
@@ -80,7 +80,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_VersionIdMenuText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_VersionIdMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.((app:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
@@ -91,7 +91,7 @@
             <MenuItem
                 Command="{x:Static app:InternalCommands.OpenUriCommand}"
                 CommandParameter="{Binding Info.Reference, FallbackValue={x:Null}}"
-                Header="{x:Static lang:Resources.InstanceSetupView_OpenWebsiteMenuText}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_OpenWebsiteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Open,
                                       FontSize={StaticResource MediumFontSize}}" />
             <!--  <MenuItem Header="Add to Favorites"  -->
@@ -104,7 +104,7 @@
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Foreground="{StaticResource ControlDangerForegroundBrush}"
-                Header="{x:Static lang:Resources.InstanceSetupView_RemoveMenuText}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_RemoveMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
@@ -156,7 +156,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.InstanceSetupView_InoperableLabelText}" />
+                        Text="{x:Static lang:Resources.InstanceSetupPage_InoperableLabelText}" />
                 </StackPanel>
             </husk:Card>
         </husk:BusyContainer.PendingContent>
@@ -188,7 +188,7 @@
                             <StackPanel Margin="12,6">
                                 <TextBlock
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
+                                    Text="{x:Static lang:Resources.InstanceSetupPage_VersionLabelText}" />
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding Basic.Version, FallbackValue=Version}" />
@@ -215,7 +215,7 @@
                                 <StackPanel Margin="12,6">
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceSetupView_LoaderLabelText}" />
+                                        Text="{x:Static lang:Resources.InstanceSetupPage_LoaderLabelText}" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
                                         Text="{Binding LoaderLabel, FallbackValue=None}" />
@@ -236,7 +236,7 @@
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_ReferenceUnavailableLabelText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ReferenceUnavailableLabelText}" />
                                 <Button
                                     IsVisible="False"
                                     Content="Retry" />
@@ -270,7 +270,7 @@
                                                 Grid.Column="2"
                                                 Classes="Small"
                                                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
-                                                Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
+                                                Content="{x:Static lang:Resources.InstanceSetupPage_SwitchVersionButtonText}"
                                                 Theme="{StaticResource OutlineButtonTheme}" />
                                         </Grid>
                                     </app:Plaque.Header>
@@ -358,7 +358,7 @@
                     <TextBox
                         Grid.Column="0"
                         MinWidth="168"
-                        PlaceholderText="{x:Static lang:Resources.InstanceSetupView_FilterBarPlaceholder}"
+                        PlaceholderText="{x:Static lang:Resources.InstanceSetupPage_FilterBarPlaceholder}"
                         Text="{Binding FilterText, Mode=OneWayToSource}"
                         ToolTip.Tip="@Author #Summary !Id Names">
                         <TextBox.InnerRightContent>
@@ -384,7 +384,7 @@
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceSetupView_FilterLabelText}" />
+                                                    Text="{x:Static lang:Resources.InstanceSetupPage_FilterLabelText}" />
                                                 <Grid
                                                     Grid.Row="1"
                                                     ColumnDefinitions="*,Auto"
@@ -392,7 +392,7 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
-                                                        Text="{x:Static lang:Resources.InstanceSetupView_StatusFilterText}" />
+                                                        Text="{x:Static lang:Resources.InstanceSetupPage_StatusFilterText}" />
                                                     <TabStrip
                                                         Grid.Column="1"
                                                         SelectedItem="{Binding FilterEnability, Mode=TwoWay}"
@@ -421,7 +421,7 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
-                                                        Text="{x:Static lang:Resources.InstanceSetupView_SourceFilterText}" />
+                                                        Text="{x:Static lang:Resources.InstanceSetupPage_SourceFilterText}" />
                                                     <TabStrip
                                                         Grid.Column="1"
                                                         SelectedItem="{Binding FilterLockility, Mode=TwoWay}"
@@ -435,10 +435,10 @@
                                                             Label="{x:Static lang:Resources.Enum_All}"
                                                             Value="{x:Null}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceImportText}"
+                                                            Label="{x:Static lang:Resources.InstanceSetupPage_SourceImportText}"
                                                             Value="{x:True}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.InstanceSetupView_SourceLocalText}"
+                                                            Label="{x:Static lang:Resources.InstanceSetupPage_SourceLocalText}"
                                                             Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
@@ -450,7 +450,7 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
-                                                        Text="{x:Static lang:Resources.InstanceSetupView_TypeFilterText}" />
+                                                        Text="{x:Static lang:Resources.InstanceSetupPage_TypeFilterText}" />
                                                     <TabStrip
                                                         Grid.Column=" 1"
                                                         SelectedItem="{Binding FilterKind, Mode=TwoWay}"
@@ -487,7 +487,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceSetupView_TagFilterText}" />
+                                                        Text="{x:Static lang:Resources.InstanceSetupPage_TagFilterText}" />
                                                 </Grid>
                                                 <Panel
                                                     Grid.Row="8"
@@ -554,7 +554,7 @@
                     <TextBlock Grid.Column="1">
                         <Run
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstanceSetupView_ResultCountLabelText}" />
+                            Text="{x:Static lang:Resources.InstanceSetupPage_ResultCountLabelText}" />
                         <LineBreak />
                         <Run Text="{Binding StageView.Count, Mode=OneWay, FallbackValue=0}" />
                         <Run
@@ -572,7 +572,7 @@
                                 Height="16"
                                 HorizontalAlignment="Center"
                                 IsIndeterminate="{Binding IsRefreshing}" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_RefreshingLabelText}" />
+                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_RefreshingLabelText}" />
                         </StackPanel>
                         <Border
                             Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
@@ -583,7 +583,7 @@
                                     VerticalAlignment="Center">
                                     <Run
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceSetupView_RuleCountLabelText}" />
+                                        Text="{x:Static lang:Resources.InstanceSetupPage_RuleCountLabelText}" />
                                     <Run
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Text="{Binding Rules.Count, Mode=OneWay, FallbackValue=0}" />
@@ -667,28 +667,28 @@
                         </TabStrip>
                         <SplitButton
                             Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
-                            Command="{Binding GotoPackageExplorerViewCommand}"
+                            Command="{Binding GotoPackageExplorerPageCommand}"
                             Foreground="{StaticResource ControlBlackForegroundBrush}">
                             <SplitButton.Flyout>
                                 <MenuFlyout>
                                     <MenuItem
                                         Command="{Binding UpdateBatchCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupView_BatchUpdateMenuText}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchUpdateMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         IsEnabled="False"
-                                        Header="{x:Static lang:Resources.InstanceSetupView_DependencyGraphMenuText}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_DependencyGraphMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowSplit,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ImportListCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupView_ImportListMenuText}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_ImportListMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowImport,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ExportListCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupView_ExportListMenuText}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_ExportListMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowExport,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                 </MenuFlyout>
@@ -700,7 +700,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Wand" />
-                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_GetMoreButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_GetMoreButtonText}" />
                             </StackPanel>
                         </SplitButton>
                     </StackPanel>

@@ -31,12 +31,12 @@
                             Symbol="PersonAdd" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.AccountsView_AddAccountButtonText}" />
+                            Text="{x:Static lang:Resources.AccountsPage_AddAccountButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
             <TextBlock
-                Text="{x:Static lang:Resources.AccountsView_Title}"
+                Text="{x:Static lang:Resources.AccountsPage_Title}"
                 Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </husk:Page.Header>
@@ -77,13 +77,13 @@
                                     IsEnabled="{Binding IsDefault, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
                                     Command="{Binding $parent[app:AccountsPage].((app:AccountsPageModel)DataContext).MarkAsDefaultAccountCommand, Mode=OneWay, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}"
-                                    Header="{x:Static lang:Resources.AccountsView_MarkAsDefaultMenuText}"
+                                    Header="{x:Static lang:Resources.AccountsPage_MarkAsDefaultMenuText}"
                                     Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,
                                                           FontSize={StaticResource MediumFontSize}}" />
                                 <MenuItem
                                     Command="{Binding $parent[app:AccountsPage].((app:AccountsPageModel)DataContext).RemoveAccountCommand, Mode=OneWay, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}"
-                                    Header="{x:Static lang:Resources.AccountsView_RemoveMenuText}"
+                                    Header="{x:Static lang:Resources.AccountsPage_RemoveMenuText}"
                                     Icon="{fie:SymbolIcon Symbol=Delete,
                                                           FontSize={StaticResource MediumFontSize}}" />
                             </MenuFlyout>

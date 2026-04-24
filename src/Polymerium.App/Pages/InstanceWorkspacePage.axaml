@@ -7,6 +7,7 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -19,11 +20,11 @@
             <husk:InfoBar
                 Classes="Warning"
                 IsVisible="{Binding IsLocked}"
-                Content="该实例导入自整合包，你将无法在整合包初始文件上应用修改。" />
+                Content="{x:Static lang:Resources.InstanceWorkspacePage_LockedInfoBarText}" />
         </Grid>
         <!--  Nav Bar  -->
         <TabControl>
-            <TabItem Header="变更">
+            <TabItem Header="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabText}">
                 <Grid
                     ColumnDefinitions="*,4,*"
                     ColumnSpacing="12">
@@ -38,10 +39,10 @@
                                 Command="{Binding RefreshCommand}">
                                 <husk:IconLabel
                                     Icon="ArrowReset"
-                                    Text="刷新" />
+                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_RefreshButtonText}" />
                             </Button>
                             <TextBox
-                                PlaceholderText="搜索文件路径..."
+                                PlaceholderText="{x:Static lang:Resources.InstanceWorkspacePage_SearchPlaceholder}"
                                 Text="{Binding FilterText, Mode=TwoWay}">
                                 <TextBox.InnerRightContent>
                                     <StackPanel Orientation="Horizontal">
@@ -86,25 +87,25 @@
                                                 <husk:SwitchCase Value="Same">
                                                     <husk:Tag
                                                         Classes="Primary"
-                                                        Content="无变化" />
+                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_SameTagText}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Outdated">
                                                     <husk:Tag
                                                         Classes="Warning"
-                                                        Content="已过时"
-                                                        ToolTip.Tip="该文件的初始版本发生变更，通常是由整合包更新引起。" />
+                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_OutdatedTagText}"
+                                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_OutdatedTagToolTip}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Updated">
                                                     <husk:Tag
                                                         Classes="Success"
-                                                        Content="已更新"
-                                                        ToolTip.Tip="该文件被客户端所修改。 " />
+                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_UpdatedTagText}"
+                                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_UpdatedTagToolTip}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Deleted">
                                                     <husk:Tag
                                                         Classes="Danger"
-                                                        Content="已删除"
-                                                        ToolTip.Tip="该文件的初始版本被移除，通常是由整合包更新引起。" />
+                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_DeletedTagText}"
+                                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_DeletedTagToolTip}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchContainer>
                                             <TextBlock
@@ -181,22 +182,22 @@
                                                             <husk:SwitchCase Value="Updated">
                                                                 <husk:Tag
                                                                     Classes="Success"
-                                                                    Content="已更新" />
+                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_UpdatedTagText}" />
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Outdated">
                                                                 <husk:Tag
                                                                     Classes="Warning"
-                                                                    Content="已过时" />
+                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_OutdatedTagText}" />
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Deleted">
                                                                 <husk:Tag
                                                                     Classes="Danger"
-                                                                    Content="已删除" />
+                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_DeletedTagText}" />
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Same">
                                                                 <husk:Tag
                                                                     Classes="Primary"
-                                                                    Content="无变化" />
+                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_SameTagText}" />
                                                             </husk:SwitchCase>
                                                         </husk:SwitchContainer>
                                                     </WrapPanel>
@@ -208,7 +209,7 @@
                                             <StackPanel Spacing="12">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="快速信息" />
+                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_QuickInfoTitle}" />
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
                                                     ColumnSpacing="16"
@@ -218,7 +219,7 @@
                                                         Grid.Row="0"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="类型" />
+                                                        Text="{x:Static lang:Resources.InstanceWorkspacePage_FileTypeLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="0"
                                                         Grid.Column="1"
@@ -228,7 +229,7 @@
                                                         Grid.Row="1"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="最后修改" />
+                                                        Text="{x:Static lang:Resources.InstanceWorkspacePage_LastModifiedLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="1"
                                                         Grid.Column="1">
@@ -245,7 +246,7 @@
                                                         Grid.Row="2"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="文件大小" />
+                                                        Text="{x:Static lang:Resources.InstanceWorkspacePage_FileSizeLabelText}" />
                                                     <TextBlock
                                                         Grid.Row="2"
                                                         Grid.Column="1"
@@ -258,7 +259,7 @@
                                             <StackPanel Spacing="10">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="建议操作" />
+                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_SuggestedActionsTitle}" />
                                                 <husk:SwitchContainer
                                                     TargetType="app:WorkspaceChangeKind"
                                                     Value="{Binding Kind}">
@@ -276,7 +277,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="SplitVertical"
-                                                                    Text="查看差异" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_ViewDiffButtonText}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -286,7 +287,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="应用" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_ApplyButtonText}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -296,7 +297,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowImport"
-                                                                    Text="放弃" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_DiscardButtonText}" />
                                                             </Button>
                                                         </Grid>
                                                     </husk:SwitchCase>
@@ -314,7 +315,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="SplitVertical"
-                                                                    Text="查看差异" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_ViewDiffButtonText}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -324,7 +325,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="覆盖" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_OverwriteButtonText}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -334,7 +335,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowImport"
-                                                                    Text="更新" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_UpdateButtonText}" />
                                                             </Button>
                                                         </Grid>
                                                     </husk:SwitchCase>
@@ -347,7 +348,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="放弃" />
+                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_DiscardButtonText}" />
                                                             </Button>
                                                         </StackPanel>
                                                     </husk:SwitchCase>
@@ -358,14 +359,14 @@
                                                         CommandParameter="{Binding LivePath}">
                                                         <husk:IconLabel
                                                             Icon="FolderOpen"
-                                                            Text="打开位置" />
+                                                            Text="{x:Static lang:Resources.InstanceWorkspacePage_OpenLocationButtonText}" />
                                                     </Button>
                                                     <Button
                                                         Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
                                                         CommandParameter="{Binding RelativePath}">
                                                         <husk:IconLabel
                                                             Icon="DocumentCopy"
-                                                            Text="复制路径" />
+                                                            Text="{x:Static lang:Resources.InstanceWorkspacePage_CopyPathButtonText}" />
                                                     </Button>
                                                 </husk:ButtonGroup>
                                             </StackPanel>
@@ -380,10 +381,10 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="选择一个文件" />
+                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_SelectFileTitle}" />
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="右侧会显示文件信息和可用操作。" />
+                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_SelectFilePrompt}" />
                             </StackPanel>
                         </husk:PlaceholderContainer>
                     </ScrollViewer>

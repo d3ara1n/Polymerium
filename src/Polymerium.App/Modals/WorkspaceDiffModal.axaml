@@ -62,12 +62,12 @@
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource ControlWarningForegroundBrush}"
-                                    Text="存在差异" />
+                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_DifferentTitle}" />
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="基于内容的判断" />
+                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -82,12 +82,12 @@
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                    Text="完全相同" />
+                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_IdenticalTitle}" />
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="基于内容的判断" />
+                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -105,11 +105,11 @@
                         <Run Text="{Binding #DiffView.LeftLineCount}" />
                         <Run Text="/" />
                         <Run Text="{Binding #DiffView.TotalLineCount}" />
-                        <Run Text="Ln." />
+                        <Run Text="{x:Static lang:Resources.WorkspaceDiffModal_LineCountSuffix}" />
                     </TextBlock>
                     <husk:Tag
                         Classes="Primary"
-                        Content="Live" />
+                        Content="{x:Static lang:Resources.WorkspaceDiffModal_LiveTagText}" />
                 </DockPanel>
                 <DockPanel Grid.Column="1">
                     <TextBlock
@@ -119,11 +119,11 @@
                         <Run Text="{Binding #DiffView.RightLineCount}" />
                         <Run Text="/" />
                         <Run Text="{Binding #DiffView.TotalLineCount}" />
-                        <Run Text="Ln." />
+                        <Run Text="{x:Static lang:Resources.WorkspaceDiffModal_LineCountSuffix}" />
                     </TextBlock>
                     <husk:Tag
                         Classes="Primary"
-                        Content="Import" />
+                        Content="{x:Static lang:Resources.WorkspaceDiffModal_ImportTagText}" />
                 </DockPanel>
             </Grid>
             <controls:DiffView

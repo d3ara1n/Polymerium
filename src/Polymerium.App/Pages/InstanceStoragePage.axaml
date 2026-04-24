@@ -49,7 +49,7 @@
                     CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87">
                     <husk:IconLabel
                         Icon="BookQuestionMark"
-                        Text="{x:Static lang:Resources.InstanceStorageView_OpenWikiButtonText}" />
+                        Text="{x:Static lang:Resources.InstanceStoragePage_OpenWikiButtonText}" />
                 </HyperlinkButton>
                 <Button
                     Classes="Small"
@@ -58,7 +58,7 @@
                     Theme="{StaticResource OutlineButtonTheme}">
                     <husk:IconLabel
                         Icon="FolderOpen"
-                        Text="{x:Static lang:Resources.InstanceStorageView_OpenFolderButtonText}" />
+                        Text="{x:Static lang:Resources.InstanceStoragePage_OpenFolderButtonText}" />
                 </Button>
                 <Button
                     Classes="Small"
@@ -68,7 +68,7 @@
                     Theme="{StaticResource OutlineButtonTheme}">
                     <husk:IconLabel
                         Icon="Library"
-                        Text="{x:Static lang:Resources.InstanceStorageView_GotoExplorerButtonText}" />
+                        Text="{x:Static lang:Resources.InstanceStoragePage_GotoExplorerButtonText}" />
                 </Button>
             </StackPanel>
         </Grid>
@@ -80,7 +80,7 @@
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.InstanceStorageView_BreakdownLabelText}" />
+                Text="{x:Static lang:Resources.InstanceStoragePage_BreakdownLabelText}" />
             <Grid
                 ColumnDefinitions="*,*,*,*"
                 ColumnSpacing="12">
@@ -358,7 +358,7 @@
                     <TextBlock
                         FontSize="{StaticResource LargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.InstanceStorageView_AdditionalLabelText}" />
+                        Text="{x:Static lang:Resources.InstanceStoragePage_AdditionalLabelText}" />
                     <Grid
                         ColumnDefinitions="*,*"
                         ColumnSpacing="12"
@@ -627,7 +627,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{x:Static lang:Resources.InstanceStorageView_OtherLabelText}" />
+                                        Text="{x:Static lang:Resources.InstanceStoragePage_OtherLabelText}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">

@@ -45,7 +45,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.InstanceActivitiesView_TotalHoursRankLabelText}" />
+                            Text="{x:Static lang:Resources.InstanceActivitiesPage_TotalHoursRankLabelText}" />
                         <Border
                             Padding="12,4"
                             HorizontalAlignment="Center"
@@ -67,7 +67,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceActivitiesView_SessionCountLabelText}" />
+                        Text="{x:Static lang:Resources.InstanceActivitiesPage_SessionCountLabelText}" />
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="1"
@@ -78,7 +78,7 @@
                         Grid.Row="1"
                         Grid.Column="0"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceActivitiesView_ActiveDaysLabelText}" />
+                        Text="{x:Static lang:Resources.InstanceActivitiesPage_ActiveDaysLabelText}" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="1"
@@ -89,7 +89,7 @@
                         Grid.Row="2"
                         Grid.Column="0"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceActivitiesView_TotalHoursLabelText}" />
+                        Text="{x:Static lang:Resources.InstanceActivitiesPage_TotalHoursLabelText}" />
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="1"
@@ -137,7 +137,7 @@
                                     Symbol="Clock" />
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimeTabText}" />
+                                    Text="{x:Static lang:Resources.InstanceActivitiesPage_PlaytimeTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <lvc:CartesianChart
@@ -159,7 +159,7 @@
                                     Symbol="HeartPulse" />
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstanceActivitiesView_HealthTabText}" />
+                                    Text="{x:Static lang:Resources.InstanceActivitiesPage_HealthTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -195,7 +195,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_SuccessRateLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_SuccessRateLabelText}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
@@ -234,7 +234,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_SessionCountLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_SessionCountLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -263,7 +263,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_CrashCountLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_CrashCountLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -287,7 +287,7 @@
                                     Symbol="List" />
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstanceActivitiesView_StatisticsTabText}" />
+                                    Text="{x:Static lang:Resources.InstanceActivitiesPage_StatisticsTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -318,7 +318,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_AverageSessionLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_AverageSessionLabelText}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
@@ -355,7 +355,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_LongestSessionLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_LongestSessionLabelText}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
@@ -392,7 +392,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_FirstPlayedLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_FirstPlayedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -421,7 +421,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_LastPlayedLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_LastPlayedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -445,7 +445,7 @@
                                     Symbol="ArrowTrending" />
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstanceActivitiesView_TrendsTabText}" />
+                                    Text="{x:Static lang:Resources.InstanceActivitiesPage_TrendsTabText}" />
                             </StackPanel>
                         </TabItem.Header>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -481,7 +481,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_PlaytimePercentageLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_PlaytimePercentageLabelText}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
@@ -520,7 +520,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_ThisWeekLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_ThisWeekLabelText}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
@@ -557,7 +557,7 @@
                                             VerticalAlignment="Center">
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstanceActivitiesView_LastWeekLabelText}" />
+                                                Text="{x:Static lang:Resources.InstanceActivitiesPage_LastWeekLabelText}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
                                                 Spacing="4">
@@ -595,7 +595,7 @@
                             Grid.Column="0"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.InstanceActivitiesView_ChangelogLabelText}" />
+                            Text="{x:Static lang:Resources.InstanceActivitiesPage_ChangelogLabelText}" />
                         <TabStrip
                             Grid.Column="1"
                             SelectedIndex="{Binding SinceDayIndex, Mode=TwoWay}"

@@ -217,7 +217,7 @@ public partial class InstanceHomePageModel(
             .ToList();
         var dialog = new AccountPickerDialog
         {
-            GotoManagerViewCommand = OpenAccountsViewCommand,
+            GotoManagerViewCommand = OpenAccountsPageCommand,
             AccountsSource = accounts,
             Result = SelectedAccount,
         };
@@ -238,14 +238,14 @@ public partial class InstanceHomePageModel(
         catch (AccountNotFoundException)
         {
             notificationService.PopMessage(
-                Resources.InstanceHomeView_AccountNotFoundDangerNotificationMessage,
-                Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
+                Resources.InstanceHomePage_AccountNotFoundDangerNotificationMessage,
+                Resources.InstanceHomePage_AccountNotFoundDangerNotificationTitle,
                 GrowlLevel.Danger,
                 thumbnail: SelectedAccount?.FaceUrl ?? ThumbnailHelper.ForInstance(Basic.Key),
                 actions:
                 [
                     new(
-                        Resources.InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText,
+                        Resources.InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText,
                         SwitchAccountCommand
                     ),
                 ]
@@ -255,7 +255,7 @@ public partial class InstanceHomePageModel(
         {
             notificationService.PopMessage(
                 ex,
-                Resources.InstanceHomeView_AccountAuthenticationDangerNotificationTitle,
+                Resources.InstanceHomePage_AccountAuthenticationDangerNotificationTitle,
                 thumbnail: SelectedAccount?.FaceUrl ?? ThumbnailHelper.ForInstance(Basic.Key)
             );
         }
@@ -263,7 +263,7 @@ public partial class InstanceHomePageModel(
         {
             notificationService.PopMessage(
                 ex,
-                Resources.InstanceHomeView_DeployDangerNotificationTitle,
+                Resources.InstanceHomePage_DeployDangerNotificationTitle,
                 thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
             );
         }
@@ -301,7 +301,7 @@ public partial class InstanceHomePageModel(
     }
 
     [RelayCommand]
-    private void OpenAccountsView(Dialog? self)
+    private void OpenAccountsPage(Dialog? self)
     {
         if (self != null)
         {

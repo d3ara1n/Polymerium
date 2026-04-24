@@ -33,430 +33,424 @@
     <data name="MainWindow_AccountButtonText" xml:space="preserve">
         <value>账号</value>
     </data>
-    <data name="AccountsView_AddAccountButtonText" xml:space="preserve">
+    <data name="AccountsPage_AddAccountButtonText" xml:space="preserve">
         <value>添加账号</value>
     </data>
-    <data name="AccountsView_Title" xml:space="preserve">
+    <data name="AccountsPage_Title" xml:space="preserve">
         <value>账号</value>
     </data>
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>空列表</value>
     </data>
-    <data name="AccountsView_MarkAsDefaultMenuText" xml:space="preserve">
+    <data name="AccountsPage_MarkAsDefaultMenuText" xml:space="preserve">
         <value>标记为默认</value>
     </data>
-    <data name="AccountsView_RemoveMenuText" xml:space="preserve">
+    <data name="AccountsPage_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
-    <data name="ExceptionView_Title" xml:space="preserve">
+    <data name="ExceptionPage_Title" xml:space="preserve">
         <value>挂壁了...</value>
     </data>
-    <data name="ExceptionView_Subtitle" xml:space="preserve">
+    <data name="ExceptionPage_Subtitle" xml:space="preserve">
         <value>程序遇到了无法自救的问题...</value>
     </data>
-    <data name="InstanceHomeView_OverviewTitle" xml:space="preserve">
+    <data name="InstanceHomePage_OverviewTitle" xml:space="preserve">
         <value>总览</value>
     </data>
-    <data name="InstanceHomeView_PackageCountText" xml:space="preserve">
+    <data name="InstanceHomePage_PackageCountText" xml:space="preserve">
         <value>个包</value>
     </data>
-    <data name="InstanceHomeView_SetupTitle" xml:space="preserve">
+    <data name="InstanceHomePage_SetupTitle" xml:space="preserve">
         <value>配置</value>
     </data>
-    <data name="InstanceHomeView_SetupTypeText" xml:space="preserve">
+    <data name="InstanceHomePage_SetupTypeText" xml:space="preserve">
         <value>类型</value>
     </data>
-    <data name="InstanceHomeView_SetupVersionText" xml:space="preserve">
+    <data name="InstanceHomePage_SetupVersionText" xml:space="preserve">
         <value>版本</value>
     </data>
-    <data name="InstanceHomeView_ActivitiesTitle" xml:space="preserve">
+    <data name="InstanceHomePage_ActivitiesTitle" xml:space="preserve">
         <value>活动</value>
     </data>
-    <data name="InstanceHomeView_HourCountText" xml:space="preserve">
+    <data name="InstanceHomePage_HourCountText" xml:space="preserve">
         <value>总时数</value>
     </data>
-    <data name="InstanceHomeView_WidgetsTitle" xml:space="preserve">
+    <data name="InstanceHomePage_WidgetsTitle" xml:space="preserve">
         <value>微件</value>
     </data>
-    <data name="InstanceHomeView_LaunchPadTitle" xml:space="preserve">
+    <data name="InstanceHomePage_LaunchPadTitle" xml:space="preserve">
         <value>发射台</value>
     </data>
-    <data name="InstanceHomeView_SeeMoreButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_SeeMoreButtonText" xml:space="preserve">
         <value>更多</value>
     </data>
-    <data name="InstanceHomeView_SetupEditButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_SetupEditButtonText" xml:space="preserve">
         <value>编辑</value>
     </data>
-    <data name="InstanceHomeView_ReadyLabelText" xml:space="preserve">
+    <data name="InstanceHomePage_ReadyLabelText" xml:space="preserve">
         <value>准备就绪</value>
     </data>
-    <data name="InstanceHomeView_NoAccountLabelText" xml:space="preserve">
+    <data name="InstanceHomePage_NoAccountLabelText" xml:space="preserve">
         <value>未选择账号</value>
     </data>
-    <data name="InstanceHomeView_LaunchButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_LaunchButtonText" xml:space="preserve">
         <value>开始游玩</value>
     </data>
-    <data name="InstanceHomeView_AccountButtonTitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountButtonTitle" xml:space="preserve">
         <value>账号</value>
     </data>
-    <data name="InstanceHomeView_AccountButtonSubtitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountButtonSubtitle" xml:space="preserve">
         <value>未选择</value>
     </data>
-    <data name="InstanceHomeView_AbortButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_AbortButtonText" xml:space="preserve">
         <value>不中嘞</value>
     </data>
-    <data name="InstanceHomeView_KillButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_KillButtonText" xml:space="preserve">
         <value>强制退出</value>
     </data>
-    <data name="InstanceHomeView_DetachButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_DetachButtonText" xml:space="preserve">
         <value>分离</value>
     </data>
-    <data name="InstanceHomeView_DashboardButtonTitle" xml:space="preserve">
+    <data name="InstanceHomePage_DashboardButtonTitle" xml:space="preserve">
         <value>日志</value>
     </data>
-    <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
+    <data name="InstanceHomePage_DashboardButtonSubtitle" xml:space="preserve">
         <value>信息面板</value>
     </data>
-    <data name="InstanceView_HomePageText" xml:space="preserve">
+    <data name="InstancePage_HomePageText" xml:space="preserve">
         <value>主页</value>
     </data>
-    <data name="InstanceView_DashboardPageText" xml:space="preserve">
+    <data name="InstancePage_DashboardPageText" xml:space="preserve">
         <value>仪表盘</value>
     </data>
-    <data name="InstanceView_SetupPageText" xml:space="preserve">
+    <data name="InstancePage_SetupPageText" xml:space="preserve">
         <value>包管理</value>
     </data>
-    <data name="InstanceView_FilesPageText" xml:space="preserve">
+    <data name="InstancePage_FilesPageText" xml:space="preserve">
         <value>文件</value>
     </data>
-    <data name="InstanceView_WorkspacePageText" xml:space="preserve">
+    <data name="InstancePage_WorkspacePageText" xml:space="preserve">
         <value>工作区</value>
     </data>
-    <data name="InstanceView_WidgetsPageText" xml:space="preserve">
+    <data name="InstancePage_WidgetsPageText" xml:space="preserve">
         <value>微件</value>
     </data>
-    <data name="InstanceView_StatisticsPageText" xml:space="preserve">
+    <data name="InstancePage_StatisticsPageText" xml:space="preserve">
         <value>统计</value>
     </data>
-    <data name="InstanceView_StoragePageText" xml:space="preserve">
+    <data name="InstancePage_StoragePageText" xml:space="preserve">
         <value>存储</value>
     </data>
-    <data name="InstanceView_PropertiesPageText" xml:space="preserve">
+    <data name="InstancePage_PropertiesPageText" xml:space="preserve">
         <value>属性</value>
     </data>
-    <data name="InstancePropertiesView_TitleTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_TitleTitle" xml:space="preserve">
         <value>标题</value>
     </data>
-    <data name="InstancePropertiesView_TitleSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_TitleSubtitle" xml:space="preserve">
         <value>实例的身份认同</value>
     </data>
-    <data name="InstancePropertiesView_DisplayNameLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_DisplayNameLabelText" xml:space="preserve">
         <value>显示名</value>
     </data>
-    <data name="InstancePropertiesView_RenameButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_RenameButtonText" xml:space="preserve">
         <value>重命名</value>
     </data>
-    <data name="InstancePropertiesView_SelectButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_SelectButtonText" xml:space="preserve">
         <value>选择</value>
     </data>
-    <data name="InstancePropertiesView_RemoveButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_RemoveButtonText" xml:space="preserve">
         <value>移除</value>
     </data>
-    <data name="InstancePropertiesView_OverridesTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_OverridesTitle" xml:space="preserve">
         <value>游戏覆盖设置</value>
     </data>
-    <data name="InstancePropertiesView_OverridesSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_OverridesSubtitle" xml:space="preserve">
         <value>在此处对实例的设置会覆盖全局中对应设置，若干为空，则遵循全局设置</value>
     </data>
-    <data name="InstancePropertiesView_NavigateToGlobalButtonTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_NavigateToGlobalButtonTitle" xml:space="preserve">
         <value>跳转到全局游戏设置</value>
     </data>
-    <data name="InstancePropertiesView_NavigateToGlobalButtonSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_NavigateToGlobalButtonSubtitle" xml:space="preserve">
         <value>此处的项目会覆盖全局游戏设置</value>
     </data>
-    <data name="InstancePropertiesView_JavaHomeLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaHomeLabelText" xml:space="preserve">
         <value>Java 主目录</value>
     </data>
-    <data name="InstancePropertiesView_JavaMaxMemoryLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaMaxMemoryLabelText" xml:space="preserve">
         <value>Java 最大内存</value>
     </data>
-    <data name="InstancePropertiesView_JavaMaxMemoryUnitText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaMaxMemoryUnitText" xml:space="preserve">
         <value>兆字节</value>
     </data>
-    <data name="InstancePropertiesView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java 附加命令行参数</value>
     </data>
-    <data name="InstancePropertiesView_WindowInitialSizeLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>窗口初始大小</value>
     </data>
-    <data name="InstancePropertiesView_WindowHeightLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_WindowHeightLabelText" xml:space="preserve">
         <value>高度</value>
     </data>
-    <data name="InstancePropertiesView_WindowWidthLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_WindowWidthLabelText" xml:space="preserve">
         <value>宽度</value>
     </data>
-    <data name="InstancePropertiesView_BehaviorsTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_BehaviorsTitle" xml:space="preserve">
         <value>行为</value>
     </data>
-    <data name="InstancePropertiesView_BehaviorsSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_BehaviorsSubtitle" xml:space="preserve">
         <value>程序会根据这些设置选择对应策略</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_FastLaunchLabelText" xml:space="preserve">
         <value>快速启动</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_FastLaunchPrompt" xml:space="preserve">
         <value>当成功部署过一次实例后且未检测到文件清单修改时将跳过还原步骤。可能会导致游戏缺少文件。</value>
     </data>
-    <data name="InstancePropertiesView_DangerZoneTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DangerZoneTitle" xml:space="preserve">
         <value>危险操作</value>
     </data>
-    <data name="InstancePropertiesView_DangerZoneSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DangerZoneSubtitle" xml:space="preserve">
         <value>这些设置一旦应用无法恢复</value>
     </data>
-    <data name="InstancePropertiesView_SacrificeLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_SacrificeLabelText" xml:space="preserve">
         <value>牺牲</value>
     </data>
-    <data name="InstancePropertiesView_DeleteButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_DeleteButtonText" xml:space="preserve">
         <value>删除</value>
     </data>
-    <data name="InstancePropertiesView_ResetButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_ResetButtonText" xml:space="preserve">
         <value>重置</value>
     </data>
-    <data name="InstancePropertiesView_UnlockButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_UnlockButtonText" xml:space="preserve">
         <value>解锁</value>
     </data>
-    <data name="InstancePropertiesView_LinkerLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_LinkerLabelText" xml:space="preserve">
         <value>关联</value>
     </data>
-    <data name="InstancePropertiesView_LinkerPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_LinkerPrompt" xml:space="preserve">
         <value>实例会保存并链接关于整合包的引用，以此实现实例的更新，但代价是无法更改/移除整合包带来的包版本。解锁/取消链接实例会失去这些能力和限制。</value>
     </data>
-    <data name="InstancePropertiesView_InoperableLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_InoperableLabelText" xml:space="preserve">
         <value>实例此时无法操作</value>
     </data>
-    <data name="InstanceSetupView_InoperableLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_InoperableLabelText" xml:space="preserve">
         <value>操作进行中</value>
     </data>
-    <data name="InstanceSetupView_VersionLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_VersionLabelText" xml:space="preserve">
         <value>游戏版本</value>
     </data>
-    <data name="InstanceSetupView_LoaderLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_LoaderLabelText" xml:space="preserve">
         <value>模组加载器</value>
     </data>
-    <data name="InstanceSetupView_ReferenceUnavailableLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_ReferenceUnavailableLabelText" xml:space="preserve">
         <value>加载出错</value>
     </data>
     <data name="Shared_ExternalLinkLabelText" xml:space="preserve">
         <value>链接指向</value>
     </data>
-    <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
+    <data name="InstanceSetupPage_SwitchVersionButtonText" xml:space="preserve">
         <value>切换版本</value>
     </data>
-    <data name="MarketplacePortalView_Title" xml:space="preserve">
+    <data name="MarketplacePortalPage_Title" xml:space="preserve">
         <value>集市门户</value>
     </data>
-    <data name="MarketplacePortalView_NewsLearnMoreButtonText" xml:space="preserve">
-        <value>了解更多</value>
-    </data>
-    <data name="MarketplacePortalView_DiscoveryCenterTitle" xml:space="preserve">
+    <data name="MarketplacePortalPage_DiscoveryCenterTitle" xml:space="preserve">
         <value>探索发现</value>
     </data>
-    <data name="MarketplacePortalView_DiscoveryCenterSubtitle" xml:space="preserve">
+    <data name="MarketplacePortalPage_DiscoveryCenterSubtitle" xml:space="preserve">
         <value>寻找新的开始</value>
     </data>
-    <data name="MarketplacePortalView_SearchButtonText" xml:space="preserve">
+    <data name="MarketplacePortalPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
-    <data name="MarketplacePortalView_NewsLabelText" xml:space="preserve">
-        <value>新闻</value>
-    </data>
-    <data name="MarketplaceSearchView_Title" xml:space="preserve">
+    <data name="MarketplaceSearchPage_Title" xml:space="preserve">
         <value>搜索整合包</value>
     </data>
-    <data name="MarketplaceSearchView_SearchBarPlaceholder" xml:space="preserve">
+    <data name="MarketplaceSearchPage_SearchBarPlaceholder" xml:space="preserve">
         <value>由这些关键词在...</value>
     </data>
-    <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
+    <data name="MarketplaceSearchPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
     <data name="Shared_FetchingLabelText" xml:space="preserve">
         <value>拉取中...</value>
     </data>
-    <data name="NewInstanceView_CreateButtonText" xml:space="preserve">
+    <data name="NewInstancePage_CreateButtonText" xml:space="preserve">
         <value>创建实例</value>
     </data>
-    <data name="NewInstanceView_Title" xml:space="preserve">
+    <data name="NewInstancePage_Title" xml:space="preserve">
         <value>新建实例</value>
     </data>
-    <data name="NewInstanceView_NameLabelText" xml:space="preserve">
+    <data name="NewInstancePage_NameLabelText" xml:space="preserve">
         <value>名称</value>
     </data>
-    <data name="NewInstanceView_VersionLabelText" xml:space="preserve">
+    <data name="NewInstancePage_VersionLabelText" xml:space="preserve">
         <value>版本</value>
     </data>
-    <data name="NewInstanceView_PackageCountLabelText" xml:space="preserve">
+    <data name="NewInstancePage_PackageCountLabelText" xml:space="preserve">
         <value>包数量</value>
     </data>
-    <data name="NewInstanceView_ModLoaderLabelText" xml:space="preserve">
+    <data name="NewInstancePage_ModLoaderLabelText" xml:space="preserve">
         <value>模组加载器</value>
     </data>
-    <data name="NewInstanceView_SeparatorLabelText" xml:space="preserve">
+    <data name="NewInstancePage_SeparatorLabelText" xml:space="preserve">
         <value>或来自于</value>
     </data>
-    <data name="NewInstanceView_DownloadButtonText" xml:space="preserve">
+    <data name="NewInstancePage_DownloadButtonText" xml:space="preserve">
         <value>集市</value>
     </data>
-    <data name="NewInstanceView_ImportButtonText" xml:space="preserve">
+    <data name="NewInstancePage_ImportButtonText" xml:space="preserve">
         <value>导入</value>
     </data>
-    <data name="PackageExplorerView_PendingLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_PendingLabelText" xml:space="preserve">
         <value>待处理</value>
     </data>
-    <data name="PackageExplorerView_AddLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_AddLabelText" xml:space="preserve">
         <value>新增</value>
     </data>
-    <data name="PackageExplorerView_ModifyLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_ModifyLabelText" xml:space="preserve">
         <value>修改</value>
     </data>
-    <data name="PackageExplorerView_RemoveLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_RemoveLabelText" xml:space="preserve">
         <value>移除</value>
     </data>
-    <data name="PackageExplorerView_EmptyLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_EmptyLabelText" xml:space="preserve">
         <value>无</value>
     </data>
-    <data name="PackageExplorerView_CollectButtonText" xml:space="preserve">
+    <data name="PackageExplorerPage_CollectButtonText" xml:space="preserve">
         <value>执行</value>
     </data>
-    <data name="PackageExplorerView_SearchBarPlaceholder" xml:space="preserve">
+    <data name="PackageExplorerPage_SearchBarPlaceholder" xml:space="preserve">
         <value>根据名字...</value>
     </data>
-    <data name="PackageExplorerView_SearchButtonText" xml:space="preserve">
+    <data name="PackageExplorerPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
-    <data name="SettingsView_Title" xml:space="preserve">
+    <data name="SettingsPage_Title" xml:space="preserve">
         <value>应用程序设置</value>
     </data>
-    <data name="SettingsView_SuperPowerTitle" xml:space="preserve">
+    <data name="SettingsPage_SuperPowerTitle" xml:space="preserve">
         <value>超能力</value>
     </data>
-    <data name="SettingsView_SuperPowerSubtitle" xml:space="preserve">
+    <data name="SettingsPage_SuperPowerSubtitle" xml:space="preserve">
         <value>味大，我为自己带盐</value>
     </data>
-    <data name="SettingsView_SuperPowerLabelText" xml:space="preserve">
+    <data name="SettingsPage_SuperPowerLabelText" xml:space="preserve">
         <value>激活</value>
     </data>
-    <data name="SettingsView_DisplayTitle" xml:space="preserve">
+    <data name="SettingsPage_DisplayTitle" xml:space="preserve">
         <value>显示与外观</value>
     </data>
-    <data name="SettingsView_DisplaySubtitle" xml:space="preserve">
+    <data name="SettingsPage_DisplaySubtitle" xml:space="preserve">
         <value>效果、字体、语言</value>
     </data>
-    <data name="SettingsView_SidebarPlacementLabelText" xml:space="preserve">
+    <data name="SettingsPage_SidebarPlacementLabelText" xml:space="preserve">
         <value>边栏位置</value>
     </data>
-    <data name="SettingsView_SidebarPlacementRightText" xml:space="preserve">
+    <data name="SettingsPage_SidebarPlacementRightText" xml:space="preserve">
         <value>右边</value>
     </data>
-    <data name="SettingsView_SidebarPlacementLeftText" xml:space="preserve">
+    <data name="SettingsPage_SidebarPlacementLeftText" xml:space="preserve">
         <value>左边</value>
     </data>
-    <data name="SettingsView_ThemeVariantLabelText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantLabelText" xml:space="preserve">
         <value>主题样式</value>
     </data>
-    <data name="SettingsView_ThemeVariantSystemText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantSystemText" xml:space="preserve">
         <value>系统</value>
     </data>
-    <data name="SettingsView_ThemeVariantLightText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantLightText" xml:space="preserve">
         <value>亮</value>
     </data>
-    <data name="SettingsView_ThemeVariantDarkText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantDarkText" xml:space="preserve">
         <value>暗</value>
     </data>
-    <data name="SettingsView_BackgroundStyleLabelText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleLabelText" xml:space="preserve">
         <value>背景风格</value>
     </data>
-    <data name="SettingsView_BackgroundStyleAutoText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleAutoText" xml:space="preserve">
         <value>自动</value>
     </data>
-    <data name="SettingsView_BackgroundStyleAcrylicText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleAcrylicText" xml:space="preserve">
         <value>亚克力</value>
     </data>
-    <data name="SettingsView_BackgroundStyleMicaText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleMicaText" xml:space="preserve">
         <value>云母</value>
     </data>
-    <data name="SettingsView_BackgroundStyleBlurText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleBlurText" xml:space="preserve">
         <value>模糊</value>
     </data>
-    <data name="SettingsView_BackgroundStyleNoneText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleNoneText" xml:space="preserve">
         <value>禁用</value>
     </data>
-    <data name="SettingsView_LanguageLabelText" xml:space="preserve">
+    <data name="SettingsPage_LanguageLabelText" xml:space="preserve">
         <value>语言</value>
     </data>
-    <data name="SettingsView_FontLabelText" xml:space="preserve">
+    <data name="SettingsPage_FontLabelText" xml:space="preserve">
         <value>字体</value>
     </data>
-    <data name="SettingsView_JavaTitle" xml:space="preserve">
+    <data name="SettingsPage_JavaTitle" xml:space="preserve">
         <value>Java 预设</value>
     </data>
-    <data name="SettingsView_JavaSubtitle" xml:space="preserve">
+    <data name="SettingsPage_JavaSubtitle" xml:space="preserve">
         <value>实例会从列表中自动选择最佳版本</value>
     </data>
-    <data name="SettingsView_Java11LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java11LabelText" xml:space="preserve">
         <value>Java 11 主目录</value>
     </data>
-    <data name="SettingsView_Java17LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java17LabelText" xml:space="preserve">
         <value>Java 17 主目录</value>
     </data>
-    <data name="SettingsView_Java21LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java21LabelText" xml:space="preserve">
         <value>Java 21 主目录</value>
     </data>
-    <data name="SettingsView_Java8LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java8LabelText" xml:space="preserve">
         <value>Java 8 主目录</value>
     </data>
-    <data name="SettingsView_GameDefaultsSubtitle" xml:space="preserve">
+    <data name="SettingsPage_GameDefaultsSubtitle" xml:space="preserve">
         <value>此处的配置项可能会被实例单独覆写</value>
     </data>
-    <data name="SettingsView_GameDefaultsTitle" xml:space="preserve">
+    <data name="SettingsPage_GameDefaultsTitle" xml:space="preserve">
         <value>游戏默认设置</value>
     </data>
-    <data name="SettingsView_JavaMaxMemoryLabelText" xml:space="preserve">
+    <data name="SettingsPage_JavaMaxMemoryLabelText" xml:space="preserve">
         <value>Java 最大内存</value>
     </data>
-    <data name="SettingsView_JavaMaxMemoryPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_JavaMaxMemoryPlaceholder" xml:space="preserve">
         <value>通常为最大物理内存的一半</value>
     </data>
-    <data name="SettingsView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+    <data name="SettingsPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java 附加命令行参数</value>
     </data>
-    <data name="SettingsView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>默认为空</value>
     </data>
-    <data name="SettingsView_WindowInitialSizeLabelText" xml:space="preserve">
+    <data name="SettingsPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>窗口初始大小</value>
     </data>
-    <data name="SettingsView_JavaMaxMemoryUnitText" xml:space="preserve">
+    <data name="SettingsPage_JavaMaxMemoryUnitText" xml:space="preserve">
         <value>兆字节</value>
     </data>
-    <data name="SettingsView_WindowHeightLabelText" xml:space="preserve">
+    <data name="SettingsPage_WindowHeightLabelText" xml:space="preserve">
         <value>高度</value>
     </data>
-    <data name="SettingsView_WindowWidthLabelText" xml:space="preserve">
+    <data name="SettingsPage_WindowWidthLabelText" xml:space="preserve">
         <value>宽度</value>
     </data>
-    <data name="SettingsView_NetworkTitle" xml:space="preserve">
+    <data name="SettingsPage_NetworkTitle" xml:space="preserve">
         <value>网络</value>
     </data>
-    <data name="SettingsView_NetworkSubtitle" xml:space="preserve">
+    <data name="SettingsPage_NetworkSubtitle" xml:space="preserve">
         <value>网络设置</value>
     </data>
-    <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
+    <data name="SettingsPage_ProxyEnabledLabelText" xml:space="preserve">
         <value>网络代理</value>
     </data>
     <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>如不需要请留空</value>
     </data>
-    <data name="SettingsView_ProxyPasswordPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_ProxyPasswordPlaceholder" xml:space="preserve">
         <value>如不需要请留空</value>
     </data>
     <data name="AccountCreationMicrosoft_Title" xml:space="preserve">
@@ -552,13 +546,13 @@
     <data name="JavaHomeContainer_Prompt" xml:space="preserve">
         <value>使用内置或</value>
     </data>
-    <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
+    <data name="InstanceSetupPage_FilterBarPlaceholder" xml:space="preserve">
         <value>输入过滤字符串...</value>
     </data>
-    <data name="InstanceSetupView_FilterLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_FilterLabelText" xml:space="preserve">
         <value>条件</value>
     </data>
-    <data name="InstanceSetupView_TagFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_TagFilterText" xml:space="preserve">
         <value>标签</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -588,28 +582,28 @@
     <data name="ResourceKind_ShaderPack" xml:space="preserve">
         <value>着色器包</value>
     </data>
-    <data name="InstanceSetupView_SourceImportText" xml:space="preserve">
+    <data name="InstanceSetupPage_SourceImportText" xml:space="preserve">
         <value>导入</value>
     </data>
-    <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
+    <data name="InstanceSetupPage_SourceLocalText" xml:space="preserve">
         <value>本地</value>
     </data>
-    <data name="InstanceSetupView_SourceFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_SourceFilterText" xml:space="preserve">
         <value>来源</value>
     </data>
-    <data name="InstanceSetupView_TypeFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_TypeFilterText" xml:space="preserve">
         <value>类型</value>
     </data>
-    <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_ResultCountLabelText" xml:space="preserve">
         <value>结果</value>
     </data>
-    <data name="InstanceSetupView_BatchUpdateMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_BatchUpdateMenuText" xml:space="preserve">
         <value>批量升级</value>
     </data>
-    <data name="InstanceSetupView_GetMoreButtonText" xml:space="preserve">
+    <data name="InstanceSetupPage_GetMoreButtonText" xml:space="preserve">
         <value>获取更多</value>
     </data>
-    <data name="InstanceSetupView_ExportListMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListMenuText" xml:space="preserve">
         <value>导出列表</value>
     </data>
     <data name="SafeLock_Title" xml:space="preserve">
@@ -624,7 +618,7 @@
     <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
         <value>必需</value>
     </data>
-    <data name="MarketplaceSearchView_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="MarketplaceSearchPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
     <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
@@ -642,13 +636,13 @@
     <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
         <value>运行中</value>
     </data>
-    <data name="InstanceSetupView_ActiveMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ActiveMenuText" xml:space="preserve">
         <value>激活</value>
     </data>
-    <data name="InstanceSetupView_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
-    <data name="InstanceSetupView_RemoveMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
@@ -867,67 +861,67 @@
     <data name="JavaHomeContainer_RequestJavaPrompt" xml:space="preserve">
         <value>请选择 Java Home 中的可执行文件，例如 /bin/java 或 /bin/java.exe</value>
     </data>
-    <data name="NewInstanceView_RequestFileTitle" xml:space="preserve">
+    <data name="NewInstancePage_RequestFileTitle" xml:space="preserve">
         <value>从文件导入</value>
     </data>
-    <data name="NewInstanceView_RequestFilePrompt" xml:space="preserve">
+    <data name="NewInstancePage_RequestFilePrompt" xml:space="preserve">
         <value>选择一个包含整合包的压缩文件</value>
     </data>
-    <data name="NewInstanceView_ImportDangerNotificationTitle" xml:space="preserve">
+    <data name="NewInstancePage_ImportDangerNotificationTitle" xml:space="preserve">
         <value>导入失败</value>
     </data>
-    <data name="NewInstanceView_IconSavingDangerNotificationTitle" xml:space="preserve">
+    <data name="NewInstancePage_IconSavingDangerNotificationTitle" xml:space="preserve">
         <value>写入图标失败</value>
     </data>
-    <data name="AccountsView_AccountAddingDangerNotificationMessage" xml:space="preserve">
+    <data name="AccountsPage_AccountAddingDangerNotificationMessage" xml:space="preserve">
         <value>已存在相同 UUID 的账号</value>
     </data>
-    <data name="AccountsView_AccountAddingDangerNotificationTitle" xml:space="preserve">
+    <data name="AccountsPage_AccountAddingDangerNotificationTitle" xml:space="preserve">
         <value>账号添加失败</value>
     </data>
-    <data name="InstanceHomeView_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
         <value>账号验证失败</value>
     </data>
-    <data name="InstanceHomeView_DeployDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceHomePage_DeployDangerNotificationTitle" xml:space="preserve">
         <value>部署失败</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
         <value>账号不存在</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationMessage" xml:space="preserve">
+    <data name="InstanceHomePage_AccountNotFoundDangerNotificationMessage" xml:space="preserve">
         <value>未提供账号或被移除</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
+    <data name="InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
         <value>选择账号</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSavingDangerNotificationTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle" xml:space="preserve">
         <value>保存图标失败</value>
     </data>
-    <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestJavaPrompt" xml:space="preserve">
         <value>请选择 Java Home 中的可执行文件，例如 /bin/java 或 /bin/java.exe</value>
     </data>
-    <data name="InstancePropertiesView_RequestJavaTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestJavaTitle" xml:space="preserve">
         <value>选择 Java 可执行文件</value>
     </data>
-    <data name="InstancePropertiesView_UnlockingSuccessNotificationMessage" xml:space="preserve">
+    <data name="InstancePropertiesPage_UnlockingSuccessNotificationMessage" xml:space="preserve">
         <value>实例不再与任何整合包关联并可以随意编辑。</value>
     </data>
-    <data name="InstancePropertiesView_RequestThumbnailTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestThumbnailTitle" xml:space="preserve">
         <value>选择图标</value>
     </data>
-    <data name="InstancePropertiesView_RequestThumbnailPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestThumbnailPrompt" xml:space="preserve">
         <value>选择一个图像文件</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
         <value>设置实例图标</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationMessage" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage" xml:space="preserve">
         <value>选择的文件不是有效图像或无文件可用。</value>
     </data>
-    <data name="InstancePropertiesView_RequestNameTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestNameTitle" xml:space="preserve">
         <value>重命名实例</value>
     </data>
-    <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestNamePrompt" xml:space="preserve">
         <value>为实例设置一个新名称</value>
     </data>
     <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
@@ -936,7 +930,7 @@
     <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
         <value>批量升级包版本</value>
     </data>
-    <data name="InstanceSetupView_DependencyGraphMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>依赖关系</value>
     </data>
     <data name="Enum_Off" xml:space="preserve">
@@ -945,7 +939,7 @@
     <data name="Enum_On" xml:space="preserve">
         <value>开</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchOnText" xml:space="preserve">
+    <data name="InstancePropertiesPage_FastLaunchOnText" xml:space="preserve">
         <value>我很急啊</value>
     </data>
     <data name="Enum_Vanilla" xml:space="preserve">
@@ -981,9 +975,6 @@
     <data name="MainWindow_InstanceLaunchingSuccessNotificationMessage" xml:space="preserve">
         <value>实例正常退出</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
-        <value>查看日志</value>
-    </data>
     <data name="LaunchMode_Managed" xml:space="preserve">
         <value>托管</value>
     </data>
@@ -993,7 +984,7 @@
     <data name="LaunchMode_FireAndForget" xml:space="preserve">
         <value>抛弃</value>
     </data>
-    <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
+    <data name="SettingsPage_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>标题栏可见性</value>
     </data>
     <data name="DeployStage_BuildArtifact" xml:space="preserve">
@@ -1017,94 +1008,94 @@
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
         <value>固实文件...</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>批量更新包版本</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
         <value>检查版本...({0}/{1})</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
         <value>取消</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
         <value>批量更新包版本</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
         <value>{0} 个包存在新版本</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>查看</value>
     </data>
-    <data name="InstanceSetupView_ParsePurlDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ParsePurlDangerNotificationTitle" xml:space="preserve">
         <value>解析 purl 失败</value>
     </data>
-    <data name="InstanceSetupView_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
         <value>加载项目信息失败</value>
     </data>
-    <data name="InstanceSetupView_ImportListNoPackagesWarningNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage" xml:space="preserve">
         <value>文件中未找到任何包</value>
     </data>
-    <data name="InstanceSetupView_ImportListWarningNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListWarningNotificationTitle" xml:space="preserve">
         <value>导入包列表</value>
     </data>
-    <data name="InstanceSetupView_ImportListSuccessNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListSuccessNotificationMessage" xml:space="preserve">
         <value>已添加: {0}, 已更新: {1}, 失败: {2}</value>
     </data>
-    <data name="InstanceSetupView_ImportListSuccessNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListSuccessNotificationTitle" xml:space="preserve">
         <value>导入包列表完成</value>
     </data>
-    <data name="InstanceSetupView_ImportListDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListDangerNotificationTitle" xml:space="preserve">
         <value>导入包列表</value>
     </data>
-    <data name="InstanceSetupView_FetchingInformationDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_FetchingInformationDangerNotificationTitle" xml:space="preserve">
         <value>获取信息失败</value>
     </data>
-    <data name="InstanceSetupView_ExportListSuccessNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListSuccessNotificationMessage" xml:space="preserve">
         <value>已导出包列表到文件 {0}</value>
     </data>
-    <data name="InstanceSetupView_ExportListSuccessNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListSuccessNotificationTitle" xml:space="preserve">
         <value>导出包列表到文件</value>
     </data>
-    <data name="InstanceSetupView_ExportListDangerNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListDangerNotificationMessage" xml:space="preserve">
         <value>写入数据到文件 ({0}) 失败: {1}</value>
     </data>
-    <data name="InstanceSetupView_ExportListDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListDangerNotificationTitle" xml:space="preserve">
         <value>导出包列表到文件</value>
     </data>
-    <data name="InstanceSetupView_CheckUpdateDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_CheckUpdateDangerNotificationTitle" xml:space="preserve">
         <value>检查更新失败</value>
     </data>
-    <data name="InstanceSetupView_UpdateDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_UpdateDangerNotificationTitle" xml:space="preserve">
         <value>更新失败</value>
     </data>
-    <data name="InstanceSetupView_InstallVersionNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_InstallVersionNotificationMessage" xml:space="preserve">
         <value>{0}({1}) 已添加到安装队列</value>
     </data>
-    <data name="MarketplaceSearchView_ModpackInstallingNotificationMessage" xml:space="preserve">
+    <data name="MarketplaceSearchPage_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} 已添加到队列</value>
     </data>
-    <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
+    <data name="MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
         <value>获取项目信息失败</value>
     </data>
     <data name="ResourceKind_World" xml:space="preserve">
         <value>存档</value>
     </data>
-    <data name="InstanceSetupView_StatusFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_StatusFilterText" xml:space="preserve">
         <value>状态</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailLabelText" xml:space="preserve">
         <value>图标</value>
     </data>
-    <data name="InstancePropertiesView_DebugTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DebugTitle" xml:space="preserve">
         <value>调试</value>
     </data>
-    <data name="InstancePropertiesView_CheckIntegrityButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_CheckIntegrityButtonText" xml:space="preserve">
         <value>进行一次完整构建</value>
     </data>
-    <data name="InstancePropertiesView_DebugSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DebugSubtitle" xml:space="preserve">
         <value>试试用这些选项解决问题</value>
     </data>
-    <data name="InstancePropertiesView_CheckIntegrityLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_CheckIntegrityLabelText" xml:space="preserve">
         <value>检查完整性</value>
     </data>
     <data name="InstancePackageDependencyButton_RequiredTagText" xml:space="preserve">
@@ -1125,7 +1116,7 @@
     <data name="InstancePackageModal_BasicsTabText" xml:space="preserve">
         <value>基本</value>
     </data>
-    <data name="SettingsView_AccentColorLabelText" xml:space="preserve">
+    <data name="SettingsPage_AccentColorLabelText" xml:space="preserve">
         <value>强调色</value>
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
@@ -1182,55 +1173,55 @@
     <data name="Enum_Hour" xml:space="preserve">
         <value>时</value>
     </data>
-    <data name="SettingsView_CornerStyleLabelText" xml:space="preserve">
+    <data name="SettingsPage_CornerStyleLabelText" xml:space="preserve">
         <value>圆角</value>
     </data>
-    <data name="InstanceView_KeyNotFoundExceptionMessage" xml:space="preserve">
+    <data name="InstancePage_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>'{0}' 指向的实例不存在或未准备完</value>
     </data>
-    <data name="SettingsView_MaintenanceTitle" xml:space="preserve">
+    <data name="SettingsPage_MaintenanceTitle" xml:space="preserve">
         <value>维护</value>
     </data>
-    <data name="SettingsView_MaintenanceSubtitle" xml:space="preserve">
+    <data name="SettingsPage_MaintenanceSubtitle" xml:space="preserve">
         <value>检查更新、清理缓存之类的杂七杂八</value>
     </data>
-    <data name="SettingsView_StorageManagementButtonText" xml:space="preserve">
+    <data name="SettingsPage_StorageManagementButtonText" xml:space="preserve">
         <value>管理</value>
     </data>
-    <data name="SettingsView_StorageManagementLabelText" xml:space="preserve">
+    <data name="SettingsPage_StorageManagementLabelText" xml:space="preserve">
         <value>储存管理</value>
     </data>
-    <data name="SettingsView_VersionLabelText" xml:space="preserve">
+    <data name="SettingsPage_VersionLabelText" xml:space="preserve">
         <value>版本</value>
     </data>
-    <data name="SettingsView_UpdatesViewButtonText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesViewButtonText" xml:space="preserve">
         <value>查看更新</value>
     </data>
-    <data name="SettingsView_UpdatesCheckButtonText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesCheckButtonText" xml:space="preserve">
         <value>检查更新</value>
     </data>
-    <data name="SettingsView_UpdatesUnavailableLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesUnavailableLabelText" xml:space="preserve">
         <value>更新不可用</value>
     </data>
-    <data name="SettingsView_UpdatesNotFoundLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesNotFoundLabelText" xml:space="preserve">
         <value>已是最新版</value>
     </data>
-    <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesFoundLabelText" xml:space="preserve">
         <value>存在新版本</value>
     </data>
-    <data name="SettingsView_UpdateSourceGithubText" xml:space="preserve">
+    <data name="SettingsPage_UpdateSourceGithubText" xml:space="preserve">
         <value>GitHub</value>
     </data>
-    <data name="SettingsView_UpdateSourceMirrorChyanText" xml:space="preserve">
+    <data name="SettingsPage_UpdateSourceMirrorChyanText" xml:space="preserve">
         <value>Mirror酱</value>
     </data>
-    <data name="SettingsView_MirrorChyanCdkLabelText" xml:space="preserve">
+    <data name="SettingsPage_MirrorChyanCdkLabelText" xml:space="preserve">
         <value>Mirror酱 CDK</value>
     </data>
-    <data name="SettingsView_MirrorChyanCdkPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_MirrorChyanCdkPlaceholder" xml:space="preserve">
         <value>（可选）在此输入你的 CDK</value>
     </data>
-    <data name="SettingsView_MirrorChyanCdkHint" xml:space="preserve">
+    <data name="SettingsPage_MirrorChyanCdkHint" xml:space="preserve">
         <value>获取 CDK 以支持开发：</value>
     </data>
     <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
@@ -1239,7 +1230,7 @@
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>共计</value>
     </data>
-    <data name="InstanceSetupView_RefreshingLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_RefreshingLabelText" xml:space="preserve">
         <value>刷新中...</value>
     </data>
     <data name="AssetImporterDialog_Title" xml:space="preserve">
@@ -1269,7 +1260,7 @@
     <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
         <value>识别文件类型...</value>
     </data>
-    <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_QuickConnectLabelText" xml:space="preserve">
         <value>自动连接到服务器</value>
     </data>
     <data name="AssetKind_Mod" xml:space="preserve">
@@ -1290,118 +1281,118 @@
     <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
         <value>导出整合包</value>
     </data>
-    <data name="InstanceActivitiesView_TotalHoursLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_TotalHoursLabelText" xml:space="preserve">
         <value>总小时</value>
     </data>
-    <data name="InstanceActivitiesView_SessionCountLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_SessionCountLabelText" xml:space="preserve">
         <value>会话数</value>
     </data>
-    <data name="InstanceActivitiesView_ActiveDaysLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ActiveDaysLabelText" xml:space="preserve">
         <value>活跃日</value>
     </data>
-    <data name="InstanceActivitiesView_TotalHoursRankLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_TotalHoursRankLabelText" xml:space="preserve">
         <value>总小时排名</value>
     </data>
-    <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ChangelogLabelText" xml:space="preserve">
         <value>修改记录</value>
     </data>
     <data name="AssetKind_DataPack" xml:space="preserve">
         <value>数据包</value>
     </data>
-    <data name="InstanceFilesView_FilterLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_FilterLabelText" xml:space="preserve">
         <value>条件</value>
     </data>
-    <data name="InstanceFilesView_LoaderFilterText" xml:space="preserve">
+    <data name="InstanceFilesPage_LoaderFilterText" xml:space="preserve">
         <value>加载器</value>
     </data>
-    <data name="InstanceFilesView_SourceFilterText" xml:space="preserve">
+    <data name="InstanceFilesPage_SourceFilterText" xml:space="preserve">
         <value>来源</value>
     </data>
-    <data name="InstanceFilesView_StatusFilterText" xml:space="preserve">
+    <data name="InstanceFilesPage_StatusFilterText" xml:space="preserve">
         <value>状态</value>
     </data>
-    <data name="InstanceFilesView_SourceLocalText" xml:space="preserve">
+    <data name="InstanceFilesPage_SourceLocalText" xml:space="preserve">
         <value>本地</value>
     </data>
-    <data name="InstanceFilesView_SourceImportText" xml:space="preserve">
+    <data name="InstanceFilesPage_SourceImportText" xml:space="preserve">
         <value>导入</value>
     </data>
-    <data name="InstanceFilesView_ModInfoBarTitle" xml:space="preserve">
+    <data name="InstanceFilesPage_ModInfoBarTitle" xml:space="preserve">
         <value>本页面只展示实体模组文件</value>
     </data>
-    <data name="InstanceFilesView_ModInfoBarText" xml:space="preserve">
+    <data name="InstanceFilesPage_ModInfoBarText" xml:space="preserve">
         <value>外部包引用需要在其他页面查看并管理。</value>
     </data>
-    <data name="InstanceFilesView_AssetFileNameLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetFileNameLabelText" xml:space="preserve">
         <value>文件名：</value>
     </data>
-    <data name="InstanceFilesView_AssetModIdLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetModIdLabelText" xml:space="preserve">
         <value>Mod Id：</value>
     </data>
-    <data name="InstanceFilesView_AssetLicenseLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetLicenseLabelText" xml:space="preserve">
         <value>许可：</value>
     </data>
-    <data name="InstanceFilesView_AssetFileSizeLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetFileSizeLabelText" xml:space="preserve">
         <value>文件大小：</value>
     </data>
-    <data name="InstanceFilesView_AssetLastModifiedLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetLastModifiedLabelText" xml:space="preserve">
         <value>最后修改：</value>
     </data>
-    <data name="InstanceFilesView_AssetStatusLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetStatusLabelText" xml:space="preserve">
         <value>状态：</value>
     </data>
-    <data name="InstanceFilesView_AssetVisitWebsiteButtonText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetVisitWebsiteButtonText" xml:space="preserve">
         <value>访问网站</value>
     </data>
-    <data name="InstanceFilesView_DetailsLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_DetailsLabelText" xml:space="preserve">
         <value>细节</value>
     </data>
-    <data name="InstanceFilesView_AssetPackFormatLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetPackFormatLabelText" xml:space="preserve">
         <value>包格式：</value>
     </data>
-    <data name="InstanceFilesView_AssetEmptyPrompt" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetEmptyPrompt" xml:space="preserve">
         <value>选择一个项目以查看详情</value>
     </data>
-    <data name="InstanceFilesView_DataPacksLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_DataPacksLabelText" xml:space="preserve">
         <value>数据包</value>
     </data>
-    <data name="InstanceFilesView_PlayersLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_PlayersLabelText" xml:space="preserve">
         <value>玩家</value>
     </data>
-    <data name="InstanceFilesView_ServerAddressLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerAddressLabelText" xml:space="preserve">
         <value>地址：</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackPreferenceLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackPreferenceLabelText" xml:space="preserve">
         <value>服务器资源包：</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackAcceptText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackAcceptText" xml:space="preserve">
         <value>接受</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackRejectText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackRejectText" xml:space="preserve">
         <value>拒绝</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackPromptText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackPromptText" xml:space="preserve">
         <value>每次询问</value>
     </data>
-    <data name="InstanceFilesView_ServerLiveStatusLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerLiveStatusLabelText" xml:space="preserve">
         <value>实时状态</value>
     </data>
-    <data name="InstanceFilesView_ServerCheckingText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerCheckingText" xml:space="preserve">
         <value>正在检查服务器...</value>
     </data>
-    <data name="InstanceFilesView_ServerMotdLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerMotdLabelText" xml:space="preserve">
         <value>消息：</value>
     </data>
-    <data name="InstanceFilesView_ServerVersionLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerVersionLabelText" xml:space="preserve">
         <value>版本：</value>
     </data>
-    <data name="InstanceFilesView_ServerPlayersLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerPlayersLabelText" xml:space="preserve">
         <value>玩家：</value>
     </data>
-    <data name="InstanceFilesView_ServerLatencyLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerLatencyLabelText" xml:space="preserve">
         <value>延迟：</value>
     </data>
-    <data name="InstanceFilesView_ServerUnavailableText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerUnavailableText" xml:space="preserve">
         <value>服务器不可用</value>
     </data>
     <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
@@ -1452,7 +1443,7 @@
     <data name="ModpackExporterDialog_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>包含 JVM 附加参数设置</value>
     </data>
-    <data name="InstanceFilesView_DescriptionLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_DescriptionLabelText" xml:space="preserve">
         <value>描述</value>
     </data>
     <data name="Account_Microsoft" xml:space="preserve">
@@ -1464,25 +1455,25 @@
     <data name="Account_Trial" xml:space="preserve">
         <value>试用</value>
     </data>
-    <data name="LandingView_RecentPlayButtonText" xml:space="preserve">
+    <data name="LandingPage_RecentPlayButtonText" xml:space="preserve">
         <value>开始</value>
     </data>
-    <data name="LandingView_RecentReleasesLabelText" xml:space="preserve">
+    <data name="LandingPage_RecentReleasesLabelText" xml:space="preserve">
         <value>近期发版</value>
     </data>
-    <data name="LandingView_StatisticsActiveDaysLabelText" xml:space="preserve">
+    <data name="LandingPage_StatisticsActiveDaysLabelText" xml:space="preserve">
         <value>活跃日</value>
     </data>
-    <data name="LandingView_StatisticsSessionsLabelText" xml:space="preserve">
+    <data name="LandingPage_StatisticsSessionsLabelText" xml:space="preserve">
         <value>会话次数</value>
     </data>
-    <data name="LandingView_StatisticsHoursLabelText" xml:space="preserve">
+    <data name="LandingPage_StatisticsHoursLabelText" xml:space="preserve">
         <value>总游玩时数</value>
     </data>
-    <data name="LandingView_OverviewAccountsLabelText" xml:space="preserve">
+    <data name="LandingPage_OverviewAccountsLabelText" xml:space="preserve">
         <value>账号</value>
     </data>
-    <data name="LandingView_OverviewInstancesLabelText" xml:space="preserve">
+    <data name="LandingPage_OverviewInstancesLabelText" xml:space="preserve">
         <value>实例</value>
     </data>
     <data name="LoaderEditorDialog_VersionLabelText" xml:space="preserve">
@@ -1500,22 +1491,22 @@
     <data name="LoaderPickerDialog_Title" xml:space="preserve">
         <value>挑选一个加载器</value>
     </data>
-    <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
+    <data name="SettingsPage_RestartRequiredLabelText" xml:space="preserve">
         <value>需要重启生效。</value>
     </data>
-    <data name="InstanceStorageView_OpenFolderButtonText" xml:space="preserve">
+    <data name="InstanceStoragePage_OpenFolderButtonText" xml:space="preserve">
         <value>打开目录</value>
     </data>
-    <data name="InstanceStorageView_GotoExplorerButtonText" xml:space="preserve">
+    <data name="InstanceStoragePage_GotoExplorerButtonText" xml:space="preserve">
         <value>前往资源浏览器</value>
     </data>
     <data name="AssetKind_ShaderPack" xml:space="preserve">
         <value>着色器包</value>
     </data>
-    <data name="InstanceStorageView_BreakdownLabelText" xml:space="preserve">
+    <data name="InstanceStoragePage_BreakdownLabelText" xml:space="preserve">
         <value>拆解</value>
     </data>
-    <data name="InstanceStorageView_AdditionalLabelText" xml:space="preserve">
+    <data name="InstanceStoragePage_AdditionalLabelText" xml:space="preserve">
         <value>其他</value>
     </data>
     <data name="AssetKind_Log" xml:space="preserve">
@@ -1527,7 +1518,7 @@
     <data name="AssetKind_Config" xml:space="preserve">
         <value>配置设定</value>
     </data>
-    <data name="InstanceStorageView_OtherLabelText" xml:space="preserve">
+    <data name="InstanceStoragePage_OtherLabelText" xml:space="preserve">
         <value>杂项</value>
     </data>
     <data name="GameCrashReportModal_ExitCodeLabelText" xml:space="preserve">
@@ -1704,16 +1695,16 @@
     <data name="ProxySettingsDialog_RestartRequiredLabelText" xml:space="preserve">
         <value>代理设置将在重启应用程序后生效</value>
     </data>
-    <data name="SettingsView_ProxyCurrentStatusLabelText" xml:space="preserve">
+    <data name="SettingsPage_ProxyCurrentStatusLabelText" xml:space="preserve">
         <value>当前状态</value>
     </data>
-    <data name="SettingsView_ProxyStatusAutoText" xml:space="preserve">
+    <data name="SettingsPage_ProxyStatusAutoText" xml:space="preserve">
         <value>自动（系统代理）</value>
     </data>
-    <data name="SettingsView_ProxyStatusDisabledText" xml:space="preserve">
+    <data name="SettingsPage_ProxyStatusDisabledText" xml:space="preserve">
         <value>禁用（直接连接）</value>
     </data>
-    <data name="SettingsView_ProxyStatusManualText" xml:space="preserve">
+    <data name="SettingsPage_ProxyStatusManualText" xml:space="preserve">
         <value>手动: {0}://{1}:{2}</value>
     </data>
     <data name="ProxySettingsDialog_TestSuccessLabelText" xml:space="preserve">
@@ -1725,88 +1716,88 @@
     <data name="MainWindow_InstanceLaunchingDangerNotificationMessage" xml:space="preserve">
         <value>{0} 非正常退出。点击链接查看具体信息。</value>
     </data>
-    <data name="InstanceActivitiesView_CrashCountLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_CrashCountLabelText" xml:space="preserve">
         <value>崩溃次数</value>
     </data>
-    <data name="InstanceActivitiesView_HealthTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_HealthTabText" xml:space="preserve">
         <value>健康度</value>
     </data>
-    <data name="InstanceActivitiesView_PlaytimeTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_PlaytimeTabText" xml:space="preserve">
         <value>游玩时间</value>
     </data>
-    <data name="InstanceActivitiesView_SuccessRateLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_SuccessRateLabelText" xml:space="preserve">
         <value>成功率</value>
     </data>
-    <data name="InstanceActivitiesView_StatisticsTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_StatisticsTabText" xml:space="preserve">
         <value>统计</value>
     </data>
-    <data name="InstanceActivitiesView_TrendsTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_TrendsTabText" xml:space="preserve">
         <value>趋势</value>
     </data>
-    <data name="InstanceActivitiesView_AverageSessionLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_AverageSessionLabelText" xml:space="preserve">
         <value>平均时长</value>
     </data>
-    <data name="InstanceActivitiesView_LongestSessionLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_LongestSessionLabelText" xml:space="preserve">
         <value>最长游戏</value>
     </data>
-    <data name="InstanceActivitiesView_FirstPlayedLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_FirstPlayedLabelText" xml:space="preserve">
         <value>首次游玩</value>
     </data>
-    <data name="InstanceActivitiesView_LastPlayedLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_LastPlayedLabelText" xml:space="preserve">
         <value>最后游玩</value>
     </data>
-    <data name="InstanceActivitiesView_PlaytimePercentageLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_PlaytimePercentageLabelText" xml:space="preserve">
         <value>时间占比</value>
     </data>
-    <data name="InstanceActivitiesView_ThisWeekLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ThisWeekLabelText" xml:space="preserve">
         <value>本周</value>
     </data>
-    <data name="InstanceActivitiesView_LastWeekLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_LastWeekLabelText" xml:space="preserve">
         <value>上周</value>
     </data>
-    <data name="InstanceActivitiesView_DataManagementTitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_DataManagementTitle" xml:space="preserve">
         <value>数据管理</value>
     </data>
-    <data name="InstanceActivitiesView_DataManagementSubtitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_DataManagementSubtitle" xml:space="preserve">
         <value>管理此实例的统计数据和操作记录</value>
     </data>
-    <data name="InstanceActivitiesView_ClearStatisticsButtonText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearStatisticsButtonText" xml:space="preserve">
         <value>清除统计</value>
     </data>
-    <data name="InstanceActivitiesView_ClearRecordsButtonText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearRecordsButtonText" xml:space="preserve">
         <value>清除记录</value>
     </data>
-    <data name="InstanceActivitiesView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationTitle" xml:space="preserve">
         <value>清除统计</value>
     </data>
-    <data name="InstanceActivitiesView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationMessage" xml:space="preserve">
         <value>确定要清除此实例的所有统计数据吗？此操作不可撤销。</value>
     </data>
-    <data name="InstanceActivitiesView_ClearRecordsConfirmationTitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearRecordsConfirmationTitle" xml:space="preserve">
         <value>清除记录</value>
     </data>
-    <data name="InstanceActivitiesView_ClearRecordsConfirmationMessage" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearRecordsConfirmationMessage" xml:space="preserve">
         <value>确定要清除此实例的所有操作记录吗？此操作不可撤销。</value>
     </data>
-    <data name="SettingsView_DataManagementLabelText" xml:space="preserve">
+    <data name="SettingsPage_DataManagementLabelText" xml:space="preserve">
         <value>数据管理</value>
     </data>
-    <data name="SettingsView_ClearStatisticsButtonText" xml:space="preserve">
+    <data name="SettingsPage_ClearStatisticsButtonText" xml:space="preserve">
         <value>清除统计</value>
     </data>
-    <data name="SettingsView_ClearRecordsButtonText" xml:space="preserve">
+    <data name="SettingsPage_ClearRecordsButtonText" xml:space="preserve">
         <value>清除记录</value>
     </data>
-    <data name="SettingsView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+    <data name="SettingsPage_ClearStatisticsConfirmationTitle" xml:space="preserve">
         <value>清除统计</value>
     </data>
-    <data name="SettingsView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+    <data name="SettingsPage_ClearStatisticsConfirmationMessage" xml:space="preserve">
         <value>确定要清除所有实例的游玩统计数据吗？此操作不可撤销。</value>
     </data>
-    <data name="SettingsView_ClearRecordsConfirmationTitle" xml:space="preserve">
+    <data name="SettingsPage_ClearRecordsConfirmationTitle" xml:space="preserve">
         <value>清除记录</value>
     </data>
-    <data name="SettingsView_ClearRecordsConfirmationMessage" xml:space="preserve">
+    <data name="SettingsPage_ClearRecordsConfirmationMessage" xml:space="preserve">
         <value>确定要清除所有实例的操作记录吗？此操作不可撤销。</value>
     </data>
     <data name="Shared_Copy" xml:space="preserve">
@@ -1818,10 +1809,10 @@
     <data name="Shared_Paste" xml:space="preserve">
         <value>粘贴</value>
     </data>
-    <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdateSourceLabelText" xml:space="preserve">
         <value>更新源</value>
     </data>
-    <data name="SettingsView_UpdateAutoCheckLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdateAutoCheckLabelText" xml:space="preserve">
         <value>启动时自动检查更新</value>
     </data>
     <!-- OOBE Modal -->
@@ -2014,46 +2005,46 @@
         <value>继续即表示您已阅读并同意上述隐私条款。</value>
     </data>
     <!-- Maintenance Storage View -->
-    <data name="MaintenanceStorageView_Title" xml:space="preserve">
+    <data name="MaintenanceStoragePage_Title" xml:space="preserve">
         <value>储存维护</value>
     </data>
-    <data name="MaintenanceStorageView_TotalLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_TotalLabelText" xml:space="preserve">
         <value>总计</value>
     </data>
-    <data name="MaintenanceStorageView_CacheLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_CacheLabelText" xml:space="preserve">
         <value>缓存</value>
     </data>
-    <data name="MaintenanceStorageView_InstancesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_InstancesLabelText" xml:space="preserve">
         <value>实例</value>
     </data>
-    <data name="MaintenanceStorageView_CacheTitle" xml:space="preserve">
+    <data name="MaintenanceStoragePage_CacheTitle" xml:space="preserve">
         <value>缓存</value>
     </data>
-    <data name="MaintenanceStorageView_PurgeButtonText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_PurgeButtonText" xml:space="preserve">
         <value>清除</value>
     </data>
-    <data name="MaintenanceStorageView_PackagesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_PackagesLabelText" xml:space="preserve">
         <value>包</value>
     </data>
-    <data name="MaintenanceStorageView_LibrariesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_LibrariesLabelText" xml:space="preserve">
         <value>库</value>
     </data>
-    <data name="MaintenanceStorageView_AssetsLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_AssetsLabelText" xml:space="preserve">
         <value>资产</value>
     </data>
-    <data name="MaintenanceStorageView_RuntimesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_RuntimesLabelText" xml:space="preserve">
         <value>运行时</value>
     </data>
-    <data name="MaintenanceStorageView_InstancesTitle" xml:space="preserve">
+    <data name="MaintenanceStoragePage_InstancesTitle" xml:space="preserve">
         <value>实例</value>
     </data>
-    <data name="InstancePropertiesView_QuickConnectPlaceholder" xml:space="preserve">
+    <data name="InstancePropertiesPage_QuickConnectPlaceholder" xml:space="preserve">
         <value>（未设置则禁用）</value>
     </data>
-    <data name="InstancePropertiesView_JavaHomePlaceholder" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaHomePlaceholder" xml:space="preserve">
         <value>（未设置则自动选择）</value>
     </data>
-    <data name="InstancePropertiesView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>（空）</value>
     </data>
     <data name="GameCrashReportModal_InstalledMemoryLabelText" xml:space="preserve">
@@ -2065,58 +2056,58 @@
     <data name="GameCrashReportModal_Title" xml:space="preserve">
         <value>游戏崩溃报告</value>
     </data>
-    <data name="SettingsView_Java25LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java25LabelText" xml:space="preserve">
         <value>Java 25 主目录</value>
     </data>
     <data name="Error_BadNetwork" xml:space="preserve">
         <value>网络错误</value>
     </data>
-    <data name="InstanceSetupView_ImportListMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListMenuText" xml:space="preserve">
         <value>导入列表</value>
     </data>
-    <data name="MarketplaceSearchView_Message" xml:space="preserve">
+    <data name="MarketplaceSearchPage_Message" xml:space="preserve">
         <value>查看并下载来自各个资源提供方的整合包。如果需要更精确的搜索过滤选项，请在对应资源网站上完成整合包查找，然后在这里输入名字即可安装。</value>
     </data>
-    <data name="LandingView_Title" xml:space="preserve">
+    <data name="LandingPage_Title" xml:space="preserve">
         <value>欢迎回来</value>
     </data>
-    <data name="LandingView_Subtitle" xml:space="preserve">
+    <data name="LandingPage_Subtitle" xml:space="preserve">
         <value>今天玩点什么呢</value>
     </data>
-    <data name="LandingView_FeaturedModpacksLabelText" xml:space="preserve">
+    <data name="LandingPage_FeaturedModpacksLabelText" xml:space="preserve">
         <value>热门整合包</value>
     </data>
-    <data name="LandingView_MoreButtonText" xml:space="preserve">
+    <data name="LandingPage_MoreButtonText" xml:space="preserve">
         <value>更多</value>
     </data>
-    <data name="LandingView_RandomPlayTitle" xml:space="preserve">
+    <data name="LandingPage_RandomPlayTitle" xml:space="preserve">
         <value>不知道玩什么？</value>
     </data>
-    <data name="LandingView_RandomPlaySubtitle" xml:space="preserve">
+    <data name="LandingPage_RandomPlaySubtitle" xml:space="preserve">
         <value>随机挑选一个！</value>
     </data>
-    <data name="LandingView_RandomPlayButtonText" xml:space="preserve">
+    <data name="LandingPage_RandomPlayButtonText" xml:space="preserve">
         <value>手气不错</value>
     </data>
-    <data name="LandingView_FeaturedModpacksErrorText" xml:space="preserve">
+    <data name="LandingPage_FeaturedModpacksErrorText" xml:space="preserve">
         <value>加载热门整合包失败</value>
     </data>
-    <data name="LandingView_MinecraftNewsErrorText" xml:space="preserve">
+    <data name="LandingPage_MinecraftNewsErrorText" xml:space="preserve">
         <value>加载 Minecraft 新闻失败</value>
     </data>
-    <data name="LandingView_RetryButtonText" xml:space="preserve">
+    <data name="LandingPage_RetryButtonText" xml:space="preserve">
         <value>重试</value>
     </data>
-    <data name="InstanceSetupView_ProjectIdMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ProjectIdMenuText" xml:space="preserve">
         <value>项目 Id</value>
     </data>
-    <data name="InstanceSetupView_VersionIdMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_VersionIdMenuText" xml:space="preserve">
         <value>版本 Id</value>
     </data>
-    <data name="InstanceSetupView_ProjectNameMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ProjectNameMenuText" xml:space="preserve">
         <value>项目名</value>
     </data>
-    <data name="InstanceSetupView_VersionNameMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_VersionNameMenuText" xml:space="preserve">
         <value>版本名</value>
     </data>
     <data name="InstancePackageModal_HistoryTabText" xml:space="preserve">
@@ -2143,7 +2134,7 @@
     <data name="InstancePackageModal_PastTagText" xml:space="preserve">
         <value>过去</value>
     </data>
-    <data name="LandingView_NoRecentPlayLabelText" xml:space="preserve">
+    <data name="LandingPage_NoRecentPlayLabelText" xml:space="preserve">
         <value>暂无最近游戏</value>
     </data>
     <data name="ExhibitPackageModal_HistoryTabText" xml:space="preserve">
@@ -2242,7 +2233,7 @@
     <data name="ProfileRuleSelectorModal_ChildrenEditButtonText" xml:space="preserve">
         <value>编辑</value>
     </data>
-    <data name="InstanceSetupView_RuleCountLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_RuleCountLabelText" xml:space="preserve">
         <value>部署规则条数：</value>
     </data>
     <data name="Shared_Yes" xml:space="preserve">
@@ -2284,7 +2275,7 @@
     <data name="ModpackExporterDialog_IncludingTagsLabelText" xml:space="preserve">
         <value>保留包的标签</value>
     </data>
-    <data name="InstanceStorageView_OpenWikiButtonText" xml:space="preserve">
+    <data name="InstanceStoragePage_OpenWikiButtonText" xml:space="preserve">
         <value>标签 import/persist 代表什么？</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
@@ -2302,49 +2293,49 @@
     <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
         <value>暂无标签</value>
     </data>
-    <data name="InstanceDashboardView_LiveLogLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_LiveLogLabelText" xml:space="preserve">
         <value>实时日志</value>
     </data>
-    <data name="InstanceDashboardView_RunningLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_RunningLabelText" xml:space="preserve">
         <value>运行中</value>
     </data>
-    <data name="InstanceDashboardView_DeployingLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_DeployingLabelText" xml:space="preserve">
         <value>部署中</value>
     </data>
-    <data name="InstanceDashboardView_UpdatingLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_UpdatingLabelText" xml:space="preserve">
         <value>更新中</value>
     </data>
-    <data name="InstanceDashboardView_IdleLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_IdleLabelText" xml:space="preserve">
         <value>空闲</value>
     </data>
-    <data name="InstanceDashboardView_SessionCountLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_SessionCountLabelText" xml:space="preserve">
         <value>游戏次数</value>
     </data>
-    <data name="InstanceDashboardView_LogsButtonText" xml:space="preserve">
+    <data name="InstanceDashboardPage_LogsButtonText" xml:space="preserve">
         <value>日志</value>
     </data>
-    <data name="InstanceDashboardView_CrashCountLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_CrashCountLabelText" xml:space="preserve">
         <value>崩溃次数</value>
     </data>
-    <data name="InstanceDashboardView_CrashReportsButtonText" xml:space="preserve">
+    <data name="InstanceDashboardPage_CrashReportsButtonText" xml:space="preserve">
         <value>崩溃报告</value>
     </data>
-    <data name="InstanceDashboardView_NoDataLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_NoDataLabelText" xml:space="preserve">
         <value>暂无数据</value>
     </data>
-    <data name="InstanceDashboardView_SuccessRateLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_SuccessRateLabelText" xml:space="preserve">
         <value>运行成功率</value>
     </data>
-    <data name="InstanceDashboardView_CpuUsageLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_CpuUsageLabelText" xml:space="preserve">
         <value>CPU 占用</value>
     </data>
-    <data name="InstanceDashboardView_MemoryUsageLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_MemoryUsageLabelText" xml:space="preserve">
         <value>内存使用</value>
     </data>
-    <data name="InstanceDashboardView_UptimeLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_UptimeLabelText" xml:space="preserve">
         <value>运行时间</value>
     </data>
-    <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
+    <data name="InstanceDashboardPage_SearchPlaceholder" xml:space="preserve">
         <value>搜索日志内容...</value>
     </data>
     <data name="NotificationSidebar_NotificationsLabelText" xml:space="preserve">
@@ -2379,5 +2370,98 @@
     </data>
     <data name="ProfileRuleModal_ResourcePackMenuText" xml:space="preserve">
         <value>资源包</value>
+    </data>
+  <data name="InstanceWorkspacePage_LockedInfoBarText" xml:space="preserve">
+    <value>该实例导入自整合包，你将无法在整合包初始文件上应用修改。</value>
+  </data>
+  <data name="InstanceWorkspacePage_ChangesTabText" xml:space="preserve">
+    <value>变更</value>
+  </data>
+  <data name="InstanceWorkspacePage_RefreshButtonText" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="InstanceWorkspacePage_SearchPlaceholder" xml:space="preserve">
+    <value>搜索文件路径...</value>
+  </data>
+  <data name="InstanceWorkspacePage_SameTagText" xml:space="preserve">
+    <value>无变化</value>
+  </data>
+  <data name="InstanceWorkspacePage_OutdatedTagText" xml:space="preserve">
+    <value>已过时</value>
+  </data>
+  <data name="InstanceWorkspacePage_OutdatedTagToolTip" xml:space="preserve">
+    <value>该文件的初始版本发生变更，通常是由整合包更新引起。</value>
+  </data>
+  <data name="InstanceWorkspacePage_UpdatedTagText" xml:space="preserve">
+    <value>已更新</value>
+  </data>
+  <data name="InstanceWorkspacePage_UpdatedTagToolTip" xml:space="preserve">
+    <value>该文件被客户端所修改。</value>
+  </data>
+  <data name="InstanceWorkspacePage_DeletedTagText" xml:space="preserve">
+    <value>已删除</value>
+  </data>
+  <data name="InstanceWorkspacePage_DeletedTagToolTip" xml:space="preserve">
+    <value>该文件的初始版本被移除，通常是由整合包更新引起。</value>
+  </data>
+  <data name="InstanceWorkspacePage_QuickInfoTitle" xml:space="preserve">
+    <value>快速信息</value>
+  </data>
+  <data name="InstanceWorkspacePage_FileTypeLabelText" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="InstanceWorkspacePage_LastModifiedLabelText" xml:space="preserve">
+    <value>最后修改</value>
+  </data>
+  <data name="InstanceWorkspacePage_FileSizeLabelText" xml:space="preserve">
+    <value>文件大小</value>
+  </data>
+  <data name="InstanceWorkspacePage_SuggestedActionsTitle" xml:space="preserve">
+    <value>建议操作</value>
+  </data>
+  <data name="InstanceWorkspacePage_ViewDiffButtonText" xml:space="preserve">
+    <value>查看差异</value>
+  </data>
+  <data name="InstanceWorkspacePage_ApplyButtonText" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="InstanceWorkspacePage_DiscardButtonText" xml:space="preserve">
+    <value>放弃</value>
+  </data>
+  <data name="InstanceWorkspacePage_OverwriteButtonText" xml:space="preserve">
+    <value>覆盖</value>
+  </data>
+  <data name="InstanceWorkspacePage_UpdateButtonText" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="InstanceWorkspacePage_OpenLocationButtonText" xml:space="preserve">
+    <value>打开位置</value>
+  </data>
+  <data name="InstanceWorkspacePage_CopyPathButtonText" xml:space="preserve">
+    <value>复制路径</value>
+  </data>
+  <data name="InstanceWorkspacePage_SelectFileTitle" xml:space="preserve">
+    <value>选择一个文件</value>
+  </data>
+  <data name="InstanceWorkspacePage_SelectFilePrompt" xml:space="preserve">
+    <value>右侧会显示文件信息和可用操作。</value>
+  </data>
+  <data name="WorkspaceDiffModal_DifferentTitle" xml:space="preserve">
+    <value>存在差异</value>
+  </data>
+  <data name="WorkspaceDiffModal_ContentBasedPrompt" xml:space="preserve">
+    <value>基于内容的判断</value>
+  </data>
+  <data name="WorkspaceDiffModal_IdenticalTitle" xml:space="preserve">
+    <value>完全相同</value>
+  </data>
+    <data name="WorkspaceDiffModal_LineCountSuffix" xml:space="preserve">
+        <value>行</value>
+    </data>
+    <data name="WorkspaceDiffModal_LiveTagText" xml:space="preserve">
+        <value>Live</value>
+    </data>
+    <data name="WorkspaceDiffModal_ImportTagText" xml:space="preserve">
+        <value>Import</value>
     </data>
 </root>

@@ -42,430 +42,424 @@
     <data name="MainWindow_AccountButtonText" xml:space="preserve">
         <value>Accounts</value>
     </data>
-    <data name="AccountsView_AddAccountButtonText" xml:space="preserve">
+    <data name="AccountsPage_AddAccountButtonText" xml:space="preserve">
         <value>Add Account</value>
     </data>
-    <data name="AccountsView_Title" xml:space="preserve">
+    <data name="AccountsPage_Title" xml:space="preserve">
         <value>Accounts</value>
     </data>
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>No Entries</value>
     </data>
-    <data name="AccountsView_MarkAsDefaultMenuText" xml:space="preserve">
+    <data name="AccountsPage_MarkAsDefaultMenuText" xml:space="preserve">
         <value>Mark as Default</value>
     </data>
-    <data name="AccountsView_RemoveMenuText" xml:space="preserve">
+    <data name="AccountsPage_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
-    <data name="ExceptionView_Title" xml:space="preserve">
+    <data name="ExceptionPage_Title" xml:space="preserve">
         <value>Died, but not dead...</value>
     </data>
-    <data name="ExceptionView_Subtitle" xml:space="preserve">
+    <data name="ExceptionPage_Subtitle" xml:space="preserve">
         <value>It seems something went wrong...</value>
     </data>
-    <data name="InstanceHomeView_OverviewTitle" xml:space="preserve">
+    <data name="InstanceHomePage_OverviewTitle" xml:space="preserve">
         <value>Overview</value>
     </data>
-    <data name="InstanceHomeView_PackageCountText" xml:space="preserve">
+    <data name="InstanceHomePage_PackageCountText" xml:space="preserve">
         <value>packages</value>
     </data>
-    <data name="InstanceHomeView_SetupTitle" xml:space="preserve">
+    <data name="InstanceHomePage_SetupTitle" xml:space="preserve">
         <value>Setup</value>
     </data>
-    <data name="InstanceHomeView_SetupTypeText" xml:space="preserve">
+    <data name="InstanceHomePage_SetupTypeText" xml:space="preserve">
         <value>Type</value>
     </data>
-    <data name="InstanceHomeView_SetupVersionText" xml:space="preserve">
+    <data name="InstanceHomePage_SetupVersionText" xml:space="preserve">
         <value>Version</value>
     </data>
-    <data name="InstanceHomeView_ActivitiesTitle" xml:space="preserve">
+    <data name="InstanceHomePage_ActivitiesTitle" xml:space="preserve">
         <value>Activities</value>
     </data>
-    <data name="InstanceHomeView_HourCountText" xml:space="preserve">
+    <data name="InstanceHomePage_HourCountText" xml:space="preserve">
         <value>Total Hours</value>
     </data>
-    <data name="InstanceHomeView_WidgetsTitle" xml:space="preserve">
+    <data name="InstanceHomePage_WidgetsTitle" xml:space="preserve">
         <value>Widgets</value>
     </data>
-    <data name="InstanceHomeView_LaunchPadTitle" xml:space="preserve">
+    <data name="InstanceHomePage_LaunchPadTitle" xml:space="preserve">
         <value>Launch Pad</value>
     </data>
-    <data name="InstanceHomeView_SeeMoreButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_SeeMoreButtonText" xml:space="preserve">
         <value>See More</value>
     </data>
-    <data name="InstanceHomeView_SetupEditButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_SetupEditButtonText" xml:space="preserve">
         <value>Details</value>
     </data>
-    <data name="InstanceHomeView_ReadyLabelText" xml:space="preserve">
+    <data name="InstanceHomePage_ReadyLabelText" xml:space="preserve">
         <value>Everything is ready</value>
     </data>
-    <data name="InstanceHomeView_NoAccountLabelText" xml:space="preserve">
+    <data name="InstanceHomePage_NoAccountLabelText" xml:space="preserve">
         <value>Account is not set yet</value>
     </data>
-    <data name="InstanceHomeView_LaunchButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_LaunchButtonText" xml:space="preserve">
         <value>LAUNCH</value>
     </data>
-    <data name="InstanceHomeView_AccountButtonTitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountButtonTitle" xml:space="preserve">
         <value>Account</value>
     </data>
-    <data name="InstanceHomeView_AccountButtonSubtitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountButtonSubtitle" xml:space="preserve">
         <value>Unchosen</value>
     </data>
-    <data name="InstanceHomeView_AbortButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_AbortButtonText" xml:space="preserve">
         <value>ABORT</value>
     </data>
-    <data name="InstanceHomeView_KillButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_KillButtonText" xml:space="preserve">
         <value>KILL</value>
     </data>
-    <data name="InstanceHomeView_DetachButtonText" xml:space="preserve">
+    <data name="InstanceHomePage_DetachButtonText" xml:space="preserve">
         <value>Eject</value>
     </data>
-    <data name="InstanceHomeView_DashboardButtonTitle" xml:space="preserve">
+    <data name="InstanceHomePage_DashboardButtonTitle" xml:space="preserve">
         <value>Logs</value>
     </data>
-    <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
+    <data name="InstanceHomePage_DashboardButtonSubtitle" xml:space="preserve">
         <value>Dashboard</value>
     </data>
-    <data name="InstanceView_HomePageText" xml:space="preserve">
+    <data name="InstancePage_HomePageText" xml:space="preserve">
         <value>Home</value>
     </data>
-    <data name="InstanceView_DashboardPageText" xml:space="preserve">
+    <data name="InstancePage_DashboardPageText" xml:space="preserve">
         <value>Dashboard</value>
     </data>
-    <data name="InstanceView_SetupPageText" xml:space="preserve">
+    <data name="InstancePage_SetupPageText" xml:space="preserve">
         <value>Packages</value>
     </data>
-    <data name="InstanceView_FilesPageText" xml:space="preserve">
+    <data name="InstancePage_FilesPageText" xml:space="preserve">
         <value>Files</value>
     </data>
-    <data name="InstanceView_WorkspacePageText" xml:space="preserve">
+    <data name="InstancePage_WorkspacePageText" xml:space="preserve">
         <value>Workspace</value>
     </data>
-    <data name="InstanceView_WidgetsPageText" xml:space="preserve">
+    <data name="InstancePage_WidgetsPageText" xml:space="preserve">
         <value>Widgets</value>
     </data>
-    <data name="InstanceView_StatisticsPageText" xml:space="preserve">
+    <data name="InstancePage_StatisticsPageText" xml:space="preserve">
         <value>Statistics</value>
     </data>
-    <data name="InstanceView_StoragePageText" xml:space="preserve">
+    <data name="InstancePage_StoragePageText" xml:space="preserve">
         <value>Storage</value>
     </data>
-    <data name="InstanceView_PropertiesPageText" xml:space="preserve">
+    <data name="InstancePage_PropertiesPageText" xml:space="preserve">
         <value>Properties</value>
     </data>
-    <data name="InstancePropertiesView_TitleTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_TitleTitle" xml:space="preserve">
         <value>Title</value>
     </data>
-    <data name="InstancePropertiesView_TitleSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_TitleSubtitle" xml:space="preserve">
         <value>How this instance identify itself</value>
     </data>
-    <data name="InstancePropertiesView_DisplayNameLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_DisplayNameLabelText" xml:space="preserve">
         <value>Display Name</value>
     </data>
-    <data name="InstancePropertiesView_RenameButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_RenameButtonText" xml:space="preserve">
         <value>Rename</value>
     </data>
-    <data name="InstancePropertiesView_SelectButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_SelectButtonText" xml:space="preserve">
         <value>Select</value>
     </data>
-    <data name="InstancePropertiesView_RemoveButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_RemoveButtonText" xml:space="preserve">
         <value>Remove</value>
     </data>
-    <data name="InstancePropertiesView_OverridesTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_OverridesTitle" xml:space="preserve">
         <value>Game Overrides</value>
     </data>
-    <data name="InstancePropertiesView_OverridesSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_OverridesSubtitle" xml:space="preserve">
         <value>Configuration specified to the instance; leaving blank to refer to the global settings</value>
     </data>
-    <data name="InstancePropertiesView_NavigateToGlobalButtonTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_NavigateToGlobalButtonTitle" xml:space="preserve">
         <value>Navigate to the global settings page</value>
     </data>
-    <data name="InstancePropertiesView_NavigateToGlobalButtonSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_NavigateToGlobalButtonSubtitle" xml:space="preserve">
         <value>Entries here will overwrite the global settings</value>
     </data>
-    <data name="InstancePropertiesView_JavaHomeLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaHomeLabelText" xml:space="preserve">
         <value>Java Home</value>
     </data>
-    <data name="InstancePropertiesView_JavaMaxMemoryLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaMaxMemoryLabelText" xml:space="preserve">
         <value>Java Max Memory</value>
     </data>
-    <data name="InstancePropertiesView_JavaMaxMemoryUnitText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaMaxMemoryUnitText" xml:space="preserve">
         <value>MiB</value>
     </data>
-    <data name="InstancePropertiesView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java Additional Arguments</value>
     </data>
-    <data name="InstancePropertiesView_WindowInitialSizeLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>Window Initial Size</value>
     </data>
-    <data name="InstancePropertiesView_WindowWidthLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_WindowWidthLabelText" xml:space="preserve">
         <value>Width</value>
     </data>
-    <data name="InstancePropertiesView_WindowHeightLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_WindowHeightLabelText" xml:space="preserve">
         <value>Height</value>
     </data>
-    <data name="InstancePropertiesView_BehaviorsTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_BehaviorsTitle" xml:space="preserve">
         <value>Behaviors</value>
     </data>
-    <data name="InstancePropertiesView_BehaviorsSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_BehaviorsSubtitle" xml:space="preserve">
         <value>How the application acts and chooses strategies</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_FastLaunchLabelText" xml:space="preserve">
         <value>Fast Launch</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_FastLaunchPrompt" xml:space="preserve">
         <value>Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted.</value>
     </data>
-    <data name="InstancePropertiesView_DangerZoneTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DangerZoneTitle" xml:space="preserve">
         <value>Danger Zone</value>
     </data>
-    <data name="InstancePropertiesView_DangerZoneSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DangerZoneSubtitle" xml:space="preserve">
         <value>These settings are applied instantly and can't be recovered</value>
     </data>
-    <data name="InstancePropertiesView_SacrificeLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_SacrificeLabelText" xml:space="preserve">
         <value>Scrifice</value>
     </data>
-    <data name="InstancePropertiesView_UnlockButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_UnlockButtonText" xml:space="preserve">
         <value>Unlock</value>
     </data>
-    <data name="InstancePropertiesView_ResetButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_ResetButtonText" xml:space="preserve">
         <value>Reset</value>
     </data>
-    <data name="InstancePropertiesView_DeleteButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_DeleteButtonText" xml:space="preserve">
         <value>Delete</value>
     </data>
-    <data name="InstancePropertiesView_LinkerLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_LinkerLabelText" xml:space="preserve">
         <value>Link</value>
     </data>
-    <data name="InstancePropertiesView_LinkerPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_LinkerPrompt" xml:space="preserve">
         <value>Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages.</value>
     </data>
-    <data name="InstancePropertiesView_InoperableLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_InoperableLabelText" xml:space="preserve">
         <value>The instance is busy now</value>
     </data>
-    <data name="InstanceSetupView_InoperableLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_InoperableLabelText" xml:space="preserve">
         <value>Operating In Progress</value>
     </data>
-    <data name="InstanceSetupView_VersionLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_VersionLabelText" xml:space="preserve">
         <value>Game Version</value>
     </data>
-    <data name="InstanceSetupView_LoaderLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_LoaderLabelText" xml:space="preserve">
         <value>Mod Loader</value>
     </data>
-    <data name="InstanceSetupView_ReferenceUnavailableLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_ReferenceUnavailableLabelText" xml:space="preserve">
         <value>Something went wrong</value>
     </data>
     <data name="Shared_ExternalLinkLabelText" xml:space="preserve">
         <value>EXTERNAL LINK TO</value>
     </data>
-    <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
+    <data name="InstanceSetupPage_SwitchVersionButtonText" xml:space="preserve">
         <value>Switch Version</value>
     </data>
-    <data name="MarketplacePortalView_Title" xml:space="preserve">
+    <data name="MarketplacePortalPage_Title" xml:space="preserve">
         <value>Marketplace Portal</value>
     </data>
-    <data name="MarketplacePortalView_NewsLearnMoreButtonText" xml:space="preserve">
-        <value>Learn More</value>
-    </data>
-    <data name="MarketplacePortalView_DiscoveryCenterTitle" xml:space="preserve">
+    <data name="MarketplacePortalPage_DiscoveryCenterTitle" xml:space="preserve">
         <value>Discovery Center</value>
     </data>
-    <data name="MarketplacePortalView_DiscoveryCenterSubtitle" xml:space="preserve">
+    <data name="MarketplacePortalPage_DiscoveryCenterSubtitle" xml:space="preserve">
         <value>Everything(mostly) begins here</value>
     </data>
-    <data name="MarketplacePortalView_SearchButtonText" xml:space="preserve">
+    <data name="MarketplacePortalPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
-    <data name="MarketplacePortalView_NewsLabelText" xml:space="preserve">
-        <value>News</value>
-    </data>
-    <data name="MarketplaceSearchView_Title" xml:space="preserve">
+    <data name="MarketplaceSearchPage_Title" xml:space="preserve">
         <value>Search modpacks</value>
     </data>
-    <data name="MarketplaceSearchView_SearchBarPlaceholder" xml:space="preserve">
+    <data name="MarketplaceSearchPage_SearchBarPlaceholder" xml:space="preserve">
         <value>With the keywords in...</value>
     </data>
-    <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
+    <data name="MarketplaceSearchPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
     <data name="Shared_FetchingLabelText" xml:space="preserve">
         <value>Fetching...</value>
     </data>
-    <data name="NewInstanceView_CreateButtonText" xml:space="preserve">
+    <data name="NewInstancePage_CreateButtonText" xml:space="preserve">
         <value>Create instance</value>
     </data>
-    <data name="NewInstanceView_Title" xml:space="preserve">
+    <data name="NewInstancePage_Title" xml:space="preserve">
         <value>Create an instance</value>
     </data>
-    <data name="NewInstanceView_NameLabelText" xml:space="preserve">
+    <data name="NewInstancePage_NameLabelText" xml:space="preserve">
         <value>Name</value>
     </data>
-    <data name="NewInstanceView_VersionLabelText" xml:space="preserve">
+    <data name="NewInstancePage_VersionLabelText" xml:space="preserve">
         <value>Version</value>
     </data>
-    <data name="NewInstanceView_PackageCountLabelText" xml:space="preserve">
+    <data name="NewInstancePage_PackageCountLabelText" xml:space="preserve">
         <value>Packages</value>
     </data>
-    <data name="NewInstanceView_ModLoaderLabelText" xml:space="preserve">
+    <data name="NewInstancePage_ModLoaderLabelText" xml:space="preserve">
         <value>Mod Loader</value>
     </data>
-    <data name="NewInstanceView_SeparatorLabelText" xml:space="preserve">
+    <data name="NewInstancePage_SeparatorLabelText" xml:space="preserve">
         <value>Or create from</value>
     </data>
-    <data name="NewInstanceView_ImportButtonText" xml:space="preserve">
+    <data name="NewInstancePage_ImportButtonText" xml:space="preserve">
         <value>Import</value>
     </data>
-    <data name="NewInstanceView_DownloadButtonText" xml:space="preserve">
+    <data name="NewInstancePage_DownloadButtonText" xml:space="preserve">
         <value>Marketplace</value>
     </data>
-    <data name="PackageExplorerView_PendingLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_PendingLabelText" xml:space="preserve">
         <value>Pending</value>
     </data>
-    <data name="PackageExplorerView_AddLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_AddLabelText" xml:space="preserve">
         <value>Add</value>
     </data>
-    <data name="PackageExplorerView_ModifyLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_ModifyLabelText" xml:space="preserve">
         <value>Modify</value>
     </data>
-    <data name="PackageExplorerView_RemoveLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_RemoveLabelText" xml:space="preserve">
         <value>Remove</value>
     </data>
-    <data name="PackageExplorerView_EmptyLabelText" xml:space="preserve">
+    <data name="PackageExplorerPage_EmptyLabelText" xml:space="preserve">
         <value>Empty</value>
     </data>
-    <data name="PackageExplorerView_CollectButtonText" xml:space="preserve">
+    <data name="PackageExplorerPage_CollectButtonText" xml:space="preserve">
         <value>Collect</value>
     </data>
-    <data name="PackageExplorerView_SearchBarPlaceholder" xml:space="preserve">
+    <data name="PackageExplorerPage_SearchBarPlaceholder" xml:space="preserve">
         <value>Search by names and names...</value>
     </data>
-    <data name="PackageExplorerView_SearchButtonText" xml:space="preserve">
+    <data name="PackageExplorerPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
-    <data name="SettingsView_Title" xml:space="preserve">
+    <data name="SettingsPage_Title" xml:space="preserve">
         <value>Application Settings</value>
     </data>
-    <data name="SettingsView_SuperPowerTitle" xml:space="preserve">
+    <data name="SettingsPage_SuperPowerTitle" xml:space="preserve">
         <value>Super Power</value>
     </data>
-    <data name="SettingsView_SuperPowerSubtitle" xml:space="preserve">
+    <data name="SettingsPage_SuperPowerSubtitle" xml:space="preserve">
         <value>sudo superpower activate</value>
     </data>
-    <data name="SettingsView_SuperPowerLabelText" xml:space="preserve">
+    <data name="SettingsPage_SuperPowerLabelText" xml:space="preserve">
         <value>Activate</value>
     </data>
-    <data name="SettingsView_DisplayTitle" xml:space="preserve">
+    <data name="SettingsPage_DisplayTitle" xml:space="preserve">
         <value>Display and Appearance</value>
     </data>
-    <data name="SettingsView_DisplaySubtitle" xml:space="preserve">
+    <data name="SettingsPage_DisplaySubtitle" xml:space="preserve">
         <value>The look, the language, the font</value>
     </data>
-    <data name="SettingsView_SidebarPlacementLabelText" xml:space="preserve">
+    <data name="SettingsPage_SidebarPlacementLabelText" xml:space="preserve">
         <value>Sidebar Placement</value>
     </data>
-    <data name="SettingsView_SidebarPlacementLeftText" xml:space="preserve">
+    <data name="SettingsPage_SidebarPlacementLeftText" xml:space="preserve">
         <value>Left</value>
     </data>
-    <data name="SettingsView_SidebarPlacementRightText" xml:space="preserve">
+    <data name="SettingsPage_SidebarPlacementRightText" xml:space="preserve">
         <value>Right</value>
     </data>
-    <data name="SettingsView_ThemeVariantLabelText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantLabelText" xml:space="preserve">
         <value>Theme Variant</value>
     </data>
-    <data name="SettingsView_ThemeVariantSystemText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantSystemText" xml:space="preserve">
         <value>System</value>
     </data>
-    <data name="SettingsView_ThemeVariantLightText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantLightText" xml:space="preserve">
         <value>Light</value>
     </data>
-    <data name="SettingsView_ThemeVariantDarkText" xml:space="preserve">
+    <data name="SettingsPage_ThemeVariantDarkText" xml:space="preserve">
         <value>Dark</value>
     </data>
-    <data name="SettingsView_BackgroundStyleLabelText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleLabelText" xml:space="preserve">
         <value>Background Style</value>
     </data>
-    <data name="SettingsView_BackgroundStyleAutoText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleAutoText" xml:space="preserve">
         <value>Auto</value>
     </data>
-    <data name="SettingsView_BackgroundStyleMicaText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleMicaText" xml:space="preserve">
         <value>Mica</value>
     </data>
-    <data name="SettingsView_BackgroundStyleAcrylicText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleAcrylicText" xml:space="preserve">
         <value>Acrylic</value>
     </data>
-    <data name="SettingsView_BackgroundStyleBlurText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleBlurText" xml:space="preserve">
         <value>Blur</value>
     </data>
-    <data name="SettingsView_BackgroundStyleNoneText" xml:space="preserve">
+    <data name="SettingsPage_BackgroundStyleNoneText" xml:space="preserve">
         <value>None</value>
     </data>
-    <data name="SettingsView_LanguageLabelText" xml:space="preserve">
+    <data name="SettingsPage_LanguageLabelText" xml:space="preserve">
         <value>Language</value>
     </data>
-    <data name="SettingsView_FontLabelText" xml:space="preserve">
+    <data name="SettingsPage_FontLabelText" xml:space="preserve">
         <value>Font</value>
     </data>
-    <data name="SettingsView_JavaTitle" xml:space="preserve">
+    <data name="SettingsPage_JavaTitle" xml:space="preserve">
         <value>Java Presets</value>
     </data>
-    <data name="SettingsView_JavaSubtitle" xml:space="preserve">
+    <data name="SettingsPage_JavaSubtitle" xml:space="preserve">
         <value>Instance will select the best match while launching</value>
     </data>
-    <data name="SettingsView_Java8LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java8LabelText" xml:space="preserve">
         <value>Java 8 Home</value>
     </data>
-    <data name="SettingsView_Java11LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java11LabelText" xml:space="preserve">
         <value>Java 11 Home</value>
     </data>
-    <data name="SettingsView_Java17LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java17LabelText" xml:space="preserve">
         <value>Java 17 Home</value>
     </data>
-    <data name="SettingsView_Java21LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java21LabelText" xml:space="preserve">
         <value>Java 21 Home</value>
     </data>
-    <data name="SettingsView_GameDefaultsTitle" xml:space="preserve">
+    <data name="SettingsPage_GameDefaultsTitle" xml:space="preserve">
         <value>Game Defaults</value>
     </data>
-    <data name="SettingsView_GameDefaultsSubtitle" xml:space="preserve">
+    <data name="SettingsPage_GameDefaultsSubtitle" xml:space="preserve">
         <value>The listing configuration can be override by the instance individually</value>
     </data>
-    <data name="SettingsView_JavaMaxMemoryLabelText" xml:space="preserve">
+    <data name="SettingsPage_JavaMaxMemoryLabelText" xml:space="preserve">
         <value>Java Max Memory</value>
     </data>
-    <data name="SettingsView_JavaMaxMemoryPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_JavaMaxMemoryPlaceholder" xml:space="preserve">
         <value>Bigger is better</value>
     </data>
-    <data name="SettingsView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+    <data name="SettingsPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java Additional Arguments</value>
     </data>
-    <data name="SettingsView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>Less is more</value>
     </data>
-    <data name="SettingsView_WindowInitialSizeLabelText" xml:space="preserve">
+    <data name="SettingsPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>Window Initial Size</value>
     </data>
-    <data name="SettingsView_JavaMaxMemoryUnitText" xml:space="preserve">
+    <data name="SettingsPage_JavaMaxMemoryUnitText" xml:space="preserve">
         <value>MiB</value>
     </data>
-    <data name="SettingsView_WindowHeightLabelText" xml:space="preserve">
+    <data name="SettingsPage_WindowHeightLabelText" xml:space="preserve">
         <value>Height</value>
     </data>
-    <data name="SettingsView_WindowWidthLabelText" xml:space="preserve">
+    <data name="SettingsPage_WindowWidthLabelText" xml:space="preserve">
         <value>Width</value>
     </data>
-    <data name="SettingsView_NetworkTitle" xml:space="preserve">
+    <data name="SettingsPage_NetworkTitle" xml:space="preserve">
         <value>Network</value>
     </data>
-    <data name="SettingsView_NetworkSubtitle" xml:space="preserve">
+    <data name="SettingsPage_NetworkSubtitle" xml:space="preserve">
         <value>Network settings</value>
     </data>
-    <data name="SettingsView_ProxyEnabledLabelText" xml:space="preserve">
+    <data name="SettingsPage_ProxyEnabledLabelText" xml:space="preserve">
         <value>Network Proxy</value>
     </data>
     <data name="ProxySettingsDialog_UsernamePlaceholder" xml:space="preserve">
         <value>Leave empty if not required</value>
     </data>
-    <data name="SettingsView_ProxyPasswordPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_ProxyPasswordPlaceholder" xml:space="preserve">
         <value>Leave empty if not required</value>
     </data>
     <data name="AccountCreationMicrosoft_Title" xml:space="preserve">
@@ -561,13 +555,13 @@
     <data name="JavaHomeContainer_Prompt" xml:space="preserve">
         <value>Bundled or</value>
     </data>
-    <data name="InstanceSetupView_FilterBarPlaceholder" xml:space="preserve">
+    <data name="InstanceSetupPage_FilterBarPlaceholder" xml:space="preserve">
         <value>Enter filter string...</value>
     </data>
-    <data name="InstanceSetupView_FilterLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_FilterLabelText" xml:space="preserve">
         <value>Filter</value>
     </data>
-    <data name="InstanceSetupView_TagFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_TagFilterText" xml:space="preserve">
         <value>Tags</value>
     </data>
     <data name="ResourceKind_Modpack" xml:space="preserve">
@@ -597,28 +591,28 @@
     <data name="Enum_Disabled" xml:space="preserve">
         <value>Disabled</value>
     </data>
-    <data name="InstanceSetupView_SourceImportText" xml:space="preserve">
+    <data name="InstanceSetupPage_SourceImportText" xml:space="preserve">
         <value>Import</value>
     </data>
-    <data name="InstanceSetupView_SourceLocalText" xml:space="preserve">
+    <data name="InstanceSetupPage_SourceLocalText" xml:space="preserve">
         <value>Local</value>
     </data>
-    <data name="InstanceSetupView_SourceFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_SourceFilterText" xml:space="preserve">
         <value>Source</value>
     </data>
-    <data name="InstanceSetupView_TypeFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_TypeFilterText" xml:space="preserve">
         <value>Type</value>
     </data>
-    <data name="InstanceSetupView_ResultCountLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_ResultCountLabelText" xml:space="preserve">
         <value>Results</value>
     </data>
-    <data name="InstanceSetupView_BatchUpdateMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_BatchUpdateMenuText" xml:space="preserve">
         <value>Batch Update</value>
     </data>
-    <data name="InstanceSetupView_GetMoreButtonText" xml:space="preserve">
+    <data name="InstanceSetupPage_GetMoreButtonText" xml:space="preserve">
         <value>Get More</value>
     </data>
-    <data name="InstanceSetupView_ExportListMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListMenuText" xml:space="preserve">
         <value>Explort List</value>
     </data>
     <data name="SafeLock_Title" xml:space="preserve">
@@ -633,7 +627,7 @@
     <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
         <value>Required</value>
     </data>
-    <data name="MarketplaceSearchView_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="MarketplaceSearchPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
     <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
@@ -651,13 +645,13 @@
     <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
         <value>RUNNING</value>
     </data>
-    <data name="InstanceSetupView_ActiveMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ActiveMenuText" xml:space="preserve">
         <value>Active</value>
     </data>
-    <data name="InstanceSetupView_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
-    <data name="InstanceSetupView_RemoveMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
     <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
@@ -876,67 +870,67 @@
     <data name="JavaHomeContainer_RequestJavaPrompt" xml:space="preserve">
         <value>Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe</value>
     </data>
-    <data name="NewInstanceView_RequestFileTitle" xml:space="preserve">
+    <data name="NewInstancePage_RequestFileTitle" xml:space="preserve">
         <value>Import from file</value>
     </data>
-    <data name="NewInstanceView_RequestFilePrompt" xml:space="preserve">
+    <data name="NewInstancePage_RequestFilePrompt" xml:space="preserve">
         <value>Select a compressed modpack file to import</value>
     </data>
-    <data name="NewInstanceView_ImportDangerNotificationTitle" xml:space="preserve">
+    <data name="NewInstancePage_ImportDangerNotificationTitle" xml:space="preserve">
         <value>Import failed</value>
     </data>
-    <data name="NewInstanceView_IconSavingDangerNotificationTitle" xml:space="preserve">
+    <data name="NewInstancePage_IconSavingDangerNotificationTitle" xml:space="preserve">
         <value>Write icon failed</value>
     </data>
-    <data name="AccountsView_AccountAddingDangerNotificationTitle" xml:space="preserve">
+    <data name="AccountsPage_AccountAddingDangerNotificationTitle" xml:space="preserve">
         <value>Account creation failed</value>
     </data>
-    <data name="AccountsView_AccountAddingDangerNotificationMessage" xml:space="preserve">
+    <data name="AccountsPage_AccountAddingDangerNotificationMessage" xml:space="preserve">
         <value>Account with the same uuid already exists</value>
     </data>
-    <data name="InstanceHomeView_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
         <value>Account authentication failed</value>
     </data>
-    <data name="InstanceHomeView_DeployDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceHomePage_DeployDangerNotificationTitle" xml:space="preserve">
         <value>Deployment failed</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceHomePage_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
         <value>Account Not Found</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationMessage" xml:space="preserve">
+    <data name="InstanceHomePage_AccountNotFoundDangerNotificationMessage" xml:space="preserve">
         <value>Account is not provided or removed after set</value>
     </data>
-    <data name="InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
+    <data name="InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
         <value>Select Account</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSavingDangerNotificationTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle" xml:space="preserve">
         <value>Thumbnail saving failed</value>
     </data>
-    <data name="InstancePropertiesView_RequestJavaTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestJavaTitle" xml:space="preserve">
         <value>Select a Java executable</value>
     </data>
-    <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestJavaPrompt" xml:space="preserve">
         <value>Pick the Java executable inside your Java home, such as /bin/java or /bin/java.exe</value>
     </data>
-    <data name="InstancePropertiesView_UnlockingSuccessNotificationMessage" xml:space="preserve">
+    <data name="InstancePropertiesPage_UnlockingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance is no longer associated to any modpack brand and free to edit.</value>
     </data>
-    <data name="InstancePropertiesView_RequestThumbnailTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestThumbnailTitle" xml:space="preserve">
         <value>Select thumbnail</value>
     </data>
-    <data name="InstancePropertiesView_RequestThumbnailPrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestThumbnailPrompt" xml:space="preserve">
         <value>Select a image file</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
         <value>Set instance thumbnail</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationMessage" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage" xml:space="preserve">
         <value>Selected file is not a valid image or no file selected.</value>
     </data>
-    <data name="InstancePropertiesView_RequestNameTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestNameTitle" xml:space="preserve">
         <value>Rename instance</value>
     </data>
-    <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
+    <data name="InstancePropertiesPage_RequestNamePrompt" xml:space="preserve">
         <value>Give the instance a new name</value>
     </data>
     <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
@@ -945,7 +939,7 @@
     <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
-    <data name="InstanceSetupView_DependencyGraphMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>Dependency Graph</value>
     </data>
     <data name="Enum_On" xml:space="preserve">
@@ -954,7 +948,7 @@
     <data name="Enum_Off" xml:space="preserve">
         <value>Off</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchOnText" xml:space="preserve">
+    <data name="InstancePropertiesPage_FastLaunchOnText" xml:space="preserve">
         <value>I'm in a hurry</value>
     </data>
     <data name="Enum_Vanilla" xml:space="preserve">
@@ -990,9 +984,6 @@
     <data name="MainWindow_InstanceLaunchingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has exited</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
-        <value>View Output</value>
-    </data>
     <data name="LaunchMode_Managed" xml:space="preserve">
         <value>Managed</value>
     </data>
@@ -1002,7 +993,7 @@
     <data name="LaunchMode_FireAndForget" xml:space="preserve">
         <value>Fire &amp; Forget</value>
     </data>
-    <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
+    <data name="SettingsPage_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>Title Bar Visibility</value>
     </data>
     <data name="DeployStage_CheckArtifact" xml:space="preserve">
@@ -1026,94 +1017,94 @@
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
         <value>Solidifying files...</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
         <value>Checking updates...({0}/{1})</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
         <value>Cancel</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
         <value>{0} packages to be updated</value>
     </data>
-    <data name="InstanceSetupView_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>Review</value>
     </data>
-    <data name="InstanceSetupView_ParsePurlDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ParsePurlDangerNotificationTitle" xml:space="preserve">
         <value>Failed to parse purl</value>
     </data>
-    <data name="InstanceSetupView_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
         <value>Failed to load project information</value>
     </data>
-    <data name="InstanceSetupView_ImportListNoPackagesWarningNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage" xml:space="preserve">
         <value>No packages found in the file</value>
     </data>
-    <data name="InstanceSetupView_ImportListWarningNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListWarningNotificationTitle" xml:space="preserve">
         <value>Import package list</value>
     </data>
-    <data name="InstanceSetupView_ImportListSuccessNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListSuccessNotificationMessage" xml:space="preserve">
         <value>Added: {0}, Updated: {1}, Failed: {2}</value>
     </data>
-    <data name="InstanceSetupView_ImportListSuccessNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListSuccessNotificationTitle" xml:space="preserve">
         <value>Import package list completed</value>
     </data>
-    <data name="InstanceSetupView_ImportListDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListDangerNotificationTitle" xml:space="preserve">
         <value>Import package list</value>
     </data>
-    <data name="InstanceSetupView_FetchingInformationDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_FetchingInformationDangerNotificationTitle" xml:space="preserve">
         <value>Failed to fetching information</value>
     </data>
-    <data name="InstanceSetupView_ExportListSuccessNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListSuccessNotificationMessage" xml:space="preserve">
         <value>Exported package list to file {0}</value>
     </data>
-    <data name="InstanceSetupView_ExportListSuccessNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListSuccessNotificationTitle" xml:space="preserve">
         <value>Export package list to file</value>
     </data>
-    <data name="InstanceSetupView_ExportListDangerNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListDangerNotificationMessage" xml:space="preserve">
         <value>Writing data to file ({0}) failed: {1}</value>
     </data>
-    <data name="InstanceSetupView_ExportListDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_ExportListDangerNotificationTitle" xml:space="preserve">
         <value>Export package list to file</value>
     </data>
-    <data name="InstanceSetupView_CheckUpdateDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_CheckUpdateDangerNotificationTitle" xml:space="preserve">
         <value>Failed to check update</value>
     </data>
-    <data name="InstanceSetupView_UpdateDangerNotificationTitle" xml:space="preserve">
+    <data name="InstanceSetupPage_UpdateDangerNotificationTitle" xml:space="preserve">
         <value>Update failed</value>
     </data>
-    <data name="InstanceSetupView_InstallVersionNotificationMessage" xml:space="preserve">
+    <data name="InstanceSetupPage_InstallVersionNotificationMessage" xml:space="preserve">
         <value>{0}({1}) has added to install queue</value>
     </data>
-    <data name="MarketplaceSearchView_ModpackInstallingNotificationMessage" xml:space="preserve">
+    <data name="MarketplaceSearchPage_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} has been added to the queue</value>
     </data>
-    <data name="MarketplaceSearchView_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
+    <data name="MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
         <value>Loading project information failed</value>
     </data>
     <data name="ResourceKind_World" xml:space="preserve">
         <value>World</value>
     </data>
-    <data name="InstanceSetupView_StatusFilterText" xml:space="preserve">
+    <data name="InstanceSetupPage_StatusFilterText" xml:space="preserve">
         <value>Status</value>
     </data>
-    <data name="InstancePropertiesView_ThumbnailLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_ThumbnailLabelText" xml:space="preserve">
         <value>Thumbnail</value>
     </data>
-    <data name="InstancePropertiesView_DebugTitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DebugTitle" xml:space="preserve">
         <value>Debug</value>
     </data>
-    <data name="InstancePropertiesView_CheckIntegrityButtonText" xml:space="preserve">
+    <data name="InstancePropertiesPage_CheckIntegrityButtonText" xml:space="preserve">
         <value>Build in Full Check Mode</value>
     </data>
-    <data name="InstancePropertiesView_DebugSubtitle" xml:space="preserve">
+    <data name="InstancePropertiesPage_DebugSubtitle" xml:space="preserve">
         <value>Having problems? Try these options</value>
     </data>
-    <data name="InstancePropertiesView_CheckIntegrityLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_CheckIntegrityLabelText" xml:space="preserve">
         <value>Check Integrity</value>
     </data>
     <data name="InstancePackageDependencyButton_RequiredTagText" xml:space="preserve">
@@ -1134,7 +1125,7 @@
     <data name="InstancePackageModal_BasicsTabText" xml:space="preserve">
         <value>Basics</value>
     </data>
-    <data name="SettingsView_AccentColorLabelText" xml:space="preserve">
+    <data name="SettingsPage_AccentColorLabelText" xml:space="preserve">
         <value>Accent Color</value>
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
@@ -1191,55 +1182,55 @@
     <data name="Enum_Hour" xml:space="preserve">
         <value>Hour</value>
     </data>
-    <data name="SettingsView_CornerStyleLabelText" xml:space="preserve">
+    <data name="SettingsPage_CornerStyleLabelText" xml:space="preserve">
         <value>Corner Radius</value>
     </data>
-    <data name="InstanceView_KeyNotFoundExceptionMessage" xml:space="preserve">
+    <data name="InstancePage_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>Key '{0}' to the instance is not found or prepared</value>
     </data>
-    <data name="SettingsView_MaintenanceTitle" xml:space="preserve">
+    <data name="SettingsPage_MaintenanceTitle" xml:space="preserve">
         <value>Maintenance</value>
     </data>
-    <data name="SettingsView_MaintenanceSubtitle" xml:space="preserve">
+    <data name="SettingsPage_MaintenanceSubtitle" xml:space="preserve">
         <value>Check for updates, clear cache, etc.</value>
     </data>
-    <data name="SettingsView_StorageManagementLabelText" xml:space="preserve">
+    <data name="SettingsPage_StorageManagementLabelText" xml:space="preserve">
         <value>Storage Management</value>
     </data>
-    <data name="SettingsView_StorageManagementButtonText" xml:space="preserve">
+    <data name="SettingsPage_StorageManagementButtonText" xml:space="preserve">
         <value>Manage</value>
     </data>
-    <data name="SettingsView_VersionLabelText" xml:space="preserve">
+    <data name="SettingsPage_VersionLabelText" xml:space="preserve">
         <value>Version</value>
     </data>
-    <data name="SettingsView_UpdatesViewButtonText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesViewButtonText" xml:space="preserve">
         <value>View update</value>
     </data>
-    <data name="SettingsView_UpdatesCheckButtonText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesCheckButtonText" xml:space="preserve">
         <value>Check for updates</value>
     </data>
-    <data name="SettingsView_UpdatesUnavailableLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesUnavailableLabelText" xml:space="preserve">
         <value>Update unavailable</value>
     </data>
-    <data name="SettingsView_UpdatesNotFoundLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesNotFoundLabelText" xml:space="preserve">
         <value>Up to date</value>
     </data>
-    <data name="SettingsView_UpdatesFoundLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdatesFoundLabelText" xml:space="preserve">
         <value>Update available</value>
     </data>
-    <data name="SettingsView_UpdateSourceGithubText" xml:space="preserve">
+    <data name="SettingsPage_UpdateSourceGithubText" xml:space="preserve">
         <value>GitHub</value>
     </data>
-    <data name="SettingsView_UpdateSourceMirrorChyanText" xml:space="preserve">
+    <data name="SettingsPage_UpdateSourceMirrorChyanText" xml:space="preserve">
         <value>MirrorChyan</value>
     </data>
-    <data name="SettingsView_MirrorChyanCdkLabelText" xml:space="preserve">
+    <data name="SettingsPage_MirrorChyanCdkLabelText" xml:space="preserve">
         <value>MirrorChyan CDK</value>
     </data>
-    <data name="SettingsView_MirrorChyanCdkPlaceholder" xml:space="preserve">
+    <data name="SettingsPage_MirrorChyanCdkPlaceholder" xml:space="preserve">
         <value>(Optional) Enter your CDK here</value>
     </data>
-    <data name="SettingsView_MirrorChyanCdkHint" xml:space="preserve">
+    <data name="SettingsPage_MirrorChyanCdkHint" xml:space="preserve">
         <value>Get a CDK to support development: </value>
     </data>
     <data name="InstancePackageModal_DependantsTabText" xml:space="preserve">
@@ -1248,7 +1239,7 @@
     <data name="InstancePackageModal_OverviewLabelText" xml:space="preserve">
         <value>Overview</value>
     </data>
-    <data name="InstanceSetupView_RefreshingLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_RefreshingLabelText" xml:space="preserve">
         <value>Refreshing...</value>
     </data>
     <data name="AssetImporterDialog_Title" xml:space="preserve">
@@ -1278,7 +1269,7 @@
     <data name="AssetImporterDialog_IdentifyingLabelText" xml:space="preserve">
         <value>Identifying file type...</value>
     </data>
-    <data name="InstancePropertiesView_QuickConnectLabelText" xml:space="preserve">
+    <data name="InstancePropertiesPage_QuickConnectLabelText" xml:space="preserve">
         <value>Connect At Startup</value>
     </data>
     <data name="AssetKind_Mod" xml:space="preserve">
@@ -1299,118 +1290,118 @@
     <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
         <value>Export Modpack</value>
     </data>
-    <data name="InstanceActivitiesView_TotalHoursLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_TotalHoursLabelText" xml:space="preserve">
         <value>Total Hours</value>
     </data>
-    <data name="InstanceActivitiesView_SessionCountLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_SessionCountLabelText" xml:space="preserve">
         <value>Session Count</value>
     </data>
-    <data name="InstanceActivitiesView_ActiveDaysLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ActiveDaysLabelText" xml:space="preserve">
         <value>Active Days</value>
     </data>
-    <data name="InstanceActivitiesView_TotalHoursRankLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_TotalHoursRankLabelText" xml:space="preserve">
         <value>Total Hours Rank</value>
     </data>
-    <data name="InstanceActivitiesView_ChangelogLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ChangelogLabelText" xml:space="preserve">
         <value>Changelog</value>
     </data>
     <data name="AssetKind_DataPack" xml:space="preserve">
         <value>Data Packs</value>
     </data>
-    <data name="InstanceFilesView_FilterLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_FilterLabelText" xml:space="preserve">
         <value>Filter</value>
     </data>
-    <data name="InstanceFilesView_LoaderFilterText" xml:space="preserve">
+    <data name="InstanceFilesPage_LoaderFilterText" xml:space="preserve">
         <value>Loader</value>
     </data>
-    <data name="InstanceFilesView_StatusFilterText" xml:space="preserve">
+    <data name="InstanceFilesPage_StatusFilterText" xml:space="preserve">
         <value>Status</value>
     </data>
-    <data name="InstanceFilesView_SourceFilterText" xml:space="preserve">
+    <data name="InstanceFilesPage_SourceFilterText" xml:space="preserve">
         <value>Source</value>
     </data>
-    <data name="InstanceFilesView_SourceLocalText" xml:space="preserve">
+    <data name="InstanceFilesPage_SourceLocalText" xml:space="preserve">
         <value>Local</value>
     </data>
-    <data name="InstanceFilesView_SourceImportText" xml:space="preserve">
+    <data name="InstanceFilesPage_SourceImportText" xml:space="preserve">
         <value>Import</value>
     </data>
-    <data name="InstanceFilesView_ModInfoBarTitle" xml:space="preserve">
+    <data name="InstanceFilesPage_ModInfoBarTitle" xml:space="preserve">
         <value>This page shows physical mod files only</value>
     </data>
-    <data name="InstanceFilesView_ModInfoBarText" xml:space="preserve">
+    <data name="InstanceFilesPage_ModInfoBarText" xml:space="preserve">
         <value>External package references are managed separately and not displayed here.</value>
     </data>
-    <data name="InstanceFilesView_AssetFileNameLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetFileNameLabelText" xml:space="preserve">
         <value>File Name:</value>
     </data>
-    <data name="InstanceFilesView_AssetModIdLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetModIdLabelText" xml:space="preserve">
         <value>Mod Id:</value>
     </data>
-    <data name="InstanceFilesView_AssetLicenseLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetLicenseLabelText" xml:space="preserve">
         <value>License:</value>
     </data>
-    <data name="InstanceFilesView_AssetFileSizeLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetFileSizeLabelText" xml:space="preserve">
         <value>File Size:</value>
     </data>
-    <data name="InstanceFilesView_AssetLastModifiedLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetLastModifiedLabelText" xml:space="preserve">
         <value>Last Modified:</value>
     </data>
-    <data name="InstanceFilesView_AssetStatusLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetStatusLabelText" xml:space="preserve">
         <value>Status:</value>
     </data>
-    <data name="InstanceFilesView_AssetVisitWebsiteButtonText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetVisitWebsiteButtonText" xml:space="preserve">
         <value>Visit Website</value>
     </data>
-    <data name="InstanceFilesView_DetailsLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_DetailsLabelText" xml:space="preserve">
         <value>Details</value>
     </data>
-    <data name="InstanceFilesView_AssetPackFormatLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetPackFormatLabelText" xml:space="preserve">
         <value>Pack Format:</value>
     </data>
-    <data name="InstanceFilesView_AssetEmptyPrompt" xml:space="preserve">
+    <data name="InstanceFilesPage_AssetEmptyPrompt" xml:space="preserve">
         <value>Select an item to view details</value>
     </data>
-    <data name="InstanceFilesView_DataPacksLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_DataPacksLabelText" xml:space="preserve">
         <value>Data Packs</value>
     </data>
-    <data name="InstanceFilesView_PlayersLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_PlayersLabelText" xml:space="preserve">
         <value>Players</value>
     </data>
-    <data name="InstanceFilesView_ServerAddressLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerAddressLabelText" xml:space="preserve">
         <value>Address:</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackPreferenceLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackPreferenceLabelText" xml:space="preserve">
         <value>Server Resource Packs:</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackAcceptText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackAcceptText" xml:space="preserve">
         <value>Accept</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackRejectText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackRejectText" xml:space="preserve">
         <value>Reject</value>
     </data>
-    <data name="InstanceFilesView_ServerResourcePackPromptText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerResourcePackPromptText" xml:space="preserve">
         <value>Ask Every Time</value>
     </data>
-    <data name="InstanceFilesView_ServerLiveStatusLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerLiveStatusLabelText" xml:space="preserve">
         <value>Live Status</value>
     </data>
-    <data name="InstanceFilesView_ServerCheckingText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerCheckingText" xml:space="preserve">
         <value>Checking server...</value>
     </data>
-    <data name="InstanceFilesView_ServerMotdLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerMotdLabelText" xml:space="preserve">
         <value>Message:</value>
     </data>
-    <data name="InstanceFilesView_ServerVersionLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerVersionLabelText" xml:space="preserve">
         <value>Version:</value>
     </data>
-    <data name="InstanceFilesView_ServerPlayersLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerPlayersLabelText" xml:space="preserve">
         <value>Players:</value>
     </data>
-    <data name="InstanceFilesView_ServerLatencyLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerLatencyLabelText" xml:space="preserve">
         <value>Latency:</value>
     </data>
-    <data name="InstanceFilesView_ServerUnavailableText" xml:space="preserve">
+    <data name="InstanceFilesPage_ServerUnavailableText" xml:space="preserve">
         <value>Server unavailable</value>
     </data>
     <data name="ModpackExporterDialog_NameLabelText" xml:space="preserve">
@@ -1461,7 +1452,7 @@
     <data name="ModpackExporterDialog_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Include JVM additional arguments settings</value>
     </data>
-    <data name="InstanceFilesView_DescriptionLabelText" xml:space="preserve">
+    <data name="InstanceFilesPage_DescriptionLabelText" xml:space="preserve">
         <value>Description</value>
     </data>
     <data name="Account_Microsoft" xml:space="preserve">
@@ -1473,25 +1464,25 @@
     <data name="Account_Trial" xml:space="preserve">
         <value>Trial</value>
     </data>
-    <data name="LandingView_RecentPlayButtonText" xml:space="preserve">
+    <data name="LandingPage_RecentPlayButtonText" xml:space="preserve">
         <value>Play</value>
     </data>
-    <data name="LandingView_RecentReleasesLabelText" xml:space="preserve">
+    <data name="LandingPage_RecentReleasesLabelText" xml:space="preserve">
         <value>Recent Releases</value>
     </data>
-    <data name="LandingView_StatisticsActiveDaysLabelText" xml:space="preserve">
+    <data name="LandingPage_StatisticsActiveDaysLabelText" xml:space="preserve">
         <value>Active Days</value>
     </data>
-    <data name="LandingView_StatisticsSessionsLabelText" xml:space="preserve">
+    <data name="LandingPage_StatisticsSessionsLabelText" xml:space="preserve">
         <value>Sessions</value>
     </data>
-    <data name="LandingView_StatisticsHoursLabelText" xml:space="preserve">
+    <data name="LandingPage_StatisticsHoursLabelText" xml:space="preserve">
         <value>Total Play Hours</value>
     </data>
-    <data name="LandingView_OverviewInstancesLabelText" xml:space="preserve">
+    <data name="LandingPage_OverviewInstancesLabelText" xml:space="preserve">
         <value>Instances</value>
     </data>
-    <data name="LandingView_OverviewAccountsLabelText" xml:space="preserve">
+    <data name="LandingPage_OverviewAccountsLabelText" xml:space="preserve">
         <value>Accounts</value>
     </data>
     <data name="LoaderEditorDialog_VersionLabelText" xml:space="preserve">
@@ -1509,22 +1500,22 @@
     <data name="LoaderPickerDialog_Title" xml:space="preserve">
         <value>Pick a mod loader</value>
     </data>
-    <data name="SettingsView_RestartRequiredLabelText" xml:space="preserve">
+    <data name="SettingsPage_RestartRequiredLabelText" xml:space="preserve">
         <value>Restart is required to take effect.</value>
     </data>
-    <data name="InstanceStorageView_OpenFolderButtonText" xml:space="preserve">
+    <data name="InstanceStoragePage_OpenFolderButtonText" xml:space="preserve">
         <value>Open Folder</value>
     </data>
-    <data name="InstanceStorageView_GotoExplorerButtonText" xml:space="preserve">
+    <data name="InstanceStoragePage_GotoExplorerButtonText" xml:space="preserve">
         <value>Go to Resource Explorer</value>
     </data>
     <data name="AssetKind_ShaderPack" xml:space="preserve">
         <value>Shader Packs</value>
     </data>
-    <data name="InstanceStorageView_BreakdownLabelText" xml:space="preserve">
+    <data name="InstanceStoragePage_BreakdownLabelText" xml:space="preserve">
         <value>Breakdown</value>
     </data>
-    <data name="InstanceStorageView_AdditionalLabelText" xml:space="preserve">
+    <data name="InstanceStoragePage_AdditionalLabelText" xml:space="preserve">
         <value>Additional</value>
     </data>
     <data name="AssetKind_Log" xml:space="preserve">
@@ -1536,7 +1527,7 @@
     <data name="AssetKind_Config" xml:space="preserve">
         <value>Config</value>
     </data>
-    <data name="InstanceStorageView_OtherLabelText" xml:space="preserve">
+    <data name="InstanceStoragePage_OtherLabelText" xml:space="preserve">
         <value>Other Files</value>
     </data>
     <data name="GameCrashReportModal_Title" xml:space="preserve">
@@ -1719,16 +1710,16 @@
     <data name="ProxySettingsDialog_RestartRequiredLabelText" xml:space="preserve">
         <value>Proxy settings will take effect after restarting the application</value>
     </data>
-    <data name="SettingsView_ProxyCurrentStatusLabelText" xml:space="preserve">
+    <data name="SettingsPage_ProxyCurrentStatusLabelText" xml:space="preserve">
         <value>Current Status</value>
     </data>
-    <data name="SettingsView_ProxyStatusAutoText" xml:space="preserve">
+    <data name="SettingsPage_ProxyStatusAutoText" xml:space="preserve">
         <value>Auto (System Proxy)</value>
     </data>
-    <data name="SettingsView_ProxyStatusDisabledText" xml:space="preserve">
+    <data name="SettingsPage_ProxyStatusDisabledText" xml:space="preserve">
         <value>Disabled (Direct Connection)</value>
     </data>
-    <data name="SettingsView_ProxyStatusManualText" xml:space="preserve">
+    <data name="SettingsPage_ProxyStatusManualText" xml:space="preserve">
         <value>Manual: {0}://{1}:{2}</value>
     </data>
     <data name="ProxySettingsDialog_TestSuccessLabelText" xml:space="preserve">
@@ -1737,88 +1728,88 @@
     <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
         <value>Failed</value>
     </data>
-    <data name="InstanceActivitiesView_PlaytimeTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_PlaytimeTabText" xml:space="preserve">
         <value>Playtime</value>
     </data>
-    <data name="InstanceActivitiesView_HealthTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_HealthTabText" xml:space="preserve">
         <value>Health</value>
     </data>
-    <data name="InstanceActivitiesView_CrashCountLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_CrashCountLabelText" xml:space="preserve">
         <value>Crash Count</value>
     </data>
-    <data name="InstanceActivitiesView_SuccessRateLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_SuccessRateLabelText" xml:space="preserve">
         <value>Success Rate</value>
     </data>
-    <data name="InstanceActivitiesView_StatisticsTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_StatisticsTabText" xml:space="preserve">
         <value>Statistics</value>
     </data>
-    <data name="InstanceActivitiesView_TrendsTabText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_TrendsTabText" xml:space="preserve">
         <value>Trends</value>
     </data>
-    <data name="InstanceActivitiesView_AverageSessionLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_AverageSessionLabelText" xml:space="preserve">
         <value>Avg. Session</value>
     </data>
-    <data name="InstanceActivitiesView_LongestSessionLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_LongestSessionLabelText" xml:space="preserve">
         <value>Longest Session</value>
     </data>
-    <data name="InstanceActivitiesView_FirstPlayedLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_FirstPlayedLabelText" xml:space="preserve">
         <value>First Played</value>
     </data>
-    <data name="InstanceActivitiesView_LastPlayedLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_LastPlayedLabelText" xml:space="preserve">
         <value>Last Played</value>
     </data>
-    <data name="InstanceActivitiesView_PlaytimePercentageLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_PlaytimePercentageLabelText" xml:space="preserve">
         <value>Playtime Share</value>
     </data>
-    <data name="InstanceActivitiesView_ThisWeekLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ThisWeekLabelText" xml:space="preserve">
         <value>This Week</value>
     </data>
-    <data name="InstanceActivitiesView_LastWeekLabelText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_LastWeekLabelText" xml:space="preserve">
         <value>Last Week</value>
     </data>
-    <data name="InstanceActivitiesView_DataManagementTitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_DataManagementTitle" xml:space="preserve">
         <value>Data Management</value>
     </data>
-    <data name="InstanceActivitiesView_DataManagementSubtitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_DataManagementSubtitle" xml:space="preserve">
         <value>Manage statistics and action records for this instance</value>
     </data>
-    <data name="InstanceActivitiesView_ClearStatisticsButtonText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearStatisticsButtonText" xml:space="preserve">
         <value>Clear Statistics</value>
     </data>
-    <data name="InstanceActivitiesView_ClearRecordsButtonText" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearRecordsButtonText" xml:space="preserve">
         <value>Clear Records</value>
     </data>
-    <data name="InstanceActivitiesView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationTitle" xml:space="preserve">
         <value>Clear Statistics</value>
     </data>
-    <data name="InstanceActivitiesView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationMessage" xml:space="preserve">
         <value>Are you sure you want to clear all statistics for this instance? This action cannot be undone.</value>
     </data>
-    <data name="InstanceActivitiesView_ClearRecordsConfirmationTitle" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearRecordsConfirmationTitle" xml:space="preserve">
         <value>Clear Records</value>
     </data>
-    <data name="InstanceActivitiesView_ClearRecordsConfirmationMessage" xml:space="preserve">
+    <data name="InstanceActivitiesPage_ClearRecordsConfirmationMessage" xml:space="preserve">
         <value>Are you sure you want to clear all action records for this instance? This action cannot be undone.</value>
     </data>
-    <data name="SettingsView_DataManagementLabelText" xml:space="preserve">
+    <data name="SettingsPage_DataManagementLabelText" xml:space="preserve">
         <value>Data Management</value>
     </data>
-    <data name="SettingsView_ClearStatisticsButtonText" xml:space="preserve">
+    <data name="SettingsPage_ClearStatisticsButtonText" xml:space="preserve">
         <value>Clear Statistics</value>
     </data>
-    <data name="SettingsView_ClearRecordsButtonText" xml:space="preserve">
+    <data name="SettingsPage_ClearRecordsButtonText" xml:space="preserve">
         <value>Clear Records</value>
     </data>
-    <data name="SettingsView_ClearStatisticsConfirmationTitle" xml:space="preserve">
+    <data name="SettingsPage_ClearStatisticsConfirmationTitle" xml:space="preserve">
         <value>Clear Statistics</value>
     </data>
-    <data name="SettingsView_ClearStatisticsConfirmationMessage" xml:space="preserve">
+    <data name="SettingsPage_ClearStatisticsConfirmationMessage" xml:space="preserve">
         <value>Are you sure you want to clear all play statistics for all instances? This action cannot be undone.</value>
     </data>
-    <data name="SettingsView_ClearRecordsConfirmationTitle" xml:space="preserve">
+    <data name="SettingsPage_ClearRecordsConfirmationTitle" xml:space="preserve">
         <value>Clear Records</value>
     </data>
-    <data name="SettingsView_ClearRecordsConfirmationMessage" xml:space="preserve">
+    <data name="SettingsPage_ClearRecordsConfirmationMessage" xml:space="preserve">
         <value>Are you sure you want to clear all action records for all instances? This action cannot be undone.</value>
     </data>
     <data name="Shared_Copy" xml:space="preserve">
@@ -1830,10 +1821,10 @@
     <data name="Shared_Paste" xml:space="preserve">
         <value>Paste</value>
     </data>
-    <data name="SettingsView_UpdateSourceLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdateSourceLabelText" xml:space="preserve">
         <value>Update Source</value>
     </data>
-    <data name="SettingsView_UpdateAutoCheckLabelText" xml:space="preserve">
+    <data name="SettingsPage_UpdateAutoCheckLabelText" xml:space="preserve">
         <value>Check for updates on startup</value>
     </data>
     <!-- OOBE Modal -->
@@ -2026,46 +2017,46 @@
         <value>By continuing, you acknowledge and agree to the privacy terms above.</value>
     </data>
     <!-- Maintenance Storage View -->
-    <data name="MaintenanceStorageView_Title" xml:space="preserve">
+    <data name="MaintenanceStoragePage_Title" xml:space="preserve">
         <value>Storage Maintenance</value>
     </data>
-    <data name="MaintenanceStorageView_TotalLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_TotalLabelText" xml:space="preserve">
         <value>Total</value>
     </data>
-    <data name="MaintenanceStorageView_CacheLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_CacheLabelText" xml:space="preserve">
         <value>Cache</value>
     </data>
-    <data name="MaintenanceStorageView_InstancesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_InstancesLabelText" xml:space="preserve">
         <value>Instances</value>
     </data>
-    <data name="MaintenanceStorageView_CacheTitle" xml:space="preserve">
+    <data name="MaintenanceStoragePage_CacheTitle" xml:space="preserve">
         <value>Cache</value>
     </data>
-    <data name="MaintenanceStorageView_PurgeButtonText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_PurgeButtonText" xml:space="preserve">
         <value>Purge</value>
     </data>
-    <data name="MaintenanceStorageView_PackagesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_PackagesLabelText" xml:space="preserve">
         <value>Packages</value>
     </data>
-    <data name="MaintenanceStorageView_LibrariesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_LibrariesLabelText" xml:space="preserve">
         <value>Libraries</value>
     </data>
-    <data name="MaintenanceStorageView_AssetsLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_AssetsLabelText" xml:space="preserve">
         <value>Assets</value>
     </data>
-    <data name="MaintenanceStorageView_RuntimesLabelText" xml:space="preserve">
+    <data name="MaintenanceStoragePage_RuntimesLabelText" xml:space="preserve">
         <value>Runtimes</value>
     </data>
-    <data name="MaintenanceStorageView_InstancesTitle" xml:space="preserve">
+    <data name="MaintenanceStoragePage_InstancesTitle" xml:space="preserve">
         <value>Instances</value>
     </data>
-    <data name="InstancePropertiesView_QuickConnectPlaceholder" xml:space="preserve">
+    <data name="InstancePropertiesPage_QuickConnectPlaceholder" xml:space="preserve">
         <value>(Disabled if unset)</value>
     </data>
-    <data name="InstancePropertiesView_JavaHomePlaceholder" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaHomePlaceholder" xml:space="preserve">
         <value>(Auto decide if unset)</value>
     </data>
-    <data name="InstancePropertiesView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+    <data name="InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>(Empty)</value>
     </data>
     <data name="GameCrashReportModal_InstalledMemoryLabelText" xml:space="preserve">
@@ -2074,58 +2065,58 @@
     <data name="GameCrashReportModal_Subtitle" xml:space="preserve">
         <value>💥 CRASHED!</value>
     </data>
-    <data name="SettingsView_Java25LabelText" xml:space="preserve">
+    <data name="SettingsPage_Java25LabelText" xml:space="preserve">
         <value>Java 25 Home</value>
     </data>
     <data name="Error_BadNetwork" xml:space="preserve">
         <value>Network Error</value>
     </data>
-    <data name="InstanceSetupView_ImportListMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ImportListMenuText" xml:space="preserve">
         <value>Import List</value>
     </data>
-    <data name="MarketplaceSearchView_Message" xml:space="preserve">
+    <data name="MarketplaceSearchPage_Message" xml:space="preserve">
         <value>View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install.</value>
     </data>
-    <data name="LandingView_Title" xml:space="preserve">
+    <data name="LandingPage_Title" xml:space="preserve">
         <value>Welcome Back</value>
     </data>
-    <data name="LandingView_Subtitle" xml:space="preserve">
+    <data name="LandingPage_Subtitle" xml:space="preserve">
         <value>Quick access to your game world</value>
     </data>
-    <data name="LandingView_FeaturedModpacksLabelText" xml:space="preserve">
+    <data name="LandingPage_FeaturedModpacksLabelText" xml:space="preserve">
         <value>Featured Modpacks</value>
     </data>
-    <data name="LandingView_MoreButtonText" xml:space="preserve">
+    <data name="LandingPage_MoreButtonText" xml:space="preserve">
         <value>More</value>
     </data>
-    <data name="LandingView_RandomPlayTitle" xml:space="preserve">
+    <data name="LandingPage_RandomPlayTitle" xml:space="preserve">
         <value>Don't know what to play?</value>
     </data>
-    <data name="LandingView_RandomPlaySubtitle" xml:space="preserve">
+    <data name="LandingPage_RandomPlaySubtitle" xml:space="preserve">
         <value>Pick one randomly!</value>
     </data>
-    <data name="LandingView_RandomPlayButtonText" xml:space="preserve">
+    <data name="LandingPage_RandomPlayButtonText" xml:space="preserve">
         <value>I'm Feeling Lucky</value>
     </data>
-    <data name="LandingView_FeaturedModpacksErrorText" xml:space="preserve">
+    <data name="LandingPage_FeaturedModpacksErrorText" xml:space="preserve">
         <value>Failed to load featured modpacks</value>
     </data>
-    <data name="LandingView_MinecraftNewsErrorText" xml:space="preserve">
+    <data name="LandingPage_MinecraftNewsErrorText" xml:space="preserve">
         <value>Failed to load Minecraft news</value>
     </data>
-    <data name="LandingView_RetryButtonText" xml:space="preserve">
+    <data name="LandingPage_RetryButtonText" xml:space="preserve">
         <value>Retry</value>
     </data>
-    <data name="InstanceSetupView_ProjectIdMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ProjectIdMenuText" xml:space="preserve">
         <value>Project Id</value>
     </data>
-    <data name="InstanceSetupView_VersionIdMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_VersionIdMenuText" xml:space="preserve">
         <value>Version Id</value>
     </data>
-    <data name="InstanceSetupView_ProjectNameMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_ProjectNameMenuText" xml:space="preserve">
         <value>Project Name</value>
     </data>
-    <data name="InstanceSetupView_VersionNameMenuText" xml:space="preserve">
+    <data name="InstanceSetupPage_VersionNameMenuText" xml:space="preserve">
         <value>Version Name</value>
     </data>
     <data name="InstancePackageModal_HistoryTabText" xml:space="preserve">
@@ -2152,7 +2143,7 @@
     <data name="InstancePackageModal_PastTagText" xml:space="preserve">
         <value>Past</value>
     </data>
-    <data name="LandingView_NoRecentPlayLabelText" xml:space="preserve">
+    <data name="LandingPage_NoRecentPlayLabelText" xml:space="preserve">
         <value>Not Played Yet</value>
     </data>
     <data name="ExhibitPackageModal_HistoryTabText" xml:space="preserve">
@@ -2251,7 +2242,7 @@
     <data name="ProfileRuleSelectorModal_ChildrenEditButtonText" xml:space="preserve">
         <value>Edit</value>
     </data>
-    <data name="InstanceSetupView_RuleCountLabelText" xml:space="preserve">
+    <data name="InstanceSetupPage_RuleCountLabelText" xml:space="preserve">
         <value>Deployment Rule Count:</value>
     </data>
     <data name="Shared_Yes" xml:space="preserve">
@@ -2293,7 +2284,7 @@
     <data name="ModpackExporterDialog_IncludingTagsLabelText" xml:space="preserve">
         <value>Include package tags</value>
     </data>
-    <data name="InstanceStorageView_OpenWikiButtonText" xml:space="preserve">
+    <data name="InstanceStoragePage_OpenWikiButtonText" xml:space="preserve">
         <value>What does import/persist mean?</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
@@ -2311,52 +2302,52 @@
     <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
         <value>No tags available</value>
     </data>
-    <data name="InstanceDashboardView_LiveLogLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_LiveLogLabelText" xml:space="preserve">
         <value>Live Log</value>
     </data>
-    <data name="InstanceDashboardView_RunningLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_RunningLabelText" xml:space="preserve">
         <value>Running</value>
     </data>
-    <data name="InstanceDashboardView_DeployingLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_DeployingLabelText" xml:space="preserve">
         <value>Deploying</value>
     </data>
-    <data name="InstanceDashboardView_UpdatingLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_UpdatingLabelText" xml:space="preserve">
         <value>Updating</value>
     </data>
-    <data name="InstanceDashboardView_IdleLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_IdleLabelText" xml:space="preserve">
         <value>Idle</value>
     </data>
-    <data name="InstanceDashboardView_SessionCountLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_SessionCountLabelText" xml:space="preserve">
         <value>Sessions</value>
     </data>
-    <data name="InstanceDashboardView_LogsButtonText" xml:space="preserve">
+    <data name="InstanceDashboardPage_LogsButtonText" xml:space="preserve">
         <value>Logs</value>
     </data>
-    <data name="InstanceDashboardView_CrashCountLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_CrashCountLabelText" xml:space="preserve">
         <value>Crashes</value>
     </data>
-    <data name="InstanceDashboardView_CrashReportsButtonText" xml:space="preserve">
+    <data name="InstanceDashboardPage_CrashReportsButtonText" xml:space="preserve">
         <value>Crash Reports</value>
     </data>
-    <data name="InstanceDashboardView_NoDataLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_NoDataLabelText" xml:space="preserve">
         <value>No Data</value>
     </data>
-    <data name="InstanceDashboardView_SuccessRateLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_SuccessRateLabelText" xml:space="preserve">
         <value>Success Rate</value>
     </data>
-    <data name="InstanceDashboardView_CpuUsageLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_CpuUsageLabelText" xml:space="preserve">
         <value>CPU Usage</value>
     </data>
-    <data name="InstanceDashboardView_MemoryUsageLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_MemoryUsageLabelText" xml:space="preserve">
         <value>Memory Usage</value>
     </data>
-    <data name="InstanceDashboardView_UptimeLabelText" xml:space="preserve">
+    <data name="InstanceDashboardPage_UptimeLabelText" xml:space="preserve">
         <value>Uptime</value>
     </data>
-    <data name="InstanceDashboardView_SearchPlaceholder" xml:space="preserve">
+    <data name="InstanceDashboardPage_SearchPlaceholder" xml:space="preserve">
         <value>Search logs...</value>
     </data>
-    <data name="InstanceDashboardView_Test" xml:space="preserve">
+    <data name="InstanceDashboardPage_Test" xml:space="preserve">
         <value />
     </data>
     <data name="NotificationSidebar_NotificationsLabelText" xml:space="preserve">
@@ -2391,5 +2382,98 @@
     </data>
     <data name="ProfileRuleModal_ResourcePackMenuText" xml:space="preserve">
         <value>Resource Pack</value>
+    </data>
+  <data name="InstanceWorkspacePage_LockedInfoBarText" xml:space="preserve">
+    <value>This instance was imported from a modpack, so changes cannot be applied to the modpack's original files.</value>
+  </data>
+  <data name="InstanceWorkspacePage_ChangesTabText" xml:space="preserve">
+    <value>Changes</value>
+  </data>
+  <data name="InstanceWorkspacePage_RefreshButtonText" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="InstanceWorkspacePage_SearchPlaceholder" xml:space="preserve">
+    <value>Search file paths...</value>
+  </data>
+  <data name="InstanceWorkspacePage_SameTagText" xml:space="preserve">
+    <value>No Changes</value>
+  </data>
+  <data name="InstanceWorkspacePage_OutdatedTagText" xml:space="preserve">
+    <value>Outdated</value>
+  </data>
+  <data name="InstanceWorkspacePage_OutdatedTagToolTip" xml:space="preserve">
+    <value>The original version of this file has changed, usually due to a modpack update.</value>
+  </data>
+  <data name="InstanceWorkspacePage_UpdatedTagText" xml:space="preserve">
+    <value>Updated</value>
+  </data>
+  <data name="InstanceWorkspacePage_UpdatedTagToolTip" xml:space="preserve">
+    <value>This file has been modified by the client.</value>
+  </data>
+  <data name="InstanceWorkspacePage_DeletedTagText" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="InstanceWorkspacePage_DeletedTagToolTip" xml:space="preserve">
+    <value>The original version of this file was removed, usually due to a modpack update.</value>
+  </data>
+  <data name="InstanceWorkspacePage_QuickInfoTitle" xml:space="preserve">
+    <value>Quick Info</value>
+  </data>
+  <data name="InstanceWorkspacePage_FileTypeLabelText" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="InstanceWorkspacePage_LastModifiedLabelText" xml:space="preserve">
+    <value>Last Modified</value>
+  </data>
+  <data name="InstanceWorkspacePage_FileSizeLabelText" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="InstanceWorkspacePage_SuggestedActionsTitle" xml:space="preserve">
+    <value>Suggested Actions</value>
+  </data>
+  <data name="InstanceWorkspacePage_ViewDiffButtonText" xml:space="preserve">
+    <value>View Diff</value>
+  </data>
+  <data name="InstanceWorkspacePage_ApplyButtonText" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="InstanceWorkspacePage_DiscardButtonText" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="InstanceWorkspacePage_OverwriteButtonText" xml:space="preserve">
+    <value>Overwrite</value>
+  </data>
+  <data name="InstanceWorkspacePage_UpdateButtonText" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="InstanceWorkspacePage_OpenLocationButtonText" xml:space="preserve">
+    <value>Open Location</value>
+  </data>
+  <data name="InstanceWorkspacePage_CopyPathButtonText" xml:space="preserve">
+    <value>Copy Path</value>
+  </data>
+  <data name="InstanceWorkspacePage_SelectFileTitle" xml:space="preserve">
+    <value>Select a File</value>
+  </data>
+  <data name="InstanceWorkspacePage_SelectFilePrompt" xml:space="preserve">
+    <value>File details and available actions will appear on the right.</value>
+  </data>
+  <data name="WorkspaceDiffModal_DifferentTitle" xml:space="preserve">
+    <value>Differences Found</value>
+  </data>
+  <data name="WorkspaceDiffModal_ContentBasedPrompt" xml:space="preserve">
+    <value>Based on content comparison</value>
+  </data>
+  <data name="WorkspaceDiffModal_IdenticalTitle" xml:space="preserve">
+    <value>Identical</value>
+  </data>
+  <data name="WorkspaceDiffModal_LineCountSuffix" xml:space="preserve">
+    <value>Ln.</value>
+  </data>
+    <data name="WorkspaceDiffModal_LiveTagText" xml:space="preserve">
+        <value>Live</value>
+    </data>
+    <data name="WorkspaceDiffModal_ImportTagText" xml:space="preserve">
+        <value>Import</value>
     </data>
 </root>

@@ -174,7 +174,7 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 PasswordChar="●"
-                                PlaceholderText="{x:Static lang:Resources.SettingsView_ProxyPasswordPlaceholder}"
+                                PlaceholderText="{x:Static lang:Resources.SettingsPage_ProxyPasswordPlaceholder}"
                                 Text="{Binding $parent[app:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}" />
                         </Grid>
 

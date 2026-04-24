@@ -212,7 +212,7 @@ public partial class LandingPageModel(
     }
 
     [RelayCommand]
-    private void OpenAccountsView() => navigationService.Navigate<AccountsPage>();
+    private void OpenAccountsPage() => navigationService.Navigate<AccountsPage>();
 
     [RelayCommand]
     private void RefreshMinecraftNews() => LoadMinecraftNews();
@@ -295,7 +295,7 @@ public partial class LandingPageModel(
                 version.VersionId
             );
             notificationService.PopMessage(
-                Resources.MarketplaceSearchView_ModpackInstallingNotificationMessage.Replace(
+                Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage.Replace(
                     "{0}",
                     version.VersionName
                 ),

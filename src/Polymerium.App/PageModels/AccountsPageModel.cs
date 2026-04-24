@@ -40,8 +40,8 @@ public partial class AccountsPageModel(
         if (found != null)
         {
             notificationService.PopMessage(
-                Resources.AccountsView_AccountAddingDangerNotificationMessage,
-                Resources.AccountsView_AccountAddingDangerNotificationTitle,
+                Resources.AccountsPage_AccountAddingDangerNotificationMessage,
+                Resources.AccountsPage_AccountAddingDangerNotificationTitle,
                 GrowlLevel.Danger,
                 thumbnail: AccountHelper.GetFaceUrl(account.Uuid)
             );

@@ -122,7 +122,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         {
             _notificationService.PopMessage(
                 ex,
-                Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle,
+                Resources.InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle,
                 thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
             );
         }
@@ -150,7 +150,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         #region Update Overrides & Perferences
 
         JavaHomeOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_HOME);
-        JavaHomeWatermark = Resources.InstancePropertiesView_JavaHomePlaceholder;
+        JavaHomeWatermark = Resources.InstancePropertiesPage_JavaHomePlaceholder;
         JavaMaxMemoryOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
         JavaAdditionalArgumentsOverride = AccessOverrideString(
@@ -160,7 +160,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             _configurationService.Value.GameJavaAdditionalArguments
         )
             ? _configurationService.Value.GameJavaAdditionalArguments
-            : Resources.InstancePropertiesView_JavaAdditionalArgumentsPlaceholder;
+            : Resources.InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder;
         WindowInitialHeightOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_HEIGHT);
         WindowInitialHeightWatermark =
             _configurationService.Value.GameWindowInitialHeight.ToString();
@@ -173,7 +173,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         QuickConnectAddressOverride = AccessOverrideString(
             Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
         );
-        QuickConnectAddressWatermark = Resources.InstancePropertiesView_QuickConnectPlaceholder;
+        QuickConnectAddressWatermark = Resources.InstancePropertiesPage_QuickConnectPlaceholder;
 
         #endregion
 
@@ -212,8 +212,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         if (box != null)
         {
             var path = await _overlayService.RequestFileAsync(
-                Resources.InstancePropertiesView_RequestJavaPrompt,
-                Resources.InstancePropertiesView_RequestJavaTitle
+                Resources.InstancePropertiesPage_RequestJavaPrompt,
+                Resources.InstancePropertiesPage_RequestJavaTitle
             );
             if (path != null && File.Exists(path))
             {
@@ -316,7 +316,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             }
         );
         _notificationService.PopMessage(
-            Resources.InstancePropertiesView_UnlockingSuccessNotificationMessage,
+            Resources.InstancePropertiesPage_UnlockingSuccessNotificationMessage,
             Basic.Key,
             GrowlLevel.Success,
             thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
@@ -334,8 +334,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     private async Task SelectThumbnailAsync()
     {
         var path = await _overlayService.RequestFileAsync(
-            Resources.InstancePropertiesView_RequestThumbnailPrompt,
-            Resources.InstancePropertiesView_RequestThumbnailTitle
+            Resources.InstancePropertiesPage_RequestThumbnailPrompt,
+            Resources.InstancePropertiesPage_RequestThumbnailTitle
         );
         if (path != null)
         {
@@ -347,8 +347,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             else
             {
                 _notificationService.PopMessage(
-                    Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationMessage,
-                    Resources.InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
+                    Resources.InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage,
+                    Resources.InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle,
                     GrowlLevel.Warning,
                     thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                 );
@@ -360,8 +360,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     private async Task RenameInstance()
     {
         var name = await _overlayService.RequestInputAsync(
-            Resources.InstancePropertiesView_RequestNamePrompt,
-            Resources.InstancePropertiesView_RequestNameTitle,
+            Resources.InstancePropertiesPage_RequestNamePrompt,
+            Resources.InstancePropertiesPage_RequestNameTitle,
             Basic.Name
         );
         if (name != null && _owned != null && !string.Equals(name, Basic.Name))

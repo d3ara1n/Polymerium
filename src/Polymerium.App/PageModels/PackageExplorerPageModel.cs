@@ -71,7 +71,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             {
                 throw new PageNotReachedException(
                     typeof(InstancePage),
-                    Resources.InstanceView_KeyNotFoundExceptionMessage.Replace("{0}", key)
+                    Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key)
                 );
             }
         }

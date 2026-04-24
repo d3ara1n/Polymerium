@@ -17,10 +17,10 @@
         Margin="24"
         Spacing="12">
         <app:SettingsEntry
-            Title="{x:Static lang:Resources.InstancePropertiesView_TitleTitle}"
+            Title="{x:Static lang:Resources.InstancePropertiesPage_TitleTitle}"
             Icon="AppTitle"
-            Summary="{x:Static lang:Resources.InstancePropertiesView_TitleSubtitle}">
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_DisplayNameLabelText}">
+            Summary="{x:Static lang:Resources.InstancePropertiesPage_TitleSubtitle}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_DisplayNameLabelText}">
                 <Border
                     Background="{StaticResource ControlBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
@@ -44,7 +44,7 @@
                         <Button
                             Classes="Small"
                             Command="{Binding RenameInstanceCommand}"
-                            Content="{x:Static lang:Resources.InstancePropertiesView_RenameButtonText}"
+                            Content="{x:Static lang:Resources.InstancePropertiesPage_RenameButtonText}"
                             Theme="{StaticResource OutlineButtonTheme}">
                             <Button.CornerRadius>
                                 <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
@@ -56,7 +56,7 @@
                     </StackPanel>
                 </Border>
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_ThumbnailLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_ThumbnailLabelText}">
                 <Grid
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="12">
@@ -95,7 +95,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Symbol="Document" />
-                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_SelectButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_SelectButtonText}" />
                             </StackPanel>
                         </Button>
                         <Button
@@ -108,7 +108,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Symbol="Delete" />
-                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_RemoveButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_RemoveButtonText}" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -117,9 +117,9 @@
         </app:SettingsEntry>
         <husk:Divider />
         <app:SettingsEntry
-            Title="{x:Static lang:Resources.InstancePropertiesView_OverridesTitle}"
+            Title="{x:Static lang:Resources.InstancePropertiesPage_OverridesTitle}"
             Icon="Games"
-            Summary="{x:Static lang:Resources.InstancePropertiesView_OverridesSubtitle}">
+            Summary="{x:Static lang:Resources.InstancePropertiesPage_OverridesSubtitle}">
             <Button Command="{Binding GotoSettingsCommand}">
                 <Grid ColumnDefinitions="Auto,8,*">
                     <fi:SymbolIcon
@@ -128,15 +128,15 @@
                     <StackPanel
                         Grid.Column="2"
                         VerticalAlignment="Center">
-                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_NavigateToGlobalButtonTitle}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_NavigateToGlobalButtonTitle}" />
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstancePropertiesView_NavigateToGlobalButtonSubtitle}" />
+                            Text="{x:Static lang:Resources.InstancePropertiesPage_NavigateToGlobalButtonSubtitle}" />
                     </StackPanel>
                 </Grid>
             </Button>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaHomeLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaHomeLabelText}">
                 <TextBox
                     PlaceholderText="{Binding JavaHomeWatermark}"
                     Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}">
@@ -158,7 +158,7 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaMaxMemoryLabelText}">
                 <NumericUpDown
                     Increment="512"
                     Minimum="0"
@@ -171,17 +171,17 @@
                                 Margin="8,0"
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstancePropertiesView_JavaMaxMemoryUnitText}" />
+                                Text="{x:Static lang:Resources.InstancePropertiesPage_JavaMaxMemoryUnitText}" />
                         </StackPanel>
                     </NumericUpDown.InnerRightContent>
                 </NumericUpDown>
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_JavaAdditionalArgumentsLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaAdditionalArgumentsLabelText}">
                 <TextBox
                     PlaceholderText="{Binding JavaAdditionalArgumentsWatermark}"
                     Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_WindowInitialSizeLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
@@ -193,7 +193,7 @@
                                     Margin="8,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstancePropertiesView_WindowWidthLabelText}" />
+                                    Text="{x:Static lang:Resources.InstancePropertiesPage_WindowWidthLabelText}" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
                         </TextBox.InnerLeftContent>
@@ -208,14 +208,14 @@
                                     Margin="8,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstancePropertiesView_WindowHeightLabelText}" />
+                                    Text="{x:Static lang:Resources.InstancePropertiesPage_WindowHeightLabelText}" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
                         </TextBox.InnerLeftContent>
                     </TextBox>
                 </Grid>
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_QuickConnectLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_QuickConnectLabelText}">
                 <TextBox
                     PlaceholderText="{Binding QuickConnectAddressWatermark}"
                     Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}" />
@@ -238,9 +238,9 @@
         <!-- </app:SettingsEntry> -->
         <!-- <husk:Divider /> -->
         <app:SettingsEntry
-            Title="{x:Static lang:Resources.InstancePropertiesView_BehaviorsTitle}"
+            Title="{x:Static lang:Resources.InstancePropertiesPage_BehaviorsTitle}"
             Icon="Handshake"
-            Summary="{x:Static lang:Resources.InstancePropertiesView_BehaviorsSubtitle}">
+            Summary="{x:Static lang:Resources.InstancePropertiesPage_BehaviorsSubtitle}">
             <!-- <app:SettingsEntryItem Header="[Experimental] Deployment Method"> -->
             <!--     <StackPanel Spacing="8"> -->
             <!--         <ComboBox SelectedIndex="0" IsEnabled="False"> -->
@@ -248,13 +248,13 @@
             <!--         </ComboBox> -->
             <!--     </StackPanel> -->
             <!-- </app:SettingsEntryItem> -->
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_FastLaunchLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_FastLaunchLabelText}">
                 <StackPanel Spacing="8">
-                    <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesView_FastLaunchPrompt}" />
+                    <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesPage_FastLaunchPrompt}" />
                     <ToggleSwitch
                         IsChecked="{Binding BehaviorDeployFastMode, Mode=TwoWay}"
                         OffContent="{x:Static lang:Resources.Enum_Off}"
-                        OnContent="{x:Static lang:Resources.InstancePropertiesView_FastLaunchOnText}" />
+                        OnContent="{x:Static lang:Resources.InstancePropertiesPage_FastLaunchOnText}" />
                 </StackPanel>
             </app:SettingsEntryItem>
         </app:SettingsEntry>
@@ -263,12 +263,12 @@
             Background="Transparent"
             IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
             <app:SettingsEntry
-                Title="{x:Static lang:Resources.InstancePropertiesView_DebugTitle}"
+                Title="{x:Static lang:Resources.InstancePropertiesPage_DebugTitle}"
                 Icon="Bug"
-                Summary="{x:Static lang:Resources.InstancePropertiesView_DebugSubtitle}">
-                <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityLabelText}">
+                Summary="{x:Static lang:Resources.InstancePropertiesPage_DebugSubtitle}">
+                <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_CheckIntegrityLabelText}">
                     <Button Command="{Binding CheckIntegrityCommand}">
-                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_CheckIntegrityButtonText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_CheckIntegrityButtonText}" />
                     </Button>
                 </app:SettingsEntryItem>
             </app:SettingsEntry>
@@ -283,7 +283,7 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="Info" />
-                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_InoperableLabelText}" />
                     </StackPanel>
                 </husk:Card>
             </husk:BusyContainer.PendingContent>
@@ -305,15 +305,15 @@
             Background="Transparent"
             IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
             <app:SettingsEntry
-                Title="{x:Static lang:Resources.InstancePropertiesView_DangerZoneTitle}"
+                Title="{x:Static lang:Resources.InstancePropertiesPage_DangerZoneTitle}"
                 Icon="WarningShield"
-                Summary="{x:Static lang:Resources.InstancePropertiesView_DangerZoneSubtitle}">
+                Summary="{x:Static lang:Resources.InstancePropertiesPage_DangerZoneSubtitle}">
                 <app:SafeLock
                     Name="Lock"
                     SafeCode="{Binding SafeCode}" />
                 <app:SettingsEntryItem
                     IsEnabled="{Binding #Lock.IsUnlocked}"
-                    Header="{x:Static lang:Resources.InstancePropertiesView_SacrificeLabelText}">
+                    Header="{x:Static lang:Resources.InstancePropertiesPage_SacrificeLabelText}">
                     <Grid ColumnDefinitions="*,8,*">
                         <Button
                             Grid.Column="0"
@@ -324,7 +324,7 @@
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="ArrowReset" />
-                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_ResetButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_ResetButtonText}" />
                             </StackPanel>
                         </Button>
                         <Button
@@ -337,7 +337,7 @@
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Delete" />
-                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_DeleteButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_DeleteButtonText}" />
                             </StackPanel>
                         </Button>
                     </Grid>
@@ -345,9 +345,9 @@
                 <app:SettingsEntryItem
                     IsEnabled="{Binding #Lock.IsUnlocked}"
                     IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}}"
-                    Header="{x:Static lang:Resources.InstancePropertiesView_LinkerLabelText}">
+                    Header="{x:Static lang:Resources.InstancePropertiesPage_LinkerLabelText}">
                     <StackPanel Spacing="8">
-                        <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesView_LinkerPrompt}" />
+                        <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesPage_LinkerPrompt}" />
                         <Button Command="{Binding UnlockInstanceCommand}">
                             <StackPanel
                                 Orientation="Horizontal"
@@ -355,7 +355,7 @@
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="WarningLockOpen" />
-                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_UnlockButtonText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_UnlockButtonText}" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -371,7 +371,7 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             Symbol="Info" />
-                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesView_InoperableLabelText}" />
+                        <TextBlock Text="{x:Static lang:Resources.InstancePropertiesPage_InoperableLabelText}" />
                     </StackPanel>
                 </husk:Card>
             </husk:BusyContainer.PendingContent>
