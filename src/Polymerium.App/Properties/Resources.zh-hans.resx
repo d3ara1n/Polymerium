@@ -1612,7 +1612,7 @@
     <value>导出完成</value>
   </data>
   <data name="GameCrashReportModal_AiExportSuccessMessage" xml:space="preserve">
-    <value>AI 分析 Markdown 已导出。</value>
+    <value>AI 分析 Markdown 已导出。将其发送给 Deepseek 以获取诊断建议。</value>
   </data>
   <data name="GameCrashReportModal_AiExportFailedTitle" xml:space="preserve">
     <value>AI 导出失败</value>

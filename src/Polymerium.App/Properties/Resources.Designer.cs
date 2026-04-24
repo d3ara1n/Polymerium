@@ -1302,7 +1302,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AI analysis markdown has been exported..
+        ///   Looks up a localized string similar to AI analysis markdown has been exported. Send it to Grok to get advices..
         /// </summary>
         public static string GameCrashReportModal_AiExportSuccessMessage {
             get {
