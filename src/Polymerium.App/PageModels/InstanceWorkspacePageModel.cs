@@ -14,11 +14,13 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Mvvm.Activation;
+using LibGit2Sharp;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Core.Services;
+using Trident.Core.Utilities;
 
 namespace Polymerium.App.PageModels;
 
@@ -37,20 +39,13 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
-        ProfileManager profileManager
-    )
-        : base(context, instanceManager, profileManager)
+        ProfileManager profileManager) : base(context, instanceManager, profileManager)
     {
         _notificationService = notificationService;
         _overlayService = overlayService;
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
-        _changesSource
-            .Connect()
-            .Filter(filter)
-            .Bind(out var view)
-            .Subscribe()
-            .DisposeWith(_subscriptions);
+        _changesSource.Connect().Filter(filter).Bind(out var view).Subscribe().DisposeWith(_subscriptions);
         ChangesView = view;
     }
 
@@ -58,9 +53,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private readonly CompositeDisposable _subscriptions = new();
     private CancellationToken? _initToken;
-    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x =>
-        x.RelativePath
-    );
+    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x => x.RelativePath);
 
     #endregion
 
@@ -83,6 +76,24 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     [ObservableProperty]
     public partial int ChangesCount { get; set; }
 
+    [ObservableProperty]
+    public partial bool IsGitRepository { get; set; }
+
+    [ObservableProperty]
+    public partial string GitBranchName { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string GitHeadSummary { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial int GitStagedCount { get; set; }
+
+    [ObservableProperty]
+    public partial int GitUnstagedCount { get; set; }
+
+    [ObservableProperty]
+    public partial int GitChangedCount { get; set; }
+
     #endregion
 
     #region Overrides
@@ -90,6 +101,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     protected override async Task OnInitializeAsync(CancellationToken token)
     {
         _initToken = token;
+
+        await LoadGitStatusAsync();
         await GenerateChangeListAsync(token);
     }
 
@@ -104,9 +117,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     #region Other
 
     private static Func<WorkspaceChangeModel, bool> BuildFilter(string? text) =>
-        x =>
-            string.IsNullOrEmpty(text)
-            || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
+        x => string.IsNullOrEmpty(text) || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
 
     private async Task GenerateChangeListAsync(CancellationToken token)
     {
@@ -133,19 +144,17 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                batch.Add(
-                    new()
-                    {
-                        RelativePath = liveEntry,
-                        FileName = Path.GetFileName(livePath),
-                        Kind = kind,
-                        LivePath = livePath,
-                        ImportPath = importPath,
-                        FileType = type,
-                        FileSizeRaw = file.Length,
-                        FileLastModifiedRaw = file.LastWriteTime,
-                    }
-                );
+                batch.Add(new()
+                {
+                    RelativePath = liveEntry,
+                    FileName = Path.GetFileName(livePath),
+                    Kind = kind,
+                    LivePath = livePath,
+                    ImportPath = importPath,
+                    FileType = type,
+                    FileSizeRaw = file.Length,
+                    FileLastModifiedRaw = file.LastWriteTime,
+                });
                 if (batch.Count >= 100)
                 {
                     var toAdd = batch.ToArray();
@@ -162,6 +171,99 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
         await Dispatcher.UIThread.InvokeAsync(() => ChangesCount = _changesSource.Count);
     }
+
+    private async Task LoadGitStatusAsync()
+    {
+        var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
+        var discoveredPath = Repository.Discover(dir);
+        if (string.IsNullOrEmpty(discoveredPath))
+        {
+            await ResetGitStatusAsync();
+            return;
+        }
+
+        using var repository = new Repository(discoveredPath);
+        if (!FileHelper.IsPathEquivalent(repository.Info.WorkingDirectory, dir))
+        {
+            await ResetGitStatusAsync();
+            return;
+        }
+
+        var branchName = repository.Info.IsHeadDetached ? "Detached HEAD" : repository.Head.FriendlyName;
+        var headSummary = BuildHeadSummary(repository);
+        var status =
+            repository.RetrieveStatus(new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true });
+
+        var stagedCount = 0;
+        var unstagedCount = 0;
+        var changedCount = 0;
+        foreach (var entry in status)
+        {
+            if (IsStaged(entry.State))
+            {
+                stagedCount++;
+            }
+
+            if (IsUnstaged(entry.State))
+            {
+                unstagedCount++;
+            }
+
+            changedCount++;
+        }
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            IsGitRepository = true;
+            GitBranchName = branchName;
+            GitHeadSummary = headSummary;
+            GitStagedCount = stagedCount;
+            GitUnstagedCount = unstagedCount;
+            GitChangedCount = changedCount;
+        });
+    }
+
+    private async Task ResetGitStatusAsync()
+    {
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            IsGitRepository = false;
+            GitBranchName = string.Empty;
+            GitHeadSummary = string.Empty;
+            GitStagedCount = 0;
+            GitUnstagedCount = 0;
+            GitChangedCount = 0;
+        });
+    }
+
+    private static string BuildHeadSummary(Repository repository)
+    {
+        var tip = repository.Head.Tip;
+        if (tip is null)
+        {
+            return "No commits yet";
+        }
+
+        var shortSha = tip.Sha[..7];
+        var tag = repository.Tags.FirstOrDefault(tag => tag.PeeledTarget is Commit commit && commit.Sha == tip.Sha)
+                           ?.FriendlyName;
+
+        return string.IsNullOrEmpty(tag) ? shortSha : $"{shortSha} ({tag})";
+    }
+
+    private static bool IsStaged(FileStatus status) =>
+        status.HasFlag(FileStatus.NewInIndex)
+     || status.HasFlag(FileStatus.ModifiedInIndex)
+     || status.HasFlag(FileStatus.DeletedFromIndex)
+     || status.HasFlag(FileStatus.RenamedInIndex)
+     || status.HasFlag(FileStatus.TypeChangeInIndex);
+
+    private static bool IsUnstaged(FileStatus status) =>
+        status.HasFlag(FileStatus.NewInWorkdir)
+     || status.HasFlag(FileStatus.ModifiedInWorkdir)
+     || status.HasFlag(FileStatus.DeletedFromWorkdir)
+     || status.HasFlag(FileStatus.RenamedInWorkdir)
+     || status.HasFlag(FileStatus.TypeChangeInWorkdir);
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
     {
@@ -226,12 +328,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     {
         if (model != null)
         {
-            if (
-                model.FileSizeRaw > 1024 * 1024 * 1024
-                && !await _overlayService.RequestConfirmationAsync(
-                    "File is too large. It may take time to compute and render diff."
-                )
-            )
+            if (model.FileSizeRaw > 1024 * 1024 * 1024
+             && !await _overlayService
+                    .RequestConfirmationAsync("File is too large. It may take time to compute and render diff."))
             {
                 // 文件大且用户拒绝
                 return;
@@ -241,8 +340,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanStage(WorkspaceChangeModel? model) =>
-        !IsLocked && model is not null && File.Exists(model.LivePath);
+    private bool CanStage(WorkspaceChangeModel? model) => !IsLocked && model is not null && File.Exists(model.LivePath);
 
     [RelayCommand(CanExecute = nameof(CanStage))]
     private async Task Stage(WorkspaceChangeModel? model)
@@ -252,11 +350,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (
-            !await _overlayService.RequestConfirmationAsync(
-                "This will overwrite the file from the modpack"
-            )
-        )
+        if (!await _overlayService.RequestConfirmationAsync("This will overwrite the file from the modpack"))
         {
             return;
         }
@@ -305,11 +399,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (
-            !await _overlayService.RequestConfirmationAsync(
-                "This will discard the changes from game playing"
-            )
-        )
+        if (!await _overlayService.RequestConfirmationAsync("This will discard the changes from game playing"))
         {
             return;
         }

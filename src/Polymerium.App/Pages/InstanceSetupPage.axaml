@@ -666,9 +666,8 @@
                             </TabStrip.ItemTemplate>
                         </TabStrip>
                         <SplitButton
-                            Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
-                            Command="{Binding GotoPackageExplorerPageCommand}"
-                            Foreground="{StaticResource ControlBlackForegroundBrush}">
+                            Classes="Primary"
+                            Command="{Binding GotoPackageExplorerPageCommand}">
                             <SplitButton.Flyout>
                                 <MenuFlyout>
                                     <MenuItem
