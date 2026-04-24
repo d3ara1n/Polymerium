@@ -202,7 +202,7 @@ public class DiffView : TemplatedControl
                 maxTextWidth = Math.Max(maxTextWidth, ft.WidthIncludingTrailingWhitespace);
             }
 
-            lines.Add(new DiffLineModel
+            lines.Add(new()
             {
                 LeftText = leftText,
                 RightText = rightText,

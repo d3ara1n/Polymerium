@@ -38,7 +38,7 @@ public static class InternalCommands
             {
                 return TopLevelHelper.LaunchUriAsync(
                     TopLevel.GetTopLevel(MainWindow.Instance),
-                    new Uri(str),
+                    new(str),
                     Resources.InternalCommands_OpenLinkDangerNotificationTitle
                 );
             }

@@ -686,7 +686,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                            {
                                                Commands.Checkout(repository,
                                                                  repository.Head.Tip.Tree,
-                                                                 new CheckoutOptions
+                                                                 new()
                                                                  {
                                                                      CheckoutModifiers = CheckoutModifiers.Force
                                                                  },
