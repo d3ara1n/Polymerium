@@ -179,7 +179,7 @@ public partial class LandingPageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                "Failed to open instance folder",
+                Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
                 notificationService,
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );
@@ -231,7 +231,7 @@ public partial class LandingPageModel(
         {
             notificationService.PopMessage(
                 ex,
-                "Failed to launch instance",
+                Resources.Shared_FailedToLaunchInstanceDangerNotificationTitle,
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );
         }
@@ -275,7 +275,7 @@ public partial class LandingPageModel(
             {
                 notificationService.PopMessage(
                     ex,
-                    "Failed to load modpack details",
+                    Resources.LandingPage_LoadModpackDetailsDangerNotificationTitle,
                     thumbnail: modpack.Thumbnail
                 );
             }

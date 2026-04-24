@@ -456,7 +456,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             {
                 _notificationService.PopMessage(
                     ex,
-                    "Failed to load project information",
+                    Resources.PackageExplorerPage_LoadProjectInformationDangerNotificationTitle,
                     GrowlLevel.Warning,
                     thumbnail: exhibit.Thumbnail
                 );

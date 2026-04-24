@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Pages;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Core.Services;
@@ -71,7 +72,7 @@ public partial class MaintenanceStoragePageModel(
     {
         if (
             await overlayService.RequestConfirmationAsync(
-                "Are you sure you want to purge the cache?"
+                Resources.MaintenanceStoragePage_PurgeCacheConfirmationMessage
             )
         )
         {
@@ -81,7 +82,7 @@ public partial class MaintenanceStoragePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to purge cache");
+                notificationService.PopMessage(ex, Resources.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle);
             }
 
             Calculate();

@@ -15,6 +15,7 @@ using Huskui.Avalonia.Mvvm.Models;
 using ObservableCollections;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Trident.Abstractions;
@@ -262,7 +263,7 @@ public partial class InstanceDashboardPageModel(
                         }
                         catch (Exception ex)
                         {
-                            notificationService.PopMessage(ex, "Read log file failed");
+                            notificationService.PopMessage(ex, Resources.InstanceDashboardPage_ReadLogDangerNotificationTitle);
                         }
                     }
                 }
@@ -453,7 +454,7 @@ public partial class InstanceDashboardPageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                "Failed to open logs folder",
+                Resources.InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle,
                 notificationService
             );
 
@@ -468,7 +469,7 @@ public partial class InstanceDashboardPageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                "Failed to open crash reports folder",
+                Resources.InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle,
                 notificationService
             );
 

@@ -17,6 +17,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using AppResources = Polymerium.App.Properties.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -66,7 +67,7 @@ public partial class GameCrashReportModal : Modal
         await TopLevelHelper.CopyToClipboardAsync(
             TopLevel.GetTopLevel(this),
             text,
-            "Failed to copy crash report",
+            AppResources.GameCrashReportModal_CopyCrashReportDangerNotificationTitle,
             _notificationService
         );
     }
@@ -79,7 +80,7 @@ public partial class GameCrashReportModal : Modal
             return TopLevelHelper.LaunchFileInfoAsync(
                 TopLevel.GetTopLevel(this),
                 new(Report.LogFilePath),
-                "Failed to open log file",
+                AppResources.Shared_FailedToOpenLogFileDangerNotificationTitle,
                 _notificationService
             );
         }
@@ -95,7 +96,7 @@ public partial class GameCrashReportModal : Modal
             return TopLevelHelper.LaunchFileInfoAsync(
                 TopLevel.GetTopLevel(this),
                 new(Report.CrashReportPath),
-                "Failed to open crash report",
+                AppResources.GameCrashReportModal_OpenCrashReportDangerNotificationTitle,
                 _notificationService
             );
         }
@@ -111,7 +112,7 @@ public partial class GameCrashReportModal : Modal
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(this),
                 new(Report.GameDirectory),
-                "Failed to open game directory",
+                AppResources.GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle,
                 _notificationService
             );
         }
@@ -140,13 +141,13 @@ public partial class GameCrashReportModal : Modal
             var file = await top.StorageProvider.SaveFilePickerAsync(
                 new()
                 {
-                    Title = Properties.Resources.GameCrashReportModal_ExportDialogTitle,
+                    Title = AppResources.GameCrashReportModal_ExportDialogTitle,
                     SuggestedFileName = fileName,
                     SuggestedStartLocation = await top.StorageProvider.TryGetWellKnownFolderAsync(
                         WellKnownFolder.Downloads
                     ),
                     DefaultExtension = "zip",
-                    FileTypeChoices = [new("Zip Archive") { Patterns = ["*.zip"] }],
+                    FileTypeChoices = [new(AppResources.Shared_ZipArchiveFileTypeText) { Patterns = ["*.zip"] }],
                 }
             );
 

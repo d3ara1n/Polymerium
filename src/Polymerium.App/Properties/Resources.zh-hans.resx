@@ -2497,4 +2497,243 @@
     <data name="WorkspaceDiffModal_ImportTagText" xml:space="preserve">
         <value>Import</value>
     </data>
+  <data name="SettingsPage_CheckUpdatesDangerNotificationTitle" xml:space="preserve">
+    <value>检查更新失败</value>
+  </data>
+  <data name="MaintenanceStoragePage_PurgeCacheConfirmationMessage" xml:space="preserve">
+    <value>确定要清空缓存吗？</value>
+  </data>
+  <data name="MaintenanceStoragePage_PurgeCacheDangerNotificationTitle" xml:space="preserve">
+    <value>清空缓存失败</value>
+  </data>
+  <data name="InstanceDashboardPage_ReadLogDangerNotificationTitle" xml:space="preserve">
+    <value>读取日志文件失败</value>
+  </data>
+  <data name="InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle" xml:space="preserve">
+    <value>打开日志文件夹失败</value>
+  </data>
+  <data name="InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle" xml:space="preserve">
+    <value>打开崩溃报告文件夹失败</value>
+  </data>
+  <data name="Shared_FailedToOpenFolderDangerNotificationTitle" xml:space="preserve">
+    <value>打开文件夹失败</value>
+  </data>
+  <data name="Shared_FailedToOpenInstanceFolderDangerNotificationTitle" xml:space="preserve">
+    <value>打开实例文件夹失败</value>
+  </data>
+  <data name="Shared_FailedToOpenLogFileDangerNotificationTitle" xml:space="preserve">
+    <value>打开日志文件失败</value>
+  </data>
+  <data name="Shared_FailedToLaunchInstanceDangerNotificationTitle" xml:space="preserve">
+    <value>启动实例失败</value>
+  </data>
+  <data name="Shared_FailedToDeployInstanceDangerNotificationTitle" xml:space="preserve">
+    <value>部署实例失败</value>
+  </data>
+  <data name="Shared_ZipArchiveFileTypeText" xml:space="preserve">
+    <value>Zip 压缩包</value>
+  </data>
+  <data name="InstanceFilesPage_OpenScreenshotDangerNotificationTitle" xml:space="preserve">
+    <value>打开截图文件失败</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteScreenshotConfirmationMessage" xml:space="preserve">
+    <value>确定要删除这张截图吗？</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteScreenshotDangerNotificationTitle" xml:space="preserve">
+    <value>删除截图文件失败</value>
+  </data>
+  <data name="InstanceFilesPage_ToggleModDangerNotificationTitle" xml:space="preserve">
+    <value>切换模组状态失败</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteModConfirmationMessage" xml:space="preserve">
+    <value>确定要删除“{0}”吗？</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteModSuccessNotificationMessage" xml:space="preserve">
+    <value>模组“{0}”已删除</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteModSuccessNotificationTitle" xml:space="preserve">
+    <value>模组已删除</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteModDangerNotificationTitle" xml:space="preserve">
+    <value>删除模组文件失败</value>
+  </data>
+  <data name="InstanceFilesPage_ToggleResourcePackDangerNotificationTitle" xml:space="preserve">
+    <value>切换资源包状态失败</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteResourcePackConfirmationMessage" xml:space="preserve">
+    <value>确定要删除“{0}”吗？</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage" xml:space="preserve">
+    <value>资源包“{0}”已删除</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle" xml:space="preserve">
+    <value>资源包已删除</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteResourcePackDangerNotificationTitle" xml:space="preserve">
+    <value>删除资源包文件失败</value>
+  </data>
+  <data name="InstanceFilesPage_ToggleDataPackDangerNotificationTitle" xml:space="preserve">
+    <value>切换数据包状态失败</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteDataPackConfirmationMessage" xml:space="preserve">
+    <value>确定要删除“{0}”吗？</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteDataPackSuccessNotificationMessage" xml:space="preserve">
+    <value>数据包“{0}”已删除</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteDataPackSuccessNotificationTitle" xml:space="preserve">
+    <value>数据包已删除</value>
+  </data>
+  <data name="InstanceFilesPage_DeleteDataPackDangerNotificationTitle" xml:space="preserve">
+    <value>删除数据包文件失败</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitErrorWarningNotificationTitle" xml:space="preserve">
+    <value>Git 错误</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage" xml:space="preserve">
+    <value>该目录不在 Git 仓库中。</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitRestoreConfirmationMessage" xml:space="preserve">
+    <value>这将还原当前工作区中未暂存的更改。
+
+受影响项目：{0}
+- 已跟踪文件将还原到 HEAD
+- 未跟踪文件和目录将被删除
+- 提交历史和远程仓库不会被修改</value>
+  </data>
+  <data name="InstanceWorkspacePage_LargeDiffConfirmationMessage" xml:space="preserve">
+    <value>文件过大，计算和渲染差异可能需要一些时间。</value>
+  </data>
+  <data name="InstanceWorkspacePage_StageConfirmationMessage" xml:space="preserve">
+    <value>这将使用当前文件覆盖整合包中的文件。</value>
+  </data>
+  <data name="InstanceWorkspacePage_RestoreConfirmationMessage" xml:space="preserve">
+    <value>这将丢弃游戏运行期间产生的更改。</value>
+  </data>
+  <data name="InstanceWorkspacePage_FileStagingDangerNotificationTitle" xml:space="preserve">
+    <value>暂存文件失败</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitDangerNotificationTitle" xml:space="preserve">
+    <value>Git 提交失败</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage" xml:space="preserve">
+    <value>此仓库尚未配置 Git 身份，请先配置 user.name 和 user.email。</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitPrompt" xml:space="preserve">
+    <value>输入提交信息。提交前会先暂存当前所有更改。</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitPromptTitle" xml:space="preserve">
+    <value>Git 提交</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitDefaultMessage" xml:space="preserve">
+    <value>更新 {0}</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage" xml:space="preserve">
+    <value>提交信息不能为空。</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage" xml:space="preserve">
+    <value>没有可提交的更改。</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitSuccessNotificationTitle" xml:space="preserve">
+    <value>Git 提交成功</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitCommitSuccessNotificationMessage" xml:space="preserve">
+    <value>已创建提交 {0}</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitRestoreConfirmationTitle" xml:space="preserve">
+    <value>还原 Git 工作区</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitRestoreDangerNotificationTitle" xml:space="preserve">
+    <value>Git 还原失败</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitRestoreSuccessNotificationTitle" xml:space="preserve">
+    <value>Git 还原成功</value>
+  </data>
+  <data name="InstanceWorkspacePage_GitRestoreSuccessNotificationMessage" xml:space="preserve">
+    <value>已还原未暂存的工作区更改。</value>
+  </data>
+  <data name="LandingPage_LoadModpackDetailsDangerNotificationTitle" xml:space="preserve">
+    <value>加载整合包详情失败</value>
+  </data>
+  <data name="PackageExplorerPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
+    <value>加载项目信息失败</value>
+  </data>
+  <data name="MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle" xml:space="preserve">
+    <value>打开项目网站失败</value>
+  </data>
+  <data name="InstancePage_ImportPackageSuccessNotificationMessage" xml:space="preserve">
+    <value>已将包 {0}({1}) 添加到实例</value>
+  </data>
+  <data name="InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage" xml:space="preserve">
+    <value>包 {0}({1}) 已存在</value>
+  </data>
+  <data name="InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle" xml:space="preserve">
+    <value>作为包导入失败</value>
+  </data>
+  <data name="InstancePage_ImportFileSuccessNotificationMessage" xml:space="preserve">
+    <value>已将文件 {0} 添加到实例</value>
+  </data>
+  <data name="InstancePage_ImportFileAlreadyExistsDangerNotificationMessage" xml:space="preserve">
+    <value>文件 {0} 已存在</value>
+  </data>
+  <data name="InstancePage_ImportFileAlreadyExistsDangerNotificationTitle" xml:space="preserve">
+    <value>作为实体文件导入失败</value>
+  </data>
+  <data name="InstanceStoragePage_OpenFolderDangerNotificationTitle" xml:space="preserve">
+    <value>打开 {0} 文件夹失败</value>
+  </data>
+  <data name="AppUpdateModal_DownloadUpdateDangerNotificationTitle" xml:space="preserve">
+    <value>下载安装包失败</value>
+  </data>
+  <data name="OobePrivilege_CreateSymlinkDangerNotificationTitle" xml:space="preserve">
+    <value>创建符号链接失败</value>
+  </data>
+  <data name="MainWindow_ReadPackConfigDangerNotificationTitle" xml:space="preserve">
+    <value>读取整合包配置失败</value>
+  </data>
+  <data name="MainWindow_ExportModpackProgressingNotificationMessage" xml:space="preserve">
+    <value>导出中...</value>
+  </data>
+  <data name="MainWindow_ExportModpackSuccessNotificationTitle" xml:space="preserve">
+    <value>导出成功</value>
+  </data>
+  <data name="MainWindow_ExportModpackDangerNotificationTitle" xml:space="preserve">
+    <value>导出实例失败</value>
+  </data>
+  <data name="MainWindow_SavePackConfigDangerNotificationTitle" xml:space="preserve">
+    <value>保存整合包配置失败</value>
+  </data>
+  <data name="MainWindow_LogFileNotFoundWarningNotificationMessage" xml:space="preserve">
+    <value>未找到日志文件</value>
+  </data>
+  <data name="AssetImporterDialog_IdentifyFileDangerNotificationTitle" xml:space="preserve">
+    <value>识别文件失败</value>
+  </data>
+  <data name="ModpackExporterDialog_OpenImportFolderDangerNotificationTitle" xml:space="preserve">
+    <value>打开导入文件夹失败</value>
+  </data>
+  <data name="ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle" xml:space="preserve">
+    <value>打开整合包链接失败</value>
+  </data>
+  <data name="ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle" xml:space="preserve">
+    <value>打开包链接失败</value>
+  </data>
+  <data name="AccountCreationMicrosoft_CopyCodeDangerNotificationTitle" xml:space="preserve">
+    <value>复制代码失败</value>
+  </data>
+  <data name="GameCrashReportModal_CopyCrashReportDangerNotificationTitle" xml:space="preserve">
+    <value>复制崩溃报告失败</value>
+  </data>
+  <data name="GameCrashReportModal_OpenCrashReportDangerNotificationTitle" xml:space="preserve">
+    <value>打开崩溃报告失败</value>
+  </data>
+  <data name="GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle" xml:space="preserve">
+    <value>打开游戏目录失败</value>
+  </data>
+  <data name="InternalCommands_OpenLinkDangerNotificationTitle" xml:space="preserve">
+    <value>打开链接失败</value>
+  </data>
+  <data name="InternalCommands_CopyTextDangerNotificationTitle" xml:space="preserve">
+    <value>复制文本失败</value>
+  </data>
 </root>

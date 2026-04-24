@@ -87,6 +87,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to copy code.
+        /// </summary>
+        public static string AccountCreationMicrosoft_CopyCodeDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_CopyCodeDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The account has been linked. Checkout in the next page..
         /// </summary>
         public static string AccountCreationMicrosoft_DoneSubtitle {
@@ -456,6 +465,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to download update.
+        /// </summary>
+        public static string AppUpdateModal_DownloadUpdateDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("AppUpdateModal_DownloadUpdateDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No release notes available.
         /// </summary>
         public static string AppUpdateModal_NoReleaseNotesLabelText {
@@ -506,6 +524,15 @@ namespace Polymerium.App.Properties {
         public static string AssetImporterDialog_AsPackageLabelText {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_AsPackageLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to identify file.
+        /// </summary>
+        public static string AssetImporterDialog_IdentifyFileDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("AssetImporterDialog_IdentifyFileDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -915,6 +942,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open modpack link.
+        /// </summary>
+        public static string ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string ExhibitPackageModal_AboutTabText {
@@ -1037,6 +1073,15 @@ namespace Polymerium.App.Properties {
         public static string ExhibitPackageModal_ModifyingTagText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_ModifyingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open package link.
+        /// </summary>
+        public static string ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -1347,6 +1392,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to copy crash report.
+        /// </summary>
+        public static string GameCrashReportModal_CopyCrashReportDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_CopyCrashReportDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Report.
         /// </summary>
         public static string GameCrashReportModal_CopyReportButtonText {
@@ -1491,11 +1545,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open crash report.
+        /// </summary>
+        public static string GameCrashReportModal_OpenCrashReportDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_OpenCrashReportDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Game Directory.
         /// </summary>
         public static string GameCrashReportModal_OpenGameDirectoryButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OpenGameDirectoryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open game directory.
+        /// </summary>
+        public static string GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -1896,6 +1968,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open crash reports folder.
+        /// </summary>
+        public static string InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open logs folder.
+        /// </summary>
+        public static string InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read log file failed.
+        /// </summary>
+        public static string InstanceDashboardPage_ReadLogDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_ReadLogDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running.
         /// </summary>
         public static string InstanceDashboardPage_RunningLabelText {
@@ -2085,6 +2184,132 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete &apos;{0}&apos;?.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteDataPackConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete data pack file.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteDataPackDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data pack &apos;{0}&apos; deleted successfully.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteDataPackSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Pack Deleted.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteDataPackSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete &apos;{0}&apos;?.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteModConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteModConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete mod file.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteModDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteModDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod &apos;{0}&apos; deleted successfully.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteModSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteModSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Deleted.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteModSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteModSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete &apos;{0}&apos;?.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteResourcePackConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete resource pack file.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteResourcePackDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource pack &apos;{0}&apos; deleted successfully.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource Pack Deleted.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this screenshot?.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteScreenshotConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteScreenshotConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete screenshot file.
+        /// </summary>
+        public static string InstanceFilesPage_DeleteScreenshotDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_DeleteScreenshotDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string InstanceFilesPage_DescriptionLabelText {
@@ -2135,6 +2360,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceFilesPage_ModInfoBarTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ModInfoBarTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open screenshot file.
+        /// </summary>
+        public static string InstanceFilesPage_OpenScreenshotDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_OpenScreenshotDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -2288,6 +2522,33 @@ namespace Polymerium.App.Properties {
         public static string InstanceFilesPage_StatusFilterText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_StatusFilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to toggle data pack.
+        /// </summary>
+        public static string InstanceFilesPage_ToggleDataPackDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_ToggleDataPackDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to toggle mod.
+        /// </summary>
+        public static string InstanceFilesPage_ToggleModDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_ToggleModDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to toggle resource pack.
+        /// </summary>
+        public static string InstanceFilesPage_ToggleResourcePackDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceFilesPage_ToggleResourcePackDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -2819,6 +3080,60 @@ namespace Polymerium.App.Properties {
         public static string InstancePage_HomePageText {
             get {
                 return ResourceManager.GetString("InstancePage_HomePageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0} already exists.
+        /// </summary>
+        public static string InstancePage_ImportFileAlreadyExistsDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportFileAlreadyExistsDangerNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to import as solid file.
+        /// </summary>
+        public static string InstancePage_ImportFileAlreadyExistsDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportFileAlreadyExistsDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0} has been added to the instance.
+        /// </summary>
+        public static string InstancePage_ImportFileSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportFileSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package {0}({1}) already exists.
+        /// </summary>
+        public static string InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to import as package.
+        /// </summary>
+        public static string InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package {0}({1}) has been added to the instance.
+        /// </summary>
+        public static string InstancePage_ImportPackageSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportPackageSuccessNotificationMessage", resourceCulture);
             }
         }
         
@@ -3813,6 +4128,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to open {0} folder.
+        /// </summary>
+        public static string InstanceStoragePage_OpenFolderDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceStoragePage_OpenFolderDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What does import/persist mean?.
         /// </summary>
         public static string InstanceStoragePage_OpenWikiButtonText {
@@ -3894,11 +4218,277 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to perform file staging.
+        /// </summary>
+        public static string InstanceWorkspacePage_FileStagingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_FileStagingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string InstanceWorkspacePage_FileTypeLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileTypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitBarSubtitleText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitBarSubtitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitBarTitleText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitBarTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitButtonText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit all current changes.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitButtonToolTip {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git commit failed.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update {0}.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitDefaultMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitDefaultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit message cannot be empty..
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No changes to commit..
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Git identity is configured for this repository. Configure user.name and user.email first..
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a commit message. All current changes will be staged before commit..
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitPrompt {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git commit.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitPromptTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitPromptTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitSectionText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSectionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created commit {0}.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git commit succeeded.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git error.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitErrorWarningNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitErrorWarningNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The directory is not in a git repository..
+        /// </summary>
+        public static string InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will restore unstaged changes in the current working tree.
+        ///
+        ///Affected entries: {0}
+        ///- Tracked files will be restored to HEAD
+        ///- Untracked files and directories will be deleted
+        ///- Commit history and remotes will not be modified.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore Git working tree.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreConfirmationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git restore failed.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreMenuText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard unstaged changes and delete untracked files.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreMenuToolTip {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restored unstaged working tree changes..
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git restore succeeded.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staged .
+        /// </summary>
+        public static string InstanceWorkspacePage_GitStagedCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitStagedCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sync.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitSyncSectionText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitSyncSectionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unstaged .
+        /// </summary>
+        public static string InstanceWorkspacePage_GitUnstagedCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitUnstagedCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working Tree.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitWorkingTreeSectionText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitWorkingTreeSectionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File is too large. It may take time to compute and render diff..
+        /// </summary>
+        public static string InstanceWorkspacePage_LargeDiffConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_LargeDiffConfirmationMessage", resourceCulture);
             }
         }
         
@@ -3975,6 +4565,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This will discard the changes from game playing.
+        /// </summary>
+        public static string InstanceWorkspacePage_RestoreConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_RestoreConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Changes.
         /// </summary>
         public static string InstanceWorkspacePage_SameTagText {
@@ -3989,105 +4588,6 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SearchPlaceholder", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Git.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitBarSubtitleText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitBarSubtitleText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Repository.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitBarTitleText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitBarTitleText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Commit.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitCommitButtonText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Commit all current changes.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitCommitButtonToolTip {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonToolTip", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Commit.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitCommitSectionText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSectionText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Restore.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitRestoreMenuText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Discard unstaged changes and delete untracked files.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitRestoreMenuToolTip {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuToolTip", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Staged.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitStagedCountLabelText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitStagedCountLabelText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Sync.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitSyncSectionText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitSyncSectionText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Unstaged.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitUnstagedCountLabelText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitUnstagedCountLabelText", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Working Tree.
-        /// </summary>
-        public static string InstanceWorkspacePage_GitWorkingTreeSectionText {
-            get {
-                return ResourceManager.GetString("InstanceWorkspacePage_GitWorkingTreeSectionText", resourceCulture);
             }
         }
         
@@ -4106,6 +4606,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_SelectFileTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SelectFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will overwrite the file from the modpack.
+        /// </summary>
+        public static string InstanceWorkspacePage_StageConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_StageConfirmationMessage", resourceCulture);
             }
         }
         
@@ -4151,6 +4660,24 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_ViewDiffButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_ViewDiffButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy text.
+        /// </summary>
+        public static string InternalCommands_CopyTextDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InternalCommands_CopyTextDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open link.
+        /// </summary>
+        public static string InternalCommands_OpenLinkDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InternalCommands_OpenLinkDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -4223,6 +4750,15 @@ namespace Polymerium.App.Properties {
         public static string LandingPage_FeaturedModpacksLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_FeaturedModpacksLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load modpack details.
+        /// </summary>
+        public static string LandingPage_LoadModpackDetailsDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("LandingPage_LoadModpackDetailsDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -4515,6 +5051,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to purge the cache?.
+        /// </summary>
+        public static string MaintenanceStoragePage_PurgeCacheConfirmationMessage {
+            get {
+                return ResourceManager.GetString("MaintenanceStoragePage_PurgeCacheConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to purge cache.
+        /// </summary>
+        public static string MaintenanceStoragePage_PurgeCacheDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MaintenanceStoragePage_PurgeCacheDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Runtimes.
         /// </summary>
         public static string MaintenanceStoragePage_RuntimesLabelText {
@@ -4569,11 +5123,38 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to export instance.
+        /// </summary>
+        public static string MainWindow_ExportModpackDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_ExportModpackDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export Modpack.
         /// </summary>
         public static string MainWindow_ExportModpackMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_ExportModpackMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting....
+        /// </summary>
+        public static string MainWindow_ExportModpackProgressingNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_ExportModpackProgressingNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export successfully.
+        /// </summary>
+        public static string MainWindow_ExportModpackSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_ExportModpackSuccessNotificationTitle", resourceCulture);
             }
         }
         
@@ -4704,6 +5285,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log file not found.
+        /// </summary>
+        public static string MainWindow_LogFileNotFoundWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_LogFileNotFoundWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go to Marketplace.
         /// </summary>
         public static string MainWindow_MarketplaceButtonText {
@@ -4736,6 +5326,24 @@ namespace Polymerium.App.Properties {
         public static string MainWindow_PropertiesMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_PropertiesMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to read pack config.
+        /// </summary>
+        public static string MainWindow_ReadPackConfigDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_ReadPackConfigDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save pack config.
+        /// </summary>
+        public static string MainWindow_SavePackConfigDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_SavePackConfigDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -4817,6 +5425,15 @@ namespace Polymerium.App.Properties {
         public static string MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open project website.
+        /// </summary>
+        public static string MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -4997,6 +5614,15 @@ namespace Polymerium.App.Properties {
         public static string ModpackExporterDialog_NameLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_NameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open import folder.
+        /// </summary>
+        public static string ModpackExporterDialog_OpenImportFolderDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_OpenImportFolderDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -5550,6 +6176,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to create symlink.
+        /// </summary>
+        public static string OobePrivilege_CreateSymlinkDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("OobePrivilege_CreateSymlinkDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What You Get.
         /// </summary>
         public static string OobePrivilege_GrantedBenefitsTitle {
@@ -5864,6 +6499,15 @@ namespace Polymerium.App.Properties {
         public static string PackageExplorerPage_EmptyLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_EmptyLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load project information.
+        /// </summary>
+        public static string PackageExplorerPage_LoadProjectInformationDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("PackageExplorerPage_LoadProjectInformationDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -6624,6 +7268,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to check updates.
+        /// </summary>
+        public static string SettingsPage_CheckUpdatesDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_CheckUpdatesDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear Records.
         /// </summary>
         public static string SettingsPage_ClearRecordsButtonText {
@@ -7263,6 +7916,51 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to deploy instance.
+        /// </summary>
+        public static string Shared_FailedToDeployInstanceDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("Shared_FailedToDeployInstanceDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to launch instance.
+        /// </summary>
+        public static string Shared_FailedToLaunchInstanceDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("Shared_FailedToLaunchInstanceDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open folder.
+        /// </summary>
+        public static string Shared_FailedToOpenFolderDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("Shared_FailedToOpenFolderDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open instance folder.
+        /// </summary>
+        public static string Shared_FailedToOpenInstanceFolderDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("Shared_FailedToOpenInstanceFolderDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open log file.
+        /// </summary>
+        public static string Shared_FailedToOpenLogFileDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("Shared_FailedToOpenLogFileDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fetching....
         /// </summary>
         public static string Shared_FetchingLabelText {
@@ -7295,6 +7993,15 @@ namespace Polymerium.App.Properties {
         public static string Shared_Yes {
             get {
                 return ResourceManager.GetString("Shared_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zip Archive.
+        /// </summary>
+        public static string Shared_ZipArchiveFileTypeText {
+            get {
+                return ResourceManager.GetString("Shared_ZipArchiveFileTypeText", resourceCulture);
             }
         }
         

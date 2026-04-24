@@ -8,6 +8,7 @@ using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using AppResources = Polymerium.App.Properties.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
@@ -152,7 +153,7 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
         await TopLevelHelper.CopyToClipboardAsync(
             TopLevel.GetTopLevel(this),
             Model.UserCode,
-            "Failed to copy code",
+            AppResources.AccountCreationMicrosoft_CopyCodeDangerNotificationTitle,
             NotificationService
         );
     }

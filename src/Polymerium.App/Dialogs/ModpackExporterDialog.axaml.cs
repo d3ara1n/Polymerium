@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using AppResources = Polymerium.App.Properties.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
@@ -185,7 +186,7 @@ public partial class ModpackExporterDialog : Dialog
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(PathDef.Default.DirectoryOfImport(model.Key)),
-                "Failed to open import folder"
+                AppResources.ModpackExporterDialog_OpenImportFolderDangerNotificationTitle
             );
         }
 
