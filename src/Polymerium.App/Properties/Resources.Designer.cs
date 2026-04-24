@@ -3991,6 +3991,105 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("InstanceWorkspacePage_SearchPlaceholder", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Git.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitBarSubtitleText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitBarSubtitleText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Repository.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitBarTitleText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitBarTitleText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Commit.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitButtonText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Commit all current changes.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitButtonToolTip {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonToolTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Commit.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitCommitSectionText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSectionText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreMenuText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Discard unstaged changes and delete untracked files.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitRestoreMenuToolTip {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuToolTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Staged.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitStagedCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitStagedCountLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sync.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitSyncSectionText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitSyncSectionText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unstaged.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitUnstagedCountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitUnstagedCountLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Working Tree.
+        /// </summary>
+        public static string InstanceWorkspacePage_GitWorkingTreeSectionText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_GitWorkingTreeSectionText", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to File details and available actions will appear on the right..
