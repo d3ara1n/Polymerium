@@ -14,6 +14,8 @@
     Message="{x:Static lang:Resources.UserInputDialog_Prompt}"
     mc:Ignorable="d">
     <TextBox
-        PlaceholderText="{Binding $parent[app:UserInputDialog].Watermark}"
+        AcceptsReturn="{Binding $parent[app:UserInputDialog].AllowMultiLine}"
+        AcceptsTab="{Binding $parent[app:UserInputDialog].AllowMultiLine}"
+        PlaceholderText="{Binding $parent[app:UserInputDialog].PlaceholderText}"
         Text="{Binding $parent[app:UserInputDialog].Result, Mode=TwoWay}" />
 </husk:Dialog>

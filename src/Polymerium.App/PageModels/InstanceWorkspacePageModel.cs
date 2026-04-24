@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -13,6 +14,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
+using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using LibGit2Sharp;
 using Polymerium.App.Modals;
@@ -93,6 +95,21 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     [ObservableProperty]
     public partial int GitChangedCount { get; set; }
+
+    [ObservableProperty]
+    public partial int GitAheadCount { get; set; }
+
+    [ObservableProperty]
+    public partial int GitBehindCount { get; set; }
+
+    [ObservableProperty]
+    public partial string GitTrackingBranchName { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool GitIsDetachedHead { get; set; }
+
+    [ObservableProperty]
+    public partial bool GitIsBusy { get; set; }
 
     #endregion
 
@@ -189,7 +206,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        var branchName = repository.Info.IsHeadDetached ? "Detached HEAD" : repository.Head.FriendlyName;
+        var isDetached = repository.Info.IsHeadDetached;
+        var trackedBranch = repository.Head.TrackedBranch;
+        var trackingDetails = repository.Head.TrackingDetails;
+        var branchName = isDetached ? "Detached HEAD" : repository.Head.FriendlyName;
         var headSummary = BuildHeadSummary(repository);
         var status =
             repository.RetrieveStatus(new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true });
@@ -220,7 +240,13 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             GitStagedCount = stagedCount;
             GitUnstagedCount = unstagedCount;
             GitChangedCount = changedCount;
+            GitAheadCount = trackingDetails.AheadBy ?? 0;
+            GitBehindCount = trackingDetails.BehindBy ?? 0;
+            GitTrackingBranchName = trackedBranch?.FriendlyName ?? "No upstream";
+            GitIsDetachedHead = isDetached;
         });
+
+        RefreshGitCommands();
     }
 
     private async Task ResetGitStatusAsync()
@@ -233,7 +259,13 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             GitStagedCount = 0;
             GitUnstagedCount = 0;
             GitChangedCount = 0;
+            GitAheadCount = 0;
+            GitBehindCount = 0;
+            GitTrackingBranchName = string.Empty;
+            GitIsDetachedHead = false;
         });
+
+        RefreshGitCommands();
     }
 
     private static string BuildHeadSummary(Repository repository)
@@ -264,6 +296,115 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
      || status.HasFlag(FileStatus.DeletedFromWorkdir)
      || status.HasFlag(FileStatus.RenamedInWorkdir)
      || status.HasFlag(FileStatus.TypeChangeInWorkdir);
+
+    private bool TryOpenGitRepository(out Repository? repository)
+    {
+        repository = null;
+
+        var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
+        var discoveredPath = Repository.Discover(dir);
+        if (string.IsNullOrEmpty(discoveredPath))
+        {
+            return false;
+        }
+
+        var candidate = new Repository(discoveredPath);
+        if (!FileHelper.IsPathEquivalent(candidate.Info.WorkingDirectory, dir))
+        {
+            candidate.Dispose();
+            return false;
+        }
+
+        repository = candidate;
+        return true;
+    }
+
+    private void RefreshGitCommands()
+    {
+        CommitGitCommand.NotifyCanExecuteChanged();
+        RestoreGitChangesCommand.NotifyCanExecuteChanged();
+    }
+
+    private void SetGitBusy(bool value)
+    {
+        GitIsBusy = value;
+        RefreshGitCommands();
+    }
+
+    private async Task RunGitOperationAsync(string errorTitle, Func<Repository, Task> operation)
+    {
+        if (!TryOpenGitRepository(out var repository))
+        {
+            await ResetGitStatusAsync();
+            _notificationService.PopMessage("The directory is not in a git repository.", "Git error", GrowlLevel.Warning);
+            return;
+        }
+
+        SetGitBusy(true);
+        try
+        {
+            using var openedRepository = repository
+                ?? throw new InvalidOperationException("Git repository was not opened.");
+            await operation(openedRepository);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, errorTitle);
+        }
+        finally
+        {
+            SetGitBusy(false);
+            await LoadGitStatusAsync();
+        }
+    }
+
+    private static void DeleteWorkingTreeEntry(string repositoryRoot, string relativePath)
+    {
+        var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(repositoryRoot));
+        var fullPath = Path.GetFullPath(Path.Combine(root, relativePath));
+        if (!fullPath.StartsWith(root, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Refused to delete path outside repository root.");
+        }
+
+        if (File.Exists(fullPath))
+        {
+            File.Delete(fullPath);
+            TrimEmptyParents(root, Path.GetDirectoryName(fullPath));
+            return;
+        }
+
+        if (Directory.Exists(fullPath))
+        {
+            Directory.Delete(fullPath, true);
+        }
+    }
+
+    private static void TrimEmptyParents(string repositoryRoot, string? current)
+    {
+        var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(repositoryRoot));
+        while (!string.IsNullOrEmpty(current) && !FileHelper.IsPathEquivalent(current, root))
+        {
+            if (Directory.EnumerateFileSystemEntries(current).Any())
+            {
+                break;
+            }
+
+            Directory.Delete(current);
+            current = Path.GetDirectoryName(current);
+        }
+    }
+
+    private static string BuildRestoreConfirmationMessage(int unstagedCount)
+    {
+        var builder = new StringBuilder();
+        builder.AppendLine("This will restore unstaged changes in the current working tree.\n");
+        builder.AppendLine($"Affected entries: {unstagedCount}");
+        builder.AppendLine("- Tracked files will be restored to HEAD");
+        builder.AppendLine("- Untracked files and directories will be deleted");
+        builder.AppendLine("- Commit history and remotes will not be modified");
+        return builder.ToString();
+    }
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
     {
@@ -318,6 +459,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
+        await LoadGitStatusAsync();
         await GenerateChangeListAsync(_initToken ?? CancellationToken.None);
     }
 
@@ -386,6 +528,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (suc)
         {
             model.Kind = WorkspaceChangeKind.Same;
+            await LoadGitStatusAsync();
         }
     }
 
@@ -430,7 +573,125 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (suc)
         {
             model.Kind = WorkspaceChangeKind.Same;
+            await LoadGitStatusAsync();
         }
+    }
+
+    private bool CanCommitGit() =>
+        IsGitRepository && !GitIsBusy && !GitIsDetachedHead && GitChangedCount > 0;
+
+    [RelayCommand(CanExecute = nameof(CanCommitGit))]
+    private async Task CommitGit()
+    {
+        await RunGitOperationAsync("Git commit failed", async repository =>
+        {
+            var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
+            if (signature is null)
+            {
+                _notificationService.PopMessage(
+                    "No Git identity is configured for this repository. Configure user.name and user.email first.",
+                    "Git commit failed",
+                    GrowlLevel.Warning
+                );
+                return;
+            }
+
+            var message = await _overlayService.RequestInputAsync(
+                "Enter a commit message. All current changes will be staged before commit.",
+                "Git commit",
+                $"Update {Basic.Name}"
+            );
+            if (message is null)
+            {
+                return;
+            }
+
+            var trimmedMessage = message.Trim();
+            if (string.IsNullOrEmpty(trimmedMessage))
+            {
+                _notificationService.PopMessage("Commit message cannot be empty.", "Git commit failed", GrowlLevel.Warning);
+                return;
+            }
+
+            var paths = repository
+                .RetrieveStatus(new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true })
+                .Select(entry => entry.FilePath)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (paths.Length == 0)
+            {
+                _notificationService.PopMessage("No changes to commit.", "Git commit", GrowlLevel.Information);
+                return;
+            }
+
+            Commands.Stage(repository, paths);
+
+            var commit = repository.Commit(trimmedMessage, signature, signature);
+            _notificationService.PopMessage(
+                $"Created commit {commit.Sha[..7]}",
+                "Git commit succeeded",
+                GrowlLevel.Success
+            );
+        });
+    }
+
+    private bool CanRestoreGitChanges() =>
+        IsGitRepository && !GitIsBusy && GitStagedCount == 0 && GitUnstagedCount > 0;
+
+    [RelayCommand(CanExecute = nameof(CanRestoreGitChanges))]
+    private async Task RestoreGitChanges()
+    {
+        if (!await _overlayService.RequestConfirmationAsync(
+                BuildRestoreConfirmationMessage(GitUnstagedCount),
+                "Restore Git working tree"
+            ))
+        {
+            return;
+        }
+
+        await RunGitOperationAsync("Git restore failed", repository =>
+        {
+            var status = repository.RetrieveStatus(
+                new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true }
+            );
+
+            var trackedPaths = status
+                .Where(entry => IsUnstaged(entry.State) && !entry.State.HasFlag(FileStatus.NewInWorkdir))
+                .Select(entry => entry.FilePath)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (trackedPaths.Length > 0)
+            {
+                if (repository.Head.Tip is null)
+                {
+                    throw new InvalidOperationException("Cannot restore tracked files because HEAD does not exist.");
+                }
+
+                foreach (var path in trackedPaths)
+                {
+                    Commands.Checkout(
+                        repository,
+                        repository.Head.Tip.Tree,
+                        new CheckoutOptions { CheckoutModifiers = CheckoutModifiers.Force },
+                        path
+                    );
+                }
+            }
+
+            foreach (
+                var relativePath in status
+                    .Where(entry => entry.State.HasFlag(FileStatus.NewInWorkdir))
+                    .Select(entry => entry.FilePath)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderByDescending(path => path.Length)
+            )
+            {
+                DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
+            }
+
+            _notificationService.PopMessage("Restored unstaged working tree changes.", "Git restore succeeded", GrowlLevel.Success);
+            return Task.CompletedTask;
+        });
     }
 
     #endregion

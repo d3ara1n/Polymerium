@@ -77,7 +77,7 @@ public class OverlayService(IViewActivator activator)
     public async Task<string?> RequestInputAsync(
         string? message = null,
         string? title = null,
-        string? watermark = null
+        string? placeholder = null
     )
     {
         var dialog = new UserInputDialog();
@@ -91,10 +91,10 @@ public class OverlayService(IViewActivator activator)
             dialog.Message = message;
         }
 
-        if (watermark != null)
+        if (placeholder != null)
         {
-            dialog.Watermark = watermark;
-            dialog.PresetText = watermark;
+            dialog.PlaceholderText = placeholder;
+            dialog.PresetText = placeholder;
         }
 
         if (await PopDialogAsync(dialog) && dialog.Result is string input)
