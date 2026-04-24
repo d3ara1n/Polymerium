@@ -34,6 +34,9 @@ public class DiffView : TemplatedControl
     public static readonly StyledProperty<double> HorizontalOffsetProperty =
         AvaloniaProperty.Register<DiffView, double>(nameof(HorizontalOffset));
 
+    public static readonly StyledProperty<double> ContentWidthProperty =
+        AvaloniaProperty.Register<DiffView, double>(nameof(ContentWidth));
+
     public static readonly StyledProperty<int> LeftLineCountProperty =
         AvaloniaProperty.Register<DiffView, int>(nameof(LeftLineCount));
 
@@ -101,6 +104,12 @@ public class DiffView : TemplatedControl
     {
         get => GetValue(HorizontalOffsetProperty);
         private set => SetValue(HorizontalOffsetProperty, value);
+    }
+
+    public double ContentWidth
+    {
+        get => GetValue(ContentWidthProperty);
+        private set => SetValue(ContentWidthProperty, value);
     }
 
     private ScrollBar? _hScrollBar;
@@ -205,6 +214,7 @@ public class DiffView : TemplatedControl
         }
 
         _maxContentWidth = maxTextWidth + 16;
+        SetCurrentValue(ContentWidthProperty, _maxContentWidth);
         UpdateScrollBarMaximum(force: true);
         SetCurrentValue(HorizontalOffsetProperty, 0.0);
 
