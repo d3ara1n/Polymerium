@@ -1624,7 +1624,7 @@
     <value>Export Completed</value>
   </data>
   <data name="GameCrashReportModal_AiExportSuccessMessage" xml:space="preserve">
-    <value>AI analysis markdown has been exported.</value>
+    <value>AI analysis markdown has been exported. Send it to Grok to get advices.</value>
   </data>
   <data name="GameCrashReportModal_AiExportFailedTitle" xml:space="preserve">
     <value>AI Export Failed</value>
