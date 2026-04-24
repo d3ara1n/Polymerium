@@ -274,12 +274,12 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanRestore(WorkspaceChangeModel? model) => model is not null && File.Exists(model.ImportPath);
+    private bool CanRestore(WorkspaceChangeModel? model) => model is not null;
 
     [RelayCommand(CanExecute = nameof(CanRestore))]
     private async Task Restore(WorkspaceChangeModel? model)
     {
-        if (model == null || !File.Exists(model.ImportPath))
+        if (model == null)
         {
             return;
         }
@@ -295,7 +295,15 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             // Restore
             try
             {
-                File.Copy(model.ImportPath, model.LivePath, true);
+                if (File.Exists(model.ImportPath))
+                {
+                    File.Copy(model.ImportPath, model.LivePath, true);
+                }
+                else
+                {
+                    File.Delete(model.LivePath);
+                }
+
                 suc = true;
             }
             catch (Exception ex)

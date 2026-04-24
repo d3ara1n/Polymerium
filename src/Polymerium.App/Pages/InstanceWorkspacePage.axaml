@@ -342,7 +342,6 @@
                                                     <husk:SwitchCase Value="Deleted">
                                                         <StackPanel Spacing="10">
                                                             <Button
-                                                                Classes="Danger"
                                                                 Classes.Primary="{Binding !((app:InstanceWorkspacePageModel)DataContext).IsLocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:False}}"
                                                                 Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
@@ -352,6 +351,7 @@
                                                             </Button>
                                                         </StackPanel>
                                                     </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Same" />
                                                 </husk:SwitchContainer>
                                                 <husk:ButtonGroup>
                                                     <Button
