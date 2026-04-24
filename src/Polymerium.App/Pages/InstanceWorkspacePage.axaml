@@ -304,11 +304,12 @@
                                                         <StackPanel Spacing="10">
                                                             <Button
                                                                 Classes="Danger"
-                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).StageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                Classes.Primary="{Binding !((app:InstanceWorkspacePageModel)DataContext).IsLocked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:False}}"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RestoreCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="删除" />
+                                                                    Text="放弃" />
                                                             </Button>
                                                         </StackPanel>
                                                     </husk:SwitchCase>

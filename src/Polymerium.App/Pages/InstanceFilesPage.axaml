@@ -341,7 +341,8 @@
                     <!--  分隔线  -->
                     <GridSplitter
                         Grid.Column="1"
-                        Width="2" />
+                        Width="2"
+                        ResizeDirection="Columns" />
 
                     <!--  右侧：详细信息面板  -->
                     <ScrollViewer Grid.Column="2">
@@ -915,7 +916,8 @@
                 <!--  分隔线  -->
                 <GridSplitter
                     Grid.Column="1"
-                    Width="2" />
+                    Width="2"
+                    ResizeDirection="Columns" />
 
                 <!--  右侧：详细信息面板  -->
                 <ScrollViewer Grid.Column="2">
@@ -1264,7 +1266,8 @@
                 <!--  分隔线  -->
                 <GridSplitter
                     Grid.Column="1"
-                    Width="2" />
+                    Width="2"
+                    ResizeDirection="Columns" />
 
                 <!--  右侧：详细信息面板  -->
                 <ScrollViewer Grid.Column="2">
