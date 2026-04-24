@@ -158,7 +158,7 @@ public partial class InstanceWorkspacePageModel(
             return;
         }
 
-        if (!await overlayService.RequestConfirmationAsync())
+        if (!await overlayService.RequestConfirmationAsync("This will overwrite the file from the modpack"))
         {
             return;
         }
@@ -207,7 +207,7 @@ public partial class InstanceWorkspacePageModel(
             return;
         }
 
-        if (!await overlayService.RequestConfirmationAsync())
+        if (!await overlayService.RequestConfirmationAsync("This will discard the changes from game playing"))
         {
             return;
         }

@@ -14,6 +14,8 @@ public static class HumanizerConverters
                 {
                     long l => Humanizer.ByteSize.FromBytes(l).Humanize(),
                     int i => Humanizer.ByteSize.FromBytes(i).Humanize(),
+                    float f => Humanizer.ByteSize.FromBytes(f).Humanize(),
+                    double d => Humanizer.ByteSize.FromBytes(d).Humanize(),
                     _ => v,
                 }
         );
