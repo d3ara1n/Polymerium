@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
@@ -613,7 +614,7 @@ public partial class InstanceFilesPageModel(
             return TopLevelHelper.LaunchFileInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(model.Image.LocalPath),
-                "Failed to open screenshot file",
+                Resources.InstanceFilesPage_OpenScreenshotDangerNotificationTitle,
                 notificationService,
                 thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
             );
@@ -633,7 +634,7 @@ public partial class InstanceFilesPageModel(
                 return TopLevelHelper.LaunchDirectoryInfoAsync(
                     TopLevel.GetTopLevel(MainWindow.Instance),
                     new(dir),
-                    "Failed to open folder",
+                    Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
                     notificationService,
                     thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                 );
@@ -653,7 +654,7 @@ public partial class InstanceFilesPageModel(
             && ScreenshotGroups is not null
             && File.Exists(model.Image.LocalPath)
             && await overlayService.RequestConfirmationAsync(
-                "Are you sure you want to delete this screenshot?"
+                Resources.InstanceFilesPage_DeleteScreenshotConfirmationMessage
             )
         )
         {
@@ -672,7 +673,7 @@ public partial class InstanceFilesPageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to delete screenshot file");
+                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteScreenshotDangerNotificationTitle);
             }
         }
     }
@@ -698,7 +699,7 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Failed to toggle mod");
+            notificationService.PopMessage(ex, Resources.InstanceFilesPage_ToggleModDangerNotificationTitle);
         }
     }
 
@@ -712,7 +713,7 @@ public partial class InstanceFilesPageModel(
             && Mods is not null
             && File.Exists(model.FilePath)
             && await overlayService.RequestConfirmationAsync(
-                $"Are you sure you want to delete '{model.DisplayName}'?"
+                Resources.InstanceFilesPage_DeleteModConfirmationMessage.Replace("{0}", model.DisplayName)
             )
         )
         {
@@ -726,13 +727,13 @@ public partial class InstanceFilesPageModel(
                 }
 
                 notificationService.PopMessage(
-                    $"Mod '{model.DisplayName}' deleted successfully",
-                    "Mod Deleted"
+                    Resources.InstanceFilesPage_DeleteModSuccessNotificationMessage.Replace("{0}", model.DisplayName),
+                    Resources.InstanceFilesPage_DeleteModSuccessNotificationTitle
                 );
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to delete mod file");
+                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteModDangerNotificationTitle);
             }
         }
     }
@@ -759,7 +760,7 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Failed to toggle resource pack");
+            notificationService.PopMessage(ex, Resources.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle);
         }
     }
 
@@ -774,7 +775,7 @@ public partial class InstanceFilesPageModel(
             && ResourcePacks is not null
             && File.Exists(model.FilePath)
             && await overlayService.RequestConfirmationAsync(
-                $"Are you sure you want to delete '{model.DisplayName}'?"
+                Resources.InstanceFilesPage_DeleteResourcePackConfirmationMessage.Replace("{0}", model.DisplayName)
             )
         )
         {
@@ -788,13 +789,13 @@ public partial class InstanceFilesPageModel(
                 }
 
                 notificationService.PopMessage(
-                    $"Resource pack '{model.DisplayName}' deleted successfully",
-                    "Resource Pack Deleted"
+                    Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage.Replace("{0}", model.DisplayName),
+                    Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle
                 );
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to delete resource pack file");
+                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteResourcePackDangerNotificationTitle);
             }
         }
     }
@@ -820,7 +821,7 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Failed to toggle data pack");
+            notificationService.PopMessage(ex, Resources.InstanceFilesPage_ToggleDataPackDangerNotificationTitle);
         }
     }
 
@@ -834,7 +835,7 @@ public partial class InstanceFilesPageModel(
             && DataPacks is not null
             && File.Exists(model.FilePath)
             && await overlayService.RequestConfirmationAsync(
-                $"Are you sure you want to delete '{model.DisplayName}'?"
+                Resources.InstanceFilesPage_DeleteDataPackConfirmationMessage.Replace("{0}", model.DisplayName)
             )
         )
         {
@@ -848,13 +849,13 @@ public partial class InstanceFilesPageModel(
                 }
 
                 notificationService.PopMessage(
-                    $"Data pack '{model.DisplayName}' deleted successfully",
-                    "Data Pack Deleted"
+                    Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationMessage.Replace("{0}", model.DisplayName),
+                    Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationTitle
                 );
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, "Failed to delete data pack file");
+                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteDataPackDangerNotificationTitle);
             }
         }
     }

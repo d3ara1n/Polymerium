@@ -9,6 +9,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using AppResources = Polymerium.App.Properties.Resources;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -585,7 +586,7 @@ public partial class ExhibitPackageModal : Modal
             return TopLevelHelper.LaunchUriAsync(
                 TopLevel.GetTopLevel(this),
                 rev.IsAbsoluteUri ? rev : new(Package.Reference, rev),
-                "Failed to open package link"
+                AppResources.ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle
             );
         }
 

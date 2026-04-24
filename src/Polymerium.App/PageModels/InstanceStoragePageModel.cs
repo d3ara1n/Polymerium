@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
+using Polymerium.App.Properties;
 using Polymerium.App.Utilities;
 using Trident.Abstractions;
 using Trident.Core.Services;
@@ -170,7 +171,7 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                "Failed to open instance folder"
+                Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle
             );
         }
 
@@ -190,7 +191,7 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                $"Failed to open {folderName} folder"
+                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace("{0}", folderName)
             );
         }
 
@@ -210,7 +211,7 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                $"Failed to open {folderName} folder"
+                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace("{0}", folderName)
             );
         }
 
@@ -230,7 +231,7 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                $"Failed to open {folderName} folder"
+                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace("{0}", folderName)
             );
         }
 

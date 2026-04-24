@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using AppResources = Polymerium.App.Properties.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
@@ -144,7 +145,7 @@ public partial class ExhibitModpackToast : Toast
             return TopLevelHelper.LaunchUriAsync(
                 TopLevel.GetTopLevel(this),
                 rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev),
-                "Failed to open modpack link"
+                AppResources.ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle
             );
         }
 

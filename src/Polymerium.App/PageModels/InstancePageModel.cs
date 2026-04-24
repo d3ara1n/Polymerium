@@ -111,7 +111,7 @@ public partial class InstancePageModel : ViewModelBase
         return TopLevelHelper.LaunchDirectoryInfoAsync(
             TopLevel.GetTopLevel(MainWindow.Instance),
             new(dir),
-            "Failed to open instance folder",
+            Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
             _notificationService,
             thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
         );
@@ -174,7 +174,10 @@ public partial class InstancePageModel : ViewModelBase
                                     }
                                 );
                                 _notificationService.PopMessage(
-                                    $"Package {package.Package.ProjectName}({package.Package.ProjectId}) has added to the instance",
+                                    Resources.InstancePage_ImportPackageSuccessNotificationMessage.Replace(
+                                        "{0}",
+                                        package.Package.ProjectName
+                                    ).Replace("{1}", package.Package.ProjectId),
                                     guard.Key,
                                     thumbnail: package.Thumbnail
                                 );
@@ -182,8 +185,11 @@ public partial class InstancePageModel : ViewModelBase
                             else
                             {
                                 _notificationService.PopMessage(
-                                    $"Package {package.Package.ProjectName}({package.Package.ProjectId}) already exists",
-                                    "Failed to import as package",
+                                    Resources.InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Replace(
+                                        "{0}",
+                                        package.Package.ProjectName
+                                    ).Replace("{1}", package.Package.ProjectId),
+                                    Resources.InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle,
                                     GrowlLevel.Danger,
                                     thumbnail: package.Thumbnail
                                 );
@@ -210,7 +216,10 @@ public partial class InstancePageModel : ViewModelBase
 
                         File.Copy(persist.Path, target, false);
                         _notificationService.PopMessage(
-                            $"File {target} has added to the instance",
+                            Resources.InstancePage_ImportFileSuccessNotificationMessage.Replace(
+                                "{0}",
+                                target
+                            ),
                             Basic.Key,
                             thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                         );
@@ -222,8 +231,11 @@ public partial class InstancePageModel : ViewModelBase
                             target
                         );
                         _notificationService.PopMessage(
-                            $"File {relative} already exists",
-                            "Failed to import as solid file",
+                            Resources.InstancePage_ImportFileAlreadyExistsDangerNotificationMessage.Replace(
+                                "{0}",
+                                relative
+                            ),
+                            Resources.InstancePage_ImportFileAlreadyExistsDangerNotificationTitle,
                             GrowlLevel.Danger,
                             thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
                         );

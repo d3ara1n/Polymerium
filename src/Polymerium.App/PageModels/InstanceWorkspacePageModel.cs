@@ -19,6 +19,7 @@ using Huskui.Avalonia.Mvvm.Activation;
 using LibGit2Sharp;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Trident.Abstractions;
 using Trident.Core.Services;
@@ -336,7 +337,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (!TryOpenGitRepository(out var repository))
         {
             await ResetGitStatusAsync();
-            _notificationService.PopMessage("The directory is not in a git repository.", "Git error", GrowlLevel.Warning);
+            _notificationService.PopMessage(
+                Resources.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage,
+                Resources.InstanceWorkspacePage_GitErrorWarningNotificationTitle,
+                GrowlLevel.Warning
+            );
             return;
         }
 
@@ -397,13 +402,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private static string BuildRestoreConfirmationMessage(int unstagedCount)
     {
-        var builder = new StringBuilder();
-        builder.AppendLine("This will restore unstaged changes in the current working tree.\n");
-        builder.AppendLine($"Affected entries: {unstagedCount}");
-        builder.AppendLine("- Tracked files will be restored to HEAD");
-        builder.AppendLine("- Untracked files and directories will be deleted");
-        builder.AppendLine("- Commit history and remotes will not be modified");
-        return builder.ToString();
+        return Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace(
+            "{0}",
+            unstagedCount.ToString()
+        );
     }
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
@@ -472,7 +474,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         {
             if (model.FileSizeRaw > 1024 * 1024 * 1024
              && !await _overlayService
-                    .RequestConfirmationAsync("File is too large. It may take time to compute and render diff."))
+                    .RequestConfirmationAsync(Resources.InstanceWorkspacePage_LargeDiffConfirmationMessage))
             {
                 // 文件大且用户拒绝
                 return;
@@ -492,7 +494,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync("This will overwrite the file from the modpack"))
+        if (!await _overlayService.RequestConfirmationAsync(Resources.InstanceWorkspacePage_StageConfirmationMessage))
         {
             return;
         }
@@ -508,7 +510,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Failed to perform file staging");
+                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
             }
         }
         else
@@ -521,7 +523,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Failed to perform file staging");
+                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
             }
         }
 
@@ -542,7 +544,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync("This will discard the changes from game playing"))
+        if (!await _overlayService.RequestConfirmationAsync(Resources.InstanceWorkspacePage_RestoreConfirmationMessage))
         {
             return;
         }
@@ -566,7 +568,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Failed to perform file staging");
+                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
             }
         }
 
@@ -583,23 +585,23 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     [RelayCommand(CanExecute = nameof(CanCommitGit))]
     private async Task CommitGit()
     {
-        await RunGitOperationAsync("Git commit failed", async repository =>
+        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle, async repository =>
         {
             var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
             if (signature is null)
             {
                 _notificationService.PopMessage(
-                    "No Git identity is configured for this repository. Configure user.name and user.email first.",
-                    "Git commit failed",
+                    Resources.InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage,
+                    Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
                     GrowlLevel.Warning
                 );
                 return;
             }
 
             var message = await _overlayService.RequestInputAsync(
-                "Enter a commit message. All current changes will be staged before commit.",
-                "Git commit",
-                $"Update {Basic.Name}"
+                Resources.InstanceWorkspacePage_GitCommitPrompt,
+                Resources.InstanceWorkspacePage_GitCommitPromptTitle,
+                Resources.InstanceWorkspacePage_GitCommitDefaultMessage.Replace("{0}", Basic.Name)
             );
             if (message is null)
             {
@@ -609,7 +611,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             var trimmedMessage = message.Trim();
             if (string.IsNullOrEmpty(trimmedMessage))
             {
-                _notificationService.PopMessage("Commit message cannot be empty.", "Git commit failed", GrowlLevel.Warning);
+                _notificationService.PopMessage(
+                    Resources.InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage,
+                    Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                    GrowlLevel.Warning
+                );
                 return;
             }
 
@@ -620,7 +626,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                 .ToArray();
             if (paths.Length == 0)
             {
-                _notificationService.PopMessage("No changes to commit.", "Git commit", GrowlLevel.Information);
+                _notificationService.PopMessage(
+                    Resources.InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
+                    Resources.InstanceWorkspacePage_GitCommitPromptTitle,
+                    GrowlLevel.Information
+                );
                 return;
             }
 
@@ -628,8 +638,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
             var commit = repository.Commit(trimmedMessage, signature, signature);
             _notificationService.PopMessage(
-                $"Created commit {commit.Sha[..7]}",
-                "Git commit succeeded",
+                Resources.InstanceWorkspacePage_GitCommitSuccessNotificationMessage.Replace(
+                    "{0}",
+                    commit.Sha[..7]
+                ),
+                Resources.InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
                 GrowlLevel.Success
             );
         });
@@ -643,13 +656,13 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     {
         if (!await _overlayService.RequestConfirmationAsync(
                 BuildRestoreConfirmationMessage(GitUnstagedCount),
-                "Restore Git working tree"
+                Resources.InstanceWorkspacePage_GitRestoreConfirmationTitle
             ))
         {
             return;
         }
 
-        await RunGitOperationAsync("Git restore failed", repository =>
+        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitRestoreDangerNotificationTitle, repository =>
         {
             var status = repository.RetrieveStatus(
                 new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true }
@@ -689,7 +702,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                 DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
             }
 
-            _notificationService.PopMessage("Restored unstaged working tree changes.", "Git restore succeeded", GrowlLevel.Success);
+            _notificationService.PopMessage(
+                Resources.InstanceWorkspacePage_GitRestoreSuccessNotificationMessage,
+                Resources.InstanceWorkspacePage_GitRestoreSuccessNotificationTitle,
+                GrowlLevel.Success
+            );
             return Task.CompletedTask;
         });
     }

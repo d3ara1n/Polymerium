@@ -303,7 +303,7 @@ public partial class MarketplaceSearchPageModel
             return TopLevelHelper.LaunchUriAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 exhibit.Reference,
-                "Failed to open project website",
+                Resources.MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle,
                 _notificationService,
                 thumbnail: exhibit.Thumbnail
             );

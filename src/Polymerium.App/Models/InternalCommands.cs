@@ -8,6 +8,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 
@@ -23,7 +24,7 @@ public static class InternalCommands
                 return TopLevelHelper.LaunchUriAsync(
                     TopLevel.GetTopLevel(MainWindow.Instance),
                     uri,
-                    "Failed to open link"
+                    Resources.InternalCommands_OpenLinkDangerNotificationTitle
                 );
             }
 
@@ -38,7 +39,7 @@ public static class InternalCommands
                 return TopLevelHelper.LaunchUriAsync(
                     TopLevel.GetTopLevel(MainWindow.Instance),
                     new Uri(str),
-                    "Failed to open link"
+                    Resources.InternalCommands_OpenLinkDangerNotificationTitle
                 );
             }
 
@@ -58,7 +59,7 @@ public static class InternalCommands
                 return TopLevelHelper.LaunchDirectoryInfoAsync(
                     TopLevel.GetTopLevel(MainWindow.Instance),
                     new(path),
-                    "Failed to open folder"
+                    Resources.Shared_FailedToOpenFolderDangerNotificationTitle
                 );
             }
 
@@ -76,7 +77,7 @@ public static class InternalCommands
             await TopLevelHelper.CopyToClipboardAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 text,
-                "Failed to copy text"
+                Resources.InternalCommands_CopyTextDangerNotificationTitle
             );
         });
 }

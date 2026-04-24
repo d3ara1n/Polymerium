@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Avalonia;
 using CommunityToolkit.Mvvm.Input;
+using AppResources = Polymerium.App.Properties.Resources;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
 using Trident.Abstractions;
@@ -84,7 +85,7 @@ public partial class OobePrivilege : OobeStep
         }
         catch (Exception ex)
         {
-            NotificationService?.PopMessage(ex, "Failed to create symlink");
+            NotificationService?.PopMessage(ex, AppResources.OobePrivilege_CreateSymlinkDangerNotificationTitle);
         }
 
         return true;

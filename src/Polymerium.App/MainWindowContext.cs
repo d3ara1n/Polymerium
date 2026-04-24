@@ -237,7 +237,7 @@ public partial class MainWindowContext : ObservableObject
             {
                 _notificationService.PopMessage(
                     ex,
-                    "Unable to read pack config",
+                    Resources.MainWindow_ReadPackConfigDangerNotificationTitle,
                     thumbnail: ThumbnailHelper.ForInstance(key)
                 );
             }
@@ -293,7 +293,7 @@ public partial class MainWindowContext : ObservableObject
                                 ),
                                 SuggestedFileName = $"{name}.{version}",
                                 DefaultExtension = "zip",
-                                FileTypeChoices = [new("Zip Archive") { Patterns = ["*.zip"] }],
+                                FileTypeChoices = [new(Resources.Shared_ZipArchiveFileTypeText) { Patterns = ["*.zip"] }],
                             }
                         );
                         if (storageItem is not null)
@@ -303,7 +303,7 @@ public partial class MainWindowContext : ObservableObject
                             profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
                             var notification = _notificationService.PopProgress(
                                 name,
-                                "Exporting...",
+                                Resources.MainWindow_ExportModpackProgressingNotificationMessage,
                                 thumbnail: ThumbnailHelper.ForInstance(key)
                             );
                             try
@@ -327,8 +327,8 @@ public partial class MainWindowContext : ObservableObject
                                 await Task.Delay(TimeSpan.FromSeconds(1));
                                 var path = storageItem.TryGetLocalPath();
                                 _notificationService.PopMessage(
-                                    path ?? "Unknown",
-                                    "Export successfully",
+                                    path ?? Resources.Enum_Unknown,
+                                    Resources.MainWindow_ExportModpackSuccessNotificationTitle,
                                     thumbnail: ThumbnailHelper.ForInstance(key)
                                 );
                             }
@@ -336,7 +336,7 @@ public partial class MainWindowContext : ObservableObject
                             {
                                 _notificationService.PopMessage(
                                     ex,
-                                    "Failed to export instance",
+                                    Resources.MainWindow_ExportModpackDangerNotificationTitle,
                                     thumbnail: ThumbnailHelper.ForInstance(key)
                                 );
                             }
@@ -366,7 +366,7 @@ public partial class MainWindowContext : ObservableObject
             {
                 _notificationService.PopMessage(
                     ex,
-                    "Unable to save pack config",
+                    Resources.MainWindow_SavePackConfigDangerNotificationTitle,
                     thumbnail: ThumbnailHelper.ForInstance(key)
                 );
             }
@@ -394,19 +394,19 @@ public partial class MainWindowContext : ObservableObject
             );
             if (File.Exists(path))
             {
-                return TopLevelHelper.LaunchFileInfoAsync(
-                    TopLevel.GetTopLevel(MainWindow.Instance),
-                    new(path),
-                    "Failed to open log file",
-                    _notificationService,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key)
-                );
+                    return TopLevelHelper.LaunchFileInfoAsync(
+                        TopLevel.GetTopLevel(MainWindow.Instance),
+                        new(path),
+                        Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
+                        _notificationService,
+                        thumbnail: ThumbnailHelper.ForInstance(tracker.Key)
+                    );
             }
             else
             {
                 _notificationService.PopMessage(
-                    "Log file not found",
-                    "Failed to open log file",
+                    Resources.MainWindow_LogFileNotFoundWarningNotificationMessage,
+                    Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
                     GrowlLevel.Warning,
                     thumbnail: ThumbnailHelper.ForInstance(tracker.Key)
                 );
@@ -427,7 +427,7 @@ public partial class MainWindowContext : ObservableObject
         {
             _notificationService.PopMessage(
                 ex,
-                "Failed to launch instance",
+                Resources.Shared_FailedToLaunchInstanceDangerNotificationTitle,
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );
         }
@@ -444,7 +444,7 @@ public partial class MainWindowContext : ObservableObject
         {
             _notificationService.PopMessage(
                 ex,
-                "Failed to deploy instance",
+                Resources.Shared_FailedToDeployInstanceDangerNotificationTitle,
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );
         }
@@ -459,7 +459,7 @@ public partial class MainWindowContext : ObservableObject
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                "Failed to open instance folder",
+                Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
                 _notificationService,
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );

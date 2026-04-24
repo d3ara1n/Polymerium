@@ -9,6 +9,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
+using AppResources = Polymerium.App.Properties.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.Repositories;
@@ -151,7 +152,7 @@ public partial class AssetImporterDialog : Dialog
             Dispatcher.UIThread.Post(() =>
             {
                 Model = null;
-                NotificationService.PopMessage(ex, "Failed to identify file");
+                NotificationService.PopMessage(ex, AppResources.AssetImporterDialog_IdentifyFileDangerNotificationTitle);
             });
         }
     }
