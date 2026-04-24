@@ -5,22 +5,28 @@ namespace Polymerium.App.Dialogs;
 
 public partial class UserInputDialog : Dialog
 {
-    public static readonly StyledProperty<string> WatermarkProperty = AvaloniaProperty.Register<
-        UserInputDialog,
-        string
-    >(nameof(Watermark));
+    public static readonly StyledProperty<string> PlaceholderTextProperty =
+        AvaloniaProperty.Register<UserInputDialog, string>(nameof(PlaceholderText));
 
-    public static readonly StyledProperty<string> PresetTextProperty = AvaloniaProperty.Register<
-        UserInputDialog,
-        string
-    >(nameof(PresetText));
+    public static readonly StyledProperty<string> PresetTextProperty =
+        AvaloniaProperty.Register<UserInputDialog, string>(nameof(PresetText));
+
+    public static readonly StyledProperty<bool> AllowMultiLineProperty =
+        AvaloniaProperty.Register<UserInputDialog, bool>(nameof(AllowMultiLine));
 
     public UserInputDialog() => InitializeComponent();
 
-    public string Watermark
+
+    public bool AllowMultiLine
     {
-        get => GetValue(WatermarkProperty);
-        set => SetValue(WatermarkProperty, value);
+        get => GetValue(AllowMultiLineProperty);
+        set => SetValue(AllowMultiLineProperty, value);
+    }
+
+    public string PlaceholderText
+    {
+        get => GetValue(PlaceholderTextProperty);
+        set => SetValue(PlaceholderTextProperty, value);
     }
 
     public string PresetText
@@ -38,6 +44,5 @@ public partial class UserInputDialog : Dialog
         }
     }
 
-    protected override bool ValidateResult(object? result) =>
-        result is string str && !string.IsNullOrEmpty(str);
+    protected override bool ValidateResult(object? result) => result is string str && !string.IsNullOrEmpty(str);
 }

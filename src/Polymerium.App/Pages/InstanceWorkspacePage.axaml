@@ -5,7 +5,6 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,20 +15,18 @@
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="12">
         <!--  Status Bar  -->
-        <StackPanel DockPanel.Dock="Top">
-            <!--  Lock Info  -->
-            <husk:InfoBar
-                Classes="Warning"
-                IsVisible="{Binding IsLocked}"
-                Content="{x:Static lang:Resources.InstanceWorkspacePage_LockedInfoBarText}" />
-
+        <StackPanel
+            DockPanel.Dock="Top"
+            Spacing="8">
             <!--  Git Bar  -->
             <Border
                 Padding="12,8"
                 IsVisible="{Binding IsGitRepository}"
                 Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                 CornerRadius="{StaticResource MediumCornerRadius}">
-                <Grid ColumnDefinitions="*,Auto">
+                <Grid
+                    ColumnDefinitions="*,Auto"
+                    ColumnSpacing="16">
                     <StackPanel
                         Grid.Column="0"
                         Orientation="Horizontal"
@@ -37,36 +34,57 @@
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="Git 仓库" />
+                                Text="仓库" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{Binding GitBranchName}" />
+                                Text="Git" />
                         </StackPanel>
                         <husk:Divider Orientation="Vertical" />
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="暂存" />
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="4">
-                                <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}">
-                                    <Run Text="±" />
-                                    <Run Text="{Binding GitStagedCount}" />
-                                </TextBlock>
-                            </StackPanel>
+                            <TextBlock Text="提交" />
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding GitHeadSummary}" />
                         </StackPanel>
+                        <husk:Divider Orientation="Vertical" />
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="变更" />
+                            <TextBlock Text="工作区" />
                             <StackPanel
                                 Orientation="Horizontal"
-                                Spacing="4">
+                                Spacing="8">
+                                <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}">
+                                    <Run Text="暂存" />
+                                    <Run Text="{Binding GitStagedCount}" />
+                                </TextBlock>
                                 <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}">
-                                    <Run Text="±" />
+                                    <Run Text="未暂存" />
                                     <Run Text="{Binding GitUnstagedCount}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <husk:Divider Orientation="Vertical" />
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Spacing="2">
+                            <TextBlock Text="同步" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding GitTrackingBranchName}" />
+                                <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}">
+                                    <Run Text="↑" />
+                                    <Run Text="{Binding GitAheadCount}" />
+                                </TextBlock>
+                                <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}">
+                                    <Run Text="↓" />
+                                    <Run Text="{Binding GitBehindCount}" />
                                 </TextBlock>
                             </StackPanel>
                         </StackPanel>
@@ -75,12 +93,30 @@
                         Grid.Column="1"
                         Orientation="Horizontal"
                         Spacing="8">
-                        <Button
+                        <SplitButton
                             Classes="Primary"
-                            Content="提交" />
+                            Command="{Binding CommitGitCommand}"
+                            ToolTip.Tip="提交当前全部变更">
+                            <husk:IconLabel
+                                Icon="Checkmark"
+                                Text="提交" />
+                            <SplitButton.Flyout>
+                                <MenuFlyout>
+                                    <MenuItem
+                                        Command="{Binding RestoreGitChangesCommand}"
+                                        Header="还原"
+                                        ToolTip.Tip="丢弃未暂存改动并删除未跟踪文件" />
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
                     </StackPanel>
                 </Grid>
             </Border>
+            <!--  Lock Info  -->
+            <husk:InfoBar
+                Classes="Warning"
+                IsVisible="{Binding IsLocked}"
+                Content="{x:Static lang:Resources.InstanceWorkspacePage_LockedInfoBarText}" />
         </StackPanel>
         <TabControl>
             <TabItem Header="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabText}">
