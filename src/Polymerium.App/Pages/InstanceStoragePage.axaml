@@ -98,15 +98,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="mods"
-                                Content="Build" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="mods"
-                                Content="Imports" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="mods"
-                                Content="Persists" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -164,15 +164,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="resourcepacks"
-                                Content="Build" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="resourcepacks"
-                                Content="Imports" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="resourcepacks"
-                                Content="Persists" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -230,15 +230,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="shaderpacks"
-                                Content="Build" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="shaderpacks"
-                                Content="Imports" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="shaderpacks"
-                                Content="Persists" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -296,15 +296,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="saves"
-                                Content="Build" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="saves"
-                                Content="Imports" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="saves"
-                                Content="Persists" />
+                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -406,15 +406,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="screenshots"
-                                        Content="Build" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="screenshots"
-                                        Content="Imports" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="screenshots"
-                                        Content="Persists" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="ScreenshotsProgressBar"
@@ -467,15 +467,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="logs"
-                                        Content="Build" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="logs"
-                                        Content="Imports" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="logs"
-                                        Content="Persists" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="LogsProgressBar"
@@ -527,15 +527,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="crash-reports"
-                                        Content="Build" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="crash-reports"
-                                        Content="Imports" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="crash-reports"
-                                        Content="Persists" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="CrashReportsProgressBar"
@@ -587,15 +587,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="config"
-                                        Content="Build" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="config"
-                                        Content="Imports" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="config"
-                                        Content="Persists" />
+                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="ConfigProgressBar"
