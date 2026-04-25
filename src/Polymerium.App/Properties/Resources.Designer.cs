@@ -4182,6 +4182,78 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This file is already in the current directory..
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add File.
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A file named {0} already exists in the current directory. Continuing will overwrite it..
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Already Exists.
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a file to add to the current import directory.
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFilePrompt {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFilePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added {0}.
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Files.
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add File.
+        /// </summary>
+        public static string InstanceWorkspacePage_AddImportFileTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string InstanceWorkspacePage_ApplyButtonText {
@@ -4245,6 +4317,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string InstanceWorkspacePage_FileFileTypeText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_FileFileTypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File Size.
         /// </summary>
         public static string InstanceWorkspacePage_FileSizeLabelText {
@@ -4286,6 +4367,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_FileTypeLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileTypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        public static string InstanceWorkspacePage_FolderFileTypeText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_FolderFileTypeText", resourceCulture);
             }
         }
         
@@ -4615,6 +4705,51 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_RefreshButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RefreshButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Folder.
+        /// </summary>
+        public static string InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove {0} from import?.
+        /// </summary>
+        public static string InstanceWorkspacePage_RemoveImportEntryConfirmationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportEntryConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed {0}.
+        /// </summary>
+        public static string InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Files.
+        /// </summary>
+        public static string InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove File.
+        /// </summary>
+        public static string InstanceWorkspacePage_RemoveImportFileConfirmationTitle {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportFileConfirmationTitle", resourceCulture);
             }
         }
         
