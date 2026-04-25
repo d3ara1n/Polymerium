@@ -187,7 +187,7 @@ public static class Startup
     {
         #region SentrySdk Init (only in Debug)
 
-        if (Program.IsDebug)
+        if (!Program.IsDebug)
         {
             SentrySdk.Init(options =>
             {
@@ -229,7 +229,7 @@ public static class Startup
 
     public static void DeinitializeUnhostedServices()
     {
-        if (Program.IsDebug)
+        if (!Program.IsDebug)
         {
             SentrySdk.Close();
         }

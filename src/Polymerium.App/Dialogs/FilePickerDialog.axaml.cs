@@ -12,6 +12,8 @@ public partial class FilePickerDialog : Dialog
 {
     public FilePickerDialog() => InitializeComponent();
 
+    public string? SuggestedStartLocationPath { get; set; }
+
     protected override bool ValidateResult(object? result) =>
         result is string filePath && File.Exists(filePath);
 
@@ -43,12 +45,18 @@ public partial class FilePickerDialog : Dialog
             var storage = top.StorageProvider;
             if (storage.CanOpen)
             {
+                IStorageFolder? startLocation = null;
+                if (!string.IsNullOrWhiteSpace(SuggestedStartLocationPath)
+                 && Directory.Exists(SuggestedStartLocationPath))
+                {
+                    startLocation = await storage.TryGetFolderFromPathAsync(SuggestedStartLocationPath);
+                }
+
                 var files = await storage.OpenFilePickerAsync(
                     new()
                     {
-                        SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(
-                            WellKnownFolder.Downloads
-                        ),
+                        SuggestedStartLocation = startLocation
+                                                 ?? await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
                     }
                 );
                 var file = files.FirstOrDefault();

@@ -145,7 +145,7 @@
                             HorizontalSpacing="8">
                             <Button
                                 DockPanel.Dock="Right"
-                                Command="{Binding RefreshCommand}">
+                                Command="{Binding RefreshChangesCommand}">
                                 <husk:IconLabel
                                     Icon="ArrowCounterclockwise"
                                     Text="{x:Static lang:Resources.InstanceWorkspacePage_RefreshButtonText}" />
@@ -511,6 +511,266 @@
                             Text="{x:Static lang:Resources.InstanceWorkspacePage_FilesTabText}" />
                     </StackPanel>
                 </TabItem.Header>
+                <husk:Card BorderThickness="0">
+                    <DockPanel VerticalSpacing="12">
+                        <StackPanel
+                            DockPanel.Dock="Top"
+                            Spacing="8">
+                            <Grid
+                                ColumnDefinitions="Auto,Auto,*,Auto"
+                                ColumnSpacing="12">
+                                <Button
+                                    Grid.Column="0"
+                                    Width="{Binding $self.Bounds.Height}"
+                                    Padding="0"
+                                    Command="{x:Static app:InternalCommands.OpenFolderCommand}"
+                                    CommandParameter="{Binding CurrentImportDirectoryPath}">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Symbol="FolderOpen" />
+                                </Button>
+                                <Button
+                                    Grid.Column="1"
+                                    Width="{Binding $self.Bounds.Height}"
+                                    Padding="0"
+                                    Command="{Binding RefreshImportCommand}">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Symbol="ArrowCounterclockwise" />
+                                </Button>
+                                <Border
+                                    Grid.Column="2"
+                                    Padding="4"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="4">
+                                        <Button
+                                            Grid.Column="0"
+                                            Classes="Small"
+                                            IsEnabled="{Binding HasNestedImportPath}"
+                                            Command="{Binding HomeImportCommand}"
+                                            Theme="{StaticResource GhostButtonTheme}">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="Home" />
+                                        </Button>
+                                        <ScrollViewer
+                                            Grid.Column="1"
+                                            HorizontalScrollBarVisibility="Auto"
+                                            VerticalScrollBarVisibility="Disabled">
+                                            <ItemsControl ItemsSource="{Binding ImportBreadcrumbs}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Spacing="4" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="app:ImportPathSegmentModel">
+                                                        <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Spacing="4">
+                                                            <TextBlock
+                                                                VerticalAlignment="Center"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Text="/" />
+                                                            <Button
+                                                                Classes="Small"
+                                                                IsEnabled="{Binding !IsCurrent}"
+                                                                Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).OpenImportBreadcrumbCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}"
+                                                                Theme="{StaticResource GhostButtonTheme}">
+                                                                <TextBlock Text="{Binding Label}" />
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                                <Button
+                                    Grid.Column="3"
+                                    Classes="Primary"
+                                    Width="{Binding $self.Bounds.Height}"
+                                    Padding="0"
+                                    Command="{Binding AddImportEntryCommand}">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Symbol="DocumentAdd" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+
+                        <app:EmptyContainer IsEmpty="{Binding ImportEntryCount, Converter={x:Static husk:NumberConverters.IsZero}}">
+                            <ListBox
+                                ItemsSource="{Binding ImportEntries}"
+                                SelectedItem="{Binding SelectedImportEntry, Mode=TwoWay}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemContainerTheme>
+                                    <ControlTheme TargetType="ListBoxItem">
+                                        <Setter Property="Padding" Value="12,8" />
+                                        <Setter Property="Margin" Value="2" />
+                                        <Setter Property="Template">
+                                            <ControlTemplate>
+                                                <Panel>
+                                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                                        <Border
+                                                            Name="Indicator"
+                                                            Grid.Column="0"
+                                                            Padding="12,8"
+                                                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                                            CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                                                      Converter={x:Static husk:CornerRadiusConverters.Left}}">
+                                                            <Border.Transitions>
+                                                                <Transitions>
+                                                                    <BrushTransition
+                                                                        Property="Background"
+                                                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                                </Transitions>
+                                                            </Border.Transitions>
+                                                            <husk:SwitchContainer
+                                                                TargetType="x:Boolean"
+                                                                Value="{Binding IsDirectory, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:ImportBrowserEntryModel}">
+                                                                <husk:SwitchCase Value="{x:True}">
+                                                                    <fi:SymbolIcon
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="18"
+                                                                        Symbol="Folder" />
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="{x:False}">
+                                                                    <fi:SymbolIcon
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="18"
+                                                                        Symbol="Document" />
+                                                                </husk:SwitchCase>
+                                                            </husk:SwitchContainer>
+                                                        </Border>
+                                                        <Border
+                                                            Grid.Column="1"
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                                                            <ContentPresenter
+                                                                Content="{TemplateBinding Content}"
+                                                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                        </Border>
+                                                        <Border Grid.Column="2">
+                                                            <husk:SwitchContainer
+                                                                TargetType="x:Boolean"
+                                                                Value="{Binding IsDirectory, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:ImportBrowserEntryModel}">
+                                                                <husk:SwitchCase Value="{x:True}">
+                                                                    <Button
+                                                                        Padding="12,8"
+                                                                        IsVisible="{Binding IsDirectory, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:ImportBrowserEntryModel}"
+                                                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                                                        Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).EnterImportDirectoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:ImportBrowserEntryModel}"
+                                                                        CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                                                                  Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                                                        Theme="{StaticResource GhostButtonTheme}">
+                                                                        <fi:SymbolIcon
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="{StaticResource LargeFontSize}"
+                                                                            Symbol="ChevronRight" />
+                                                                    </Button>
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="{x:False}">
+                                                                    <Button
+                                                                        Classes="Danger"
+                                                                        Padding="12,8"
+                                                                        IsVisible="{Binding !IsDirectory, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:ImportBrowserEntryModel}"
+                                                                        Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
+                                                                        Command="{Binding ((app:InstanceWorkspacePageModel)DataContext).RemoveImportEntryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type app:InstanceWorkspacePage}}, FallbackValue={x:Null}}"
+                                                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:ImportBrowserEntryModel}"
+                                                                        CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                                                                                  Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                                                        Theme="{StaticResource GhostButtonTheme}">
+                                                                        <fi:SymbolIcon
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="{StaticResource LargeFontSize}"
+                                                                            Symbol="Dismiss" />
+                                                                    </Button>
+                                                                </husk:SwitchCase>
+                                                            </husk:SwitchContainer>
+                                                        </Border>
+                                                    </Grid>
+                                                    <Border
+                                                        Name="Overlay"
+                                                        IsHitTestVisible="False"
+                                                        Background="{StaticResource OverlayBackgroundBrush}"
+                                                        CornerRadius="{StaticResource MediumCornerRadius}"
+                                                        Opacity="0">
+                                                        <Border.Transitions>
+                                                            <Transitions>
+                                                                <DoubleTransition
+                                                                    Property="Opacity"
+                                                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            </Transitions>
+                                                        </Border.Transitions>
+                                                    </Border>
+                                                </Panel>
+                                            </ControlTemplate>
+                                        </Setter>
+
+                                        <Style Selector="^:pointerover /template/ Border#Overlay">
+                                            <Setter Property="Opacity" Value="1" />
+                                        </Style>
+
+                                        <Style Selector="^:selected /template/ Border#Indicator">
+                                            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+                                        </Style>
+                                    </ControlTheme>
+                                </ListBox.ItemContainerTheme>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="app:ImportBrowserEntryModel">
+                                        <Grid
+                                            ColumnSpacing="12"
+                                            RowDefinitions="Auto,Auto"
+                                            RowSpacing="4">
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                VerticalAlignment="Center"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding Name}"
+                                                TextTrimming="CharacterEllipsis" />
+
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <TextBlock
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding FileType}" />
+                                                <TextBlock
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding FileLastModifiedRaw, StringFormat={}{0:g}}" />
+                                                <TextBlock
+                                                    IsVisible="{Binding !IsDirectory}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding FileSizeRaw, Mode=OneTime, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </app:EmptyContainer>
+                    </DockPanel>
+                </husk:Card>
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -116,9 +116,12 @@ public class OverlayService(IViewActivator activator)
         return await PopDialogAsync(dialog);
     }
 
-    public async Task<string?> RequestFileAsync(string? message = null, string? title = null)
+    public async Task<string?> RequestFileAsync(
+        string? message = null,
+        string? title = null,
+        string? suggestedStartLocationPath = null)
     {
-        var dialog = new FilePickerDialog();
+        var dialog = new FilePickerDialog { SuggestedStartLocationPath = suggestedStartLocationPath };
         if (title != null)
         {
             dialog.Title = title;
