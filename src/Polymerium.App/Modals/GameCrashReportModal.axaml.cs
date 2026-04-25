@@ -17,7 +17,6 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
-using AppResources = Polymerium.App.Properties.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -26,6 +25,7 @@ using Refit;
 using Trident.Abstractions;
 using Trident.Core.Clients;
 using Trident.Core.Models.MclogsApi;
+using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Modals;
 
@@ -147,7 +147,10 @@ public partial class GameCrashReportModal : Modal
                         WellKnownFolder.Downloads
                     ),
                     DefaultExtension = "zip",
-                    FileTypeChoices = [new(AppResources.Shared_ZipArchiveFileTypeText) { Patterns = ["*.zip"] }],
+                    FileTypeChoices =
+                    [
+                        new(AppResources.Shared_ZipArchiveFileTypeText) { Patterns = ["*.zip"] },
+                    ],
                 }
             );
 
@@ -398,11 +401,11 @@ public partial class GameCrashReportModal : Modal
                             Report?.MinecraftVersion,
                             "Minecraft Version",
                             true
-                           ),
+                        ),
                         new("loader", Report?.LoaderLabel, "Loader", true),
                         new("operating_system", Report?.OperatingSystem, "Operating System", true),
                     ]
-                   )
+                )
             );
         }
         catch (ApiException ex)

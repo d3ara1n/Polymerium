@@ -8,7 +8,6 @@ using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
-using AppResources = Polymerium.App.Properties.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
@@ -17,6 +16,7 @@ using Polymerium.App.Utilities;
 using Trident.Abstractions.Accounts;
 using Trident.Core.Accounts;
 using Trident.Core.Services;
+using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Components;
 

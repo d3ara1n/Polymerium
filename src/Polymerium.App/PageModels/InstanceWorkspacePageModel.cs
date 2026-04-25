@@ -42,13 +42,20 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
-        ProfileManager profileManager) : base(context, instanceManager, profileManager)
+        ProfileManager profileManager
+    )
+        : base(context, instanceManager, profileManager)
     {
         _notificationService = notificationService;
         _overlayService = overlayService;
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
-        _changesSource.Connect().Filter(filter).Bind(out var view).Subscribe().DisposeWith(_subscriptions);
+        _changesSource
+            .Connect()
+            .Filter(filter)
+            .Bind(out var view)
+            .Subscribe()
+            .DisposeWith(_subscriptions);
         ChangesView = view;
     }
 
@@ -56,7 +63,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private readonly CompositeDisposable _subscriptions = new();
     private CancellationToken? _initToken;
-    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x => x.RelativePath);
+    private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x =>
+        x.RelativePath
+    );
 
     #endregion
 
@@ -161,7 +170,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     #region Other
 
     private static Func<WorkspaceChangeModel, bool> BuildFilter(string? text) =>
-        x => string.IsNullOrEmpty(text) || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
+        x =>
+            string.IsNullOrEmpty(text)
+            || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
 
     private static string NormalizeRelativePath(string? relativePath)
     {
@@ -170,7 +181,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return string.Empty;
         }
 
-        return relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar).Trim();
+        return relativePath
+            .Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+            .Trim();
     }
 
     private string GetImportRootPath()
@@ -185,16 +198,27 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private static IReadOnlyList<ImportPathSegmentModel> BuildImportBreadcrumbs(string relativePath)
     {
-        var segments = relativePath.Split([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar],
-                                          StringSplitOptions.RemoveEmptyEntries);
+        var segments = relativePath.Split(
+            [Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar],
+            StringSplitOptions.RemoveEmptyEntries
+        );
 
         var result = new List<ImportPathSegmentModel>(segments.Length);
 
         var current = string.Empty;
         for (var i = 0; i < segments.Length; i++)
         {
-            current = string.IsNullOrEmpty(current) ? segments[i] : Path.Combine(current, segments[i]);
-            result.Add(new() { Label = segments[i], RelativePath = current, IsCurrent = i == segments.Length - 1, });
+            current = string.IsNullOrEmpty(current)
+                ? segments[i]
+                : Path.Combine(current, segments[i]);
+            result.Add(
+                new()
+                {
+                    Label = segments[i],
+                    RelativePath = current,
+                    IsCurrent = i == segments.Length - 1,
+                }
+            );
         }
 
         return result;
@@ -205,38 +229,43 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(GetImportRootPath()));
         var relativePath = NormalizeRelativePath(CurrentImportRelativePath);
         var currentPath = Path.GetFullPath(Path.Combine(root, relativePath));
-        if (!currentPath.StartsWith(root, StringComparison.OrdinalIgnoreCase) || !Directory.Exists(currentPath))
+        if (
+            !currentPath.StartsWith(root, StringComparison.OrdinalIgnoreCase)
+            || !Directory.Exists(currentPath)
+        )
         {
             relativePath = string.Empty;
             currentPath = root;
         }
 
         var entries = Directory
-                     .EnumerateFileSystemEntries(currentPath)
-                     .Select(path =>
-                      {
-                          var isDirectory = Directory.Exists(path);
-                          var info = isDirectory ? (FileSystemInfo)new DirectoryInfo(path) : new FileInfo(path);
-                          var fullPath = Path.GetFullPath(path);
+            .EnumerateFileSystemEntries(currentPath)
+            .Select(path =>
+            {
+                var isDirectory = Directory.Exists(path);
+                var info = isDirectory
+                    ? (FileSystemInfo)new DirectoryInfo(path)
+                    : new FileInfo(path);
+                var fullPath = Path.GetFullPath(path);
 
-                          return new ImportBrowserEntryModel
-                          {
-                              Name = Path.GetFileName(path),
-                              RelativePath = Path.GetRelativePath(root, fullPath),
-                              FullPath = fullPath,
-                              IsDirectory = isDirectory,
-                               FileType = isDirectory ? Resources.InstanceWorkspacePage_FolderFileTypeText :
-                                          string.IsNullOrWhiteSpace(Path.GetExtension(path))
-                                              ? Resources.InstanceWorkspacePage_FileFileTypeText
-                                              :
-                                          Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
-                              FileSizeRaw = info is FileInfo file ? file.Length : 0,
-                              FileLastModifiedRaw = info.LastWriteTime,
-                          };
-                      })
-                     .OrderByDescending(entry => entry.IsDirectory)
-                     .ThenBy(entry => entry.Name, StringComparer.CurrentCultureIgnoreCase)
-                     .ToList();
+                return new ImportBrowserEntryModel
+                {
+                    Name = Path.GetFileName(path),
+                    RelativePath = Path.GetRelativePath(root, fullPath),
+                    FullPath = fullPath,
+                    IsDirectory = isDirectory,
+                    FileType =
+                        isDirectory ? Resources.InstanceWorkspacePage_FolderFileTypeText
+                        : string.IsNullOrWhiteSpace(Path.GetExtension(path))
+                            ? Resources.InstanceWorkspacePage_FileFileTypeText
+                        : Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
+                    FileSizeRaw = info is FileInfo file ? file.Length : 0,
+                    FileLastModifiedRaw = info.LastWriteTime,
+                };
+            })
+            .OrderByDescending(entry => entry.IsDirectory)
+            .ThenBy(entry => entry.Name, StringComparer.CurrentCultureIgnoreCase)
+            .ToList();
 
         var breadcrumbs = BuildImportBreadcrumbs(relativePath);
         var selectedPath = SelectedImportEntry?.RelativePath;
@@ -259,10 +288,14 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
             ImportEntryCount = ImportEntries.Count;
             SelectedImportEntry = string.IsNullOrWhiteSpace(selectedPath)
-                                      ? null
-                                      : ImportEntries.FirstOrDefault(entry => string.Equals(entry.RelativePath,
-                                                                         selectedPath,
-                                                                         StringComparison.OrdinalIgnoreCase));
+                ? null
+                : ImportEntries.FirstOrDefault(entry =>
+                    string.Equals(
+                        entry.RelativePath,
+                        selectedPath,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
 
             RefreshImportCommands();
         });
@@ -293,17 +326,19 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
-                batch.Add(new()
-                {
-                    RelativePath = liveEntry,
-                    FileName = Path.GetFileName(livePath),
-                    Kind = kind,
-                    LivePath = livePath,
-                    ImportPath = importPath,
-                    FileType = type,
-                    FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTime,
-                });
+                batch.Add(
+                    new()
+                    {
+                        RelativePath = liveEntry,
+                        FileName = Path.GetFileName(livePath),
+                        Kind = kind,
+                        LivePath = livePath,
+                        ImportPath = importPath,
+                        FileType = type,
+                        FileSizeRaw = file.Length,
+                        FileLastModifiedRaw = file.LastWriteTime,
+                    }
+                );
                 if (batch.Count >= 100)
                 {
                     var toAdd = batch.ToArray();
@@ -343,8 +378,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         var trackingDetails = repository.Head.TrackingDetails;
         var branchName = isDetached ? "Detached HEAD" : repository.Head.FriendlyName;
         var headSummary = BuildHeadSummary(repository);
-        var status =
-            repository.RetrieveStatus(new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true });
+        var status = repository.RetrieveStatus(
+            new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true }
+        );
 
         var stagedCount = 0;
         var unstagedCount = 0;
@@ -409,25 +445,26 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
 
         var shortSha = tip.Sha[..7];
-        var tag = repository.Tags.FirstOrDefault(tag => tag.PeeledTarget is Commit commit && commit.Sha == tip.Sha)
-                           ?.FriendlyName;
+        var tag = repository
+            .Tags.FirstOrDefault(tag => tag.PeeledTarget is Commit commit && commit.Sha == tip.Sha)
+            ?.FriendlyName;
 
         return string.IsNullOrEmpty(tag) ? shortSha : $"{shortSha} ({tag})";
     }
 
     private static bool IsStaged(FileStatus status) =>
         status.HasFlag(FileStatus.NewInIndex)
-     || status.HasFlag(FileStatus.ModifiedInIndex)
-     || status.HasFlag(FileStatus.DeletedFromIndex)
-     || status.HasFlag(FileStatus.RenamedInIndex)
-     || status.HasFlag(FileStatus.TypeChangeInIndex);
+        || status.HasFlag(FileStatus.ModifiedInIndex)
+        || status.HasFlag(FileStatus.DeletedFromIndex)
+        || status.HasFlag(FileStatus.RenamedInIndex)
+        || status.HasFlag(FileStatus.TypeChangeInIndex);
 
     private static bool IsUnstaged(FileStatus status) =>
         status.HasFlag(FileStatus.NewInWorkdir)
-     || status.HasFlag(FileStatus.ModifiedInWorkdir)
-     || status.HasFlag(FileStatus.DeletedFromWorkdir)
-     || status.HasFlag(FileStatus.RenamedInWorkdir)
-     || status.HasFlag(FileStatus.TypeChangeInWorkdir);
+        || status.HasFlag(FileStatus.ModifiedInWorkdir)
+        || status.HasFlag(FileStatus.DeletedFromWorkdir)
+        || status.HasFlag(FileStatus.RenamedInWorkdir)
+        || status.HasFlag(FileStatus.TypeChangeInWorkdir);
 
     private bool TryOpenGitRepository(out Repository? repository)
     {
@@ -465,7 +502,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         RemoveImportEntryCommand.NotifyCanExecuteChanged();
     }
 
-    partial void OnSelectedImportEntryChanged(ImportBrowserEntryModel? value) => RefreshImportCommands();
+    partial void OnSelectedImportEntryChanged(ImportBrowserEntryModel? value) =>
+        RefreshImportCommands();
 
     partial void OnCurrentImportRelativePathChanged(string value) => RefreshImportCommands();
 
@@ -480,17 +518,19 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (!TryOpenGitRepository(out var repository))
         {
             await ResetGitStatusAsync();
-            _notificationService.PopMessage(Resources.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage,
-                                            Resources.InstanceWorkspacePage_GitErrorWarningNotificationTitle,
-                                            GrowlLevel.Warning);
+            _notificationService.PopMessage(
+                Resources.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage,
+                Resources.InstanceWorkspacePage_GitErrorWarningNotificationTitle,
+                GrowlLevel.Warning
+            );
             return;
         }
 
         SetGitBusy(true);
         try
         {
-            using var openedRepository = repository
-                                      ?? throw new InvalidOperationException("Git repository was not opened.");
+            using var openedRepository =
+                repository ?? throw new InvalidOperationException("Git repository was not opened.");
             await operation(openedRepository);
         }
         catch (Exception ex)
@@ -543,7 +583,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private static string BuildRestoreConfirmationMessage(int unstagedCount)
     {
-        return Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace("{0}", unstagedCount.ToString());
+        return Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace(
+            "{0}",
+            unstagedCount.ToString()
+        );
     }
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
@@ -614,7 +657,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         await LoadImportBrowserAsync();
     }
 
-    private bool CanOpenImportBreadcrumb(ImportPathSegmentModel? model) => model is { IsCurrent: false };
+    private bool CanOpenImportBreadcrumb(ImportPathSegmentModel? model) =>
+        model is { IsCurrent: false };
 
     [RelayCommand(CanExecute = nameof(CanOpenImportBreadcrumb))]
     private async Task OpenImportBreadcrumbAsync(ImportPathSegmentModel? model)
@@ -628,7 +672,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         await LoadImportBrowserAsync();
     }
 
-    private bool CanEnterImportDirectory(ImportBrowserEntryModel? model) => model is { IsDirectory: true };
+    private bool CanEnterImportDirectory(ImportBrowserEntryModel? model) =>
+        model is { IsDirectory: true };
 
     [RelayCommand(CanExecute = nameof(CanEnterImportDirectory))]
     private async Task EnterImportDirectoryAsync(ImportBrowserEntryModel? model)
@@ -645,10 +690,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     [RelayCommand]
     private async Task AddImportEntryAsync()
     {
-        var filePath = await _overlayService.RequestFileAsync(Resources
-                                                                 .InstanceWorkspacePage_AddImportFilePrompt,
-                                                              Resources.InstanceWorkspacePage_AddImportFileTitle,
-                                                              GetPreferredImportPickerDirectoryPath());
+        var filePath = await _overlayService.RequestFileAsync(
+            Resources.InstanceWorkspacePage_AddImportFilePrompt,
+            Resources.InstanceWorkspacePage_AddImportFileTitle,
+            GetPreferredImportPickerDirectoryPath()
+        );
         if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
         {
             return;
@@ -663,22 +709,24 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             var targetPath = Path.Combine(directory, fileName);
             if (FileHelper.IsPathEquivalent(filePath, targetPath))
             {
-                _notificationService.PopMessage(Resources
-                                                   .InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage,
-                                                Resources
-                                                   .InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle,
-                                                GrowlLevel.Warning);
+                _notificationService.PopMessage(
+                    Resources.InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage,
+                    Resources.InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle,
+                    GrowlLevel.Warning
+                );
                 return;
             }
 
             var overwrite = false;
             if (File.Exists(targetPath))
             {
-                overwrite = await _overlayService.RequestConfirmationAsync(Resources
-                       .InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage
-                       .Replace("{0}", fileName),
-                                                                           Resources
-                       .InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle);
+                overwrite = await _overlayService.RequestConfirmationAsync(
+                    Resources.InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage.Replace(
+                        "{0}",
+                        fileName
+                    ),
+                    Resources.InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle
+                );
                 if (!overwrite)
                 {
                     return;
@@ -688,15 +736,22 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             File.Copy(filePath, targetPath, overwrite);
             await RefreshImportAsync();
 
-            SelectedImportEntry = ImportEntries.FirstOrDefault(entry => string.Equals(entry.RelativePath,
-                                                                   Path.GetRelativePath(GetImportRootPath(),
-                                                                       targetPath),
-                                                                   StringComparison.OrdinalIgnoreCase));
+            SelectedImportEntry = ImportEntries.FirstOrDefault(entry =>
+                string.Equals(
+                    entry.RelativePath,
+                    Path.GetRelativePath(GetImportRootPath(), targetPath),
+                    StringComparison.OrdinalIgnoreCase
+                )
+            );
 
-            _notificationService.PopMessage(Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationMessage
-                                                     .Replace("{0}", fileName),
-                                            Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationTitle,
-                                            GrowlLevel.Success);
+            _notificationService.PopMessage(
+                Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationMessage.Replace(
+                    "{0}",
+                    fileName
+                ),
+                Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationTitle,
+                GrowlLevel.Success
+            );
         }
         catch (Exception ex)
         {
@@ -723,7 +778,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         return Directory.Exists(importPath) ? importPath : null;
     }
 
-    private bool CanRemoveImportEntry(ImportBrowserEntryModel? model) => (model ?? SelectedImportEntry) is not null;
+    private bool CanRemoveImportEntry(ImportBrowserEntryModel? model) =>
+        (model ?? SelectedImportEntry) is not null;
 
     [RelayCommand(CanExecute = nameof(CanRemoveImportEntry))]
     private async Task RemoveImportEntryAsync(ImportBrowserEntryModel? model)
@@ -734,14 +790,15 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        var confirmed = await _overlayService.RequestConfirmationAsync(Resources
-               .InstanceWorkspacePage_RemoveImportEntryConfirmationMessage
-               .Replace("{0}", model.Name),
-                                                                       model.IsDirectory
-                                                                           ? Resources
-                                                                               .InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle
-                                                                           : Resources
-                                                                               .InstanceWorkspacePage_RemoveImportFileConfirmationTitle);
+        var confirmed = await _overlayService.RequestConfirmationAsync(
+            Resources.InstanceWorkspacePage_RemoveImportEntryConfirmationMessage.Replace(
+                "{0}",
+                model.Name
+            ),
+            model.IsDirectory
+                ? Resources.InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle
+                : Resources.InstanceWorkspacePage_RemoveImportFileConfirmationTitle
+        );
         if (!confirmed)
         {
             return;
@@ -760,10 +817,14 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
             SelectedImportEntry = null;
             await RefreshImportAsync();
-            _notificationService.PopMessage(Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage
-                                                     .Replace("{0}", model.Name),
-                                            Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle,
-                                            GrowlLevel.Success);
+            _notificationService.PopMessage(
+                Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage.Replace(
+                    "{0}",
+                    model.Name
+                ),
+                Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle,
+                GrowlLevel.Success
+            );
         }
         catch (Exception ex)
         {
@@ -778,9 +839,12 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     {
         if (model != null)
         {
-            if (model.FileSizeRaw > 1024 * 1024 * 1024
-             && !await _overlayService.RequestConfirmationAsync(Resources
-                                                                   .InstanceWorkspacePage_LargeDiffConfirmationMessage))
+            if (
+                model.FileSizeRaw > 1024 * 1024 * 1024
+                && !await _overlayService.RequestConfirmationAsync(
+                    Resources.InstanceWorkspacePage_LargeDiffConfirmationMessage
+                )
+            )
             {
                 // 文件大且用户拒绝
                 return;
@@ -790,7 +854,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanStage(WorkspaceChangeModel? model) => !IsLocked && model is not null && File.Exists(model.LivePath);
+    private bool CanStage(WorkspaceChangeModel? model) =>
+        !IsLocked && model is not null && File.Exists(model.LivePath);
 
     [RelayCommand(CanExecute = nameof(CanStage))]
     private async Task Stage(WorkspaceChangeModel? model)
@@ -800,7 +865,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync(Resources.InstanceWorkspacePage_StageConfirmationMessage))
+        if (
+            !await _overlayService.RequestConfirmationAsync(
+                Resources.InstanceWorkspacePage_StageConfirmationMessage
+            )
+        )
         {
             return;
         }
@@ -816,7 +885,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
+                _notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle
+                );
             }
         }
         else
@@ -829,7 +901,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
+                _notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle
+                );
             }
         }
 
@@ -850,7 +925,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync(Resources.InstanceWorkspacePage_RestoreConfirmationMessage))
+        if (
+            !await _overlayService.RequestConfirmationAsync(
+                Resources.InstanceWorkspacePage_RestoreConfirmationMessage
+            )
+        )
         {
             return;
         }
@@ -874,7 +953,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
+                _notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle
+                );
             }
         }
 
@@ -885,140 +967,153 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanCommitGit() => IsGitRepository && !GitIsBusy && !GitIsDetachedHead && GitChangedCount > 0;
+    private bool CanCommitGit() =>
+        IsGitRepository && !GitIsBusy && !GitIsDetachedHead && GitChangedCount > 0;
 
     [RelayCommand(CanExecute = nameof(CanCommitGit))]
     private async Task CommitGit()
     {
-        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
-                                   async repository =>
-                                   {
-                                       var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
-                                       if (signature is null)
-                                       {
-                                           _notificationService.PopMessage(Resources
-                                                                              .InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage,
-                                                                           Resources
-                                                                              .InstanceWorkspacePage_GitCommitDangerNotificationTitle,
-                                                                           GrowlLevel.Warning);
-                                           return;
-                                       }
+        await RunGitOperationAsync(
+            Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+            async repository =>
+            {
+                var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
+                if (signature is null)
+                {
+                    _notificationService.PopMessage(
+                        Resources.InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage,
+                        Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                        GrowlLevel.Warning
+                    );
+                    return;
+                }
 
-                                       var message =
-                                           await _overlayService.RequestInputAsync(Resources
-                                                  .InstanceWorkspacePage_GitCommitPrompt,
-                                               Resources.InstanceWorkspacePage_GitCommitPromptTitle,
-                                               Resources.InstanceWorkspacePage_GitCommitDefaultMessage
-                                                        .Replace("{0}", Basic.Name),
-                                               true);
-                                       if (message is null)
-                                       {
-                                           return;
-                                       }
+                var message = await _overlayService.RequestInputAsync(
+                    Resources.InstanceWorkspacePage_GitCommitPrompt,
+                    Resources.InstanceWorkspacePage_GitCommitPromptTitle,
+                    Resources.InstanceWorkspacePage_GitCommitDefaultMessage.Replace(
+                        "{0}",
+                        Basic.Name
+                    ),
+                    true
+                );
+                if (message is null)
+                {
+                    return;
+                }
 
-                                       var trimmedMessage = message.Trim();
-                                       if (string.IsNullOrEmpty(trimmedMessage))
-                                       {
-                                           _notificationService.PopMessage(Resources
-                                                                              .InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage,
-                                                                           Resources
-                                                                              .InstanceWorkspacePage_GitCommitDangerNotificationTitle,
-                                                                           GrowlLevel.Warning);
-                                           return;
-                                       }
+                var trimmedMessage = message.Trim();
+                if (string.IsNullOrEmpty(trimmedMessage))
+                {
+                    _notificationService.PopMessage(
+                        Resources.InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage,
+                        Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                        GrowlLevel.Warning
+                    );
+                    return;
+                }
 
-                                       var paths = repository
-                                                  .RetrieveStatus(new StatusOptions
-                                                   {
-                                                       IncludeIgnored = false,
-                                                       RecurseUntrackedDirs = true
-                                                   })
-                                                  .Select(entry => entry.FilePath)
-                                                  .Distinct(StringComparer.OrdinalIgnoreCase)
-                                                  .ToArray();
-                                       if (paths.Length == 0)
-                                       {
-                                           _notificationService.PopMessage(Resources
-                                                                              .InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
-                                                                           Resources
-                                                                              .InstanceWorkspacePage_GitCommitPromptTitle);
-                                           return;
-                                       }
+                var paths = repository
+                    .RetrieveStatus(
+                        new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true }
+                    )
+                    .Select(entry => entry.FilePath)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+                if (paths.Length == 0)
+                {
+                    _notificationService.PopMessage(
+                        Resources.InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
+                        Resources.InstanceWorkspacePage_GitCommitPromptTitle
+                    );
+                    return;
+                }
 
-                                       Commands.Stage(repository, paths);
+                Commands.Stage(repository, paths);
 
-                                       var commit = repository.Commit(trimmedMessage, signature, signature);
-                                       _notificationService.PopMessage(Resources
-                                                                      .InstanceWorkspacePage_GitCommitSuccessNotificationMessage
-                                                                      .Replace("{0}", commit.Sha[..7]),
-                                                                       Resources
-                                                                          .InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
-                                                                       GrowlLevel.Success);
-                                   });
+                var commit = repository.Commit(trimmedMessage, signature, signature);
+                _notificationService.PopMessage(
+                    Resources.InstanceWorkspacePage_GitCommitSuccessNotificationMessage.Replace(
+                        "{0}",
+                        commit.Sha[..7]
+                    ),
+                    Resources.InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
+                    GrowlLevel.Success
+                );
+            }
+        );
     }
 
-    private bool CanRestoreGitChanges() => IsGitRepository && !GitIsBusy && GitStagedCount == 0 && GitUnstagedCount > 0;
+    private bool CanRestoreGitChanges() =>
+        IsGitRepository && !GitIsBusy && GitStagedCount == 0 && GitUnstagedCount > 0;
 
     [RelayCommand(CanExecute = nameof(CanRestoreGitChanges))]
     private async Task RestoreGitChanges()
     {
-        if (!await _overlayService.RequestConfirmationAsync(BuildRestoreConfirmationMessage(GitUnstagedCount),
-                                                            Resources
-                                                               .InstanceWorkspacePage_GitRestoreConfirmationTitle))
+        if (
+            !await _overlayService.RequestConfirmationAsync(
+                BuildRestoreConfirmationMessage(GitUnstagedCount),
+                Resources.InstanceWorkspacePage_GitRestoreConfirmationTitle
+            )
+        )
         {
             return;
         }
 
-        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitRestoreDangerNotificationTitle,
-                                   repository =>
-                                   {
-                                       var status = repository.RetrieveStatus(new StatusOptions
-                                       {
-                                           IncludeIgnored = false,
-                                           RecurseUntrackedDirs = true
-                                       });
+        await RunGitOperationAsync(
+            Resources.InstanceWorkspacePage_GitRestoreDangerNotificationTitle,
+            repository =>
+            {
+                var status = repository.RetrieveStatus(
+                    new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true }
+                );
 
-                                       var trackedPaths = status
-                                                         .Where(entry => IsUnstaged(entry.State)
-                                                                      && !entry.State.HasFlag(FileStatus.NewInWorkdir))
-                                                         .Select(entry => entry.FilePath)
-                                                         .Distinct(StringComparer.OrdinalIgnoreCase)
-                                                         .ToArray();
-                                       if (trackedPaths.Length > 0)
-                                       {
-                                           if (repository.Head.Tip is null)
-                                           {
-                                               throw new
-                                                   InvalidOperationException("Cannot restore tracked files because HEAD does not exist.");
-                                           }
+                var trackedPaths = status
+                    .Where(entry =>
+                        IsUnstaged(entry.State) && !entry.State.HasFlag(FileStatus.NewInWorkdir)
+                    )
+                    .Select(entry => entry.FilePath)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+                if (trackedPaths.Length > 0)
+                {
+                    if (repository.Head.Tip is null)
+                    {
+                        throw new InvalidOperationException(
+                            "Cannot restore tracked files because HEAD does not exist."
+                        );
+                    }
 
-                                           foreach (var path in trackedPaths)
-                                           {
-                                               Commands.Checkout(repository,
-                                                                 repository.Head.Tip.Tree,
-                                                                 new() { CheckoutModifiers = CheckoutModifiers.Force },
-                                                                 path);
-                                           }
-                                       }
+                    foreach (var path in trackedPaths)
+                    {
+                        Commands.Checkout(
+                            repository,
+                            repository.Head.Tip.Tree,
+                            new() { CheckoutModifiers = CheckoutModifiers.Force },
+                            path
+                        );
+                    }
+                }
 
-                                       foreach (var relativePath in status
-                                                                   .Where(entry =>
-                                                                              entry.State.HasFlag(FileStatus
-                                                                                 .NewInWorkdir))
-                                                                   .Select(entry => entry.FilePath)
-                                                                   .Distinct(StringComparer.OrdinalIgnoreCase)
-                                                                   .OrderByDescending(path => path.Length))
-                                       {
-                                           DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
-                                       }
+                foreach (
+                    var relativePath in status
+                        .Where(entry => entry.State.HasFlag(FileStatus.NewInWorkdir))
+                        .Select(entry => entry.FilePath)
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderByDescending(path => path.Length)
+                )
+                {
+                    DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
+                }
 
-                                       _notificationService.PopMessage(Resources
-                                                                          .InstanceWorkspacePage_GitRestoreSuccessNotificationMessage,
-                                                                       Resources
-                                                                          .InstanceWorkspacePage_GitRestoreSuccessNotificationTitle,
-                                                                       GrowlLevel.Success);
-                                       return Task.CompletedTask;
-                                   });
+                _notificationService.PopMessage(
+                    Resources.InstanceWorkspacePage_GitRestoreSuccessNotificationMessage,
+                    Resources.InstanceWorkspacePage_GitRestoreSuccessNotificationTitle,
+                    GrowlLevel.Success
+                );
+                return Task.CompletedTask;
+            }
+        );
     }
 
     #endregion

@@ -263,7 +263,10 @@ public partial class InstanceDashboardPageModel(
                         }
                         catch (Exception ex)
                         {
-                            notificationService.PopMessage(ex, Resources.InstanceDashboardPage_ReadLogDangerNotificationTitle);
+                            notificationService.PopMessage(
+                                ex,
+                                Resources.InstanceDashboardPage_ReadLogDangerNotificationTitle
+                            );
                         }
                     }
                 }

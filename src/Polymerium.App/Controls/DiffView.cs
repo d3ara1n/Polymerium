@@ -19,14 +19,19 @@ public class DiffView : TemplatedControl
     public const double MEASURE_FONT_SIZE = 13.0;
     public const double LINE_HEIGHT = 22.0;
 
-    private static readonly Typeface MonospaceTypeface =
-        new(new FontFamily("Cascadia Code, Consolas, Courier New, monospace"));
+    private static readonly Typeface MonospaceTypeface = new(
+        new FontFamily("Cascadia Code, Consolas, Courier New, monospace")
+    );
 
-    public static readonly StyledProperty<string?> LeftTextProperty =
-        AvaloniaProperty.Register<DiffView, string?>(nameof(LeftText));
+    public static readonly StyledProperty<string?> LeftTextProperty = AvaloniaProperty.Register<
+        DiffView,
+        string?
+    >(nameof(LeftText));
 
-    public static readonly StyledProperty<string?> RightTextProperty =
-        AvaloniaProperty.Register<DiffView, string?>(nameof(RightText));
+    public static readonly StyledProperty<string?> RightTextProperty = AvaloniaProperty.Register<
+        DiffView,
+        string?
+    >(nameof(RightText));
 
     public static readonly StyledProperty<IReadOnlyList<DiffLineModel>?> LinesProperty =
         AvaloniaProperty.Register<DiffView, IReadOnlyList<DiffLineModel>?>(nameof(Lines));
@@ -34,17 +39,25 @@ public class DiffView : TemplatedControl
     public static readonly StyledProperty<double> HorizontalOffsetProperty =
         AvaloniaProperty.Register<DiffView, double>(nameof(HorizontalOffset));
 
-    public static readonly StyledProperty<double> ContentWidthProperty =
-        AvaloniaProperty.Register<DiffView, double>(nameof(ContentWidth));
+    public static readonly StyledProperty<double> ContentWidthProperty = AvaloniaProperty.Register<
+        DiffView,
+        double
+    >(nameof(ContentWidth));
 
-    public static readonly StyledProperty<int> LeftLineCountProperty =
-        AvaloniaProperty.Register<DiffView, int>(nameof(LeftLineCount));
+    public static readonly StyledProperty<int> LeftLineCountProperty = AvaloniaProperty.Register<
+        DiffView,
+        int
+    >(nameof(LeftLineCount));
 
-    public static readonly StyledProperty<int> RightLineCountProperty =
-        AvaloniaProperty.Register<DiffView, int>(nameof(RightLineCount));
+    public static readonly StyledProperty<int> RightLineCountProperty = AvaloniaProperty.Register<
+        DiffView,
+        int
+    >(nameof(RightLineCount));
 
-    public static readonly StyledProperty<int> TotalLineCountProperty =
-        AvaloniaProperty.Register<DiffView, int>(nameof(TotalLineCount));
+    public static readonly StyledProperty<int> TotalLineCountProperty = AvaloniaProperty.Register<
+        DiffView,
+        int
+    >(nameof(TotalLineCount));
 
     public static readonly StyledProperty<bool> LeftHasDifferenceProperty =
         AvaloniaProperty.Register<DiffView, bool>(nameof(LeftHasDifference));
@@ -182,35 +195,41 @@ public class DiffView : TemplatedControl
 
             if (!string.IsNullOrEmpty(leftText))
             {
-                var ft = new FormattedText(leftText,
-                                           CultureInfo.CurrentCulture,
-                                           FlowDirection.LeftToRight,
-                                           MonospaceTypeface,
-                                           MEASURE_FONT_SIZE,
-                                           null);
+                var ft = new FormattedText(
+                    leftText,
+                    CultureInfo.CurrentCulture,
+                    FlowDirection.LeftToRight,
+                    MonospaceTypeface,
+                    MEASURE_FONT_SIZE,
+                    null
+                );
                 maxTextWidth = Math.Max(maxTextWidth, ft.WidthIncludingTrailingWhitespace);
             }
 
             if (!string.IsNullOrEmpty(rightText))
             {
-                var ft = new FormattedText(rightText,
-                                           CultureInfo.CurrentCulture,
-                                           FlowDirection.LeftToRight,
-                                           MonospaceTypeface,
-                                           MEASURE_FONT_SIZE,
-                                           null);
+                var ft = new FormattedText(
+                    rightText,
+                    CultureInfo.CurrentCulture,
+                    FlowDirection.LeftToRight,
+                    MonospaceTypeface,
+                    MEASURE_FONT_SIZE,
+                    null
+                );
                 maxTextWidth = Math.Max(maxTextWidth, ft.WidthIncludingTrailingWhitespace);
             }
 
-            lines.Add(new()
-            {
-                LeftText = leftText,
-                RightText = rightText,
-                LeftLineNumber = left.Position?.ToString() ?? string.Empty,
-                RightLineNumber = right.Position?.ToString() ?? string.Empty,
-                LeftKind = ToKind(left.Type),
-                RightKind = ToKind(right.Type),
-            });
+            lines.Add(
+                new()
+                {
+                    LeftText = leftText,
+                    RightText = rightText,
+                    LeftLineNumber = left.Position?.ToString() ?? string.Empty,
+                    RightLineNumber = right.Position?.ToString() ?? string.Empty,
+                    LeftKind = ToKind(left.Type),
+                    RightKind = ToKind(right.Type),
+                }
+            );
         }
 
         _maxContentWidth = maxTextWidth + 16;
@@ -231,15 +250,20 @@ public class DiffView : TemplatedControl
 
         var viewportWidth = _scrollViewer.Viewport.Width;
 
-        if (!force
-         && Math.Abs(viewportWidth - _lastViewportWidth) < 0.5
-         && Math.Abs(_maxContentWidth - _lastMaxContentWidth) < 0.5)
+        if (
+            !force
+            && Math.Abs(viewportWidth - _lastViewportWidth) < 0.5
+            && Math.Abs(_maxContentWidth - _lastMaxContentWidth) < 0.5
+        )
             return;
 
         _lastViewportWidth = viewportWidth;
         _lastMaxContentWidth = _maxContentWidth;
 
-        var contentColumnWidth = Math.Max(0, (viewportWidth - GUTTER_WIDTH * 2 - SEPARATOR_WIDTH) / 2);
+        var contentColumnWidth = Math.Max(
+            0,
+            (viewportWidth - GUTTER_WIDTH * 2 - SEPARATOR_WIDTH) / 2
+        );
 
         _hScrollBar.Maximum = Math.Max(0, _maxContentWidth - contentColumnWidth);
         _hScrollBar.ViewportSize = contentColumnWidth;

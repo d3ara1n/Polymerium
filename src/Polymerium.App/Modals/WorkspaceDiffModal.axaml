@@ -62,12 +62,12 @@
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource ControlWarningForegroundBrush}"
-                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_DifferentTitle}" />
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_DifferentTitle}" />
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -82,12 +82,12 @@
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_IdenticalTitle}" />
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_IdenticalTitle}" />
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                     Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>

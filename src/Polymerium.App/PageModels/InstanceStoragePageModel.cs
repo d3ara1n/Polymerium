@@ -191,7 +191,10 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace("{0}", folderName)
+                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
+                    "{0}",
+                    folderName
+                )
             );
         }
 
@@ -211,7 +214,10 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace("{0}", folderName)
+                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
+                    "{0}",
+                    folderName
+                )
             );
         }
 
@@ -231,7 +237,10 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevel.GetTopLevel(MainWindow.Instance),
                 new(dir),
-                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace("{0}", folderName)
+                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
+                    "{0}",
+                    folderName
+                )
             );
         }
 

@@ -8,14 +8,17 @@ public partial class UserInputDialog : Dialog
     public static readonly StyledProperty<string> PlaceholderTextProperty =
         AvaloniaProperty.Register<UserInputDialog, string>(nameof(PlaceholderText));
 
-    public static readonly StyledProperty<string> PresetTextProperty =
-        AvaloniaProperty.Register<UserInputDialog, string>(nameof(PresetText));
+    public static readonly StyledProperty<string> PresetTextProperty = AvaloniaProperty.Register<
+        UserInputDialog,
+        string
+    >(nameof(PresetText));
 
-    public static readonly StyledProperty<bool> AllowMultiLineProperty =
-        AvaloniaProperty.Register<UserInputDialog, bool>(nameof(AllowMultiLine));
+    public static readonly StyledProperty<bool> AllowMultiLineProperty = AvaloniaProperty.Register<
+        UserInputDialog,
+        bool
+    >(nameof(AllowMultiLine));
 
     public UserInputDialog() => InitializeComponent();
-
 
     public bool AllowMultiLine
     {
@@ -44,5 +47,6 @@ public partial class UserInputDialog : Dialog
         }
     }
 
-    protected override bool ValidateResult(object? result) => result is string str && !string.IsNullOrEmpty(str);
+    protected override bool ValidateResult(object? result) =>
+        result is string str && !string.IsNullOrEmpty(str);
 }

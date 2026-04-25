@@ -82,7 +82,10 @@ public partial class MaintenanceStoragePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle);
+                notificationService.PopMessage(
+                    ex,
+                    Resources.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle
+                );
             }
 
             Calculate();
