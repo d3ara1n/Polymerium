@@ -3192,7 +3192,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workspace.
+        ///   Looks up a localized string similar to Modpack Workspace.
         /// </summary>
         public static string InstancePage_WorkspacePageText {
             get {
@@ -4110,11 +4110,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run Folder.
+        /// </summary>
+        public static string InstanceStoragePage_BuildFolderLinkText {
+            get {
+                return ResourceManager.GetString("InstanceStoragePage_BuildFolderLinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go to Resource Explorer.
         /// </summary>
         public static string InstanceStoragePage_GotoExplorerButtonText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_GotoExplorerButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pack Source.
+        /// </summary>
+        public static string InstanceStoragePage_ImportFolderLinkText {
+            get {
+                return ResourceManager.GetString("InstanceStoragePage_ImportFolderLinkText", resourceCulture);
             }
         }
         
@@ -4128,29 +4146,11 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Run Folder.
-        /// </summary>
-        public static string InstanceStoragePage_BuildFolderLinkText {
-            get {
-                return ResourceManager.GetString("InstanceStoragePage_BuildFolderLinkText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Failed to open {0} folder.
         /// </summary>
         public static string InstanceStoragePage_OpenFolderDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_OpenFolderDangerNotificationTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pack Source.
-        /// </summary>
-        public static string InstanceStoragePage_ImportFolderLinkText {
-            get {
-                return ResourceManager.GetString("InstanceStoragePage_ImportFolderLinkText", resourceCulture);
             }
         }
         
@@ -4191,7 +4191,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Changes.
+        ///   Looks up a localized string similar to File Changes.
         /// </summary>
         public static string InstanceWorkspacePage_ChangesTabText {
             get {
@@ -4254,7 +4254,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Files.
+        ///   Looks up a localized string similar to Packed Files.
         /// </summary>
         public static string InstanceWorkspacePage_FilesTabText {
             get {

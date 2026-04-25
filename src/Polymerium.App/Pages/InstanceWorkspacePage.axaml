@@ -5,6 +5,7 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -105,6 +106,8 @@
                                     <MenuItem
                                         Command="{Binding RestoreGitChangesCommand}"
                                         Header="{x:Static lang:Resources.InstanceWorkspacePage_GitRestoreMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=ArrowReset,
+                                                              FontSize={StaticResource MediumFontSize}}"
                                         ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_GitRestoreMenuToolTip}" />
                                 </MenuFlyout>
                             </SplitButton.Flyout>
