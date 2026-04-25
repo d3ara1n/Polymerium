@@ -70,14 +70,30 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     public ReadOnlyObservableCollection<WorkspaceChangeModel> ChangesView { get; }
 
+    public ObservableCollection<ImportBrowserEntryModel> ImportEntries { get; } = [];
+
+    public ObservableCollection<ImportPathSegmentModel> ImportBreadcrumbs { get; } = [];
+
     [ObservableProperty]
     public partial WorkspaceChangeModel? SelectedChange { get; set; }
+
+    [ObservableProperty]
+    public partial ImportBrowserEntryModel? SelectedImportEntry { get; set; }
 
     [ObservableProperty]
     public partial string FilterText { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CurrentImportDisplayPath))]
+    [NotifyPropertyChangedFor(nameof(CurrentImportDirectoryPath))]
+    [NotifyPropertyChangedFor(nameof(HasNestedImportPath))]
+    public partial string CurrentImportRelativePath { get; set; } = string.Empty;
+
+    [ObservableProperty]
     public partial int ChangesCount { get; set; }
+
+    [ObservableProperty]
+    public partial int ImportEntryCount { get; set; }
 
     [ObservableProperty]
     public partial bool IsGitRepository { get; set; }
@@ -112,6 +128,15 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     [ObservableProperty]
     public partial bool GitIsBusy { get; set; }
 
+    public string CurrentImportDisplayPath =>
+        string.IsNullOrWhiteSpace(CurrentImportRelativePath)
+            ? "import"
+            : $"import/{CurrentImportRelativePath.Replace(Path.DirectorySeparatorChar, '/')}";
+
+    public string CurrentImportDirectoryPath => GetCurrentImportDirectoryPath();
+
+    public bool HasNestedImportPath => !string.IsNullOrWhiteSpace(CurrentImportRelativePath);
+
     #endregion
 
     #region Overrides
@@ -121,7 +146,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         _initToken = token;
 
         await LoadGitStatusAsync();
-        await GenerateChangeListAsync(token);
+        await LoadChangeListAsync(token);
+        await LoadImportBrowserAsync();
     }
 
     protected override Task OnDeinitializeAsync()
@@ -137,7 +163,110 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     private static Func<WorkspaceChangeModel, bool> BuildFilter(string? text) =>
         x => string.IsNullOrEmpty(text) || x.RelativePath.Contains(text, StringComparison.CurrentCultureIgnoreCase);
 
-    private async Task GenerateChangeListAsync(CancellationToken token)
+    private static string NormalizeRelativePath(string? relativePath)
+    {
+        if (string.IsNullOrWhiteSpace(relativePath))
+        {
+            return string.Empty;
+        }
+
+        return relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar).Trim();
+    }
+
+    private string GetImportRootPath()
+    {
+        var root = PathDef.Default.DirectoryOfImport(Basic.Key);
+        Directory.CreateDirectory(root);
+        return root;
+    }
+
+    private string GetCurrentImportDirectoryPath() =>
+        Path.Combine(GetImportRootPath(), NormalizeRelativePath(CurrentImportRelativePath));
+
+    private static IReadOnlyList<ImportPathSegmentModel> BuildImportBreadcrumbs(string relativePath)
+    {
+        var segments = relativePath.Split([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar],
+                                          StringSplitOptions.RemoveEmptyEntries);
+
+        var result = new List<ImportPathSegmentModel>(segments.Length);
+
+        var current = string.Empty;
+        for (var i = 0; i < segments.Length; i++)
+        {
+            current = string.IsNullOrEmpty(current) ? segments[i] : Path.Combine(current, segments[i]);
+            result.Add(new() { Label = segments[i], RelativePath = current, IsCurrent = i == segments.Length - 1, });
+        }
+
+        return result;
+    }
+
+    private async Task LoadImportBrowserAsync()
+    {
+        var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(GetImportRootPath()));
+        var relativePath = NormalizeRelativePath(CurrentImportRelativePath);
+        var currentPath = Path.GetFullPath(Path.Combine(root, relativePath));
+        if (!currentPath.StartsWith(root, StringComparison.OrdinalIgnoreCase) || !Directory.Exists(currentPath))
+        {
+            relativePath = string.Empty;
+            currentPath = root;
+        }
+
+        var entries = Directory
+                     .EnumerateFileSystemEntries(currentPath)
+                     .Select(path =>
+                      {
+                          var isDirectory = Directory.Exists(path);
+                          var info = isDirectory ? (FileSystemInfo)new DirectoryInfo(path) : new FileInfo(path);
+                          var fullPath = Path.GetFullPath(path);
+
+                          return new ImportBrowserEntryModel
+                          {
+                              Name = Path.GetFileName(path),
+                              RelativePath = Path.GetRelativePath(root, fullPath),
+                              FullPath = fullPath,
+                              IsDirectory = isDirectory,
+                              FileType = isDirectory ? "Folder" :
+                                         string.IsNullOrWhiteSpace(Path.GetExtension(path)) ? "File" :
+                                         Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
+                              FileSizeRaw = info is FileInfo file ? file.Length : 0,
+                              FileLastModifiedRaw = info.LastWriteTime,
+                          };
+                      })
+                     .OrderByDescending(entry => entry.IsDirectory)
+                     .ThenBy(entry => entry.Name, StringComparer.CurrentCultureIgnoreCase)
+                     .ToList();
+
+        var breadcrumbs = BuildImportBreadcrumbs(relativePath);
+        var selectedPath = SelectedImportEntry?.RelativePath;
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            CurrentImportRelativePath = relativePath;
+
+            ImportEntries.Clear();
+            foreach (var entry in entries)
+            {
+                ImportEntries.Add(entry);
+            }
+
+            ImportBreadcrumbs.Clear();
+            foreach (var breadcrumb in breadcrumbs)
+            {
+                ImportBreadcrumbs.Add(breadcrumb);
+            }
+
+            ImportEntryCount = ImportEntries.Count;
+            SelectedImportEntry = string.IsNullOrWhiteSpace(selectedPath)
+                                      ? null
+                                      : ImportEntries.FirstOrDefault(entry => string.Equals(entry.RelativePath,
+                                                                         selectedPath,
+                                                                         StringComparison.OrdinalIgnoreCase));
+
+            RefreshImportCommands();
+        });
+    }
+
+    private async Task LoadChangeListAsync(CancellationToken token)
     {
         // live / import 的变更
         // 由于 import -> live 是全量文件复制，live 的文件只会比 import 多（但存在 .keep 映射了目录时，游戏会往目录里塞东西）
@@ -326,6 +455,18 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         RestoreGitChangesCommand.NotifyCanExecuteChanged();
     }
 
+    private void RefreshImportCommands()
+    {
+        HomeImportCommand.NotifyCanExecuteChanged();
+        OpenImportBreadcrumbCommand.NotifyCanExecuteChanged();
+        EnterImportDirectoryCommand.NotifyCanExecuteChanged();
+        RemoveImportEntryCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnSelectedImportEntryChanged(ImportBrowserEntryModel? value) => RefreshImportCommands();
+
+    partial void OnCurrentImportRelativePathChanged(string value) => RefreshImportCommands();
+
     private void SetGitBusy(bool value)
     {
         GitIsBusy = value;
@@ -449,15 +590,162 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     #region Commands
 
     [RelayCommand]
-    private async Task RefreshAsync()
+    private async Task RefreshChangesAsync()
     {
-        if (_initToken is not null && _initToken.Value.IsCancellationRequested)
+        await LoadChangeListAsync(_initToken ?? CancellationToken.None);
+        await LoadGitStatusAsync();
+    }
+
+    [RelayCommand]
+    private async Task RefreshImportAsync()
+    {
+        await LoadImportBrowserAsync();
+        await LoadGitStatusAsync();
+    }
+
+    private bool CanGoImportHome() => !string.IsNullOrWhiteSpace(CurrentImportRelativePath);
+
+    [RelayCommand(CanExecute = nameof(CanGoImportHome))]
+    private async Task HomeImportAsync()
+    {
+        CurrentImportRelativePath = string.Empty;
+        await LoadImportBrowserAsync();
+    }
+
+    private bool CanOpenImportBreadcrumb(ImportPathSegmentModel? model) => model is { IsCurrent: false };
+
+    [RelayCommand(CanExecute = nameof(CanOpenImportBreadcrumb))]
+    private async Task OpenImportBreadcrumbAsync(ImportPathSegmentModel? model)
+    {
+        if (model == null)
         {
             return;
         }
 
-        await LoadGitStatusAsync();
-        await GenerateChangeListAsync(_initToken ?? CancellationToken.None);
+        CurrentImportRelativePath = model.RelativePath;
+        await LoadImportBrowserAsync();
+    }
+
+    private bool CanEnterImportDirectory(ImportBrowserEntryModel? model) => model is { IsDirectory: true };
+
+    [RelayCommand(CanExecute = nameof(CanEnterImportDirectory))]
+    private async Task EnterImportDirectoryAsync(ImportBrowserEntryModel? model)
+    {
+        if (model == null)
+        {
+            return;
+        }
+
+        CurrentImportRelativePath = model.RelativePath;
+        await LoadImportBrowserAsync();
+    }
+
+    [RelayCommand]
+    private async Task AddImportEntryAsync()
+    {
+        var filePath = await _overlayService.RequestFileAsync("选择要添加到当前 import 目录的文件",
+                                                              "添加文件",
+                                                              GetPreferredImportPickerDirectoryPath());
+        if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+        {
+            return;
+        }
+
+        try
+        {
+            var directory = GetCurrentImportDirectoryPath();
+            Directory.CreateDirectory(directory);
+
+            var fileName = Path.GetFileName(filePath);
+            var targetPath = Path.Combine(directory, fileName);
+            if (FileHelper.IsPathEquivalent(filePath, targetPath))
+            {
+                _notificationService.PopMessage("该文件已经位于当前目录。", "添加文件", GrowlLevel.Warning);
+                return;
+            }
+
+            var overwrite = false;
+            if (File.Exists(targetPath))
+            {
+                overwrite = await _overlayService.RequestConfirmationAsync($"当前目录已存在 {fileName}，继续会覆盖原文件。", "文件已存在");
+                if (!overwrite)
+                {
+                    return;
+                }
+            }
+
+            File.Copy(filePath, targetPath, overwrite);
+            await RefreshImportAsync();
+
+            SelectedImportEntry = ImportEntries.FirstOrDefault(entry => string.Equals(entry.RelativePath,
+                                                                   Path.GetRelativePath(GetImportRootPath(),
+                                                                       targetPath),
+                                                                   StringComparison.OrdinalIgnoreCase));
+
+            _notificationService.PopMessage($"已添加 {fileName}", "Import 文件", GrowlLevel.Success);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "添加 import 文件失败");
+        }
+    }
+
+    private string? GetPreferredImportPickerDirectoryPath()
+    {
+        var buildRoot = PathDef.Default.DirectoryOfBuild(Basic.Key);
+        var currentRelativePath = NormalizeRelativePath(CurrentImportRelativePath);
+        var preferredBuildPath = Path.Combine(buildRoot, currentRelativePath);
+        if (Directory.Exists(preferredBuildPath))
+        {
+            return preferredBuildPath;
+        }
+
+        if (Directory.Exists(buildRoot))
+        {
+            return buildRoot;
+        }
+
+        var importPath = GetCurrentImportDirectoryPath();
+        return Directory.Exists(importPath) ? importPath : null;
+    }
+
+    private bool CanRemoveImportEntry(ImportBrowserEntryModel? model) => (model ?? SelectedImportEntry) is not null;
+
+    [RelayCommand(CanExecute = nameof(CanRemoveImportEntry))]
+    private async Task RemoveImportEntryAsync(ImportBrowserEntryModel? model)
+    {
+        model ??= SelectedImportEntry;
+        if (model == null)
+        {
+            return;
+        }
+
+        var confirmed = await _overlayService.RequestConfirmationAsync($"确定要从 import 中移出 {model.Name} 吗？",
+                                                                       model.IsDirectory ? "移出文件夹" : "移出文件");
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            if (model.IsDirectory)
+            {
+                Directory.Delete(model.FullPath, true);
+            }
+            else if (File.Exists(model.FullPath))
+            {
+                File.Delete(model.FullPath);
+            }
+
+            SelectedImportEntry = null;
+            await RefreshImportAsync();
+            _notificationService.PopMessage($"已移出 {model.Name}", "Import 文件", GrowlLevel.Success);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "移出 import 文件失败");
+        }
     }
 
     private bool CanOpenDiffer(WorkspaceChangeModel? model) => model is not null;
@@ -686,10 +974,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                            {
                                                Commands.Checkout(repository,
                                                                  repository.Head.Tip.Tree,
-                                                                 new()
-                                                                 {
-                                                                     CheckoutModifiers = CheckoutModifiers.Force
-                                                                 },
+                                                                 new() { CheckoutModifiers = CheckoutModifiers.Force },
                                                                  path);
                                            }
                                        }
