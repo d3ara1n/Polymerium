@@ -510,7 +510,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Persistent files stay in the persist directory across deployments; portable files are persistent files stored in the import directory that get bundled when exporting modpacks..
+        ///   Looks up a localized string similar to Files stored in persist stay local across redeploys. If &quot;Export with modpack&quot; is enabled, the file is stored in import instead, synced into the live working copy on deploy, and bundled when exporting a modpack..
         /// </summary>
         public static string AssetImporterDialog_AsAssetPrompt {
             get {
@@ -555,7 +555,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Portable.
+        ///   Looks up a localized string similar to Export with modpack.
         /// </summary>
         public static string AssetImporterDialog_PortableLabelText {
             get {
@@ -4128,6 +4128,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run Folder.
+        /// </summary>
+        public static string InstanceStoragePage_BuildFolderLinkText {
+            get {
+                return ResourceManager.GetString("InstanceStoragePage_BuildFolderLinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open {0} folder.
         /// </summary>
         public static string InstanceStoragePage_OpenFolderDangerNotificationTitle {
@@ -4137,7 +4146,16 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to What does import/persist mean?.
+        ///   Looks up a localized string similar to Pack Source.
+        /// </summary>
+        public static string InstanceStoragePage_ImportFolderLinkText {
+            get {
+                return ResourceManager.GetString("InstanceStoragePage_ImportFolderLinkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What are build/live/import/persist?.
         /// </summary>
         public static string InstanceStoragePage_OpenWikiButtonText {
             get {
@@ -4151,6 +4169,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceStoragePage_OtherLabelText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_OtherLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local Data.
+        /// </summary>
+        public static string InstanceStoragePage_PersistFolderLinkText {
+            get {
+                return ResourceManager.GetString("InstanceStoragePage_PersistFolderLinkText", resourceCulture);
             }
         }
         
@@ -4169,6 +4196,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_ChangesTabText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_ChangesTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows how the live working copy differs from the import pack source..
+        /// </summary>
+        public static string InstanceWorkspacePage_ChangesTabToolTip {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_ChangesTabToolTip", resourceCulture);
             }
         }
         
@@ -4214,6 +4250,24 @@ namespace Polymerium.App.Properties {
         public static string InstanceWorkspacePage_FileSizeLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileSizeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string InstanceWorkspacePage_FilesTabText {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_FilesTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Presenting virtual structure of game files..
+        /// </summary>
+        public static string InstanceWorkspacePage_FilesTabToolTip {
+            get {
+                return ResourceManager.GetString("InstanceWorkspacePage_FilesTabToolTip", resourceCulture);
             }
         }
         
@@ -5492,7 +5546,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Override file being packed is located at.
+        ///   Looks up a localized string similar to Files included from the import layer are located at.
         /// </summary>
         public static string ModpackExporterDialog_AttachmentsPrompt {
             get {
@@ -5566,9 +5620,9 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Source information links the instance to an internet modpack and enables update support..
         /// </summary>
-        public static string ModpackExporterDialog_IncludingSourceToolTipText {
+        public static string ModpackExporterDialog_IncludingSourceToolTip {
             get {
-                return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceToolTipText", resourceCulture);
+                return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceToolTip", resourceCulture);
             }
         }
         
@@ -5627,7 +5681,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How it works?.
+        ///   Looks up a localized string similar to How import files are packed.
         /// </summary>
         public static string ModpackExporterDialog_OpenWikiButtonText {
             get {

@@ -1249,7 +1249,7 @@
         <value>Package was not found in the hosting repositories</value>
     </data>
     <data name="AssetImporterDialog_PortableLabelText" xml:space="preserve">
-        <value>Portable</value>
+        <value>Export with modpack</value>
     </data>
     <data name="AssetImporterDialog_AsPackageLabelText" xml:space="preserve">
         <value>As package reference</value>
@@ -1261,7 +1261,7 @@
         <value>Falls back to traditional mod.jar placement, losing Polymerium's file management benefits.</value>
     </data>
     <data name="AssetImporterDialog_AsAssetPrompt" xml:space="preserve">
-        <value>Persistent files stay in the persist directory across deployments; portable files are persistent files stored in the import directory that get bundled when exporting modpacks.</value>
+        <value>Files stored in persist stay local across redeploys. If "Export with modpack" is enabled, the file is stored in import instead, synced into the live working copy on deploy, and bundled when exporting a modpack.</value>
     </data>
     <data name="AssetImporterDialog_Prompt" xml:space="preserve">
         <value>Physical asset files are not shown in the package list. View them in the File Explorer.</value>
@@ -1417,7 +1417,7 @@
         <value>Attachments</value>
     </data>
     <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
-        <value>Override file being packed is located at</value>
+        <value>Files included from the import layer are located at</value>
     </data>
     <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
         <value>Version</value>
@@ -1440,7 +1440,7 @@
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>Include source information</value>
     </data>
-    <data name="ModpackExporterDialog_IncludingSourceToolTipText" xml:space="preserve">
+    <data name="ModpackExporterDialog_IncludingSourceToolTip" xml:space="preserve">
         <value>Source information links the instance to an internet modpack and enables update support.</value>
     </data>
     <data name="ModpackExporterDialog_ConnectServerText" xml:space="preserve">
@@ -1505,6 +1505,15 @@
     </data>
     <data name="InstanceStoragePage_OpenFolderButtonText" xml:space="preserve">
         <value>Open Folder</value>
+    </data>
+    <data name="InstanceStoragePage_BuildFolderLinkText" xml:space="preserve">
+        <value>Run Folder</value>
+    </data>
+    <data name="InstanceStoragePage_ImportFolderLinkText" xml:space="preserve">
+        <value>Pack Source</value>
+    </data>
+    <data name="InstanceStoragePage_PersistFolderLinkText" xml:space="preserve">
+        <value>Local Data</value>
     </data>
     <data name="InstanceStoragePage_GotoExplorerButtonText" xml:space="preserve">
         <value>Go to Resource Explorer</value>
@@ -2285,10 +2294,10 @@
         <value>Include package tags</value>
     </data>
     <data name="InstanceStoragePage_OpenWikiButtonText" xml:space="preserve">
-        <value>What does import/persist mean?</value>
+        <value>What are build/live/import/persist?</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
-        <value>How it works?</value>
+        <value>How import files are packed</value>
     </data>
     <data name="ModpackExporterDialog_TridentOptionsLabelText" xml:space="preserve">
         <value>Trident-specific Options</value>
@@ -2748,4 +2757,13 @@ Affected entries: {0}
   <data name="InternalCommands_CopyTextDangerNotificationTitle" xml:space="preserve">
     <value>Failed to copy text</value>
   </data>
+    <data name="InstanceWorkspacePage_ChangesTabToolTip" xml:space="preserve">
+        <value>Shows how the live working copy differs from the import pack source.</value>
+    </data>
+    <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
+        <value>Files</value>
+    </data>
+    <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
+        <value>Presenting virtual structure of game files.</value>
+    </data>
 </root>

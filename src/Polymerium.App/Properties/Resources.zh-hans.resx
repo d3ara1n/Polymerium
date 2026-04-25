@@ -1240,7 +1240,7 @@
         <value>未在资源托管站点检索到该资源</value>
     </data>
     <data name="AssetImporterDialog_PortableLabelText" xml:space="preserve">
-        <value>可移植</value>
+        <value>随整合包导出</value>
     </data>
     <data name="AssetImporterDialog_AsPackageLabelText" xml:space="preserve">
         <value>作为包引用</value>
@@ -1252,7 +1252,7 @@
         <value>抛弃 Polymerium 的文件管理机制，使用传统的 mod.jar 放入 mods 模式。</value>
     </data>
     <data name="AssetImporterDialog_AsAssetPrompt" xml:space="preserve">
-        <value>持久化文件保存在 persist 目录中，并在每次部署中保持不变；可移植文件是持久化文件的一种，但保存在 import 目录，且会随整合包导出一块打包。</value>
+        <value>保存在 persist 的文件会在重新部署后继续保留在当前实例中；若启用“随整合包导出”，文件会改存到 import，部署时先同步到 live 工作副本，并在导出整合包时一起打包。</value>
     </data>
     <data name="AssetImporterDialog_Prompt" xml:space="preserve">
         <value>实体资源文件不会显示在包列表中, 请在 资源管理器 中查看。</value>
@@ -1405,7 +1405,7 @@
         <value>附件</value>
     </data>
     <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
-        <value>被一起打包的 Overrides 文件位于</value>
+        <value>会随整合包一起打包的 import 文件位于</value>
     </data>
     <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
         <value>版本</value>
@@ -1431,7 +1431,7 @@
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>保留来源信息</value>
     </data>
-    <data name="ModpackExporterDialog_IncludingSourceToolTipText" xml:space="preserve">
+    <data name="ModpackExporterDialog_IncludingSourceToolTip" xml:space="preserve">
         <value>来源信息将实例与互联网整合包相关联，并启用更新能力。</value>
     </data>
     <data name="ModpackExporterDialog_ConnectServerText" xml:space="preserve">
@@ -1496,6 +1496,15 @@
     </data>
     <data name="InstanceStoragePage_OpenFolderButtonText" xml:space="preserve">
         <value>打开目录</value>
+    </data>
+    <data name="InstanceStoragePage_BuildFolderLinkText" xml:space="preserve">
+        <value>运行目录</value>
+    </data>
+    <data name="InstanceStoragePage_ImportFolderLinkText" xml:space="preserve">
+        <value>整合包源</value>
+    </data>
+    <data name="InstanceStoragePage_PersistFolderLinkText" xml:space="preserve">
+        <value>本地保留</value>
     </data>
     <data name="InstanceStoragePage_GotoExplorerButtonText" xml:space="preserve">
         <value>前往资源浏览器</value>
@@ -2276,10 +2285,10 @@
         <value>保留包的标签</value>
     </data>
     <data name="InstanceStoragePage_OpenWikiButtonText" xml:space="preserve">
-        <value>标签 import/persist 代表什么？</value>
+        <value>build / live / import / persist 分别是什么？</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
-        <value>这是怎么运作的？</value>
+        <value>import 文件如何打包？</value>
     </data>
     <data name="ModpackExporterDialog_TridentOptionsLabelText" xml:space="preserve">
         <value>Trident 专属选项</value>
@@ -2736,4 +2745,13 @@
   <data name="InternalCommands_CopyTextDangerNotificationTitle" xml:space="preserve">
     <value>复制文本失败</value>
   </data>
+    <data name="InstanceWorkspacePage_ChangesTabToolTip" xml:space="preserve">
+        <value>查看 live 工作副本相对 import 整合包源的文件变化。</value>
+    </data>
+    <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
+        <value>文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
+        <value>展示游戏文件的虚拟结构并管理。</value>
+    </data>
 </root>

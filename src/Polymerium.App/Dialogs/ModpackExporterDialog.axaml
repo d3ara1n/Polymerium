@@ -177,7 +177,7 @@
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="Info"
-                            ToolTip.Tip="{x:Static lang:Resources.ModpackExporterDialog_IncludingSourceToolTipText}" />
+                            ToolTip.Tip="{x:Static lang:Resources.ModpackExporterDialog_IncludingSourceToolTip}" />
                     </StackPanel>
                 </DockPanel>
                 <DockPanel>

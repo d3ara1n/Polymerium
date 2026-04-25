@@ -119,7 +119,18 @@
                 Content="{x:Static lang:Resources.InstanceWorkspacePage_LockedInfoBarText}" />
         </StackPanel>
         <TabControl>
-            <TabItem Header="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabText}">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Background="Transparent"
+                        Orientation="Horizontal"
+                        Spacing="4"
+                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabToolTip}">
+                        <husk:IconLabel
+                            Icon="DocumentLandscapeSplitHint"
+                            Text="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabText}" />
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid
                     ColumnDefinitions="*,4,*"
                     ColumnSpacing="12">
@@ -484,6 +495,19 @@
                         </husk:PlaceholderContainer>
                     </ScrollViewer>
                 </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel
+                        Background="Transparent"
+                        Orientation="Horizontal"
+                        Spacing="4"
+                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_FilesTabToolTip}">
+                        <husk:IconLabel
+                            Icon="FolderList"
+                            Text="{x:Static lang:Resources.InstanceWorkspacePage_FilesTabText}" />
+                    </StackPanel>
+                </TabItem.Header>
             </TabItem>
         </TabControl>
     </DockPanel>
