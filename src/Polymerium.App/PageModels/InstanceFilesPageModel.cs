@@ -673,7 +673,10 @@ public partial class InstanceFilesPageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteScreenshotDangerNotificationTitle);
+                notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceFilesPage_DeleteScreenshotDangerNotificationTitle
+                );
             }
         }
     }
@@ -699,7 +702,10 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.InstanceFilesPage_ToggleModDangerNotificationTitle);
+            notificationService.PopMessage(
+                ex,
+                Resources.InstanceFilesPage_ToggleModDangerNotificationTitle
+            );
         }
     }
 
@@ -713,7 +719,10 @@ public partial class InstanceFilesPageModel(
             && Mods is not null
             && File.Exists(model.FilePath)
             && await overlayService.RequestConfirmationAsync(
-                Resources.InstanceFilesPage_DeleteModConfirmationMessage.Replace("{0}", model.DisplayName)
+                Resources.InstanceFilesPage_DeleteModConfirmationMessage.Replace(
+                    "{0}",
+                    model.DisplayName
+                )
             )
         )
         {
@@ -727,13 +736,19 @@ public partial class InstanceFilesPageModel(
                 }
 
                 notificationService.PopMessage(
-                    Resources.InstanceFilesPage_DeleteModSuccessNotificationMessage.Replace("{0}", model.DisplayName),
+                    Resources.InstanceFilesPage_DeleteModSuccessNotificationMessage.Replace(
+                        "{0}",
+                        model.DisplayName
+                    ),
                     Resources.InstanceFilesPage_DeleteModSuccessNotificationTitle
                 );
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteModDangerNotificationTitle);
+                notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceFilesPage_DeleteModDangerNotificationTitle
+                );
             }
         }
     }
@@ -760,7 +775,10 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle);
+            notificationService.PopMessage(
+                ex,
+                Resources.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle
+            );
         }
     }
 
@@ -775,7 +793,10 @@ public partial class InstanceFilesPageModel(
             && ResourcePacks is not null
             && File.Exists(model.FilePath)
             && await overlayService.RequestConfirmationAsync(
-                Resources.InstanceFilesPage_DeleteResourcePackConfirmationMessage.Replace("{0}", model.DisplayName)
+                Resources.InstanceFilesPage_DeleteResourcePackConfirmationMessage.Replace(
+                    "{0}",
+                    model.DisplayName
+                )
             )
         )
         {
@@ -789,13 +810,19 @@ public partial class InstanceFilesPageModel(
                 }
 
                 notificationService.PopMessage(
-                    Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage.Replace("{0}", model.DisplayName),
+                    Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage.Replace(
+                        "{0}",
+                        model.DisplayName
+                    ),
                     Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle
                 );
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteResourcePackDangerNotificationTitle);
+                notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceFilesPage_DeleteResourcePackDangerNotificationTitle
+                );
             }
         }
     }
@@ -821,7 +848,10 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.InstanceFilesPage_ToggleDataPackDangerNotificationTitle);
+            notificationService.PopMessage(
+                ex,
+                Resources.InstanceFilesPage_ToggleDataPackDangerNotificationTitle
+            );
         }
     }
 
@@ -835,7 +865,10 @@ public partial class InstanceFilesPageModel(
             && DataPacks is not null
             && File.Exists(model.FilePath)
             && await overlayService.RequestConfirmationAsync(
-                Resources.InstanceFilesPage_DeleteDataPackConfirmationMessage.Replace("{0}", model.DisplayName)
+                Resources.InstanceFilesPage_DeleteDataPackConfirmationMessage.Replace(
+                    "{0}",
+                    model.DisplayName
+                )
             )
         )
         {
@@ -849,13 +882,19 @@ public partial class InstanceFilesPageModel(
                 }
 
                 notificationService.PopMessage(
-                    Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationMessage.Replace("{0}", model.DisplayName),
+                    Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationMessage.Replace(
+                        "{0}",
+                        model.DisplayName
+                    ),
                     Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationTitle
                 );
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteDataPackDangerNotificationTitle);
+                notificationService.PopMessage(
+                    ex,
+                    Resources.InstanceFilesPage_DeleteDataPackDangerNotificationTitle
+                );
             }
         }
     }

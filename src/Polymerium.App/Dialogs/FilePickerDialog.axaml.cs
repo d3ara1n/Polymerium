@@ -46,17 +46,22 @@ public partial class FilePickerDialog : Dialog
             if (storage.CanOpen)
             {
                 IStorageFolder? startLocation = null;
-                if (!string.IsNullOrWhiteSpace(SuggestedStartLocationPath)
-                 && Directory.Exists(SuggestedStartLocationPath))
+                if (
+                    !string.IsNullOrWhiteSpace(SuggestedStartLocationPath)
+                    && Directory.Exists(SuggestedStartLocationPath)
+                )
                 {
-                    startLocation = await storage.TryGetFolderFromPathAsync(SuggestedStartLocationPath);
+                    startLocation = await storage.TryGetFolderFromPathAsync(
+                        SuggestedStartLocationPath
+                    );
                 }
 
                 var files = await storage.OpenFilePickerAsync(
                     new()
                     {
-                        SuggestedStartLocation = startLocation
-                                                 ?? await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
+                        SuggestedStartLocation =
+                            startLocation
+                            ?? await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
                     }
                 );
                 var file = files.FirstOrDefault();

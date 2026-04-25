@@ -10,7 +10,11 @@ internal static class ErrorReporter
 {
     internal enum ErrorReportSource
     {
-        AppDomainUnhandled, DispatcherUnhandled, TaskUnobserved, LifetimeStartup, LifetimeShutdown,
+        AppDomainUnhandled,
+        DispatcherUnhandled,
+        TaskUnobserved,
+        LifetimeStartup,
+        LifetimeShutdown,
     }
 
     internal readonly record struct ErrorReportMeta(
@@ -18,7 +22,8 @@ internal static class ErrorReporter
         string Phase,
         bool Critical,
         bool Terminating,
-        SentryLevel Level);
+        SentryLevel Level
+    );
 
     public static void Report(object core, ErrorReportMeta meta)
     {
@@ -29,21 +34,25 @@ internal static class ErrorReporter
 
         if (core is Exception ex)
         {
-            SentrySdk.CaptureException(ex,
-                                       scope =>
-                                       {
-                                           scope.Level = meta.Level;
-                                           // 可搜索、可筛选
-                                           scope.SetTag("polymerium.source", meta.Source.ToString());
-                                           scope.SetTag("polymerium.phase", meta.Phase);
-                                           scope.SetTag("polymerium.critical", meta.Critical ? "true" : "false");
-                                           scope.SetTag("polymerium.likely_crash", meta.Terminating ? "true" : "false");
-                                           // 辅助信息
-                                           scope.SetExtra("exception.type.full",
-                                                          ex.GetType().FullName ?? ex.GetType().Name);
-                                           scope.SetExtra("exception.message", ex.Message);
-                                           scope.SetExtra("exception.is_aggregate", ex is AggregateException);
-                                       });
+            SentrySdk.CaptureException(
+                ex,
+                scope =>
+                {
+                    scope.Level = meta.Level;
+                    // 可搜索、可筛选
+                    scope.SetTag("polymerium.source", meta.Source.ToString());
+                    scope.SetTag("polymerium.phase", meta.Phase);
+                    scope.SetTag("polymerium.critical", meta.Critical ? "true" : "false");
+                    scope.SetTag("polymerium.likely_crash", meta.Terminating ? "true" : "false");
+                    // 辅助信息
+                    scope.SetExtra(
+                        "exception.type.full",
+                        ex.GetType().FullName ?? ex.GetType().Name
+                    );
+                    scope.SetExtra("exception.message", ex.Message);
+                    scope.SetExtra("exception.is_aggregate", ex is AggregateException);
+                }
+            );
         }
 
         Dump(core);
@@ -55,14 +64,20 @@ internal static class ErrorReporter
         if (!Program.IsDebug)
             return;
 
-        var path = Path.Combine(AppContext.BaseDirectory, "dumps", $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
-        var sb = new StringBuilder($"""
+        var path = Path.Combine(
+            AppContext.BaseDirectory,
+            "dumps",
+            $"Exception-{DateTimeOffset.Now.ToFileTime()}.log"
+        );
+        var sb = new StringBuilder(
+            $"""
                                     // {DateTimeOffset.Now.ToString()}
                                     // Polymerium: {typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                                                                   ?.InformationalVersion.Split('+')[0] ?? Program.Version}
                                     // Avalonia: {Assembly.GetEntryAssembly()?.GetName().Version}
 
-                                    """);
+                                    """
+        );
         sb.AppendLine();
         DumpInternal(sb, core, 0);
         var dir = Path.GetDirectoryName(path);
@@ -79,13 +94,15 @@ internal static class ErrorReporter
         switch (core)
         {
             case AggregateException ae:
-                builder.AppendLine($"""
-                                    --- LEVEL: {level} ---
-                                    Exception: {ae.GetType().Name}
-                                    Message: {ae.Message}
-                                    StackTrace: {ae.StackTrace}
+                builder.AppendLine(
+                    $"""
+                    --- LEVEL: {level} ---
+                    Exception: {ae.GetType().Name}
+                    Message: {ae.Message}
+                    StackTrace: {ae.StackTrace}
 
-                                    """);
+                    """
+                );
                 foreach (var inner in ae.InnerExceptions)
                 {
                     DumpInternal(builder, inner, level + 1);
@@ -98,13 +115,15 @@ internal static class ErrorReporter
 
                 break;
             case Exception e:
-                builder.AppendLine($"""
-                                    --- LEVEL: {level} ---
-                                    Exception: {e.GetType().Name}
-                                    Message: {e.Message}
-                                    StackTrace: {e.StackTrace}
+                builder.AppendLine(
+                    $"""
+                    --- LEVEL: {level} ---
+                    Exception: {e.GetType().Name}
+                    Message: {e.Message}
+                    StackTrace: {e.StackTrace}
 
-                                    """);
+                    """
+                );
                 if (e.InnerException is not null)
                 {
                     DumpInternal(builder, e.InnerException, level + 1);
@@ -112,11 +131,13 @@ internal static class ErrorReporter
 
                 break;
             default:
-                builder.AppendLine($"""
-                                    --- LEVEL: {level} ---
-                                    Content: {core.ToString()}
+                builder.AppendLine(
+                    $"""
+                    --- LEVEL: {level} ---
+                    Content: {core.ToString()}
 
-                                    """);
+                    """
+                );
                 break;
         }
     }

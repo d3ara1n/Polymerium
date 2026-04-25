@@ -852,7 +852,7 @@ public partial class InstanceSetupPageModel(
                     new(
                         Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText,
                         new RelayCommand(Cancel)
-                       )
+                    )
                 );
 
                 var filter = new Filter(

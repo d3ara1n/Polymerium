@@ -9,10 +9,10 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
-using AppResources = Polymerium.App.Properties.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.Repositories;
+using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Dialogs;
 
@@ -152,7 +152,10 @@ public partial class AssetImporterDialog : Dialog
             Dispatcher.UIThread.Post(() =>
             {
                 Model = null;
-                NotificationService.PopMessage(ex, AppResources.AssetImporterDialog_IdentifyFileDangerNotificationTitle);
+                NotificationService.PopMessage(
+                    ex,
+                    AppResources.AssetImporterDialog_IdentifyFileDangerNotificationTitle
+                );
             });
         }
     }

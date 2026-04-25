@@ -161,7 +161,10 @@ public partial class SettingsPageModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.SettingsPage_CheckUpdatesDangerNotificationTitle);
+            _notificationService.PopMessage(
+                ex,
+                Resources.SettingsPage_CheckUpdatesDangerNotificationTitle
+            );
         }
         SyncUpdateState();
         CheckUpdatesCommand.NotifyCanExecuteChanged();

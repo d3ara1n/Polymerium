@@ -174,10 +174,12 @@ public partial class InstancePageModel : ViewModelBase
                                     }
                                 );
                                 _notificationService.PopMessage(
-                                    Resources.InstancePage_ImportPackageSuccessNotificationMessage.Replace(
-                                        "{0}",
-                                        package.Package.ProjectName
-                                    ).Replace("{1}", package.Package.ProjectId),
+                                    Resources
+                                        .InstancePage_ImportPackageSuccessNotificationMessage.Replace(
+                                            "{0}",
+                                            package.Package.ProjectName
+                                        )
+                                        .Replace("{1}", package.Package.ProjectId),
                                     guard.Key,
                                     thumbnail: package.Thumbnail
                                 );
@@ -185,10 +187,12 @@ public partial class InstancePageModel : ViewModelBase
                             else
                             {
                                 _notificationService.PopMessage(
-                                    Resources.InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Replace(
-                                        "{0}",
-                                        package.Package.ProjectName
-                                    ).Replace("{1}", package.Package.ProjectId),
+                                    Resources
+                                        .InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Replace(
+                                            "{0}",
+                                            package.Package.ProjectName
+                                        )
+                                        .Replace("{1}", package.Package.ProjectId),
                                     Resources.InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle,
                                     GrowlLevel.Danger,
                                     thumbnail: package.Thumbnail

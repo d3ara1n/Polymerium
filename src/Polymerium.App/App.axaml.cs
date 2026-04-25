@@ -34,26 +34,39 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        AppDomain.CurrentDomain.UnhandledException += (_, e) => ErrorReporter.Report(e.ExceptionObject,
-            new(ErrorReporter.ErrorReportSource.AppDomainUnhandled,
-                Phase: "runtime",
-                Critical: true,
-                Terminating: e.IsTerminating,
-                Level: e.IsTerminating ? SentryLevel.Fatal : SentryLevel.Error));
-        TaskScheduler.UnobservedTaskException += (_, e) => ErrorReporter.Report(e.Exception,
-                                                                                    new(ErrorReporter.ErrorReportSource
-                                                                                           .TaskUnobserved,
-                                                                                        Phase: "runtime",
-                                                                                        Critical: true,
-                                                                                        Terminating: false,
-                                                                                        Level: SentryLevel
-                                                                                           .Warning));
-        Dispatcher.UIThread.UnhandledException += (_, e) => ErrorReporter.Report(e.Exception,
-            new(ErrorReporter.ErrorReportSource.DispatcherUnhandled,
-                Phase: "runtime",
-                Critical: true,
-                Terminating: !e.Handled,
-                Level: !e.Handled ? SentryLevel.Fatal : SentryLevel.Error));
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            ErrorReporter.Report(
+                e.ExceptionObject,
+                new(
+                    ErrorReporter.ErrorReportSource.AppDomainUnhandled,
+                    Phase: "runtime",
+                    Critical: true,
+                    Terminating: e.IsTerminating,
+                    Level: e.IsTerminating ? SentryLevel.Fatal : SentryLevel.Error
+                )
+            );
+        TaskScheduler.UnobservedTaskException += (_, e) =>
+            ErrorReporter.Report(
+                e.Exception,
+                new(
+                    ErrorReporter.ErrorReportSource.TaskUnobserved,
+                    Phase: "runtime",
+                    Critical: true,
+                    Terminating: false,
+                    Level: SentryLevel.Warning
+                )
+            );
+        Dispatcher.UIThread.UnhandledException += (_, e) =>
+            ErrorReporter.Report(
+                e.Exception,
+                new(
+                    ErrorReporter.ErrorReportSource.DispatcherUnhandled,
+                    Phase: "runtime",
+                    Critical: true,
+                    Terminating: !e.Handled,
+                    Level: !e.Handled ? SentryLevel.Fatal : SentryLevel.Error
+                )
+            );
 
         foreach (var styles in Styles)
         {
@@ -73,7 +86,9 @@ public class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private static async Task StartLifetimeServicesAsync(IClassicDesktopStyleApplicationLifetime desktop)
+    private static async Task StartLifetimeServicesAsync(
+        IClassicDesktopStyleApplicationLifetime desktop
+    )
     {
         if (Program.Services?.GetService<LifetimeServiceRuntime>() is not { } runtime)
         {
@@ -86,12 +101,16 @@ public class App : Application
         }
         catch (Exception ex)
         {
-            ErrorReporter.Report(ex,
-                                 new(ErrorReporter.ErrorReportSource.LifetimeStartup,
-                                     Phase: "startup",
-                                     Critical: true,
-                                     Terminating: true,
-                                     Level: SentryLevel.Fatal));
+            ErrorReporter.Report(
+                ex,
+                new(
+                    ErrorReporter.ErrorReportSource.LifetimeStartup,
+                    Phase: "startup",
+                    Critical: true,
+                    Terminating: true,
+                    Level: SentryLevel.Fatal
+                )
+            );
             desktop.Shutdown(-1);
         }
     }
@@ -119,7 +138,12 @@ public class App : Application
 
         // Link navigation service
         var navigation = Program.Services.GetRequiredService<NavigationService>();
-        navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
+        navigation.SetHandler(
+            window.Navigate,
+            window.GoBack,
+            window.CanGoBack,
+            window.ClearHistory
+        );
 
         var activator = Program.Services.GetRequiredService<IViewActivator>();
         window.SetFrameActivator(activator);
