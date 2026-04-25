@@ -11,6 +11,7 @@ using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
+using Sentry;
 using Trident.Abstractions;
 using Trident.Core.Lifetimes;
 using Velopack;
@@ -35,11 +36,11 @@ internal static class Program
 
     public static bool FirstRun { get; private set; }
 
-#if DEBUG
+    #if DEBUG
     public static bool IsDebug => true;
-#else
+    #else
     public static bool IsDebug => false;
-#endif
+    #endif
 
     [STAThread]
     public static void Main(string[] args)
@@ -48,18 +49,12 @@ internal static class Program
 
         #region Before lifetime configuration
 
-        var overrideFile = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".trident.home"
-        );
+        var overrideFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                                        ".trident.home");
         if (File.Exists(overrideFile))
         {
             var firstLine = File.ReadLines(overrideFile).FirstOrDefault();
-            if (
-                !string.IsNullOrWhiteSpace(firstLine)
-                && Path.IsPathRooted(firstLine)
-                && !File.Exists(firstLine)
-            )
+            if (!string.IsNullOrWhiteSpace(firstLine) && Path.IsPathRooted(firstLine) && !File.Exists(firstLine))
             {
                 PathDef.Default = new(firstLine);
             }
@@ -89,9 +84,7 @@ internal static class Program
 
         Startup.InitializeUnhostedServices();
         var configurationService = Services.GetRequiredService<ConfigurationService>();
-        CultureInfo.CurrentUICulture = GetSafeCultureInfo(
-            configurationService.Value.ApplicationLanguage
-        );
+        CultureInfo.CurrentUICulture = GetSafeCultureInfo(configurationService.Value.ApplicationLanguage);
         Resources.Culture = CultureInfo.CurrentUICulture;
         var httpClient = Services.GetRequiredService<HttpClient>();
         var loader = new SuppressedImageLoader(httpClient);
@@ -130,7 +123,12 @@ internal static class Program
 
         if (stopException is not null)
         {
-            throw stopException;
+            ErrorReporter.Report(stopException,
+                                 new(ErrorReporter.ErrorReportSource.LifetimeShutdown,
+                                     Phase: "shutdown",
+                                     Critical: true,
+                                     Terminating: true,
+                                     Level: SentryLevel.Error));
         }
 
         #endregion
@@ -141,10 +139,7 @@ internal static class Program
     public static void Terminate(Action? beforeDie)
     {
         exitAction = beforeDie;
-        if (
-            Application.Current?.ApplicationLifetime
-            is IClassicDesktopStyleApplicationLifetime desktop
-        )
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.Shutdown();
         }
@@ -170,15 +165,15 @@ internal static class Program
     public static AppBuilder BuildAvaloniaApp()
     {
         var builder = AppBuilder
-            .Configure<App>()
-#if DEBUG
-            .WithDeveloperTools()
-            .LogToTextWriter(Console.Out)
-#else
+                     .Configure<App>()
+                      #if DEBUG
+                     .WithDeveloperTools()
+                     .LogToTextWriter(Console.Out)
+                      #else
         .LogToTrace()
-#endif
-            .UsePlatformDetect()
-            .WithFontSetup();
+                      #endif
+                     .UsePlatformDetect()
+                     .WithFontSetup();
 
         return builder;
     }
