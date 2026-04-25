@@ -130,7 +130,7 @@
         <value>文件</value>
     </data>
     <data name="InstancePage_WorkspacePageText" xml:space="preserve">
-        <value>工作区</value>
+        <value>整合包工作区</value>
     </data>
     <data name="InstancePage_WidgetsPageText" xml:space="preserve">
         <value>微件</value>
@@ -2383,9 +2383,9 @@
   <data name="InstanceWorkspacePage_LockedInfoBarText" xml:space="preserve">
     <value>该实例导入自整合包，你将无法在整合包初始文件上应用修改。</value>
   </data>
-  <data name="InstanceWorkspacePage_ChangesTabText" xml:space="preserve">
-    <value>变更</value>
-  </data>
+    <data name="InstanceWorkspacePage_ChangesTabText" xml:space="preserve">
+        <value>文件变更</value>
+    </data>
   <data name="InstanceWorkspacePage_RefreshButtonText" xml:space="preserve">
     <value>刷新</value>
   </data>
@@ -2749,7 +2749,7 @@
         <value>查看 live 工作副本相对 import 整合包源的文件变化。</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
-        <value>文件</value>
+        <value>包含的文件</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
         <value>展示游戏文件的虚拟结构并管理。</value>

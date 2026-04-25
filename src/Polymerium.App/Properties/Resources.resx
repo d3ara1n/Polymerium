@@ -139,7 +139,7 @@
         <value>Files</value>
     </data>
     <data name="InstancePage_WorkspacePageText" xml:space="preserve">
-        <value>Workspace</value>
+        <value>Modpack Workspace</value>
     </data>
     <data name="InstancePage_WidgetsPageText" xml:space="preserve">
         <value>Widgets</value>
@@ -2395,9 +2395,9 @@
   <data name="InstanceWorkspacePage_LockedInfoBarText" xml:space="preserve">
     <value>This instance was imported from a modpack, so changes cannot be applied to the modpack's original files.</value>
   </data>
-  <data name="InstanceWorkspacePage_ChangesTabText" xml:space="preserve">
-    <value>Changes</value>
-  </data>
+    <data name="InstanceWorkspacePage_ChangesTabText" xml:space="preserve">
+        <value>File Changes</value>
+    </data>
   <data name="InstanceWorkspacePage_RefreshButtonText" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -2761,7 +2761,7 @@ Affected entries: {0}
         <value>Shows how the live working copy differs from the import pack source.</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
-        <value>Files</value>
+        <value>Packed Files</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
         <value>Presenting virtual structure of game files.</value>
