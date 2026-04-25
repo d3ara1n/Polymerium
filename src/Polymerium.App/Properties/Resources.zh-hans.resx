@@ -2285,7 +2285,7 @@
         <value>保留包的标签</value>
     </data>
     <data name="InstanceStoragePage_OpenWikiButtonText" xml:space="preserve">
-        <value>build / live / import / persist 分别是什么？</value>
+        <value>运行目录/整合包源/本地保留 分别是什么？</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
         <value>import 文件如何打包？</value>
