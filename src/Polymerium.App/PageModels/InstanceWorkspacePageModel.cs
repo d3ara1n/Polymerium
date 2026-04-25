@@ -225,9 +225,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                               RelativePath = Path.GetRelativePath(root, fullPath),
                               FullPath = fullPath,
                               IsDirectory = isDirectory,
-                              FileType = isDirectory ? "Folder" :
-                                         string.IsNullOrWhiteSpace(Path.GetExtension(path)) ? "File" :
-                                         Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
+                               FileType = isDirectory ? Resources.InstanceWorkspacePage_FolderFileTypeText :
+                                          string.IsNullOrWhiteSpace(Path.GetExtension(path))
+                                              ? Resources.InstanceWorkspacePage_FileFileTypeText
+                                              :
+                                          Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
                               FileSizeRaw = info is FileInfo file ? file.Length : 0,
                               FileLastModifiedRaw = info.LastWriteTime,
                           };
@@ -643,8 +645,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     [RelayCommand]
     private async Task AddImportEntryAsync()
     {
-        var filePath = await _overlayService.RequestFileAsync("选择要添加到当前 import 目录的文件",
-                                                              "添加文件",
+        var filePath = await _overlayService.RequestFileAsync(Resources
+                                                                 .InstanceWorkspacePage_AddImportFilePrompt,
+                                                              Resources.InstanceWorkspacePage_AddImportFileTitle,
                                                               GetPreferredImportPickerDirectoryPath());
         if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
         {
@@ -660,14 +663,22 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             var targetPath = Path.Combine(directory, fileName);
             if (FileHelper.IsPathEquivalent(filePath, targetPath))
             {
-                _notificationService.PopMessage("该文件已经位于当前目录。", "添加文件", GrowlLevel.Warning);
+                _notificationService.PopMessage(Resources
+                                                   .InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage,
+                                                Resources
+                                                   .InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle,
+                                                GrowlLevel.Warning);
                 return;
             }
 
             var overwrite = false;
             if (File.Exists(targetPath))
             {
-                overwrite = await _overlayService.RequestConfirmationAsync($"当前目录已存在 {fileName}，继续会覆盖原文件。", "文件已存在");
+                overwrite = await _overlayService.RequestConfirmationAsync(Resources
+                       .InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage
+                       .Replace("{0}", fileName),
+                                                                           Resources
+                       .InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle);
                 if (!overwrite)
                 {
                     return;
@@ -682,7 +693,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                                                        targetPath),
                                                                    StringComparison.OrdinalIgnoreCase));
 
-            _notificationService.PopMessage($"已添加 {fileName}", "Import 文件", GrowlLevel.Success);
+            _notificationService.PopMessage(Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationMessage
+                                                     .Replace("{0}", fileName),
+                                            Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationTitle,
+                                            GrowlLevel.Success);
         }
         catch (Exception ex)
         {
@@ -720,8 +734,14 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        var confirmed = await _overlayService.RequestConfirmationAsync($"确定要从 import 中移出 {model.Name} 吗？",
-                                                                       model.IsDirectory ? "移出文件夹" : "移出文件");
+        var confirmed = await _overlayService.RequestConfirmationAsync(Resources
+               .InstanceWorkspacePage_RemoveImportEntryConfirmationMessage
+               .Replace("{0}", model.Name),
+                                                                       model.IsDirectory
+                                                                           ? Resources
+                                                                               .InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle
+                                                                           : Resources
+                                                                               .InstanceWorkspacePage_RemoveImportFileConfirmationTitle);
         if (!confirmed)
         {
             return;
@@ -740,7 +760,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
             SelectedImportEntry = null;
             await RefreshImportAsync();
-            _notificationService.PopMessage($"已移出 {model.Name}", "Import 文件", GrowlLevel.Success);
+            _notificationService.PopMessage(Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage
+                                                     .Replace("{0}", model.Name),
+                                            Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle,
+                                            GrowlLevel.Success);
         }
         catch (Exception ex)
         {
@@ -918,8 +941,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                            _notificationService.PopMessage(Resources
                                                                               .InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
                                                                            Resources
-                                                                              .InstanceWorkspacePage_GitCommitPromptTitle,
-                                                                           GrowlLevel.Information);
+                                                                              .InstanceWorkspacePage_GitCommitPromptTitle);
                                            return;
                                        }
 

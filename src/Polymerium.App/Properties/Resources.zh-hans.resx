@@ -2458,9 +2458,9 @@
   <data name="InstanceWorkspacePage_GitBarTitleText" xml:space="preserve">
     <value>仓库</value>
   </data>
-  <data name="InstanceWorkspacePage_GitBarSubtitleText" xml:space="preserve">
-    <value>Git</value>
-  </data>
+    <data name="InstanceWorkspacePage_GitBarSubtitleText" xml:space="preserve">
+        <value>Git</value>
+    </data>
   <data name="InstanceWorkspacePage_GitCommitSectionText" xml:space="preserve">
     <value>提交</value>
   </data>
@@ -2753,5 +2753,50 @@
     </data>
     <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
         <value>展示游戏文件的虚拟结构并管理。</value>
+    </data>
+    <data name="InstanceWorkspacePage_FolderFileTypeText" xml:space="preserve">
+        <value>文件夹</value>
+    </data>
+    <data name="InstanceWorkspacePage_FileFileTypeText" xml:space="preserve">
+        <value>文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFilePrompt" xml:space="preserve">
+        <value>选择要添加到当前 import 目录的文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileTitle" xml:space="preserve">
+        <value>添加文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage" xml:space="preserve">
+        <value>该文件已经位于当前目录。</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle" xml:space="preserve">
+        <value>添加文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage" xml:space="preserve">
+        <value>当前目录已存在 {0}，继续会覆盖原文件。</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle" xml:space="preserve">
+        <value>文件已存在</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileSuccessNotificationMessage" xml:space="preserve">
+        <value>已添加 {0}</value>
+    </data>
+    <data name="InstanceWorkspacePage_AddImportFileSuccessNotificationTitle" xml:space="preserve">
+        <value>Import 文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_RemoveImportEntryConfirmationMessage" xml:space="preserve">
+        <value>确定要从 import 中移出 {0} 吗？</value>
+    </data>
+    <data name="InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle" xml:space="preserve">
+        <value>移出文件夹</value>
+    </data>
+    <data name="InstanceWorkspacePage_RemoveImportFileConfirmationTitle" xml:space="preserve">
+        <value>移出文件</value>
+    </data>
+    <data name="InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage" xml:space="preserve">
+        <value>已移出 {0}</value>
+    </data>
+    <data name="InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle" xml:space="preserve">
+        <value>Import 文件</value>
     </data>
 </root>

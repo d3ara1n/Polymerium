@@ -2763,7 +2763,52 @@ Affected entries: {0}
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
         <value>Packed Files</value>
     </data>
-    <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
-        <value>Presenting virtual structure of game files.</value>
-    </data>
+  <data name="InstanceWorkspacePage_FilesTabToolTip" xml:space="preserve">
+    <value>Presenting virtual structure of game files.</value>
+  </data>
+  <data name="InstanceWorkspacePage_FolderFileTypeText" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="InstanceWorkspacePage_FileFileTypeText" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFilePrompt" xml:space="preserve">
+    <value>Select a file to add to the current import directory</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileTitle" xml:space="preserve">
+    <value>Add File</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage" xml:space="preserve">
+    <value>This file is already in the current directory.</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle" xml:space="preserve">
+    <value>Add File</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage" xml:space="preserve">
+    <value>A file named {0} already exists in the current directory. Continuing will overwrite it.</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle" xml:space="preserve">
+    <value>File Already Exists</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileSuccessNotificationMessage" xml:space="preserve">
+    <value>Added {0}</value>
+  </data>
+  <data name="InstanceWorkspacePage_AddImportFileSuccessNotificationTitle" xml:space="preserve">
+    <value>Import Files</value>
+  </data>
+  <data name="InstanceWorkspacePage_RemoveImportEntryConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to remove {0} from import?</value>
+  </data>
+  <data name="InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle" xml:space="preserve">
+    <value>Remove Folder</value>
+  </data>
+  <data name="InstanceWorkspacePage_RemoveImportFileConfirmationTitle" xml:space="preserve">
+    <value>Remove File</value>
+  </data>
+  <data name="InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage" xml:space="preserve">
+    <value>Removed {0}</value>
+  </data>
+  <data name="InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle" xml:space="preserve">
+    <value>Import Files</value>
+  </data>
 </root>
