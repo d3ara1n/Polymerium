@@ -34,10 +34,26 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
-            ShowOrDump(e.ExceptionObject, e.IsTerminating);
-        TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
-        Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
+        AppDomain.CurrentDomain.UnhandledException += (_, e) => ErrorReporter.Report(e.ExceptionObject,
+            new(ErrorReporter.ErrorReportSource.AppDomainUnhandled,
+                Phase: "runtime",
+                Critical: true,
+                Terminating: e.IsTerminating,
+                Level: e.IsTerminating ? SentryLevel.Fatal : SentryLevel.Error));
+        TaskScheduler.UnobservedTaskException += (_, e) => ErrorReporter.Report(e.Exception,
+                                                                                    new(ErrorReporter.ErrorReportSource
+                                                                                           .TaskUnobserved,
+                                                                                        Phase: "runtime",
+                                                                                        Critical: true,
+                                                                                        Terminating: false,
+                                                                                        Level: SentryLevel
+                                                                                           .Warning));
+        Dispatcher.UIThread.UnhandledException += (_, e) => ErrorReporter.Report(e.Exception,
+            new(ErrorReporter.ErrorReportSource.DispatcherUnhandled,
+                Phase: "runtime",
+                Critical: true,
+                Terminating: !e.Handled,
+                Level: !e.Handled ? SentryLevel.Fatal : SentryLevel.Error));
 
         foreach (var styles in Styles)
         {
@@ -57,9 +73,7 @@ public class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private static async Task StartLifetimeServicesAsync(
-        IClassicDesktopStyleApplicationLifetime desktop
-    )
+    private static async Task StartLifetimeServicesAsync(IClassicDesktopStyleApplicationLifetime desktop)
     {
         if (Program.Services?.GetService<LifetimeServiceRuntime>() is not { } runtime)
         {
@@ -72,119 +86,13 @@ public class App : Application
         }
         catch (Exception ex)
         {
-            ShowOrDump(ex, true);
+            ErrorReporter.Report(ex,
+                                 new(ErrorReporter.ErrorReportSource.LifetimeStartup,
+                                     Phase: "startup",
+                                     Critical: true,
+                                     Terminating: true,
+                                     Level: SentryLevel.Fatal));
             desktop.Shutdown(-1);
-        }
-    }
-
-    private static void ShowOrDump(object core, bool critical = false)
-    {
-        // 只接受致命错误的 dump，避免 TaskCancellationException 等在 Task 中发生触发 UnobservedTaskException 转发把 Dump 吃满
-        if (!critical)
-        {
-            return;
-        }
-
-        if (core is Exception rec)
-        {
-            SentrySdk.CaptureException(rec);
-        }
-
-        if (
-            core is Exception ex
-            && !critical
-            && Program.Services?.GetService<NavigationService>() is { } navigation
-        )
-        {
-            Dispatcher.UIThread.Post(() => navigation.Navigate<ExceptionPage>(ex));
-        }
-        else
-        {
-            Dump(core);
-        }
-    }
-
-    private static void Dump(object core)
-    {
-        // 只有调试模式才转储错误报告，而 Prod 模式有大概率文件目录是只读的
-        if (!Program.IsDebug)
-            return;
-
-        var path = Path.Combine(
-            AppContext.BaseDirectory,
-            "dumps",
-            $"Exception-{DateTimeOffset.Now.ToFileTime()}.log"
-        );
-        var sb = new StringBuilder(
-            $"""
-                                    // {DateTimeOffset.Now.ToString()}
-                                    // Polymerium: {typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                                                                  ?.InformationalVersion.Split('+')[0] ?? Program.Version}
-                                    // Avalonia: {Assembly.GetEntryAssembly()?.GetName().Version}
-
-                                    """
-        );
-        sb.AppendLine();
-        DumpInternal(sb, core, 0);
-        var dir = Path.GetDirectoryName(path);
-        if (dir is not null && !Directory.Exists(dir))
-        {
-            Directory.CreateDirectory(dir);
-        }
-
-        File.WriteAllText(path, sb.ToString());
-    }
-
-    private static void DumpInternal(StringBuilder builder, object core, int level)
-    {
-        switch (core)
-        {
-            case AggregateException ae:
-                builder.AppendLine(
-                    $"""
-                    --- LEVEL: {level} ---
-                    Exception: {ae.GetType().Name}
-                    Message: {ae.Message}
-                    StackTrace: {ae.StackTrace}
-
-                    """
-                );
-                foreach (var inner in ae.InnerExceptions)
-                {
-                    DumpInternal(builder, inner, level + 1);
-                }
-
-                if (ae.InnerException is not null)
-                {
-                    DumpInternal(builder, ae.InnerException, level + 1);
-                }
-
-                break;
-            case Exception e:
-                builder.AppendLine(
-                    $"""
-                    --- LEVEL: {level} ---
-                    Exception: {e.GetType().Name}
-                    Message: {e.Message}
-                    StackTrace: {e.StackTrace}
-
-                    """
-                );
-                if (e.InnerException is not null)
-                {
-                    DumpInternal(builder, e.InnerException, level + 1);
-                }
-
-                break;
-            default:
-                builder.AppendLine(
-                    $"""
-                    --- LEVEL: {level} ---
-                    Content: {core.ToString()}
-
-                    """
-                );
-                break;
         }
     }
 
@@ -211,12 +119,7 @@ public class App : Application
 
         // Link navigation service
         var navigation = Program.Services.GetRequiredService<NavigationService>();
-        navigation.SetHandler(
-            window.Navigate,
-            window.GoBack,
-            window.CanGoBack,
-            window.ClearHistory
-        );
+        navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
 
         var activator = Program.Services.GetRequiredService<IViewActivator>();
         window.SetFrameActivator(activator);
