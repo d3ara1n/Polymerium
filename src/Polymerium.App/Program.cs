@@ -47,7 +47,9 @@ internal static class Program
     {
         VelopackApp.Build().OnFirstRun(_ => FirstRun = true).Run();
 
-        #region Before lifetime configuration
+        #region 0. 这些设置需要在整个应用启动的第一时间完成
+
+        Startup.InitializeUnhostedServices();
 
         var overrideFile = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
@@ -86,9 +88,8 @@ internal static class Program
         Startup.ConfigureServices(services, IsDebug);
         Services = services.BuildServiceProvider();
 
-        #region Initialize Application Environment
+        #region 1. 服务已构造，现在初始化这些服务
 
-        Startup.InitializeUnhostedServices();
         var configurationService = Services.GetRequiredService<ConfigurationService>();
         CultureInfo.CurrentUICulture = GetSafeCultureInfo(
             configurationService.Value.ApplicationLanguage
@@ -98,13 +99,18 @@ internal static class Program
         var loader = new SuppressedImageLoader(httpClient);
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
+
+        #endregion
+
+        #region 2. Avalonia 启动窗口之后调用部分耗时服务
+
         // PROCEDURE MOVED: Lifetime Services 在 App.OnFrameworkInitialized 中进行延迟初始化而不是 Program 收尾
 
         #endregion
 
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
-        #region Dispose & Shutdown Services
+        #region 7. Avalonia 退出之后处置部分耗时服务
 
         Exception? stopException = null;
         if (Services.GetService<LifetimeServiceRuntime>() is { } runtime)
@@ -119,14 +125,26 @@ internal static class Program
             }
         }
 
+        #endregion
+
+
+        #region 8. 处置整个服务容器
+
         try
         {
+            #region 8.1 部分用 ServiceProvider.Dispose 不可靠的服务处置需要显式写在这
+
             Services.GetRequiredService<IViewStateStore>().Flush();
-            Startup.DeinitializeUnhostedServices();
+
+            #endregion
         }
         finally
         {
+            #region 8.2 杂七杂八的服务处置
+
             ((IDisposable)Services).Dispose();
+
+            #endregion
         }
 
         if (stopException is not null)
@@ -142,6 +160,12 @@ internal static class Program
                 )
             );
         }
+
+        #endregion
+
+        #region 9. 这些服务与应用程序生命周期无关且不影响，放在最后进行
+
+        Startup.DeinitializeUnhostedServices();
 
         #endregion
 
