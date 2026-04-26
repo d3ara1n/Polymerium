@@ -687,7 +687,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         await LoadImportBrowserAsync();
     }
 
-    [RelayCommand]
+    private bool CanAddImportEntry() => !IsLocked;
+
+    [RelayCommand(CanExecute = nameof(CanAddImportEntry))]
     private async Task AddImportEntryAsync()
     {
         var filePath = await _overlayService.RequestFileAsync(
@@ -779,7 +781,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     }
 
     private bool CanRemoveImportEntry(ImportBrowserEntryModel? model) =>
-        (model ?? SelectedImportEntry) is not null;
+        !IsLocked && (model ?? SelectedImportEntry) is not null;
 
     [RelayCommand(CanExecute = nameof(CanRemoveImportEntry))]
     private async Task RemoveImportEntryAsync(ImportBrowserEntryModel? model)
