@@ -21,7 +21,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Pages;
 using Polymerium.App.Services;
 using Sentry;
-using Trident.Core.Lifetimes;
+using TridentCore.Core.Lifetimes;
 using Page = Huskui.Avalonia.Controls.Page;
 
 namespace Polymerium.App;

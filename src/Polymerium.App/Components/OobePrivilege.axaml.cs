@@ -4,7 +4,7 @@ using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
-using Trident.Abstractions;
+using TridentCore.Abstractions;
 using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Components;

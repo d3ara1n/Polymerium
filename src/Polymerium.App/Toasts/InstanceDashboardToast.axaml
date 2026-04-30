@@ -7,7 +7,7 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:launching="clr-namespace:Trident.Core.Engines.Launching;assembly=Trident.Core"
+    xmlns:launching="clr-namespace:TridentCore.Core.Engines.Launching;assembly=TridentCore.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="0"
     d:DesignHeight="450"

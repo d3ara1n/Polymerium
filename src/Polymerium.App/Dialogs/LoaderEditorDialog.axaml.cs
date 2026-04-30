@@ -6,7 +6,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Abstractions.Utilities;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.App.Dialogs;
 

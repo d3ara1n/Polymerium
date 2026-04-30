@@ -3,8 +3,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.Models;
 

@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using Trident.Abstractions.Tasks;
+using TridentCore.Abstractions.Tasks;
 
 namespace Polymerium.App.Models;
 

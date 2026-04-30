@@ -3,7 +3,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Controls;
-using Trident.Core.Utilities;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.Pages;
 

@@ -12,12 +12,12 @@ using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Services.Profiles;
-using Trident.Purl;
-using Version = Trident.Abstractions.Repositories.Resources.Version;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Services.Profiles;
+using TridentCore.Purl;
+using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Modals;
 

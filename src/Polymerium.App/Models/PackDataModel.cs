@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using Trident.Abstractions.FileModels;
+using TridentCore.Abstractions.FileModels;
 
 namespace Polymerium.App.Models;
 

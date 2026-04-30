@@ -11,7 +11,7 @@ using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Abstractions.Repositories;
+using TridentCore.Abstractions.Repositories;
 using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Dialogs;

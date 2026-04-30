@@ -1,6 +1,6 @@
 using System;
 using Polymerium.App.Controls;
-using Trident.Core.Accounts;
+using TridentCore.Core.Accounts;
 
 namespace Polymerium.App.Components;
 

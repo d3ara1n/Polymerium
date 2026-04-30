@@ -18,12 +18,12 @@ using Polymerium.App.Models;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Trident.Abstractions;
-using Trident.Abstractions.Tasks;
-using Trident.Core.Engines.Launching;
-using Trident.Core.Services;
-using Trident.Core.Services.Instances;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions;
+using TridentCore.Abstractions.Tasks;
+using TridentCore.Core.Engines.Launching;
+using TridentCore.Core.Services;
+using TridentCore.Core.Services.Instances;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.PageModels;
 

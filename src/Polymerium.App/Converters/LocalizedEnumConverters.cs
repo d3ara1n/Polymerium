@@ -2,9 +2,9 @@
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Core.Igniters;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Core.Igniters;
 
 namespace Polymerium.App.Converters;
 

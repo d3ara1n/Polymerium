@@ -1,7 +1,7 @@
 using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
-using Trident.Abstractions.Importers;
-using Trident.Abstractions.Utilities;
+using TridentCore.Abstractions.Importers;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 

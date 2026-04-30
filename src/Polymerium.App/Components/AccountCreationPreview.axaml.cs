@@ -2,7 +2,7 @@ using System;
 using Avalonia;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
-using Trident.Abstractions.Accounts;
+using TridentCore.Abstractions.Accounts;
 
 namespace Polymerium.App.Components;
 

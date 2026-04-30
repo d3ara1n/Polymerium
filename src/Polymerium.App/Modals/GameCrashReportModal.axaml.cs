@@ -22,9 +22,9 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Refit;
-using Trident.Abstractions;
-using Trident.Core.Clients;
-using Trident.Core.Models.MclogsApi;
+using TridentCore.Abstractions;
+using TridentCore.Core.Clients;
+using TridentCore.Core.Models.MclogsApi;
 using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Modals;

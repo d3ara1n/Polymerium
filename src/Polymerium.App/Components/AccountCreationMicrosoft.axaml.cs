@@ -13,9 +13,9 @@ using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Trident.Abstractions.Accounts;
-using Trident.Core.Accounts;
-using Trident.Core.Services;
+using TridentCore.Abstractions.Accounts;
+using TridentCore.Core.Accounts;
+using TridentCore.Core.Services;
 using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Components;

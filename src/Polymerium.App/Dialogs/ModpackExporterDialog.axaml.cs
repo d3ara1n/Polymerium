@@ -9,8 +9,8 @@ using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Trident.Abstractions;
-using Trident.Abstractions.FileModels;
+using TridentCore.Abstractions;
+using TridentCore.Abstractions.FileModels;
 using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Dialogs;

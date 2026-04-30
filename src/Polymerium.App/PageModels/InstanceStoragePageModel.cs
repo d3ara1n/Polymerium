@@ -10,9 +10,9 @@ using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Properties;
 using Polymerium.App.Utilities;
-using Trident.Abstractions;
-using Trident.Core.Services;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions;
+using TridentCore.Core.Services;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.PageModels;
 

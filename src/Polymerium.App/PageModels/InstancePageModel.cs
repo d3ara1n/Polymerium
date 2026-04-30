@@ -21,13 +21,13 @@ using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Polymerium.App.Widgets;
-using Trident.Abstractions;
-using Trident.Abstractions.Tasks;
-using Trident.Abstractions.Utilities;
-using Trident.Core;
-using Trident.Core.Services;
-using Trident.Core.Services.Instances;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions;
+using TridentCore.Abstractions.Tasks;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core;
+using TridentCore.Core.Services;
+using TridentCore.Core.Services.Instances;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.PageModels;
 

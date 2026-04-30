@@ -12,8 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Sentry;
-using Trident.Abstractions;
-using Trident.Core.Lifetimes;
+using TridentCore.Abstractions;
+using TridentCore.Core.Lifetimes;
 using Velopack;
 
 namespace Polymerium.App;

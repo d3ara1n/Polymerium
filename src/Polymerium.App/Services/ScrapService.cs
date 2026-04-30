@@ -6,11 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using ObservableCollections;
 using Polymerium.App.Models;
-using Trident.Abstractions.Extensions;
-using Trident.Abstractions.Lifetimes;
-using Trident.Core.Engines.Launching;
-using Trident.Core.Services;
-using Trident.Core.Services.Instances;
+using TridentCore.Abstractions.Extensions;
+using TridentCore.Abstractions.Lifetimes;
+using TridentCore.Core.Engines.Launching;
+using TridentCore.Core.Services;
+using TridentCore.Core.Services.Instances;
 
 namespace Polymerium.App.Services;
 

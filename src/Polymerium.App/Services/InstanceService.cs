@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Utilities;
 using Refit;
-using Trident.Abstractions.Extensions;
-using Trident.Abstractions.FileModels;
-using Trident.Core.Accounts;
-using Trident.Core.Igniters;
-using Trident.Core.Services;
-using Trident.Core.Services.Instances;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions.Extensions;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Core.Accounts;
+using TridentCore.Core.Igniters;
+using TridentCore.Core.Services;
+using TridentCore.Core.Services.Instances;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.Services;
 

@@ -55,13 +55,13 @@
 				"stopAtEntry": false
 			},
             {
-				"name": "Trident.Cli",
+				"name": "TridentCore.Cli",
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "build",
-				"program": "${workspaceFolder}/submodules/Trident.Net/src/Trident.Cli/bin/Debug/net9.0/Trident.Cli.dll",
+				"program": "${workspaceFolder}/submodules/Trident.Net/src/TridentCore.Cli/bin/Debug/net9.0/TridentCore.Cli.dll",
 				"args": [],
-				"cwd": "${workspaceFolder}/submodules/Trident.Net/src/Trident.Cli/bin/Debug/net9.0",
+				"cwd": "${workspaceFolder}/submodules/Trident.Net/src/TridentCore.Cli/bin/Debug/net9.0",
 				"console": "internalConsole",
 				"stopAtEntry": false
 			}

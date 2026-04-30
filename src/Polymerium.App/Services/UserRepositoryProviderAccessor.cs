@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Trident.Core.Services;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.Services;
 

@@ -1,5 +1,5 @@
 using Polymerium.App.Facilities;
-using Trident.Abstractions.Utilities;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 

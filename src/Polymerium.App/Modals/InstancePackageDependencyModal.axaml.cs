@@ -10,10 +10,10 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Services.Profiles;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Services.Profiles;
 
 namespace Polymerium.App.Modals;
 

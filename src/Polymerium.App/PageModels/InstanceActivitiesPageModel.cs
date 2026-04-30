@@ -18,10 +18,10 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using SkiaSharp;
-using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Services;
+using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.PageModels;
 
