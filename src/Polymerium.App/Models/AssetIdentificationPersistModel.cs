@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using Trident.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 

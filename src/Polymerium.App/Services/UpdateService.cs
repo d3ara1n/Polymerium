@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Polymerium.App.Models;
-using Trident.Abstractions.Lifetimes;
+using TridentCore.Abstractions.Lifetimes;
 using Velopack;
 using VelopackExtension.MirrorChyan.Sources;
 

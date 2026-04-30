@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Avalonia;
 using Polymerium.App.Controls;
-using Trident.Core.Accounts;
+using TridentCore.Core.Accounts;
 
 namespace Polymerium.App.Components;
 

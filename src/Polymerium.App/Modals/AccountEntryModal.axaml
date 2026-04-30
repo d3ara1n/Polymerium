@@ -2,7 +2,7 @@
     x:Class="Polymerium.App.Modals.AccountEntryModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:accounts="clr-namespace:Trident.Core.Accounts;assembly=Trident.Core"
+    xmlns:accounts="clr-namespace:TridentCore.Core.Accounts;assembly=TridentCore.Core"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

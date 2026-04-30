@@ -13,9 +13,9 @@ using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Abstractions.Utilities;
+using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Utilities;
 using AppResources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Modals;

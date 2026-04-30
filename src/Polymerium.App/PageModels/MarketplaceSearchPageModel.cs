@@ -21,9 +21,9 @@ using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
 using Refit;
 using Semver;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Services;
+using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.PageModels;
 

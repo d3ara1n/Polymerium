@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MirrorChyan.Net;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
-using Trident.Abstractions;
+using TridentCore.Abstractions;
 using Velopack;
 using Velopack.Sources;
 

@@ -16,11 +16,11 @@ using Polymerium.App.Models;
 using Polymerium.App.Pages;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
-using Trident.Abstractions;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Importers;
-using Trident.Core.Services;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Importers;
+using TridentCore.Core.Services;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.PageModels;
 

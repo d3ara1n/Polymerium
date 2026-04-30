@@ -2,7 +2,7 @@ using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
-using Trident.Abstractions;
+using TridentCore.Abstractions;
 
 namespace Polymerium.App.Modals;
 

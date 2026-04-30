@@ -22,11 +22,11 @@ using Polymerium.App.Pages;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Refit;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Abstractions.Utilities;
-using Trident.Core.Services;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.PageModels;
 

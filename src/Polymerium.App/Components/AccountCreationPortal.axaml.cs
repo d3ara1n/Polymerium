@@ -2,7 +2,7 @@ using System;
 using Avalonia;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
-using Trident.Core.Services;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.Components;
 

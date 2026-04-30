@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
 using Polymerium.App.Utilities;
-using Trident.Core.Accounts;
+using TridentCore.Core.Accounts;
 using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.Models;

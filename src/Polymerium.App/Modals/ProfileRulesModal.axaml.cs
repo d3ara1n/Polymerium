@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Trident.Abstractions.FileModels;
+using TridentCore.Abstractions.FileModels;
 
 namespace Polymerium.App.Modals;
 

@@ -1,6 +1,6 @@
 using System;
 using Polymerium.App.Assets;
-using Trident.Core.Utilities;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.Utilities;
 

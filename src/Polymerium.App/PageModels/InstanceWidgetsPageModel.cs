@@ -1,7 +1,7 @@
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
-using Trident.Core.Services;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.PageModels;
 

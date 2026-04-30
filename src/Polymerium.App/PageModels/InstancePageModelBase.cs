@@ -8,11 +8,11 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Widgets;
-using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Tasks;
-using Trident.Core;
-using Trident.Core.Services;
-using Trident.Core.Services.Instances;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Tasks;
+using TridentCore.Core;
+using TridentCore.Core.Services;
+using TridentCore.Core.Services.Instances;
 
 namespace Polymerium.App.PageModels;
 

@@ -14,11 +14,11 @@ using Polymerium.App.Pages;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
-using Trident.Abstractions;
-using Trident.Abstractions.FileModels;
-using Trident.Core.Services;
-using Trident.Core.Services.Profiles;
-using Trident.Core.Utilities;
+using TridentCore.Abstractions;
+using TridentCore.Abstractions.FileModels;
+using TridentCore.Core.Services;
+using TridentCore.Core.Services.Profiles;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.PageModels;
 

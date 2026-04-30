@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
-using Trident.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 

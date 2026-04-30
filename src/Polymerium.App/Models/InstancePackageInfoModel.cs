@@ -2,8 +2,8 @@ using System;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using Trident.Abstractions.Repositories.Resources;
-using Trident.Abstractions.Utilities;
+using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 

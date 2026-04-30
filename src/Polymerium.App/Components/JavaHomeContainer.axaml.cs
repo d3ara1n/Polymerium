@@ -7,7 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Services;
-using Trident.Core.Utilities;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.Components;
 

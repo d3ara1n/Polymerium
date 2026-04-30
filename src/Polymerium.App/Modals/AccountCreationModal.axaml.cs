@@ -7,8 +7,8 @@ using Huskui.Avalonia.Controls;
 using Polymerium.App.Components;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
-using Trident.Abstractions.Accounts;
-using Trident.Core.Services;
+using TridentCore.Abstractions.Accounts;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.Modals;
 
