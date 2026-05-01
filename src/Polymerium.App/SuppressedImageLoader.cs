@@ -7,11 +7,15 @@ using Avalonia.Platform.Storage;
 
 namespace Polymerium.App;
 
-public class SuppressedImageLoader(HttpClient client) : RamCachedWebImageLoader(client, disposeHttpClient: false)
+public class SuppressedImageLoader(HttpClient client)
+    : RamCachedWebImageLoader(client, disposeHttpClient: false)
 {
     public override Task<Bitmap?> ProvideImageAsync(string url) => ProvideImageAsync(url, null);
 
-    public override async Task<Bitmap?> ProvideImageAsync(string url, IStorageProvider? storageProvider = null)
+    public override async Task<Bitmap?> ProvideImageAsync(
+        string url,
+        IStorageProvider? storageProvider = null
+    )
     {
         try
         {

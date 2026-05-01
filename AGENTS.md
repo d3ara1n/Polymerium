@@ -48,8 +48,8 @@
 ## Localization
 
 - Localized strings live in `src/Polymerium.App/Properties/Resources.resx` and `Resources.zh-hans.resx`.
-- `Resources.Designer.cs` is generated from the `.resx` files; edit the `.resx`, not the designer file.
-- If encountered build failure due to missing localized string references, tell the user to generate `Rsources.Designer.cs` in the IDE to fix that. Do not fix it by yourself.
+- `Resources.Designer.cs` is generated from the `.resx` files; edit the `.resx` and `Resource.Designer.cs` to pass the build process.
+- If encountered build failure due to missing localized string references, tell the user to generate `Rsources.Designer.cs` in the IDE to fix that or fix it by yourself.
 
 ## Expected Build Noise
 

@@ -186,6 +186,12 @@
     <data name="InstancePropertiesPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java 附加命令行参数</value>
     </data>
+    <data name="InstancePropertiesPage_CommandWrapperLabelText" xml:space="preserve">
+        <value>包装命令</value>
+    </data>
+    <data name="InstancePropertiesPage_CommandWrapperDescriptionText" xml:space="preserve">
+        <value>使用 {command} 作为启动命令占位符。留空则使用全局设置。</value>
+    </data>
     <data name="InstancePropertiesPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>窗口初始大小</value>
     </data>
@@ -425,6 +431,15 @@
     </data>
     <data name="SettingsPage_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>默认为空</value>
+    </data>
+    <data name="SettingsPage_CommandWrapperLabelText" xml:space="preserve">
+        <value>包装命令</value>
+    </data>
+    <data name="SettingsPage_CommandWrapperPlaceholder" xml:space="preserve">
+        <value>例：prime-run {command}</value>
+    </data>
+    <data name="SettingsPage_CommandWrapperDescriptionText" xml:space="preserve">
+        <value>使用 {command} 作为启动命令占位符。</value>
     </data>
     <data name="SettingsPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>窗口初始大小</value>

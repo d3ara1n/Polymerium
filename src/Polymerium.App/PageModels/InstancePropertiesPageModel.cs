@@ -161,6 +161,12 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         )
             ? _configurationService.Value.GameJavaAdditionalArguments
             : Resources.InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder;
+        CommandWrapperOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER);
+        CommandWrapperWatermark = !string.IsNullOrEmpty(
+            _configurationService.Value.GameCommandWrapper
+        )
+            ? _configurationService.Value.GameCommandWrapper
+            : "prime-run {command}";
         WindowInitialHeightOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_HEIGHT);
         WindowInitialHeightWatermark =
             _configurationService.Value.GameWindowInitialHeight.ToString();
@@ -431,6 +437,18 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     partial void OnJavaAdditionalArgumentsOverrideChanged(string value) =>
         WriteOverride(
             Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+            !string.IsNullOrEmpty(value) ? value : null
+        );
+
+    [ObservableProperty]
+    public partial string CommandWrapperOverride { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string CommandWrapperWatermark { get; set; } = string.Empty;
+
+    partial void OnCommandWrapperOverrideChanged(string value) =>
+        WriteOverride(
+            Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
             !string.IsNullOrEmpty(value) ? value : null
         );
 

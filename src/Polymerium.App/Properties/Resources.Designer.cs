@@ -3237,6 +3237,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use {command} as the launch command placeholder. Empty means using the global setting..
+        /// </summary>
+        public static string InstancePropertiesPage_CommandWrapperDescriptionText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesPage_CommandWrapperDescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Wrapper.
+        /// </summary>
+        public static string InstancePropertiesPage_CommandWrapperLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesPage_CommandWrapperLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to These settings are applied instantly and can&apos;t be recovered.
         /// </summary>
         public static string InstancePropertiesPage_DangerZoneSubtitle {
@@ -7516,6 +7534,33 @@ namespace Polymerium.App.Properties {
         public static string SettingsPage_ClearStatisticsConfirmationTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearStatisticsConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use {command} as the launch command placeholder..
+        /// </summary>
+        public static string SettingsPage_CommandWrapperDescriptionText {
+            get {
+                return ResourceManager.GetString("SettingsPage_CommandWrapperDescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Wrapper.
+        /// </summary>
+        public static string SettingsPage_CommandWrapperLabelText {
+            get {
+                return ResourceManager.GetString("SettingsPage_CommandWrapperLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to prime-run {command}.
+        /// </summary>
+        public static string SettingsPage_CommandWrapperPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsPage_CommandWrapperPlaceholder", resourceCulture);
             }
         }
         

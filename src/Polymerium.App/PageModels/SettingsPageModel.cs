@@ -72,6 +72,7 @@ public partial class SettingsPageModel : ViewModelBase
                 : null;
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
+        CommandWrapper = configurationService.Value.GameCommandWrapper;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
         AutoCheckUpdates = configurationService.Value.UpdateAutoCheck;
@@ -442,6 +443,16 @@ public partial class SettingsPageModel : ViewModelBase
 
     partial void OnJavaAdditionalArgumentsChanged(string value) =>
         _configurationService.Value.GameJavaAdditionalArguments = value;
+
+    #endregion
+
+    #region Command Wrapper
+
+    [ObservableProperty]
+    public partial string CommandWrapper { get; set; }
+
+    partial void OnCommandWrapperChanged(string value) =>
+        _configurationService.Value.GameCommandWrapper = value;
 
     #endregion
 
