@@ -272,6 +272,18 @@
                     PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsPlaceholder}"
                     Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
             </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CommandWrapperLabelText}">
+                <StackPanel Spacing="4">
+                    <TextBox
+                        PlaceholderText="{x:Static lang:Resources.SettingsPage_CommandWrapperPlaceholder}"
+                        Text="{Binding CommandWrapper, Mode=TwoWay}" />
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SettingsPage_CommandWrapperDescriptionText}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
                     <TextBox

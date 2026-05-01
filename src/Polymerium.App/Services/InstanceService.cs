@@ -122,6 +122,10 @@ public class InstanceService(
                     quickConnectAddress: profile.GetOverride<string>(
                         Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
                     ),
+                    commandWrapperTemplate: profile.GetOverride(
+                        Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
+                        configurationService.Value.GameCommandWrapper
+                    ),
                     launchMode: mode,
                     account: cooked,
                     brand: Program.Brand

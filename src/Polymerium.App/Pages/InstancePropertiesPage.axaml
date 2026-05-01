@@ -181,6 +181,18 @@
                     PlaceholderText="{Binding JavaAdditionalArgumentsWatermark}"
                     Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperLabelText}">
+                <StackPanel Spacing="4">
+                    <TextBox
+                        PlaceholderText="{Binding CommandWrapperWatermark}"
+                        Text="{Binding CommandWrapperOverride, Mode=TwoWay}" />
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperDescriptionText}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_WindowInitialSizeLabelText}">
                 <Grid ColumnDefinitions="*,7,*">
                     <TextBox

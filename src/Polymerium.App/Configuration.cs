@@ -23,6 +23,7 @@ public class Configuration
     public const string RUNTIME_JAVA_HOME_25 = "Runtime.Java.Home.25";
     public const string GAME_JAVA_MAX_MEMORY = "Game.Java.MaxMemory";
     public const string GAME_JAVA_ADDITIONAL_ARGUMENTS = "Game.Java.AdditionalArguments";
+    public const string GAME_COMMAND_WRAPPER = "Game.CommandWrapper";
     public const string GAME_WINDOW_HEIGHT = "Game.Window.Height";
     public const string GAME_WINDOW_WIDTH = "Game.Window.Width";
     public const string NETWORK_PROXY_MODE = "Network.Proxy.Mode";
@@ -58,6 +59,7 @@ public class Configuration
         { RUNTIME_JAVA_HOME_25, string.Empty },
         { GAME_JAVA_MAX_MEMORY, 4096u },
         { GAME_JAVA_ADDITIONAL_ARGUMENTS, string.Empty },
+        { GAME_COMMAND_WRAPPER, string.Empty },
         { GAME_WINDOW_WIDTH, 1270u },
         { GAME_WINDOW_HEIGHT, 720u },
         { NETWORK_PROXY_MODE, (int)ProxyMode.Auto },
@@ -98,6 +100,7 @@ public class Configuration
     public uint GameJavaMaxMemory { get; set; } = AccessDefault<uint>(GAME_JAVA_MAX_MEMORY);
     public string GameJavaAdditionalArguments { get; set; } =
         AccessDefault<string>(GAME_JAVA_ADDITIONAL_ARGUMENTS);
+    public string GameCommandWrapper { get; set; } = AccessDefault<string>(GAME_COMMAND_WRAPPER);
     public uint GameWindowInitialWidth { get; set; } = AccessDefault<uint>(GAME_WINDOW_WIDTH);
     public uint GameWindowInitialHeight { get; set; } = AccessDefault<uint>(GAME_WINDOW_HEIGHT);
     public int NetworkProxyMode { get; set; } = AccessDefault<int>(NETWORK_PROXY_MODE);

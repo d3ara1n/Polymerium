@@ -195,6 +195,12 @@
     <data name="InstancePropertiesPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java Additional Arguments</value>
     </data>
+    <data name="InstancePropertiesPage_CommandWrapperLabelText" xml:space="preserve">
+        <value>Command Wrapper</value>
+    </data>
+    <data name="InstancePropertiesPage_CommandWrapperDescriptionText" xml:space="preserve">
+        <value>Use {command} as the launch command placeholder. Empty means using the global setting.</value>
+    </data>
     <data name="InstancePropertiesPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>Window Initial Size</value>
     </data>
@@ -434,6 +440,15 @@
     </data>
     <data name="SettingsPage_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
         <value>Less is more</value>
+    </data>
+    <data name="SettingsPage_CommandWrapperLabelText" xml:space="preserve">
+        <value>Command Wrapper</value>
+    </data>
+    <data name="SettingsPage_CommandWrapperPlaceholder" xml:space="preserve">
+        <value>Example: prime-run {command}</value>
+    </data>
+    <data name="SettingsPage_CommandWrapperDescriptionText" xml:space="preserve">
+        <value>Use {command} as the launch command placeholder.</value>
     </data>
     <data name="SettingsPage_WindowInitialSizeLabelText" xml:space="preserve">
         <value>Window Initial Size</value>
