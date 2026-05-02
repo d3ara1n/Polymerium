@@ -88,7 +88,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             return;
         }
 
-        if (value is not null and not "")
+        if (value is not null)
         {
             _owned.Value.Overrides[key] = value;
         }
