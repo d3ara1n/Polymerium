@@ -75,30 +75,7 @@ public static class AssetModHelper
     /// </summary>
     public static Bitmap? ExtractIcon(string jarFilePath, string? logoFile)
     {
-        if (string.IsNullOrEmpty(logoFile))
-        {
-            return null;
-        }
-
-        try
-        {
-            using var archive = ZipFile.OpenRead(jarFilePath);
-            var iconEntry = archive.GetEntry(logoFile);
-            if (iconEntry != null)
-            {
-                using var stream = iconEntry.Open();
-                var memory = new MemoryStream();
-                stream.CopyTo(memory);
-                memory.Position = 0;
-                return new(memory);
-            }
-        }
-        catch
-        {
-            // 图标提取失败
-        }
-
-        return null;
+        return AssetArchiveHelper.ExtractIcon(jarFilePath, logoFile);
     }
 
     #region Fabric Mod 解析

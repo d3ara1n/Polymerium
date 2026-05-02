@@ -10,36 +10,8 @@ using Polymerium.App.Services;
 
 namespace Polymerium.App.Modals;
 
-public partial class OobeModal : Modal
+public partial class OobeModal : StepWizardModalBase
 {
-    public static readonly DirectProperty<OobeModal, object?> CurrentStepProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, object?>(
-            nameof(CurrentStep),
-            o => o.CurrentStep,
-            (o, v) => o.CurrentStep = v
-        );
-
-    public static readonly DirectProperty<OobeModal, bool> IsReversedProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(
-            nameof(IsReversed),
-            o => o.IsReversed,
-            (o, v) => o.IsReversed = v
-        );
-
-    public static readonly DirectProperty<OobeModal, bool> IsBackAvailableProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(
-            nameof(IsBackAvailable),
-            o => o.IsBackAvailable,
-            (o, v) => o.IsBackAvailable = v
-        );
-
-    public static readonly DirectProperty<OobeModal, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, bool>(
-            nameof(IsLast),
-            o => o.IsLast,
-            (o, v) => o.IsLast = v
-        );
-
     public static readonly DirectProperty<OobeModal, int> StepIndexProperty =
         AvaloniaProperty.RegisterDirect<OobeModal, int>(
             nameof(StepIndex),
@@ -62,30 +34,6 @@ public partial class OobeModal : Modal
     public required OverlayService OverlayService { get; init; }
     public NotificationService? NotificationService { get; init; }
     public Action? OnCompleted { get; init; }
-
-    public object? CurrentStep
-    {
-        get;
-        set => SetAndRaise(CurrentStepProperty, ref field, value);
-    }
-
-    public bool IsReversed
-    {
-        get;
-        set => SetAndRaise(IsReversedProperty, ref field, value);
-    }
-
-    public bool IsBackAvailable
-    {
-        get;
-        set => SetAndRaise(IsBackAvailableProperty, ref field, value);
-    }
-
-    public bool IsLast
-    {
-        get;
-        set => SetAndRaise(IsLastProperty, ref field, value);
-    }
 
     public int StepIndex
     {

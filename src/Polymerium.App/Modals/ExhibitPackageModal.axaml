@@ -775,10 +775,11 @@
                                                 <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate x:DataType="app:ExhibitDependencyModel">
-                                                            <app:ExhibitDependencyButton
+                                                            <app:PackageDependencyButton
                                                                 Command="{Binding $parent[app:ExhibitPackageModal].ViewPackageCommand, Mode=OneWay}"
-                                                                CommandParameter="{Binding Exhibit}">
-                                                                <app:ExhibitDependencyButton.IsChecked>
+                                                                CommandParameter="{Binding Exhibit}"
+                                                                Theme="{StaticResource ExhibitPackageDependencyButtonTheme}">
+                                                                <app:PackageDependencyButton.IsChecked>
                                                                     <MultiBinding Converter="{x:Static BoolConverters.Or}">
                                                                         <Binding
                                                                             Converter="{x:Static husk:ObjectConverters.Match}"
@@ -797,8 +798,8 @@
                                                                             ConverterParameter="Modifying"
                                                                             Path="Exhibit.State" />
                                                                     </MultiBinding>
-                                                                </app:ExhibitDependencyButton.IsChecked>
-                                                            </app:ExhibitDependencyButton>
+                                                                </app:PackageDependencyButton.IsChecked>
+                                                            </app:PackageDependencyButton>
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>

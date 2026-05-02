@@ -295,7 +295,7 @@ public partial class InstanceFilesPageModel(
         // 设置过滤器
         _resourcePackFilterSubscription?.Dispose();
         var searchFilter = this.WhenValueChanged(x => x.ResourcePackSearchText)
-            .Select(BuildResourcePackSearchFilter);
+            .Select(BuildPackSearchFilter<AssetResourcePackModel, AssetResourcePackMetadataModel>);
 
         _resourcePackFilterSubscription = _resourcePackCache
             .Connect()
@@ -350,7 +350,7 @@ public partial class InstanceFilesPageModel(
         // 设置过滤器
         _dataPackFilterSubscription?.Dispose();
         var searchFilter = this.WhenValueChanged(x => x.DataPackSearchText)
-            .Select(BuildDataPackSearchFilter);
+            .Select(BuildPackSearchFilter<AssetDataPackModel, AssetDataPackMetadataModel>);
 
         _dataPackFilterSubscription = _dataPackCache
             .Connect()
@@ -573,18 +573,9 @@ public partial class InstanceFilesPageModel(
             _ => _ => true,
         };
 
-    private static Func<AssetResourcePackModel, bool> BuildResourcePackSearchFilter(
-        string? searchText
-    ) =>
-        x =>
-            string.IsNullOrEmpty(searchText)
-            || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-            || (
-                x.Metadata.Description?.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-                ?? false
-            );
-
-    private static Func<AssetDataPackModel, bool> BuildDataPackSearchFilter(string? searchText) =>
+    private static Func<TAsset, bool> BuildPackSearchFilter<TAsset, TMetadata>(string? searchText)
+        where TAsset : FileAssetModel<TMetadata>
+        where TMetadata : IAssetPackMetadataModel =>
         x =>
             string.IsNullOrEmpty(searchText)
             || x.DisplayName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
@@ -681,33 +672,13 @@ public partial class InstanceFilesPageModel(
         }
     }
 
-    private bool CanToggleMod(AssetModModel? model) => model is { IsLocked: false };
+    private static bool CanToggleAsset(FileAssetModel? model) => model is { IsLocked: false };
+
+    private bool CanToggleMod(AssetModModel? model) => CanToggleAsset(model);
 
     [RelayCommand(CanExecute = nameof(CanToggleMod))]
-    private void ToggleMod(AssetModModel? model)
-    {
-        if (model == null || Mods == null)
-        {
-            return;
-        }
-
-        var oldPath = model.FilePath;
-        var newPath = model.IsEnabled ? oldPath + ".disabled" : oldPath.Replace(".disabled", "");
-
-        try
-        {
-            File.Move(oldPath, newPath);
-            model.IsEnabled = !model.IsEnabled;
-            model.FilePath = newPath;
-        }
-        catch (Exception ex)
-        {
-            notificationService.PopMessage(
-                ex,
-                Resources.InstanceFilesPage_ToggleModDangerNotificationTitle
-            );
-        }
-    }
+    private void ToggleMod(AssetModModel? model) =>
+        ToggleAsset(model, Resources.InstanceFilesPage_ToggleModDangerNotificationTitle);
 
     private bool CanDeleteMod(AssetModModel? model) => model is { IsLocked: false };
 
@@ -753,34 +724,11 @@ public partial class InstanceFilesPageModel(
         }
     }
 
-    private bool CanToggleResourcePack(AssetResourcePackModel? model) =>
-        model is { IsLocked: false };
+    private bool CanToggleResourcePack(AssetResourcePackModel? model) => CanToggleAsset(model);
 
     [RelayCommand(CanExecute = nameof(CanToggleResourcePack))]
-    private void ToggleResourcePack(AssetResourcePackModel? model)
-    {
-        if (model == null || ResourcePacks == null)
-        {
-            return;
-        }
-
-        var oldPath = model.FilePath;
-        var newPath = model.IsEnabled ? oldPath + ".disabled" : oldPath.Replace(".disabled", "");
-
-        try
-        {
-            File.Move(oldPath, newPath);
-            model.IsEnabled = !model.IsEnabled;
-            model.FilePath = newPath;
-        }
-        catch (Exception ex)
-        {
-            notificationService.PopMessage(
-                ex,
-                Resources.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle
-            );
-        }
-    }
+    private void ToggleResourcePack(AssetResourcePackModel? model) =>
+        ToggleAsset(model, Resources.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle);
 
     private bool CanDeleteResourcePack(AssetResourcePackModel? model) =>
         model is { IsLocked: false };
@@ -827,12 +775,15 @@ public partial class InstanceFilesPageModel(
         }
     }
 
-    private bool CanToggleDataPack(AssetDataPackModel? model) => model is { IsLocked: false };
+    private bool CanToggleDataPack(AssetDataPackModel? model) => CanToggleAsset(model);
 
     [RelayCommand(CanExecute = nameof(CanToggleDataPack))]
-    private void ToggleDataPack(AssetDataPackModel? model)
+    private void ToggleDataPack(AssetDataPackModel? model) =>
+        ToggleAsset(model, Resources.InstanceFilesPage_ToggleDataPackDangerNotificationTitle);
+
+    private void ToggleAsset(FileAssetModel? model, string dangerTitle)
     {
-        if (model == null || DataPacks == null)
+        if (model == null)
         {
             return;
         }
@@ -848,10 +799,7 @@ public partial class InstanceFilesPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(
-                ex,
-                Resources.InstanceFilesPage_ToggleDataPackDangerNotificationTitle
-            );
+            notificationService.PopMessage(ex, dangerTitle);
         }
     }
 

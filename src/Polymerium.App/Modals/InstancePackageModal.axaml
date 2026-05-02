@@ -568,10 +568,11 @@
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
-                                                        <app:InstancePackageDependencyButton
+                                                        <app:PackageDependencyButton
                                                             Command="{Binding $parent[app:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
                                                             CommandParameter="{Binding}"
-                                                            IsChecked="{Binding Installed, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                                            IsChecked="{Binding Installed, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                                            Theme="{StaticResource InstancePackageDependencyButtonTheme}" />
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
@@ -642,10 +643,11 @@
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate x:DataType="m:InstancePackageDependencyModel">
-                                                        <app:InstancePackageDependencyButton
+                                                        <app:PackageDependencyButton
                                                             Command="{Binding $parent[app:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
                                                             CommandParameter="{Binding}"
-                                                            IsChecked="{Binding Installed, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                                            IsChecked="{Binding Installed, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                                            Theme="{StaticResource InstancePackageDependencyButtonTheme}" />
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
