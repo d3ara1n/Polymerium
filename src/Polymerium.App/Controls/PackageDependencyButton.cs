@@ -3,10 +3,10 @@ using Avalonia.Controls;
 
 namespace Polymerium.App.Controls;
 
-public class InstancePackageDependencyButton : Button
+public class PackageDependencyButton : Button
 {
     public static readonly StyledProperty<bool> IsCheckedProperty = AvaloniaProperty.Register<
-        ExhibitDependencyButton,
+        PackageDependencyButton,
         bool
     >(nameof(IsChecked));
 

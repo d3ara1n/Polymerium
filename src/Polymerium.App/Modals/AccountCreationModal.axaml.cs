@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Avalonia;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Controls;
 using Polymerium.App.Components;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
@@ -12,36 +10,8 @@ using TridentCore.Core.Services;
 
 namespace Polymerium.App.Modals;
 
-public partial class AccountCreationModal : Modal
+public partial class AccountCreationModal : StepWizardModalBase
 {
-    public static readonly DirectProperty<AccountCreationModal, object?> CurrentStepProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, object?>(
-            nameof(CurrentStep),
-            o => o.CurrentStep,
-            (o, v) => o.CurrentStep = v
-        );
-
-    public static readonly DirectProperty<AccountCreationModal, bool> IsReversedProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(
-            nameof(IsReversed),
-            o => o.IsReversed,
-            (o, v) => o.IsReversed = v
-        );
-
-    public static readonly DirectProperty<AccountCreationModal, bool> IsBackAvailableProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(
-            nameof(IsBackAvailable),
-            o => o.IsBackAvailable,
-            (o, v) => o.IsBackAvailable = v
-        );
-
-    public static readonly DirectProperty<AccountCreationModal, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(
-            nameof(IsLast),
-            o => o.IsLast,
-            (o, v) => o.IsLast = v
-        );
-
     private readonly Stack<object> _history = new();
 
     public AccountCreationModal() => InitializeComponent();
@@ -50,30 +20,6 @@ public partial class AccountCreationModal : Modal
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
     public required NotificationService NotificationService { get; init; }
-
-    public object? CurrentStep
-    {
-        get;
-        set => SetAndRaise(CurrentStepProperty, ref field, value);
-    }
-
-    public bool IsReversed
-    {
-        get;
-        set => SetAndRaise(IsReversedProperty, ref field, value);
-    }
-
-    public bool IsBackAvailable
-    {
-        get;
-        set => SetAndRaise(IsBackAvailableProperty, ref field, value);
-    }
-
-    public bool IsLast
-    {
-        get;
-        set => SetAndRaise(IsLastProperty, ref field, value);
-    }
 
     public required bool IsOfflineAvailable { get; init; }
     public required Func<IAccount, bool> FinishCallback { get; init; }

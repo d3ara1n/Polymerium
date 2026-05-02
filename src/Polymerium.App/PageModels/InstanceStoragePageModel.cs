@@ -182,56 +182,26 @@ public partial class InstanceStoragePageModel(
         Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), folderName));
 
     [RelayCommand(CanExecute = nameof(CanOpenBuildFolder))]
-    private Task OpenBuildFolder(string folderName)
-    {
-        var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
-        var dir = Path.Combine(buildDir, folderName);
-        if (Directory.Exists(dir))
-        {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
-                new(dir),
-                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
-                    "{0}",
-                    folderName
-                )
-            );
-        }
-
-        return Task.CompletedTask;
-    }
+    private Task OpenBuildFolder(string folderName) =>
+        OpenStorageFolder(PathDef.Default.DirectoryOfBuild(Basic.Key), folderName);
 
     private bool CanOpenImportFolder(string folderName) =>
         Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfImport(Basic.Key), folderName));
 
     [RelayCommand(CanExecute = nameof(CanOpenImportFolder))]
-    private Task OpenImportFolder(string folderName)
-    {
-        var import = PathDef.Default.DirectoryOfImport(Basic.Key);
-        var dir = Path.Combine(import, folderName);
-        if (Directory.Exists(dir))
-        {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
-                new(dir),
-                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
-                    "{0}",
-                    folderName
-                )
-            );
-        }
-
-        return Task.CompletedTask;
-    }
+    private Task OpenImportFolder(string folderName) =>
+        OpenStorageFolder(PathDef.Default.DirectoryOfImport(Basic.Key), folderName);
 
     private bool CanOpenPersistFolder(string folderName) =>
         Directory.Exists(Path.Combine(PathDef.Default.DirectoryOfPersist(Basic.Key), folderName));
 
     [RelayCommand(CanExecute = nameof(CanOpenPersistFolder))]
-    private Task OpenPersistFolder(string folderName)
+    private Task OpenPersistFolder(string folderName) =>
+        OpenStorageFolder(PathDef.Default.DirectoryOfPersist(Basic.Key), folderName);
+
+    private static Task OpenStorageFolder(string rootPath, string folderName)
     {
-        var persistDir = PathDef.Default.DirectoryOfPersist(Basic.Key);
-        var dir = Path.Combine(persistDir, folderName);
+        var dir = Path.Combine(rootPath, folderName);
         if (Directory.Exists(dir))
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(
