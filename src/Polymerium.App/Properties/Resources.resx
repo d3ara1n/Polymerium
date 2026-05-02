@@ -2826,4 +2826,16 @@ Affected entries: {0}
   <data name="InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle" xml:space="preserve">
     <value>Import Files</value>
   </data>
+  <data name="RuntimePickerDialog_LoadingText" xml:space="preserve">
+    <value>Scanning Java runtimes...</value>
+  </data>
+  <data name="RuntimePickerDialog_Prompt" xml:space="preserve">
+    <value>Select one of the Java runtimes detected on this computer.</value>
+  </data>
+  <data name="RuntimePickerDialog_RefreshButtonText" xml:space="preserve">
+    <value>Rescan</value>
+  </data>
+  <data name="RuntimePickerDialog_Title" xml:space="preserve">
+    <value>Detect Java Runtime</value>
+  </data>
 </root>

@@ -5888,6 +5888,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scanning Java runtimes....
+        /// </summary>
+        public static string RuntimePickerDialog_LoadingText {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select one of the Java runtimes detected on this computer..
+        /// </summary>
+        public static string RuntimePickerDialog_Prompt {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rescan.
+        /// </summary>
+        public static string RuntimePickerDialog_RefreshButtonText {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_RefreshButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detect Java Runtime.
+        /// </summary>
+        public static string RuntimePickerDialog_Title {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create instance.
         /// </summary>
         public static string NewInstancePage_CreateButtonText {

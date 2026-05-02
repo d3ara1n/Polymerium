@@ -20,8 +20,7 @@
 - Full solution build: `dotnet build "Polymerium.slnx"`
 - Focused app build: `dotnet build "src/Polymerium.App/Polymerium.App.csproj"`
 - There are no test projects in this repo right now. `dotnet test "Polymerium.slnx"` is not a meaningful verification step; use build plus targeted checks instead.
-- Formatting is repo-specific: run `pwsh scripts/Format-Files.ps1`.
-- `scripts/Format-Files.ps1` requires globally installed `csharpier` and `xstyler`; there is no root `.config/dotnet-tools.json` manifest to restore them automatically.
+- **Do NOT run any formatting tools** (`scripts/Format-Files.ps1`, `csharpier`, `xstyler`, etc.). They operate across the entire repo including submodules and will produce unintended changes in unrelated files. Only the user may invoke formatting.
 
 ## Architecture Entry Points
 

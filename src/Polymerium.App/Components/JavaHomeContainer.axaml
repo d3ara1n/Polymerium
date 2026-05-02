@@ -109,7 +109,9 @@
                         Text="{x:Static lang:Resources.JavaHomeContainer_Prompt}" />
                     <Button
                         Classes="Small"
-                        IsEnabled="False"
+                        IsVisible="{OnPlatform Default={x:False},
+                                               Windows={x:True},
+                                               macOS={x:True}}"
                         Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         Command="{Binding $parent[app:JavaHomeContainer].DetectHomeCommand}">
                         <StackPanel
