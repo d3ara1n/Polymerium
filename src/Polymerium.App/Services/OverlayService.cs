@@ -56,6 +56,9 @@ public class OverlayService(IViewActivator activator)
 
     public void PopDialog(Dialog dialog) => _dialogHandler?.Invoke(dialog);
 
+    public TDialog CreateDialog<TDialog>(object? parameter = null)
+        where TDialog : Dialog => (TDialog)activator.Activate(typeof(TDialog), parameter)!;
+
     public void PopMessage(string message, string title)
     {
         var dialog = new MessageDialog

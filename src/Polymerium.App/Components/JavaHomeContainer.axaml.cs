@@ -6,6 +6,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using Polymerium.App.Dialogs;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
 using TridentCore.Core.Utilities;
 
@@ -220,9 +222,21 @@ public partial class JavaHomeContainer : UserControl
     }
 
     [RelayCommand]
-    private void DetectHome()
+    private async Task DetectHomeAsync()
     {
-        // 未来也不会支持，单纯按钮放在这布局好看
+        if (OverlayService == null)
+        {
+            return;
+        }
+
+        var dialog = OverlayService.CreateDialog<RuntimePickerDialog>();
+        if (
+            await OverlayService.PopDialogAsync(dialog)
+            && dialog.Result is RuntimePickerDialogCandidateModel runtime
+        )
+        {
+            Home = runtime.Home;
+        }
     }
 
     #endregion

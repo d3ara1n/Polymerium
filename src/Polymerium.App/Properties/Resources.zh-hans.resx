@@ -2814,4 +2814,16 @@
     <data name="InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle" xml:space="preserve">
         <value>Import 文件</value>
     </data>
+    <data name="RuntimePickerDialog_LoadingText" xml:space="preserve">
+        <value>正在扫描 Java Runtime...</value>
+    </data>
+    <data name="RuntimePickerDialog_Prompt" xml:space="preserve">
+        <value>选择在此计算机上检测到的 Java Runtime。</value>
+    </data>
+    <data name="RuntimePickerDialog_RefreshButtonText" xml:space="preserve">
+        <value>重新扫描</value>
+    </data>
+    <data name="RuntimePickerDialog_Title" xml:space="preserve">
+        <value>检测 Java Runtime</value>
+    </data>
 </root>
