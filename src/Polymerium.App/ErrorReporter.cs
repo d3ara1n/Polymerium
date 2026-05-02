@@ -79,7 +79,7 @@ internal static class ErrorReporter
                                     """
         );
         sb.AppendLine();
-        DumpInternal(sb, core, 0);
+        DumpCore(sb, core, 0);
         var dir = Path.GetDirectoryName(path);
         if (dir is not null && !Directory.Exists(dir))
         {
@@ -89,7 +89,7 @@ internal static class ErrorReporter
         File.WriteAllText(path, sb.ToString());
     }
 
-    private static void DumpInternal(StringBuilder builder, object core, int level)
+    private static void DumpCore(StringBuilder builder, object core, int level)
     {
         switch (core)
         {
@@ -105,12 +105,12 @@ internal static class ErrorReporter
                 );
                 foreach (var inner in ae.InnerExceptions)
                 {
-                    DumpInternal(builder, inner, level + 1);
+                    DumpCore(builder, inner, level + 1);
                 }
 
                 if (ae.InnerException is not null)
                 {
-                    DumpInternal(builder, ae.InnerException, level + 1);
+                    DumpCore(builder, ae.InnerException, level + 1);
                 }
 
                 break;
@@ -126,7 +126,7 @@ internal static class ErrorReporter
                 );
                 if (e.InnerException is not null)
                 {
-                    DumpInternal(builder, e.InnerException, level + 1);
+                    DumpCore(builder, e.InnerException, level + 1);
                 }
 
                 break;

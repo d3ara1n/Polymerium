@@ -367,7 +367,7 @@ public partial class InstanceDashboardPageModel(
         {
             try
             {
-                (lastSampleTime, lastCpuTime) = await MonitorInternalAsync(
+                (lastSampleTime, lastCpuTime) = await MonitorCoreAsync(
                     process,
                     lastSampleTime,
                     lastCpuTime,
@@ -406,7 +406,7 @@ public partial class InstanceDashboardPageModel(
         }
     }
 
-    private async Task<(DateTime, TimeSpan)> MonitorInternalAsync(
+    private async Task<(DateTime, TimeSpan)> MonitorCoreAsync(
         Process process,
         DateTime lastSampleTime,
         TimeSpan? lastCpuTime,

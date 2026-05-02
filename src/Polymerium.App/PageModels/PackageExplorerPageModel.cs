@@ -209,7 +209,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
         return model;
     }
 
-    private async Task SearchInternalAsync()
+    private async Task SearchCoreAsync()
     {
         try
         {
@@ -325,7 +325,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             Filter = Filter with { Kind = value.Kinds?.FirstOrDefault() ?? Filter.Kind };
         }
 
-        _ = SearchInternalAsync();
+        _ = SearchCoreAsync();
     }
 
     [ObservableProperty]
@@ -386,7 +386,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
     #region Commands
 
     [RelayCommand]
-    private void Search() => _ = SearchInternalAsync();
+    private void Search() => _ = SearchCoreAsync();
 
     [RelayCommand]
     private async Task ViewPackageAsync(ExhibitModel? exhibit)
