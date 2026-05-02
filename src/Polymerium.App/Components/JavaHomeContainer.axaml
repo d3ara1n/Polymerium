@@ -93,7 +93,7 @@
             </husk:SwitchCase>
             <husk:SwitchCase Value="{x:False}">
                 <StackPanel
-                    Margin="12"
+                    Margin="11"
                     HorizontalAlignment="Center"
                     Orientation="Horizontal"
                     Spacing="8">
