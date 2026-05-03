@@ -978,9 +978,9 @@ public partial class MainWindowContext : ObservableObject
                             e.FailureReason
                             is AccountAuthenticationException
                                 or AggregateException
-                                {
-                                    InnerException: AccountAuthenticationException
-                                };
+                            {
+                                InnerException: AccountAuthenticationException
+                            };
                         var isGameCrash =
                             e.FailureReason
                             is ProcessFaultedException

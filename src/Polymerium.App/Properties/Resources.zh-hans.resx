@@ -2275,6 +2275,39 @@
     <data name="InstancePackageModal_OperationLabelText" xml:space="preserve">
         <value>操作：</value>
     </data>
+    <data name="InstancePackageModal_BuiltStatusText" xml:space="preserve">
+        <value>已构建</value>
+    </data>
+    <data name="InstancePackageModal_NotBuiltStatusText" xml:space="preserve">
+        <value>未构建</value>
+    </data>
+    <data name="InstancePackageModal_BuildButtonText" xml:space="preserve">
+        <value>构建</value>
+    </data>
+    <data name="InstancePackageModal_DeploymentStatusLabelText" xml:space="preserve">
+        <value>部署状态</value>
+    </data>
+    <data name="InstancePackageModal_TargetPathLabelText" xml:space="preserve">
+        <value>目标路径</value>
+    </data>
+    <data name="InstancePackageModal_BuildProgressTitle" xml:space="preserve">
+        <value>正在构建包 {0}</value>
+    </data>
+    <data name="InstancePackageModal_BuildProgressMessage" xml:space="preserve">
+        <value>构建中</value>
+    </data>
+    <data name="InstancePackageModal_BuildTargetOutsideBuildDirectoryError" xml:space="preserve">
+        <value>构建目标必须位于 /build 目录内。</value>
+    </data>
+    <data name="InstancePackageModal_BuildSuccessMessage" xml:space="preserve">
+        <value>已将 {0} 构建到 {1}。&#xA;旧版本会暂时保留，并在下次清理。</value>
+    </data>
+    <data name="InstancePackageModal_BuildSuccessTitle" xml:space="preserve">
+        <value>构建完成</value>
+    </data>
+    <data name="InstancePackageModal_BuildFailedTitle" xml:space="preserve">
+        <value>构建失败</value>
+    </data>
     <data name="PackageBulkUpdatePreviewerTagPolicy_Ignore" xml:space="preserve">
         <value>忽略</value>
     </data>
@@ -2825,5 +2858,8 @@
     </data>
     <data name="RuntimePickerDialog_Title" xml:space="preserve">
         <value>检测 Java Runtime</value>
+    </data>
+    <data name="InstancePackageModal_SkippedStatusText" xml:space="preserve">
+        <value>被跳过</value>
     </data>
 </root>

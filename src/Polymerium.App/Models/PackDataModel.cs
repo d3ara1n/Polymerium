@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using TridentCore.Abstractions.FileModels;

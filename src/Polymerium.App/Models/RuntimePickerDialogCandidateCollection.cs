@@ -9,7 +9,7 @@ public class RuntimePickerDialogCandidateCollection(
 )
 {
     public IReadOnlyList<RuntimePickerDialogCandidateModel> Items { get; } =
-        [.. candidates.Select(x => new RuntimePickerDialogCandidateModel(x))];
+    [.. candidates.Select(x => new RuntimePickerDialogCandidateModel(x))];
 
     public int Count => Items.Count;
 }

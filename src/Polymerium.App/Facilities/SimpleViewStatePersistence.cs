@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Huskui.Avalonia.Mvvm.States;
 using Polymerium.App.Services;
 

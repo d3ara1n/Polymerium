@@ -2284,6 +2284,39 @@
     <data name="InstancePackageModal_OperationLabelText" xml:space="preserve">
         <value>Operation: </value>
     </data>
+    <data name="InstancePackageModal_BuiltStatusText" xml:space="preserve">
+        <value>Built</value>
+    </data>
+    <data name="InstancePackageModal_NotBuiltStatusText" xml:space="preserve">
+        <value>Not built</value>
+    </data>
+    <data name="InstancePackageModal_BuildButtonText" xml:space="preserve">
+        <value>Build</value>
+    </data>
+    <data name="InstancePackageModal_DeploymentStatusLabelText" xml:space="preserve">
+        <value>Deployment Status</value>
+    </data>
+    <data name="InstancePackageModal_TargetPathLabelText" xml:space="preserve">
+        <value>Target Path</value>
+    </data>
+    <data name="InstancePackageModal_BuildProgressTitle" xml:space="preserve">
+        <value>Building package {0}</value>
+    </data>
+    <data name="InstancePackageModal_BuildProgressMessage" xml:space="preserve">
+        <value>Building</value>
+    </data>
+    <data name="InstancePackageModal_BuildTargetOutsideBuildDirectoryError" xml:space="preserve">
+        <value>The build target must stay inside the /build directory.</value>
+    </data>
+    <data name="InstancePackageModal_BuildSuccessMessage" xml:space="preserve">
+        <value>Built {0} to {1}.&#xA;The previous version was left untouched and will be cleaned up next time.</value>
+    </data>
+    <data name="InstancePackageModal_BuildSuccessTitle" xml:space="preserve">
+        <value>Build complete</value>
+    </data>
+    <data name="InstancePackageModal_BuildFailedTitle" xml:space="preserve">
+        <value>Build failed</value>
+    </data>
     <data name="PackageBulkUpdatePreviewerTagPolicy_Ignore" xml:space="preserve">
         <value>Ignore</value>
     </data>
@@ -2838,4 +2871,7 @@ Affected entries: {0}
   <data name="RuntimePickerDialog_Title" xml:space="preserve">
     <value>Detect Java Runtime</value>
   </data>
+    <data name="InstancePackageModal_SkippedStatusText" xml:space="preserve">
+        <value>Skipped</value>
+    </data>
 </root>

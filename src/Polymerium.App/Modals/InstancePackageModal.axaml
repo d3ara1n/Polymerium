@@ -7,14 +7,13 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
     MinWidth="360"
     Margin="64"
     d:DesignHeight="600"
     d:DesignWidth="360"
-    x:DataType="m:InstancePackageInfoModel"
+    x:DataType="app:InstancePackageInfoModel"
     mc:Ignorable="d">
     <husk:ConstrainedBox AspectRatio="0.8">
         <Grid
@@ -100,100 +99,183 @@
                 </TabControl.Styles>
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_BasicsTabText}">
                     <DockPanel>
-                        <husk:LazyContainer
+                        <StackPanel
                             DockPanel.Dock="Bottom"
-                            Source="{Binding $parent[app:InstancePackageModal].LazyRules}">
-                            <husk:LazyContainer.SourceTemplate>
-                                <DataTemplate DataType="m:InstancePackageRuleResultModel">
-                                    <Border
-                                        Padding="12"
-                                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
-                                        <StackPanel Spacing="6">
-                                            <DockPanel>
-                                                <husk:Tag
-                                                    DockPanel.Dock="Right"
-                                                    Classes="Status">
-                                                    <TextBlock Text="{Binding AppliedRuleCount}" />
-                                                </husk:Tag>
+                            Spacing="8">
+                            <husk:LazyContainer
+                                MinHeight="32"
+                                Source="{Binding $parent[app:InstancePackageModal].LazyRules}">
+                                <husk:LazyContainer.SourceTemplate>
+                                    <DataTemplate DataType="app:InstancePackageRuleResultModel">
+                                        <Border
+                                            Padding="12"
+                                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                            <StackPanel Spacing="6">
+                                                <DockPanel>
+                                                    <husk:Tag
+                                                        DockPanel.Dock="Right"
+                                                        Classes="Status">
+                                                        <TextBlock Text="{Binding AppliedRuleCount}" />
+                                                    </husk:Tag>
+                                                    <StackPanel
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal"
+                                                        Spacing="6">
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            Symbol="Filter" />
+                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AppliedRulesLabelText}" />
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <TextBlock
+                                                    IsVisible="{Binding Matched, Converter={x:Static BoolConverters.Not}}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstancePackageModal_NoRulesLabelText}"
+                                                    TextAlignment="Center" />
                                                 <StackPanel
-                                                    VerticalAlignment="Center"
-                                                    Orientation="Horizontal"
-                                                    Spacing="6">
-                                                    <fi:SymbolIcon
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        Symbol="Filter" />
-                                                    <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AppliedRulesLabelText}" />
+                                                    IsVisible="{Binding Matched}"
+                                                    Spacing="4">
+                                                    <DockPanel
+                                                        IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                        Background="Transparent"
+                                                        ToolTip.Tip="{Binding Destination}">
+                                                        <TextBlock
+                                                            DockPanel.Dock="Right"
+                                                            Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                            Text="{Binding Destination}"
+                                                            TextTrimming="LeadingCharacterEllipsis" />
+                                                        <TextBlock
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
+                                                    </DockPanel>
+                                                    <DockPanel>
+                                                        <husk:SwitchContainer
+                                                            DockPanel.Dock="Right"
+                                                            TargetType="x:Boolean"
+                                                            Value="{Binding Skipping}">
+                                                            <husk:SwitchCase Value="{x:True}">
+                                                                <husk:Tag
+                                                                    Classes="Danger"
+                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                                </husk:Tag>
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="{x:False}">
+                                                                <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                                </husk:Tag>
+                                                            </husk:SwitchCase>
+                                                        </husk:SwitchContainer>
+                                                        <TextBlock
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                                                    </DockPanel>
+                                                    <DockPanel>
+                                                        <husk:SwitchContainer
+                                                            DockPanel.Dock="Right"
+                                                            TargetType="x:Boolean"
+                                                            Value="{Binding Normalizing}">
+                                                            <husk:SwitchCase Value="True">
+                                                                <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                                </husk:Tag>
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="False">
+                                                                <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                                </husk:Tag>
+                                                            </husk:SwitchCase>
+                                                        </husk:SwitchContainer>
+                                                        <TextBlock
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
+                                                    </DockPanel>
                                                 </StackPanel>
-                                            </DockPanel>
-                                            <TextBlock
-                                                IsVisible="{Binding Matched, Converter={x:Static BoolConverters.Not}}"
-                                                FontSize="{StaticResource SmallFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstancePackageModal_NoRulesLabelText}" />
-                                            <StackPanel
-                                                IsVisible="{Binding Matched}"
-                                                Spacing="4">
-                                                <DockPanel IsVisible="{Binding Destination, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                                                    <TextBlock
-                                                        DockPanel.Dock="Right"
-                                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                                        Text="{Binding Destination}" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
-                                                </DockPanel>
-                                                <DockPanel>
-                                                    <husk:SwitchContainer
-                                                        DockPanel.Dock="Right"
-                                                        TargetType="x:Boolean"
-                                                        Value="{Binding Skipping}">
-                                                        <husk:SwitchCase Value="True">
-                                                            <husk:Tag
-                                                                Classes="Danger"
-                                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                        <husk:SwitchCase Value="False">
-                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                    </husk:SwitchContainer>
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
-                                                </DockPanel>
-                                                <DockPanel>
-                                                    <husk:SwitchContainer
-                                                        DockPanel.Dock="Right"
-                                                        TargetType="x:Boolean"
-                                                        Value="{Binding Normalizing}">
-                                                        <husk:SwitchCase Value="True">
-                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                        <husk:SwitchCase Value="False">
-                                                            <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                    </husk:SwitchContainer>
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
-                                                </DockPanel>
                                             </StackPanel>
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </husk:LazyContainer.SourceTemplate>
-                        </husk:LazyContainer>
+                                        </Border>
+                                    </DataTemplate>
+                                </husk:LazyContainer.SourceTemplate>
+                            </husk:LazyContainer>
+                            <husk:LazyContainer
+                                MinHeight="32"
+                                Source="{Binding $parent[app:InstancePackageModal].LazyBuildStatus}">
+                                <husk:LazyContainer.SourceTemplate>
+                                    <DataTemplate DataType="app:InstancePackageBuildStatusResultModel">
+                                        <Border
+                                            Padding="12"
+                                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                            <StackPanel Spacing="6">
+                                                <DockPanel>
+                                                    <husk:SwitchContainer
+                                                        DockPanel.Dock="Right"
+                                                        TargetType="x:Boolean"
+                                                        Value="{Binding IsSkipped}">
+                                                        <husk:SwitchCase Value="{x:True}">
+                                                            <husk:Tag Classes="Status">
+                                                                <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_SkippedStatusText}" />
+                                                            </husk:Tag>
+                                                        </husk:SwitchCase>
+                                                        <husk:SwitchCase Value="{x:False}">
+                                                            <husk:SwitchContainer
+                                                                TargetType="x:Boolean"
+                                                                Value="{Binding IsBuilt}">
+                                                                <husk:SwitchCase Value="{x:True}">
+                                                                    <husk:Tag Classes="Status Success">
+                                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_BuiltStatusText}" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="{x:False}">
+                                                                    <StackPanel
+                                                                        Orientation="Horizontal"
+                                                                        Spacing="4">
+                                                                        <husk:Tag Classes="Status">
+                                                                            <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_NotBuiltStatusText}" />
+                                                                        </husk:Tag>
+                                                                        <Button
+                                                                            Classes="Small"
+                                                                            Padding="4,2"
+                                                                            Command="{Binding BuildCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=app:InstancePackageModal}}">
+                                                                            <husk:IconLabel
+                                                                                Icon="DrawerArrowDownload"
+                                                                                Text="{x:Static lang:Resources.InstancePackageModal_BuildButtonText}" />
+                                                                        </Button>
+                                                                    </StackPanel>
+                                                                </husk:SwitchCase>
+                                                            </husk:SwitchContainer>
+                                                        </husk:SwitchCase>
+                                                    </husk:SwitchContainer>
+                                                    <StackPanel
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal"
+                                                        Spacing="6">
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            Symbol="Storage" />
+                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_DeploymentStatusLabelText}" />
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <StackPanel Spacing="4">
+                                                    <DockPanel
+                                                        Background="Transparent"
+                                                        ToolTip.Tip="{Binding Target}">
+                                                        <TextBlock
+                                                            DockPanel.Dock="Right"
+                                                            Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                            Text="{Binding Target}"
+                                                            TextTrimming="LeadingCharacterEllipsis" />
+                                                        <TextBlock
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{x:Static lang:Resources.InstancePackageModal_TargetPathLabelText}" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </husk:LazyContainer.SourceTemplate>
+                            </husk:LazyContainer>
+                        </StackPanel>
                         <ScrollViewer>
                             <StackPanel Spacing="12">
                                 <TextBlock
@@ -311,7 +393,7 @@
                             CornerRadius="{StaticResource MediumCornerRadius}">
                             <ContentControl Content="{Binding Version, FallbackValue={x:Null}}">
                                 <ContentControl.DataTemplates>
-                                    <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
+                                    <DataTemplate DataType="app:InstancePackageUnspecifiedVersionModel">
                                         <Grid
                                             Margin="6,12"
                                             HorizontalAlignment="Center"
@@ -338,7 +420,7 @@
                                                 Text="{x:Static lang:Resources.InstancePackageModal_VersionBoxUnspecificSubtitle}" />
                                         </Grid>
                                     </DataTemplate>
-                                    <DataTemplate DataType="m:InstancePackageVersionModel">
+                                    <DataTemplate DataType="app:InstancePackageVersionModel">
                                         <Grid
                                             Margin="3"
                                             ColumnDefinitions="*,Auto">
@@ -360,7 +442,7 @@
                                                 Classes="Small"
                                                 Margin="4,0,0,0"
                                                 Padding="6"
-                                                IsVisible="{Binding $parent[app:InstancePackageModal].((m:InstancePackageInfoModel)DataContext).Owner.IsLocked, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
+                                                IsVisible="{Binding $parent[app:InstancePackageModal].((app:InstancePackageInfoModel)DataContext).Owner.IsLocked, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
                                                 Command="{Binding $parent[app:InstancePackageModal].RemoveVersionCommand}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <fi:SymbolIcon
@@ -394,7 +476,7 @@
                                 <!--  TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load  -->
                                 <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyVersions}">
                                     <husk:LazyContainer.SourceTemplate>
-                                        <DataTemplate DataType="m:InstancePackageVersionCollection">
+                                        <DataTemplate DataType="app:InstancePackageVersionCollection">
                                             <Grid
                                                 RowDefinitions="Auto,*"
                                                 RowSpacing="8">
@@ -422,7 +504,7 @@
                                                     ItemsSource="{Binding}"
                                                     SelectedItem="{Binding $parent[app:InstancePackageModal].SelectedVersionProxy, Mode=TwoWay, FallbackValue={x:Null}}">
                                                     <ListBox.ItemTemplate>
-                                                        <DataTemplate DataType="m:InstancePackageVersionModel">
+                                                        <DataTemplate DataType="app:InstancePackageVersionModel">
                                                             <StackPanel Spacing="4">
                                                                 <DockPanel>
                                                                     <husk:SwitchContainer
@@ -511,7 +593,7 @@
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependenciesTabText}">
                     <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyDependencies}">
                         <husk:LazyContainer.SourceTemplate>
-                            <DataTemplate DataType="m:InstancePackageDependencyCollection">
+                            <DataTemplate DataType="app:InstancePackageDependencyCollection">
                                 <Grid
                                     RowDefinitions="Auto,*"
                                     RowSpacing="12">
@@ -567,7 +649,7 @@
                                         <ScrollViewer>
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                 <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="m:InstancePackageDependencyModel">
+                                                    <DataTemplate x:DataType="app:InstancePackageDependencyModel">
                                                         <app:PackageDependencyButton
                                                             Command="{Binding $parent[app:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
                                                             CommandParameter="{Binding}"
@@ -586,7 +668,7 @@
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependantsTabText}">
                     <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyDependants}">
                         <husk:LazyContainer.SourceTemplate>
-                            <DataTemplate DataType="m:InstancePackageDependencyCollection">
+                            <DataTemplate DataType="app:InstancePackageDependencyCollection">
                                 <Grid
                                     RowDefinitions="Auto,*"
                                     RowSpacing="12">
@@ -642,7 +724,7 @@
                                         <ScrollViewer>
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                 <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="m:InstancePackageDependencyModel">
+                                                    <DataTemplate x:DataType="app:InstancePackageDependencyModel">
                                                         <app:PackageDependencyButton
                                                             Command="{Binding $parent[app:InstancePackageModal].ViewPackageCommand, Mode=OneWay}"
                                                             CommandParameter="{Binding}"
@@ -661,7 +743,7 @@
                 <TabItem Header="{x:Static lang:Resources.InstancePackageModal_HistoryTabText}">
                     <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyHistory}">
                         <husk:LazyContainer.SourceTemplate>
-                            <DataTemplate DataType="m:InstancePackageModificationCollection">
+                            <DataTemplate DataType="app:InstancePackageModificationCollection">
                                 <Panel>
                                     <StackPanel
                                         VerticalAlignment="Center"
@@ -684,9 +766,9 @@
                                             NowContent="{x:Static lang:Resources.InstancePackageModal_NowTagText}"
                                             PastContent="{x:Static lang:Resources.InstancePackageModal_PastTagText}">
                                             <husk:TimelineControl.HeaderTemplate>
-                                                <DataTemplate DataType="m:InstancePackageModificationModel">
+                                                <DataTemplate DataType="app:InstancePackageModificationModel">
                                                     <husk:SwitchContainer
-                                                        TargetType="m:InstancePackageModificationKind"
+                                                        TargetType="app:InstancePackageModificationKind"
                                                         Value="{Binding Kind}">
                                                         <husk:SwitchCase Value="AddUnversioned">
                                                             <Border
@@ -757,14 +839,14 @@
                                                 </DataTemplate>
                                             </husk:TimelineControl.HeaderTemplate>
                                             <husk:TimelineControl.ItemTemplate>
-                                                <DataTemplate DataType="m:InstancePackageModificationModel">
+                                                <DataTemplate DataType="app:InstancePackageModificationModel">
                                                     <Grid
                                                         RowDefinitions="Auto,Auto"
                                                         RowSpacing="4">
                                                         <!--  Action description  -->
                                                         <husk:SwitchContainer
                                                             Grid.Row="0"
-                                                            TargetType="m:InstancePackageModificationKind"
+                                                            TargetType="app:InstancePackageModificationKind"
                                                             Value="{Binding Kind}">
                                                             <husk:SwitchCase Value="AddUnversioned">
                                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">

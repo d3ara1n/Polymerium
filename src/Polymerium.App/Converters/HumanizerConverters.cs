@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia.Data.Converters;
 using Humanizer;
 using Huskui.Avalonia.Converters;
