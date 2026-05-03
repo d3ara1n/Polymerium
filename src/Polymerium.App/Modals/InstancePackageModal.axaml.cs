@@ -161,10 +161,10 @@ public partial class InstancePackageModal : Modal
                        .Dependencies.Select(async x =>
                         {
                             var count = (uint)Collection.Items.Count(y => y.Info is
-                                                                              {
-                                                                                  Version: InstancePackageVersionModel
+                            {
+                                Version: InstancePackageVersionModel
                                                                                   version
-                                                                              }
+                            }
                                                                        && version.Dependencies.Any(z =>
                                                                               z.Label == x.Label
                                                                            && z.Namespace == x.Namespace
@@ -182,7 +182,8 @@ public partial class InstancePackageModal : Modal
                                            found.Info!.Thumbnail,
                                            found.Info!.Reference,
                                            count,
-                                           x.IsRequired) { Installed = found, };
+                                           x.IsRequired)
+                                { Installed = found, };
                             }
 
                             var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.ProjectId);
@@ -219,11 +220,11 @@ public partial class InstancePackageModal : Modal
             var dependants = await DataService.ResolvePackagesAsync(Collection
                                                                    .Items
                                                                    .Where(x => x.Info is
-                                                                               {
-                                                                                   Version:
+                                                                   {
+                                                                       Version:
                                                                                    InstancePackageVersionModel
                                                                                    version
-                                                                               }
+                                                                   }
                                                                             && version.Dependencies.Any(y => y.Label
                                                                                 == Model.Label
                                                                                 && y.Namespace
@@ -264,7 +265,8 @@ public partial class InstancePackageModal : Modal
                                                                          && y.Namespace == Model.Namespace
                                                                          && y.ProjectId == Model.ProjectId)
                                                                       ?.IsRequired
-                                                                   ?? false) { Installed = found, };
+                                                                   ?? false)
+                            { Installed = found, };
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
@@ -403,7 +405,9 @@ public partial class InstancePackageModal : Modal
 
                             return new InstancePackageModificationModel
                             {
-                                Kind = InstancePackageModificationKind.Remove, VersionName = null, ModifiedAtRaw = x.At,
+                                Kind = InstancePackageModificationKind.Remove,
+                                VersionName = null,
+                                ModifiedAtRaw = x.At,
                             };
                         })
                        .ToArray();
@@ -463,7 +467,9 @@ public partial class InstancePackageModal : Modal
             var symExists = File.Exists(symPath) && FileHelper.VerifyModified(symPath, null, plan.Sha1);
             return new InstancePackageBuildStatusResultModel()
             {
-                IsBuilt = realExists && symExists, IsSkipped = plan.IsSkipping, Target = plan.RelativeTargetPath
+                IsBuilt = realExists && symExists,
+                IsSkipped = plan.IsSkipping,
+                Target = plan.RelativeTargetPath
             };
         });
 
@@ -663,7 +669,7 @@ public partial class InstancePackageModal : Modal
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
             var plans = await PackagePlanner
                              .PlanAsync([Model.Owner.Entry],
-                                        new([..Guard.Value.Setup.Rules.Where(x => x.Enabled)],
+                                        new([.. Guard.Value.Setup.Rules.Where(x => x.Enabled)],
                                             new(Guard.Value.Setup.Version, loader, null)))
                              .ToListAsync();
             await PackageMaterializer.MaterializeAsync(plans);

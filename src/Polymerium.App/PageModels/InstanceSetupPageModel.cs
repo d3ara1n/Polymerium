@@ -55,7 +55,7 @@ public partial class InstanceSetupPageModel(
     NotificationService notificationService,
     InstanceManager instanceManager,
     PackagePlanner packagePlanner,
-    PackageMaterializer  packageMaterializer,
+    PackageMaterializer packageMaterializer,
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
@@ -732,7 +732,7 @@ public partial class InstanceSetupPageModel(
                     PersistenceService = persistenceService,
                     PackageMaterializer = packageMaterializer,
                     Collection = _stageSource,
-                    NotificationService =  notificationService,
+                    NotificationService = notificationService,
                     PackagePlanner = packagePlanner,
                     Filter = new(
                         Kind: model.Kind,
