@@ -40,6 +40,7 @@ using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 using TridentCore.Purl;
@@ -53,6 +54,8 @@ public partial class InstanceSetupPageModel(
     ProfileManager profileManager,
     NotificationService notificationService,
     InstanceManager instanceManager,
+    PackagePlanner packagePlanner,
+    PackageMaterializer  packageMaterializer,
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
@@ -594,13 +597,14 @@ public partial class InstanceSetupPageModel(
             string.IsNullOrEmpty(filter)
             || (
                 x.Info
-                    is {
-                        ProjectId: { } pid,
-                        ProjectName: { } name,
-                        Author: { } author,
-                        Summary: { } summary,
-                        Version: { } version
-                    }
+                    is
+                {
+                    ProjectId: { } pid,
+                    ProjectName: { } name,
+                    Author: { } author,
+                    Summary: { } summary,
+                    Version: { } version
+                }
                 && filter
                     .Split(' ')
                     .All(y =>
@@ -726,7 +730,10 @@ public partial class InstanceSetupPageModel(
                     DataService = dataService,
                     OverlayService = overlayService,
                     PersistenceService = persistenceService,
+                    PackageMaterializer = packageMaterializer,
                     Collection = _stageSource,
+                    NotificationService =  notificationService,
+                    PackagePlanner = packagePlanner,
                     Filter = new(
                         Kind: model.Kind,
                         Version: Basic.Version,
@@ -814,11 +821,11 @@ public partial class InstanceSetupPageModel(
                 await overlayService.PopDialogAsync(previewer)
                 && previewer.Result
                     is PackageBulkUpdatePreviewerModel
-                    {
-                        IsEnabledOnly: var enabledOnly,
-                        TagPolicy: var tagPolicy,
-                        Tags: var tags
-                    }
+                {
+                    IsEnabledOnly: var enabledOnly,
+                    TagPolicy: var tagPolicy,
+                    Tags: var tags
+                }
             )
             {
                 var staging = _stageSource
@@ -1377,9 +1384,9 @@ public partial class InstanceSetupPageModel(
                         x.ReleaseType,
                         x.PublishedAt
                     )
-                    {
-                        IsCurrent = x.VersionId == reference.VersionId,
-                    })
+                {
+                    IsCurrent = x.VersionId == reference.VersionId,
+                })
                     .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (
@@ -1521,7 +1528,6 @@ public partial class InstanceSetupPageModel(
     public string ViewStateKey => Basic.Key;
 
     #endregion
-
 
     #region Nested type: StateData
     public partial class StateView : ModelBase

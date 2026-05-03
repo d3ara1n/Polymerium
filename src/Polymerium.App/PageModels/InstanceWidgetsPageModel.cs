@@ -9,4 +9,5 @@ public class InstanceWidgetsPageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceManager instanceManager,
     ProfileManager profileManager
-) : InstancePageModelBase(context, instanceManager, profileManager) { }
+) : InstancePageModelBase(context, instanceManager, profileManager)
+{ }

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -12,81 +13,67 @@ using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services.Profiles;
+using TridentCore.Core.Utilities;
 using TridentCore.Purl;
+using AppResources = Polymerium.App.Properties.Resources;
 using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Modals;
 
 public partial class InstancePackageModal : Modal
 {
-    public static readonly DirectProperty<
-        InstancePackageModal,
-        LazyObject?
-    > LazyDependenciesProperty = AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(
-        nameof(LazyDependencies),
-        o => o.LazyDependencies,
-        (o, v) => o.LazyDependencies = v
-    );
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyDependenciesProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyDependencies),
+                                                                           o => o.LazyDependencies,
+                                                                           (o, v) => o.LazyDependencies = v);
 
     public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(
-            nameof(LazyVersions),
-            o => o.LazyVersions,
-            (o, v) => o.LazyVersions = v
-        );
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyVersions),
+                                                                           o => o.LazyVersions,
+                                                                           (o, v) => o.LazyVersions = v);
 
     public static readonly DirectProperty<InstancePackageModal, bool> IsFilterEnabledProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(
-            nameof(IsFilterEnabled),
-            o => o.IsFilterEnabled,
-            (o, v) => o.IsFilterEnabled = v
-        );
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(nameof(IsFilterEnabled),
+                                                                    o => o.IsFilterEnabled,
+                                                                    (o, v) => o.IsFilterEnabled = v);
 
-    public static readonly DirectProperty<
-        InstancePackageModal,
-        InstancePackageVersionModel?
-    > SelectedVersionProxyProperty = AvaloniaProperty.RegisterDirect<
-        InstancePackageModal,
-        InstancePackageVersionModel?
-    >(
-        nameof(SelectedVersionProxy),
-        o => o.SelectedVersionProxy,
-        (o, v) => o.SelectedVersionProxy = v
-    );
+    public static readonly DirectProperty<InstancePackageModal, InstancePackageVersionModel?>
+        SelectedVersionProxyProperty =
+            AvaloniaProperty
+               .RegisterDirect<InstancePackageModal, InstancePackageVersionModel?>(nameof(SelectedVersionProxy),
+                    o => o.SelectedVersionProxy,
+                    (o, v) => o.SelectedVersionProxy = v);
 
-    public static readonly DirectProperty<
-        InstancePackageModal,
-        LazyObject?
-    > LazyDependantsProperty = AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(
-        nameof(LazyDependants),
-        o => o.LazyDependants,
-        (o, v) => o.LazyDependants = v
-    );
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyDependantsProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyDependants),
+                                                                           o => o.LazyDependants,
+                                                                           (o, v) => o.LazyDependants = v);
 
     public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyHistoryProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(
-            nameof(LazyHistory),
-            o => o.LazyHistory,
-            (o, v) => o.LazyHistory = v
-        );
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyHistory),
+                                                                           o => o.LazyHistory,
+                                                                           (o, v) => o.LazyHistory = v);
 
     public static readonly DirectProperty<InstancePackageModal, bool> IsDeletingProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(
-            nameof(IsDeleting),
-            o => o.IsDeleting,
-            (o, v) => o.IsDeleting = v
-        );
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(nameof(IsDeleting),
+                                                                    o => o.IsDeleting,
+                                                                    (o, v) => o.IsDeleting = v);
 
     public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyRulesProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(
-            nameof(LazyRules),
-            o => o.LazyRules,
-            (o, v) => o.LazyRules = v
-        );
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyRules),
+                                                                           o => o.LazyRules,
+                                                                           (o, v) => o.LazyRules = v);
+
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyBuildStatusProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyBuildStatus),
+                                                                           o => o.LazyBuildStatus,
+                                                                           (o, v) => o.LazyBuildStatus = v);
 
     private string? _old;
 
@@ -108,7 +95,10 @@ public partial class InstancePackageModal : Modal
     public required DataService DataService { get; init; }
     public required Filter Filter { get; init; }
     public required OverlayService OverlayService { get; init; }
+    public required PackagePlanner PackagePlanner { get; init; }
     public required PersistenceService PersistenceService { get; init; }
+    public required PackageMaterializer PackageMaterializer { get; init; }
+    public required NotificationService NotificationService { get; init; }
     public required SourceCache<InstancePackageModel, Profile.Rice.Entry> Collection { get; init; }
 
     public LazyObject? LazyDependencies
@@ -137,6 +127,12 @@ public partial class InstancePackageModal : Modal
         set => SetAndRaise(LazyVersionsProperty, ref field, value);
     }
 
+    public LazyObject? LazyBuildStatus
+    {
+        get;
+        set => SetAndRaise(LazyBuildStatusProperty, ref field, value);
+    }
+
     public bool IsFilterEnabled
     {
         get;
@@ -159,69 +155,51 @@ public partial class InstancePackageModal : Modal
             }
 
             var vid = SelectedVersionProxy?.Id;
-            var package = await DataService.ResolvePackageAsync(
-                Model.Label,
-                Model.Namespace,
-                Model.ProjectId,
-                vid,
-                Filter
-            );
+            var package =
+                await DataService.ResolvePackageAsync(Model.Label, Model.Namespace, Model.ProjectId, vid, Filter);
             var tasks = package
-                .Dependencies.Select(async x =>
-                {
-                    var count = (uint)
-                        Collection.Items.Count(y =>
-                            y.Info is { Version: InstancePackageVersionModel version }
-                            && version.Dependencies.Any(z =>
-                                z.Label == x.Label
-                                && z.Namespace == x.Namespace
-                                && z.ProjectId == x.ProjectId
-                            )
-                        );
-                    var found = Collection.Items.FirstOrDefault(y =>
-                        y.Info?.Label == x.Label
-                        && y.Info?.Namespace == x.Namespace
-                        && y.Info?.ProjectId == x.ProjectId
-                    );
-                    if (found is not null)
-                    {
-                        return new(
-                            x.Label,
-                            x.Namespace,
-                            x.ProjectId,
-                            x.VersionId,
-                            found.Info!.ProjectName,
-                            found.Info!.Thumbnail,
-                            found.Info!.Reference,
-                            count,
-                            x.IsRequired
-                        )
+                       .Dependencies.Select(async x =>
                         {
-                            Installed = found,
-                        };
-                    }
+                            var count = (uint)Collection.Items.Count(y => y.Info is
+                                                                              {
+                                                                                  Version: InstancePackageVersionModel
+                                                                                  version
+                                                                              }
+                                                                       && version.Dependencies.Any(z =>
+                                                                              z.Label == x.Label
+                                                                           && z.Namespace == x.Namespace
+                                                                           && z.ProjectId == x.ProjectId));
+                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Label
+                                                                          && y.Info?.Namespace == x.Namespace
+                                                                          && y.Info?.ProjectId == x.ProjectId);
+                            if (found is not null)
+                            {
+                                return new(x.Label,
+                                           x.Namespace,
+                                           x.ProjectId,
+                                           x.VersionId,
+                                           found.Info!.ProjectName,
+                                           found.Info!.Thumbnail,
+                                           found.Info!.Reference,
+                                           count,
+                                           x.IsRequired) { Installed = found, };
+                            }
 
-                    var project = await DataService.QueryProjectAsync(
-                        x.Label,
-                        x.Namespace,
-                        x.ProjectId
-                    );
-                    var thumbnail = project.Thumbnail is not null
-                        ? await DataService.GetBitmapAsync(project.Thumbnail)
-                        : AssetUriIndex.DirtImageBitmap;
-                    return new InstancePackageDependencyModel(
-                        x.Label,
-                        x.Namespace,
-                        x.ProjectId,
-                        x.VersionId,
-                        project.ProjectName,
-                        thumbnail,
-                        project.Reference,
-                        count,
-                        x.IsRequired
-                    );
-                })
-                .ToArray();
+                            var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.ProjectId);
+                            var thumbnail = project.Thumbnail is not null
+                                                ? await DataService.GetBitmapAsync(project.Thumbnail)
+                                                : AssetUriIndex.DirtImageBitmap;
+                            return new InstancePackageDependencyModel(x.Label,
+                                                                      x.Namespace,
+                                                                      x.ProjectId,
+                                                                      x.VersionId,
+                                                                      project.ProjectName,
+                                                                      thumbnail,
+                                                                      project.Reference,
+                                                                      count,
+                                                                      x.IsRequired);
+                        })
+                       .ToArray();
             await Task.WhenAll(tasks);
             var rv = new InstancePackageDependencyCollection([.. tasks.Select(x => x.Result)]);
             return rv;
@@ -238,65 +216,57 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            var dependants = await DataService.ResolvePackagesAsync(
-                Collection
-                    .Items.Where(x =>
-                        x.Info is { Version: InstancePackageVersionModel version }
-                        && version.Dependencies.Any(y =>
-                            y.Label == Model.Label
-                            && y.Namespace == Model.Namespace
-                            && y.ProjectId == Model.ProjectId
-                        )
-                    )
-                    .Select(x => new PackageIdentifier(
-                        x.Info!.Label,
-                        x.Info!.Namespace,
-                        x.Info!.ProjectId,
-                        (string?)((InstancePackageVersionModel)x.Info!.Version).Id
-                    )),
-                Filter.None
-            );
+            var dependants = await DataService.ResolvePackagesAsync(Collection
+                                                                   .Items
+                                                                   .Where(x => x.Info is
+                                                                               {
+                                                                                   Version:
+                                                                                   InstancePackageVersionModel
+                                                                                   version
+                                                                               }
+                                                                            && version.Dependencies.Any(y => y.Label
+                                                                                == Model.Label
+                                                                                && y.Namespace
+                                                                                == Model.Namespace
+                                                                                && y.ProjectId
+                                                                                == Model.ProjectId))
+                                                                   .Select(x => new PackageIdentifier(x.Info!.Label,
+                                                                               x.Info!.Namespace,
+                                                                               x.Info!.ProjectId,
+                                                                               (string?)
+                                                                               ((InstancePackageVersionModel)
+                                                                                   x.Info!.Version).Id)),
+                                                                    Filter.None);
             var tasks = dependants
-                .Select(async x =>
-                {
-                    var count = (uint)
-                        Collection.Items.Count(y =>
-                            y.Info!.Version is InstancePackageVersionModel version
-                            && version.Dependencies.Any(z =>
-                                z.Label == x.Item2.Label
-                                && z.Namespace == x.Item2.Namespace
-                                && z.ProjectId == x.Item2.ProjectId
-                            )
-                        );
-                    var found = Collection.Items.FirstOrDefault(y =>
-                        y.Info?.Label == x.Item2.Label
-                        && y.Info?.Namespace == x.Item2.Namespace
-                        && y.Info?.ProjectId == x.Item2.ProjectId
-                    );
-                    var thumbnail = x.Item2.Thumbnail is not null
-                        ? await DataService.GetBitmapAsync(x.Item2.Thumbnail)
-                        : AssetUriIndex.DirtImageBitmap;
-                    return new InstancePackageDependencyModel(
-                        x.Item2.Label,
-                        x.Item2.Namespace,
-                        x.Item2.ProjectId,
-                        x.Item2.VersionId,
-                        x.Item2.ProjectName,
-                        thumbnail,
-                        x.Item2.Reference,
-                        count,
-                        x.Item2.Dependencies.FirstOrDefault(y =>
-                            y.Label == Model.Label
-                            && y.Namespace == Model.Namespace
-                            && y.ProjectId == Model.ProjectId
-                        )?.IsRequired
-                            ?? false
-                    )
-                    {
-                        Installed = found,
-                    };
-                })
-                .ToArray();
+                       .Select(async x =>
+                        {
+                            var count = (uint)
+                                Collection.Items.Count(y => y.Info!.Version is InstancePackageVersionModel version
+                                                         && version.Dependencies.Any(z => z.Label == x.Item2.Label
+                                                             && z.Namespace == x.Item2.Namespace
+                                                             && z.ProjectId == x.Item2.ProjectId));
+                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Item2.Label
+                                                                          && y.Info?.Namespace == x.Item2.Namespace
+                                                                          && y.Info?.ProjectId == x.Item2.ProjectId);
+                            var thumbnail = x.Item2.Thumbnail is not null
+                                                ? await DataService.GetBitmapAsync(x.Item2.Thumbnail)
+                                                : AssetUriIndex.DirtImageBitmap;
+                            return new InstancePackageDependencyModel(x.Item2.Label,
+                                                                      x.Item2.Namespace,
+                                                                      x.Item2.ProjectId,
+                                                                      x.Item2.VersionId,
+                                                                      x.Item2.ProjectName,
+                                                                      thumbnail,
+                                                                      x.Item2.Reference,
+                                                                      count,
+                                                                      x.Item2.Dependencies
+                                                                       .FirstOrDefault(y => y.Label == Model.Label
+                                                                         && y.Namespace == Model.Namespace
+                                                                         && y.ProjectId == Model.ProjectId)
+                                                                      ?.IsRequired
+                                                                   ?? false) { Installed = found, };
+                        })
+                       .ToArray();
             await Task.WhenAll(tasks);
             return new InstancePackageDependencyCollection([.. tasks.Select(x => x.Result)]);
         });
@@ -306,47 +276,48 @@ public partial class InstancePackageModal : Modal
 
     private LazyObject ConstructVersions()
     {
-        var lazy = new LazyObject(
-            async t =>
-            {
-                if (t.IsCancellationRequested)
-                {
-                    return null;
-                }
+        var lazy = new LazyObject(async t =>
+                                  {
+                                      if (t.IsCancellationRequested)
+                                      {
+                                          return null;
+                                      }
 
-                var versions = await DataService.InspectVersionsAsync(
-                    Model.Label,
-                    Model.Namespace,
-                    Model.ProjectId,
-                    IsFilterEnabled ? Filter : Filter.None
-                );
-                return new InstancePackageVersionCollection([
-                    .. versions.Select<Version, InstancePackageVersionModelBase>(x =>
-                        Model is { Version: InstancePackageVersionModel v } && v.Id == x.VersionId
-                            ? v
-                            : new(
-                                x.VersionId,
-                                x.VersionName,
-                                string.Join(
-                                    ",",
-                                    x.Requirements.AnyOfLoaders.Select(LoaderHelper.ToDisplayName)
-                                ),
-                                string.Join(",", x.Requirements.AnyOfVersions),
-                                x.PublishedAt,
-                                x.ReleaseType,
-                                x.Dependencies
-                            )
-                    ),
-                ]);
-            },
-            _ =>
-            {
-                if (Model.Version is InstancePackageVersionModel v)
-                {
-                    SelectedVersionProxy = v;
-                }
-            }
-        );
+                                      var versions = await DataService.InspectVersionsAsync(Model.Label,
+                                                         Model.Namespace,
+                                                         Model.ProjectId,
+                                                         IsFilterEnabled ? Filter : Filter.None);
+                                      return new InstancePackageVersionCollection([
+                                          .. versions.Select<Version, InstancePackageVersionModelBase>(x =>
+                                              Model is
+                                              {
+                                                  Version:
+                                                  InstancePackageVersionModel v
+                                              }
+                                           && v.Id == x.VersionId
+                                                  ? v
+                                                  : new(x.VersionId,
+                                                        x.VersionName,
+                                                        string.Join(",",
+                                                                    x.Requirements
+                                                                     .AnyOfLoaders
+                                                                     .Select(LoaderHelper
+                                                                                .ToDisplayName)),
+                                                        string.Join(",",
+                                                                    x.Requirements
+                                                                     .AnyOfVersions),
+                                                        x.PublishedAt,
+                                                        x.ReleaseType,
+                                                        x.Dependencies)),
+                                      ]);
+                                  },
+                                  _ =>
+                                  {
+                                      if (Model.Version is InstancePackageVersionModel v)
+                                      {
+                                          SelectedVersionProxy = v;
+                                      }
+                                  });
 
         return lazy;
     }
@@ -365,97 +336,80 @@ public partial class InstancePackageModal : Modal
 
             // 过滤出与当前包相关的记录
             var filteredActions = actions
-                .Where(x =>
-                    (
-                        x.Old is not null
-                        && PackageHelper.IsMatched(
-                            x.Old,
-                            Model.Label,
-                            Model.Namespace,
-                            Model.ProjectId
-                        )
-                    )
-                    || (
-                        x.New is not null
-                        && PackageHelper.IsMatched(
-                            x.New,
-                            Model.Label,
-                            Model.Namespace,
-                            Model.ProjectId
-                        )
-                    )
-                )
-                .ToArray();
+                                 .Where(x => (x.Old is not null
+                                           && PackageHelper.IsMatched(x.Old,
+                                                                      Model.Label,
+                                                                      Model.Namespace,
+                                                                      Model.ProjectId))
+                                          || (x.New is not null
+                                           && PackageHelper.IsMatched(x.New,
+                                                                      Model.Label,
+                                                                      Model.Namespace,
+                                                                      Model.ProjectId)))
+                                 .ToArray();
 
             // 解析包信息并创建 InstanceActionModel
             var tasks = filteredActions
-                .Select(async x =>
-                {
-                    if (x.New != null && PackageHelper.TryParse(x.New, out var result))
-                    {
-                        if (result.Vid is null)
+                       .Select(async x =>
                         {
-                            if (x.Old is null)
+                            if (x.New != null && PackageHelper.TryParse(x.New, out var result))
                             {
-                                // null -> Project
+                                if (result.Vid is null)
+                                {
+                                    if (x.Old is null)
+                                    {
+                                        // null -> Project
+                                        return new()
+                                        {
+                                            Kind = InstancePackageModificationKind.AddUnversioned,
+                                            VersionName = null,
+                                            ModifiedAtRaw = x.At,
+                                        };
+                                    }
+
+                                    // -> Project: Unset
+                                    return new()
+                                    {
+                                        Kind = InstancePackageModificationKind.Unset,
+                                        VersionName = null,
+                                        ModifiedAtRaw = x.At,
+                                    };
+                                }
+
+                                var package = await DataService.ResolvePackageAsync(result.Label,
+                                                  result.Namespace,
+                                                  result.Pid,
+                                                  result.Vid,
+                                                  Filter);
+                                if (x.Old is null)
+                                {
+                                    // null -> Package: Add
+                                    return new()
+                                    {
+                                        Kind = InstancePackageModificationKind.AddVersioned,
+                                        VersionName = package.VersionName,
+                                        ModifiedAtRaw = x.At,
+                                    };
+                                }
+
+                                // Package -> Package: Update
                                 return new()
                                 {
-                                    Kind = InstancePackageModificationKind.AddUnversioned,
-                                    VersionName = null,
+                                    Kind = InstancePackageModificationKind.Update,
+                                    VersionName = package.VersionName,
                                     ModifiedAtRaw = x.At,
                                 };
                             }
 
-                            // -> Project: Unset
-                            return new()
+                            return new InstancePackageModificationModel
                             {
-                                Kind = InstancePackageModificationKind.Unset,
-                                VersionName = null,
-                                ModifiedAtRaw = x.At,
+                                Kind = InstancePackageModificationKind.Remove, VersionName = null, ModifiedAtRaw = x.At,
                             };
-                        }
-
-                        var package = await DataService.ResolvePackageAsync(
-                            result.Label,
-                            result.Namespace,
-                            result.Pid,
-                            result.Vid,
-                            Filter
-                        );
-                        if (x.Old is null)
-                        {
-                            // null -> Package: Add
-                            return new()
-                            {
-                                Kind = InstancePackageModificationKind.AddVersioned,
-                                VersionName = package.VersionName,
-                                ModifiedAtRaw = x.At,
-                            };
-                        }
-
-                        // Package -> Package: Update
-                        return new()
-                        {
-                            Kind = InstancePackageModificationKind.Update,
-                            VersionName = package.VersionName,
-                            ModifiedAtRaw = x.At,
-                        };
-                    }
-
-                    return new InstancePackageModificationModel
-                    {
-                        Kind = InstancePackageModificationKind.Remove,
-                        VersionName = null,
-                        ModifiedAtRaw = x.At,
-                    };
-                })
-                .ToArray();
+                        })
+                       .ToArray();
 
             await Task.WhenAll(tasks);
-            var results = tasks
-                .Where(x => x.IsCompletedSuccessfully)
-                .Select(x => x.Result)
-                .ToList();
+            var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
             return new InstancePackageModificationCollection(results);
         });
 
@@ -472,20 +426,47 @@ public partial class InstancePackageModal : Modal
             }
 
             var vid = Model.Version is InstancePackageVersionModel v ? v.Id : null;
-            var package = await DataService.ResolvePackageAsync(
-                Model.Label,
-                Model.Namespace,
-                Model.ProjectId,
-                vid,
-                Filter
-            );
+            var package =
+                await DataService.ResolvePackageAsync(Model.Label, Model.Namespace, Model.ProjectId, vid, Filter);
             var enabledRules = Guard.Value.Setup.Rules.Where(x => x.Enabled).ToList();
-            var result = RuleHelper.Evaluate(
-                new RuleHelper.Input(Model.Owner.Entry, package),
-                enabledRules
-            );
+            var result = RuleHelper.Evaluate(new RuleHelper.Input(Model.Owner.Entry, package), enabledRules);
             return new InstancePackageRuleResultModel(result);
         });
+        return lazy;
+    }
+
+    private LazyObject ConstructBuildStatus()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
+            // planner 会忽略 Enabled == false 的情况，这里也是
+            var plans = await PackagePlanner
+                             .PlanAsync([Model.Owner.Entry],
+                                        new([.. Guard.Value.Setup.Rules.Where(x => x.Enabled)],
+                                            new(Guard.Value.Setup.Version, loader, null)))
+                             .ToListAsync(cancellationToken: t);
+            var plan = plans.First();
+            var realPath = Path.Combine(PathDef.Default.DirectoryOfBuild(Guard.Key), plan.RelativeTargetPath);
+            var symPath = PathDef.Default.FileOfPackageObject(plan.Label,
+                                                              plan.Namespace,
+                                                              plan.ProjectId,
+                                                              plan.VersionId,
+                                                              Path.GetExtension(realPath));
+            var realExists = File.Exists(realPath)
+                          && FileHelper.IsPathEquivalent(File.ResolveLinkTarget(realPath, false)?.FullName, symPath);
+            var symExists = File.Exists(symPath) && FileHelper.VerifyModified(symPath, null, plan.Sha1);
+            return new InstancePackageBuildStatusResultModel()
+            {
+                IsBuilt = realExists && symExists, IsSkipped = plan.IsSkipping, Target = plan.RelativeTargetPath
+            };
+        });
+
         return lazy;
     }
 
@@ -503,6 +484,7 @@ public partial class InstancePackageModal : Modal
         LazyDependants = ConstructDependants();
         LazyHistory = ConstructHistory();
         LazyRules = ConstructRules();
+        LazyBuildStatus = ConstructBuildStatus();
         AddHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
     }
 
@@ -519,15 +501,13 @@ public partial class InstancePackageModal : Modal
         base.OnUnloaded(e);
         if (Model.Owner.Entry.Purl != _old)
         {
-            PersistenceService.AppendAction(
-                new()
-                {
-                    Key = Guard.Key,
-                    Kind = PersistenceService.ActionKind.EditPackage,
-                    Old = _old,
-                    New = Model.Owner.Entry.Purl,
-                }
-            );
+            PersistenceService.AppendAction(new()
+            {
+                Key = Guard.Key,
+                Kind = PersistenceService.ActionKind.EditPackage,
+                Old = _old,
+                New = Model.Owner.Entry.Purl,
+            });
         }
 
         RemoveHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
@@ -543,13 +523,16 @@ public partial class InstancePackageModal : Modal
             LazyVersions = ConstructVersions();
         }
 
-        if (
-            change.Property == SelectedVersionProxyProperty
-            && change.NewValue is InstancePackageVersionModel v
-            && Model.Version != v
-        )
+        if (change.Property == SelectedVersionProxyProperty
+         && change.NewValue is InstancePackageVersionModel v
+         && Model.Version != v)
         {
             Model.Version = v;
+        }
+
+        if (change.Property == SelectedVersionProxyProperty)
+        {
+            LazyBuildStatus = ConstructBuildStatus();
         }
     }
 
@@ -561,9 +544,11 @@ public partial class InstancePackageModal : Modal
         // 由于 LazyDependencies 已经加载完成，我们需要找到对应的依赖并更新其 Installed 属性
         if (LazyDependencies?.Value is InstancePackageDependencyCollection dependencies)
         {
-            var dependency = dependencies.FirstOrDefault(x =>
-                PackageHelper.IsMatched(newPackage.Entry.Purl, x.Label, x.Namespace, x.ProjectId)
-            );
+            var dependency =
+                dependencies.FirstOrDefault(x => PackageHelper.IsMatched(newPackage.Entry.Purl,
+                                                                         x.Label,
+                                                                         x.Namespace,
+                                                                         x.ProjectId));
             dependency?.Installed = newPackage;
         }
     }
@@ -585,18 +570,14 @@ public partial class InstancePackageModal : Modal
     {
         // 收集所有现有标签（去重，排除当前包已有的标签）
         var existingTags = Collection
-            .Items.SelectMany(x => x.Tags)
-            .Distinct()
-            .Where(t => !Model.Owner.Tags.Contains(t))
-            .OrderBy(t => t)
-            .ToList();
+                          .Items.SelectMany(x => x.Tags)
+                          .Distinct()
+                          .Where(t => !Model.Owner.Tags.Contains(t))
+                          .OrderBy(t => t)
+                          .ToList();
 
         var dialog = new TagPickerDialog { ExistingTags = existingTags };
-        if (
-            await OverlayService.PopDialogAsync(dialog)
-            && dialog.Result is string tag
-            && !string.IsNullOrEmpty(tag)
-        )
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
         {
             // 避免添加重复标签
             if (!Model.Owner.Tags.Contains(tag))
@@ -634,34 +615,33 @@ public partial class InstancePackageModal : Modal
         if (model.Installed is { Info: not null } installed)
         {
             // 本地已安装的依赖，打开 InstancePackageModal
-            OverlayService.PopModal(
-                new InstancePackageModal
-                {
-                    DataContext = installed.Info,
-                    Guard = Guard,
-                    DataService = DataService,
-                    OverlayService = OverlayService,
-                    PersistenceService = PersistenceService,
-                    Collection = Collection,
-                    Filter = Filter,
-                }
-            );
+            OverlayService.PopModal(new InstancePackageModal
+            {
+                DataContext = installed.Info,
+                Guard = Guard,
+                DataService = DataService,
+                OverlayService = OverlayService,
+                PersistenceService = PersistenceService,
+                PackagePlanner = PackagePlanner,
+                NotificationService = NotificationService,
+                PackageMaterializer = PackageMaterializer,
+                Collection = Collection,
+                Filter = Filter,
+            });
         }
         else
         {
             // 在线依赖，打开 InstancePackageDependencyModal
-            OverlayService.PopModal(
-                new InstancePackageDependencyModal
-                {
-                    DataContext = model,
-                    Guard = Guard,
-                    DataService = DataService,
-                    PersistenceService = PersistenceService,
-                    Collection = Collection,
-                    Filter = Filter,
-                    OnPackageInstalledCallback = OnDependencyInstalled,
-                }
-            );
+            OverlayService.PopModal(new InstancePackageDependencyModal
+            {
+                DataContext = model,
+                Guard = Guard,
+                DataService = DataService,
+                PersistenceService = PersistenceService,
+                Collection = Collection,
+                Filter = Filter,
+                OnPackageInstalledCallback = OnDependencyInstalled,
+            });
         }
     }
 
@@ -670,6 +650,80 @@ public partial class InstancePackageModal : Modal
 
     [RelayCommand]
     private void Undelete() => IsDeleting = false;
+
+    [RelayCommand]
+    private async Task Build()
+    {
+        var progress =
+            NotificationService.PopProgress(string.Format(AppResources.InstancePackageModal_BuildProgressTitle,
+                                                          Model.ProjectName),
+                                            AppResources.InstancePackageModal_BuildProgressMessage);
+        try
+        {
+            var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
+            var plans = await PackagePlanner
+                             .PlanAsync([Model.Owner.Entry],
+                                        new([..Guard.Value.Setup.Rules.Where(x => x.Enabled)],
+                                            new(Guard.Value.Setup.Version, loader, null)))
+                             .ToListAsync();
+            await PackageMaterializer.MaterializeAsync(plans);
+            progress.Dispose();
+            foreach (var plan in plans.Where(x => !x.IsSkipping))
+            {
+                var symPath = PathDef.Default.FileOfPackageObject(plan.Label,
+                                                                  plan.Namespace,
+                                                                  plan.ProjectId,
+                                                                  plan.VersionId,
+                                                                  Path.GetExtension(plan.RelativeTargetPath));
+                var realPath = Path.Combine(PathDef.Default.DirectoryOfBuild(Guard.Key), plan.RelativeTargetPath);
+                if (!FileHelper.IsInDirectory(realPath, PathDef.Default.DirectoryOfBuild(Guard.Key)))
+                {
+                    throw new InvalidOperationException(AppResources
+                                                           .InstancePackageModal_BuildTargetOutsideBuildDirectoryError);
+                }
+
+                var create = false;
+                if (File.Exists(realPath))
+                {
+                    if (!FileHelper.IsPathEquivalent(File.ResolveLinkTarget(realPath, false)?.FullName, symPath))
+                    {
+                        File.Delete(realPath);
+                        create = true;
+                    }
+                }
+                else
+                {
+                    create = true;
+                }
+
+                if (create)
+                {
+                    var dir = Path.GetDirectoryName(realPath);
+                    if (dir != null && !Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+
+                    File.CreateSymbolicLink(realPath, symPath);
+                }
+
+                NotificationService.PopMessage(string.Format(AppResources.InstancePackageModal_BuildSuccessMessage,
+                                                             Model.ProjectName,
+                                                             plan.RelativeTargetPath),
+                                               AppResources.InstancePackageModal_BuildSuccessTitle,
+                                               GrowlLevel.Success);
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.PopMessage(ex, AppResources.InstancePackageModal_BuildFailedTitle);
+        }
+        finally
+        {
+            progress.Dispose();
+            LazyBuildStatus = ConstructBuildStatus();
+        }
+    }
 
     #endregion
 }

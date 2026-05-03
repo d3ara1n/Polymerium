@@ -2895,6 +2895,79 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Build.
+        /// </summary>
+        public static string InstancePackageModal_BuildButtonText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Build failed.
+        /// </summary>
+        public static string InstancePackageModal_BuildFailedTitle {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Building.
+        /// </summary>
+        public static string InstancePackageModal_BuildProgressMessage {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Building package {0}.
+        /// </summary>
+        public static string InstancePackageModal_BuildProgressTitle {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildProgressTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Built {0} to {1}.
+        ///The previous version was left untouched and will be cleaned up next time..
+        /// </summary>
+        public static string InstancePackageModal_BuildSuccessMessage {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Build complete.
+        /// </summary>
+        public static string InstancePackageModal_BuildSuccessTitle {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildSuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The build target must stay inside the /build directory..
+        /// </summary>
+        public static string InstancePackageModal_BuildTargetOutsideBuildDirectoryError {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuildTargetOutsideBuildDirectoryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Built.
+        /// </summary>
+        public static string InstancePackageModal_BuiltStatusText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_BuiltStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dependants.
         /// </summary>
         public static string InstancePackageModal_DependantsTabText {
@@ -2909,6 +2982,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePackageModal_DependenciesTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_DependenciesTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deployment Status.
+        /// </summary>
+        public static string InstancePackageModal_DeploymentStatusLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_DeploymentStatusLabelText", resourceCulture);
             }
         }
         
@@ -2945,6 +3027,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePackageModal_NoRulesLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_NoRulesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not built.
+        /// </summary>
+        public static string InstancePackageModal_NotBuiltStatusText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_NotBuiltStatusText", resourceCulture);
             }
         }
         
@@ -3003,11 +3094,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skipped.
+        /// </summary>
+        public static string InstancePackageModal_SkippedStatusText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_SkippedStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string InstancePackageModal_TagsTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_TagsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Path.
+        /// </summary>
+        public static string InstancePackageModal_TargetPathLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_TargetPathLabelText", resourceCulture);
             }
         }
         
@@ -5888,42 +5997,6 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scanning Java runtimes....
-        /// </summary>
-        public static string RuntimePickerDialog_LoadingText {
-            get {
-                return ResourceManager.GetString("RuntimePickerDialog_LoadingText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select one of the Java runtimes detected on this computer..
-        /// </summary>
-        public static string RuntimePickerDialog_Prompt {
-            get {
-                return ResourceManager.GetString("RuntimePickerDialog_Prompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rescan.
-        /// </summary>
-        public static string RuntimePickerDialog_RefreshButtonText {
-            get {
-                return ResourceManager.GetString("RuntimePickerDialog_RefreshButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Detect Java Runtime.
-        /// </summary>
-        public static string RuntimePickerDialog_Title {
-            get {
-                return ResourceManager.GetString("RuntimePickerDialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create instance.
         /// </summary>
         public static string NewInstancePage_CreateButtonText {
@@ -7358,6 +7431,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scanning Java runtimes....
+        /// </summary>
+        public static string RuntimePickerDialog_LoadingText {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select one of the Java runtimes detected on this computer..
+        /// </summary>
+        public static string RuntimePickerDialog_Prompt {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rescan.
+        /// </summary>
+        public static string RuntimePickerDialog_RefreshButtonText {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_RefreshButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detect Java Runtime.
+        /// </summary>
+        public static string RuntimePickerDialog_Title {
+            get {
+                return ResourceManager.GetString("RuntimePickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code:.
         /// </summary>
         public static string SafeLock_CodeLabelText {
@@ -7592,7 +7701,7 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to prime-run {command}.
+        ///   Looks up a localized string similar to Example: prime-run {command}.
         /// </summary>
         public static string SettingsPage_CommandWrapperPlaceholder {
             get {

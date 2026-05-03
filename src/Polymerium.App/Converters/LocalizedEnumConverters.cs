@@ -1,4 +1,4 @@
-﻿using Avalonia.Data.Converters;
+using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Models;
 using Polymerium.App.Properties;

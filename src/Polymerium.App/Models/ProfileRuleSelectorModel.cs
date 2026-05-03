@@ -46,7 +46,8 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
     public partial MappingCollection<
         Profile.Rice.Rule.RuleSelector,
         ProfileRuleSelectorModel
-    >? Children { get; private set; } =
+    >? Children
+    { get; private set; } =
         owner.Children is not null ? new(owner.Children, x => new(x), x => x.Owner) : null;
 
     [ObservableProperty]
