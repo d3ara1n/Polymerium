@@ -47,6 +47,9 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Humanizer" Version="3.0.10" />
+        <PackageReference Include="Huskui.Avalonia" Version="1.1.0" />
+        <PackageReference Include="Huskui.Avalonia.Markdown" Version="1.1.0" />
+        <PackageReference Include="Huskui.Avalonia.Mvvm" Version="1.1.0" />
         <PackageReference Include="IconPacks.Avalonia.Lucide" Version="2.0.0" />
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
         <PackageReference Include="LibGit2Sharp" Version="0.31.0" />
@@ -99,9 +102,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia.Markdown\Huskui.Avalonia.Markdown.csproj" />
-        <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia.Mvvm\Huskui.Avalonia.Mvvm.csproj" />
-        <ProjectReference Include="..\..\submodules\Huskui.Avalonia\src\Huskui.Avalonia\Huskui.Avalonia.csproj" />
         <ProjectReference Include="..\..\submodules\Trident.Net\src\TridentCore.Core\TridentCore.Core.csproj" />
     </ItemGroup>
 </Project>
