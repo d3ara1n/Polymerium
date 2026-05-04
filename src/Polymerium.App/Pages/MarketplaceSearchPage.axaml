@@ -205,7 +205,7 @@
                             Grid.Column="5"
                             Classes="Primary"
                             Padding="12,0"
-                            IsEnabled="{Binding Exhibits.IsFetching, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
+                            IsEnabled="{Binding Exhibits.IsFetching, Converter={x:Static BoolConverters.Not}, FallbackValue={x:False}}"
                             Command="{Binding SearchCommand}"
                             IsDefault="True">
                             <StackPanel
