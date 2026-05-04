@@ -464,6 +464,25 @@ public partial class PackageExplorerPageModel : ViewModelBase
         }
     }
 
+    private static bool CanInstallPackage(ExhibitModel? exhibit) => exhibit?.State is null;
+
+    [RelayCommand(CanExecute = nameof(CanInstallPackage))]
+    private void InstallPackage(ExhibitModel? exhibit)
+    {
+        if (exhibit is null)
+        {
+            return;
+        }
+
+        exhibit.PendingVersionId = null;
+        exhibit.PendingVersionName = null;
+        exhibit.State = ExhibitState.Adding;
+        ModifyPending(exhibit);
+    }
+
+    [RelayCommand]
+    private static void FavoritePackage(ExhibitModel? exhibit) { }
+
     [RelayCommand]
     private void DismissPending()
     {

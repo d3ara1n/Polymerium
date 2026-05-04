@@ -342,6 +342,18 @@
     <data name="PackageExplorerPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
+    <data name="PackageExplorerPage_InstallMenuText" xml:space="preserve">
+        <value>Install</value>
+    </data>
+    <data name="PackageExplorerPage_FavoriteMenuText" xml:space="preserve">
+        <value>Favorite</value>
+    </data>
+    <data name="PackageExplorerPage_RepositoryMenuText" xml:space="preserve">
+        <value>Repository</value>
+    </data>
+    <data name="PackageExplorerPage_NamespaceMenuText" xml:space="preserve">
+        <value>Namespace</value>
+    </data>
     <data name="SettingsPage_Title" xml:space="preserve">
         <value>Application Settings</value>
     </data>
