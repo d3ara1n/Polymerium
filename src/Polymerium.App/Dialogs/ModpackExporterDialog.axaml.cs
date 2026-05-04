@@ -64,7 +64,7 @@ public partial class ModpackExporterDialog : Dialog
         InitializeComponent();
     }
 
-    public IReadOnlyList<string> ExporterLabels { get; } = ["trident", "curseforge", "modrinth"];
+    public IReadOnlyList<string> ExporterLabels { get; } = ["trident", "curseforge", "modrinth", "multimc"];
 
     public string SelectedExporterLabel
     {
