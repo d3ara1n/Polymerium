@@ -92,6 +92,25 @@
         <Expander Header="{x:Static lang:Resources.ModpackExporterDialog_AdvancedOptionsLabelText}">
             <StackPanel Spacing="8">
                 <DockPanel>
+                    <ToggleSwitch
+                        DockPanel.Dock="Right"
+                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.OfflineMode, Mode=TwoWay, FallbackValue=false}" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.ModpackExporterDialog_OfflineModeLabelText}" />
+                        <fi:SymbolIcon
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Symbol="Info"
+                            ToolTip.Tip="{x:Static lang:Resources.ModpackExporterDialog_OfflineModeToolTip}" />
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel>
                     <Button
                         DockPanel.Dock="Right"
                         Classes="Small"
