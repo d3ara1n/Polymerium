@@ -28,9 +28,9 @@ public class FavoriteRepository(
         List<string> loaders =
         [
             LoaderHelper.LOADERID_NEOFORGE,
-            LoaderHelper.LOADERID_FABRIC,
             LoaderHelper.LOADERID_FORGE,
-            LoaderHelper.LOADERID_FABRIC
+            LoaderHelper.LOADERID_FABRIC,
+            LoaderHelper.LOADERID_QUILT,
         ];
 
         var index = await prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None).ConfigureAwait(false);
