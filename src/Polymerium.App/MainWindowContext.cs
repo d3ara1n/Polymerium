@@ -227,7 +227,7 @@ public partial class MainWindowContext : ObservableObject
                                                 thumbnail: ThumbnailHelper.ForInstance(key));
             }
 
-            pack ??= PackData.CreateDefault();
+            pack ??= new();
 
             var availableTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(x => x).ToList();
 
