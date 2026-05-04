@@ -1470,6 +1470,12 @@
     <data name="ModpackExporterDialog_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>包含 JVM 附加参数设置</value>
     </data>
+    <data name="ModpackExporterDialog_OfflineModeLabelText" xml:space="preserve">
+        <value>离线模式</value>
+    </data>
+    <data name="ModpackExporterDialog_OfflineModeToolTip" xml:space="preserve">
+        <value>启用后，Mod 文件会被直接打包进压缩包中，而不是使用下载链接。这会显著增加压缩包体积，但允许离线安装。</value>
+    </data>
     <data name="InstanceFilesPage_DescriptionLabelText" xml:space="preserve">
         <value>描述</value>
     </data>

@@ -14,6 +14,7 @@ public partial class PackDataModel : ModelBase
     {
         _pack = pack;
         ExcludedTags = new(_pack.ExcludedTags, x => x, x => x);
+        OfflineMode = pack.OfflineMode;
         IncludingSource = pack.IncludingSource;
         IncludingTags = pack.IncludingTags;
         JavaMaxMemory = GetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY);
@@ -22,6 +23,11 @@ public partial class PackDataModel : ModelBase
     }
 
     #region Reactive
+
+    [ObservableProperty]
+    public partial bool OfflineMode { get; set; }
+
+    partial void OnOfflineModeChanged(bool value) => _pack.OfflineMode = value;
 
     [ObservableProperty]
     public partial bool IncludingSource { get; set; }

@@ -5934,6 +5934,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offline mode.
+        /// </summary>
+        public static string ModpackExporterDialog_OfflineModeLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_OfflineModeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, mod files will be bundled into the archive instead of using download links. This increases archive size significantly but allows offline installation..
+        /// </summary>
+        public static string ModpackExporterDialog_OfflineModeToolTip {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_OfflineModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open import folder.
         /// </summary>
         public static string ModpackExporterDialog_OpenImportFolderDangerNotificationTitle {
@@ -6817,7 +6835,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerPage_EmptyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Favorite.
         /// </summary>
@@ -6826,7 +6844,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerPage_FavoriteMenuText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
@@ -6853,7 +6871,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerPage_ModifyLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Namespace.
         /// </summary>
@@ -6880,7 +6898,7 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerPage_RemoveLabelText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Repository.
         /// </summary>
