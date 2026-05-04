@@ -40,6 +40,13 @@ public partial class ExhibitModpackToast : Toast
             (o, v) => o.LazyVersions = v
         );
 
+    public static readonly DirectProperty<ExhibitModpackToast, bool> IsFavoriteProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, bool>(
+            nameof(IsFavorite),
+            o => o.IsFavorite,
+            (o, v) => o.IsFavorite = v
+        );
+
     public static readonly DirectProperty<
         ExhibitModpackToast,
         ExhibitVersionModel?
@@ -62,7 +69,14 @@ public partial class ExhibitModpackToast : Toast
         set => SetValue(InstallCommandProperty, value);
     }
 
+    public bool IsFavorite
+    {
+        get;
+        set => SetAndRaise(IsFavoriteProperty, ref field, value);
+    }
+
     public required DataService DataService { get; set; }
+    public required PersistenceService PersistenceService { get; set; }
 
     public LazyObject? LazyVersions
     {
@@ -82,6 +96,11 @@ public partial class ExhibitModpackToast : Toast
     {
         base.OnLoaded(e);
 
+        IsFavorite = PersistenceService.IsFavoriteProject(
+            Modpack.Label,
+            Modpack.Namespace,
+            Modpack.ProjectId
+        );
         LoadVersions();
         LoadDescription();
     }
@@ -135,6 +154,34 @@ public partial class ExhibitModpackToast : Toast
         });
 
     #region Commands
+
+    [RelayCommand]
+    private void Favorite()
+    {
+        if (IsFavorite)
+        {
+            PersistenceService.RemoveFavoriteProject(Modpack.Label, Modpack.Namespace, Modpack.ProjectId);
+            IsFavorite = false;
+            return;
+        }
+
+        PersistenceService.AddFavoriteProject(
+            Modpack.Label,
+            Modpack.Namespace,
+            Modpack.ProjectId,
+            Modpack.ProjectName,
+            Modpack.AuthorName,
+            Modpack.Summary,
+            Modpack.Reference,
+            Modpack.Thumbnail,
+            ResourceKind.Modpack,
+            Modpack.DownloadCountRaw,
+            Modpack.Tags,
+            Modpack.UpdatedAtRaw,
+            Modpack.UpdatedAtRaw
+        );
+        IsFavorite = true;
+    }
 
     [RelayCommand]
     private Task NavigateUri(string? url)

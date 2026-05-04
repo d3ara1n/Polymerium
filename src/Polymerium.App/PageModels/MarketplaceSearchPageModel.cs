@@ -38,7 +38,8 @@ public partial class MarketplaceSearchPageModel
         NotificationService notificationService,
         OverlayService overlayService,
         DataService dataService,
-        ConfigurationService configurationService
+        ConfigurationService configurationService,
+        PersistenceService persistenceService
     )
     {
         _agent = agent;
@@ -47,6 +48,7 @@ public partial class MarketplaceSearchPageModel
         _overlayService = overlayService;
         _dataService = dataService;
         _configurationService = configurationService;
+        _persistenceService = persistenceService;
 
         var r = agent
             .Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper()))
@@ -122,6 +124,7 @@ public partial class MarketplaceSearchPageModel
     private readonly OverlayService _overlayService;
     private readonly DataService _dataService;
     private readonly ConfigurationService _configurationService;
+    private readonly PersistenceService _persistenceService;
 
     #endregion
 
@@ -268,6 +271,7 @@ public partial class MarketplaceSearchPageModel
                     project.ProjectName,
                     project.Author,
                     project.Reference,
+                    project.Thumbnail ?? exhibit.Thumbnail,
                     project.Tags,
                     project.DownloadCount,
                     project.Summary,
@@ -278,6 +282,7 @@ public partial class MarketplaceSearchPageModel
                     new ExhibitModpackToast
                     {
                         DataService = _dataService,
+                        PersistenceService = _persistenceService,
                         DataContext = model,
                         InstallCommand = InstallVersionCommand,
                     }

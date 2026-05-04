@@ -304,10 +304,23 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
-                                        <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Symbol="Bookmark" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    IconVariant="Filled"
+                                                    Symbol="BookmarkOff" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="BookmarkAdd" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
                                     </Button>
                                     <Button
                                         Grid.Column="1"
@@ -366,10 +379,22 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
-                                        <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Symbol="Bookmark" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
                                     </Button>
                                     <Button
                                         Grid.Column="1"
@@ -461,10 +486,22 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
-                                        <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Symbol="Bookmark" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
                                     </Button>
                                     <Button
                                         Grid.Column="1"
@@ -560,10 +597,22 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
-                                        <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Symbol="Bookmark" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
                                     </Button>
                                     <Button
                                         Grid.Column="1"
@@ -615,10 +664,22 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
-                                        <fi:SymbolIcon
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Symbol="Bookmark" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
                                     </Button>
                                     <Button
                                         Grid.Column="1"

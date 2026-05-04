@@ -58,6 +58,13 @@ public partial class ExhibitPackageModal : Modal
             (o, v) => o.IsDetailPanelVisible = v
         );
 
+    public static readonly DirectProperty<ExhibitPackageModal, bool> IsFavoriteProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(
+            nameof(IsFavorite),
+            o => o.IsFavorite,
+            (o, v) => o.IsFavorite = v
+        );
+
     public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
         AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(
             nameof(Exhibit),
@@ -146,6 +153,12 @@ public partial class ExhibitPackageModal : Modal
         set => SetAndRaise(IsDetailPanelVisibleProperty, ref field, value);
     } = isDetailPanelVisible;
 
+    public bool IsFavorite
+    {
+        get;
+        set => SetAndRaise(IsFavoriteProperty, ref field, value);
+    }
+
     public required ExhibitModel Exhibit
     {
         get;
@@ -192,6 +205,11 @@ public partial class ExhibitPackageModal : Modal
 
         // Trigger ConstructVersions
         IsFilterEnabled = true;
+        IsFavorite = PersistenceService.IsFavoriteProject(
+            Package.Label,
+            Package.Namespace,
+            Package.ProjectId
+        );
 
         // Initialize
         LazyDescription = ConstructDescription();
@@ -575,6 +593,34 @@ public partial class ExhibitPackageModal : Modal
         Exhibit.PendingVersionName = null;
         ModifyPendingCallback(Exhibit);
         Dismiss();
+    }
+
+    [RelayCommand]
+    private void Favorite()
+    {
+        if (IsFavorite)
+        {
+            PersistenceService.RemoveFavoriteProject(Package.Label, Package.Namespace, Package.ProjectId);
+            IsFavorite = false;
+            return;
+        }
+
+        PersistenceService.AddFavoriteProject(
+            Package.Label,
+            Package.Namespace,
+            Package.ProjectId,
+            Package.ProjectName,
+            Package.AuthorName,
+            Package.Summary,
+            Package.Reference ?? Exhibit.Reference,
+            Package.Thumbnail,
+            Filter.Kind ?? ResourceKind.Unknown,
+            Package.DownloadCountRaw,
+            Package.Tags,
+            Package.UpdatedAtRaw,
+            Package.UpdatedAtRaw
+        );
+        IsFavorite = true;
     }
 
     [RelayCommand]

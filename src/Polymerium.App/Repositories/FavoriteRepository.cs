@@ -8,6 +8,7 @@ using Polymerium.App.Services;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Repositories;
 using TridentCore.Core.Services;
 using TridentCore.Purl;
 using Version = TridentCore.Abstractions.Repositories.Resources.Version;
@@ -18,6 +19,8 @@ public class FavoriteRepository(
     PersistenceService persistenceService,
     PrismLauncherService prismLauncherService) : IRepository
 {
+    private const uint PAGE_SIZE = 20;
+
     #region IRepository Members
 
     public async Task<RepositoryStatus> CheckStatusAsync()
@@ -46,8 +49,36 @@ public class FavoriteRepository(
         return new(loaders, versions, kinds);
     }
 
-    public Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter) =>
-        throw new NotImplementedException();
+    public Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
+    {
+        var first = persistenceService.SearchFavoriteProjects(
+            query,
+            filter,
+            0,
+            PAGE_SIZE,
+            out var totalCount
+        );
+        var initial = first.Select(ToExhibit).ToList();
+
+        return Task.FromResult<IPaginationHandle<Exhibit>>(
+            new PaginationHandle<Exhibit>(
+                initial,
+                PAGE_SIZE,
+                (uint)totalCount,
+                (pageIndex, _) =>
+                {
+                    var favorites = persistenceService.SearchFavoriteProjects(
+                        query,
+                        filter,
+                        pageIndex,
+                        PAGE_SIZE,
+                        out var _
+                    );
+                    return Task.FromResult(favorites.Select(ToExhibit));
+                }
+            )
+        );
+    }
 
     public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotImplementedException();
 
@@ -72,4 +103,21 @@ public class FavoriteRepository(
         throw new NotImplementedException();
 
     #endregion
+
+    private static Exhibit ToExhibit(PersistenceService.FavoriteProject favorite) =>
+        new(
+            favorite.Label,
+            PersistenceService.NormalizeFavoriteNamespace(favorite.Namespace),
+            favorite.ProjectId,
+            favorite.ProjectName,
+            string.IsNullOrWhiteSpace(favorite.Thumbnail) ? null : new Uri(favorite.Thumbnail),
+            favorite.Author,
+            favorite.Summary,
+            favorite.Kind,
+            favorite.DownloadCount,
+            PersistenceService.DeserializeFavoriteTags(favorite.Tags),
+            new Uri(favorite.Reference),
+            new DateTimeOffset(favorite.CreatedAt),
+            new DateTimeOffset(favorite.UpdatedAt)
+        );
 }

@@ -481,7 +481,35 @@ public partial class PackageExplorerPageModel : ViewModelBase
     }
 
     [RelayCommand]
-    private static void FavoritePackage(ExhibitModel? exhibit) { }
+    private async Task FavoritePackageAsync(ExhibitModel? exhibit)
+    {
+        if (exhibit is null)
+        {
+            return;
+        }
+
+        if (_persistenceService.IsFavoriteProject(exhibit.Label, exhibit.Namespace, exhibit.ProjectId))
+        {
+            _persistenceService.RemoveFavoriteProject(
+                exhibit.Label,
+                exhibit.Namespace,
+                exhibit.ProjectId
+            );
+            if (SelectedRepository.Label == "favorite")
+            {
+                await SearchCoreAsync();
+            }
+
+            return;
+        }
+
+        var project = await _dataService.QueryProjectAsync(
+            exhibit.Label,
+            exhibit.Namespace,
+            exhibit.ProjectId
+        );
+        _persistenceService.AddFavoriteProject(project);
+    }
 
     [RelayCommand]
     private void DismissPending()

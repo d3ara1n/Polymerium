@@ -12,6 +12,7 @@ public class ExhibitModpackModel(
     string projectName,
     string authorName,
     Uri reference,
+    Uri? thumbnail,
     IReadOnlyList<string> tags,
     ulong downloadCount,
     string summary,
@@ -27,6 +28,7 @@ public class ExhibitModpackModel(
     public string? Namespace => @namespace;
     public string ProjectId => projectId;
     public Uri Reference => reference;
+    public Uri? Thumbnail => thumbnail;
     public IReadOnlyList<string> Tags => tags;
     public string Summary => summary;
     public ulong DownloadCountRaw => downloadCount;

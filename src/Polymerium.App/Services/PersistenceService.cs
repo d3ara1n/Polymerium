@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using FreeSql.DataAnnotations;
+using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Core.Accounts;
 
 namespace Polymerium.App.Services;
@@ -112,6 +114,36 @@ public class PersistenceService(IFreeSql freeSql)
         [Column(DbType = "BLOB")]
         public required string Data { get; set; }
     }
+    #endregion
+
+    #region Nested type: FavoriteProject
+
+    public class FavoriteProject
+    {
+        [Column(IsPrimary = true)]
+        public required string Label { get; set; }
+
+        [Column(IsPrimary = true)]
+        public required string Namespace { get; set; }
+
+        [Column(IsPrimary = true)]
+        public required string ProjectId { get; set; }
+
+        public required string ProjectName { get; set; }
+        public required string Author { get; set; }
+        public required string Summary { get; set; }
+        public required string Reference { get; set; }
+        public string? Thumbnail { get; set; }
+        public required ResourceKind Kind { get; set; }
+        public required ulong DownloadCount { get; set; }
+        public required DateTime CreatedAt { get; set; }
+        public required DateTime UpdatedAt { get; set; }
+        public DateTime AddedAt { get; set; } = DateTime.Now;
+
+        [Column(DbType = "BLOB")]
+        public required string Tags { get; set; }
+    }
+
     #endregion
 
 
@@ -361,6 +393,122 @@ public class PersistenceService(IFreeSql freeSql)
         var serializedData = JsonSerializer.Serialize(data);
         var state = new ViewState() { Key = key, Data = serializedData };
         freeSql.InsertOrUpdate<ViewState>().SetSource(state).ExecuteAffrows();
+    }
+
+    #endregion
+
+    #region Favorites
+
+    public bool IsFavoriteProject(string label, string? ns, string projectId) =>
+        freeSql
+            .Select<FavoriteProject>()
+            .Where(x => x.Label == label && x.Namespace == (ns ?? string.Empty) && x.ProjectId == projectId)
+            .Any();
+
+    public void AddFavoriteProject(Project project) =>
+        AddFavoriteProject(
+            project.Label,
+            project.Namespace,
+            project.ProjectId,
+            project.ProjectName,
+            project.Author,
+            project.Summary,
+            project.Reference,
+            project.Thumbnail,
+            project.Kind,
+            project.DownloadCount,
+            project.Tags,
+            project.CreatedAt,
+            project.UpdatedAt
+        );
+
+    public void AddFavoriteProject(
+        string label,
+        string? ns,
+        string projectId,
+        string projectName,
+        string author,
+        string summary,
+        Uri reference,
+        Uri? thumbnail,
+        ResourceKind kind,
+        ulong downloadCount,
+        IReadOnlyList<string> tags,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt
+    )
+    {
+        var existing = freeSql
+            .Select<FavoriteProject>()
+            .Where(x => x.Label == label && x.Namespace == (ns ?? string.Empty) && x.ProjectId == projectId)
+            .First();
+        var favorite = new FavoriteProject
+        {
+            Label = label,
+            Namespace = ns ?? string.Empty,
+            ProjectId = projectId,
+            ProjectName = projectName,
+            Author = author,
+            Summary = summary,
+            Reference = reference.AbsoluteUri,
+            Thumbnail = thumbnail?.AbsoluteUri,
+            Kind = kind,
+            DownloadCount = downloadCount,
+            CreatedAt = createdAt.LocalDateTime,
+            UpdatedAt = updatedAt.LocalDateTime,
+            AddedAt = existing?.AddedAt ?? DateTime.Now,
+            Tags = JsonSerializer.Serialize(tags),
+        };
+
+        freeSql.InsertOrUpdate<FavoriteProject>().SetSource(favorite).ExecuteAffrows();
+    }
+
+    public int RemoveFavoriteProject(string label, string? ns, string projectId) =>
+        freeSql
+            .Delete<FavoriteProject>()
+            .Where(x => x.Label == label && x.Namespace == (ns ?? string.Empty) && x.ProjectId == projectId)
+            .ExecuteAffrows();
+
+    public IReadOnlyList<FavoriteProject> SearchFavoriteProjects(
+        string query,
+        Filter filter,
+        uint pageIndex,
+        uint pageSize,
+        out int totalCount
+    )
+    {
+        var normalizedQuery = query.Trim();
+        var filtered = freeSql
+            .Select<FavoriteProject>()
+            .ToList()
+            .Where(x => filter.Kind is null || x.Kind == filter.Kind)
+            .Where(x => IsFavoriteQueryMatched(x, normalizedQuery))
+            .OrderByDescending(x => x.AddedAt)
+            .ThenByDescending(x => x.UpdatedAt)
+            .ToList();
+
+        totalCount = filtered.Count;
+        return filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize).ToList();
+    }
+
+    public static string? NormalizeFavoriteNamespace(string ns) =>
+        string.IsNullOrEmpty(ns) ? null : ns;
+
+    public static IReadOnlyList<string> DeserializeFavoriteTags(string tags) =>
+        JsonSerializer.Deserialize<IReadOnlyList<string>>(tags) ?? [];
+
+    private static bool IsFavoriteQueryMatched(FavoriteProject favorite, string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return true;
+        }
+
+        return favorite.ProjectName.Contains(query, StringComparison.OrdinalIgnoreCase)
+            || favorite.Author.Contains(query, StringComparison.OrdinalIgnoreCase)
+            || favorite.Summary.Contains(query, StringComparison.OrdinalIgnoreCase)
+            || DeserializeFavoriteTags(favorite.Tags)
+                .Any(x => x.Contains(query, StringComparison.OrdinalIgnoreCase));
     }
 
     #endregion
