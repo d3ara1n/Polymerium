@@ -23,6 +23,7 @@ using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Models;
 using Huskui.Avalonia.Mvvm.States;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
@@ -51,19 +52,17 @@ namespace Polymerium.App.PageModels;
 public partial class InstanceSetupPageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     ILogger<InstanceSetupPageModel> logger,
+    IServiceProvider serviceProvider,
     ProfileManager profileManager,
     NotificationService notificationService,
     InstanceManager instanceManager,
-    PackagePlanner packagePlanner,
     PackageMaterializer packageMaterializer,
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
-    PersistenceService persistenceService
-)
-    : InstancePageModelBase(context, instanceManager, profileManager),
-        IStatefulViewModel<InstanceSetupPageModel.StateView>,
-        IViewStateKeyProvider
+    PersistenceService persistenceService) : InstancePageModelBase(context, instanceManager, profileManager),
+                                             IStatefulViewModel<InstanceSetupPageModel.StateView>,
+                                             IViewStateKeyProvider
 {
     #region Nested type: ExportedEntry
 
@@ -77,8 +76,7 @@ public partial class InstanceSetupPageModel(
         string? Source,
         string? Name,
         string? Version,
-        string Tags
-    );
+        string Tags);
 
     #endregion
 
@@ -134,22 +132,17 @@ public partial class InstanceSetupPageModel(
             _stageSource.Remove(toRemove);
             var persistentIndex = _stageSource.Count;
             var toAdd = lookup
-                .Select(x => new InstancePackageModel(
-                    x,
-                    x.Source is not null && x.Source == Basic.Source
-                )
-                {
-                    PersistentIndex = persistentIndex++,
-                })
-                .ToList();
+                       .Select(x => new InstancePackageModel(x, x.Source is not null && x.Source == Basic.Source)
+                        {
+                            PersistentIndex = persistentIndex++,
+                        })
+                       .ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
             if (StageCount != profile.Setup.Packages.Count)
             {
                 // NOTE: 通过即时给 StageCount 赋值，以容忍两次 Merge 期间外部对 _stageSource 的修改
-                throw new UnreachableException(
-                    "使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了"
-                );
+                throw new UnreachableException("使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了");
             }
 
             var toModify = toAdd.Concat(toUpdate).ToList();
@@ -173,38 +166,30 @@ public partial class InstanceSetupPageModel(
         {
             if (profile.Setup.Source is not null)
             {
-                if (
-                    Reference is null
-                    || (
-                        Reference is { Value: InstanceReferenceModel { } reference }
-                        && reference.Purl != profile.Setup.Source
-                    )
-                )
+                if (Reference is null
+                 || (Reference is { Value: InstanceReferenceModel { } reference }
+                  && reference.Purl != profile.Setup.Source))
                 {
                     if (PackageHelper.TryParse(profile.Setup.Source, out var r))
                     {
                         Reference = new(async _ =>
                         {
-                            var package = await dataService.ResolvePackageAsync(
-                                r.Label,
-                                r.Namespace,
-                                r.Pid,
-                                r.Vid,
-                                Filter.None with
-                                {
-                                    Kind = ResourceKind.Modpack,
-                                }
-                            );
+                            var package = await dataService.ResolvePackageAsync(r.Label,
+                                                                                    r.Namespace,
+                                                                                    r.Pid,
+                                                                                    r.Vid,
+                                                                                    Filter.None with
+                                                                                    {
+                                                                                        Kind = ResourceKind.Modpack,
+                                                                                    });
 
-                            return new InstanceReferenceModel(
-                                profile.Setup.Source,
-                                r.Label,
-                                package.ProjectName,
-                                package.VersionId,
-                                package.VersionName,
-                                package.Thumbnail,
-                                package.Reference
-                            );
+                            return new InstanceReferenceModel(profile.Setup.Source,
+                                                              r.Label,
+                                                              package.ProjectName,
+                                                              package.VersionId,
+                                                              package.VersionName,
+                                                              package.Thumbnail,
+                                                              package.Reference);
                         });
                     }
                 }
@@ -219,10 +204,7 @@ public partial class InstanceSetupPageModel(
         }
     }
 
-    private async Task RefreshPackagesAsync(
-        IReadOnlyList<InstancePackageModel> packages,
-        CancellationToken token
-    )
+    private async Task RefreshPackagesAsync(IReadOnlyList<InstancePackageModel> packages, CancellationToken token)
     {
         if (token.IsCancellationRequested)
         {
@@ -233,20 +215,11 @@ public partial class InstanceSetupPageModel(
         try
         {
             var purls = packages
-                .Select(x =>
-                    PackageHelper.TryParse(x.Entry.Purl, out var purl)
-                        ? (
-                            Model: x,
-                            Purl: new PackageIdentifier(
-                                purl.Label,
-                                purl.Namespace,
-                                purl.Pid,
-                                purl.Vid
-                            )
-                        )
-                        : throw new FormatException($"Failed to parse purl: {x.Entry.Purl}")
-                )
-                .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Model));
+                       .Select(x => PackageHelper.TryParse(x.Entry.Purl, out var purl)
+                                        ? (Model: x,
+                                           Purl: new PackageIdentifier(purl.Label, purl.Namespace, purl.Pid, purl.Vid))
+                                        : throw new FormatException($"Failed to parse purl: {x.Entry.Purl}"))
+                       .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Model));
             var knownVids = purls.Where(x => x.Key.Version is not null).ToArray();
             var unknownVids = purls.Where(x => x.Key.Version is null).ToArray();
 
@@ -256,43 +229,36 @@ public partial class InstanceSetupPageModel(
             }
 
             // 固定 Vid 的不需要 Filter
-            var knownPackages = await dataService.ResolvePackagesAsync(
-                knownVids.Select(x => x.Key),
-                Filter.None
-            );
+            var knownPackages = await dataService.ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None);
             if (token.IsCancellationRequested)
             {
                 return;
             }
 
-            var unknownProjects = await dataService.QueryProjectsAsync(
-                unknownVids.Select(x => (x.Key.Repository, x.Key.Namespace, x.Key.Identity))
-            );
+            var unknownProjects =
+                await dataService.QueryProjectsAsync(unknownVids.Select(x => (x.Key.Repository, x.Key.Namespace,
+                                                                              x.Key.Identity)));
             if (token.IsCancellationRequested)
             {
                 return;
             }
 
             var thumbnailsTasks = knownPackages
-                .Select(async x =>
-                    (
-                        Purl: x.Item1,
-                        Thumbnail: x.Item2.Thumbnail is not null
-                            ? await dataService.GetBitmapAsync(x.Item2.Thumbnail)
-                            : AssetUriIndex.DirtImageBitmap
-                    )
-                )
-                .Concat(
-                    unknownProjects.Select(async x =>
-                        (
-                            Purl: new PackageIdentifier(x.Label, x.Namespace, x.ProjectId, null),
-                            Thumbnail: x.Thumbnail is not null
-                                ? await dataService.GetBitmapAsync(x.Thumbnail)
-                                : AssetUriIndex.DirtImageBitmap
-                        )
-                    )
-                )
-                .ToList();
+                                 .Select(async x => (Purl: x.Item1,
+                                                     Thumbnail: x.Item2.Thumbnail is not null
+                                                                    ? await dataService
+                                                                         .GetBitmapAsync(x.Item2.Thumbnail)
+                                                                    : AssetUriIndex.DirtImageBitmap))
+                                 .Concat(unknownProjects.Select(async x =>
+                                                                    (Purl: new PackageIdentifier(x.Label,
+                                                                         x.Namespace,
+                                                                         x.ProjectId,
+                                                                         null),
+                                                                     Thumbnail: x.Thumbnail is not null
+                                                                         ? await dataService
+                                                                              .GetBitmapAsync(x.Thumbnail)
+                                                                         : AssetUriIndex.DirtImageBitmap)))
+                                 .ToList();
             await Task.WhenAll(thumbnailsTasks);
             if (token.IsCancellationRequested)
             {
@@ -306,8 +272,7 @@ public partial class InstanceSetupPageModel(
 
             foreach (var project in unknownProjects)
             {
-                purls[new(project.Label, project.Namespace, project.ProjectId, null)].Project =
-                    project;
+                purls[new(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
             }
 
             foreach (var thumbnailsTask in thumbnailsTasks)
@@ -319,48 +284,45 @@ public partial class InstanceSetupPageModel(
             {
                 InstancePackageInfoModel info = x switch
                 {
-                    { Package: not null, Thumbnail: not null } => new(
-                        x.Model,
-                        x.Package.Label,
-                        x.Package.Namespace,
-                        x.Package.ProjectId,
-                        x.Package.ProjectName,
-                        new InstancePackageVersionModel(
-                            x.Package.VersionId,
-                            x.Package.VersionName,
-                            string.Join(
-                                ",",
-                                x.Package.Requirements.AnyOfLoaders.Select(
-                                    LoaderHelper.ToDisplayName
-                                )
-                            ),
-                            string.Join(",", x.Package.Requirements.AnyOfVersions),
-                            x.Package.PublishedAt,
-                            x.Package.ReleaseType,
-                            x.Package.Dependencies
-                        )
-                        {
-                            IsCurrent = true,
-                        },
-                        x.Package.Author,
-                        x.Package.Summary,
-                        x.Package.Reference,
-                        x.Thumbnail,
-                        x.Package.Kind
-                    ),
-                    { Project: not null, Thumbnail: not null } => new(
-                        x.Model,
-                        x.Project.Label,
-                        x.Project.Namespace,
-                        x.Project.ProjectId,
-                        x.Project.ProjectName,
-                        InstancePackageUnspecifiedVersionModel.Default,
-                        x.Project.Author,
-                        x.Project.Summary,
-                        x.Project.Reference,
-                        x.Thumbnail,
-                        x.Project.Kind
-                    ),
+                    { Package: not null, Thumbnail: not null } => new(x.Model,
+                                                                      x.Package.Label,
+                                                                      x.Package.Namespace,
+                                                                      x.Package.ProjectId,
+                                                                      x.Package.ProjectName,
+                                                                      new
+                                                                          InstancePackageVersionModel(x.Package
+                                                                                 .VersionId,
+                                                                              x.Package.VersionName,
+                                                                              string.Join(",",
+                                                                                  x.Package.Requirements
+                                                                                     .AnyOfLoaders
+                                                                                     .Select(LoaderHelper
+                                                                                         .ToDisplayName)),
+                                                                              string.Join(",",
+                                                                                  x.Package.Requirements
+                                                                                     .AnyOfVersions),
+                                                                              x.Package.PublishedAt,
+                                                                              x.Package.ReleaseType,
+                                                                              x.Package.Dependencies)
+                                                                          {
+                                                                              IsCurrent = true,
+                                                                          },
+                                                                      x.Package.Author,
+                                                                      x.Package.Summary,
+                                                                      x.Package.Reference,
+                                                                      x.Thumbnail,
+                                                                      x.Package.Kind),
+                    { Project: not null, Thumbnail: not null } => new(x.Model,
+                                                                      x.Project.Label,
+                                                                      x.Project.Namespace,
+                                                                      x.Project.ProjectId,
+                                                                      x.Project.ProjectName,
+                                                                      InstancePackageUnspecifiedVersionModel.Default,
+                                                                      x.Project.Author,
+                                                                      x.Project.Summary,
+                                                                      x.Project.Reference,
+                                                                      x.Thumbnail,
+                                                                      x.Project.Kind),
                     _ => throw new UnreachableException(),
                 };
 
@@ -373,12 +335,10 @@ public partial class InstanceSetupPageModel(
         {
             Dispatcher.UIThread.Post(() =>
             {
-                notificationService.PopMessage(
-                    ex.Message,
-                    Resources.InstanceSetupPage_ParsePurlDangerNotificationTitle,
-                    GrowlLevel.Danger,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                notificationService.PopMessage(ex.Message,
+                                               Resources.InstanceSetupPage_ParsePurlDangerNotificationTitle,
+                                               GrowlLevel.Danger,
+                                               thumbnail: GetNotificationThumbnail());
             });
         }
 
@@ -387,12 +347,9 @@ public partial class InstanceSetupPageModel(
 
     private Uri GetNotificationThumbnail(Uri? preferred = null) =>
         preferred
-        ?? (
-            Reference?.Value is InstanceReferenceModel reference
-            && reference.Thumbnail is { } thumbnail
-                ? thumbnail
-                : ThumbnailHelper.ForInstance(Basic.Key)
-        );
+     ?? (Reference?.Value is InstanceReferenceModel reference && reference.Thumbnail is { } thumbnail
+             ? thumbnail
+             : ThumbnailHelper.ForInstance(Basic.Key));
 
     #endregion
 
@@ -400,9 +357,7 @@ public partial class InstanceSetupPageModel(
 
     private CancellationToken? _lifetimeToken;
     private CancellationTokenSource? _pageCancellationTokenSource;
-    private readonly SourceCache<InstancePackageModel, Profile.Rice.Entry> _stageSource = new(x =>
-        x.Entry
-    );
+    private readonly SourceCache<InstancePackageModel, Profile.Rice.Entry> _stageSource = new(x => x.Entry);
     private IDisposable? _updatingSubscription;
     private readonly CompositeDisposable _subscriptions = new();
 
@@ -413,10 +368,7 @@ public partial class InstanceSetupPageModel(
     protected override void OnModelUpdated(string key, Profile profile)
     {
         base.OnModelUpdated(key, profile);
-        if (
-            profile.Setup.Loader is not null
-            && LoaderHelper.TryParse(profile.Setup.Loader, out var result)
-        )
+        if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var result))
         {
             LoaderLabel = LoaderHelper.ToDisplayLabel(result.Identity, result.Version);
         }
@@ -444,27 +396,24 @@ public partial class InstanceSetupPageModel(
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
 
         _stageSource
-            .Connect()
-            .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
-            .GroupOn(x => x)
-            .Transform(group => new InstancePackageFilterTagModel(group.GroupKey)
-            {
-                RefCount = group.List.Count,
-            })
-            .DisposeMany()
-            .Bind(out var tagsView)
-            .Subscribe()
-            .DisposeWith(_subscriptions);
+           .Connect()
+           .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
+           .GroupOn(x => x)
+           .Transform(group => new InstancePackageFilterTagModel(group.GroupKey) { RefCount = group.List.Count, })
+           .DisposeMany()
+           .Bind(out var tagsView)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
         TagsView = tagsView;
 
         tagsView
-            .ToObservableChangeSet()
-            .AutoRefresh(x => x.IsSelected)
-            .Filter(x => x.IsSelected)
-            .Transform(x => x.Content)
-            .Bind(out var filterTags)
-            .Subscribe()
-            .DisposeWith(_subscriptions);
+           .ToObservableChangeSet()
+           .AutoRefresh(x => x.IsSelected)
+           .Filter(x => x.IsSelected)
+           .Transform(x => x.Content)
+           .Bind(out var filterTags)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
 
         var text = this.WhenValueChanged(x => x.FilterText).Select(BuildTextFilter);
         var enability = this.WhenValueChanged(x => x.FilterEnability).Select(BuildEnabilityFilter);
@@ -472,35 +421,29 @@ public partial class InstanceSetupPageModel(
         var kind = this.WhenValueChanged(x => x.FilterKind).Select(BuildKindFilter);
         var tags = filterTags.ToObservableChangeSet().Select(_ => BuildTagFilter(filterTags));
         _stageSource
-            .Connect()
-            .Filter(enability)
-            .Filter(lockility)
-            .Filter(kind)
-            .Filter(tags)
-            .Filter(text)
-            .SortBy(x => x.PersistentIndex)
-            .Bind(out var view)
-            .Subscribe()
-            .DisposeWith(_subscriptions);
+           .Connect()
+           .Filter(enability)
+           .Filter(lockility)
+           .Filter(kind)
+           .Filter(tags)
+           .Filter(text)
+           .SortBy(x => x.PersistentIndex)
+           .Bind(out var view)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
         StageView = view;
 
         filterTags
-            .ToObservableChangeSet()
-            .Select(_ => filterTags.Any())
-            .CombineLatest(
-                this.WhenValueChanged(x => x.FilterEnability).Select(x => x is { Value: not null }),
-                (x, y) => x || y
-            )
-            .CombineLatest(
-                this.WhenValueChanged(x => x.FilterLockility).Select(x => x is { Value: not null }),
-                (x, y) => x || y
-            )
-            .CombineLatest(
-                this.WhenValueChanged(x => x.FilterKind).Select(x => x is { Value: not null }),
-                (x, y) => x || y
-            )
-            .Subscribe(x => IsFilterActive = x)
-            .DisposeWith(_subscriptions);
+           .ToObservableChangeSet()
+           .Select(_ => filterTags.Any())
+           .CombineLatest(this.WhenValueChanged(x => x.FilterEnability).Select(x => x is { Value: not null }),
+                          (x, y) => x || y)
+           .CombineLatest(this.WhenValueChanged(x => x.FilterLockility).Select(x => x is { Value: not null }),
+                          (x, y) => x || y)
+           .CombineLatest(this.WhenValueChanged(x => x.FilterKind).Select(x => x is { Value: not null }),
+                          (x, y) => x || y)
+           .Subscribe(x => IsFilterActive = x)
+           .DisposeWith(_subscriptions);
 
         return Task.CompletedTask;
     }
@@ -520,9 +463,7 @@ public partial class InstanceSetupPageModel(
         IsRefreshing = false;
         _pageCancellationTokenSource?.Cancel();
         _pageCancellationTokenSource?.Dispose();
-        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
-            _lifetimeToken!.Value
-        );
+        _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_lifetimeToken!.Value);
         TrackUpdateProgress(tracker);
         base.OnInstanceUpdating(tracker);
     }
@@ -530,16 +471,13 @@ public partial class InstanceSetupPageModel(
     protected override void OnInstanceUpdated(UpdateTracker tracker)
     {
         _updatingSubscription?.Dispose();
-        if (
-            _pageCancellationTokenSource is null
-            || _pageCancellationTokenSource.IsCancellationRequested
-        )
-        // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
-        //  但该 TrackerBase.StateChanged 事件未接触订阅
-        //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
-        //  第二层是第一层的订阅事件中创建，由事件处理函数维护
-        //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
-        //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
+        if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
+            // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
+            //  但该 TrackerBase.StateChanged 事件未接触订阅
+            //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
+            //  第二层是第一层的订阅事件中创建，由事件处理函数维护
+            //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
+            //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
         {
             return;
         }
@@ -553,15 +491,15 @@ public partial class InstanceSetupPageModel(
     {
         _updatingSubscription?.Dispose();
         _updatingSubscription = update
-            .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-            .Where(x => x.Any())
-            .Select(x => x.Last())
-            .Subscribe(x =>
-            {
-                UpdatingProgress = x ?? 0d;
-                UpdatingPending = !x.HasValue;
-            })
-            .DisposeWith(update);
+                               .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+                               .Where(x => x.Any())
+                               .Select(x => x.Last())
+                               .Subscribe(x =>
+                                {
+                                    UpdatingProgress = x ?? 0d;
+                                    UpdatingPending = !x.HasValue;
+                                })
+                               .DisposeWith(update);
     }
 
     #endregion
@@ -569,68 +507,50 @@ public partial class InstanceSetupPageModel(
     #region Filters
 
     private static Func<InstancePackageModel, bool> BuildEnabilityFilter(FilterModel? enablity) =>
-        x =>
-            enablity?.Value switch
-            {
-                bool it => x.IsEnabled == it,
-                _ => true,
-            };
+        x => enablity?.Value switch
+        {
+            bool it => x.IsEnabled == it,
+            _ => true,
+        };
 
     private static Func<InstancePackageModel, bool> BuildLockilityFilter(FilterModel? lockility) =>
-        x =>
-            lockility?.Value switch
-            {
-                bool it => x.IsLocked == it,
-                _ => true,
-            };
+        x => lockility?.Value switch
+        {
+            bool it => x.IsLocked == it,
+            _ => true,
+        };
 
     private static Func<InstancePackageModel, bool> BuildKindFilter(FilterModel? kind) =>
-        x =>
-            kind?.Value switch
-            {
-                ResourceKind it => x.Info?.Kind == it,
-                _ => true,
-            };
+        x => kind?.Value switch
+        {
+            ResourceKind it => x.Info?.Kind == it,
+            _ => true,
+        };
 
     private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
-        x =>
-            string.IsNullOrEmpty(filter)
-            || (
-                x.Info
-                    is
-                {
-                    ProjectId: { } pid,
-                    ProjectName: { } name,
-                    Author: { } author,
-                    Summary: { } summary,
-                    Version: { } version
-                }
-                && filter
-                    .Split(' ')
-                    .All(y =>
-                        y switch
-                        {
-                            ['@', .. var a] => author.Contains(
-                                a,
-                                StringComparison.OrdinalIgnoreCase
-                            ),
-                            ['#', .. var s] => summary.Contains(
-                                s,
-                                StringComparison.OrdinalIgnoreCase
-                            ),
-                            ['!', .. var i] => pid.Contains(i, StringComparison.OrdinalIgnoreCase)
-                                || (
-                                    version is InstancePackageVersionModel v
-                                    && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase)
-                                ),
-                            _ => name.Contains(y, StringComparison.OrdinalIgnoreCase),
-                        }
-                    )
-            );
+        x => string.IsNullOrEmpty(filter)
+          || (x.Info is
+              {
+                  ProjectId: { } pid,
+                  ProjectName: { } name,
+                  Author: { } author,
+                  Summary: { } summary,
+                  Version: { } version
+              }
+           && filter
+             .Split(' ')
+             .All(y => y switch
+              {
+                  ['@', .. var a] => author.Contains(a, StringComparison.OrdinalIgnoreCase),
+                  ['#', .. var s] => summary.Contains(s, StringComparison.OrdinalIgnoreCase),
+                  ['!', .. var i] => pid.Contains(i, StringComparison.OrdinalIgnoreCase)
+                                  || (version is InstancePackageVersionModel v
+                                   && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase)),
+                  _ => name.Contains(y, StringComparison.OrdinalIgnoreCase),
+              }));
 
-    private static Func<InstancePackageModel, bool> BuildTagFilter(
-        ReadOnlyObservableCollection<string>? tags
-    ) => x => tags is null or { Count: 0 } || tags.All(x.Tags.Contains);
+    private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>
+        x => tags is null or { Count: 0 } || tags.All(x.Tags.Contains);
 
     #endregion
 
@@ -666,15 +586,13 @@ public partial class InstanceSetupPageModel(
                     guard.Value.Setup.Loader = lurl;
                     if (old != lurl)
                     {
-                        persistenceService.AppendAction(
-                            new()
-                            {
-                                Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditLoader,
-                                Old = old,
-                                New = lurl,
-                            }
-                        );
+                        persistenceService.AppendAction(new()
+                        {
+                            Key = Basic.Key,
+                            Kind = PersistenceService.ActionKind.EditLoader,
+                            Old = old,
+                            New = lurl,
+                        });
                     }
                 }
                 else
@@ -683,14 +601,12 @@ public partial class InstanceSetupPageModel(
                     guard.Value.Setup.Loader = null;
                     if (old != null)
                     {
-                        persistenceService.AppendAction(
-                            new()
-                            {
-                                Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditLoader,
-                                Old = old,
-                            }
-                        );
+                        persistenceService.AppendAction(new()
+                        {
+                            Key = Basic.Key,
+                            Kind = PersistenceService.ActionKind.EditLoader,
+                            Old = old,
+                        });
                     }
                 }
 
@@ -704,14 +620,12 @@ public partial class InstanceSetupPageModel(
     {
         if (Rules is not null)
         {
-            overlayService.PopModal(
-                new ProfileRulesModal
-                {
-                    Rules = Rules,
-                    Packages = _stageSource.Items,
-                    OverlayService = overlayService,
-                }
-            );
+            overlayService.PopModal(new ProfileRulesModal
+            {
+                Rules = Rules,
+                Packages = _stageSource.Items,
+                OverlayService = overlayService,
+            });
         }
     }
 
@@ -722,29 +636,26 @@ public partial class InstanceSetupPageModel(
     {
         if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
-            overlayService.PopModal(
-                new InstancePackageModal
-                {
-                    DataContext = model,
-                    Guard = guard,
-                    DataService = dataService,
-                    OverlayService = overlayService,
-                    PersistenceService = persistenceService,
-                    PackageMaterializer = packageMaterializer,
-                    Collection = _stageSource,
-                    NotificationService = notificationService,
-                    PackagePlanner = packagePlanner,
-                    Filter = new(
-                        Kind: model.Kind,
-                        Version: Basic.Version,
-                        Loader: Basic.Loader is not null
-                            ? LoaderHelper.TryParse(Basic.Loader, out var result)
-                                ? result.Identity
-                                : null
-                            : null
-                    ),
-                }
-            );
+            overlayService.PopModal(new InstancePackageModal
+            {
+                DataContext = model,
+                Guard = guard,
+                DataService = dataService,
+                OverlayService = overlayService,
+                PersistenceService = persistenceService,
+                PackageMaterializer = packageMaterializer,
+                Collection = _stageSource,
+                NotificationService = notificationService,
+                PackagePlanner = serviceProvider.GetRequiredService<PackagePlanner>(),
+                Filter = new(Kind: model.Kind,
+                             Version: Basic.Version,
+                             Loader: Basic.Loader is not null
+                                         ? LoaderHelper.TryParse(Basic.Loader,
+                                                                 out var result)
+                                               ? result.Identity
+                                               : null
+                                         : null),
+            });
         }
     }
 
@@ -755,51 +666,41 @@ public partial class InstanceSetupPageModel(
         {
             try
             {
-                var project = await dataService.QueryProjectAsync(
-                    source.Label,
-                    source.Namespace,
-                    source.Pid
-                );
-                var model = new ExhibitModpackModel(
-                    project.Label,
-                    project.Namespace,
-                    project.ProjectId,
-                    project.ProjectName,
-                    project.Author,
-                    project.Reference,
-                    project.Thumbnail ?? AssetUriIndex.DirtImage,
-                    project.Tags,
-                    project.DownloadCount,
-                    project.Summary,
-                    project.UpdatedAt,
-                    [.. project.Gallery.Select(x => x.Url)]
-                );
-                overlayService.PopToast(
-                    new ExhibitModpackToast
-                    {
-                        DataService = dataService,
-                        PersistenceService = persistenceService,
-                        DataContext = model,
-                        InstallCommand = InstallVersionCommand,
-                    }
-                );
+                var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
+                                                    project.Author,
+                                                    project.Reference,
+                                                    project.Thumbnail ?? AssetUriIndex.DirtImage,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.UpdatedAt,
+                                                    [.. project.Gallery.Select(x => x.Url)]);
+                overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataService = dataService,
+                    PersistenceService = persistenceService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand,
+                });
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                notificationService.PopMessage(
-                    ex,
-                    Resources.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
-                    GrowlLevel.Warning,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                notificationService.PopMessage(ex,
+                                               Resources
+                                                  .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
+                                               GrowlLevel.Warning,
+                                               thumbnail: GetNotificationThumbnail());
             }
         }
     }
 
     [RelayCommand]
-    private void GotoPackageExplorerPage() =>
-        navigationService.Navigate<PackageExplorerPage>(Basic.Key);
+    private void GotoPackageExplorerPage() => navigationService.Navigate<PackageExplorerPage>(Basic.Key);
 
     [RelayCommand]
     private async Task UpdateBatchAsync()
@@ -807,11 +708,7 @@ public partial class InstanceSetupPageModel(
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             // 收集所有现有标签（去重，排除当前包已有的标签）
-            var existingTags = profile
-                .Setup.Packages.SelectMany(x => x.Tags)
-                .Distinct()
-                .OrderBy(t => t)
-                .ToList();
+            var existingTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(t => t).ToList();
             var previewer = new PackageBulkUpdatePreviewerDialog()
             {
                 ExistingTags = existingTags,
@@ -819,60 +716,39 @@ public partial class InstanceSetupPageModel(
                 IsEnabledOnly = true,
                 ViewState = ViewState,
             };
-            if (
-                await overlayService.PopDialogAsync(previewer)
-                && previewer.Result
-                    is PackageBulkUpdatePreviewerModel
+            if (await overlayService.PopDialogAsync(previewer)
+             && previewer.Result is PackageBulkUpdatePreviewerModel
                 {
-                    IsEnabledOnly: var enabledOnly,
-                    TagPolicy: var tagPolicy,
-                    Tags: var tags
-                }
-            )
+                    IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
+                })
             {
                 var staging = _stageSource
-                    .Items.Where(x => !enabledOnly || x.IsEnabled)
-                    .Where(x =>
-                        tagPolicy switch
-                        {
-                            PackageBulkUpdatePreviewerTagPolicy.Include => tags.Any(y =>
-                                x.Tags.Contains(y)
-                            ),
-                            PackageBulkUpdatePreviewerTagPolicy.Exclude => !tags.Any(y =>
-                                x.Tags.Contains(y)
-                            ),
-                            _ => true,
-                        }
-                    )
-                    .ToList();
+                             .Items.Where(x => !enabledOnly || x.IsEnabled)
+                             .Where(x => tagPolicy switch
+                              {
+                                  PackageBulkUpdatePreviewerTagPolicy.Include => tags.Any(y => x.Tags.Contains(y)),
+                                  PackageBulkUpdatePreviewerTagPolicy.Exclude => !tags.Any(y => x.Tags.Contains(y)),
+                                  _ => true,
+                              })
+                             .ToList();
                 var total = staging.Count;
-                var progress = notificationService.PopProgress(
-                    Resources
-                        .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage.Replace(
-                            "{0}",
-                            "0"
-                        )
-                        .Replace("{1}", staging.Count.ToString()),
-                    Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                var progress =
+                    notificationService.PopProgress(Resources
+                                                   .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage
+                                                   .Replace("{0}", "0")
+                                                   .Replace("{1}", staging.Count.ToString()),
+                                                    Resources
+                                                       .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle,
+                                                    thumbnail: GetNotificationThumbnail());
 
-                progress.AddAction(
-                    new(
-                        Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText,
-                        new RelayCommand(Cancel)
-                    )
-                );
+                progress.AddAction(new(Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText,
+                                       new RelayCommand(Cancel)));
 
-                var filter = new Filter(
-                    Kind: null,
-                    Version: profile.Setup.Version,
-                    Loader: profile.Setup.Loader is not null
-                        ? LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
-                            ? loader.Identity
-                            : null
-                        : null
-                );
+                var filter = new Filter(Kind: null,
+                                        Version: profile.Setup.Version,
+                                        Loader: LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                                                    ? loader.Identity
+                                                    : null);
 
                 var updates = new ConcurrentBag<PackageBulkUpdateReviewerModel>();
                 try
@@ -888,12 +764,11 @@ public partial class InstanceSetupPageModel(
                 catch (OperationCanceledException) { }
                 catch (Exception ex)
                 {
-                    notificationService.PopMessage(
-                        ex,
-                        Resources.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
-                        GrowlLevel.Warning,
-                        thumbnail: GetNotificationThumbnail()
-                    );
+                    notificationService.PopMessage(ex,
+                                                   Resources
+                                                      .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
+                                                   GrowlLevel.Warning,
+                                                   thumbnail: GetNotificationThumbnail());
                 }
 
                 if (progress.Token.IsCancellationRequested)
@@ -904,25 +779,22 @@ public partial class InstanceSetupPageModel(
                 // 调用 Dismiss 会让 Token 进入 Cancel 状态，导致 Notification 显示“过期”，Growl 直接消失
                 progress.Dispose();
 
-                notificationService.PopMessage(
-                    Resources.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle,
-                    Resources.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage.Replace(
-                        "{0}",
-                        updates.Count.ToString()
-                    ),
-                    thumbnail: GetNotificationThumbnail(),
-                    actions: new GrowlAction(
-                        Resources.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText,
-                        new AsyncRelayCommand(ReviewAsync, CanReview)
-                    )
-                );
+                notificationService.PopMessage(Resources
+                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle,
+                                               Resources
+                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
+                                                  .Replace("{0}", updates.Count.ToString()),
+                                               thumbnail: GetNotificationThumbnail(),
+                                               actions: new
+                                                   GrowlAction(Resources
+                                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText,
+                                                               new AsyncRelayCommand(ReviewAsync, CanReview)));
                 return;
 
                 async Task UpdateAsync(
                     InstancePackageModel entry,
                     SemaphoreSlim semaphore,
-                    NotificationService.ProgressHandle handle
-                )
+                    NotificationService.ProgressHandle handle)
                 {
                     if (handle.Token.IsCancellationRequested)
                     {
@@ -937,28 +809,23 @@ public partial class InstanceSetupPageModel(
                             try
                             {
                                 var resolved = await dataService
-                                    .ResolvePackageAsync(
-                                        result.Label,
-                                        result.Namespace,
-                                        result.Pid,
-                                        null,
-                                        filter,
-                                        false
-                                    )
-                                    .ConfigureAwait(false);
+                                                    .ResolvePackageAsync(result.Label,
+                                                                         result.Namespace,
+                                                                         result.Pid,
+                                                                         null,
+                                                                         filter,
+                                                                         false)
+                                                    .ConfigureAwait(false);
                                 if (resolved.VersionId != result.Vid)
                                 {
                                     var package = await dataService
-                                        .ResolvePackageAsync(
-                                            result.Label,
-                                            result.Namespace,
-                                            result.Pid,
-                                            result.Vid,
-                                            Filter.None
-                                        )
-                                        .ConfigureAwait(false);
-                                    var model = new PackageBulkUpdateReviewerModel(
-                                        entry,
+                                                       .ResolvePackageAsync(result.Label,
+                                                                            result.Namespace,
+                                                                            result.Pid,
+                                                                            result.Vid,
+                                                                            Filter.None)
+                                                       .ConfigureAwait(false);
+                                    var model = new PackageBulkUpdateReviewerModel(entry,
                                         package,
                                         package.Thumbnail ?? AssetUriIndex.DirtImage,
                                         package.VersionId,
@@ -966,19 +833,16 @@ public partial class InstanceSetupPageModel(
                                         package.PublishedAt,
                                         resolved.VersionId,
                                         resolved.VersionName,
-                                        resolved.PublishedAt
-                                    );
+                                        resolved.PublishedAt);
                                     updates.Add(model);
                                 }
                             }
                             catch (Exception ex)
                             {
-                                notificationService.PopMessage(
-                                    ex,
-                                    entry.Info?.ProjectName ?? entry.Entry.Purl,
-                                    GrowlLevel.Warning,
-                                    thumbnail: GetNotificationThumbnail()
-                                );
+                                notificationService.PopMessage(ex,
+                                                               entry.Info?.ProjectName ?? entry.Entry.Purl,
+                                                               GrowlLevel.Warning,
+                                                               thumbnail: GetNotificationThumbnail());
                             }
                         }
                     }
@@ -988,20 +852,12 @@ public partial class InstanceSetupPageModel(
 
                     Dispatcher.UIThread.Post(() =>
                     {
-                        handle.Report(
-                            Math.Min(
-                                100d,
-                                100d * (_stageSource.Items.Count - total) / _stageSource.Items.Count
-                            )
-                        );
-                        handle.Report(
-                            Resources
-                                .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage.Replace(
-                                    "{0}",
-                                    updates.Count.ToString()
-                                )
-                                .Replace("{1}", total.ToString())
-                        );
+                        handle.Report(Math.Min(100d,
+                                               100d * (_stageSource.Items.Count - total) / _stageSource.Items.Count));
+                        handle.Report(Resources
+                                     .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage
+                                     .Replace("{0}", updates.Count.ToString())
+                                     .Replace("{1}", total.ToString()));
                     });
                 }
 
@@ -1024,41 +880,29 @@ public partial class InstanceSetupPageModel(
                     // 导致 Guard 无法保证能被释放而出现泄露
                     // 缺陷：可能会导致批量更新未能保存到硬盘，例如进程被杀的情况
                     var dialog = new PackageBulkUpdateReviewerDialog { Result = updates.ToList() };
-                    if (
-                        await overlayService.PopDialogAsync(dialog)
-                        && dialog.Result is IReadOnlyList<PackageBulkUpdateReviewerModel> results
-                    )
+                    if (await overlayService.PopDialogAsync(dialog)
+                     && dialog.Result is IReadOnlyList<PackageBulkUpdateReviewerModel> results)
                     {
                         foreach (var model in results.Where(x => x.IsChecked))
                         {
                             var old = model.Model.Entry.Purl;
-                            model
-                                .Model
-                                .Info
-                                ?.Version = new InstancePackageVersionModel(
-                                    model.NewVersionId,
-                                    model.NewVersionName,
-                                    string.Join(
-                                        ",",
-                                        model.Package.Requirements.AnyOfLoaders.Select(
-                                            LoaderHelper.ToDisplayName
-                                        )
-                                    ),
-                                    string.Join(",", model.Package.Requirements.AnyOfVersions),
-                                    model.NewVersionTimeRaw,
-                                    model.Package.ReleaseType,
-                                    model.Package.Dependencies
-                                );
+                            model.Model.Info?.Version = new InstancePackageVersionModel(model.NewVersionId,
+                                model.NewVersionName,
+                                string.Join(",",
+                                            model.Package.Requirements.AnyOfLoaders.Select(LoaderHelper
+                                               .ToDisplayName)),
+                                string.Join(",", model.Package.Requirements.AnyOfVersions),
+                                model.NewVersionTimeRaw,
+                                model.Package.ReleaseType,
+                                model.Package.Dependencies);
                             // 设置 Version 会同步到 Entry.Purl
-                            persistenceService.AppendAction(
-                                new()
-                                {
-                                    Key = Basic.Key,
-                                    Kind = PersistenceService.ActionKind.EditPackage,
-                                    Old = old,
-                                    New = model.Model.Entry.Purl,
-                                }
-                            );
+                            persistenceService.AppendAction(new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Old = old,
+                                New = model.Model.Entry.Purl,
+                            });
                         }
                     }
                 }
@@ -1088,12 +932,11 @@ public partial class InstanceSetupPageModel(
 
                 if (importedEntries.Count == 0)
                 {
-                    notificationService.PopMessage(
-                        Resources.InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage,
-                        Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
-                        GrowlLevel.Warning,
-                        thumbnail: GetNotificationThumbnail()
-                    );
+                    notificationService.PopMessage(Resources
+                                                      .InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage,
+                                                   Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+                                                   GrowlLevel.Warning,
+                                                   thumbnail: GetNotificationThumbnail());
                     return;
                 }
 
@@ -1117,18 +960,13 @@ public partial class InstanceSetupPageModel(
 
                                 // 查找是否已存在相同的包（基于 Label, Namespace, ProjectId）
                                 Profile.Rice.Entry? existingEntry = null;
-                                if (
-                                    PackageHelper.TryParse(importedEntry.Purl, out var importedPurl)
-                                )
+                                if (PackageHelper.TryParse(importedEntry.Purl, out var importedPurl))
                                 {
-                                    existingEntry = guard.Value.Setup.Packages.FirstOrDefault(x =>
-                                        PackageHelper.IsMatched(
-                                            x.Purl,
+                                    existingEntry =
+                                        guard.Value.Setup.Packages.FirstOrDefault(x => PackageHelper.IsMatched(x.Purl,
                                             importedPurl.Label,
                                             importedPurl.Namespace,
-                                            importedPurl.Pid
-                                        )
-                                    );
+                                            importedPurl.Pid));
                                 }
 
                                 if (existingEntry != null)
@@ -1139,9 +977,9 @@ public partial class InstanceSetupPageModel(
                                     existingEntry.Enabled = importedEntry.Enabled;
 
                                     var tags = importedEntry
-                                        .Tags.Split('|')
-                                        .Where(x => !string.IsNullOrEmpty(x))
-                                        .ToList();
+                                              .Tags.Split('|')
+                                              .Where(x => !string.IsNullOrEmpty(x))
+                                              .ToList();
                                     var toAdd = tags.Except(existingEntry.Tags).ToList();
 
                                     if (toAdd.Count > 0)
@@ -1161,15 +999,14 @@ public partial class InstanceSetupPageModel(
 
                                     if (oldPurl != importedEntry.Purl)
                                     {
-                                        persistenceService.AppendAction(
-                                            new()
-                                            {
-                                                Key = Basic.Key,
-                                                Kind = PersistenceService.ActionKind.EditPackage,
-                                                Old = oldPurl,
-                                                New = importedEntry.Purl,
-                                            }
-                                        );
+                                        persistenceService.AppendAction(new()
+                                        {
+                                            Key = Basic.Key,
+                                            Kind = PersistenceService.ActionKind
+                                                                     .EditPackage,
+                                            Old = oldPurl,
+                                            New = importedEntry.Purl,
+                                        });
                                     }
 
                                     updatedCount++;
@@ -1184,24 +1021,19 @@ public partial class InstanceSetupPageModel(
                                         Source = importedEntry.Source,
                                     };
                                     guard.Value.Setup.Packages.Add(newEntry);
-                                    persistenceService.AppendAction(
-                                        new()
-                                        {
-                                            Key = Basic.Key,
-                                            Kind = PersistenceService.ActionKind.EditPackage,
-                                            New = importedEntry.Purl,
-                                        }
-                                    );
+                                    persistenceService.AppendAction(new()
+                                    {
+                                        Key = Basic.Key,
+                                        Kind = PersistenceService.ActionKind
+                                                                 .EditPackage,
+                                        New = importedEntry.Purl,
+                                    });
                                     addedCount++;
                                 }
                             }
                             catch (Exception ex)
                             {
-                                logger.LogError(
-                                    ex,
-                                    "Failed to import package: {purl}",
-                                    importedEntry.Purl
-                                );
+                                logger.LogError(ex, "Failed to import package: {purl}", importedEntry.Purl);
                                 failedCount++;
                             }
                         }
@@ -1210,28 +1042,22 @@ public partial class InstanceSetupPageModel(
 
                 // 显示结果通知
                 var resultMessage = Resources
-                    .InstanceSetupPage_ImportListSuccessNotificationMessage.Replace(
-                        "{0}",
-                        addedCount.ToString()
-                    )
-                    .Replace("{1}", updatedCount.ToString())
-                    .Replace("{2}", failedCount.ToString());
+                                   .InstanceSetupPage_ImportListSuccessNotificationMessage
+                                   .Replace("{0}", addedCount.ToString())
+                                   .Replace("{1}", updatedCount.ToString())
+                                   .Replace("{2}", failedCount.ToString());
                 var level = failedCount > 0 ? GrowlLevel.Warning : GrowlLevel.Success;
-                notificationService.PopMessage(
-                    resultMessage,
-                    Resources.InstanceSetupPage_ImportListSuccessNotificationTitle,
-                    level,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                notificationService.PopMessage(resultMessage,
+                                               Resources.InstanceSetupPage_ImportListSuccessNotificationTitle,
+                                               level,
+                                               thumbnail: GetNotificationThumbnail());
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Failed to import package list from file: {path}", filePath);
-                notificationService.PopMessage(
-                    ex,
-                    Resources.InstanceSetupPage_ImportListDangerNotificationTitle,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                notificationService.PopMessage(ex,
+                                               Resources.InstanceSetupPage_ImportListDangerNotificationTitle,
+                                               thumbnail: GetNotificationThumbnail());
             }
         }
     }
@@ -1245,10 +1071,8 @@ public partial class InstanceSetupPageModel(
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             var output = new List<ExportedEntry>();
-            var progress = notificationService.PopProgress(
-                "Export package list to file",
-                thumbnail: GetNotificationThumbnail()
-            );
+            var progress = notificationService.PopProgress("Export package list to file",
+                                                           thumbnail: GetNotificationThumbnail());
             // 这里用单个解析也没关系，能进入这个页面就说明所有数据都被缓存过了
             foreach (var entry in list)
             {
@@ -1272,42 +1096,35 @@ public partial class InstanceSetupPageModel(
                     try
                     {
                         await Task.Delay(TimeSpan.FromMilliseconds(25));
-                        var package = await dataService.ResolvePackageAsync(
-                            result.Label,
-                            result.Namespace,
-                            result.Pid,
-                            result.Vid,
-                            Filter.None
-                        );
+                        var package = await dataService.ResolvePackageAsync(result.Label,
+                                                                            result.Namespace,
+                                                                            result.Pid,
+                                                                            result.Vid,
+                                                                            Filter.None);
                         name = package.ProjectName;
                         version = package.VersionName;
                     }
                     catch (Exception ex)
                     {
                         logger.LogError(ex, "Failed to exporting: {}", entry.Purl);
-                        notificationService.PopMessage(
-                            $"{entry.Purl}: {ex.Message}",
-                            Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
-                            GrowlLevel.Warning,
-                            thumbnail: GetNotificationThumbnail()
-                        );
+                        notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
+                                                       Resources
+                                                          .InstanceSetupPage_FetchingInformationDangerNotificationTitle,
+                                                       GrowlLevel.Warning,
+                                                       thumbnail: GetNotificationThumbnail());
                     }
                 }
 
-                output.Add(
-                    new(
-                        entry.Purl,
-                        label,
-                        @namespace,
-                        projectId,
-                        versionId,
-                        entry.Enabled,
-                        entry.Source,
-                        name,
-                        version,
-                        string.Join("|", entry.Tags)
-                    )
-                );
+                output.Add(new(entry.Purl,
+                               label,
+                               @namespace,
+                               projectId,
+                               versionId,
+                               entry.Enabled,
+                               entry.Source,
+                               name,
+                               version,
+                               string.Join("|", entry.Tags)));
                 progress.Report(100d * output.Count / list.Count);
                 progress.Report($"Exporting package list...({output.Count}/{list.Count})");
             }
@@ -1323,36 +1140,26 @@ public partial class InstanceSetupPageModel(
                 }
 
                 await using (var writer = new StreamWriter(path))
-                await using (
-                    var csv = new CsvWriter(
-                        writer,
-                        new CsvConfiguration(CultureInfo.InvariantCulture)
-                    )
-                )
+                await using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
                 {
                     await csv.WriteRecordsAsync(output);
                 }
 
-                notificationService.PopMessage(
-                    Resources.InstanceSetupPage_ExportListSuccessNotificationMessage.Replace(
-                        "{0}",
-                        path
-                    ),
-                    Resources.InstanceSetupPage_ExportListSuccessNotificationTitle,
-                    GrowlLevel.Success,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                notificationService.PopMessage(Resources.InstanceSetupPage_ExportListSuccessNotificationMessage
+                                                        .Replace("{0}", path),
+                                               Resources.InstanceSetupPage_ExportListSuccessNotificationTitle,
+                                               GrowlLevel.Success,
+                                               thumbnail: GetNotificationThumbnail());
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(
-                    Resources
-                        .InstanceSetupPage_ExportListDangerNotificationMessage.Replace("{0}", path)
-                        .Replace("{1}", ex.Message),
-                    Resources.InstanceSetupPage_ExportListDangerNotificationTitle,
-                    GrowlLevel.Danger,
-                    thumbnail: GetNotificationThumbnail()
-                );
+                notificationService.PopMessage(Resources
+                                              .InstanceSetupPage_ExportListDangerNotificationMessage
+                                              .Replace("{0}", path)
+                                              .Replace("{1}", ex.Message),
+                                               Resources.InstanceSetupPage_ExportListDangerNotificationTitle,
+                                               GrowlLevel.Danger,
+                                               thumbnail: GetNotificationThumbnail());
             }
         }
     }
@@ -1360,41 +1167,34 @@ public partial class InstanceSetupPageModel(
     [RelayCommand]
     private async Task CheckUpdateAsync()
     {
-        if (
-            Reference is { Value: InstanceReferenceModel reference }
-            && PackageHelper.TryParse(reference.Purl, out var result)
-        )
+        if (Reference is { Value: InstanceReferenceModel reference }
+         && PackageHelper.TryParse(reference.Purl, out var result))
         {
             try
             {
-                var page = await dataService.InspectVersionsAsync(
-                    result.Label,
-                    result.Namespace,
-                    result.Pid,
-                    Filter.None with
-                    {
-                        Kind = ResourceKind.Modpack,
-                        Version = Basic.Version,
-                    }
-                );
-                var versions = page.Select(x => new InstanceReferenceVersionModel(
-                        x.Label,
-                        x.Namespace,
-                        x.ProjectId,
-                        x.VersionId,
-                        x.VersionName,
-                        x.ReleaseType,
-                        x.PublishedAt
-                    )
-                {
-                    IsCurrent = x.VersionId == reference.VersionId,
-                })
-                    .ToList();
+                var page = await dataService.InspectVersionsAsync(result.Label,
+                                                                  result.Namespace,
+                                                                  result.Pid,
+                                                                  Filter.None with
+                                                                  {
+                                                                      Kind = ResourceKind.Modpack,
+                                                                      Version = Basic.Version,
+                                                                  });
+                var versions = page
+                              .Select(x => new InstanceReferenceVersionModel(x.Label,
+                                                                             x.Namespace,
+                                                                             x.ProjectId,
+                                                                             x.VersionId,
+                                                                             x.VersionName,
+                                                                             x.ReleaseType,
+                                                                             x.PublishedAt)
+                               {
+                                   IsCurrent = x.VersionId == reference.VersionId,
+                               })
+                              .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
-                if (
-                    await overlayService.PopDialogAsync(dialog)
-                    && dialog.Result is InstanceReferenceVersionModel version
-                )
+                if (await overlayService.PopDialogAsync(dialog)
+                 && dialog.Result is InstanceReferenceVersionModel version)
                 {
                     Update(version);
                 }
@@ -1402,11 +1202,9 @@ public partial class InstanceSetupPageModel(
             catch (ApiException ex)
             {
                 logger.LogError(ex, "Failed to check update: {}", reference.Purl);
-                notificationService.PopMessage(
-                    ex,
-                    Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
-                    thumbnail: GetNotificationThumbnail(reference.Thumbnail)
-                );
+                notificationService.PopMessage(ex,
+                                               Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
+                                               thumbnail: GetNotificationThumbnail(reference.Thumbnail));
             }
         }
     }
@@ -1427,11 +1225,9 @@ public partial class InstanceSetupPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(
-                ex,
-                Resources.InstanceSetupPage_UpdateDangerNotificationTitle,
-                thumbnail: GetNotificationThumbnail()
-            );
+            notificationService.PopMessage(ex,
+                                           Resources.InstanceSetupPage_UpdateDangerNotificationTitle,
+                                           thumbnail: GetNotificationThumbnail());
         }
     }
 
@@ -1440,22 +1236,16 @@ public partial class InstanceSetupPageModel(
     {
         if (version is not null)
         {
-            InstanceManager.Install(
-                version.ProjectName,
-                version.Label,
-                version.Namespace,
-                version.ProjectId,
-                version.VersionId
-            );
-            notificationService.PopMessage(
-                Resources
-                    .InstanceSetupPage_InstallVersionNotificationMessage.Replace(
-                        "{0}",
-                        version.ProjectName
-                    )
-                    .Replace("{1}", version.VersionName),
-                thumbnail: GetNotificationThumbnail()
-            );
+            InstanceManager.Install(version.ProjectName,
+                                    version.Label,
+                                    version.Namespace,
+                                    version.ProjectId,
+                                    version.VersionId);
+            notificationService.PopMessage(Resources
+                                          .InstanceSetupPage_InstallVersionNotificationMessage
+                                          .Replace("{0}", version.ProjectName)
+                                          .Replace("{1}", version.VersionName),
+                                           thumbnail: GetNotificationThumbnail());
         }
     }
 
@@ -1467,14 +1257,12 @@ public partial class InstanceSetupPageModel(
             await using (guard)
             {
                 guard.Value.Setup.Packages.Remove(model.Entry);
-                persistenceService.AppendAction(
-                    new()
-                    {
-                        Key = Basic.Key,
-                        Kind = PersistenceService.ActionKind.EditPackage,
-                        Old = model.Entry.Purl,
-                    }
-                );
+                persistenceService.AppendAction(new()
+                {
+                    Key = Basic.Key,
+                    Kind = PersistenceService.ActionKind.EditPackage,
+                    Old = model.Entry.Purl,
+                });
             }
         }
     }
@@ -1527,21 +1315,26 @@ public partial class InstanceSetupPageModel(
 
     [ObservableProperty]
     public partial StateView? ViewState { get; set; }
+
     public string ViewStateKey => Basic.Key;
 
     #endregion
 
     #region Nested type: StateData
+
     public partial class StateView : ModelBase
     {
         [ObservableProperty]
         public partial int LayoutIndex { get; set; }
 
         #region For PackageBulkUpdatePreviewerDialog
+
         public bool LastChosenIsEnabledOnly { get; set; } = true;
         public IReadOnlyList<string>? LastChosenTags { get; set; }
         public PackageBulkUpdatePreviewerTagPolicy LastChosenTagPolicy { get; set; }
+
         #endregion
     }
+
     #endregion
 }
