@@ -215,7 +215,14 @@ public partial class MarketplaceSearchPageModel
                                 x.UpdatedAt,
                                 x.DownloadCount,
                                 x.Reference
-                            ))
+                            )
+                            {
+                                IsFavorite = _persistenceService.IsFavoriteProject(
+                                    x.Label,
+                                    x.Namespace,
+                                    x.Pid
+                                ),
+                            })
                             .ToArray();
                         return tasks;
                     }
@@ -262,6 +269,39 @@ public partial class MarketplaceSearchPageModel
                 thumbnail: exhibit.Thumbnail
             );
         }
+    }
+
+    [RelayCommand]
+    private async Task FavoriteModpackAsync(ExhibitModel? exhibit)
+    {
+        if (exhibit is null)
+        {
+            return;
+        }
+
+        if (exhibit.IsFavorite)
+        {
+            _persistenceService.RemoveFavoriteProject(
+                exhibit.Label,
+                exhibit.Namespace,
+                exhibit.ProjectId
+            );
+            exhibit.IsFavorite = false;
+            if (SelectedRepository.Label == "favorite")
+            {
+                await SearchAsync();
+            }
+
+            return;
+        }
+
+        var project = await _dataService.QueryProjectAsync(
+            exhibit.Label,
+            exhibit.Namespace,
+            exhibit.ProjectId
+        );
+        _persistenceService.AddFavoriteProject(project);
+        exhibit.IsFavorite = true;
     }
 
     [RelayCommand]

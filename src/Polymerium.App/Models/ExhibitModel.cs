@@ -70,5 +70,8 @@ public partial class ExhibitModel(
     [ObservableProperty]
     public partial string? PendingVersionId { get; set; }
 
+    [ObservableProperty]
+    public partial bool IsFavorite { get; set; }
+
     #endregion
 }

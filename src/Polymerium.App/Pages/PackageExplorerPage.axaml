@@ -28,12 +28,13 @@
                 Icon="{fie:SymbolIcon Symbol=ArrowDownload,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
-                IsEnabled="False"
                 Command="{Binding $parent[app:PackageExplorerPage].((app:PackageExplorerPageModel)DataContext).FavoritePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Header="{x:Static lang:Resources.PackageExplorerPage_FavoriteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
-                                      FontSize={StaticResource MediumFontSize}}" />
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsChecked="{Binding IsFavorite, Mode=OneWay}"
+                ToggleType="CheckBox" />
             <MenuItem Header="-" />
             <MenuItem
                 Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
