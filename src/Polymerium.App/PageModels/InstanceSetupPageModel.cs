@@ -767,6 +767,7 @@ public partial class InstanceSetupPageModel(
                     project.ProjectName,
                     project.Author,
                     project.Reference,
+                    project.Thumbnail ?? AssetUriIndex.DirtImage,
                     project.Tags,
                     project.DownloadCount,
                     project.Summary,
@@ -777,6 +778,7 @@ public partial class InstanceSetupPageModel(
                     new ExhibitModpackToast
                     {
                         DataService = dataService,
+                        PersistenceService = persistenceService,
                         DataContext = model,
                         InstallCommand = InstallVersionCommand,
                     }

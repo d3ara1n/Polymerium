@@ -256,6 +256,7 @@ public partial class LandingPageModel(
                     project.ProjectName,
                     project.Author,
                     project.Reference,
+                    project.Thumbnail ?? modpack.Thumbnail,
                     project.Tags,
                     project.DownloadCount,
                     project.Summary,
@@ -266,6 +267,7 @@ public partial class LandingPageModel(
                     new ExhibitModpackToast
                     {
                         DataService = dataService,
+                        PersistenceService = persistenceService,
                         DataContext = model,
                         InstallCommand = InstallVersionCommand,
                     }

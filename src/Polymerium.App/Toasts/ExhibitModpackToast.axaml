@@ -109,10 +109,22 @@
                                 </Button>
                                 <Button
                                     Grid.Column="1"
-                                    IsVisible="False">
-                                    <fi:SymbolIcon
-                                        FontSize="{StaticResource MediumFontSize}"
-                                        Symbol="Bookmark" />
+                                    Command="{Binding $parent[app:ExhibitModpackToast].FavoriteCommand}">
+                                    <husk:SwitchContainer
+                                        TargetType="x:Boolean"
+                                        Value="{Binding $parent[app:ExhibitModpackToast].IsFavorite, Mode=OneWay}">
+                                        <husk:SwitchCase Value="True">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                IconVariant="Filled"
+                                                Symbol="BookmarkOff" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="False">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="BookmarkAdd" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchContainer>
                                 </Button>
                                 <ComboBox
                                     Name="VersionBox"
