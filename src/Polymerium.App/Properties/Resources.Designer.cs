@@ -6817,6 +6817,24 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerPage_EmptyLabelText", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Favorite.
+        /// </summary>
+        public static string PackageExplorerPage_FavoriteMenuText {
+            get {
+                return ResourceManager.GetString("PackageExplorerPage_FavoriteMenuText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string PackageExplorerPage_InstallMenuText {
+            get {
+                return ResourceManager.GetString("PackageExplorerPage_InstallMenuText", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Failed to load project information.
@@ -6835,6 +6853,15 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("PackageExplorerPage_ModifyLabelText", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Namespace.
+        /// </summary>
+        public static string PackageExplorerPage_NamespaceMenuText {
+            get {
+                return ResourceManager.GetString("PackageExplorerPage_NamespaceMenuText", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Pending.
@@ -6851,6 +6878,15 @@ namespace Polymerium.App.Properties {
         public static string PackageExplorerPage_RemoveLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_RemoveLabelText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Repository.
+        /// </summary>
+        public static string PackageExplorerPage_RepositoryMenuText {
+            get {
+                return ResourceManager.GetString("PackageExplorerPage_RepositoryMenuText", resourceCulture);
             }
         }
         
