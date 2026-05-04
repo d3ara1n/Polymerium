@@ -351,6 +351,7 @@
                         <Button
                             Grid.Column="1"
                             Classes="Primary"
+                            IsEnabled="{Binding Exhibits?.IsFetching, Converter={x:Static BoolConverters.Not}, FallbackValue={x:False}}"
                             Command="{Binding SearchCommand}"
                             IsDefault="True"
                             Theme="{StaticResource OutlineButtonTheme}">
@@ -362,10 +363,10 @@
                                     Height="{StaticResource MediumFontSize}"
                                     VerticalAlignment="Center"
                                     TargetType="x:Boolean"
-                                    Value="{Binding Exhibits.IsFetching, Mode=OneWay, FallbackValue=True}">
+                                    Value="{Binding Exhibits?.IsFetching, Mode=OneWay, FallbackValue=True}">
                                     <husk:SwitchCase Value="True">
                                         <husk:ProgressRing
-                                            IsIndeterminate="{Binding Exhibits.IsFetching, Mode=OneWay, FallbackValue=True}"
+                                            IsIndeterminate="{Binding Exhibits?.IsFetching, Mode=OneWay, FallbackValue=True}"
                                             StrokeWidth="2"
                                             Theme="{StaticResource SolidProgressRingTheme}"
                                             TrackStrokeWidth="2" />
