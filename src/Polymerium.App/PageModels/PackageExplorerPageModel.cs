@@ -162,6 +162,11 @@ public partial class PackageExplorerPageModel : ViewModelBase
         );
         if (foundInPending != null)
         {
+            foundInPending.IsFavorite = _persistenceService.IsFavoriteProject(
+                project.Label,
+                project.Namespace,
+                project.ProjectId
+            );
             return foundInPending;
         }
 
@@ -172,6 +177,11 @@ public partial class PackageExplorerPageModel : ViewModelBase
         );
         if (foundInResult != null)
         {
+            foundInResult.IsFavorite = _persistenceService.IsFavoriteProject(
+                project.Label,
+                project.Namespace,
+                project.ProjectId
+            );
             return foundInResult;
         }
 
@@ -188,7 +198,14 @@ public partial class PackageExplorerPageModel : ViewModelBase
             project.UpdatedAt,
             project.DownloadCount,
             project.Reference
-        );
+        )
+        {
+            IsFavorite = _persistenceService.IsFavoriteProject(
+                project.Label,
+                project.Namespace,
+                project.ProjectId
+            ),
+        };
         var installed = profile.Setup.Packages.FirstOrDefault(y =>
             PackageHelper.IsMatched(y.Purl, project.Label, project.Namespace, project.ProjectId)
         );
@@ -238,6 +255,11 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                 );
                                 if (found != null)
                                 {
+                                    found.IsFavorite = _persistenceService.IsFavoriteProject(
+                                        x.Label,
+                                        x.Namespace,
+                                        x.Pid
+                                    );
                                     return found;
                                 }
 
@@ -253,7 +275,14 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                     x.UpdatedAt,
                                     x.DownloadCount,
                                     x.Reference
-                                );
+                                )
+                                {
+                                    IsFavorite = _persistenceService.IsFavoriteProject(
+                                        x.Label,
+                                        x.Namespace,
+                                        x.Pid
+                                    ),
+                                };
                                 var installed = profile.Setup.Packages.FirstOrDefault(y =>
                                     PackageHelper.IsMatched(y.Purl, x.Label, x.Namespace, x.Pid)
                                 );
@@ -492,13 +521,14 @@ public partial class PackageExplorerPageModel : ViewModelBase
             return;
         }
 
-        if (_persistenceService.IsFavoriteProject(exhibit.Label, exhibit.Namespace, exhibit.ProjectId))
+        if (exhibit.IsFavorite)
         {
             _persistenceService.RemoveFavoriteProject(
                 exhibit.Label,
                 exhibit.Namespace,
                 exhibit.ProjectId
             );
+            exhibit.IsFavorite = false;
             if (SelectedRepository.Label == "favorite")
             {
                 await SearchCoreAsync();
@@ -513,6 +543,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             exhibit.ProjectId
         );
         _persistenceService.AddFavoriteProject(project);
+        exhibit.IsFavorite = true;
     }
 
     [RelayCommand]

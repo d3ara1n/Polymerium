@@ -24,23 +24,83 @@
             x:Key="ExhibitModpackButtonFlyout"
             x:DataType="app:ExhibitModel">
             <MenuItem
+                Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Header="{x:Static lang:Resources.ExhibitModpackToast_InstallButtonText}"
+                Icon="{fie:SymbolIcon Symbol=ArrowDownload,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).FavoriteModpackCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Header="{x:Static lang:Resources.PackageExplorerPage_FavoriteMenuText}"
+                Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsChecked="{Binding IsFavorite, Mode=OneWay}"
+                ToggleType="CheckBox" />
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding ProjectName, FallbackValue=Project Name}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectNameMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding ProjectName, FallbackValue=Project Name}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding ProjectId, FallbackValue=Pid}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectIdMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding ProjectId, FallbackValue=Pid}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Label, FallbackValue=Repository}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerPage_RepositoryMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Label, FallbackValue=Repository}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Namespace, FallbackValue=Namespace}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerPage_NamespaceMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Namespace, FallbackValue=Namespace}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Header="-" />
+            <MenuItem
                 Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).OpenWebsiteCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.MarketplaceSearchPage_OpenWebsiteMenuText}">
-                <MenuItem.Icon>
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource MediumFontSize}"
-                        Symbol="Link" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <!-- <MenuItem Header="Save to Favorites"> -->
-            <!--     <MenuItem.Icon> -->
-            <!--  <icons:PackIconLucide Kind="Bookmark"  -->
-            <!--  Height="10" Width="10"  -->
-            <!--  VerticalAlignment="Center" />  -->
-            <!--     </MenuItem.Icon> -->
-            <!-- </MenuItem> -->
+                Header="{x:Static lang:Resources.MarketplaceSearchPage_OpenWebsiteMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Link,
+                                      FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
     </husk:Page.Resources>
     <Panel>
@@ -184,7 +244,7 @@
                         <TabStrip
                             Name="LayoutSelector"
                             Grid.Column="6"
-                            SelectedIndex="{Binding ViewState.LayoutIndex, Mode=TwoWay}"
+                            SelectedIndex="{Binding ViewState?.LayoutIndex, Mode=TwoWay}"
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <collection:List x:TypeArguments="app:ListTemplateCombinationModel">
