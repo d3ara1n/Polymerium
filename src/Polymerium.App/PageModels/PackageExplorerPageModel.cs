@@ -112,7 +112,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
         RemovingPackagesView = removing;
     }
 
-    #region Properties
+    #region Direct
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
 
@@ -354,6 +354,8 @@ public partial class PackageExplorerPageModel : ViewModelBase
         {
             Filter = Filter with { Loader = null, Version = null };
         }
+
+        _ = SearchCoreAsync();
     }
 
     [ObservableProperty]
@@ -365,6 +367,8 @@ public partial class PackageExplorerPageModel : ViewModelBase
         {
             Filter = Filter with { Kind = value };
         }
+
+        _ = SearchCoreAsync();
     }
 
     [ObservableProperty]

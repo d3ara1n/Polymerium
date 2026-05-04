@@ -143,13 +143,25 @@ public partial class MarketplaceSearchPageModel
             "favorite" => AssetUriIndex.RepositoryHeaderFavoriteBitmap,
             _ => HeaderImage,
         };
+
+        _ = SearchAsync();
     }
 
     [ObservableProperty]
     public partial string? FilteredVersion { get; set; }
 
+    partial void OnFilteredVersionChanged(string? value)
+    {
+        _ = SearchAsync();
+    }
+
     [ObservableProperty]
     public partial LoaderBasicModel? FilteredLoader { get; set; }
+
+    partial void OnFilteredLoaderChanged(LoaderBasicModel? value)
+    {
+        _ = SearchAsync();
+    }
 
     [ObservableProperty]
     public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
