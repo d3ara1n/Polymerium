@@ -175,7 +175,7 @@ public partial class NewInstancePageModel(
                     Directory.CreateDirectory(parent);
                 }
 
-                var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
+                await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
                 await stream.CopyToAsync(writer).ConfigureAwait(false);
                 await writer.FlushAsync().ConfigureAwait(false);
             }
