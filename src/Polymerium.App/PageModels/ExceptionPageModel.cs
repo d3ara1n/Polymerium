@@ -1,7 +1,6 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.PageModels;

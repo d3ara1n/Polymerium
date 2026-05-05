@@ -10,7 +10,6 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Mixins;
-using Huskui.Avalonia.Mvvm.Models;
 using Huskui.Avalonia.Transitions;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Controls;

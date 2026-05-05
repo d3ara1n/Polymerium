@@ -10,7 +10,6 @@ using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Mixins;
-using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Pages;
 
 namespace Polymerium.App;

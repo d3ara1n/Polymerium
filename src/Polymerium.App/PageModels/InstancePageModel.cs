@@ -11,10 +11,10 @@ using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Pages;
 using Polymerium.App.Properties;
@@ -115,6 +115,12 @@ public partial class InstancePageModel : ViewModelBase
             _notificationService,
             thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
         );
+    }
+
+    [RelayCommand]
+    private void ManageSnapshotsAsync()
+    {
+        _overlayService.PopModal<SnapshotModal>();
     }
 
     [RelayCommand]

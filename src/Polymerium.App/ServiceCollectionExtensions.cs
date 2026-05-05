@@ -2,7 +2,6 @@ using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
 using MirrorChyan.Net;
-using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using TridentCore.Abstractions;
 using Velopack;
