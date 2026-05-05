@@ -188,12 +188,20 @@
                                                 <husk:ProgressRing
                                                     Width="32"
                                                     Height="32"
-                                                    IsVisible="{Binding IsProgressBarVisible}"
                                                     IsIndeterminate="{Binding IsProgressIndeterminate}"
                                                     ShowProgressText="False"
                                                     StrokeWidth="4"
                                                     TrackStrokeWidth="4"
-                                                    Value="{Binding Progress}" />
+                                                    Value="{Binding Progress}">
+                                                    <husk:ProgressRing.IsVisible>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                            <Binding Path="IsProgressBarVisible" />
+                                                            <Binding
+                                                                Converter="{x:Static BoolConverters.Not}"
+                                                                Path="IsCancelled" />
+                                                        </MultiBinding>
+                                                    </husk:ProgressRing.IsVisible>
+                                                </husk:ProgressRing>
                                             </Panel>
                                             <StackPanel
                                                 Grid.Row="0"
