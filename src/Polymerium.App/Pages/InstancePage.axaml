@@ -302,7 +302,7 @@
                                     Symbol="FolderZip" />
                             </Button>
                             <Button
-                                Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                Command="{Binding ManageSnapshotsAsyncCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding Basic.Key}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
                                 ToolTip.Tip="Manage snapshots">
@@ -320,7 +320,7 @@
                                 </Button.IsEnabled>
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
-                                    Symbol="FolderZip" />
+                                    Symbol="Storage" />
                             </Button>
                             <Button
                                 Command="{Binding OpenFolderCommand}"

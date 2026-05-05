@@ -3,11 +3,118 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    IsHeaderVisible="False"
+    Padding="32,28"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid ColumnDefinitions="*,*" />
-</husk:Page>
+    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="20">
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock
+                FontSize="{StaticResource ExtraLargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.SnapshotPortalPage_Title}" />
+            <TextBlock
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.SnapshotPortalPage_Subtitle}" />
+        </StackPanel>
 
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="20">
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Click="OnCreateSnapshotClick"
+                CornerRadius="{StaticResource MediumCornerRadius}"
+                Padding="24">
+                <Grid
+                    RowDefinitions="Auto,Auto,*,Auto"
+                    RowSpacing="8">
+                    <fi:SymbolIcon
+                        Grid.Row="0"
+                        FontSize="32"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="SaveSync" />
+                    <TextBlock
+                        Grid.Row="1"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_CreateTitleText}" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_CreateDescriptionText}"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.SnapshotPortalPage_CreateLastTimeLabelText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.SnapshotPortalPage_CreateNeverText}" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Click="OnViewSnapshotsClick"
+                CornerRadius="{StaticResource MediumCornerRadius}"
+                Padding="24">
+                <Grid
+                    RowDefinitions="Auto,Auto,*,Auto"
+                    RowSpacing="8">
+                    <fi:SymbolIcon
+                        Grid.Row="0"
+                        FontSize="32"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="History" />
+                    <TextBlock
+                        Grid.Row="1"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_ViewTitleText}" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_ViewDescriptionText}"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.SnapshotPortalPage_ViewCountLabelText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="0" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <TextBlock
+            Grid.Row="2"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            FontStyle="Italic"
+            Text="{x:Static lang:Resources.SnapshotPortalPage_HintText}"
+            TextWrapping="Wrap" />
+    </Grid>
+</husk:Page>
