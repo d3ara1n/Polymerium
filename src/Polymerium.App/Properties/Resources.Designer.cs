@@ -8617,5 +8617,203 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("WorkspaceDiffModal_LiveTagText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshot Management.
+        /// </summary>
+        public static string SnapshotPortalPage_Title {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and restore instance states at any point in time.
+        /// </summary>
+        public static string SnapshotPortalPage_Subtitle {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Snapshot.
+        /// </summary>
+        public static string SnapshotPortalPage_CreateTitleText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_CreateTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the current instance state as a recoverable snapshot.
+        /// </summary>
+        public static string SnapshotPortalPage_CreateDescriptionText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_CreateDescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last created.
+        /// </summary>
+        public static string SnapshotPortalPage_CreateLastTimeLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_CreateLastTimeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never.
+        /// </summary>
+        public static string SnapshotPortalPage_CreateNeverText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_CreateNeverText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Snapshots.
+        /// </summary>
+        public static string SnapshotPortalPage_ViewTitleText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_ViewTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse and manage existing snapshots of this instance.
+        /// </summary>
+        public static string SnapshotPortalPage_ViewDescriptionText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_ViewDescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshots.
+        /// </summary>
+        public static string SnapshotPortalPage_ViewCountLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_ViewCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshots capture the complete state of your instance at a specific point in time, including mods, configurations and world data..
+        /// </summary>
+        public static string SnapshotPortalPage_HintText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_HintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshots.
+        /// </summary>
+        public static string SnapshotManagementPage_Title {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No snapshots yet.
+        /// </summary>
+        public static string SnapshotManagementPage_EmptyListText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_EmptyListText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a snapshot to view details.
+        /// </summary>
+        public static string SnapshotManagementPage_DetailSelectHintText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DetailSelectHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label.
+        /// </summary>
+        public static string SnapshotManagementPage_LabelLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_LabelLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remark.
+        /// </summary>
+        public static string SnapshotManagementPage_RemarkLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RemarkLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created At.
+        /// </summary>
+        public static string SnapshotManagementPage_CreatedAtLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_CreatedAtLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string SnapshotManagementPage_PackageCountLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_PackageCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string SnapshotManagementPage_FileCountLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_FileCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Size.
+        /// </summary>
+        public static string SnapshotManagementPage_TotalSizeLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_TotalSizeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Version.
+        /// </summary>
+        public static string SnapshotManagementPage_GameVersionLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_GameVersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loader.
+        /// </summary>
+        public static string SnapshotManagementPage_LoaderLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_LoaderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No remark.
+        /// </summary>
+        public static string SnapshotManagementPage_NoRemarkText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_NoRemarkText", resourceCulture);
+            }
+        }
     }
 }

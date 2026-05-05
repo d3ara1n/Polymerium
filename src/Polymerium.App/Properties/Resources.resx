@@ -2892,4 +2892,70 @@ Affected entries: {0}
     <data name="InstancePackageModal_SkippedStatusText" xml:space="preserve">
         <value>Skipped</value>
     </data>
+  <data name="SnapshotPortalPage_Title" xml:space="preserve">
+    <value>Snapshot Management</value>
+  </data>
+  <data name="SnapshotPortalPage_Subtitle" xml:space="preserve">
+    <value>Save and restore instance states at any point in time</value>
+  </data>
+  <data name="SnapshotPortalPage_CreateTitleText" xml:space="preserve">
+    <value>Create Snapshot</value>
+  </data>
+  <data name="SnapshotPortalPage_CreateDescriptionText" xml:space="preserve">
+    <value>Save the current instance state as a recoverable snapshot</value>
+  </data>
+  <data name="SnapshotPortalPage_CreateLastTimeLabelText" xml:space="preserve">
+    <value>Last created</value>
+  </data>
+  <data name="SnapshotPortalPage_CreateNeverText" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="SnapshotPortalPage_ViewTitleText" xml:space="preserve">
+    <value>View Snapshots</value>
+  </data>
+  <data name="SnapshotPortalPage_ViewDescriptionText" xml:space="preserve">
+    <value>Browse and manage existing snapshots of this instance</value>
+  </data>
+  <data name="SnapshotPortalPage_ViewCountLabelText" xml:space="preserve">
+    <value>Snapshots</value>
+  </data>
+  <data name="SnapshotPortalPage_HintText" xml:space="preserve">
+    <value>Snapshots capture the complete state of your instance at a specific point in time, including mods, configurations and world data.</value>
+  </data>
+  <data name="SnapshotManagementPage_Title" xml:space="preserve">
+    <value>Snapshots</value>
+  </data>
+  <data name="SnapshotManagementPage_EmptyListText" xml:space="preserve">
+    <value>No snapshots yet</value>
+  </data>
+  <data name="SnapshotManagementPage_DetailSelectHintText" xml:space="preserve">
+    <value>Select a snapshot to view details</value>
+  </data>
+  <data name="SnapshotManagementPage_LabelLabelText" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="SnapshotManagementPage_RemarkLabelText" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="SnapshotManagementPage_CreatedAtLabelText" xml:space="preserve">
+    <value>Created At</value>
+  </data>
+  <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="SnapshotManagementPage_FileCountLabelText" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="SnapshotManagementPage_TotalSizeLabelText" xml:space="preserve">
+    <value>Total Size</value>
+  </data>
+  <data name="SnapshotManagementPage_GameVersionLabelText" xml:space="preserve">
+    <value>Game Version</value>
+  </data>
+  <data name="SnapshotManagementPage_LoaderLabelText" xml:space="preserve">
+    <value>Loader</value>
+  </data>
+  <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
+    <value>No remark</value>
+  </data>
 </root>

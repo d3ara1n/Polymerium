@@ -1,0 +1,211 @@
+<husk:Page
+    x:Class="Polymerium.App.Pages.SnapshotManagementPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    IsHeaderVisible="False"
+    Padding="0"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid ColumnDefinitions="280,*">
+        <Border
+            Background="{StaticResource LayerBackgroundBrush}"
+            BorderBrush="{StaticResource ControlBorderBrush}"
+            BorderThickness="0,0,1,0">
+            <Grid RowDefinitions="Auto,*">
+                <DockPanel
+                    Grid.Row="0"
+                    Margin="16,16,16,12">
+                    <Button
+                        DockPanel.Dock="Left"
+                        Click="OnBackClick"
+                        Theme="{StaticResource GhostButtonTheme}">
+                        <fi:SymbolIcon Symbol="ArrowLeft" />
+                    </Button>
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_Title}" />
+                </DockPanel>
+
+                <ListBox
+                    Grid.Row="1"
+                    x:Name="SnapshotList"
+                    SelectionChanged="OnSnapshotSelectionChanged">
+                    <ListBoxItem>
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="12">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Symbol="DocumentBulletList" />
+                            <StackPanel
+                                Grid.Column="1"
+                                Spacing="2">
+                                <TextBlock
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="Initial Setup" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="2025-03-15 10:30" />
+                            </StackPanel>
+                        </Grid>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="12">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Symbol="DocumentBulletList" />
+                            <StackPanel
+                                Grid.Column="1"
+                                Spacing="2">
+                                <TextBlock
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="Before Mod Update" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="2025-03-18 14:22" />
+                            </StackPanel>
+                        </Grid>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="12">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Symbol="DocumentBulletList" />
+                            <StackPanel
+                                Grid.Column="1"
+                                Spacing="2">
+                                <TextBlock
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="Pre-Cleanup Backup" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="2025-03-20 09:45" />
+                            </StackPanel>
+                        </Grid>
+                    </ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <Panel Grid.Column="1">
+            <StackPanel
+                x:Name="DetailPanel"
+                Margin="24"
+                Spacing="16"
+                IsVisible="False">
+                <TextBlock
+                    x:Name="DetailTitle"
+                    FontSize="{StaticResource ExtraLargeFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}" />
+
+                <husk:Divider />
+
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                    RowSpacing="12"
+                    ColumnSpacing="16">
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_LabelLabelText}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="DetailLabel"
+                        FontWeight="{StaticResource ControlStrongFontWeight}" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_RemarkLabelText}" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="DetailRemark" />
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_CreatedAtLabelText}" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        x:Name="DetailCreatedAt" />
+
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_GameVersionLabelText}" />
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        x:Name="DetailVersion" />
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_LoaderLabelText}" />
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        x:Name="DetailLoader" />
+
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_PackageCountLabelText}" />
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        x:Name="DetailPackageCount" />
+
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_TotalSizeLabelText}" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        x:Name="DetailTotalSize" />
+                </Grid>
+            </StackPanel>
+
+            <TextBlock
+                x:Name="DetailEmptyHint"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.SnapshotManagementPage_DetailSelectHintText}" />
+        </Panel>
+    </Grid>
+</husk:Page>
