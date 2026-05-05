@@ -291,7 +291,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
     [RelayCommand]
     private async Task SearchAsync()
     {
-        if (Exhibits is { IsFetching: true })
+        if (Exhibits is { IsFetching: true } or null)
         {
             return;
         }

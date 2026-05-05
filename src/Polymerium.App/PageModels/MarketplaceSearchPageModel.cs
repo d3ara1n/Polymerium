@@ -36,7 +36,6 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
         NotificationService notificationService,
         OverlayService overlayService,
         DataService dataService,
-        ConfigurationService configurationService,
         PersistenceService persistenceService)
     {
         _agent = agent;
@@ -44,7 +43,6 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
         _notificationService = notificationService;
         _overlayService = overlayService;
         _dataService = dataService;
-        _configurationService = configurationService;
         _persistenceService = persistenceService;
 
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
@@ -114,7 +112,6 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     private readonly NotificationService _notificationService;
     private readonly OverlayService _overlayService;
     private readonly DataService _dataService;
-    private readonly ConfigurationService _configurationService;
     private readonly PersistenceService _persistenceService;
 
     #endregion
@@ -180,7 +177,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     [RelayCommand]
     private async Task SearchAsync()
     {
-        if (Exhibits is { IsFetching: true })
+        if (Exhibits is { IsFetching: true } or null)
         {
             return;
         }
