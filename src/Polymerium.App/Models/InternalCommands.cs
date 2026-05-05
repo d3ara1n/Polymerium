@@ -3,13 +3,8 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
-using Avalonia.Input.Platform;
-using Avalonia.Platform.Storage;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Properties;
-using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 
 namespace Polymerium.App.Models;

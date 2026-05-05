@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Pages;
 using Polymerium.App.Properties;

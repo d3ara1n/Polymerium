@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;

@@ -302,6 +302,27 @@
                                     Symbol="FolderZip" />
                             </Button>
                             <Button
+                                Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                CommandParameter="{Binding Basic.Key}"
+                                CornerRadius="{StaticResource ExtraSmallCornerRadius}"
+                                ToolTip.Tip="Manage snapshots">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                            ConverterParameter="Updating"
+                                            Path="State" />
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                                            ConverterParameter="Deploying"
+                                            Path="State" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="FolderZip" />
+                            </Button>
+                            <Button
                                 Command="{Binding OpenFolderCommand}"
                                 ToolTip.Tip="Open instance folder">
                                 <Button.CornerRadius>

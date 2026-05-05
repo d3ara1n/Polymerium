@@ -2,7 +2,6 @@ using System.IO;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using TridentCore.Core.Utilities;
 using Resources = Polymerium.App.Properties.Resources;

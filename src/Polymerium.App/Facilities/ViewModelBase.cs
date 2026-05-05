@@ -1,10 +1,7 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia.Mvvm.Models;
-using Microsoft.Extensions.DependencyInjection;
-using Polymerium.App.Services;
 
 namespace Polymerium.App.Facilities;
 

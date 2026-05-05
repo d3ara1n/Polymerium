@@ -6,7 +6,6 @@ using System.Net.Http;
 using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media;
 using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Properties;

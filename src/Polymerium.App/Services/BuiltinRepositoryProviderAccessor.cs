@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Repositories;
-using TridentCore.Abstractions.Repositories;
 using TridentCore.Core.Services;
 using TridentCore.Core.Utilities;
 

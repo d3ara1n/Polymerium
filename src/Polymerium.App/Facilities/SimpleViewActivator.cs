@@ -1,7 +1,6 @@
 using System;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
 using Huskui.Avalonia.Mvvm.States;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Pages;

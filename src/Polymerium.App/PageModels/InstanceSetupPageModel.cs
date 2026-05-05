@@ -21,7 +21,6 @@ using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
-using Huskui.Avalonia.Mvvm.Models;
 using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
