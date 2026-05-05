@@ -32,8 +32,7 @@ public partial class NewInstancePageModel(
     NotificationService notificationService,
     ImporterAgent importerAgent,
     DataService dataService,
-    PersistenceService persistenceService
-) : ViewModelBase
+    PersistenceService persistenceService) : ViewModelBase
 {
     #region Overrides
 
@@ -50,9 +49,7 @@ public partial class NewInstancePageModel(
         }
 
         var game = await dataService.GetMinecraftVersionsAsync();
-        var versions = game
-            .Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime))
-            .ToList();
+        var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
 
         Versions = versions;
         var first = game.Versions.FirstOrDefault(x => x.Recommended);
@@ -81,10 +78,7 @@ public partial class NewInstancePageModel(
         }
         catch (Exception e)
         {
-            notificationService.PopMessage(
-                e,
-                Resources.NewInstancePage_ImportDangerNotificationTitle
-            );
+            notificationService.PopMessage(e, Resources.NewInstancePage_ImportDangerNotificationTitle);
         }
     }
 
@@ -99,10 +93,7 @@ public partial class NewInstancePageModel(
         {
             var dialog = new GameVersionPickerDialog();
             dialog.SetItems(Versions);
-            if (
-                await overlayService.PopDialogAsync(dialog)
-                && dialog.Result is GameVersionModel version
-            )
+            if (await overlayService.PopDialogAsync(dialog) && dialog.Result is GameVersionModel version)
             {
                 Dispatcher.UIThread.Post(() => VersionName = version.Name);
             }
@@ -112,10 +103,8 @@ public partial class NewInstancePageModel(
     [RelayCommand]
     private async Task OpenImportDialog()
     {
-        var path = await overlayService.RequestFileAsync(
-            Resources.NewInstancePage_RequestFilePrompt,
-            Resources.NewInstancePage_RequestFileTitle
-        );
+        var path = await overlayService.RequestFileAsync(Resources.NewInstancePage_RequestFilePrompt,
+                                                         Resources.NewInstancePage_RequestFileTitle);
         if (path != null)
         {
             await TryImportFromFileAsync(path);
@@ -139,24 +128,13 @@ public partial class NewInstancePageModel(
         if (ImportedPack != null)
         {
             profile = ImportedPack.Container.Profile;
-            await importerAgent.ExtractFilesAsync(
-                key.Key,
-                ImportedPack.Container,
-                ImportedPack.Pack
-            );
+            await Task.Run(async () => await importerAgent.ExtractFilesAsync(key.Key,
+                                                                             ImportedPack.Container,
+                                                                             ImportedPack.Pack));
         }
         else
         {
-            profile = new()
-            {
-                Name = display,
-                Setup = new()
-                {
-                    Loader = null,
-                    Version = VersionName,
-                    Source = null,
-                },
-            };
+            profile = new() { Name = display, Setup = new() { Loader = null, Version = VersionName, Source = null, }, };
         }
 
         if (Thumbnail != null)
@@ -176,30 +154,25 @@ public partial class NewInstancePageModel(
                 }
 
                 await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
-                await stream.CopyToAsync(writer).ConfigureAwait(false);
-                await writer.FlushAsync().ConfigureAwait(false);
+                await stream.CopyToAsync(writer);
+                await writer.FlushAsync();
             }
             catch (Exception ex)
             {
-                Dispatcher.UIThread.Post(() =>
-                    notificationService.PopMessage(
-                        ex,
-                        Resources.NewInstancePage_IconSavingDangerNotificationTitle
-                    )
-                );
+                Dispatcher.UIThread.Post(() => notificationService.PopMessage(ex,
+                                                                              Resources
+                                                                                 .NewInstancePage_IconSavingDangerNotificationTitle));
             }
         }
 
         profileManager.Add(key, profile);
 
-        persistenceService.AppendAction(
-            new()
-            {
-                Key = key.Key,
-                Kind = PersistenceService.ActionKind.Install,
-                New = ImportedPack?.Path,
-            }
-        );
+        persistenceService.AppendAction(new()
+        {
+            Key = key.Key,
+            Kind = PersistenceService.ActionKind.Install,
+            New = ImportedPack?.Path,
+        });
 
         navigationService.Navigate<InstancePage>(key.Key);
     }

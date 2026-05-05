@@ -289,16 +289,18 @@ public partial class MainWindowContext : ObservableObject
                                                                                        .ForInstance(key));
                             try
                             {
-                                using var container = await _exporterAgent.ExportAsync(pack,
-                                                    model.SelectedExporterLabel,
-                                                    key,
-                                                    name,
-                                                    author,
-                                                    version);
-                                notification.Report(33);
-                                notification.Report(66);
+                                using var container = await Task.Run(async () => await _exporterAgent.ExportAsync(pack,
+                                                                         model.SelectedExporterLabel,
+                                                                         key,
+                                                                         name,
+                                                                         author,
+                                                                         version));
+                                notification.Report(50);
                                 await using var stream = await storageItem.OpenWriteAsync();
-                                await _exporterAgent.PackCompressedAsync(stream, container);
+                                await Task.Run(async () =>
+                                {
+                                    await _exporterAgent.PackCompressedAsync(stream, container);
+                                });
                                 notification.Report(100);
                                 await Task.Delay(TimeSpan.FromSeconds(1));
                                 var path = storageItem.TryGetLocalPath();
@@ -893,14 +895,14 @@ public partial class MainWindowContext : ObservableObject
                         // Determine if this is an account issue or game crash
                         var isAccountIssue = e.FailureReason is AccountAuthenticationException
                                                              or AggregateException
-                        {
-                            InnerException: AccountAuthenticationException
-                        };
+                                                                {
+                                                                    InnerException: AccountAuthenticationException
+                                                                };
                         var isGameCrash = e.FailureReason is ProcessFaultedException
                                                           or AggregateException
-                        {
-                            InnerException: ProcessFaultedException
-                        };
+                                                             {
+                                                                 InnerException: ProcessFaultedException
+                                                             };
 
                         if (isAccountIssue)
                         {

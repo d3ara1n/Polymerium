@@ -758,7 +758,7 @@ public partial class InstanceSetupPageModel(
                     // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
                     // ReSharper disable once AccessToDisposedClosure
                     var tasks = staging.Select(x => UpdateAsync(x, semaphore, progress));
-                    await Task.WhenAll(tasks);
+                    await Task.Run(async () => await Task.WhenAll(tasks));
                     semaphore.Dispose();
                 }
                 catch (OperationCanceledException) { }
@@ -1066,67 +1066,47 @@ public partial class InstanceSetupPageModel(
     private async Task ExportListAsync()
     {
         var profile = ProfileManager.GetImmutable(Basic.Key);
-        var list = new List<Profile.Rice.Entry>(profile.Setup.Packages);
-        var dialog = new PackageListExporterDialog { PackageCount = list.Count, Key = Basic.Key };
+        var dialog = new PackageListExporterDialog { PackageCount = profile.Setup.Packages.Count, Key = Basic.Key };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             var output = new List<ExportedEntry>();
             var progress = notificationService.PopProgress("Export package list to file",
                                                            thumbnail: GetNotificationThumbnail());
-            // 这里用单个解析也没关系，能进入这个页面就说明所有数据都被缓存过了
-            foreach (var entry in list)
+            var list = new Dictionary<PackageIdentifier, Profile.Rice.Entry>();
+            foreach (var entry in profile.Setup.Packages)
             {
-                if (progress.IsDisposed)
-                {
-                    return;
-                }
-
-                string? label = null;
-                string? @namespace = null;
-                string? projectId = null;
-                string? versionId = null;
-                string? name = null;
-                string? version = null;
                 if (PackageHelper.TryParse(entry.Purl, out var result))
                 {
-                    label = result.Label;
-                    @namespace = result.Namespace;
-                    projectId = result.Pid;
-                    versionId = result.Vid;
-                    try
-                    {
-                        await Task.Delay(TimeSpan.FromMilliseconds(25));
-                        var package = await dataService.ResolvePackageAsync(result.Label,
-                                                                            result.Namespace,
-                                                                            result.Pid,
-                                                                            result.Vid,
-                                                                            Filter.None);
-                        name = package.ProjectName;
-                        version = package.VersionName;
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogError(ex, "Failed to exporting: {}", entry.Purl);
-                        notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
-                                                       Resources
-                                                          .InstanceSetupPage_FetchingInformationDangerNotificationTitle,
-                                                       GrowlLevel.Warning,
-                                                       thumbnail: GetNotificationThumbnail());
-                    }
+                    list.Add(new(result.Label, result.Namespace, result.Pid, result.Vid), entry);
                 }
+            }
 
-                output.Add(new(entry.Purl,
-                               label,
-                               @namespace,
-                               projectId,
-                               versionId,
-                               entry.Enabled,
-                               entry.Source,
-                               name,
-                               version,
-                               string.Join("|", entry.Tags)));
-                progress.Report(100d * output.Count / list.Count);
-                progress.Report($"Exporting package list...({output.Count}/{list.Count})");
+
+            try
+            {
+                var res = await Task.Run(async () => await dataService.ResolvePackagesAsync(list.Keys, Filter.None));
+                foreach (var (id, pkg) in res)
+                {
+                    var entry = list[id];
+                    output.Add(new(entry.Purl,
+                                   pkg.Label,
+                                   pkg.Namespace,
+                                   pkg.ProjectId,
+                                   pkg.VersionId,
+                                   entry.Enabled,
+                                   entry.Source,
+                                   pkg.ProjectName,
+                                   id.Version is not null ? pkg.VersionName : null,
+                                   string.Join("|", entry.Tags)));
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to export");
+                notificationService.PopMessage(ex,
+                                               Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
+                                               GrowlLevel.Warning,
+                                               thumbnail: GetNotificationThumbnail());
             }
 
             progress.Dispose();
