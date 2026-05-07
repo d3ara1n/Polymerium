@@ -139,32 +139,32 @@
                         </StackPanel>
                         <StackPanel>
                             <TextBlock Text="{x:Static lang:Resources.NewInstancePage_VersionLabelText}" />
-                            <husk:SkeletonContainer
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
-                                <TextBox
-                                    IsEnabled="{Binding ImportedPack, Converter={x:Static ObjectConverters.IsNull}}"
-                                    Text="{Binding VersionName, Mode=TwoWay}">
-                                    <TextBox.InnerLeftContent>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fi:SymbolIcon
-                                                Margin="10,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="{StaticResource MediumFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Symbol="CompassNorthwest" />
-                                            <husk:Divider Orientation="Vertical" />
-                                        </StackPanel>
-                                    </TextBox.InnerLeftContent>
-                                    <TextBox.InnerRightContent>
+                            <TextBox
+                                IsEnabled="{Binding ImportedPack, Converter={x:Static ObjectConverters.IsNull}}"
+                                Text="{Binding VersionName, Mode=TwoWay}">
+                                <TextBox.InnerLeftContent>
+                                    <StackPanel Orientation="Horizontal">
+                                        <fi:SymbolIcon
+                                            Margin="10,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Symbol="CompassNorthwest" />
+                                        <husk:Divider Orientation="Vertical" />
+                                    </StackPanel>
+                                </TextBox.InnerLeftContent>
+                                <TextBox.InnerRightContent>
+                                    <husk:SkeletonContainer
+                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                        IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
                                         <Button Command="{Binding PickVersionCommand}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="List" />
                                         </Button>
-                                    </TextBox.InnerRightContent>
-                                </TextBox>
-                            </husk:SkeletonContainer>
+                                    </husk:SkeletonContainer>
+                                </TextBox.InnerRightContent>
+                            </TextBox>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
