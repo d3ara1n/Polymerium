@@ -7,109 +7,84 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    IsHeaderVisible="False"
     Padding="0"
+    Header="{x:Static lang:Resources.SnapshotManagementPage_Title}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid ColumnDefinitions="280,*">
-        <Border
-            Background="{StaticResource LayerBackgroundBrush}"
-            BorderBrush="{StaticResource ControlBorderBrush}"
-            BorderThickness="0,0,1,0">
-            <Grid RowDefinitions="Auto,*">
-                <DockPanel
-                    Grid.Row="0"
-                    Margin="16,16,16,12">
-                    <Button
-                        DockPanel.Dock="Left"
-                        Click="OnBackClick"
-                        Theme="{StaticResource GhostButtonTheme}">
-                        <fi:SymbolIcon Symbol="ArrowLeft" />
-                    </Button>
-                    <TextBlock
-                        Margin="8,0,0,0"
+    <Grid ColumnDefinitions="*,Auto,*">
+        <ListBox Grid.Column="0"
+                 x:Name="SnapshotList"
+                 SelectionChanged="OnSnapshotSelectionChanged">
+            <ListBoxItem>
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12">
+                    <fi:SymbolIcon
                         VerticalAlignment="Center"
-                        FontSize="{StaticResource LargeFontSize}"
-                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_Title}" />
-                </DockPanel>
-
-                <ListBox
-                    Grid.Row="1"
-                    x:Name="SnapshotList"
-                    SelectionChanged="OnSnapshotSelectionChanged">
-                    <ListBoxItem>
-                        <Grid
-                            ColumnDefinitions="Auto,*"
-                            ColumnSpacing="12">
-                            <fi:SymbolIcon
-                                VerticalAlignment="Center"
-                                FontSize="20"
-                                Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                Symbol="DocumentBulletList" />
-                            <StackPanel
-                                Grid.Column="1"
-                                Spacing="2">
-                                <TextBlock
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="Initial Setup" />
-                                <TextBlock
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="2025-03-15 10:30" />
-                            </StackPanel>
-                        </Grid>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <Grid
-                            ColumnDefinitions="Auto,*"
-                            ColumnSpacing="12">
-                            <fi:SymbolIcon
-                                VerticalAlignment="Center"
-                                FontSize="20"
-                                Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                Symbol="DocumentBulletList" />
-                            <StackPanel
-                                Grid.Column="1"
-                                Spacing="2">
-                                <TextBlock
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="Before Mod Update" />
-                                <TextBlock
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="2025-03-18 14:22" />
-                            </StackPanel>
-                        </Grid>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <Grid
-                            ColumnDefinitions="Auto,*"
-                            ColumnSpacing="12">
-                            <fi:SymbolIcon
-                                VerticalAlignment="Center"
-                                FontSize="20"
-                                Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                Symbol="DocumentBulletList" />
-                            <StackPanel
-                                Grid.Column="1"
-                                Spacing="2">
-                                <TextBlock
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="Pre-Cleanup Backup" />
-                                <TextBlock
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="2025-03-20 09:45" />
-                            </StackPanel>
-                        </Grid>
-                    </ListBoxItem>
-                </ListBox>
-            </Grid>
-        </Border>
-
-        <Panel Grid.Column="1">
+                        FontSize="20"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="DocumentBulletList" />
+                    <StackPanel
+                        Grid.Column="1"
+                        Spacing="2">
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="Initial Setup" />
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="2025-03-15 10:30" />
+                    </StackPanel>
+                </Grid>
+            </ListBoxItem>
+            <ListBoxItem>
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12">
+                    <fi:SymbolIcon
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="DocumentBulletList" />
+                    <StackPanel
+                        Grid.Column="1"
+                        Spacing="2">
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="Before Mod Update" />
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="2025-03-18 14:22" />
+                    </StackPanel>
+                </Grid>
+            </ListBoxItem>
+            <ListBoxItem>
+                <Grid
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="12">
+                    <fi:SymbolIcon
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="DocumentBulletList" />
+                    <StackPanel
+                        Grid.Column="1"
+                        Spacing="2">
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="Pre-Cleanup Backup" />
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="2025-03-20 09:45" />
+                    </StackPanel>
+                </Grid>
+            </ListBoxItem>
+        </ListBox>
+        <GridSplitter Grid.Column="1" ResizeDirection="Columns" />
+        <Panel Grid.Column="2">
             <StackPanel
                 x:Name="DetailPanel"
                 Margin="24"

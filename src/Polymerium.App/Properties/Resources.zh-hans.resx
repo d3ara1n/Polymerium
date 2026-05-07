@@ -2946,4 +2946,7 @@
   <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
     <value>无备注</value>
   </data>
+    <data name="SnapshotsModal_Title" xml:space="preserve">
+        <value>快照</value>
+    </data>
 </root>

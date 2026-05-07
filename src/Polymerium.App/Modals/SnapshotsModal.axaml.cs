@@ -8,9 +8,9 @@ using Polymerium.App.Pages;
 
 namespace Polymerium.App.Modals;
 
-public partial class SnapshotModal : Modal
+public partial class SnapshotsModal : Modal
 {
-    public SnapshotModal()
+    public SnapshotsModal()
     {
         InitializeComponent();
 
