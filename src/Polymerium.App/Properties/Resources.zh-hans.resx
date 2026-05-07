@@ -2910,9 +2910,9 @@
     <data name="SnapshotPortalPage_HintText" xml:space="preserve">
         <value>快照会捕获实例在特定时间点的可还原状态，包括构建运行时产物以外的所有数据。</value>
     </data>
-  <data name="SnapshotManagementPage_Title" xml:space="preserve">
-    <value>快照</value>
-  </data>
+    <data name="SnapshotManagementPage_Title" xml:space="preserve">
+        <value>快照管理</value>
+    </data>
   <data name="SnapshotManagementPage_EmptyListText" xml:space="preserve">
     <value>暂无快照</value>
   </data>

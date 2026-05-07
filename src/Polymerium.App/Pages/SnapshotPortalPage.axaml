@@ -2,19 +2,23 @@
     x:Class="Polymerium.App.Pages.SnapshotPortalPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:app="https://github.com/d3ara1n/Polymerium"
-    IsHeaderVisible="False"
     Padding="32,28"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    IsHeaderVisible="False"
     mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="20">
-        <StackPanel Grid.Row="0" Spacing="4">
+    <Grid
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="20">
+        <StackPanel
+            Grid.Row="0"
+            Spacing="4">
             <TextBlock
                 FontSize="{StaticResource ExtraLargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -30,10 +34,12 @@
             ColumnSpacing="20">
             <Button
                 Grid.Column="0"
+                Padding="24"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
-                CornerRadius="{StaticResource MediumCornerRadius}"
-                Padding="24">
+                Command="{Binding $parent[app:SnapshotsModal].NavigateCommand}"
+                CommandParameter="{x:Type app:SnapshotCreationPage}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid
                     RowDefinitions="Auto,Auto,*,Auto"
                     RowSpacing="8">
@@ -68,12 +74,12 @@
 
             <Button
                 Grid.Column="1"
+                Padding="24"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
                 Command="{Binding $parent[app:SnapshotsModal].NavigateCommand}"
                 CommandParameter="{x:Type app:SnapshotManagementPage}"
-                CornerRadius="{StaticResource MediumCornerRadius}"
-                Padding="24">
+                CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid
                     RowDefinitions="Auto,Auto,*,Auto"
                     RowSpacing="8">
@@ -109,8 +115,8 @@
 
         <TextBlock
             Grid.Row="2"
-            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
             FontStyle="Italic"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
             Text="{x:Static lang:Resources.SnapshotPortalPage_HintText}"
             TextWrapping="Wrap" />
     </Grid>
