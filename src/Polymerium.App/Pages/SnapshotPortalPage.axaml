@@ -7,6 +7,7 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     IsHeaderVisible="False"
     Padding="32,28"
     d:DesignHeight="450"
@@ -29,11 +30,8 @@
             ColumnSpacing="20">
             <Button
                 Grid.Column="0"
-                HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
-                VerticalAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
-                Click="OnCreateSnapshotClick"
                 CornerRadius="{StaticResource MediumCornerRadius}"
                 Padding="24">
                 <Grid
@@ -70,11 +68,10 @@
 
             <Button
                 Grid.Column="1"
-                HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
-                VerticalAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
-                Click="OnViewSnapshotsClick"
+                Command="{Binding $parent[app:SnapshotModal].NavigateCommand}"
+                CommandParameter="{x:Type app:SnapshotManagementPage}"
                 CornerRadius="{StaticResource MediumCornerRadius}"
                 Padding="24">
                 <Grid

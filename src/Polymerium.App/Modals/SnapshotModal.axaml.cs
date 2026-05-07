@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Mixins;
@@ -18,9 +19,12 @@ public partial class SnapshotModal : Modal
         Frame.Navigate(typeof(SnapshotPortalPage), null, null);
     }
 
-    private void Navigate(Type page)
+    [RelayCommand]
+    private void Navigate(Type? page)
     {
-        Frame.Navigate(page, null, null);
+        if (page != null)
+        {
+            Frame.Navigate(page, null, null);
+        }
     }
 }
-
