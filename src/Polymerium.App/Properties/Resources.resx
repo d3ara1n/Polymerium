@@ -2895,9 +2895,9 @@ Affected entries: {0}
   <data name="SnapshotPortalPage_Title" xml:space="preserve">
     <value>Snapshot Management</value>
   </data>
-  <data name="SnapshotPortalPage_Subtitle" xml:space="preserve">
-    <value>Save and restore instance states at any point in time</value>
-  </data>
+    <data name="SnapshotPortalPage_Subtitle" xml:space="preserve">
+        <value>Save and restore instance states at any point in time.</value>
+    </data>
   <data name="SnapshotPortalPage_CreateTitleText" xml:space="preserve">
     <value>Create Snapshot</value>
   </data>
@@ -2919,9 +2919,9 @@ Affected entries: {0}
   <data name="SnapshotPortalPage_ViewCountLabelText" xml:space="preserve">
     <value>Snapshots</value>
   </data>
-  <data name="SnapshotPortalPage_HintText" xml:space="preserve">
-    <value>Snapshots capture the complete state of your instance at a specific point in time, including mods, configurations and world data.</value>
-  </data>
+    <data name="SnapshotPortalPage_HintText" xml:space="preserve">
+        <value>Snapshots capture the restorable state of your instance at a specific point in time, including all the data except build artifacts.</value>
+    </data>
   <data name="SnapshotManagementPage_Title" xml:space="preserve">
     <value>Snapshots</value>
   </data>

@@ -12,23 +12,4 @@ public partial class SnapshotPortalPage : Page
     {
         InitializeComponent();
     }
-
-    private void OnCreateSnapshotClick(object? sender, RoutedEventArgs e)
-    {
-    }
-
-    private void OnViewSnapshotsClick(object? sender, RoutedEventArgs e)
-    {
-        var current = Parent;
-        while (current != null)
-        {
-            if (current is Frame frame)
-            {
-                frame.Navigate(typeof(SnapshotManagementPage), null, null);
-                return;
-            }
-
-            current = current.Parent;
-        }
-    }
 }
