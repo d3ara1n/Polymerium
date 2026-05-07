@@ -70,7 +70,7 @@
                 Grid.Column="1"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
-                Command="{Binding $parent[app:SnapshotModal].NavigateCommand}"
+                Command="{Binding $parent[app:SnapshotsModal].NavigateCommand}"
                 CommandParameter="{x:Type app:SnapshotManagementPage}"
                 CornerRadius="{StaticResource MediumCornerRadius}"
                 Padding="24">

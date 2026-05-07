@@ -5876,5 +5876,11 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("SnapshotManagementPage_NoRemarkText", resourceCulture);
             }
         }
+        
+        public static string SnapshotsModal_Title {
+            get {
+                return ResourceManager.GetString("SnapshotsModal_Title", resourceCulture);
+            }
+        }
     }
 }

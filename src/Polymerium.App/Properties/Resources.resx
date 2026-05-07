@@ -2958,4 +2958,7 @@ Affected entries: {0}
   <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
     <value>No remark</value>
   </data>
+    <data name="SnapshotsModal_Title" xml:space="preserve">
+        <value>Snapshots</value>
+    </data>
 </root>

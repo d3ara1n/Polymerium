@@ -1,0 +1,32 @@
+﻿<husk:Modal
+    x:Class="Polymerium.App.Modals.SnapshotsModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Width="660"
+    Height="480"
+    mc:Ignorable="d">
+    <husk:Modal.Styles>
+        <Style Selector="husk|Page">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="IsHeaderVisible" Value="False"/>
+        </Style>
+    </husk:Modal.Styles>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Button DockPanel.Dock="Right" Command="{Binding $parent[app:SnapshotsModal].Dismiss}" Classes="Small">
+                <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
+            </Button>
+            <TextBlock Text="{Binding #Frame.((husk:Page)Content)?.Header}" FontSize="{StaticResource LargeFontSize}"
+                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+        </DockPanel>
+        <husk:Frame x:Name="Frame" />
+    </DockPanel>
+</husk:Modal>
