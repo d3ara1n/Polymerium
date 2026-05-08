@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
+using Polymerium.App.Models;
 using Polymerium.App.Pages;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
@@ -34,9 +36,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         NavigationService navigationService,
         ConfigurationService configurationService,
         PersistenceService persistenceService,
-        InstanceService instanceService
-    )
-        : base(context, instanceManager, profileManager)
+        InstanceService instanceService) : base(context, instanceManager, profileManager)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         _overlayService = overlayService;
@@ -54,11 +54,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     private string AccessOverrideString(string key)
     {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (
-            _owned != null
-            && _owned.Value.Overrides.TryGetValue(key, out var result)
-            && result != null
-        )
+        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result != null)
         {
             return result.ToString() ?? string.Empty;
         }
@@ -68,11 +64,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
     private bool AccessOverrideBoolean(string key)
     {
-        if (
-            _owned != null
-            && _owned.Value.Overrides.TryGetValue(key, out var result)
-            && result is bool rv
-        )
+        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is bool rv)
         {
             return rv;
         }
@@ -119,11 +111,9 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(
-                ex,
-                Resources.InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle,
-                thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-            );
+            _notificationService.PopMessage(ex,
+                                            Resources.InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle,
+                                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
         }
     }
 
@@ -152,32 +142,22 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         JavaHomeWatermark = Resources.InstancePropertiesPage_JavaHomePlaceholder;
         JavaMaxMemoryOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
-        JavaAdditionalArgumentsOverride = AccessOverrideString(
-            Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS
-        );
-        JavaAdditionalArgumentsWatermark = !string.IsNullOrEmpty(
-            _configurationService.Value.GameJavaAdditionalArguments
-        )
-            ? _configurationService.Value.GameJavaAdditionalArguments
-            : Resources.InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder;
+        JavaAdditionalArgumentsOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
+        JavaAdditionalArgumentsWatermark =
+            !string.IsNullOrEmpty(_configurationService.Value.GameJavaAdditionalArguments)
+                ? _configurationService.Value.GameJavaAdditionalArguments
+                : Resources.InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder;
         CommandWrapperOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER);
-        CommandWrapperWatermark = !string.IsNullOrEmpty(
-            _configurationService.Value.GameCommandWrapper
-        )
-            ? _configurationService.Value.GameCommandWrapper
-            : "prime-run {command}";
+        CommandWrapperWatermark = !string.IsNullOrEmpty(_configurationService.Value.GameCommandWrapper)
+                                      ? _configurationService.Value.GameCommandWrapper
+                                      : "prime-run {command}";
         WindowInitialHeightOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_HEIGHT);
-        WindowInitialHeightWatermark =
-            _configurationService.Value.GameWindowInitialHeight.ToString();
+        WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
         WindowInitialWidthOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_WIDTH);
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
-        BehaviorResolveDependency = AccessOverrideBoolean(
-            Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY
-        );
-        QuickConnectAddressOverride = AccessOverrideString(
-            Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
-        );
+        BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
+        QuickConnectAddressOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
         QuickConnectAddressWatermark = Resources.InstancePropertiesPage_QuickConnectPlaceholder;
 
         #endregion
@@ -216,10 +196,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     {
         if (box != null)
         {
-            var path = await _overlayService.RequestFileAsync(
-                Resources.InstancePropertiesPage_RequestJavaPrompt,
-                Resources.InstancePropertiesPage_RequestJavaTitle
-            );
+            var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesPage_RequestJavaPrompt,
+                                                              Resources.InstancePropertiesPage_RequestJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -232,8 +210,17 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     }
 
     [RelayCommand]
-    private void CheckIntegrity() =>
-        _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
+    private async Task PickRuntime()
+    {
+        var dialog = _overlayService.CreateDialog<RuntimePickerDialog>();
+        if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is RuntimePickerDialogCandidateModel runtime)
+        {
+            JavaHomeOverride = runtime.Home;
+        }
+    }
+
+    [RelayCommand]
+    private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
 
     [RelayCommand]
     private void ResetInstance()
@@ -260,22 +247,15 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
                     File.Delete(file);
                 }
 
-                _persistenceService.AppendAction(
-                    new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.Reset }
-                );
-                _notificationService.PopMessage(
-                    "Instance reset",
-                    Basic.Key,
-                    GrowlLevel.Success,
-                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-                );
+                _persistenceService.AppendAction(new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.Reset });
+                _notificationService.PopMessage("Instance reset",
+                                                Basic.Key,
+                                                GrowlLevel.Success,
+                                                thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(
-                    ex,
-                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-                );
+                _notificationService.PopMessage(ex, thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
             }
         }
     }
@@ -312,20 +292,16 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
         var oldSource = Basic.Source;
         Basic.Source = null;
-        _persistenceService.AppendAction(
-            new()
-            {
-                Key = Basic.Key,
-                Kind = PersistenceService.ActionKind.Unlock,
-                Old = oldSource,
-            }
-        );
-        _notificationService.PopMessage(
-            Resources.InstancePropertiesPage_UnlockingSuccessNotificationMessage,
-            Basic.Key,
-            GrowlLevel.Success,
-            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-        );
+        _persistenceService.AppendAction(new()
+        {
+            Key = Basic.Key,
+            Kind = PersistenceService.ActionKind.Unlock,
+            Old = oldSource,
+        });
+        _notificationService.PopMessage(Resources.InstancePropertiesPage_UnlockingSuccessNotificationMessage,
+                                        Basic.Key,
+                                        GrowlLevel.Success,
+                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
     }
 
     [RelayCommand]
@@ -338,10 +314,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task SelectThumbnailAsync()
     {
-        var path = await _overlayService.RequestFileAsync(
-            Resources.InstancePropertiesPage_RequestThumbnailPrompt,
-            Resources.InstancePropertiesPage_RequestThumbnailTitle
-        );
+        var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesPage_RequestThumbnailPrompt,
+                                                          Resources.InstancePropertiesPage_RequestThumbnailTitle);
         if (path != null)
         {
             if (FileHelper.IsBitmapFile(path))
@@ -351,12 +325,12 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             }
             else
             {
-                _notificationService.PopMessage(
-                    Resources.InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage,
-                    Resources.InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle,
-                    GrowlLevel.Warning,
-                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-                );
+                _notificationService.PopMessage(Resources
+                                                   .InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage,
+                                                Resources
+                                                   .InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle,
+                                                GrowlLevel.Warning,
+                                                thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
             }
         }
     }
@@ -364,25 +338,21 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task RenameInstance()
     {
-        var name = await _overlayService.RequestInputAsync(
-            Resources.InstancePropertiesPage_RequestNamePrompt,
-            Resources.InstancePropertiesPage_RequestNameTitle,
-            Basic.Name
-        );
+        var name = await _overlayService.RequestInputAsync(Resources.InstancePropertiesPage_RequestNamePrompt,
+                                                           Resources.InstancePropertiesPage_RequestNameTitle,
+                                                           Basic.Name);
         if (name != null && _owned != null && !string.Equals(name, Basic.Name))
         {
             var oldName = NameOverwrite;
             NameOverwrite = name;
             _owned.Value.Name = name;
-            _persistenceService.AppendAction(
-                new()
-                {
-                    Key = Basic.Key,
-                    Kind = PersistenceService.ActionKind.Rename,
-                    Old = oldName,
-                    New = name,
-                }
-            );
+            _persistenceService.AppendAction(new()
+            {
+                Key = Basic.Key,
+                Kind = PersistenceService.ActionKind.Rename,
+                Old = oldName,
+                New = name,
+            });
         }
     }
 
@@ -412,8 +382,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [ObservableProperty]
     public partial string JavaHomeWatermark { get; set; } = string.Empty;
 
-    partial void OnJavaHomeOverrideChanged(string value) =>
-        WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
+    partial void OnJavaHomeOverrideChanged(string value) => WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
 
     [ObservableProperty]
     public partial string JavaMaxMemoryOverride { get; set; } = string.Empty;
@@ -422,10 +391,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public partial string JavaMaxMemoryWatermark { get; set; } = string.Empty;
 
     partial void OnJavaMaxMemoryOverrideChanged(string value) =>
-        WriteOverride(
-            Profile.OVERRIDE_JAVA_MAX_MEMORY,
-            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
-        );
+        WriteOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
 
     [ObservableProperty]
     public partial string JavaAdditionalArgumentsOverride { get; set; } = string.Empty;
@@ -434,10 +401,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public partial string JavaAdditionalArgumentsWatermark { get; set; } = string.Empty;
 
     partial void OnJavaAdditionalArgumentsOverrideChanged(string value) =>
-        WriteOverride(
-            Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-            !string.IsNullOrEmpty(value) ? value : null
-        );
+        WriteOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS, !string.IsNullOrEmpty(value) ? value : null);
 
     [ObservableProperty]
     public partial string CommandWrapperOverride { get; set; } = string.Empty;
@@ -446,10 +410,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public partial string CommandWrapperWatermark { get; set; } = string.Empty;
 
     partial void OnCommandWrapperOverrideChanged(string value) =>
-        WriteOverride(
-            Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
-            !string.IsNullOrEmpty(value) ? value : null
-        );
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER, !string.IsNullOrEmpty(value) ? value : null);
 
     [ObservableProperty]
     public partial string WindowInitialHeightOverride { get; set; } = string.Empty;
@@ -458,10 +419,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public partial string WindowInitialHeightWatermark { get; set; } = string.Empty;
 
     partial void OnWindowInitialHeightOverrideChanged(string value) =>
-        WriteOverride(
-            Profile.OVERRIDE_WINDOW_HEIGHT,
-            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
-        );
+        WriteOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
+                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
 
     [ObservableProperty]
     public partial string WindowInitialWidthOverride { get; set; } = string.Empty;
@@ -470,10 +429,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public partial string WindowInitialWidthWatermark { get; set; } = string.Empty;
 
     partial void OnWindowInitialWidthOverrideChanged(string value) =>
-        WriteOverride(
-            Profile.OVERRIDE_WINDOW_WIDTH,
-            !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null
-        );
+        WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH,
+                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
 
     [ObservableProperty]
     public partial string QuickConnectAddressOverride { get; set; } = string.Empty;
@@ -482,10 +439,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public partial string QuickConnectAddressWatermark { get; set; } = string.Empty;
 
     partial void OnQuickConnectAddressOverrideChanged(string value) =>
-        WriteOverride(
-            Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER,
-            !string.IsNullOrEmpty(value) ? value : null
-        );
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, !string.IsNullOrEmpty(value) ? value : null);
 
     [ObservableProperty]
     public partial bool BehaviorResolveDependency { get; set; }
