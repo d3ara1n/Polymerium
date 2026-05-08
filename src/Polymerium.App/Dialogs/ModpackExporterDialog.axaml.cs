@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
+using FluentIcons.Common;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -16,31 +17,23 @@ namespace Polymerium.App.Dialogs;
 
 public partial class ModpackExporterDialog : Dialog
 {
-    public static readonly StyledProperty<string> SelectedExporterLabelProperty =
-        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(SelectedExporterLabel));
+    public static readonly StyledProperty<ModpackExporterFormatModel> SelectedExporterLabelProperty =
+        AvaloniaProperty.Register<ModpackExporterDialog, ModpackExporterFormatModel>(nameof(SelectedExporterLabel));
 
-    public static readonly StyledProperty<string> NameOverrideProperty = AvaloniaProperty.Register<
-        ModpackExporterDialog,
-        string
-    >(nameof(NameOverride));
+    public static readonly StyledProperty<string> NameOverrideProperty =
+        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(NameOverride));
 
     public static readonly StyledProperty<string> AuthorOverrideProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(AuthorOverride));
 
-    public static readonly StyledProperty<int> PackageCountProperty = AvaloniaProperty.Register<
-        ModpackExporterDialog,
-        int
-    >(nameof(PackageCount));
+    public static readonly StyledProperty<int> PackageCountProperty =
+        AvaloniaProperty.Register<ModpackExporterDialog, int>(nameof(PackageCount));
 
-    public static readonly StyledProperty<string> LoaderLabelProperty = AvaloniaProperty.Register<
-        ModpackExporterDialog,
-        string
-    >(nameof(LoaderLabel));
+    public static readonly StyledProperty<string> LoaderLabelProperty =
+        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(LoaderLabel));
 
-    public static readonly StyledProperty<string> NameOriginalProperty = AvaloniaProperty.Register<
-        ModpackExporterDialog,
-        string
-    >(nameof(NameOriginal));
+    public static readonly StyledProperty<string> NameOriginalProperty =
+        AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(NameOriginal));
 
     public static readonly StyledProperty<string> AuthorOriginalProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(AuthorOriginal));
@@ -52,20 +45,24 @@ public partial class ModpackExporterDialog : Dialog
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(VersionOriginal));
 
     public static readonly DirectProperty<ModpackExporterDialog, PackDataModel?> PackDataProperty =
-        AvaloniaProperty.RegisterDirect<ModpackExporterDialog, PackDataModel?>(
-            nameof(PackData),
-            o => o.PackData,
-            (o, v) => o.PackData = v
-        );
+        AvaloniaProperty.RegisterDirect<ModpackExporterDialog, PackDataModel?>(nameof(PackData),
+                                                                               o => o.PackData,
+                                                                               (o, v) => o.PackData = v);
 
     public ModpackExporterDialog()
     {
         InitializeComponent();
     }
 
-    public IReadOnlyList<string> ExporterLabels { get; } = ["trident", "curseforge", "modrinth", "multimc"];
+    public IReadOnlyList<ModpackExporterFormatModel> ExporterLabels { get; } =
+    [
+        new() { Icon = Symbol.FolderZip, Label = "trident", SupportsOffline = false, SupportsOnline = true },
+        new() { Icon = Symbol.FolderZip, Label = "curseforge", SupportsOffline = false, SupportsOnline = true },
+        new() { Icon = Symbol.FolderZip, Label = "modrinth", SupportsOffline = false, SupportsOnline = true },
+        new() { Icon = Symbol.FolderZip, Label = "multimc", SupportsOffline = true, SupportsOnline = false }
+    ];
 
-    public string SelectedExporterLabel
+    public ModpackExporterFormatModel SelectedExporterLabel
     {
         get => GetValue(SelectedExporterLabelProperty);
         set => SetValue(SelectedExporterLabelProperty, value);
@@ -147,9 +144,9 @@ public partial class ModpackExporterDialog : Dialog
         // 2. TabStrip 不会在第一次选中时触发 SelectedItem 的变更通知，导致 SelectedExporterLabel 默认为空
         if (result is ModpackExporterModel model)
         {
-            if (!string.IsNullOrEmpty(SelectedExporterLabel))
+            if (!string.IsNullOrEmpty(SelectedExporterLabel.Label))
             {
-                model.SelectedExporterLabel = SelectedExporterLabel;
+                model.SelectedExporterLabel = SelectedExporterLabel.Label;
             }
 
             if (!string.IsNullOrEmpty(NameOverride))
@@ -182,11 +179,10 @@ public partial class ModpackExporterDialog : Dialog
     {
         if (Result is ModpackExporterModel model)
         {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
-                new(PathDef.Default.DirectoryOfImport(model.Key)),
-                AppResources.ModpackExporterDialog_OpenImportFolderDangerNotificationTitle
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+                                                           new(PathDef.Default.DirectoryOfImport(model.Key)),
+                                                           AppResources
+                                                              .ModpackExporterDialog_OpenImportFolderDangerNotificationTitle);
         }
 
         return Task.CompletedTask;
@@ -197,15 +193,8 @@ public partial class ModpackExporterDialog : Dialog
     {
         if (PackData is null)
             return;
-        var dialog = new TagPickerDialog
-        {
-            ExistingTags = [.. AvailableTags.Except(PackData.ExcludedTags)],
-        };
-        if (
-            await OverlayService.PopDialogAsync(dialog)
-            && dialog.Result is string tag
-            && !string.IsNullOrEmpty(tag)
-        )
+        var dialog = new TagPickerDialog { ExistingTags = [.. AvailableTags.Except(PackData.ExcludedTags)], };
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
         {
             if (!PackData.ExcludedTags.Contains(tag))
             {

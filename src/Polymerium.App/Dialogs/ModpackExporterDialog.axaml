@@ -19,17 +19,78 @@
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}" />
-            <TabStrip
-                ItemsSource="{Binding $parent[app:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}"
-                SelectedItem="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
-                <TabStrip.ItemTemplate>
-                    <DataTemplate x:DataType="x:String">
-                        <husk:IconLabel
-                            Icon="FolderZip"
-                            Text="{Binding Converter={x:Static husk:StringConverters.ToUpper}}" />
-                    </DataTemplate>
-                </TabStrip.ItemTemplate>
-            </TabStrip>
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Disabled">
+                <TabStrip
+                    ItemsSource="{Binding $parent[app:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}"
+                    SelectedItem="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
+                    <TabStrip.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid
+                                ColumnSpacing="8"
+                                Columns="2"
+                                RowSpacing="8" />
+                        </ItemsPanelTemplate>
+                    </TabStrip.ItemsPanel>
+                    <TabStrip.ItemTemplate>
+                        <DataTemplate x:DataType="app:ModpackExporterFormatModel">
+                            <Grid
+                                ColumnDefinitions="Auto,Auto"
+                                ColumnSpacing="4">
+                                <husk:IconLabel
+                                    Grid.Column="0"
+                                    Icon="{Binding Icon}"
+                                    Text="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                <husk:Tag
+                                    Grid.Column="1"
+                                    Classes="Small">
+                                    <husk:Tag.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Path="SupportsOffline" />
+                                            <Binding Path="!SupportsOnline" />
+                                        </MultiBinding>
+                                    </husk:Tag.IsVisible>
+                                    <TextBlock>
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_TypeLabelText}" />
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OfflineTagText}" />
+                                    </TextBlock>
+                                </husk:Tag>
+                                <husk:Tag
+                                    Grid.Column="1"
+                                    Classes="Small">
+                                    <husk:Tag.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Path="!SupportsOffline" />
+                                            <Binding Path="SupportsOnline" />
+                                        </MultiBinding>
+                                    </husk:Tag.IsVisible>
+                                    <TextBlock>
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_TypeLabelText}" />
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OnlineTagText}" />
+                                    </TextBlock>
+                                </husk:Tag>
+                                <husk:Tag
+                                    Grid.Column="1"
+                                    Classes="Small">
+                                    <husk:Tag.IsVisible>
+                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                            <Binding Path="SupportsOffline" />
+                                            <Binding Path="SupportsOnline" />
+                                        </MultiBinding>
+                                    </husk:Tag.IsVisible>
+                                    <TextBlock>
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_TypeLabelText}" />
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OnlineTagText}" />
+                                        <Run Text="/" />
+                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OfflineTagText}" />
+                                    </TextBlock>
+                                </husk:Tag>
+                            </Grid>
+                        </DataTemplate>
+                    </TabStrip.ItemTemplate>
+                </TabStrip>
+            </ScrollViewer>
         </StackPanel>
         <!--  基本选项  -->
         <StackPanel Spacing="8">
