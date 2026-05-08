@@ -5952,6 +5952,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string ModpackExporterDialog_OfflineTagText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_OfflineTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string ModpackExporterDialog_OnlineTagText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_OnlineTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to open import folder.
         /// </summary>
         public static string ModpackExporterDialog_OpenImportFolderDangerNotificationTitle {
@@ -6002,6 +6020,15 @@ namespace Polymerium.App.Properties {
         public static string ModpackExporterDialog_TridentOptionsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type:.
+        /// </summary>
+        public static string ModpackExporterDialog_TypeLabelText {
+            get {
+                return ResourceManager.GetString("ModpackExporterDialog_TypeLabelText", resourceCulture);
             }
         }
         
