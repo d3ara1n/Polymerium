@@ -147,12 +147,17 @@
                                     FontSize="{StaticResource SmallFontSize}"
                                     Symbol="Dismiss" />
                             </Button>
+                            <Button Command="{Binding PickRuntimeCommand}">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="FolderSearch" />
+                            </Button>
                             <Button
                                 Command="{Binding PickFileCommand}"
                                 CommandParameter="{Binding $parent[TextBox]}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
-                                    Symbol="DocumentArrowLeft" />
+                                    Symbol="DocumentSearch" />
                             </Button>
                         </StackPanel>
                     </TextBox.InnerRightContent>
