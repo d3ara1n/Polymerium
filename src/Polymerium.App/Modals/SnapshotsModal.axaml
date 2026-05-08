@@ -17,6 +17,7 @@
         <Style Selector="husk|Page">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="IsHeaderVisible" Value="False" />
+            <Setter Property="Padding" Value="0" />
         </Style>
     </husk:Modal.Styles>
     <DockPanel VerticalSpacing="12">
@@ -42,7 +43,8 @@
             <Button
                 Grid.Column="2"
                 Classes="Small"
-                Command="{Binding $parent[app:SnapshotsModal].Dismiss}">
+                Command="{Binding $parent[app:SnapshotsModal].Dismiss}"
+                IsCancel="True">
                 <fi:SymbolIcon
                     FontSize="{StaticResource MediumFontSize}"
                     Symbol="Dismiss" />

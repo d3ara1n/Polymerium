@@ -4,21 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Header="创建快照"
     mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,*">
-        <StackPanel Grid.Row="0" />
+    <Grid
+        ColumnDefinitions="4*,6*"
+        ColumnSpacing="12">
         <husk:PlaceholderContainer
-            Grid.Row="1"
+            Grid.Column="1"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="快照未拍摄" />
                 <Button
-                    Classes="Primary"
+                    Classes="Success"
                     HorizontalAlignment="Center">
                     <husk:IconLabel
                         Icon="Camera"
@@ -26,6 +28,27 @@
                 </Button>
             </StackPanel>
         </husk:PlaceholderContainer>
+        <DockPanel Grid.Column="0">
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button Classes="Primary">
+                    <TextBlock Text="创建并插入数据库" />
+                </Button>
+            </StackPanel>
+            <StackPanel Spacing="4">
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="标签" />
+                <TextBox PlaceholderText="用于提示快照的创建目的" />
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="备注" />
+                <TextBox
+                    MinHeight="128"
+                    AcceptsReturn="True"
+                    PlaceholderText="标签要是不够写这里还能再写点提示性的文字"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </husk:Page>
 
