@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.States;
@@ -46,23 +47,23 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
     {
         if (view.IsAssignableTo(typeof(Page)))
         {
-            return Type.GetType(view.FullName!.Replace("Page", "PageModel"))!;
+            return ResolveViewModelType(view,nameof(Page));
         }
         else if (view.IsAssignableTo(typeof(Dialog)))
         {
-            return Type.GetType(view.FullName!.Replace("Dialog", "DialogModel"))!;
+            return ResolveViewModelType(view,nameof(Dialog));
         }
         else if (view.IsAssignableTo(typeof(Modal)))
         {
-            return Type.GetType(view.FullName!.Replace("Modal", "ModalModel"))!;
+            return ResolveViewModelType(view,nameof(Modal));
         }
         else if (view.IsAssignableTo(typeof(Sidebar)))
         {
-            return Type.GetType(view.FullName!.Replace("Sidebar", "SidebarModel"))!;
+            return ResolveViewModelType(view,nameof(Sidebar));
         }
         else if (view.IsAssignableTo(typeof(Toast)))
         {
-            return Type.GetType(view.FullName!.Replace("Toast", "ToastModel"))!;
+            return ResolveViewModelType(view,nameof(Toast));
         }
 
         throw new ArgumentOutOfRangeException(
@@ -70,5 +71,16 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
             view,
             "Parameter view must be derived from Page/Dialog/Sidebar/Toast"
         );
+    }
+
+    private static Type ResolveViewModelType(Type view, string suffix)
+    {
+        var pattern = $@"\.{suffix}s\.|(?<=\w){suffix}$";
+        var replaced = Regex.Replace(
+                                     view.FullName!,
+                                     pattern,
+                                     m => m.Value.StartsWith('.') ? $".{suffix}Models." : $"{suffix}Model"
+                                    );
+        return Type.GetType(replaced)!;
     }
 }
