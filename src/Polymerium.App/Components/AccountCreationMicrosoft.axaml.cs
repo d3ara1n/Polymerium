@@ -83,14 +83,17 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
         base.OnUnloaded(e);
 
         _cts.Cancel();
+        _cts.Dispose();
     }
 
     private async Task LoadModelAsync()
     {
         ErrorMessage = null;
         Model = null;
-        await _cts.CancelAsync();
+        var old = _cts;
         _cts = new();
+        await old.CancelAsync();
+        old.Dispose();
 
         try
         {
