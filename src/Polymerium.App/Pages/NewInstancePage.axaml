@@ -155,9 +155,10 @@
                                 </TextBox.InnerLeftContent>
                                 <TextBox.InnerRightContent>
                                     <husk:SkeletonContainer
+                                        Margin="2"
                                         CornerRadius="{StaticResource SmallCornerRadius}"
                                         IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
-                                        <Button Command="{Binding PickVersionCommand}">
+                                        <Button Margin="0" Command="{Binding PickVersionCommand}">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="List" />
