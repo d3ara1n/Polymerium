@@ -2,187 +2,414 @@
     x:Class="Polymerium.App.Pages.SnapshotManagementPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Header="{x:Static lang:Resources.SnapshotManagementPage_Title}"
+    x:DataType="app:SnapshotManagementPageModel"
+    Header="快照列表"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="*,Auto,*">
-        <ListBox
-            x:Name="SnapshotList"
-            Grid.Column="0"
-            SelectionChanged="OnSnapshotSelectionChanged">
-            <ListBoxItem>
-                <Grid
-                    ColumnDefinitions="Auto,*"
-                    ColumnSpacing="12">
+        <DockPanel Grid.Column="0">
+            <Grid
+                DockPanel.Dock="Top"
+                Margin="0,0,0,8"
+                ColumnDefinitions="*,Auto">
+                <TextBox
+                    Grid.Column="0"
+                    PlaceholderText="搜索快照..."
+                    Text="{Binding SearchText, Mode=TwoWay}" />
+            </Grid>
+
+            <Panel>
+                <ListBox
+                    x:Name="SnapshotList"
+                    ItemsSource="{Binding FilteredSnapshots}"
+                    SelectedItem="{Binding SelectedSnapshot, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="app:SnapshotItemModel">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="12">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Symbol="DocumentBulletList" />
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Spacing="2">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding Label}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding CreatedAt}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding FilteredSnapshots.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                    Spacing="8">
                     <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="20"
-                        Foreground="{StaticResource ControlAccentForegroundBrush}"
-                        Symbol="DocumentBulletList" />
-                    <StackPanel
-                        Grid.Column="1"
-                        Spacing="2">
-                        <TextBlock
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="Initial Setup" />
-                        <TextBlock
-                            FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="2025-03-15 10:30" />
-                    </StackPanel>
-                </Grid>
-            </ListBoxItem>
-            <ListBoxItem>
-                <Grid
-                    ColumnDefinitions="Auto,*"
-                    ColumnSpacing="12">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="20"
-                        Foreground="{StaticResource ControlAccentForegroundBrush}"
-                        Symbol="DocumentBulletList" />
-                    <StackPanel
-                        Grid.Column="1"
-                        Spacing="2">
-                        <TextBlock
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="Before Mod Update" />
-                        <TextBlock
-                            FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="2025-03-18 14:22" />
-                    </StackPanel>
-                </Grid>
-            </ListBoxItem>
-            <ListBoxItem>
-                <Grid
-                    ColumnDefinitions="Auto,*"
-                    ColumnSpacing="12">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="20"
-                        Foreground="{StaticResource ControlAccentForegroundBrush}"
-                        Symbol="DocumentBulletList" />
-                    <StackPanel
-                        Grid.Column="1"
-                        Spacing="2">
-                        <TextBlock
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="Pre-Cleanup Backup" />
-                        <TextBlock
-                            FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="2025-03-20 09:45" />
-                    </StackPanel>
-                </Grid>
-            </ListBoxItem>
-        </ListBox>
+                        HorizontalAlignment="Center"
+                        FontSize="32"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Symbol="DocumentBulletListOff" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="没有匹配的快照" />
+                </StackPanel>
+            </Panel>
+        </DockPanel>
+
         <GridSplitter
             Grid.Column="1"
             ResizeDirection="Columns" />
+
         <Panel Grid.Column="2">
+            <ScrollViewer IsVisible="{Binding SelectedSnapshot, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <StackPanel Margin="16" Spacing="12">
+                    <TextBlock
+                        FontSize="{StaticResource ExtraLargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Binding SelectedSnapshot.Label}" />
+
+                    <husk:Divider />
+
+                    <Border
+                        Padding="12"
+                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                        <StackPanel Spacing="8">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="16"
+                                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                RowSpacing="8">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="标签" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding SelectedSnapshot.Label}" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="备注" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedSnapshot.Remark}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="创建时间" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedSnapshot.CreatedAt}" />
+
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="游戏版本" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedSnapshot.GameVersion}" />
+
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="加载器" />
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedSnapshot.Loader}" />
+
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="模组数量" />
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedSnapshot.PackageCount}" />
+
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="总大小" />
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedSnapshot.TotalSizeFormatted}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <husk:Divider />
+
+                    <Border
+                        Padding="12"
+                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="引用文件" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding SelectedSnapshot.FileCount, StringFormat='({0})'}" />
+                                </StackPanel>
+                                <Button
+                                    Grid.Column="1"
+                                    Classes="Small"
+                                    Command="{Binding ToggleReferencesCommand}">
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Text="{Binding ToggleReferencesText}" />
+                                </Button>
+                            </Grid>
+
+                            <ItemsControl
+                                IsVisible="{Binding IsReferencesExpanded}"
+                                ItemsSource="{Binding SelectedSnapshot.References}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="app:ReferenceItemModel">
+                                        <Grid
+                                            ColumnDefinitions="6*,Auto,*"
+                                            Margin="0,2">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Text="{Binding RelativePath}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Margin="6,0"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding Target}"
+                                                TextTrimming="CharacterEllipsis" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                    <husk:Divider />
+
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <Button
+                            Classes="Primary"
+                            Command="{Binding RequestRestoreCommand}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="ArrowReset" />
+                                <TextBlock Text="还原此快照" />
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding RequestDeleteCommand}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Delete" />
+                                <TextBlock Text="删除" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <husk:SwitchContainer
+                        TargetType="x:Boolean"
+                        Value="{Binding IsDeleteConfirmVisible}">
+                        <husk:SwitchCase Value="True">
+                            <Border
+                                Padding="16"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                BorderBrush="#33ff4444"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <StackPanel Spacing="8">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="确认删除" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        TextWrapping="Wrap">
+                                        <Run Text="删除快照 &quot;" />
+                                        <Run Text="{Binding SelectedSnapshot.Label}" />
+                                        <Run Text="&quot;? 此操作不可撤销。" />
+                                    </TextBlock>
+                                    <StackPanel
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <Button Command="{Binding CancelDeleteCommand}">
+                                            <TextBlock Text="取消" />
+                                        </Button>
+                                        <Button
+                                            Classes="Danger"
+                                            Command="{Binding ConfirmDeleteCommand}">
+                                            <TextBlock Text="确认删除" />
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </husk:SwitchCase>
+                    </husk:SwitchContainer>
+
+                    <husk:SwitchContainer
+                        TargetType="x:Boolean"
+                        Value="{Binding IsRestoreConfirmVisible}">
+                        <husk:SwitchCase Value="True">
+                            <Border
+                                Padding="16"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                BorderBrush="#33ffaa00"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <StackPanel Spacing="8">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <fi:SymbolIcon
+                                            Foreground="#ffaa00"
+                                            Symbol="Warning" />
+                                        <TextBlock
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="确认还原快照" />
+                                    </StackPanel>
+
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        TextWrapping="Wrap">
+                                        <Run Text="即将还原到: " />
+                                        <Run
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding SelectedSnapshot.Label}" />
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="此操作将:"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Margin="12,0,0,0"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="• 重建符号链接"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Margin="12,0,0,0"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="• 删除快照中不存在的多余链接"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Margin="12,0,0,0"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="• 不会删除或修改任何实际文件数据"
+                                        TextWrapping="Wrap" />
+
+                                    <Border
+                                        Padding="10"
+                                        Background="#33ffaa00"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <TextBlock
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="⚠ 建议先为当前状态创建一个新快照。"
+                                            TextWrapping="Wrap" />
+                                    </Border>
+
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        TextWrapping="Wrap">
+                                        <Run Text="请输入 &quot;" />
+                                        <Run
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding SelectedSnapshot.Label}" />
+                                        <Run Text="&quot; 以确认:" />
+                                    </TextBlock>
+
+                                    <TextBox Text="{Binding RestoreConfirmInput, Mode=TwoWay}" />
+
+                                    <StackPanel
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <Button Command="{Binding CancelRestoreCommand}">
+                                            <TextBlock Text="取消" />
+                                        </Button>
+                                        <Button
+                                            Classes="Primary"
+                                            Command="{Binding ConfirmRestoreCommand}">
+                                            <TextBlock Text="确认还原" />
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </husk:SwitchCase>
+                    </husk:SwitchContainer>
+                </StackPanel>
+            </ScrollViewer>
+
             <StackPanel
-                x:Name="DetailPanel"
-                Margin="24"
-                IsVisible="False"
-                Spacing="16">
-                <TextBlock
-                    x:Name="DetailTitle"
-                    FontSize="{StaticResource ExtraLargeFontSize}"
-                    FontWeight="{StaticResource ControlStrongFontWeight}" />
-
-                <husk:Divider />
-
-                <Grid
-                    ColumnDefinitions="Auto,*"
-                    ColumnSpacing="16"
-                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-                    RowSpacing="12">
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_LabelLabelText}" />
-                    <TextBlock
-                        x:Name="DetailLabel"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        FontWeight="{StaticResource ControlStrongFontWeight}" />
-
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_RemarkLabelText}" />
-                    <TextBlock
-                        x:Name="DetailRemark"
-                        Grid.Row="1"
-                        Grid.Column="1" />
-
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_CreatedAtLabelText}" />
-                    <TextBlock
-                        x:Name="DetailCreatedAt"
-                        Grid.Row="2"
-                        Grid.Column="1" />
-
-                    <TextBlock
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_GameVersionLabelText}" />
-                    <TextBlock
-                        x:Name="DetailVersion"
-                        Grid.Row="3"
-                        Grid.Column="1" />
-
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_LoaderLabelText}" />
-                    <TextBlock
-                        x:Name="DetailLoader"
-                        Grid.Row="4"
-                        Grid.Column="1" />
-
-                    <TextBlock
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_PackageCountLabelText}" />
-                    <TextBlock
-                        x:Name="DetailPackageCount"
-                        Grid.Row="5"
-                        Grid.Column="1" />
-
-                    <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="0"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_TotalSizeLabelText}" />
-                    <TextBlock
-                        x:Name="DetailTotalSize"
-                        Grid.Row="6"
-                        Grid.Column="1" />
-                </Grid>
-            </StackPanel>
-
-            <TextBlock
                 x:Name="DetailEmptyHint"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.SnapshotManagementPage_DetailSelectHintText}" />
+                Spacing="8"
+                IsVisible="{Binding SelectedSnapshot, Converter={x:Static ObjectConverters.IsNull}}">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="DocumentBulletListOff" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="选择一个快照以查看详情" />
+            </StackPanel>
         </Panel>
     </Grid>
 </husk:Page>
