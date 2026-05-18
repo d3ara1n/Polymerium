@@ -12,7 +12,7 @@
 
 - This repo is a .NET 10 solution rooted at `Polymerium.slnx`.
 - `src/Polymerium.App` is the only app in this repo.
-- `submodules/Huskui.Avalonia` and `submodules/Trident.Net` are real git submodules and are part of the solution build. Treat changes there as nested-repo changes, not normal folders.
+- `submodules/Trident.Net` is a real git submodule and is part of the solution build. Treat changes there as nested-repo changes, not normal folders. `Huskui.Avalonia` is consumed as a NuGet package, not a submodule.
 - Fresh clones need submodules initialized: `git submodule update --init --recursive`.
 
 ## Verified Commands
