@@ -60,6 +60,8 @@ public partial class NotificationModel : ModelBase
         {
             _cts.Cancel();
         }
+
+        _cts.Dispose();
     }
 
     public void Cancel()

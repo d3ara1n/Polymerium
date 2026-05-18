@@ -347,10 +347,12 @@ public partial class InstanceDashboardPageModel(
 
     private void StopMonitoring()
     {
-        if (_monitoringTokenSource is { Token: { IsCancellationRequested: false } })
+        if (_monitoringTokenSource is { } cts)
         {
-            _monitoringTokenSource.Cancel();
             _monitoringTokenSource = null;
+            if (!cts.IsCancellationRequested)
+                cts.Cancel();
+            cts.Dispose();
         }
     }
 
