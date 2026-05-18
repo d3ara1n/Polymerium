@@ -176,7 +176,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     [RelayCommand]
     private async Task SearchAsync()
     {
-        if (Exhibits is { IsFetching: true } or null)
+        if (Exhibits is { IsFetching: true })
         {
             return;
         }

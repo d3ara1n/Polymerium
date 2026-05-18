@@ -290,7 +290,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
     [RelayCommand]
     private async Task SearchAsync()
     {
-        if (Exhibits is { IsFetching: true } or null)
+        if (Exhibits is { IsFetching: true })
         {
             return;
         }
@@ -493,6 +493,21 @@ public partial class PackageExplorerPageModel : ViewModelBase
         }
 
         PendingPackagesSource.Clear();
+    }
+
+    [RelayCommand]
+    private void RemoveFromPending(ExhibitModel? exhibit)
+    {
+        if (exhibit is null)
+        {
+            return;
+        }
+
+        exhibit.State = exhibit.Installed == null ? null : ExhibitState.Editable;
+        exhibit.PendingVersionId = null;
+        exhibit.PendingVersionName = null;
+
+        PendingPackagesSource.RemoveKey(exhibit);
     }
 
     [RelayCommand]
