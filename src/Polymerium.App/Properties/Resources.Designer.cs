@@ -705,6 +705,12 @@ namespace Polymerium.App.Properties {
             }
         }
         
+        
+        public static string PackageExplorerPage_RemoveFromPendingMenuText {
+            get {
+                return ResourceManager.GetString("PackageExplorerPage_RemoveFromPendingMenuText", resourceCulture);
+            }
+        }
         public static string SettingsPage_Title {
             get {
                 return ResourceManager.GetString("SettingsPage_Title", resourceCulture);
