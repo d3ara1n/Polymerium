@@ -583,38 +583,20 @@
                                 TargetType="x:Boolean"
                                 Value="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay, FallbackValue={x:False}}">
                                 <husk:SwitchCase Value="{x:True}">
-                                    <StackPanel
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Orientation="Horizontal"
-                                        Spacing="8">
-                                        <fi:SymbolIcon
-                                            VerticalAlignment="Center"
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            IconVariant="Filled"
-                                            Symbol="CheckmarkCircle" />
-                                        <TextBlock
-                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}" />
-                                    </StackPanel>
+                                    <husk:IconLabel Variant="Filled"
+                                                    Icon="CheckmarkCircle"
+                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}"
+                                                    TextBlock.TextWrapping="Wrap" VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="{x:False}">
-                                    <StackPanel
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Orientation="Horizontal"
-                                        Spacing="8">
-                                        <fi:SymbolIcon
-                                            VerticalAlignment="Center"
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                            IconVariant="Filled"
-                                            Symbol="DismissCircle" />
-                                        <TextBlock
-                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}" />
-                                    </StackPanel>
+                                    <husk:IconLabel Variant="Filled"
+                                                    Icon="DismissCircle"
+                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}"
+                                                    TextBlock.TextWrapping="Wrap" VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center" />
                                 </husk:SwitchCase>
                             </husk:SwitchContainer>
                         </husk:SwitchCase>
@@ -757,7 +739,8 @@
                                     Command="{Binding SwitchModeCommand}"
                                     CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
                                                                               Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
-                                    <TextBlock Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
+                                    <TextBlock
+                                        Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Margin="0,8,8,8"
@@ -806,7 +789,8 @@
                                                         Height="28"
                                                         CornerRadius="{StaticResource SmallCornerRadius}">
                                                         <Border.Background>
-                                                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
+                                                            <ImageBrush
+                                                                async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
                                                         </Border.Background>
                                                     </Border>
                                                     <TextBlock
