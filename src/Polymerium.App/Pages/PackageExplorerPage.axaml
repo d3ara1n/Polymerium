@@ -38,6 +38,82 @@
             <MenuItem Header="-" />
             <MenuItem
                 Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Label, FallbackValue=Repository}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerPage_RepositoryMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Label, FallbackValue=Repository}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding Namespace, FallbackValue=Namespace}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerPage_NamespaceMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding Namespace, FallbackValue=Namespace}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding ProjectName, FallbackValue=Project Name}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectNameMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding ProjectName, FallbackValue=Project Name}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                CommandParameter="{Binding ProjectId, FallbackValue=Pid}"
+                Icon="{fie:SymbolIcon Symbol=Copy,
+                                      FontSize={StaticResource MediumFontSize}}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectIdMenuText}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding ProjectId, FallbackValue=Pid}" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{x:Static app:InternalCommands.OpenUriCommand}"
+                CommandParameter="{Binding Reference, FallbackValue={x:Null}}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_OpenWebsiteMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Open,
+                                      FontSize={StaticResource MediumFontSize}}" />
+        </MenuFlyout>
+        <MenuFlyout
+            x:Key="ExhibitPendingPackageButtonFlyout"
+            x:DataType="app:ExhibitModel">
+            <MenuItem
+                Command="{Binding $parent[app:PackageExplorerPage].((app:PackageExplorerPageModel)DataContext).FavoritePackageCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Header="{x:Static lang:Resources.PackageExplorerPage_FavoriteMenuText}"
+                Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsChecked="{Binding IsFavorite, Mode=OneWay}"
+                ToggleType="CheckBox" />
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
                 CommandParameter="{Binding ProjectName, FallbackValue=Project Name}"
                 Icon="{fie:SymbolIcon Symbol=Copy,
                                       FontSize={StaticResource MediumFontSize}}">
@@ -99,6 +175,13 @@
                 Header="{x:Static lang:Resources.InstanceSetupPage_OpenWebsiteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Open,
                                       FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{Binding $parent[app:PackageExplorerPage].((app:PackageExplorerPageModel)DataContext).RemoveFromPendingCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Header="{x:Static lang:Resources.PackageExplorerPage_RemoveFromPendingMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Delete,
+                                      FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
         <DataTemplate
             x:Key="ExhibitModelTemplate"
@@ -106,7 +189,7 @@
             <app:ExhibitPendingPackageButton
                 Command="{Binding $parent[app:PackageExplorerPage].((app:PackageExplorerPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                ContextFlyout="{StaticResource ExhibitPackageButtonFlyout}" />
+                ContextFlyout="{StaticResource ExhibitPendingPackageButtonFlyout}" />
         </DataTemplate>
     </app:ScopedPage.Resources>
     <Grid
