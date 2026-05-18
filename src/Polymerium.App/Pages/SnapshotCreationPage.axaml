@@ -17,8 +17,8 @@
             Grid.Column="1"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="快照未拍摄" />
+            <StackPanel VerticalAlignment="Center" Spacing="12">
+                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="快照未拍摄" Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center"/>
                 <Button
                     Classes="Success"
                     HorizontalAlignment="Center">

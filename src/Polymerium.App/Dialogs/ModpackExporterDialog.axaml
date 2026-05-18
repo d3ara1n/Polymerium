@@ -364,6 +364,7 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Info" />
                     <TextBlock
+                        FontStyle="Italic"
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
