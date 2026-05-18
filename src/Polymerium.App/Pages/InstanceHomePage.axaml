@@ -596,7 +596,8 @@
                                             Symbol="CheckmarkCircle" />
                                         <TextBlock
                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}" />
+                                            Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}"
+                                            TextWrapping="Wrap" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="{x:False}">
@@ -613,7 +614,8 @@
                                             Symbol="DismissCircle" />
                                         <TextBlock
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}" />
+                                            Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}"
+                                            TextWrapping="Wrap" />
                                     </StackPanel>
                                 </husk:SwitchCase>
                             </husk:SwitchContainer>
@@ -757,7 +759,8 @@
                                     Command="{Binding SwitchModeCommand}"
                                     CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
                                                                               Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
-                                    <TextBlock Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
+                                    <TextBlock
+                                        Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Margin="0,8,8,8"
@@ -806,7 +809,8 @@
                                                         Height="28"
                                                         CornerRadius="{StaticResource SmallCornerRadius}">
                                                         <Border.Background>
-                                                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
+                                                            <ImageBrush
+                                                                async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
                                                         </Border.Background>
                                                     </Border>
                                                     <TextBlock
