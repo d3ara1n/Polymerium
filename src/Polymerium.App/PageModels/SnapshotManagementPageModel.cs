@@ -15,21 +15,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
     [ObservableProperty]
     public partial SnapshotItemModel? SelectedSnapshot { get; set; }
 
-    [ObservableProperty]
-    public partial bool IsReferencesExpanded { get; set; }
-
-    [ObservableProperty]
-    public partial bool IsDeleteConfirmVisible { get; set; }
-
-    [ObservableProperty]
-    public partial bool IsRestoreConfirmVisible { get; set; }
-
-    [ObservableProperty]
-    public partial string RestoreConfirmInput { get; set; } = string.Empty;
-
     public ObservableCollection<SnapshotItemModel> Snapshots { get; } = [];
-
-    public ObservableCollection<SnapshotItemModel> FilteredSnapshots { get; } = [];
 
     protected override Task OnInitializeAsync(CancellationToken token)
     {
@@ -90,84 +76,9 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         foreach (var item in items)
         {
             Snapshots.Add(item);
-            FilteredSnapshots.Add(item);
         }
 
         return Task.CompletedTask;
-    }
-
-    public string ToggleReferencesText => IsReferencesExpanded ? "收起" : "展开";
-
-    partial void OnSearchTextChanged(string value)
-    {
-        FilteredSnapshots.Clear();
-        foreach (var item in Snapshots)
-        {
-            if (string.IsNullOrWhiteSpace(value) ||
-                item.Label.Contains(value, System.StringComparison.OrdinalIgnoreCase))
-            {
-                FilteredSnapshots.Add(item);
-            }
-        }
-    }
-
-    partial void OnIsReferencesExpandedChanged(bool value)
-    {
-        OnPropertyChanged(nameof(ToggleReferencesText));
-    }
-
-    [RelayCommand]
-    private void ToggleReferences()
-    {
-        IsReferencesExpanded = !IsReferencesExpanded;
-    }
-
-    [RelayCommand]
-    private void RequestDelete()
-    {
-        IsDeleteConfirmVisible = true;
-    }
-
-    [RelayCommand]
-    private void ConfirmDelete()
-    {
-        if (SelectedSnapshot != null)
-        {
-            Snapshots.Remove(SelectedSnapshot);
-            FilteredSnapshots.Remove(SelectedSnapshot);
-            SelectedSnapshot = null;
-        }
-
-        IsDeleteConfirmVisible = false;
-    }
-
-    [RelayCommand]
-    private void CancelDelete()
-    {
-        IsDeleteConfirmVisible = false;
-    }
-
-    [RelayCommand]
-    private void RequestRestore()
-    {
-        IsRestoreConfirmVisible = true;
-        RestoreConfirmInput = string.Empty;
-    }
-
-    [RelayCommand]
-    private void ConfirmRestore()
-    {
-        if (SelectedSnapshot != null &&
-            RestoreConfirmInput == SelectedSnapshot.Label)
-        {
-            IsRestoreConfirmVisible = false;
-        }
-    }
-
-    [RelayCommand]
-    private void CancelRestore()
-    {
-        IsRestoreConfirmVisible = false;
     }
 }
 
