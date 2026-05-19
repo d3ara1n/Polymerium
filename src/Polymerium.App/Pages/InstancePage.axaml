@@ -303,7 +303,6 @@
                             </Button>
                             <Button
                                 Command="{Binding ManageSnapshotsAsyncCommand, FallbackValue={x:Null}}"
-                                CommandParameter="{Binding Basic.Key}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
                                 ToolTip.Tip="Manage snapshots">
                                 <Button.IsEnabled>

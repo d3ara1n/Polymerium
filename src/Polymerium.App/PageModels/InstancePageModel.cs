@@ -120,7 +120,7 @@ public partial class InstancePageModel : ViewModelBase
     [RelayCommand]
     private void ManageSnapshotsAsync()
     {
-        _overlayService.PopModal<SnapshotsModal>();
+        _overlayService.PopModal<SnapshotsModal>(Basic);
     }
 
     [RelayCommand]
