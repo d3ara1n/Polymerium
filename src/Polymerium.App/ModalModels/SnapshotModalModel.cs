@@ -1,6 +1,8 @@
-﻿namespace Polymerium.App.ModalModels;
+﻿using TridentCore.Core.Services;
 
-public class SnapshotModalModel
+namespace Polymerium.App.ModalModels;
+
+public class SnapshotModalModel(SnapshotManager snapshotManager)
 {
-    
+
 }

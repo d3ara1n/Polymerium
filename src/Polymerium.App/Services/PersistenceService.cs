@@ -85,7 +85,6 @@ public class PersistenceService(IFreeSql freeSql)
 
     #endregion
 
-
     #region Nested type: WidgetLocalSection
 
     public class WidgetLocalSection
