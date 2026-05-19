@@ -19,6 +19,16 @@ public partial class SnapshotCreationPageModel(IViewContext<SnapshotsModalModel.
     public InstanceBasicModel Basic { get; } = context.Parameter!.Basic;
     #endregion
 
+    #region Reactive
+
+    [ObservableProperty]
+    public partial bool IsSnapshotTaking { get; set; }
+
+    [ObservableProperty]
+    public partial SnapshotTakenModel? SnapshotTaken { get; set; }
+
+    #endregion
+
     #region Commands
 
     [RelayCommand]
