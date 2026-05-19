@@ -6,27 +6,44 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Header="创建快照"
+    x:DataType="app:SnapshotCreationPageModel"
     mc:Ignorable="d">
     <Grid
         ColumnDefinitions="4*,6*"
         ColumnSpacing="12">
         <husk:PlaceholderContainer
             Grid.Column="1"
+            Source="{Binding SnapshotTaken}"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
-            <StackPanel VerticalAlignment="Center" Spacing="12">
-                <TextBlock FontSize="{StaticResource LargeFontSize}" Text="快照未拍摄" Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center"/>
-                <Button
-                    Classes="Success"
-                    HorizontalAlignment="Center">
-                    <husk:IconLabel
-                        Icon="Camera"
-                        Text="拍摄" />
-                </Button>
-            </StackPanel>
+            <husk:PlaceholderContainer.SourceTemplate>
+                <DataTemplate DataType="app:SnapshotTakenModel">
+                    <!-- TODO: show a preview of the taken snapshot -->
+                </DataTemplate>
+            </husk:PlaceholderContainer.SourceTemplate>
+            <husk:SwitchContainer Value="{Binding IsSnapshotTaking}" TargetType="x:Boolean">
+                <husk:SwitchCase Value="{x:False}">
+                    <StackPanel VerticalAlignment="Center" Spacing="12">
+                        <TextBlock FontSize="{StaticResource LargeFontSize}" Text="快照未拍摄"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                        <Button
+                            Classes="Success"
+                            HorizontalAlignment="Center">
+                            <husk:IconLabel
+                                Icon="Camera"
+                                Text="拍摄" />
+                        </Button>
+                    </StackPanel>
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="{x:True}">
+                    <!-- TODO: indicate state and report processed/collected progress -->
+                </husk:SwitchCase>
+            </husk:SwitchContainer>
         </husk:PlaceholderContainer>
         <DockPanel Grid.Column="0">
             <StackPanel DockPanel.Dock="Bottom">
@@ -51,4 +68,3 @@
         </DockPanel>
     </Grid>
 </husk:Page>
-
