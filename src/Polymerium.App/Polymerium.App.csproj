@@ -66,7 +66,6 @@
         <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.8.0" />
         <PackageReference Include="Sentry" Version="6.5.0" />
         <PackageReference Include="Sentry.Profiling" Version="6.5.0" />
-        <PackageReference Include="SmoothScroll.Avalonia" Version="12.0.0.7" />
         <PackageReference Include="Tomlyn" Version="2.4.0" />
         <PackageReference Include="Velopack" Version="0.0.1298" />
         <PackageReference Include="VelopackExtension.MirrorChyan" Version="1.0.4" />

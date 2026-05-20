@@ -593,7 +593,7 @@
                                 <husk:SwitchCase Value="{x:False}">
                                     <husk:IconLabel Variant="Filled"
                                                     Icon="DismissCircle"
-                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                     Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}"
                                                     TextBlock.TextWrapping="Wrap" VerticalAlignment="Center"
                                                     HorizontalAlignment="Center" />
