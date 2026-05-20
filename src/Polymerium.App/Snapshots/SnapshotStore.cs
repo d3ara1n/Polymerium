@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -10,8 +9,14 @@ using TridentCore.Abstractions.Snapshots;
 
 namespace Polymerium.App.Snapshots;
 
-public class SnapshotStore(IFreeSql freeSql) : ISnapshotStore
+public class SnapshotStore : ISnapshotStore
 {
+    private readonly IFreeSql _freeSql;
+
+    public SnapshotStore(IFreeSql freeSql)
+    {
+        _freeSql = freeSql;
+    }
     #region Fields
 
     private bool _isDisposed;
@@ -26,49 +31,49 @@ public class SnapshotStore(IFreeSql freeSql) : ISnapshotStore
         }
 
         _isDisposed = true;
-        freeSql.Dispose();
+        _freeSql.Dispose();
     }
 
     public void InsertSnapshot(SnapshotInfo snapshot, IEnumerable<ReferenceInfo> references)
     {
         var guid = ParseId(snapshot.Id);
-        freeSql.Transaction(() =>
+        _freeSql.Transaction(() =>
         {
-            freeSql.Insert(ToRecord(snapshot)).ExecuteAffrows();
-            freeSql.Insert(references.Select(x => ToRecord(x, guid))).ExecuteAffrows();
+            _freeSql.Insert(ToRecord(snapshot)).ExecuteAffrows();
+            _freeSql.Insert(references.Select(x => ToRecord(x, guid))).ExecuteAffrows();
         });
     }
 
     public IReadOnlyList<SnapshotInfo> GetSnapshots()
     {
-        return freeSql.Select<SnapshotRecord>().ToList(x => FromRecord(x));
+        return _freeSql.Select<SnapshotRecord>().ToList(x => FromRecord(x));
     }
 
     public SnapshotInfo? GetSnapshot(object id)
     {
         var guid = ParseId(id);
-        return freeSql.Select<SnapshotRecord>().Where(x => guid == x.Id).ToOne(x => FromRecord(x));
+        return _freeSql.Select<SnapshotRecord>().Where(x => guid == x.Id).ToOne(x => FromRecord(x));
     }
 
     public IReadOnlyList<ReferenceInfo> GetReferences(object snapshotId)
     {
         var guid = ParseId(snapshotId);
-        return freeSql.Select<ReferenceRecord>().Where(x => x.SnapshotId == guid).ToList(x => FromRecord(x));
+        return _freeSql.Select<ReferenceRecord>().Where(x => x.SnapshotId == guid).ToList(x => FromRecord(x));
     }
 
     public void DeleteSnapshot(object id)
     {
         var guid = ParseId(id);
-        freeSql.Transaction(() =>
+        _freeSql.Transaction(() =>
         {
-            freeSql.Delete<SnapshotRecord>().Where(x => x.Id == guid).ExecuteAffrows();
-            freeSql.Delete<ReferenceRecord>().Where(x => x.SnapshotId == guid).ExecuteAffrows();
+            _freeSql.Delete<SnapshotRecord>().Where(x => x.Id == guid).ExecuteAffrows();
+            _freeSql.Delete<ReferenceRecord>().Where(x => x.SnapshotId == guid).ExecuteAffrows();
         });
     }
 
     public ISet<string> GetAllReferencedHashes()
     {
-        var data = new HashSet<string>(freeSql.Select<ReferenceRecord>().Distinct().ToList(x => x.Hash));
+        var data = new HashSet<string>(_freeSql.Select<ReferenceRecord>().Distinct().ToList(x => x.Hash));
         return data;
     }
 
@@ -87,11 +92,13 @@ public class SnapshotStore(IFreeSql freeSql) : ISnapshotStore
 
     private static SnapshotInfo FromRecord(SnapshotRecord record)
     {
+        var metadata = JsonSerializer.Deserialize<Profile.Rice>(record.Metadata, JsonSerializerOptions.Default)
+            ?? throw new InvalidDataException($"Corrupted snapshot metadata: {record.Id}");
+
         var info = new SnapshotInfo(record.Id,
                                     record.Label,
                                     record.Remark,
-                                    JsonSerializer.Deserialize<Profile.Rice>(record.Metadata,
-                                                                             JsonSerializerOptions.Default)!,
+                                    metadata,
                                     record.PackageCount,
                                     record.FileCount,
                                     record.TotalSize,
@@ -150,7 +157,7 @@ public class SnapshotStore(IFreeSql freeSql) : ISnapshotStore
 
     public class SnapshotRecord
     {
-        [Column(IsPrimary = true, IsIdentity = true)]
+        [Column(IsPrimary = true)]
         public required Guid Id { get; init; }
 
         public required string Label { get; init; }
@@ -174,7 +181,7 @@ public class SnapshotStore(IFreeSql freeSql) : ISnapshotStore
     [Index("UQ_Ref_Snapshot_Path", $"{nameof(SnapshotId)},{nameof(RelativePath)}", IsUnique = true)]
     public class ReferenceRecord
     {
-        [Column(IsPrimary = true, IsIdentity = true)]
+        [Column(IsPrimary = true)]
         public required Guid Id { get; init; }
 
         public required Guid SnapshotId { get; init; }
