@@ -40,13 +40,11 @@ public partial class SnapshotCreationPageModel(IViewContext<SnapshotsModalModel.
     [RelayCommand]
     private async Task TakeAsync()
     {
-        // TODO: IProcess report to ui
         var collected = new Progress<int>(x => TotalCollected = x);
         var processed = new Progress<int>(x => TotalProcessed = x);
-        await Handle.TakeAsync(collected, processed);
+       var metadata =  await Handle.TakeAsync(collected, processed);
 
-        // TODO: set snapshot model
-        // _ = new SnapshotModel()
+       SnapshotTaken = new() { Metadata = metadata };
     }
     #endregion
 }

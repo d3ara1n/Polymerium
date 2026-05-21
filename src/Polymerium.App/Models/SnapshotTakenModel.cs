@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Humanizer;
 using Polymerium.App.Facilities;
 using TridentCore.Abstractions.Snapshots;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 
@@ -19,6 +20,10 @@ public class SnapshotTakenModel : ModelBase
     public int FileCount => Metadata.Snapshot.FileCount;
 
     public long TotalSize => Metadata.Snapshot.TotalSize;
+
+    public string LoaderLabel => LoaderHelper.ToDisplayLabel(Metadata.Snapshot.Metadata.Loader);
+
+    public string VersionLabel => Metadata.Snapshot.Metadata.Version;
 
     #endregion
 }
