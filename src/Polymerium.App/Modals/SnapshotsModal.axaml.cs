@@ -1,4 +1,5 @@
 ﻿using System;
+using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
@@ -16,8 +17,21 @@ public partial class SnapshotsModal : Modal
         InitializeComponent();
 
         FrameActivationMixin.Install(Frame, Program.Services!.GetRequiredService<IViewActivator>());
+    }
 
-        Frame.Navigate(typeof(SnapshotPortalPage), null, null);
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == DataContextProperty)
+        {
+            if (change.NewValue is SnapshotsModalModel viewModel)
+            {
+                viewModel._navigateHandler = (p) => Frame.Navigate(p, ((SnapshotsModalModel)DataContext!).Context!, null);
+                viewModel._backHandler = Frame.GoBack;
+                viewModel._dismissHandler = Dismiss;
+            }
+        }
     }
 
     [RelayCommand]

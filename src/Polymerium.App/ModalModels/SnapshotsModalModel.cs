@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Pages;
 using Polymerium.App.Services;
 using TridentCore.Core.Services;
 
@@ -35,7 +36,8 @@ public class SnapshotsModalModel : ViewModelBase
             Context = new()
             {
                 Basic = Basic,
-                Handle = _snapshots
+                Handle = _snapshots,
+                BackHandler = _backHandler!,
             };
         }
         catch (Exception ex)
@@ -43,6 +45,7 @@ public class SnapshotsModalModel : ViewModelBase
             _notificationService.PopMessage(ex, "Failed to open snapshots database");
         }
 
+        _navigateHandler!.Invoke(typeof(SnapshotPortalPage));
         return Task.CompletedTask;
     }
 
@@ -65,6 +68,9 @@ public class SnapshotsModalModel : ViewModelBase
 
     public InstanceBasicModel Basic { get; }
     public SnapshotContext? Context { get; private set; }
+    public Action<Type>? _navigateHandler { get; internal set; }
+    public Action? _backHandler { get; internal set; }
+    public Action? _dismissHandler { get; internal set; }
 
     #endregion
 
@@ -74,6 +80,7 @@ public class SnapshotsModalModel : ViewModelBase
     {
         public required InstanceBasicModel Basic { get; init; }
         public required SnapshotManager.InstanceSnapshots Handle { get; init; }
+        public required Action BackHandler { get; init; }
     }
 
     #endregion
