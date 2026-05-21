@@ -13,32 +13,18 @@
     mc:Ignorable="d"
     ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <Grid
-        ColumnDefinitions="4*,6*"
+        ColumnDefinitions="45*,55*"
         ColumnSpacing="12">
         <husk:PlaceholderContainer
             Grid.Column="1"
             Source="{Binding SnapshotTaken}"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            Padding="8"
             CornerRadius="{StaticResource MediumCornerRadius}">
             <husk:PlaceholderContainer.SourceTemplate>
                 <DataTemplate DataType="app:SnapshotTakenModel">
-                    <Grid RowDefinitions="Auto,*,Auto" Margin="8" RowSpacing="8">
-                        <Border Grid.Row="0">
-                            <Border.CornerRadius>
-                                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                                    <Binding Path="CornerRadius"
-                                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=husk:PlaceholderContainer}" />
-                                    <Binding Path="Margin"
-                                             RelativeSource="{RelativeSource FindAncestor, AncestorType=Grid}" />
-                                </MultiBinding>
-                            </Border.CornerRadius>
-                            <DockPanel>
-                                <Button Classes="Small Danger" DockPanel.Dock="Right" Content="移除"
-                                        Command="{Binding $parent[app:SnapshotCreationPage].((app:SnapshotCreationPageModel)DataContext)?.RemoveCommand}" />
-                                <TextBlock Text="{Binding TakenAtRaw}" />
-                            </DockPanel>
-                        </Border>
-                        <Grid Grid.Row="1" RowDefinitions="Auto,Auto" RowSpacing="12">
+                    <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                        <Grid Grid.Row="0" RowDefinitions="Auto,Auto" RowSpacing="12">
                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
                                 <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                         Padding="12,8" Grid.Column="0">
@@ -47,8 +33,8 @@
                                             Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                             <Binding Path="CornerRadius"
                                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=husk:PlaceholderContainer}" />
-                                            <Binding Path="Margin"
-                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType=Grid}" />
+                                            <Binding Path="Padding"
+                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:PlaceholderContainer}" />
                                         </MultiBinding>
                                     </Border.CornerRadius>
                                     <StackPanel>
@@ -70,8 +56,8 @@
                                             Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                             <Binding Path="CornerRadius"
                                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=husk:PlaceholderContainer}" />
-                                            <Binding Path="Margin"
-                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType=Grid}" />
+                                            <Binding Path="Padding"
+                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:PlaceholderContainer}" />
                                         </MultiBinding>
                                     </Border.CornerRadius>
                                     <StackPanel>
@@ -99,16 +85,17 @@
                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
                                                            FontSize="{StaticResource SmallFontSize}">
                                                     <Run Text="{Binding Label}" />
-                                                    <Run Text=" · " />
+                                                    <Run Text="·" />
                                                     <Run Text="{Binding Count}" />
-                                                    <Run Text=" 个文件 · " />
+                                                    <Run Text="个文件" />
+                                                    <Run Text="·" />
                                                     <Run
                                                         Text="{Binding Size, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
                                                 </TextBlock>
                                                 <ItemsControl ItemsSource="{Binding Categories}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <WrapPanel Orientation="Horizontal" />
+                                                            <WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4"/>
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
@@ -116,7 +103,7 @@
                                                             <Border
                                                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                                                 CornerRadius="{StaticResource SmallCornerRadius}"
-                                                                Padding="8,4" Margin="0,0,4,4">
+                                                                Padding="8,4">
                                                                 <StackPanel Spacing="2">
                                                                     <TextBlock Text="{Binding Label}"
                                                                                FontSize="{StaticResource CaptionFontSize}"
@@ -125,7 +112,7 @@
                                                                         FontSize="{StaticResource SmallFontSize}"
                                                                         FontWeight="{StaticResource ControlStrongFontWeight}">
                                                                         <Run Text="{Binding Count}" />
-                                                                        <Run Text=" · " />
+                                                                        <Run Text="·" />
                                                                         <Run
                                                                             Text="{Binding Size, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
                                                                     </TextBlock>
@@ -140,13 +127,13 @@
                                 </ItemsControl>
                             </ScrollViewer>
                         </Grid>
-                        <Border Grid.Row="2" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="16">
+                        <Border Grid.Row="1" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="16">
                             <Border.CornerRadius>
                                 <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                     <Binding Path="CornerRadius"
                                              RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:PlaceholderContainer}" />
-                                    <Binding Path="Margin"
-                                             RelativeSource="{RelativeSource FindAncestor, AncestorType=Grid}" />
+                                    <Binding Path="Padding"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:PlaceholderContainer}" />
                                 </MultiBinding>
                             </Border.CornerRadius>
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
@@ -205,7 +192,7 @@
         </husk:PlaceholderContainer>
         <DockPanel Grid.Column="0">
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Classes="Primary">
+                <Button Classes="Primary" Command="{Binding CreateCommand}" CommandParameter="{Binding SnapshotTaken, Mode=OneWay}">
                     <TextBlock Text="创建并插入数据库" />
                 </Button>
             </StackPanel>

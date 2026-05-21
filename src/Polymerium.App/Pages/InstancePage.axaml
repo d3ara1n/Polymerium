@@ -308,12 +308,8 @@
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
-                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                            ConverterParameter="Updating"
-                                            Path="State" />
-                                        <Binding
-                                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                                            ConverterParameter="Deploying"
+                                            Converter="{x:Static husk:ObjectConverters.Match}"
+                                            ConverterParameter="Idle"
                                             Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>

@@ -47,10 +47,11 @@ public partial class SnapshotCreationPageModel(IViewContext<SnapshotsModalModel.
        SnapshotTaken = new() { Metadata = metadata };
     }
 
-    [RelayCommand]
-    private void Remove()
+    private bool CanCreate(SnapshotTakenModel? model) => model != null;
+
+    [RelayCommand(CanExecute = nameof(CanCreate))]
+    private async Task CreateAsync(SnapshotTakenModel? model)
     {
-        SnapshotTaken = null;
     }
     #endregion
 }
