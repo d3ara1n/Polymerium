@@ -114,7 +114,7 @@
                                                                         <Run Text="{Binding Count}" />
                                                                         <Run Text="·" />
                                                                         <Run
-                                                                            Text="{Binding Size, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
+                                                                            Text="{Binding Size, Mode=OneWay, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
                                                                     </TextBlock>
                                                                 </StackPanel>
                                                             </Border>
