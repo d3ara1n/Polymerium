@@ -46,5 +46,11 @@ public partial class SnapshotCreationPageModel(IViewContext<SnapshotsModalModel.
 
        SnapshotTaken = new() { Metadata = metadata };
     }
+
+    [RelayCommand]
+    private void Remove()
+    {
+        SnapshotTaken = null;
+    }
     #endregion
 }
