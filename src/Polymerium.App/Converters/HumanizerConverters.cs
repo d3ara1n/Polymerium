@@ -7,6 +7,15 @@ namespace Polymerium.App.Converters;
 
 public static class HumanizerConverters
 {
+    public static IValueConverter Metric { get; } = new RelayConverter((v,_) => v switch
+    {
+        long l => l.ToMetric(),
+        int i => i.ToMetric(),
+        float f => ((double)f).ToMetric(),
+        double d => d.ToMetric(),
+        _ => v
+    });
+
     public static IValueConverter ByteSize { get; } = new RelayConverter((v) => v switch
     {
         long l => Humanizer.ByteSize.FromBytes(l).Humanize(),

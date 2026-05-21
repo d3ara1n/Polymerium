@@ -421,6 +421,34 @@
                                 TextAlignment="Center" />
                         </Grid>
                     </husk:Card>
+
+                    <GroupBox Classes="Primary">
+                        <GroupBox.Header>
+                            <DockPanel>
+                                <Button Classes="Small" Theme="" Content="Read More" DockPanel.Dock="Right"/>
+                                <TextBlock Text="Calendar Preview" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </GroupBox.Header>
+                        <Border Background="{StaticResource ControlBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}" HorizontalAlignment="Left">
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Top" Text="Sep"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" Margin="8,4"
+                                           HorizontalAlignment="Center" />
+                                <Border Margin="2"
+                                        Background="{StaticResource OverlaySolidBackgroundBrush}">
+                                    <Border.CornerRadius>
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Border}"/>
+                                            <Binding Path="Margin" RelativeSource="{RelativeSource Mode=Self}"/>
+                                        </MultiBinding>
+                                    </Border.CornerRadius>
+                                    <TextBlock Text="28" FontSize="{StaticResource LargeFontSize}"
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12" />
+                                </Border>
+                            </DockPanel>
+                        </Border>
+                    </GroupBox>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Baz">
