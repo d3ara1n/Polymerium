@@ -130,7 +130,7 @@
                 <TextBlock
                     FontStyle="Italic"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="快照记录实例当前的【托管文件】的状态和布局，使快照的构建结果是可复现的。"
+                    Text="快照记录实例当前的【托管文件】的状态和布局，使快照的构建结果可复现。"
                     TextWrapping="Wrap" />
             </StackPanel>
         </StackPanel>
