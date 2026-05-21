@@ -22,7 +22,18 @@
             CornerRadius="{StaticResource MediumCornerRadius}">
             <husk:PlaceholderContainer.SourceTemplate>
                 <DataTemplate DataType="app:SnapshotTakenModel">
-                    <!-- TODO: show a preview of the taken snapshot -->
+                    <DockPanel>
+                        <DockPanel Dock="Bottom">
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small Danger" Content="移除" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding TakenAtRaw, Converter={x:Static app:HumanizerConverters.DateTime}}" />
+                        </DockPanel>
+                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                            <!-- TODO: preview of taken snapshot -->
+                        </Border>
+                    </DockPanel>
                 </DataTemplate>
             </husk:PlaceholderContainer.SourceTemplate>
             <husk:SwitchContainer Value="{Binding IsSnapshotTaking}" TargetType="x:Boolean">
@@ -41,7 +52,15 @@
                     </StackPanel>
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="{x:True}">
-                    <!-- TODO: indicate state and report processed/collected progress -->
+                    <StackPanel>
+                        <husk:ProgressRing Height="64" Width="64" HorizontalAlignment="Center" IsIndeterminate="True" />
+                        <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center">
+                            <Run Text="{Binding TotalProcessed}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding TotalCollected}" />
+                        </TextBlock>
+                    </StackPanel>
                 </husk:SwitchCase>
             </husk:SwitchContainer>
         </husk:PlaceholderContainer>

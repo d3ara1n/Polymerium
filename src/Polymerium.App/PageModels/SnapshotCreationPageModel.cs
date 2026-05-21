@@ -27,6 +27,12 @@ public partial class SnapshotCreationPageModel(IViewContext<SnapshotsModalModel.
     [ObservableProperty]
     public partial SnapshotTakenModel? SnapshotTaken { get; set; }
 
+    [ObservableProperty]
+    public partial int TotalCollected { get; set; }
+
+    [ObservableProperty]
+    public partial int TotalProcessed { get; set; }
+
     #endregion
 
     #region Commands
@@ -35,8 +41,8 @@ public partial class SnapshotCreationPageModel(IViewContext<SnapshotsModalModel.
     private async Task TakeAsync()
     {
         // TODO: IProcess report to ui
-        var collected = new Progress<int>();
-        var processed = new Progress<int>();
+        var collected = new Progress<int>(x => TotalCollected = x);
+        var processed = new Progress<int>(x => TotalProcessed = x);
         await Handle.TakeAsync(collected, processed);
 
         // TODO: set snapshot model
