@@ -797,8 +797,11 @@ public partial class MainWindowContext : ObservableObject
         e
            .StageStream.Subscribe(_ =>
             {
-                model.IsPending = true;
-                model.Progress = 0d;
+                Dispatcher.UIThread.Post(() =>
+                {
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                });
             })
            .DisposeWith(e);
         e
@@ -807,8 +810,11 @@ public partial class MainWindowContext : ObservableObject
            .Select(x => x.Last())
            .Subscribe(x =>
             {
-                model.IsPending = false;
-                model.Progress = x.Item2 != 0 ? x.Item1 * 100d / x.Item2 : 0;
+                Dispatcher.UIThread.Post(() =>
+                {
+                    model.IsPending = false;
+                    model.Progress = x.Item2 != 0 ? x.Item1 * 100d / x.Item2 : 0;
+                });
             })
            .DisposeWith(e);
 
@@ -878,10 +884,10 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Idle:
                     break;
                 case TrackerState.Running:
-                    model.IsPending = true;
-                    model.Progress = 0d;
                     Dispatcher.UIThread.Post(() =>
                     {
+                        model.IsPending = true;
+                        model.Progress = 0d;
                         // 不从 ProfileManager 里取，反正 UI 上只要行为类似就好
                         model.LastPlayedAtRaw = DateTimeOffset.Now;
                         model.State = InstanceEntryState.Running;
