@@ -3,16 +3,11 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Humanizer;
 using Polymerium.App.Facilities;
 using TridentCore.Abstractions.Snapshots;
 using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
-
-public record FileCategoryEntryModel(string Label, int Count, long Size);
-
-public record FilePartitionModel(string Label, int Count, long Size, IReadOnlyList<FileCategoryEntryModel> Categories);
 
 public class SnapshotTakenModel : ModelBase
 {
@@ -53,8 +48,6 @@ public class SnapshotTakenModel : ModelBase
             Partitions = BuildPartitions(value.References);
         }
     }
-
-    public DateTime TakenAtRaw => Metadata.Snapshot.CreatedAt;
 
     public int PackageCount => Metadata.Snapshot.PackageCount;
 
