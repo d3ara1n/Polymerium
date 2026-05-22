@@ -199,7 +199,7 @@
                             </husk:PlaceholderContainer.SourceTemplate>
                             <husk:PlaceholderContainer.Placeholder>
                                 <husk:SkeletonContainer
-                                    CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}"
+                                    CornerRadius="{Binding  $parent[husk:Card].CornerRadius}"
                                     IsAnimated="{TemplateBinding IsRefreshing}"
                                     IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
                             </husk:PlaceholderContainer.Placeholder>
