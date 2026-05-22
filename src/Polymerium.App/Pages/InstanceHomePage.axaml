@@ -583,20 +583,24 @@
                                 TargetType="x:Boolean"
                                 Value="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay, FallbackValue={x:False}}">
                                 <husk:SwitchCase Value="{x:True}">
-                                    <husk:IconLabel Variant="Filled"
-                                                    Icon="CheckmarkCircle"
-                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}"
-                                                    TextBlock.TextWrapping="Wrap" VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center" />
+                                    <husk:IconLabel
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                        Icon="CheckmarkCircle"
+                                        Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}"
+                                        TextBlock.TextWrapping="Wrap"
+                                        Variant="Filled" />
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="{x:False}">
-                                    <husk:IconLabel Variant="Filled"
-                                                    Icon="DismissCircle"
-                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}"
-                                                    TextBlock.TextWrapping="Wrap" VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center" />
+                                    <husk:IconLabel
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                        Icon="DismissCircle"
+                                        Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}"
+                                        TextBlock.TextWrapping="Wrap"
+                                        Variant="Filled" />
                                 </husk:SwitchCase>
                             </husk:SwitchContainer>
                         </husk:SwitchCase>
@@ -739,8 +743,7 @@
                                     Command="{Binding SwitchModeCommand}"
                                     CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
                                                                               Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
-                                    <TextBlock
-                                        Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
+                                    <TextBlock Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Margin="0,8,8,8"
@@ -789,8 +792,7 @@
                                                         Height="28"
                                                         CornerRadius="{StaticResource SmallCornerRadius}">
                                                         <Border.Background>
-                                                            <ImageBrush
-                                                                async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
+                                                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
                                                         </Border.Background>
                                                     </Border>
                                                     <TextBlock

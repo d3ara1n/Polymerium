@@ -364,8 +364,8 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Symbol="Info" />
                     <TextBlock
-                        FontStyle="Italic"
                         FontSize="{StaticResource SmallFontSize}"
+                        FontStyle="Italic"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                         <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
                         <HyperlinkButton Command="{Binding $parent[app:ModpackExporterDialog].OpenImportFolderCommand}">

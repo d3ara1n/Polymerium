@@ -47,23 +47,23 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
     {
         if (view.IsAssignableTo(typeof(Page)))
         {
-            return ResolveViewModelType(view,nameof(Page));
+            return ResolveViewModelType(view, nameof(Page));
         }
         else if (view.IsAssignableTo(typeof(Dialog)))
         {
-            return ResolveViewModelType(view,nameof(Dialog));
+            return ResolveViewModelType(view, nameof(Dialog));
         }
         else if (view.IsAssignableTo(typeof(Modal)))
         {
-            return ResolveViewModelType(view,nameof(Modal));
+            return ResolveViewModelType(view, nameof(Modal));
         }
         else if (view.IsAssignableTo(typeof(Sidebar)))
         {
-            return ResolveViewModelType(view,nameof(Sidebar));
+            return ResolveViewModelType(view, nameof(Sidebar));
         }
         else if (view.IsAssignableTo(typeof(Toast)))
         {
-            return ResolveViewModelType(view,nameof(Toast));
+            return ResolveViewModelType(view, nameof(Toast));
         }
 
         throw new ArgumentOutOfRangeException(

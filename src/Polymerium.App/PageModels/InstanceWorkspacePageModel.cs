@@ -935,10 +935,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
                                        var paths = repository
                                                   .RetrieveStatus(new StatusOptions
-                                                   {
-                                                       IncludeIgnored = false,
-                                                       RecurseUntrackedDirs = true
-                                                   })
+                                                  {
+                                                      IncludeIgnored = false,
+                                                      RecurseUntrackedDirs = true
+                                                  })
                                                   .Select(entry => entry.FilePath)
                                                   .Distinct(StringComparer.OrdinalIgnoreCase)
                                                   .ToArray();

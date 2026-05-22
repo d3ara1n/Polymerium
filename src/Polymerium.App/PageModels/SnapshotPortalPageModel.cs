@@ -1,8 +1,8 @@
-﻿using Polymerium.App.Facilities;
+using Polymerium.App.Facilities;
 
 namespace Polymerium.App.PageModels;
 
-public class SnapshotPortalPageModel: ViewModelBase
+public class SnapshotPortalPageModel : ViewModelBase
 {
 
 }
