@@ -1,4 +1,4 @@
-﻿using FluentIcons.Common;
+using FluentIcons.Common;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;

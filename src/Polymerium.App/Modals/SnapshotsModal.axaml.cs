@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;

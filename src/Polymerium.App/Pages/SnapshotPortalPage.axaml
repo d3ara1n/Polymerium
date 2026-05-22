@@ -118,8 +118,9 @@
             </Button>
         </Grid>
 
-        <StackPanel Spacing="4"
-                    Grid.Row="2">
+        <StackPanel
+            Grid.Row="2"
+            Spacing="4">
             <StackPanel
                 Orientation="Horizontal"
                 Spacing="8">

@@ -132,9 +132,9 @@ public partial class InstanceSetupPageModel(
             var persistentIndex = _stageSource.Count;
             var toAdd = lookup
                        .Select(x => new InstancePackageModel(x, x.Source is not null && x.Source == Basic.Source)
-                        {
-                            PersistentIndex = persistentIndex++,
-                        })
+                       {
+                           PersistentIndex = persistentIndex++,
+                       })
                        .ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
@@ -303,9 +303,9 @@ public partial class InstanceSetupPageModel(
                                                                               x.Package.PublishedAt,
                                                                               x.Package.ReleaseType,
                                                                               x.Package.Dependencies)
-                                                                          {
-                                                                              IsCurrent = true,
-                                                                          },
+                                                                      {
+                                                                          IsCurrent = true,
+                                                                      },
                                                                       x.Package.Author,
                                                                       x.Package.Summary,
                                                                       x.Package.Reference,
@@ -471,12 +471,12 @@ public partial class InstanceSetupPageModel(
     {
         _updatingSubscription?.Dispose();
         if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
-            // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
-            //  但该 TrackerBase.StateChanged 事件未接触订阅
-            //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
-            //  第二层是第一层的订阅事件中创建，由事件处理函数维护
-            //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
-            //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
+        // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
+        //  但该 TrackerBase.StateChanged 事件未接触订阅
+        //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
+        //  第二层是第一层的订阅事件中创建，由事件处理函数维护
+        //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
+        //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
         {
             return;
         }
@@ -529,13 +529,13 @@ public partial class InstanceSetupPageModel(
     private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter)
           || (x.Info is
-              {
-                  ProjectId: { } pid,
-                  ProjectName: { } name,
-                  Author: { } author,
-                  Summary: { } summary,
-                  Version: { } version
-              }
+          {
+              ProjectId: { } pid,
+              ProjectName: { } name,
+              Author: { } author,
+              Summary: { } summary,
+              Version: { } version
+          }
            && filter
              .Split(' ')
              .All(y => y switch
@@ -717,9 +717,9 @@ public partial class InstanceSetupPageModel(
             };
             if (await overlayService.PopDialogAsync(previewer)
              && previewer.Result is PackageBulkUpdatePreviewerModel
-                {
-                    IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
-                })
+             {
+                 IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
+             })
             {
                 var staging = _stageSource
                              .Items.Where(x => !enabledOnly || x.IsEnabled)
@@ -1167,9 +1167,9 @@ public partial class InstanceSetupPageModel(
                                                                              x.VersionName,
                                                                              x.ReleaseType,
                                                                              x.PublishedAt)
-                               {
-                                   IsCurrent = x.VersionId == reference.VersionId,
-                               })
+                              {
+                                  IsCurrent = x.VersionId == reference.VersionId,
+                              })
                               .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (await overlayService.PopDialogAsync(dialog)
