@@ -57,9 +57,6 @@ public partial class LandingPageModel(
     [ObservableProperty]
     public partial RecentPlayModel? RecentPlay { get; set; }
 
-    [ObservableProperty]
-    public partial LazyObject? FeaturedModpacks { get; set; }
-
     #endregion
 
     #region Overrides
@@ -70,7 +67,6 @@ public partial class LandingPageModel(
         navigationService.ClearHistory();
 
         LoadMinecraftNews();
-        LoadFeaturedModpacks();
 
         TotalPlayHours = persistenceService.GetTotalPlayTime().TotalHours;
         ActiveDays = persistenceService.GetActiveDays();
@@ -148,24 +144,6 @@ public partial class LandingPageModel(
             return models;
         });
 
-    private void LoadFeaturedModpacks() =>
-        FeaturedModpacks = new(async _ =>
-        {
-            var exhibits = await dataService.GetFeaturedModpacksAsync();
-            var models = exhibits
-                .Select(x => new FeaturedModpackModel(
-                    x.Label,
-                    x.Namespace,
-                    x.Pid,
-                    x.Name,
-                    x.Author,
-                    x.Thumbnail ?? AssetUriIndex.DirtImage,
-                    x.Tags
-                ))
-                .ToList();
-            return models;
-        });
-
     #endregion
 
     #region Commands
@@ -216,9 +194,6 @@ public partial class LandingPageModel(
 
     [RelayCommand]
     private void RefreshMinecraftNews() => LoadMinecraftNews();
-
-    [RelayCommand]
-    private void RefreshFeaturedModpacks() => LoadFeaturedModpacks();
 
     [RelayCommand]
     private async Task PlayAsync(string key)
