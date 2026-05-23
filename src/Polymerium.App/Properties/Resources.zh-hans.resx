@@ -835,10 +835,10 @@
         <value>关于</value>
     </data>
     <data name="ExhibitPackageModal_DependenciesTabText" xml:space="preserve">
-        <value>依赖</value>
+        <value>前置</value>
     </data>
     <data name="ExhibitPackageModal_DependenciesTabPrompt" xml:space="preserve">
-        <value>正在展示如下版本的依赖：</value>
+        <value>正在展示如下版本的前置：</value>
     </data>
     <data name="ExhibitPackageModal_ChangelogsTabText" xml:space="preserve">
         <value>更新日志</value>
@@ -1141,7 +1141,7 @@
         <value>自动选择最佳兼容版本</value>
     </data>
     <data name="InstancePackageModal_DependenciesTabText" xml:space="preserve">
-        <value>依赖</value>
+        <value>前置</value>
     </data>
     <data name="InstancePackageModal_BasicsTabText" xml:space="preserve">
         <value>基本</value>
