@@ -35,7 +35,7 @@
                 <TextBlock
                     FontSize="{StaticResource ExtraLargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.LandingPage_Title}">
+                    Text="{x:Static app:Program.Brand}">
                     <TextBlock.Foreground>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
                             <GradientStop Offset="0" Color="{DynamicResource Accent8Color}" />
@@ -43,9 +43,11 @@
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBlock
-                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.LandingPage_Subtitle}" />
+                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                    <Run Text="{Binding Source={x:Static app:Program.Version}, StringFormat={}v{0}}" />
+                    <Run Text="·" />
+                    <Run Text="{x:Static app:Program.ReleaseDate}" />
+                </TextBlock>
             </StackPanel>
             <Grid
                 Grid.Column="2"

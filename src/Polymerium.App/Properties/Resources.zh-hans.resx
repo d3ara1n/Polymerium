@@ -2113,12 +2113,6 @@
     <data name="MarketplaceSearchPage_Message" xml:space="preserve">
         <value>查看并下载来自各个资源提供方的整合包。如果需要更精确的搜索过滤选项，请在对应资源网站上完成整合包查找，然后在这里输入名字即可安装。</value>
     </data>
-    <data name="LandingPage_Title" xml:space="preserve">
-        <value>欢迎回来</value>
-    </data>
-    <data name="LandingPage_Subtitle" xml:space="preserve">
-        <value>今天玩点什么呢</value>
-    </data>
     <data name="LandingPage_FeaturedModpacksLabelText" xml:space="preserve">
         <value>热门整合包</value>
     </data>
