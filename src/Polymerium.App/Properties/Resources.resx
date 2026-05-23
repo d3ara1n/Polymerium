@@ -2973,4 +2973,19 @@ Affected entries: {0}
     <data name="ModpackExporterDialog_TypeLabelText" xml:space="preserve">
         <value>Type:</value>
     </data>
+    <data name="InstancePackageButton_LoadFailedTitleText" xml:space="preserve">
+        <value>🫡 Failed to load package info</value>
+    </data>
+    <data name="InstancePackageButton_LoadFailedToolTipText" xml:space="preserve">
+        <value>The package may have been removed or delisted from the remote repository. You can remove it or edit the metadata manually.</value>
+    </data>
+    <data name="InstancePackageButton_RetryButtonText" xml:space="preserve">
+        <value>Retry</value>
+    </data>
+    <data name="InstancePackageButton_EditPurlButtonText" xml:space="preserve">
+        <value>Edit Purl</value>
+    </data>
+    <data name="InstancePackageButton_RemoveEntryButtonText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
 </root>

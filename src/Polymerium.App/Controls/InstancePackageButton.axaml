@@ -199,9 +199,80 @@
                             </husk:PlaceholderContainer.SourceTemplate>
                             <husk:PlaceholderContainer.Placeholder>
                                 <husk:SkeletonContainer
+                                    Padding="12,0"
                                     CornerRadius="{Binding $parent[husk:Card].CornerRadius}"
-                                    IsAnimated="{TemplateBinding IsRefreshing}"
-                                    IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
+                                    IsLoading="{Binding !IsLoaded}">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,Auto"
+                                        ColumnSpacing="8">
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="4"
+                                            Margin="0,12"
+                                            Background="{StaticResource ControlDangerBackgroundBrush}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}" />
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Spacing="8">
+                                            <StackPanel
+                                                Background="Transparent"
+                                                Orientation="Horizontal"
+                                                Spacing="4"
+                                                ToolTip.Tip="{x:Static lang:Resources.InstancePackageButton_LoadFailedToolTipText}">
+                                                <TextBlock
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Text="{x:Static lang:Resources.InstancePackageButton_LoadFailedTitleText}" />
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Symbol="Info" />
+                                            </StackPanel>
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding Entry.Purl}" />
+                                        </StackPanel>
+                                        <Grid
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            ColumnDefinitions="*,*"
+                                            RowDefinitions="Auto,Auto">
+                                            <Button
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                Classes="Small"
+                                                Command="{Binding $parent[app:InstancePackageButton].RefreshCommand}"
+                                                CommandParameter="{Binding}"
+                                                Theme="{StaticResource GhostButtonTheme}">
+                                                <husk:IconLabel
+                                                    Icon="ArrowCounterclockwise"
+                                                    Text="{x:Static lang:Resources.InstancePackageButton_RetryButtonText}" />
+                                            </Button>
+                                            <Button
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Classes="Small"
+                                                Command="{Binding $parent[app:InstancePackageButton].EditCommand}"
+                                                CommandParameter="{Binding}"
+                                                Theme="{StaticResource GhostButtonTheme}">
+                                                <husk:IconLabel
+                                                    Icon="Edit"
+                                                    Text="{x:Static lang:Resources.InstancePackageButton_EditPurlButtonText}" />
+                                            </Button>
+                                            <Button
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Classes="Small Danger"
+                                                Command="{Binding $parent[app:InstancePackageButton].RemoveCommand}"
+                                                CommandParameter="{Binding}"
+                                                Theme="{StaticResource GhostButtonTheme}">
+                                                <husk:IconLabel
+                                                    Icon="Delete"
+                                                    Text="{x:Static lang:Resources.InstancePackageButton_RemoveEntryButtonText}" />
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </husk:SkeletonContainer>
                             </husk:PlaceholderContainer.Placeholder>
                         </husk:PlaceholderContainer>
                     </Panel>
@@ -275,8 +346,37 @@
                         <husk:PlaceholderContainer.Placeholder>
                             <husk:SkeletonContainer
                                 CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=husk:Card}}"
-                                IsAnimated="{TemplateBinding IsRefreshing}"
-                                IsLoading="{Binding Info, Converter={x:Static ObjectConverters.IsNull}}" />
+                                IsLoading="{Binding !IsLoaded}">
+                                <StackPanel VerticalAlignment="Center">
+                                    <Button
+                                        Classes="Small"
+                                        Command="{Binding $parent[app:InstancePackageButton].RefreshCommand}"
+                                        CommandParameter="{Binding}"
+                                        Theme="{StaticResource GhostButtonTheme}">
+                                        <husk:IconLabel
+                                            Icon="ArrowCounterclockwise"
+                                            Text="{x:Static lang:Resources.InstancePackageButton_RetryButtonText}" />
+                                    </Button>
+                                    <Button
+                                        Classes="Small"
+                                        Command="{Binding $parent[app:InstancePackageButton].EditCommand}"
+                                        CommandParameter="{Binding}"
+                                        Theme="{StaticResource GhostButtonTheme}">
+                                        <husk:IconLabel
+                                            Icon="Edit"
+                                            Text="{x:Static lang:Resources.InstancePackageButton_EditPurlButtonText}" />
+                                    </Button>
+                                    <Button
+                                        Classes="Small Danger"
+                                        Command="{Binding $parent[app:InstancePackageButton].RemoveCommand}"
+                                        CommandParameter="{Binding}"
+                                        Theme="{StaticResource GhostButtonTheme}">
+                                        <husk:IconLabel
+                                            Icon="Delete"
+                                            Text="{x:Static lang:Resources.InstancePackageButton_RemoveEntryButtonText}" />
+                                    </Button>
+                                </StackPanel>
+                            </husk:SkeletonContainer>
                         </husk:PlaceholderContainer.Placeholder>
                     </husk:PlaceholderContainer>
                 </husk:Card>

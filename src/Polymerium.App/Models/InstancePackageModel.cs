@@ -34,6 +34,9 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool isLocke
     [ObservableProperty]
     public partial bool IsEnabled { get; set; } = entry.Enabled;
 
+    [ObservableProperty]
+    public partial bool IsLoaded { get; set; }
+
     partial void OnIsEnabledChanged(bool value) => entry.Enabled = value;
 
     [ObservableProperty]
