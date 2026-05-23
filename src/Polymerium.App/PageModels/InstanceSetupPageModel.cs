@@ -132,9 +132,9 @@ public partial class InstanceSetupPageModel(
             var persistentIndex = _stageSource.Count;
             var toAdd = lookup
                        .Select(x => new InstancePackageModel(x, x.Source is not null && x.Source == Basic.Source)
-                       {
-                           PersistentIndex = persistentIndex++,
-                       })
+                        {
+                            PersistentIndex = persistentIndex++,
+                        })
                        .ToList();
             _stageSource.AddOrUpdate(toAdd);
             StageCount += toAdd.Count - toRemove.Count;
@@ -205,14 +205,16 @@ public partial class InstanceSetupPageModel(
 
     private async Task RefreshPackagesAsync(IReadOnlyList<InstancePackageModel> packages, CancellationToken token)
     {
-        if (token.IsCancellationRequested)
-        {
-            return;
-        }
-
         IsRefreshing = true;
         try
         {
+            token.ThrowIfCancellationRequested();
+
+            foreach (var package in packages)
+            {
+                package.IsLoaded = false;
+            }
+
             var purls = packages
                        .Select(x => PackageHelper.TryParse(x.Entry.Purl, out var purl)
                                         ? (Model: x,
@@ -222,25 +224,17 @@ public partial class InstanceSetupPageModel(
             var knownVids = purls.Where(x => x.Key.Version is not null).ToArray();
             var unknownVids = purls.Where(x => x.Key.Version is null).ToArray();
 
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
+            token.ThrowIfCancellationRequested();
 
             // 固定 Vid 的不需要 Filter
             var knownPackages = await dataService.ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None);
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
+
+            token.ThrowIfCancellationRequested();
 
             var unknownProjects =
                 await dataService.QueryProjectsAsync(unknownVids.Select(x => (x.Key.Repository, x.Key.Namespace,
                                                                               x.Key.Identity)));
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
+            token.ThrowIfCancellationRequested();
 
             var thumbnailsTasks = knownPackages
                                  .Select(async x => (Purl: x.Item1,
@@ -259,10 +253,8 @@ public partial class InstanceSetupPageModel(
                                                                          : AssetUriIndex.DirtImageBitmap)))
                                  .ToList();
             await Task.WhenAll(thumbnailsTasks);
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
+
+            token.ThrowIfCancellationRequested();
 
             foreach (var (id, package) in knownPackages)
             {
@@ -281,7 +273,7 @@ public partial class InstanceSetupPageModel(
 
             foreach (var x in purls.Values)
             {
-                InstancePackageInfoModel info = x switch
+                InstancePackageInfoModel? info = x switch
                 {
                     { Package: not null, Thumbnail: not null } => new(x.Model,
                                                                       x.Package.Label,
@@ -303,9 +295,9 @@ public partial class InstanceSetupPageModel(
                                                                               x.Package.PublishedAt,
                                                                               x.Package.ReleaseType,
                                                                               x.Package.Dependencies)
-                                                                      {
-                                                                          IsCurrent = true,
-                                                                      },
+                                                                          {
+                                                                              IsCurrent = true,
+                                                                          },
                                                                       x.Package.Author,
                                                                       x.Package.Summary,
                                                                       x.Package.Reference,
@@ -322,11 +314,12 @@ public partial class InstanceSetupPageModel(
                                                                       x.Project.Reference,
                                                                       x.Thumbnail,
                                                                       x.Project.Kind),
-                    _ => throw new UnreachableException(),
+                    _ => null,
                 };
 
-                x.Model.Info = info;
                 x.Model.OldPurlCache = x.Model.Entry.Purl;
+                x.Model.Info = info;
+                x.Model.IsLoaded = true;
             }
         }
         catch (OperationCanceledException) { }
@@ -340,8 +333,10 @@ public partial class InstanceSetupPageModel(
                                                thumbnail: GetNotificationThumbnail());
             });
         }
-
-        IsRefreshing = false;
+        finally
+        {
+            IsRefreshing = false;
+        }
     }
 
     private Uri GetNotificationThumbnail(Uri? preferred = null) =>
@@ -471,12 +466,12 @@ public partial class InstanceSetupPageModel(
     {
         _updatingSubscription?.Dispose();
         if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
-        // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
-        //  但该 TrackerBase.StateChanged 事件未接触订阅
-        //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
-        //  第二层是第一层的订阅事件中创建，由事件处理函数维护
-        //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
-        //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
+            // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
+            //  但该 TrackerBase.StateChanged 事件未接触订阅
+            //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
+            //  第二层是第一层的订阅事件中创建，由事件处理函数维护
+            //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
+            //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
         {
             return;
         }
@@ -529,13 +524,13 @@ public partial class InstanceSetupPageModel(
     private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
         x => string.IsNullOrEmpty(filter)
           || (x.Info is
-          {
-              ProjectId: { } pid,
-              ProjectName: { } name,
-              Author: { } author,
-              Summary: { } summary,
-              Version: { } version
-          }
+              {
+                  ProjectId: { } pid,
+                  ProjectName: { } name,
+                  Author: { } author,
+                  Summary: { } summary,
+                  Version: { } version
+              }
            && filter
              .Split(' ')
              .All(y => y switch
@@ -628,16 +623,14 @@ public partial class InstanceSetupPageModel(
         }
     }
 
-    private bool CanViewPackage(InstancePackageInfoModel? model) => model is not null;
-
-    [RelayCommand(CanExecute = nameof(CanViewPackage))]
-    private void ViewPackage(InstancePackageInfoModel? model)
+    [RelayCommand]
+    private void ViewPackage(InstancePackageModel? model)
     {
-        if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        if (model is {Info: not null} && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
             overlayService.PopModal(new InstancePackageModal
             {
-                DataContext = model,
+                DataContext = model.Info,
                 Guard = guard,
                 DataService = dataService,
                 OverlayService = overlayService,
@@ -646,7 +639,7 @@ public partial class InstanceSetupPageModel(
                 Collection = _stageSource,
                 NotificationService = notificationService,
                 PackagePlanner = serviceProvider.GetRequiredService<PackagePlanner>(),
-                Filter = new(Kind: model.Kind,
+                Filter = new(Kind: model.Info.Kind,
                              Version: Basic.Version,
                              Loader: Basic.Loader is not null
                                          ? LoaderHelper.TryParse(Basic.Loader,
@@ -717,9 +710,9 @@ public partial class InstanceSetupPageModel(
             };
             if (await overlayService.PopDialogAsync(previewer)
              && previewer.Result is PackageBulkUpdatePreviewerModel
-             {
-                 IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
-             })
+                {
+                    IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
+                })
             {
                 var staging = _stageSource
                              .Items.Where(x => !enabledOnly || x.IsEnabled)
@@ -1167,9 +1160,9 @@ public partial class InstanceSetupPageModel(
                                                                              x.VersionName,
                                                                              x.ReleaseType,
                                                                              x.PublishedAt)
-                              {
-                                  IsCurrent = x.VersionId == reference.VersionId,
-                              })
+                               {
+                                   IsCurrent = x.VersionId == reference.VersionId,
+                               })
                               .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (await overlayService.PopDialogAsync(dialog)
@@ -1229,7 +1222,7 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private async Task RemovePackage(InstancePackageModel? model)
+    private async Task RemovePackageAsync(InstancePackageModel? model)
     {
         if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
@@ -1243,6 +1236,28 @@ public partial class InstanceSetupPageModel(
                     Old = model.Entry.Purl,
                 });
             }
+        }
+    }
+
+    [RelayCommand]
+    private void RefreshPackages()
+    {
+        TriggerPackageMerge();
+    }
+
+    [RelayCommand]
+    private async Task EditRaw(InstancePackageModel? model)
+    {
+        if (model == null)
+        {
+            return;
+        }
+
+        var res = await overlayService.RequestInputAsync(placeholder: model.Entry.Purl);
+        if (res != null)
+        {
+            model.Entry.Purl = res;
+            TriggerPackageMerge();
         }
     }
 

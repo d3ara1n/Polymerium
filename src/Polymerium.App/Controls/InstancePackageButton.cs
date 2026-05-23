@@ -1,18 +1,42 @@
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace Polymerium.App.Controls;
 
 public class InstancePackageButton : Button
 {
-    public static readonly StyledProperty<bool> IsRefreshingProperty = AvaloniaProperty.Register<
-        InstancePackageButton,
-        bool
-    >(nameof(IsRefreshing));
+    public static readonly DirectProperty<InstancePackageButton, ICommand?> EditCommandProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(EditCommand),
+                                                                          o => o.EditCommand,
+                                                                          (o, v) => o.EditCommand = v);
 
-    public bool IsRefreshing
+    public ICommand? EditCommand
     {
-        get => GetValue(IsRefreshingProperty);
-        set => SetValue(IsRefreshingProperty, value);
+        get;
+        set => SetAndRaise(EditCommandProperty, ref field, value);
+    }
+
+    public static readonly DirectProperty<InstancePackageButton, ICommand?> RemoveCommandProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(RemoveCommand),
+                                                                          o => o.RemoveCommand,
+                                                                          (o, v) => o.RemoveCommand = v);
+
+    public ICommand? RemoveCommand
+    {
+        get;
+        set => SetAndRaise(RemoveCommandProperty, ref field, value);
+    }
+
+    public static readonly DirectProperty<InstancePackageButton, ICommand?> RefreshCommandProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(RefreshCommand),
+                                                                          o => o.RefreshCommand,
+                                                                          (o, v) => o.RefreshCommand = v);
+
+    public ICommand? RefreshCommand
+    {
+        get;
+        set => SetAndRaise(RefreshCommandProperty, ref field, value);
     }
 }

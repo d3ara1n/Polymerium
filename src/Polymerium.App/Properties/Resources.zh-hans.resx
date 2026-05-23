@@ -2961,4 +2961,19 @@
     <data name="ModpackExporterDialog_TypeLabelText" xml:space="preserve">
         <value>类型：</value>
     </data>
+    <data name="InstancePackageButton_LoadFailedTitleText" xml:space="preserve">
+        <value>🫡这个包的相关信息获取失败了</value>
+    </data>
+    <data name="InstancePackageButton_LoadFailedToolTipText" xml:space="preserve">
+        <value>可能是这个包在远程仓库下架或被移除而导致的。你可以直接移除这个包，或尝试手动编辑元数据来修复。</value>
+    </data>
+    <data name="InstancePackageButton_RetryButtonText" xml:space="preserve">
+        <value>重试</value>
+    </data>
+    <data name="InstancePackageButton_EditPurlButtonText" xml:space="preserve">
+        <value>编辑 Purl</value>
+    </data>
+    <data name="InstancePackageButton_RemoveEntryButtonText" xml:space="preserve">
+        <value>移除条目</value>
+    </data>
 </root>

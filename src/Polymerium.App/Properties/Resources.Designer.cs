@@ -5906,5 +5906,35 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("ModpackExporterDialog_TypeLabelText", resourceCulture);
             }
         }
+        
+        public static string InstancePackageButton_LoadFailedTitleText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_LoadFailedTitleText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePackageButton_LoadFailedToolTipText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_LoadFailedToolTipText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePackageButton_RetryButtonText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_RetryButtonText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePackageButton_EditPurlButtonText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_EditPurlButtonText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePackageButton_RemoveEntryButtonText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_RemoveEntryButtonText", resourceCulture);
+            }
+        }
     }
 }

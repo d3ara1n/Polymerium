@@ -603,7 +603,7 @@
                         </Border>
                         <TabStrip
                             Name="LayoutSelector"
-                            SelectedIndex="{Binding ViewState.LayoutIndex, Mode=TwoWay}"
+                            SelectedIndex="{Binding ViewState?.LayoutIndex, Mode=TwoWay}"
                             Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <generic:List x:TypeArguments="app:ListTemplateCombinationModel">
@@ -613,10 +613,21 @@
                                                 <app:InstancePackageButton
                                                     Margin="0,3"
                                                     Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding Info}"
+                                                    CommandParameter="{Binding}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    IsRefreshing="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
-                                                    Theme="{StaticResource ListPackageEntryButtonTheme}" />
+                                                    EditCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EditRawCommand, FallbackValue={x:Null}}"
+                                                    RefreshCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
+                                                    RemoveCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
+                                                    Theme="{StaticResource ListPackageEntryButtonTheme}">
+                                                    <app:InstancePackageButton.IsEnabled>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                            <Binding Path="IsLoaded" />
+                                                            <Binding
+                                                                Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                                Path="Info" />
+                                                        </MultiBinding>
+                                                    </app:InstancePackageButton.IsEnabled>
+                                                </app:InstancePackageButton>
                                             </DataTemplate>
                                         </app:ListTemplateCombinationModel.ItemTemplate>
                                         <app:ListTemplateCombinationModel.ItemsPanelTemplate>
@@ -630,11 +641,22 @@
                                             <DataTemplate x:DataType="app:InstancePackageModel">
                                                 <app:InstancePackageButton
                                                     Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding Info}"
+                                                    CommandParameter="{Binding}"
                                                     ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    IsRefreshing="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).IsRefreshing, Mode=OneWay, FallbackValue={x:False}}"
+                                                    EditCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EditRawCommand, FallbackValue={x:Null}}"
+                                                    RefreshCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
+                                                    RemoveCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
                                                     Theme="{StaticResource GridPackageEntryButtonTheme}"
-                                                    ToolTip.Tip="{Binding Info.ProjectName, FallbackValue=Name}" />
+                                                    ToolTip.Tip="{Binding Info.ProjectName, FallbackValue=Name}">
+                                                    <app:InstancePackageButton.IsEnabled>
+                                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                            <Binding Path="IsLoaded" />
+                                                            <Binding
+                                                                Converter="{x:Static ObjectConverters.IsNotNull}"
+                                                                Path="Info" />
+                                                        </MultiBinding>
+                                                    </app:InstancePackageButton.IsEnabled>
+                                                </app:InstancePackageButton>
                                             </DataTemplate>
                                         </app:ListTemplateCombinationModel.ItemTemplate>
                                         <app:ListTemplateCombinationModel.ItemsPanelTemplate>
