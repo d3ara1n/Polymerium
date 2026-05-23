@@ -13,15 +13,16 @@ namespace Polymerium.App.Snapshots;
 public class SnapshotStore : ISnapshotStore
 {
     private readonly IFreeSql _freeSql;
-    private readonly  ILogger _logger;
+    private readonly ILogger _logger;
 
     public SnapshotStore(IFreeSql freeSql, ILogger<SnapshotStore> logger)
     {
         _freeSql = freeSql;
         _logger = logger;
 
-        logger.LogInformation("Initialized SnapshotStore");
+        logger.LogDebug("Initialized SnapshotStore");
     }
+
     #region Fields
 
     private bool _isDisposed;
@@ -37,7 +38,7 @@ public class SnapshotStore : ISnapshotStore
 
         _isDisposed = true;
         _freeSql.Dispose();
-        _logger.LogInformation("SnapshotStore disposed");
+        _logger.LogDebug("SnapshotStore disposed");
     }
 
     public void InsertSnapshot(SnapshotInfo snapshot, IEnumerable<ReferenceInfo> references)
@@ -79,7 +80,7 @@ public class SnapshotStore : ISnapshotStore
 
     public ISet<string> GetAllReferencedHashes()
     {
-        var data = new HashSet<string>(_freeSql.Select<ReferenceRecord>().Distinct().ToList(x => x.Hash));
+        var data = new HashSet<string>(_freeSql.Select<ReferenceRecord>().ToList(x => x.Hash));
         return data;
     }
 
@@ -99,7 +100,7 @@ public class SnapshotStore : ISnapshotStore
     private static SnapshotInfo FromRecord(SnapshotRecord record)
     {
         var metadata = JsonSerializer.Deserialize<Profile.Rice>(record.Metadata, JsonSerializerOptions.Default)
-            ?? throw new InvalidDataException($"Corrupted snapshot metadata: {record.Id}");
+                    ?? throw new InvalidDataException($"Corrupted snapshot metadata: {record.Id}");
 
         var info = new SnapshotInfo(record.Id,
                                     record.Label,
