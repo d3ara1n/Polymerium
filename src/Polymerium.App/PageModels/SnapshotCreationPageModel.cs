@@ -1,5 +1,7 @@
 using System;
-using System.Threading;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,6 +11,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.ModalModels;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using TridentCore.Abstractions.Snapshots;
 using TridentCore.Core.Services;
 
 namespace Polymerium.App.PageModels;
@@ -17,6 +20,36 @@ public partial class SnapshotCreationPageModel(
     IViewContext<SnapshotsModalModel.SnapshotContext> context,
     NotificationService notificationService) : ViewModelBase
 {
+    #region Constants
+
+    private static readonly FrozenDictionary<string, string> SecondaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["mods"] = "模组",
+        ["resourcepacks"] = "资源包",
+        ["shaderpacks"] = "光影包",
+        ["saves"] = "存档",
+        ["world"] = "存档",
+        ["config"] = "配置",
+        ["logs"] = "日志",
+        ["crash-reports"] = "崩溃报告",
+        ["screenshots"] = "截图",
+        ["textures"] = "纹理文件",
+        ["libraries"] = "依赖库",
+        ["versions"] = "版本文件",
+        ["assets"] = "资源文件",
+    }.ToFrozenDictionary();
+
+    private static readonly FrozenDictionary<string, string> PrimaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["live"] = "运行副本",
+        ["import"] = "整合包源",
+        ["persist"] = "个人数据",
+    }.ToFrozenDictionary();
+
+    private static readonly string[] PrimaryOrder = ["live", "import", "persist"];
+
+    #endregion
+
     #region Direct
 
     public SnapshotsModalModel.SnapshotContext Context { get; } = context.Parameter!;
@@ -50,11 +83,24 @@ public partial class SnapshotCreationPageModel(
     [RelayCommand]
     private async Task TakeAsync()
     {
-        var collected = new Progress<int>(x => TotalCollected = x);
-        var processed = new Progress<int>(x => TotalProcessed = x);
-        var metadata = await Context.Handle.TakeAsync(collected, processed);
-
-        SnapshotTaken = new() { Metadata = metadata };
+        try
+        {
+            IsSnapshotTaking = true;
+            var collected = new Progress<int>(x => TotalCollected = x);
+            var processed = new Progress<int>(x => TotalProcessed = x);
+            var metadata = await Context.Handle.TakeAsync(collected, processed);
+            var partitions = await Task.Run(() => BuildPartitions(metadata.References));
+            SnapshotTaken = new() { Metadata = metadata, Partitions = partitions };
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex)
+        {
+            notificationService.PopMessage(ex, "Take snapshot failed");
+        }
+        finally
+        {
+            IsSnapshotTaking = false;
+        }
     }
 
     private bool CanCreate(SnapshotTakenModel? model) => model != null;
@@ -81,6 +127,125 @@ public partial class SnapshotCreationPageModel(
         {
             notificationService.PopMessage(ex, "Create snapshot failed");
         }
+    }
+
+    #endregion
+
+    #region Partition Building
+
+    private static IReadOnlyList<FilePartitionModel> BuildPartitions(
+        IReadOnlyList<ReferenceInfo> references)
+    {
+        var buckets = new Dictionary<string, Dictionary<string, (int count, long size)>>(
+            StringComparer.OrdinalIgnoreCase);
+        var outerLookup = buckets.GetAlternateLookup<ReadOnlySpan<char>>();
+
+        foreach (var reference in references)
+        {
+            var span = reference.RelativePath.AsSpan();
+            var firstSlash = span.IndexOfAny('/', '\\');
+            var primarySpan = firstSlash >= 0 ? span[..firstSlash] : span;
+            var remainder = firstSlash >= 0 ? span[(firstSlash + 1)..] : [];
+
+            var secondarySlash = remainder.IndexOfAny('/', '\\');
+            var secondarySpan = secondarySlash >= 0
+                ? remainder[..secondarySlash]
+                : remainder;
+
+            if (!outerLookup.TryGetValue(primarySpan, out var secondaries))
+            {
+                secondaries = new Dictionary<string, (int count, long size)>(
+                    StringComparer.OrdinalIgnoreCase);
+                outerLookup[primarySpan] = secondaries;
+            }
+
+            var innerLookup = secondaries.GetAlternateLookup<ReadOnlySpan<char>>();
+            if (innerLookup.TryGetValue(secondarySpan, out var existing))
+            {
+                innerLookup[secondarySpan] = (existing.count + 1, existing.size + reference.Size);
+            }
+            else
+            {
+                innerLookup[secondarySpan] = (1, reference.Size);
+            }
+        }
+
+        var result = new List<FilePartitionModel>();
+        var primaryOtherCount = 0;
+        var primaryOtherSize = 0L;
+        var primaryOtherCategories = new List<FileCategoryEntryModel>();
+
+        foreach (var primary in PrimaryOrder)
+        {
+            if (!buckets.TryGetValue(primary, out var secondaries))
+                continue;
+
+            var totalCount = 0;
+            var totalSize = 0L;
+            var categories = new List<FileCategoryEntryModel>();
+            var otherCount = 0;
+            var otherSize = 0L;
+
+            foreach (var (key, (count, size)) in secondaries.OrderByDescending(x => x.Value.size))
+            {
+                totalCount += count;
+                totalSize += size;
+                if (SecondaryAliases.TryGetValue(key, out var alias))
+                {
+                    categories.Add(new(alias, count, size));
+                }
+                else
+                {
+                    otherCount += count;
+                    otherSize += size;
+                }
+            }
+
+            if (otherCount > 0)
+                categories.Add(new("其他", otherCount, otherSize));
+
+            var primaryLabel = PrimaryAliases.GetValueOrDefault(primary, primary);
+            result.Add(new(primaryLabel, totalCount, totalSize, categories));
+        }
+
+        foreach (var (primary, secondaries) in buckets)
+        {
+            if (PrimaryOrder.Contains(primary, StringComparer.OrdinalIgnoreCase))
+                continue;
+
+            var totalCount = 0;
+            var totalSize = 0L;
+            var categories = new List<FileCategoryEntryModel>();
+            var otherSecondaryCount = 0;
+            var otherSecondarySize = 0L;
+
+            foreach (var (key, (count, size)) in secondaries.OrderByDescending(x => x.Value.size))
+            {
+                totalCount += count;
+                totalSize += size;
+                if (SecondaryAliases.TryGetValue(key, out var alias))
+                {
+                    categories.Add(new(alias, count, size));
+                }
+                else
+                {
+                    otherSecondaryCount += count;
+                    otherSecondarySize += size;
+                }
+            }
+
+            if (otherSecondaryCount > 0)
+                categories.Add(new("其他", otherSecondaryCount, otherSecondarySize));
+
+            primaryOtherCount += totalCount;
+            primaryOtherSize += totalSize;
+            primaryOtherCategories.AddRange(categories);
+        }
+
+        if (primaryOtherCount > 0)
+            result.Add(new("其他", primaryOtherCount, primaryOtherSize, primaryOtherCategories));
+
+        return result;
     }
 
     #endregion

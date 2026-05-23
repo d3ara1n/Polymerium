@@ -28,7 +28,7 @@
                         RowSpacing="8">
                         <Grid
                             Grid.Row="0"
-                            RowDefinitions="Auto,Auto"
+                            RowDefinitions="Auto,*"
                             RowSpacing="12">
                             <Grid
                                 Grid.Row="0"
@@ -63,7 +63,7 @@
                                     </StackPanel>
                                 </Border>
                                 <Border
-                                    Grid.Column="2"
+                                    Grid.Column="1"
                                     Padding="12,8"
                                     Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                                     <Border.CornerRadius>
@@ -231,10 +231,12 @@
                     </StackPanel>
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="{x:True}">
-                    <StackPanel>
+                    <StackPanel
+                        VerticalAlignment="Center"
+                        Spacing="4">
                         <husk:ProgressRing
-                            Width="64"
-                            Height="64"
+                            Width="48"
+                            Height="48"
                             HorizontalAlignment="Center"
                             IsIndeterminate="True" />
                         <TextBlock
@@ -261,7 +263,9 @@
                 <TextBlock
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="标签" />
-                <TextBox PlaceholderText="用于提示快照的创建目的" />
+                <TextBox
+                    PlaceholderText="用于提示快照的创建目的"
+                    Text="{Binding Label, Mode=TwoWay}" />
                 <TextBlock
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="备注" />
@@ -269,6 +273,7 @@
                     MinHeight="128"
                     AcceptsReturn="True"
                     PlaceholderText="标签要是不够写这里还能再写点提示性的文字"
+                    Text="{Binding Remark, Mode=TwoWay}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </DockPanel>
