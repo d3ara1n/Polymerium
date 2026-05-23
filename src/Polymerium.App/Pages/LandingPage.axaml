@@ -28,7 +28,8 @@
                 Width="48"
                 Height="48"
                 Opacity="0.9"
-                Source="/Assets/Icons/Chipmunk.png" />
+                RenderOptions.BitmapInterpolationMode="HighQuality"
+                Source="/Assets/Icon.png" />
             <StackPanel
                 Grid.Column="1"
                 VerticalAlignment="Center">
