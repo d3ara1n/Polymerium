@@ -48,8 +48,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Background="Transparent"
-                    DoubleTapped="TitleBarDragArea_OnDoubleTapped"
-                    PointerPressed="TitleBarDragArea_OnPointerPressed" />
+                    WindowDecorationProperties.ElementRole="TitleBar" />
                 <StackPanel Grid.Column="1">
                     <husk:ButtonGroup BorderThickness="0">
                         <husk:ButtonGroup.Styles>
@@ -63,10 +62,16 @@
                                 <Setter Property="FontSize" Value="10" />
                             </Style>
                         </husk:ButtonGroup.Styles>
-                        <Button Click="MinimizeButton_OnClick">
+                        <Button
+                            Click="MinimizeButton_OnClick"
+                            Cursor="{x:Null}"
+                            WindowDecorationProperties.ElementRole="MinimizeButton">
                             <fi:SymbolIcon Symbol="Subtract" />
                         </Button>
-                        <Button Click="ToggleMaximizeButton_OnClick">
+                        <Button
+                            Click="ToggleMaximizeButton_OnClick"
+                            Cursor="{x:Null}"
+                            WindowDecorationProperties.ElementRole="MaximizeButton">
                             <husk:SwitchContainer
                                 TargetType="x:Boolean"
                                 Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}">
@@ -78,7 +83,10 @@
                                 </husk:SwitchCase>
                             </husk:SwitchContainer>
                         </Button>
-                        <Button Click="CloseButton_OnClick">
+                        <Button
+                            Click="CloseButton_OnClick"
+                            Cursor="{x:Null}"
+                            WindowDecorationProperties.ElementRole="CloseButton">
                             <Button.Styles>
                                 <Style Selector="Button:pointerover fi|SymbolIcon">
                                     <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
