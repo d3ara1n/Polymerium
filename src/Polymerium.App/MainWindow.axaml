@@ -109,9 +109,12 @@
                             BlurRadius="6"
                             Opacity="0.1" />
                     </StackPanel.Effect>
-                    <TextBlock
+                    <Image
+                        Width="{StaticResource MediumFontSize}"
+                        Height="{StaticResource MediumFontSize}"
                         VerticalAlignment="Center"
-                        Text="🐿" />
+                        RenderOptions.BitmapInterpolationMode="HighQuality"
+                        Source="/Assets/Icon.png" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"
