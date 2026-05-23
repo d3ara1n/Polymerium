@@ -1,13 +1,14 @@
 using System;
 using System.IO;
 using FreeSql;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.Snapshots;
 
 namespace Polymerium.App.Snapshots;
 
-public class SnapshotStoreFactory(ILogger<SnapshotStoreFactory> logger) : ISnapshotStoreFactory
+public class SnapshotStoreFactory(IServiceProvider provider) : ISnapshotStoreFactory
 {
     public ISnapshotStore Open(string key)
     {
@@ -18,11 +19,10 @@ public class SnapshotStoreFactory(ILogger<SnapshotStoreFactory> logger) : ISnaps
             Directory.CreateDirectory(dir);
         }
 
-        logger.LogInformation("Open snapshot store at {Path}", path);
         var freeSql = new FreeSqlBuilder()
                      .UseConnectionString(DataType.Sqlite, $"Data Source=\"{path}\";Cache=Private")
                      .UseAutoSyncStructure(true)
                      .Build();
-        return new SnapshotStore(freeSql);
+        return ActivatorUtilities.CreateInstance<SnapshotStore>(provider, freeSql);
     }
 }

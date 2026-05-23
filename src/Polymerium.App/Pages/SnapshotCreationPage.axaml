@@ -256,7 +256,31 @@
                     Classes="Primary"
                     Command="{Binding CreateCommand}"
                     CommandParameter="{Binding SnapshotTaken, Mode=OneWay}">
-                    <TextBlock Text="创建并插入数据库" />
+                    <husk:SwitchContainer
+                        TargetType="x:Boolean"
+                        Value="{Binding IsCreating}">
+                        <husk:SwitchCase Value="{x:False}">
+                            <TextBlock Text="创建并插入数据库" />
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="{x:True}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <husk:ProgressRing
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    IsIndeterminate="{Binding IsCreating}"
+                                    Theme="{StaticResource SolidProgressRingTheme}" />
+                                <TextBlock>
+                                    <Run Text="提交文件 (" />
+                                    <Run Text="{Binding TotalCommitted}" />
+                                    <Run Text="/" />
+                                    <Run Text="{Binding SnapshotTaken?.FileCount, FallbackValue=N/A}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                    </husk:SwitchContainer>
                 </Button>
             </StackPanel>
             <StackPanel Spacing="4">
