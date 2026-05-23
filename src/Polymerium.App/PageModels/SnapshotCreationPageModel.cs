@@ -62,6 +62,10 @@ public partial class SnapshotCreationPageModel(
     public partial bool IsSnapshotTaking { get; set; }
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(CreateCommand))]
+    public partial bool IsCreating { get; set; }
+
+    [ObservableProperty]
     public partial SnapshotTakenModel? SnapshotTaken { get; set; }
 
     [ObservableProperty]
@@ -69,6 +73,9 @@ public partial class SnapshotCreationPageModel(
 
     [ObservableProperty]
     public partial int TotalProcessed { get; set; }
+
+    [ObservableProperty]
+    public partial int TotalCommitted { get; set; }
 
     [ObservableProperty]
     public partial string Label { get; set; } = string.Empty;
@@ -103,7 +110,7 @@ public partial class SnapshotCreationPageModel(
         }
     }
 
-    private bool CanCreate(SnapshotTakenModel? model) => model != null;
+    private bool CanCreate(SnapshotTakenModel? model) => model != null && !IsCreating;
 
     [RelayCommand(CanExecute = nameof(CanCreate))]
     private async Task CreateAsync(SnapshotTakenModel? model)
@@ -116,9 +123,16 @@ public partial class SnapshotCreationPageModel(
         var (snapshot, references) = model.Metadata;
         snapshot = snapshot with { Label = !string.IsNullOrEmpty(Label) ? Label : "Untitled", Remark = Remark };
 
+        var committed = new Progress<int>(x =>
+        {
+            TotalCommitted = x;
+        });
+
         try
         {
-            await Context.Handle.CommitAsync(snapshot, references);
+            IsCreating = true;
+            TotalCommitted = 0;
+            await Context.Handle.CommitAsync(snapshot, references, committed);
             notificationService.PopMessage($"{snapshot.Label} has been saved.", "Snapshot created", GrowlLevel.Success);
             Context.BackHandler.Invoke();
         }
@@ -126,6 +140,10 @@ public partial class SnapshotCreationPageModel(
         catch (Exception ex)
         {
             notificationService.PopMessage(ex, "Create snapshot failed");
+        }
+        finally
+        {
+            IsCreating = false;
         }
     }
 

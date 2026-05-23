@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using FreeSql.DataAnnotations;
+using Microsoft.Extensions.Logging;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Snapshots;
 
@@ -12,10 +13,14 @@ namespace Polymerium.App.Snapshots;
 public class SnapshotStore : ISnapshotStore
 {
     private readonly IFreeSql _freeSql;
+    private readonly  ILogger _logger;
 
-    public SnapshotStore(IFreeSql freeSql)
+    public SnapshotStore(IFreeSql freeSql, ILogger<SnapshotStore> logger)
     {
         _freeSql = freeSql;
+        _logger = logger;
+
+        logger.LogInformation("Initialized SnapshotStore");
     }
     #region Fields
 
@@ -32,6 +37,7 @@ public class SnapshotStore : ISnapshotStore
 
         _isDisposed = true;
         _freeSql.Dispose();
+        _logger.LogInformation("SnapshotStore disposed");
     }
 
     public void InsertSnapshot(SnapshotInfo snapshot, IEnumerable<ReferenceInfo> references)
