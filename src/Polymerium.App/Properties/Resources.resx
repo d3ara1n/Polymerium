@@ -2122,12 +2122,6 @@
     <data name="MarketplaceSearchPage_Message" xml:space="preserve">
         <value>View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install.</value>
     </data>
-    <data name="LandingPage_Title" xml:space="preserve">
-        <value>Welcome Back</value>
-    </data>
-    <data name="LandingPage_Subtitle" xml:space="preserve">
-        <value>Quick access to your game world</value>
-    </data>
     <data name="LandingPage_FeaturedModpacksLabelText" xml:space="preserve">
         <value>Featured Modpacks</value>
     </data>
