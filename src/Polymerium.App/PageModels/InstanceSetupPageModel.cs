@@ -626,7 +626,7 @@ public partial class InstanceSetupPageModel(
     [RelayCommand]
     private void ViewPackage(InstancePackageModel? model)
     {
-        if (model is {Info: not null} && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        if (model is { Info: not null } && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
             overlayService.PopModal(new InstancePackageModal
             {
@@ -910,127 +910,130 @@ public partial class InstanceSetupPageModel(
         {
             try
             {
-                var importedEntries = new List<ExportedEntry>();
-
-                // 读取 CSV 文件
-                using (var reader = new StreamReader(filePath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    await foreach (var record in csv.GetRecordsAsync<ExportedEntry>())
-                    {
-                        importedEntries.Add(record);
-                    }
-                }
-
-                if (importedEntries.Count == 0)
-                {
-                    notificationService.PopMessage(Resources
-                                                      .InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage,
-                                                   Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
-                                                   GrowlLevel.Warning,
-                                                   thumbnail: GetNotificationThumbnail());
-                    return;
-                }
-
                 var addedCount = 0;
                 var updatedCount = 0;
                 var failedCount = 0;
-
-                if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+                await Task.Run(async () =>
                 {
-                    await using (guard)
+                    var importedEntries = new List<ExportedEntry>();
+
+                    // 读取 CSV 文件
+                    using (var reader = new StreamReader(filePath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
-                        foreach (var importedEntry in importedEntries)
+                        await foreach (var record in csv.GetRecordsAsync<ExportedEntry>())
                         {
-                            try
+                            importedEntries.Add(record);
+                        }
+                    }
+
+                    if (importedEntries.Count == 0)
+                    {
+                        notificationService.PopMessage(Resources
+                                                          .InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage,
+                                                       Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+                                                       GrowlLevel.Warning,
+                                                       thumbnail: GetNotificationThumbnail());
+                        return;
+                    }
+
+                    if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+                    {
+                        await using (guard)
+                        {
+                            foreach (var importedEntry in importedEntries)
                             {
-                                if (string.IsNullOrEmpty(importedEntry.Purl))
+                                try
                                 {
-                                    failedCount++;
-                                    continue;
-                                }
-
-                                // 查找是否已存在相同的包（基于 Label, Namespace, ProjectId）
-                                Profile.Rice.Entry? existingEntry = null;
-                                if (PackageHelper.TryParse(importedEntry.Purl, out var importedPurl))
-                                {
-                                    existingEntry =
-                                        guard.Value.Setup.Packages.FirstOrDefault(x => PackageHelper.IsMatched(x.Purl,
-                                            importedPurl.Label,
-                                            importedPurl.Namespace,
-                                            importedPurl.Pid));
-                                }
-
-                                if (existingEntry != null)
-                                {
-                                    // 更新现有包的版本
-                                    var oldPurl = existingEntry.Purl;
-                                    existingEntry.Purl = importedEntry.Purl;
-                                    existingEntry.Enabled = importedEntry.Enabled;
-
-                                    var tags = importedEntry
-                                              .Tags.Split('|')
-                                              .Where(x => !string.IsNullOrEmpty(x))
-                                              .ToList();
-                                    var toAdd = tags.Except(existingEntry.Tags).ToList();
-
-                                    if (toAdd.Count > 0)
+                                    if (string.IsNullOrEmpty(importedEntry.Purl))
                                     {
-                                        // HACK: 由于触发更新并不会同步 Tags，
-                                        //  在 Entry 中修改也不会同步，
-                                        //  所以需要推送到 InstancePackageModel 中
-                                        var model = _stageSource.Lookup(existingEntry);
-                                        if (model.HasValue)
-                                        {
-                                            foreach (var tag in toAdd)
-                                            {
-                                                model.Value.Tags.Add(tag);
-                                            }
-                                        }
+                                        failedCount++;
+                                        continue;
                                     }
 
-                                    if (oldPurl != importedEntry.Purl)
+                                    // 查找是否已存在相同的包（基于 Label, Namespace, ProjectId）
+                                    Profile.Rice.Entry? existingEntry = null;
+                                    if (PackageHelper.TryParse(importedEntry.Purl, out var importedPurl))
                                     {
+                                        existingEntry =
+                                            guard.Value.Setup.Packages.FirstOrDefault(x =>
+                                                PackageHelper.IsMatched(x.Purl,
+                                                                        importedPurl.Label,
+                                                                        importedPurl.Namespace,
+                                                                        importedPurl.Pid));
+                                    }
+
+                                    if (existingEntry != null)
+                                    {
+                                        // 更新现有包的版本
+                                        var oldPurl = existingEntry.Purl;
+                                        existingEntry.Purl = importedEntry.Purl;
+                                        existingEntry.Enabled = importedEntry.Enabled;
+
+                                        var tags = importedEntry
+                                                  .Tags.Split('|')
+                                                  .Where(x => !string.IsNullOrEmpty(x))
+                                                  .ToList();
+                                        var toAdd = tags.Except(existingEntry.Tags).ToList();
+
+                                        if (toAdd.Count > 0)
+                                        {
+                                            // HACK: 由于触发更新并不会同步 Tags，
+                                            //  在 Entry 中修改也不会同步，
+                                            //  所以需要推送到 InstancePackageModel 中
+                                            var model = _stageSource.Lookup(existingEntry);
+                                            if (model.HasValue)
+                                            {
+                                                foreach (var tag in toAdd)
+                                                {
+                                                    model.Value.Tags.Add(tag);
+                                                }
+                                            }
+                                        }
+
+                                        if (oldPurl != importedEntry.Purl)
+                                        {
+                                            persistenceService.AppendAction(new()
+                                            {
+                                                Key = Basic.Key,
+                                                Kind = PersistenceService.ActionKind
+                                                                         .EditPackage,
+                                                Old = oldPurl,
+                                                New = importedEntry.Purl,
+                                            });
+                                        }
+
+                                        updatedCount++;
+                                    }
+                                    else
+                                    {
+                                        // 添加新包
+                                        var newEntry = new Profile.Rice.Entry
+                                        {
+                                            Enabled = importedEntry.Enabled,
+                                            Purl = importedEntry.Purl,
+                                            Source = importedEntry.Source,
+                                        };
+                                        guard.Value.Setup.Packages.Add(newEntry);
                                         persistenceService.AppendAction(new()
                                         {
                                             Key = Basic.Key,
                                             Kind = PersistenceService.ActionKind
                                                                      .EditPackage,
-                                            Old = oldPurl,
                                             New = importedEntry.Purl,
                                         });
+                                        addedCount++;
                                     }
-
-                                    updatedCount++;
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    // 添加新包
-                                    var newEntry = new Profile.Rice.Entry
-                                    {
-                                        Enabled = importedEntry.Enabled,
-                                        Purl = importedEntry.Purl,
-                                        Source = importedEntry.Source,
-                                    };
-                                    guard.Value.Setup.Packages.Add(newEntry);
-                                    persistenceService.AppendAction(new()
-                                    {
-                                        Key = Basic.Key,
-                                        Kind = PersistenceService.ActionKind
-                                                                 .EditPackage,
-                                        New = importedEntry.Purl,
-                                    });
-                                    addedCount++;
+                                    logger.LogError(ex, "Failed to import package: {purl}", importedEntry.Purl);
+                                    failedCount++;
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                logger.LogError(ex, "Failed to import package: {purl}", importedEntry.Purl);
-                                failedCount++;
                             }
                         }
                     }
-                }
+                });
 
                 // 显示结果通知
                 var resultMessage = Resources
