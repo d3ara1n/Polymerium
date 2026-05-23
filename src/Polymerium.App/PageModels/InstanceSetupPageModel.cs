@@ -346,7 +346,7 @@ public partial class InstanceSetupPageModel(
 
     private Uri GetNotificationThumbnail(Uri? preferred = null) =>
         preferred
-     ?? (Reference?.Value is InstanceReferenceModel reference && reference.Thumbnail is { } thumbnail
+     ?? (Reference?.Value is InstanceReferenceModel { Thumbnail: { } thumbnail }
              ? thumbnail
              : ThumbnailHelper.ForInstance(Basic.Key));
 

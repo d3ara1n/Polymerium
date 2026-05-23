@@ -302,6 +302,7 @@
                                     Symbol="FolderZip" />
                             </Button>
                             <Button
+                                IsVisible="{x:Static app:Program.IsDebug}"
                                 Command="{Binding ManageSnapshotsAsyncCommand, FallbackValue={x:Null}}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
                                 ToolTip.Tip="Manage snapshots">
