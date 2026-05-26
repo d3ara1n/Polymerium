@@ -24,5 +24,6 @@
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
         <ResourceInclude Source="/Controls/FancyListBox.axaml" />
         <ResourceInclude Source="/Controls/DiffView.axaml" />
+        <ResourceInclude Source="/Controls/DateRangePicker.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
