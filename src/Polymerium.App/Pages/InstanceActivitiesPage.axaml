@@ -586,28 +586,23 @@
             <husk:Card
                 Grid.Column="0"
                 Padding="0">
-                <DockPanel>
-                    <Grid
-                        DockPanel.Dock="Top"
-                        Margin="{Binding Source={StaticResource CardContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutBottom}}"
-                        ColumnDefinitions="*,Auto">
-                        <TextBlock
-                            Grid.Column="0"
-                            FontSize="{StaticResource LargeFontSize}"
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.InstanceActivitiesPage_ChangelogLabelText}" />
-                        <TabStrip
+                <Grid RowDefinitions="Auto,Auto,*">
+                    <Grid Grid.Row="0"
+                          DockPanel.Dock="Top"
+                          Margin="{StaticResource CardContentMargin}"
+                          ColumnDefinitions="*,Auto">
+                        <TextBlock VerticalAlignment="Center"
+                                   Grid.Column="0"
+                                   FontSize="{StaticResource LargeFontSize}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   Text="{x:Static lang:Resources.InstanceActivitiesPage_ChangelogLabelText}" />
+                        <app:DateRangePicker
                             Grid.Column="1"
-                            SelectedIndex="{Binding SinceDayIndex, Mode=TwoWay}"
-                            Theme="{StaticResource SegmentedTabStripTheme}">
-                            <TabStripItem Content="{x:Static lang:Resources.Enum_Day}" />
-                            <TabStripItem Content="{x:Static lang:Resources.Enum_Week}" />
-                            <TabStripItem Content="{x:Static lang:Resources.Enum_Month}" />
-                            <TabStripItem Content="{x:Static lang:Resources.Enum_Year}" />
-                            <TabStripItem Content="{x:Static lang:Resources.Enum_All}" />
-                        </TabStrip>
+                            End="{Binding ActionRangeEnd, Mode=TwoWay}"
+                            Start="{Binding ActionRangeStart, Mode=TwoWay}" />
                     </Grid>
-                    <husk:LazyContainer Source="{Binding PagedActions}">
+                    <husk:Divider Grid.Row="1" />
+                    <husk:LazyContainer Grid.Row="2" Source="{Binding PagedActions}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="app:InstanceActionCollection">
                                 <Panel>
@@ -646,7 +641,7 @@
                             </DataTemplate>
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
-                </DockPanel>
+                </Grid>
             </husk:Card>
         </Grid>
     </Grid>
