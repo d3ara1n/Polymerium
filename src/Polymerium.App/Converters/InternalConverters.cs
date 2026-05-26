@@ -202,7 +202,7 @@ public static class InternalConverters
     {
         if (v is DateTime datetime)
         {
-            return datetime.ToString("D", CultureInfo.CurrentUICulture);
+            return datetime.ToString("d", CultureInfo.CurrentUICulture);
         }
 
         return v;
