@@ -31,6 +31,8 @@ public partial class InstanceActivitiesPageModel(
     PersistenceService persistenceService
 ) : InstancePageModelBase(context, instanceManager, profileManager)
 {
+    private bool _isInitializingActionRange;
+
     #region Other
 
     private SKColor GetAccentColorFromResources()
@@ -61,11 +63,11 @@ public partial class InstanceActivitiesPageModel(
         return SKColors.DodgerBlue;
     }
 
-    private void LoadPage(DateTimeOffset since)
+    private void LoadPage(DateTime? start, DateTime? end)
     {
         var lazy = new LazyObject(async _ =>
         {
-            var actions = persistenceService.GetLatestActions(Basic.Key, since);
+            var actions = persistenceService.GetActions(Basic.Key, start, end);
             var tasks = actions
                 .Where(x => !(x.Old == null && x.New == null))
                 .Select(async x =>
@@ -134,7 +136,12 @@ public partial class InstanceActivitiesPageModel(
     protected override Task OnInitializeAsync(CancellationToken token)
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
-        SinceDayIndex = 0;
+
+        _isInitializingActionRange = true;
+        ActionRangeStart = DateTime.Today;
+        ActionRangeEnd = DateTime.Today;
+        _isInitializingActionRange = false;
+        LoadPageForRange();
 
         int[] days = [-6, -5, -4, -3, -2, -1, 0];
         var times = days.Select(x =>
@@ -215,20 +222,23 @@ public partial class InstanceActivitiesPageModel(
     {
         base.OnPropertyChanged(e);
 
-        if (e.PropertyName == nameof(SinceDayIndex))
+        if (
+            !_isInitializingActionRange
+            && e.PropertyName is nameof(ActionRangeStart) or nameof(ActionRangeEnd)
+        )
         {
-            var since = DateTimeOffset.Now.AddDays(
-                SinceDayIndex switch
-                {
-                    0 => -1,
-                    1 => -7,
-                    2 => -30,
-                    3 => -365,
-                    _ => -114514,
-                }
-            );
-            LoadPage(since);
+            LoadPageForRange();
         }
+    }
+
+    private void LoadPageForRange()
+    {
+        if (ActionRangeStart is { } start && ActionRangeEnd is { } end && start.Date > end.Date)
+        {
+            return;
+        }
+
+        LoadPage(ActionRangeStart?.Date, ActionRangeEnd?.Date.AddDays(1));
     }
 
     #endregion
@@ -255,7 +265,10 @@ public partial class InstanceActivitiesPageModel(
     public partial int ActiveDays { get; set; }
 
     [ObservableProperty]
-    public partial int SinceDayIndex { get; set; } = -1;
+    public partial DateTime? ActionRangeStart { get; set; }
+
+    [ObservableProperty]
+    public partial DateTime? ActionRangeEnd { get; set; }
 
     [ObservableProperty]
     public partial ISeries<double>[]? WeekSeries { get; set; }
