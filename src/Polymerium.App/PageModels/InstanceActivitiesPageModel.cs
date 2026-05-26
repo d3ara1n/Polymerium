@@ -15,6 +15,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using SkiaSharp;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -113,7 +114,7 @@ public partial class InstanceActivitiesPageModel(
                         newPackage?.VersionId,
                         newPackage?.VersionName,
                         thumbnail,
-                        x.At,
+                        DateTimeHelper.FromPersistedLocalDateTime(x.At),
                         false
                     );
                 })

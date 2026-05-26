@@ -54,7 +54,7 @@ public partial class InstanceHomePageModel(
     private void UpdateTime(string key)
     {
         var activity = persistenceService.GetLastActivity(key);
-        LastPlayedAtRaw = activity?.End;
+        LastPlayedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(activity?.End);
         LastPlayTimeRaw = activity?.End - activity?.Begin ?? TimeSpan.Zero;
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(key);
         PercentageInTotalPlayTime = persistenceService.GetPercentageInTotalPlayTime(key);
@@ -94,8 +94,8 @@ public partial class InstanceHomePageModel(
                     cooked.GetType(),
                     cooked.Uuid,
                     cooked.Username,
-                    account.EnrolledAt,
-                    account.LastUsedAt
+                    DateTimeHelper.FromPersistedLocalDateTime(account.EnrolledAt),
+                    DateTimeHelper.FromPersistedLocalDateTime(account.LastUsedAt)
                 );
             }
         }
@@ -208,8 +208,8 @@ public partial class InstanceHomePageModel(
                         cooked.GetType(),
                         cooked.Uuid,
                         cooked.Username,
-                        x.EnrolledAt,
-                        x.LastUsedAt
+                        DateTimeHelper.FromPersistedLocalDateTime(x.EnrolledAt),
+                        DateTimeHelper.FromPersistedLocalDateTime(x.LastUsedAt)
                     );
             })
             .ToList();

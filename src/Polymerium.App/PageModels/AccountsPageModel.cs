@@ -49,10 +49,11 @@ public partial class AccountsPageModel(
         }
 
         var isDefault = !Accounts.Any(x => x.IsDefault);
-        var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, isDefault);
+        var enrolledAt = DateTimeOffset.Now;
+        var raw = AccountHelper.ToRaw(account, enrolledAt, null, isDefault);
         persistenceService.AppendAccount(raw);
         Accounts.Add(
-            new(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
+            new(account.GetType(), account.Uuid, account.Username, enrolledAt, null)
             {
                 IsDefault = isDefault,
             }
@@ -74,8 +75,8 @@ public partial class AccountsPageModel(
                 cooked.GetType(),
                 cooked.Uuid,
                 cooked.Username,
-                account.EnrolledAt,
-                account.LastUsedAt
+                DateTimeHelper.FromPersistedLocalDateTime(account.EnrolledAt),
+                DateTimeHelper.FromPersistedLocalDateTime(account.LastUsedAt)
             )
             {
                 IsDefault = account.Uuid == defaultAccount?.Uuid,

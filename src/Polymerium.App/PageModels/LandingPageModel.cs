@@ -94,7 +94,7 @@ public partial class LandingPageModel(
                         ? LoaderHelper.ToDisplayName(loader.Identity)
                         : Resources.Enum_Vanilla,
                 Thumbnail = icon,
-                LastPlayedRaw = last.End,
+                LastPlayedRaw = DateTimeHelper.FromPersistedLocalDateTime(last.End),
                 LastPlayTimeRaw = last.End - last.Begin,
             };
         }

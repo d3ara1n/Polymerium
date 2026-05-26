@@ -13,6 +13,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
@@ -334,7 +335,7 @@ public partial class InstancePackageModal : Modal
             }
 
             // 获取当前包的所有历史记录
-            var actions = PersistenceService.GetLatestActions(Guard.Key, DateTimeOffset.MinValue);
+            var actions = PersistenceService.GetActions(Guard.Key, null, null);
 
             // 过滤出与当前包相关的记录
             var filteredActions = actions
@@ -365,7 +366,7 @@ public partial class InstancePackageModal : Modal
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
                                             VersionName = null,
-                                            ModifiedAtRaw = x.At,
+                                            ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                         };
                                     }
 
@@ -374,7 +375,7 @@ public partial class InstancePackageModal : Modal
                                     {
                                         Kind = InstancePackageModificationKind.Unset,
                                         VersionName = null,
-                                        ModifiedAtRaw = x.At,
+                                        ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                     };
                                 }
 
@@ -390,7 +391,7 @@ public partial class InstancePackageModal : Modal
                                     {
                                         Kind = InstancePackageModificationKind.AddVersioned,
                                         VersionName = package.VersionName,
-                                        ModifiedAtRaw = x.At,
+                                        ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                     };
                                 }
 
@@ -399,7 +400,7 @@ public partial class InstancePackageModal : Modal
                                 {
                                     Kind = InstancePackageModificationKind.Update,
                                     VersionName = package.VersionName,
-                                    ModifiedAtRaw = x.At,
+                                    ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                 };
                             }
 
@@ -407,7 +408,7 @@ public partial class InstancePackageModal : Modal
                             {
                                 Kind = InstancePackageModificationKind.Remove,
                                 VersionName = null,
-                                ModifiedAtRaw = x.At,
+                                ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                             };
                         })
                        .ToArray();

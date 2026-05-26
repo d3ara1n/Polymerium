@@ -553,7 +553,9 @@ public partial class MainWindowContext : ObservableObject
         {
             InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source)
             {
-                LastPlayedAtRaw = _persistenceService.GetLastActivity(key)?.End,
+                LastPlayedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(
+                    _persistenceService.GetLastActivity(key)?.End
+                ),
             };
             list.Add(model);
         }
@@ -948,7 +950,7 @@ public partial class MainWindowContext : ObservableObject
                         Key = e.Key,
                         AccountId = e.Options.Account?.Uuid ?? string.Empty,
                         DieInPeace = false,
-                        Begin = e.StartedAt.DateTime,
+                        Begin = DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
                         End = DateTime.Now,
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -967,7 +969,7 @@ public partial class MainWindowContext : ObservableObject
                     {
                         Key = e.Key,
                         AccountId = e.Options.Account?.Uuid ?? string.Empty,
-                        Begin = e.StartedAt.DateTime,
+                        Begin = DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
                         End = DateTime.Now,
                         DieInPeace = true,
                     });

@@ -361,7 +361,7 @@ public partial class InstanceDashboardPageModel(
         process.Refresh();
         var errorCount = 0;
         TimeSpan? lastCpuTime = null;
-        var lastSampleTime = DateTime.UtcNow;
+        var lastSampleTime = DateTime.Now;
         var cpuCount = Environment.ProcessorCount;
         while (!token.IsCancellationRequested)
         {

@@ -432,7 +432,7 @@ public partial class ExhibitPackageModal : Modal
             }
 
             // 获取当前包的所有历史记录
-            var actions = PersistenceService.GetLatestActions(Key, DateTimeOffset.MinValue);
+            var actions = PersistenceService.GetActions(Key, null, null);
 
             // 过滤出与当前包相关的记录
             var filteredActions = actions
@@ -473,7 +473,7 @@ public partial class ExhibitPackageModal : Modal
                                 {
                                     Kind = InstancePackageModificationKind.AddUnversioned,
                                     VersionName = null,
-                                    ModifiedAtRaw = x.At,
+                                    ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                 };
                             }
 
@@ -482,7 +482,7 @@ public partial class ExhibitPackageModal : Modal
                             {
                                 Kind = InstancePackageModificationKind.Unset,
                                 VersionName = null,
-                                ModifiedAtRaw = x.At,
+                                ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                             };
                         }
 
@@ -500,7 +500,7 @@ public partial class ExhibitPackageModal : Modal
                             {
                                 Kind = InstancePackageModificationKind.AddVersioned,
                                 VersionName = package.VersionName,
-                                ModifiedAtRaw = x.At,
+                                ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                             };
                         }
 
@@ -509,7 +509,7 @@ public partial class ExhibitPackageModal : Modal
                         {
                             Kind = InstancePackageModificationKind.Update,
                             VersionName = package.VersionName,
-                            ModifiedAtRaw = x.At,
+                            ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                         };
                     }
 
@@ -517,7 +517,7 @@ public partial class ExhibitPackageModal : Modal
                     {
                         Kind = InstancePackageModificationKind.Remove,
                         VersionName = null,
-                        ModifiedAtRaw = x.At,
+                        ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                     };
                 })
                 .ToArray();
