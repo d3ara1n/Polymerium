@@ -29,8 +29,8 @@ public static class AccountHelper
         {
             Uuid = account.Uuid,
             IsDefault = isDefault,
-            EnrolledAt = enrolledAt.DateTime,
-            LastUsedAt = lastUsedAt?.DateTime,
+            EnrolledAt = DateTimeHelper.ToPersistedLocalDateTime(enrolledAt),
+            LastUsedAt = DateTimeHelper.ToPersistedLocalDateTime(lastUsedAt),
             Data = JsonSerializer.Serialize(account, account.GetType()),
             Kind = account.GetType().Name,
         };

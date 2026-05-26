@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Polymerium.App.Services;
+using Polymerium.App.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
@@ -116,7 +117,7 @@ public class FavoriteRepository(
             favorite.DownloadCount,
             PersistenceService.DeserializeFavoriteTags(favorite.Tags),
             new Uri(favorite.Reference),
-            new DateTimeOffset(favorite.CreatedAt),
-            new DateTimeOffset(favorite.UpdatedAt)
+            DateTimeHelper.FromPersistedLocalDateTime(favorite.CreatedAt),
+            DateTimeHelper.FromPersistedLocalDateTime(favorite.UpdatedAt)
         );
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using FreeSql.DataAnnotations;
+using Polymerium.App.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Core.Accounts;
@@ -151,7 +152,7 @@ public class PersistenceService(IFreeSql freeSql)
     public void AppendAction(Action action) => freeSql.Insert(action).ExecuteAffrows();
 
     public IReadOnlyList<Action> GetLatestActions(string key, DateTimeOffset since) =>
-        GetActions(key, since.LocalDateTime, null);
+        GetActions(key, DateTimeHelper.ToPersistedLocalDateTime(since), null);
 
     public IReadOnlyList<Action> GetActions(string key, DateTime? start, DateTime? end)
     {
@@ -237,7 +238,7 @@ public class PersistenceService(IFreeSql freeSql)
     {
         var totalSeconds = freeSql
             .Select<Activity>()
-            .Where(x => x.Key == key && x.End.Date == date.DateTime.Date)
+            .Where(x => x.Key == key && x.End.Date == DateTimeHelper.ToPersistedLocalDateTime(date).Date)
             .Sum(x => (x.End - x.Begin).TotalSeconds);
         return TimeSpan.FromSeconds((double)totalSeconds);
     }
@@ -466,8 +467,8 @@ public class PersistenceService(IFreeSql freeSql)
             Thumbnail = thumbnail?.AbsoluteUri,
             Kind = kind,
             DownloadCount = downloadCount,
-            CreatedAt = createdAt.LocalDateTime,
-            UpdatedAt = updatedAt.LocalDateTime,
+            CreatedAt = DateTimeHelper.ToPersistedLocalDateTime(createdAt),
+            UpdatedAt = DateTimeHelper.ToPersistedLocalDateTime(updatedAt),
             AddedAt = existing?.AddedAt ?? DateTime.Now,
             Tags = JsonSerializer.Serialize(tags),
         };

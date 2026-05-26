@@ -505,8 +505,8 @@ public partial class InstanceFilesPageModel(
                     cooked.GetType(),
                     cooked.Uuid,
                     cooked.Username,
-                    x.EnrolledAt,
-                    x.LastUsedAt
+                    DateTimeHelper.FromPersistedLocalDateTime(x.EnrolledAt),
+                    DateTimeHelper.FromPersistedLocalDateTime(x.LastUsedAt)
                 );
             })
             .ToList();
