@@ -216,13 +216,8 @@ public partial class PackageExplorerPageModel : ViewModelBase
     [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
 
-    partial void OnSelectedRepositoryChanged(RepositoryBasicModel? value)
+    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
     {
-        // BUG: POLYMERIUM-1K，尝试使用 value is null 回避来修复，实际 value 是否会为 null 还未知
-        if (value is null)
-        {
-            return;
-        }
         // HACK: 此时 SelectedKind 没回绑，Filter 未更新，因此手动提前打补丁
         if (value.Kinds?.Any(x => x == Filter.Kind) is not true)
         {
