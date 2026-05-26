@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
+        <ApplicationIcon>Assets\Icon.App.ico</ApplicationIcon>
         <LangVersion>preview</LangVersion>
 
         <!-- Windows -->
