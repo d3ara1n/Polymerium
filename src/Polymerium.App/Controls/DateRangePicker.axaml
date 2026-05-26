@@ -1,0 +1,298 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <Design.PreviewWith>
+        <Panel>
+            <StackPanel
+                Margin="24"
+                HorizontalAlignment="Left"
+                Spacing="12">
+                <app:DateRangePicker />
+                <app:DateRangePicker
+                    End="2026-05-26"
+                    Start="2026-05-20" />
+                <app:DateRangePicker
+                    End="2026-05-20"
+                    Start="2026-05-26" />
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+
+    <Thickness x:Key="DateRangePickerPadding">2</Thickness>
+    <Thickness x:Key="DateRangePickerButtonPadding">12,8</Thickness>
+
+    <ControlTheme
+        x:Key="DateRangePickerButtonTheme"
+        TargetType="Button">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="{StaticResource DateRangePickerButtonPadding}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderBrush"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <ThicknessTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderThickness"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                        <Border
+                            Name="Indicator"
+                            Background="{StaticResource OverlayHalfBackgroundBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Opacity="0">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <DoubleTransition
+                                        Easing="SineEaseOut"
+                                        Property="Opacity"
+                                        Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
+                    </Border>
+                    <Border
+                        Name="GlowBorder"
+                        BorderBrush="{StaticResource TransparentBrush}"
+                        BorderThickness="2"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderBrush"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <ContentPresenter
+                        Name="ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Foreground="{TemplateBinding Foreground}" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Indicator">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Indicator">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="^:focus /template/ Border#GlowBorder">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        </Style>
+
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme
+        x:Key="{x:Type app:DateRangePicker}"
+        TargetType="app:DateRangePicker">
+        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="{StaticResource DateRangePickerPadding}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Panel>
+                        <Border
+                            Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <BrushTransition
+                                        Easing="SineEaseOut"
+                                        Property="Background"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    <BrushTransition
+                                        Easing="SineEaseOut"
+                                        Property="BorderBrush"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </Border.Transitions>
+                            <Grid
+                                Margin="{TemplateBinding Padding}"
+                                ColumnDefinitions="Auto,Auto,Auto">
+                                <Button
+                                    Name="PART_StartButton"
+                                    Grid.Column="0"
+                                    Theme="{StaticResource DateRangePickerButtonTheme}">
+                                    <Button.CornerRadius>
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                            <Binding
+                                                Path="CornerRadius"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=app:DateRangePicker}" />
+                                            <Binding
+                                                Path="Padding"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=app:DateRangePicker}" />
+                                        </MultiBinding>
+                                    </Button.CornerRadius>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
+                                        <fi:SymbolIcon
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="Calendar" />
+                                        <husk:PlaceholderContainer Source="{TemplateBinding Start}">
+                                            <husk:PlaceholderContainer.SourceTemplate>
+                                                <DataTemplate x:DataType="system:DateTime">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding}" />
+                                                </DataTemplate>
+                                            </husk:PlaceholderContainer.SourceTemplate>
+                                            <husk:PlaceholderContainer.Placeholder>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding StartPlaceholderText, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=app:DateRangePicker}}" />
+                                            </husk:PlaceholderContainer.Placeholder>
+                                        </husk:PlaceholderContainer>
+                                    </StackPanel>
+                                </Button>
+                                <fi:SymbolIcon
+                                    Grid.Column="1"
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Symbol="ArrowRight" />
+                                <Button
+                                    Name="PART_EndButton"
+                                    Grid.Column="2"
+                                    Theme="{StaticResource DateRangePickerButtonTheme}">
+                                    <Button.CornerRadius>
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                            <Binding
+                                                Path="CornerRadius"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=app:DateRangePicker}" />
+                                            <Binding
+                                                Path="Padding"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=app:DateRangePicker}" />
+                                        </MultiBinding>
+                                    </Button.CornerRadius>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="6">
+                                        <fi:SymbolIcon
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="Calendar" />
+                                        <husk:PlaceholderContainer Source="{TemplateBinding End}">
+                                            <husk:PlaceholderContainer.SourceTemplate>
+                                                <DataTemplate x:DataType="system:DateTime">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding}" />
+                                                </DataTemplate>
+                                            </husk:PlaceholderContainer.SourceTemplate>
+                                            <husk:PlaceholderContainer.Placeholder>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding EndPlaceholderText, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=app:DateRangePicker}}" />
+                                            </husk:PlaceholderContainer.Placeholder>
+                                        </husk:PlaceholderContainer>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <Popup
+                            Name="PART_StartPopup"
+                            IsLightDismissEnabled="True"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding #PART_StartButton}"
+                            WindowManagerAddShadowHint="False">
+                            <Border Margin="2,4">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        OffsetX="0"
+                                        OffsetY="8"
+                                        Opacity="0.18" />
+                                </Border.Effect>
+                                <Calendar
+                                    Name="PART_StartCalendar"
+                                    DisplayDate="{TemplateBinding StartDisplayDate}"
+                                    IsTodayHighlighted="False" />
+                            </Border>
+                        </Popup>
+
+                        <Popup
+                            Name="PART_EndPopup"
+                            IsLightDismissEnabled="True"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding #PART_EndButton}"
+                            WindowManagerAddShadowHint="False">
+                            <Border Margin="2,4">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        OffsetX="0"
+                                        OffsetY="8"
+                                        Opacity="0.18" />
+                                </Border.Effect>
+                                <Calendar
+                                    Name="PART_EndCalendar"
+                                    DisplayDate="{TemplateBinding EndDisplayDate}"
+                                    IsTodayHighlighted="False" />
+                            </Border>
+                        </Popup>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:error /template/ Border#Border">
+            <Setter Property="Background" Value="{StaticResource ControlDangerBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#Border">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

@@ -470,6 +470,25 @@
                             </DockPanel>
                         </Border>
                     </GroupBox>
+
+                    <GroupBox Classes="Primary">
+                        <GroupBox.Header>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="Date Range Picker Preview" />
+                        </GroupBox.Header>
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            Spacing="8">
+                            <app:DateRangePicker />
+                            <app:DateRangePicker
+                                End="2026-05-26"
+                                Start="2026-05-20" />
+                            <app:DateRangePicker
+                                End="2026-05-20"
+                                Start="2026-05-26" />
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Baz">
