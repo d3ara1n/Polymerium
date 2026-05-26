@@ -31,8 +31,6 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -120,7 +118,7 @@
     <ControlTheme
         x:Key="{x:Type app:DateRangePicker}"
         TargetType="app:DateRangePicker">
-        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentHalfBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
@@ -181,7 +179,7 @@
                                                 <DataTemplate x:DataType="system:DateTime">
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding}" />
+                                                        Text="{Binding Converter={x:Static app:InternalConverters.CurrentCultureDateTime}}" />
                                                 </DataTemplate>
                                             </husk:PlaceholderContainer.SourceTemplate>
                                             <husk:PlaceholderContainer.Placeholder>
@@ -228,7 +226,7 @@
                                                 <DataTemplate x:DataType="system:DateTime">
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding}" />
+                                                        Text="{Binding Converter={x:Static app:InternalConverters.CurrentCultureDateTime}}" />
                                                 </DataTemplate>
                                             </husk:PlaceholderContainer.SourceTemplate>
                                             <husk:PlaceholderContainer.Placeholder>
