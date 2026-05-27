@@ -335,7 +335,7 @@ public partial class InstancePackageModal : Modal
             }
 
             // 获取当前包的所有历史记录
-            var actions = PersistenceService.GetActions(Guard.Key, null, null);
+            var actions = PersistenceService.GetActions(Guard.Key);
 
             // 过滤出与当前包相关的记录
             var filteredActions = actions

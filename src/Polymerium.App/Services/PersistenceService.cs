@@ -151,27 +151,26 @@ public class PersistenceService(IFreeSql freeSql)
 
     public void AppendAction(Action action) => freeSql.Insert(action).ExecuteAffrows();
 
-    public IReadOnlyList<Action> GetLatestActions(string key, DateTimeOffset since) =>
-        GetActions(key, DateTimeHelper.ToPersistedLocalDateTime(since), null);
-
-    public IReadOnlyList<Action> GetActions(string key, DateTime? start, DateTime? end)
+    public IReadOnlyList<Action> GetActions(string key, int pageIndex, int pageSize, out int totalCount)
     {
         var query = freeSql
             .Select<Action>()
             .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage);
 
-        if (start is { } startValue)
-        {
-            query = query.Where(x => x.At >= startValue);
-        }
+        totalCount = (int)query.Count();
 
-        if (end is { } endValue)
-        {
-            query = query.Where(x => x.At < endValue);
-        }
-
-        return query.OrderByDescending(x => x.At).ToList();
+        return query.OrderByDescending(x => x.At)
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
+            .ToList();
     }
+
+    public IReadOnlyList<Action> GetActions(string key) =>
+        freeSql
+            .Select<Action>()
+            .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage)
+            .OrderByDescending(x => x.At)
+            .ToList();
 
     public int ClearActions(string key) =>
         freeSql.Delete<Action>().Where(x => x.Key == key).ExecuteAffrows();
