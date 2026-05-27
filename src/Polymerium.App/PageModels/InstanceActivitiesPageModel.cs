@@ -32,7 +32,7 @@ public partial class InstanceActivitiesPageModel(
     PersistenceService persistenceService
 ) : InstancePageModelBase(context, instanceManager, profileManager)
 {
-    private bool _isInitializingActionRange;
+    private const int ActionPageSize = 20;
 
     #region Other
 
@@ -40,7 +40,6 @@ public partial class InstanceActivitiesPageModel(
     {
         try
         {
-            // Try to get the ControlAccentInteractiveBackgroundBrush from Avalonia resources
             if (
                 Application.Current?.TryGetResource(
                     "ControlAccentInteractiveBackgroundBrush",
@@ -51,24 +50,28 @@ public partial class InstanceActivitiesPageModel(
             )
             {
                 var avaloniaColor = brush.Color;
-                // Convert Avalonia Color to SkiaSharp SKColor
                 return new(avaloniaColor.R, avaloniaColor.G, avaloniaColor.B, avaloniaColor.A);
             }
         }
         catch
         {
-            // Fallback if resource is not found or any error occurs
         }
 
-        // Fallback to a default accent color if resource is not available
         return SKColors.DodgerBlue;
     }
 
-    private void LoadPage(DateTime? start, DateTime? end)
+    private void LoadActionPage(int pageIndex)
     {
         var lazy = new LazyObject(async _ =>
         {
-            var actions = persistenceService.GetActions(Basic.Key, start, end);
+            var actions = persistenceService.GetActions(
+                Basic.Key,
+                pageIndex,
+                ActionPageSize,
+                out var totalCount
+            );
+            ActionTotalCount = totalCount;
+
             var tasks = actions
                 .Where(x => !(x.Old == null && x.New == null))
                 .Select(async x =>
@@ -138,11 +141,8 @@ public partial class InstanceActivitiesPageModel(
     {
         TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(Basic.Key);
 
-        _isInitializingActionRange = true;
-        ActionRangeStart = DateTime.Today;
-        ActionRangeEnd = DateTime.Today;
-        _isInitializingActionRange = false;
-        LoadPageForRange();
+        ActionPageIndex = 0;
+        LoadActionPage(0);
 
         int[] days = [-6, -5, -4, -3, -2, -1, 0];
         var times = days.Select(x =>
@@ -151,7 +151,6 @@ public partial class InstanceActivitiesPageModel(
             .Select(x => x.TotalHours)
             .ToArray();
 
-        // Get accent color from Avalonia resources
         var accentColor = GetAccentColorFromResources();
 
         WeekSeries =
@@ -163,7 +162,6 @@ public partial class InstanceActivitiesPageModel(
             },
         ];
 
-        // Configure X-axis with day labels
         var dayLabels = days.Select(x =>
                 DateTimeOffset.Now.AddDays(x).DayOfWeek switch
                 {
@@ -188,7 +186,6 @@ public partial class InstanceActivitiesPageModel(
             },
         ];
 
-        // Configure Y-axis for hours
         YAxes =
         [
             new()
@@ -204,14 +201,12 @@ public partial class InstanceActivitiesPageModel(
         ActiveDays = persistenceService.GetActiveDays(Basic.Key);
         CrashCount = persistenceService.GetCrashCount(Basic.Key);
 
-        // Statistics Tab 数据
         var lastActivity = persistenceService.GetLastActivity(Basic.Key);
         LastPlayedAt = lastActivity?.End;
         var firstActivity = persistenceService.GetFirstActivity(Basic.Key);
         FirstPlayedAt = firstActivity?.Begin;
         LongestSessionRaw = persistenceService.GetLongestSession(Basic.Key);
 
-        // Trends Tab 数据
         PlaytimePercentage = persistenceService.GetPercentageInTotalPlayTime(Basic.Key) * 100.0;
         ThisWeekPlayTimeRaw = persistenceService.GetWeekPlayTime(Basic.Key, 0);
         LastWeekPlayTimeRaw = persistenceService.GetWeekPlayTime(Basic.Key, 1);
@@ -223,23 +218,10 @@ public partial class InstanceActivitiesPageModel(
     {
         base.OnPropertyChanged(e);
 
-        if (
-            !_isInitializingActionRange
-            && e.PropertyName is nameof(ActionRangeStart) or nameof(ActionRangeEnd)
-        )
+        if (e.PropertyName == nameof(ActionPageIndex))
         {
-            LoadPageForRange();
+            LoadActionPage(ActionPageIndex);
         }
-    }
-
-    private void LoadPageForRange()
-    {
-        if (ActionRangeStart is { } start && ActionRangeEnd is { } end && start.Date > end.Date)
-        {
-            return;
-        }
-
-        LoadPage(ActionRangeStart?.Date, ActionRangeEnd?.Date.AddDays(1));
     }
 
     #endregion
@@ -266,10 +248,10 @@ public partial class InstanceActivitiesPageModel(
     public partial int ActiveDays { get; set; }
 
     [ObservableProperty]
-    public partial DateTime? ActionRangeStart { get; set; }
+    public partial int ActionPageIndex { get; set; }
 
     [ObservableProperty]
-    public partial DateTime? ActionRangeEnd { get; set; }
+    public partial int ActionTotalCount { get; set; }
 
     [ObservableProperty]
     public partial ISeries<double>[]? WeekSeries { get; set; }

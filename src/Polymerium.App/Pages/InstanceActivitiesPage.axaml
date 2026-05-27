@@ -586,20 +586,14 @@
             <husk:Card
                 Grid.Column="0"
                 Padding="0">
-                <Grid RowDefinitions="Auto,Auto,*">
+                <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
                     <Grid Grid.Row="0"
                           DockPanel.Dock="Top"
-                          Margin="{StaticResource CardContentMargin}"
-                          ColumnDefinitions="*,Auto">
+                          Margin="{StaticResource CardContentMargin}">
                         <TextBlock VerticalAlignment="Center"
-                                   Grid.Column="0"
                                    FontSize="{StaticResource LargeFontSize}"
                                    FontWeight="{StaticResource ControlStrongFontWeight}"
                                    Text="{x:Static lang:Resources.InstanceActivitiesPage_ChangelogLabelText}" />
-                        <app:DateRangePicker
-                            Grid.Column="1"
-                            End="{Binding ActionRangeEnd, Mode=TwoWay}"
-                            Start="{Binding ActionRangeStart, Mode=TwoWay}" />
                     </Grid>
                     <husk:Divider Grid.Row="1" />
                     <husk:LazyContainer Grid.Row="2" Source="{Binding PagedActions}">
@@ -641,6 +635,14 @@
                             </DataTemplate>
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
+                    <husk:Divider Grid.Row="3" />
+                    <husk:PaginationControl
+                        Grid.Row="4"
+                        Margin="{StaticResource CardContentMargin}"
+                        HorizontalAlignment="Center"
+                        PageIndex="{Binding ActionPageIndex, Mode=TwoWay}"
+                        PageSize="20"
+                        TotalCount="{Binding ActionTotalCount}" />
                 </Grid>
             </husk:Card>
         </Grid>
