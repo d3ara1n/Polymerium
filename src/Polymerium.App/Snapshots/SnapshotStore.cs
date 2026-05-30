@@ -53,19 +53,19 @@ public class SnapshotStore : ISnapshotStore
 
     public IReadOnlyList<SnapshotInfo> GetSnapshots()
     {
-        return _freeSql.Select<SnapshotRecord>().ToList(x => FromRecord(x));
+        return _freeSql.Select<SnapshotRecord>().ToList().Select(FromRecord).ToList();
     }
 
     public SnapshotInfo? GetSnapshot(object id)
     {
         var guid = ParseId(id);
-        return _freeSql.Select<SnapshotRecord>().Where(x => guid == x.Id).ToOne(x => FromRecord(x));
+        return _freeSql.Select<SnapshotRecord>().Where(x => guid == x.Id).ToOne() is { } r ? FromRecord(r) : null;
     }
 
     public IReadOnlyList<ReferenceInfo> GetReferences(object snapshotId)
     {
         var guid = ParseId(snapshotId);
-        return _freeSql.Select<ReferenceRecord>().Where(x => x.SnapshotId == guid).ToList(x => FromRecord(x));
+        return _freeSql.Select<ReferenceRecord>().Where(x => x.SnapshotId == guid).ToList().Select(FromRecord).ToList();
     }
 
     public void DeleteSnapshot(object id)
