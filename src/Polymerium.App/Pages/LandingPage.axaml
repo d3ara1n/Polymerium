@@ -166,12 +166,10 @@
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                                     Text="{Binding Name}" />
-                                                <StackPanel
-                                                    Orientation="Horizontal"
-                                                    Spacing="8">
-                                                    <husk:Tag Content="{Binding Version}" />
-                                                    <husk:Tag Content="{Binding LoaderLabel}" />
-                                                </StackPanel>
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="2 hours ago" />
                                             </StackPanel>
                                         </Grid>
                                         <StackPanel
@@ -202,117 +200,52 @@
                                     Margin="{StaticResource CardContentMargin}"
                                     ColumnDefinitions="*,Auto"
                                     ColumnSpacing="16">
-                                    <!--  Left: Packages + Info  -->
-                                    <Grid
+                                    <!--  Left: Mod badge + Stats  -->
+                                    <StackPanel
                                         Grid.Column="0"
-                                        RowDefinitions="*,Auto,Auto"
-                                        RowSpacing="12">
-                                        <!--  Package AvatarGroup  -->
-                                        <Grid
-                                            Grid.Row="1"
-                                            ColumnDefinitions="Auto,*"
-                                            ColumnSpacing="12">
-                                            <!--  Overlapping package icons  -->
+                                        VerticalAlignment="Bottom"
+                                        Spacing="12">
+                                        <!--  Mod count badge + Version info  -->
+                                        <StackPanel Spacing="6">
                                             <Grid
-                                                Grid.Column="0"
-                                                ColumnDefinitions="Auto">
-                                                <!--  Fake package avatars - overlapping  -->
+                                                ColumnDefinitions="Auto,*"
+                                                ColumnSpacing="10">
+                                                <!--  Big accent number  -->
                                                 <Border
-                                                    Width="36"
-                                                    Height="36"
+                                                    Grid.Column="0"
+                                                    Padding="8,0"
                                                     Background="{StaticResource ControlAccentBackgroundBrush}"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <Border.Margin>0,0,44,0</Border.Margin>
-                                                    <fi:SymbolIcon
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        Foreground="White"
-                                                        Symbol="PuzzlePiece" />
-                                                </Border>
-                                                <Border
-                                                    Width="36"
-                                                    Height="36"
-                                                    Margin="20,0,0,0"
-                                                    Background="{StaticResource SubtleFillColorSecondaryBrush}"
-                                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <fi:SymbolIcon
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Symbol="Cube" />
-                                                </Border>
-                                                <Border
-                                                    Width="36"
-                                                    Height="36"
-                                                    Margin="40,0,0,0"
-                                                    Background="{StaticResource SubtleFillColorSecondaryBrush}"
-                                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <fi:SymbolIcon
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Symbol="Cube" />
-                                                </Border>
-                                                <!--  Count badge  -->
-                                                <Border
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="56,0,0,8"
-                                                    HorizontalAlignment="Left"
-                                                    VerticalAlignment="Bottom"
-                                                    Background="{StaticResource ControlAccentBackgroundBrush}"
-                                                    BorderBrush="{StaticResource CardBackgroundBrush}"
-                                                    BorderThickness="2"
-                                                    CornerRadius="10">
+                                                    CornerRadius="{StaticResource MediumCornerRadius}">
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        FontSize="9"
-                                                        FontWeight="SemiBold"
+                                                        FontSize="{StaticResource ExtraLargeFontSize}"
+                                                        FontWeight="Bold"
                                                         Foreground="White"
                                                         Text="12" />
                                                 </Border>
-                                            </Grid>
-                                            <!--  Play stats summary  -->
-                                            <StackPanel
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Spacing="4">
-                                                <TextBlock
-                                                    FontSize="{StaticResource MediumFontSize}"
-                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="12 mods loaded" />
-                                                <TextBlock
-                                                    FontSize="{StaticResource SmallFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="Fabric Loader · 1.20.4" />
-                                            </StackPanel>
-                                        </Grid>
-                                        <!--  Detail stats  -->
-                                        <StackPanel Grid.Row="2"
-                                                    Orientation="Horizontal"
-                                                    Spacing="8">
-                                            <husk:Card Padding="10,8">
-                                                <StackPanel Spacing="2">
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="Last Played" />
+                                                <StackPanel
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    Spacing="4">
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="2 hours ago" />
+                                                        Text="packages installed" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Spacing="6">
+                                                        <husk:Tag Content="1.20.4" />
+                                                        <husk:Tag Content="Fabric Loader" />
+                                                    </StackPanel>
                                                 </StackPanel>
-                                            </husk:Card>
-                                            <husk:Card
-                                                Padding="10,8">
+                                            </Grid>
+                                        </StackPanel>
+                                        <!--  Detail stats  -->
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                            <husk:Card Padding="10,8">
                                                 <StackPanel Spacing="2">
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
@@ -324,8 +257,7 @@
                                                         Text="1h 23m" />
                                                 </StackPanel>
                                             </husk:Card>
-                                            <husk:Card
-                                                Padding="10,8">
+                                            <husk:Card Padding="10,8">
                                                 <StackPanel Spacing="2">
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
@@ -338,28 +270,80 @@
                                                 </StackPanel>
                                             </husk:Card>
                                         </StackPanel>
-                                    </Grid>
-                                    <!--  Right: Screenshots  -->
+                                    </StackPanel>
+                                    <!--  Right: Screenshot previews  -->
                                     <Border
+                                        Grid.Column="1"
+                                        MinWidth="200"
+                                        MinHeight="120"
+                                        VerticalAlignment="Bottom"
                                         Background="{StaticResource SubtleFillColorSecondaryBrush}"
                                         BorderBrush="{StaticResource ControlBorderBrush}"
                                         BorderThickness="1"
                                         CornerRadius="{StaticResource MediumCornerRadius}">
-                                        <StackPanel
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Spacing="6">
-                                            <fi:SymbolIcon
-                                                HorizontalAlignment="Center"
-                                                FontSize="{StaticResource LargeFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Symbol="ImageMultiple" />
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                FontSize="{StaticResource SmallFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="No screenshots yet" />
-                                        </StackPanel>
+                                        <Grid
+                                            Margin="8"
+                                            ColumnDefinitions="*,*"
+                                            ColumnSpacing="4"
+                                            RowDefinitions="*,*"
+                                            RowSpacing="4">
+                                            <Border
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Background="{StaticResource CardBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <fi:SymbolIcon
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Symbol="Image" />
+                                            </Border>
+                                            <Border
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Background="{StaticResource CardBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <fi:SymbolIcon
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Symbol="Image" />
+                                            </Border>
+                                            <Border
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Background="{StaticResource CardBackgroundBrush}"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <fi:SymbolIcon
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Symbol="Image" />
+                                            </Border>
+                                            <Border
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Background="{StaticResource SubtleFillColorSecondaryBrush}"
+                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="+5" />
+                                            </Border>
+                                        </Grid>
                                     </Border>
                                 </Grid>
                             </DockPanel>
