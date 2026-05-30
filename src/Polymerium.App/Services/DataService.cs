@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
+using TridentCore.Abstractions;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
@@ -28,10 +32,12 @@ public class DataService(
     IMemoryCache cache,
     RepositoryAgent agent,
     PrismLauncherService prismLauncherService,
-    MojangService mojangService
+    MojangService mojangService,
+    IHttpClientFactory httpClientFactory
 )
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
+    private static readonly TimeSpan ICON_FILE_EXPIRED_IN = TimeSpan.FromDays(30);
 
     public async ValueTask<Package> IdentifyVersionAsync(string filePath) =>
         await agent.IdentityAsync(filePath);
@@ -71,15 +77,46 @@ public class DataService(
     // 以下为 DataService 独有的内存缓存，数据源不在 RepositoryAgent 中
     // 或经过额外处理（如 Bitmap 解码、版本数量截断）
 
-    public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
-        GetOrCreate(
-            $"bitmap:{url.AbsoluteUri}:{widthDesired}",
-            async () =>
-            {
-                var bytes = await agent.SeeAsync(url);
-                return Bitmap.DecodeToWidth(new MemoryStream(bytes), widthDesired);
-            }
-        );
+    public ValueTask<Bitmap> GetBitmapAsync(Uri url)
+    {
+        var key = $"bitmap:{url.AbsoluteUri}";
+
+        // 第一层：内存缓存（包括进行中的 Task，天然去重）
+        if (cache.TryGetValue(key, out var cached) && cached is ValueTask<Bitmap> task)
+            return task;
+
+        var rv = new ValueTask<Bitmap>(LoadOrDownloadBitmapAsync(url));
+        cache.Set(key, rv, EXPIRED_IN);
+        return rv;
+    }
+
+    private async Task<Bitmap> LoadOrDownloadBitmapAsync(Uri url)
+    {
+        var hash = Convert.ToHexString(SHA1.HashData(Encoding.UTF8.GetBytes(url.AbsoluteUri))).ToLowerInvariant();
+        var path = PathDef.Default.FileOfIconObject(hash);
+
+        // 第二层：文件缓存（30天有效期）
+        byte[] bytes;
+        if (File.Exists(path) && File.GetLastWriteTime(path) + ICON_FILE_EXPIRED_IN > DateTime.UtcNow)
+        {
+            bytes = await File.ReadAllBytesAsync(path);
+        }
+        else
+        {
+            // 第三层：下载
+            using var client = httpClientFactory.CreateClient();
+            bytes = await client.GetByteArrayAsync(url);
+
+            // 写入临时文件再 rename，防止崩溃留下损坏文件
+            var dir = Path.GetDirectoryName(path)!;
+            Directory.CreateDirectory(dir);
+            var tmp = path + ".tmp";
+            await File.WriteAllBytesAsync(tmp, bytes);
+            File.Move(tmp, path, overwrite: true);
+        }
+
+        return new(new MemoryStream(bytes));
+    }
 
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(
         string label,
@@ -169,7 +206,7 @@ public class DataService(
         if (
             cachedEnabled
             && cache.TryGetValue(key, out var cached)
-            && cached is ValueTask<T> { IsCompletedSuccessfully: true } task
+            && cached is ValueTask<T> task
         )
         {
             return task;
