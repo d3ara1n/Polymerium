@@ -82,12 +82,20 @@ public class DataService(
         var key = $"bitmap:{url.AbsoluteUri}";
 
         // 第一层：内存缓存（包括进行中的 Task，天然去重）
-        if (cache.TryGetValue(key, out var cached) && cached is ValueTask<Bitmap> task)
-            return task;
+        if (cache.TryGetValue(key, out var cached) && cached is Task<Bitmap> task)
+            return new(task);
 
-        var rv = new ValueTask<Bitmap>(LoadOrDownloadBitmapAsync(url));
-        cache.Set(key, rv, EXPIRED_IN);
-        return rv;
+        var rv = LoadOrDownloadBitmapAsync(url);
+        var entry = cache.CreateEntry(key);
+        entry.AbsoluteExpirationRelativeToNow = EXPIRED_IN;
+        entry.Value = rv;
+        entry.RegisterPostEvictionCallback((_, value, _, _) =>
+        {
+            if (value is Task<Bitmap> { Result: Bitmap bmp })
+                bmp.Dispose();
+        });
+        entry.Dispose();
+        return new(rv);
     }
 
     private async Task<Bitmap> LoadOrDownloadBitmapAsync(Uri url)
@@ -97,7 +105,7 @@ public class DataService(
 
         // 第二层：文件缓存（30天有效期）
         byte[] bytes;
-        if (File.Exists(path) && File.GetLastWriteTime(path) + ICON_FILE_EXPIRED_IN > DateTime.UtcNow)
+        if (File.Exists(path) && File.GetLastWriteTimeUtc(path) + ICON_FILE_EXPIRED_IN > DateTime.UtcNow)
         {
             bytes = await File.ReadAllBytesAsync(path);
         }
@@ -206,18 +214,18 @@ public class DataService(
         if (
             cachedEnabled
             && cache.TryGetValue(key, out var cached)
-            && cached is ValueTask<T> task
+            && cached is Task<T> task
         )
         {
-            return task;
+            return new(task);
         }
 
-        var rv = new ValueTask<T>(Task.Run(factory));
+        var rv = Task.Run(factory);
         if (cachedEnabled)
         {
             cache.Set(key, rv, EXPIRED_IN);
         }
 
-        return rv;
+        return new(rv);
     }
 }
