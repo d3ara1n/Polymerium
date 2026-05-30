@@ -140,7 +140,7 @@ public static class Startup
             })
            .AddMemoryCache(options =>
            {
-               options.ExpirationScanFrequency = TimeSpan.FromSeconds(60);
+               options.ExpirationScanFrequency = TimeSpan.FromMinutes(10);
                options.TrackStatistics = true;
            });
 
