@@ -2146,6 +2146,15 @@
     <data name="LandingPage_RetryButtonText" xml:space="preserve">
         <value>Retry</value>
     </data>
+    <data name="LandingPage_RecentPlayPackagesText" xml:space="preserve">
+        <value>packages installed</value>
+    </data>
+    <data name="LandingPage_RecentPlayPlayTimeText" xml:space="preserve">
+        <value>Play Time</value>
+    </data>
+    <data name="LandingPage_RecentPlaySessionsText" xml:space="preserve">
+        <value>Sessions</value>
+    </data>
     <data name="InstanceSetupPage_ProjectIdMenuText" xml:space="preserve">
         <value>Project Id</value>
     </data>
