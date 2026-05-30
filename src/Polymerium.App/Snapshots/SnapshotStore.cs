@@ -53,7 +53,7 @@ public class SnapshotStore : ISnapshotStore
 
     public IReadOnlyList<SnapshotInfo> GetSnapshots()
     {
-        return _freeSql.Select<SnapshotRecord>().ToList().Select(FromRecord).ToList();
+        return _freeSql.Select<SnapshotRecord>().OrderByDescending(x => x.CreatedAt).ToList().Select(FromRecord).ToList();
     }
 
     public SnapshotInfo? GetSnapshot(object id)
