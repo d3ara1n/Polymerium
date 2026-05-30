@@ -217,7 +217,8 @@
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Bottom"
                                             Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                            BorderThickness="0">
+                                            BorderThickness="0"
+                                            BoxShadow="0 0 4 0 #3F000000">
                                             <!--  Left: Mod badge + Stats  -->
                                             <StackPanel Spacing="12">
                                                 <!--  Mod count badge + Version info  -->
@@ -267,7 +268,7 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                 Text="{x:Static lang:Resources.LandingPage_RecentPlayPlayTimeText}" />
+                                                                Text="{x:Static lang:Resources.LandingPage_RecentPlayPlayTimeText}" />
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -281,7 +282,7 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                 Text="{x:Static lang:Resources.LandingPage_RecentPlaySessionsText}" />
+                                                                Text="{x:Static lang:Resources.LandingPage_RecentPlaySessionsText}" />
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
