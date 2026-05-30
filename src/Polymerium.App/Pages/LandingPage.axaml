@@ -196,156 +196,103 @@
                                         </StackPanel>
                                     </Grid>
                                 </Border>
-                                <Grid
-                                    Margin="{StaticResource CardContentMargin}"
-                                    ColumnDefinitions="*,Auto"
-                                    ColumnSpacing="16">
-                                    <!--  Left: Mod badge + Stats  -->
-                                    <StackPanel
-                                        Grid.Column="0"
-                                        VerticalAlignment="Bottom"
-                                        Spacing="12">
-                                        <!--  Mod count badge + Version info  -->
-                                        <StackPanel Spacing="6">
-                                            <Grid
-                                                ColumnDefinitions="Auto,*"
-                                                ColumnSpacing="10">
-                                                <!--  Big accent number  -->
-                                                <Border
-                                                    Grid.Column="0"
-                                                    Padding="8,0"
-                                                    Background="{StaticResource ControlAccentBackgroundBrush}"
-                                                    CornerRadius="{StaticResource MediumCornerRadius}">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="{StaticResource ExtraLargeFontSize}"
-                                                        FontWeight="Bold"
-                                                        Foreground="White"
-                                                        Text="12" />
-                                                </Border>
-                                                <StackPanel
-                                                    Grid.Column="1"
-                                                    VerticalAlignment="Center"
-                                                    Spacing="4">
-                                                    <TextBlock
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="packages installed" />
-                                                    <StackPanel
-                                                        Orientation="Horizontal"
-                                                        Spacing="6">
-                                                        <husk:Tag Content="1.20.4" />
-                                                        <husk:Tag Content="Fabric Loader" />
-                                                    </StackPanel>
-                                                </StackPanel>
-                                            </Grid>
-                                        </StackPanel>
-                                        <!--  Detail stats  -->
-                                        <StackPanel
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <husk:Card Padding="10,8">
-                                                <StackPanel Spacing="2">
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="Play Time" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="1h 23m" />
-                                                </StackPanel>
-                                            </husk:Card>
-                                            <husk:Card Padding="10,8">
-                                                <StackPanel Spacing="2">
-                                                    <TextBlock
-                                                        FontSize="{StaticResource SmallFontSize}"
-                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="Sessions" />
-                                                    <TextBlock
-                                                        FontSize="{StaticResource MediumFontSize}"
-                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="8" />
-                                                </StackPanel>
-                                            </husk:Card>
-                                        </StackPanel>
-                                    </StackPanel>
-                                    <!--  Right: Screenshot previews  -->
-                                    <Border
-                                        Grid.Column="1"
-                                        MinWidth="200"
-                                        MinHeight="120"
-                                        VerticalAlignment="Bottom"
-                                        Background="{StaticResource SubtleFillColorSecondaryBrush}"
-                                        BorderBrush="{StaticResource ControlBorderBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
-                                        <Grid
-                                            Margin="8"
-                                            ColumnDefinitions="*,*"
-                                            ColumnSpacing="4"
-                                            RowDefinitions="*,*"
-                                            RowSpacing="4">
-                                            <Border
-                                                Grid.Row="0"
-                                                Grid.Column="0"
-                                                Background="{StaticResource CardBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="1"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <fi:SymbolIcon
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="{StaticResource MediumFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Symbol="Image" />
-                                            </Border>
-                                            <Border
-                                                Grid.Row="0"
-                                                Grid.Column="1"
-                                                Background="{StaticResource CardBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="1"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <fi:SymbolIcon
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="{StaticResource MediumFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Symbol="Image" />
-                                            </Border>
-                                            <Border
-                                                Grid.Row="1"
-                                                Grid.Column="0"
-                                                Background="{StaticResource CardBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="1"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <fi:SymbolIcon
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="{StaticResource MediumFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Symbol="Image" />
-                                            </Border>
-                                            <Border
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                Background="{StaticResource SubtleFillColorSecondaryBrush}"
-                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="1"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <TextBlock
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="{StaticResource SmallFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="+5" />
-                                            </Border>
-                                        </Grid>
+                                <Panel>
+                                    <Border CornerRadius="{Binding CornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}">
+                                        <Border.Background>
+                                            <ImageBrush
+                                                Source="/Assets/Images/Wallpaper.png"
+                                                Stretch="UniformToFill" />
+                                        </Border.Background>
+                                        <Border.OpacityMask>
+                                            <LinearGradientBrush StartPoint="0%,10%" EndPoint="100%,100%">
+                                                <GradientStop Offset="0" Color="#3F000000" />
+                                                <GradientStop Offset="0.5" Color="#6F000000" />
+                                                <GradientStop Offset="1" Color="#DF000000" />
+                                            </LinearGradientBrush>
+                                        </Border.OpacityMask>
                                     </Border>
-                                </Grid>
+                                    <Border Padding="{StaticResource CardContentMargin}">
+                                        <husk:Card
+                                            Padding="18"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Bottom"
+                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                            BorderThickness="0">
+                                            <!--  Left: Mod badge + Stats  -->
+                                            <StackPanel Spacing="12">
+                                                <!--  Mod count badge + Version info  -->
+                                                <StackPanel Spacing="6">
+                                                    <Grid
+                                                        ColumnDefinitions="Auto,*"
+                                                        ColumnSpacing="10">
+                                                        <!--  Big accent number  -->
+                                                        <Border
+                                                            Grid.Column="0"
+                                                            Padding="8,0"
+                                                            Background="{StaticResource ControlAccentBackgroundBrush}"
+                                                            CornerRadius="{StaticResource MediumCornerRadius}">
+                                                            <TextBlock
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                                                FontWeight="Bold"
+                                                                Foreground="{StaticResource ControlWhiteForegroundBrush}"
+                                                                Text="12" />
+                                                        </Border>
+                                                        <StackPanel
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            Spacing="4">
+                                                            <TextBlock
+                                                                FontSize="{StaticResource MediumFontSize}"
+                                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                Text="packages installed" />
+                                                            <StackPanel
+                                                                Orientation="Horizontal"
+                                                                Spacing="6">
+                                                                <husk:Tag Content="1.20.4" />
+                                                                <husk:Tag Content="Fabric Loader" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
+                                                <!--  Detail stats  -->
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="8">
+                                                    <husk:Card
+                                                        Padding="10,8"
+                                                        BorderThickness="0">
+                                                        <StackPanel Spacing="2">
+                                                            <TextBlock
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Text="Play Time" />
+                                                            <TextBlock
+                                                                FontSize="{StaticResource MediumFontSize}"
+                                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                Text="1h 23m" />
+                                                        </StackPanel>
+                                                    </husk:Card>
+                                                    <husk:Card
+                                                        Padding="10,8"
+                                                        BorderThickness="0">
+                                                        <StackPanel Spacing="2">
+                                                            <TextBlock
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Text="Sessions" />
+                                                            <TextBlock
+                                                                FontSize="{StaticResource MediumFontSize}"
+                                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                                Text="8" />
+                                                        </StackPanel>
+                                                    </husk:Card>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </husk:Card>
+                                    </Border>
+                                </Panel>
                             </DockPanel>
                         </Border>
                     </DataTemplate>
@@ -590,4 +537,3 @@
         </DockPanel>
     </StackPanel>
 </husk:Page>
-
