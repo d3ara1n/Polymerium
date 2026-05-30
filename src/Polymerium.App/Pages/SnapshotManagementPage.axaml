@@ -1,4 +1,4 @@
-﻿<husk:Page
+<husk:Page
     x:Class="Polymerium.App.Pages.SnapshotManagementPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -11,8 +11,9 @@
     d:DesignWidth="800"
     x:DataType="app:SnapshotManagementPageModel"
     Header="快照列表"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <Grid ColumnDefinitions="*,Auto,*">
+    <Grid ColumnDefinitions="4*,Auto,6*">
         <DockPanel Grid.Column="0">
             <Grid
                 DockPanel.Dock="Top"
@@ -44,11 +45,11 @@
                                     Spacing="2">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{Binding Label}" />
+                                        Text="{Binding DisplayLabel}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding CreatedAt}" />
+                                        Text="{Binding CreatedAtText}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -78,8 +79,253 @@
             Margin="12,0"
             ResizeDirection="Columns" />
 
-        <Panel Grid.Column="2">
-            <husk:PlaceholderContainer />
-        </Panel>
+
+        <husk:PlaceholderContainer
+            Grid.Column="2"
+            Source="{Binding Detail}">
+            <husk:PlaceholderContainer.SourceTemplate>
+                <DataTemplate DataType="app:SnapshotDetailModel">
+                    <ScrollViewer>
+                        <StackPanel
+                            Margin="8"
+                            Spacing="12">
+                            <!--  Header  -->
+                            <StackPanel Spacing="4">
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding Label}" />
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding CreatedAtText}" />
+                            </StackPanel>
+
+                            <!--  Remark  -->
+                            <Border
+                                Padding="12"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Remark}"
+                                    TextWrapping="Wrap" />
+                            </Border>
+
+                            <!--  Stats cards  -->
+                            <Grid
+                                ColumnDefinitions="*,*,*"
+                                ColumnSpacing="8">
+                                <Border
+                                    Grid.Column="0"
+                                    Padding="12,8"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding PackageCount, Converter={x:Static app:HumanizerConverters.Metric}}" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource CaptionFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="包数量" />
+                                    </StackPanel>
+                                </Border>
+                                <Border
+                                    Grid.Column="1"
+                                    Padding="12,8"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding FileCount, Converter={x:Static app:HumanizerConverters.Metric}}" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource CaptionFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="文件数" />
+                                    </StackPanel>
+                                </Border>
+                                <Border
+                                    Grid.Column="2"
+                                    Padding="12,8"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding TotalSizeFormatted}" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource CaptionFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="总大小" />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!--  Diff section (only shown when there's a previous snapshot)  -->
+                            <Border
+                                Padding="12"
+                                IsVisible="{Binding Diff, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="与上一个快照的差异" />
+                                    <Grid
+                                        ColumnDefinitions="*,*"
+                                        ColumnSpacing="8"
+                                        RowDefinitions="Auto,Auto"
+                                        RowSpacing="4">
+                                        <StackPanel
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Spacing="2">
+                                            <TextBlock
+                                                FontSize="{StaticResource CaptionFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="文件新增" />
+                                            <TextBlock
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                Text="{Binding Diff?.FilesAdded}" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Spacing="2">
+                                            <TextBlock
+                                                FontSize="{StaticResource CaptionFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="文件移除" />
+                                            <TextBlock
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                Text="{Binding Diff?.FilesRemoved}" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Spacing="2">
+                                            <TextBlock
+                                                FontSize="{StaticResource CaptionFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="包新增" />
+                                            <TextBlock
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                Text="{Binding Diff?.PackagesAdded}" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Spacing="2">
+                                            <TextBlock
+                                                FontSize="{StaticResource CaptionFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="包移除" />
+                                            <TextBlock
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                Text="{Binding Diff?.PackagesRemoved}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <husk:Divider />
+
+                            <!--  Game info  -->
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="配置信息" />
+                                <Grid
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="8"
+                                    RowDefinitions="Auto,Auto"
+                                    RowSpacing="4">
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="游戏版本" />
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Text="{Binding GameVersion}" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="加载器" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Text="{Binding Loader}" />
+                                </Grid>
+                            </StackPanel>
+
+                            <!--  Actions  -->
+                            <husk:Divider />
+                            <Grid
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="8">
+                                <Button
+                                    Grid.Column="0"
+                                    Classes="Primary"
+                                    Command="{Binding $parent[app:SnapshotManagementPage].((app:SnapshotManagementPageModel)DataContext).RestoreCommand}">
+                                    <husk:IconLabel
+                                        Icon="ArrowReset"
+                                        Text="还原" />
+                                </Button>
+                                <Button
+                                    Grid.Column="1"
+                                    Classes="Danger"
+                                    Command="{Binding $parent[app:SnapshotManagementPage].((app:SnapshotManagementPageModel)DataContext).DeleteCommand}">
+                                    <husk:IconLabel
+                                        Icon="Delete"
+                                        Text="删除" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DataTemplate>
+            </husk:PlaceholderContainer.SourceTemplate>
+
+            <!--  Empty state: no snapshot selected  -->
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="8">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="DocumentBulletListOff" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="选择一个快照查看详情" />
+            </StackPanel>
+        </husk:PlaceholderContainer>
     </Grid>
 </husk:Page>
