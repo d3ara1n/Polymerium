@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Threading;
+using System.Net.Http;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -368,12 +369,22 @@ public partial class PackageExplorerPageModel : ViewModelBase
                     _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
+                catch (HttpRequestException ex)
+                {
+                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    Debug.WriteLine(ex);
+                }
 
                 return [];
             });
             Exhibits = source;
         }
         catch (ApiException ex)
+        {
+            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+            Debug.WriteLine(ex);
+        }
+        catch (HttpRequestException ex)
         {
             _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
             Debug.WriteLine(ex);

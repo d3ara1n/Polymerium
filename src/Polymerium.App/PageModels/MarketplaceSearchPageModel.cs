@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -216,12 +217,22 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                     _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
+                catch (HttpRequestException ex)
+                {
+                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    Debug.WriteLine(ex);
+                }
 
                 return [];
             });
             Exhibits = source;
         }
         catch (ApiException ex)
+        {
+            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+            Debug.WriteLine(ex);
+        }
+        catch (HttpRequestException ex)
         {
             _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
             Debug.WriteLine(ex);

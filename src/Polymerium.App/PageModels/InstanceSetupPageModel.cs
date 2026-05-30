@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
@@ -1175,6 +1176,13 @@ public partial class InstanceSetupPageModel(
                 }
             }
             catch (ApiException ex)
+            {
+                logger.LogError(ex, "Failed to check update: {}", reference.Purl);
+                notificationService.PopMessage(ex,
+                                               Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
+                                               thumbnail: GetNotificationThumbnail(reference.Thumbnail));
+            }
+            catch (HttpRequestException ex)
             {
                 logger.LogError(ex, "Failed to check update: {}", reference.Purl);
                 notificationService.PopMessage(ex,
