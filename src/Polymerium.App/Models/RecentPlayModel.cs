@@ -15,6 +15,9 @@ public partial class RecentPlayModel : ModelBase
     public required string Version { get; init; }
     public required string LoaderLabel { get; init; }
     public required Bitmap Thumbnail { get; init; }
+    public required int PackageCount { get; init; }
+    public required int SessionCount { get; init; }
+    public Bitmap? Screenshot { get; init; }
 
     #endregion
 

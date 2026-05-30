@@ -169,7 +169,7 @@
                                                 <TextBlock
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="2 hours ago" />
+                                                    Text="{Binding LastPlayed}" />
                                             </StackPanel>
                                         </Grid>
                                         <StackPanel
@@ -200,7 +200,7 @@
                                     <Border CornerRadius="{Binding CornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}">
                                         <Border.Background>
                                             <ImageBrush
-                                                Source="/Assets/Images/Wallpaper.png"
+                                                Source="{Binding Screenshot}"
                                                 Stretch="UniformToFill" />
                                         </Border.Background>
                                         <Border.OpacityMask>
@@ -237,7 +237,7 @@
                                                                 FontSize="{StaticResource ExtraLargeFontSize}"
                                                                 FontWeight="Bold"
                                                                 Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                                                                Text="12" />
+                                                                Text="{Binding PackageCount}" />
                                                         </Border>
                                                         <StackPanel
                                                             Grid.Column="1"
@@ -246,12 +246,12 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                Text="packages installed" />
+                                                                Text="{x:Static lang:Resources.LandingPage_RecentPlayPackagesText}" />
                                                             <StackPanel
                                                                 Orientation="Horizontal"
                                                                 Spacing="6">
-                                                                <husk:Tag Content="1.20.4" />
-                                                                <husk:Tag Content="Fabric Loader" />
+                                                                <husk:Tag Content="{Binding Version}" />
+                                                                <husk:Tag Content="{Binding LoaderLabel}" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </Grid>
@@ -267,11 +267,11 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                Text="Play Time" />
+                                                                 Text="{x:Static lang:Resources.LandingPage_RecentPlayPlayTimeText}" />
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                Text="1h 23m" />
+                                                                Text="{Binding LastPlayTime}" />
                                                         </StackPanel>
                                                     </husk:Card>
                                                     <husk:Card
@@ -281,11 +281,11 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                Text="Sessions" />
+                                                                 Text="{x:Static lang:Resources.LandingPage_RecentPlaySessionsText}" />
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                Text="8" />
+                                                                Text="{Binding SessionCount}" />
                                                         </StackPanel>
                                                     </husk:Card>
                                                 </StackPanel>

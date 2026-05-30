@@ -2137,6 +2137,15 @@
     <data name="LandingPage_RetryButtonText" xml:space="preserve">
         <value>重试</value>
     </data>
+    <data name="LandingPage_RecentPlayPackagesText" xml:space="preserve">
+        <value>个包已安装</value>
+    </data>
+    <data name="LandingPage_RecentPlayPlayTimeText" xml:space="preserve">
+        <value>游玩时长</value>
+    </data>
+    <data name="LandingPage_RecentPlaySessionsText" xml:space="preserve">
+        <value>会话数</value>
+    </data>
     <data name="InstanceSetupPage_ProjectIdMenuText" xml:space="preserve">
         <value>项目 Id</value>
     </data>

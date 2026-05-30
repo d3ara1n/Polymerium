@@ -5223,6 +5223,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to packages installed.
+        /// </summary>
+        public static string LandingPage_RecentPlayPackagesText {
+            get {
+                return ResourceManager.GetString("LandingPage_RecentPlayPackagesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play Time.
+        /// </summary>
+        public static string LandingPage_RecentPlayPlayTimeText {
+            get {
+                return ResourceManager.GetString("LandingPage_RecentPlayPlayTimeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sessions.
+        /// </summary>
+        public static string LandingPage_RecentPlaySessionsText {
+            get {
+                return ResourceManager.GetString("LandingPage_RecentPlaySessionsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active Days.
         /// </summary>
         public static string LandingPage_StatisticsActiveDaysLabelText {

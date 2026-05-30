@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -83,6 +84,10 @@ public partial class LandingPageModel(
         {
             var iconPath = InstanceHelper.PickIcon(last.Key);
             var icon = iconPath is not null ? new(iconPath) : AssetUriIndex.DirtImageBitmap;
+
+            var screenshotPath = InstanceHelper.PickScreenshotRandomly(last.Key);
+            Bitmap? screenshot = screenshotPath is not null ? new(screenshotPath) : null;
+
             RecentPlay = new()
             {
                 Key = last.Key,
@@ -96,6 +101,9 @@ public partial class LandingPageModel(
                 Thumbnail = icon,
                 LastPlayedRaw = DateTimeHelper.FromPersistedLocalDateTime(last.End),
                 LastPlayTimeRaw = last.End - last.Begin,
+                PackageCount = profile.Setup.Packages.Count,
+                SessionCount = persistenceService.GetSessionCount(last.Key),
+                Screenshot = screenshot,
             };
         }
 
