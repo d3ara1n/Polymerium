@@ -138,7 +138,11 @@ public static class Startup
 
                 setup.CachePath = path;
             })
-           .AddMemoryCache();
+           .AddMemoryCache(options =>
+           {
+               options.ExpirationScanFrequency = TimeSpan.FromSeconds(60);
+               options.TrackStatistics = true;
+           });
 
         // Trident
         services

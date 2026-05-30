@@ -8,6 +8,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Sentry;
@@ -94,8 +95,7 @@ internal static class Program
             configurationService.Value.ApplicationLanguage
         );
         Resources.Culture = CultureInfo.CurrentUICulture;
-        var httpClient = Services.GetRequiredService<HttpClient>();
-        var loader = new SuppressedImageLoader(httpClient);
+        var loader = new AppImageLoader(Services.GetRequiredService<HttpClient>(), Services.GetRequiredService<ILogger<AppImageLoader>>());
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
 
