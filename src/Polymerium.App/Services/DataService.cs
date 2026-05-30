@@ -36,115 +36,48 @@ public class DataService(
     public async ValueTask<Package> IdentifyVersionAsync(string filePath) =>
         await agent.IdentityAsync(filePath);
 
-    public ValueTask<Package> ResolvePackageAsync(
+    // Package / Project / Description / Changelog / Status 的缓存统一由
+    // RepositoryAgent 的分布式缓存(SQLite)管理，此处直接委托。
+    public Task<Package> ResolvePackageAsync(
         string label,
         string? ns,
         string pid,
         string? vid,
         Filter filter,
         bool cachedEnabled = true
-    ) =>
-        GetOrCreate(
-            $"package:{PackageHelper.Identify(label, ns, pid, vid, filter)}",
-            () => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled),
-            cachedEnabled
-        );
+    ) => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled);
 
-    public async ValueTask<IReadOnlyList<(PackageIdentifier, Package)>> ResolvePackagesAsync(
+    public Task<IReadOnlyList<(PackageIdentifier, Package)>> ResolvePackagesAsync(
         IEnumerable<PackageIdentifier> batch,
         Filter filter
-    )
-    {
-        var batchArray = batch.ToArray();
-        var cachedTasks = batchArray
-            .Select(x =>
-                (
-                    Purl: x,
-                    Task: Get<Package>(
-                        $"package:{PackageHelper.Identify(x.Repository, x.Namespace, x.Identity, x.Version, filter)}"
-                    )
-                )
-            )
-            .Where(x => x.Task.HasValue)
-            .Select(async x => (Meta: x.Purl, Package: await x.Task!.Value))
-            .ToList();
+    ) => agent.ResolveBatchAsync(batch, filter);
 
-        await Task.WhenAll(cachedTasks).ConfigureAwait(false);
-        List<(PackageIdentifier Purl, Package Package)> cached = cachedTasks.ConvertAll(x =>
-            x.Result
-        );
-        var toResolve = batchArray.Except(cached.Select(x => x.Purl));
-        var resolved = await agent.ResolveBatchAsync(toResolve, filter).ConfigureAwait(false);
-        foreach (var (id, package) in resolved)
-        {
-            Set(
-                $"package:{PackageHelper.Identify(package.Label, package.Namespace, package.ProjectId, package.VersionId, filter)}",
-                package
-            );
-        }
+    public Task<Project> QueryProjectAsync(string label, string? ns, string pid) =>
+        agent.QueryAsync(label, ns, pid);
 
-        return cached.Concat(resolved).ToList();
-    }
-
-    public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
-        GetOrCreate(
-            $"bitmap:{url.AbsoluteUri}:{widthDesired}",
-            async () =>
-            {
-                var bytes = await agent.SeeAsync(url);
-                return Bitmap.DecodeToWidth(new MemoryStream(bytes), 64);
-            }
-        );
-
-    public ValueTask<Project> QueryProjectAsync(string label, string? ns, string pid) =>
-        GetOrCreate(
-            $"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
-            () => agent.QueryAsync(label, ns, pid)
-        );
-
-    public async ValueTask<IReadOnlyList<Project>> QueryProjectsAsync(
+    public Task<IReadOnlyList<Project>> QueryProjectsAsync(
         IEnumerable<(string label, string? ns, string pid)> batch
-    )
+    ) => agent.QueryBatchAsync(batch);
+
+    public Task<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
+        agent.ReadDescriptionAsync(label, ns, pid);
+
+    public Task<string> ReadChangelogAsync(string label, string? ns, string pid, string vid) =>
+        agent.ReadChangelogAsync(label, ns, pid, vid);
+
+    public Task<RepositoryStatus> CheckStatusAsync(string label) =>
+        agent.CheckStatusAsync(label);
+
+    // 以下为 DataService 独有的内存缓存，数据源不在 RepositoryAgent 中
+    // 或经过额外处理（如 Bitmap 解码、版本数量截断）
+
+    public async ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64)
     {
-        var batchArray = batch.ToArray();
-        var cachedTasks = batchArray
-            .Select(x =>
-                (
-                    Meta: x,
-                    Task: Get<Project>(
-                        $"project:{PackageHelper.Identify(x.label, x.ns, x.pid, null, null)}"
-                    )
-                )
-            )
-            .Where(x => x.Task.HasValue)
-            .Select(async x => (x.Meta, Project: await x.Task!.Value))
-            .ToList();
-        await Task.WhenAll(cachedTasks).ConfigureAwait(false);
-        var cached = cachedTasks.ConvertAll(x => x.Result);
-        var toQuery = batchArray.Except(cached.Select(x => x.Meta));
-        var queried = await agent.QueryBatchAsync(toQuery).ConfigureAwait(false);
-        foreach (var project in queried)
-        {
-            Set(
-                $"project:{PackageHelper.Identify(project.Label, project.Namespace, project.ProjectId, null, null)}",
-                project
-            );
-        }
-
-        return cached.Select(x => x.Project).Concat(queried).ToList();
+        // agent.SeeAsync 内部已有 SQLite 分布式缓存(thumbnail:{url})，
+        // 此处不再重复缓存 Bitmap 对象，每次按需 decode 到目标宽度。
+        var bytes = await agent.SeeAsync(url);
+        return Bitmap.DecodeToWidth(new MemoryStream(bytes), widthDesired);
     }
-
-    public ValueTask<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
-        GetOrCreate(
-            $"description:{PackageHelper.Identify(label, ns, pid, null, null)}",
-            () => agent.ReadDescriptionAsync(label, ns, pid)
-        );
-
-    public ValueTask<string> ReadChangelogAsync(string label, string? ns, string pid, string vid) =>
-        GetOrCreate(
-            $"changelog:{PackageHelper.Identify(label, ns, pid, vid, null)}",
-            () => agent.ReadChangelogAsync(label, ns, pid, vid)
-        );
 
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(
         string label,
@@ -224,14 +157,6 @@ public class DataService(
                 return models;
             }
         );
-
-    public ValueTask<RepositoryStatus> CheckStatusAsync(string label) =>
-        GetOrCreate($"repository:{label}:status", () => agent.CheckStatusAsync(label));
-
-    private ValueTask<T>? Get<T>(string key) =>
-        cache.TryGetValue(key, out var cached) && cached is ValueTask<T> res ? res : null;
-
-    private void Set<T>(string key, T value) => cache.Set(key, new ValueTask<T>(value), EXPIRED_IN);
 
     private ValueTask<T> GetOrCreate<T>(
         string key,
