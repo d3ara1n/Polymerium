@@ -7,6 +7,7 @@ using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -16,9 +17,11 @@ using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.App.Facilities;
 using Polymerium.App.ModalModels;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using TridentCore.Abstractions.Snapshots;
+using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Services;
 
@@ -32,14 +35,17 @@ public partial class SnapshotManagementPageModel : ViewModelBase
     private readonly CompositeDisposable _subscriptions = new();
     private readonly OverlayService _overlayService;
     private readonly NotificationService _notificationService;
+    private readonly ProfileManager _profileManager;
 
     /// <inheritdoc/>
     public SnapshotManagementPageModel(IViewContext<SnapshotsModalModel.SnapshotContext> context,
                                        OverlayService overlayService,
-                                       NotificationService notificationService)
+                                       NotificationService notificationService,
+                                       ProfileManager profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
+        _profileManager = profileManager;
         Context = context.Parameter!;
 
 
@@ -221,8 +227,35 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         if (!confirmed)
             return;
 
-        // TODO: implement restore
-        _notificationService.PopMessage("还原功能尚未实现", "快照还原", GrowlLevel.Warning);
+        var progress = new ProgressModal
+        {
+            Title = "还原快照",
+            IsIndeterminate = false,
+        };
+        _overlayService.PopModal(progress);
+
+        try
+        {
+            var restored = new Progress<int>(x =>
+                Dispatcher.UIThread.Post(() => progress.StatusText = $"已处理 {x} 个文件"));
+            await Context.Handle.RestoreAsync(target.Source.Id, restored);
+
+            if (_profileManager.TryGetMutable(Context.Basic.Key, out var guard))
+            {
+                guard.Value.Setup = target.Source.Metadata.Clone();
+                await guard.DisposeAsync();
+            }
+
+            _notificationService.PopMessage($"快照「{label}」已还原", "还原成功", GrowlLevel.Success);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "还原快照失败");
+        }
+        finally
+        {
+            progress.Dismiss();
+        }
     }
 
     #endregion
