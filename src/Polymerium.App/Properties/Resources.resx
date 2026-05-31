@@ -2991,4 +2991,31 @@ Affected entries: {0}
     <data name="InstancePackageButton_RemoveEntryButtonText" xml:space="preserve">
         <value>Remove</value>
     </data>
+    <data name="SettingsPage_GarbageCollectButtonText" xml:space="preserve">
+        <value>Garbage Collect</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectConfirmationTitle" xml:space="preserve">
+        <value>Garbage Collect</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectConfirmationMessage" xml:space="preserve">
+        <value>Garbage collection will scan and remove orphan data from the database and snapshot storage. This includes instance-related records (account mappings, play history, action logs, view states, widget data) and unreferenced snapshot files. This operation is safe and will not affect any existing instance data.</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectProgressTitle" xml:space="preserve">
+        <value>Garbage Collecting</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectProgressScanningText" xml:space="preserve">
+        <value>Scanning...</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectProgressCleaningText" xml:space="preserve">
+        <value>Cleaning...</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectSuccessTitle" xml:space="preserve">
+        <value>Garbage Collected</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectSuccessMessage" xml:space="preserve">
+        <value>Garbage collection completed successfully.</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectDangerTitle" xml:space="preserve">
+        <value>Garbage Collect Failed</value>
+    </data>
 </root>
