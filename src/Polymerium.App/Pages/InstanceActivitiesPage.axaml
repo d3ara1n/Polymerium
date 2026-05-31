@@ -587,16 +587,20 @@
                 Grid.Column="0"
                 Padding="0">
                 <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
-                    <Grid Grid.Row="0"
-                          DockPanel.Dock="Top"
-                          Margin="{StaticResource CardContentMargin}">
-                        <TextBlock VerticalAlignment="Center"
-                                   FontSize="{StaticResource LargeFontSize}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}"
-                                   Text="{x:Static lang:Resources.InstanceActivitiesPage_ChangelogLabelText}" />
+                    <Grid
+                        Grid.Row="0"
+                        DockPanel.Dock="Top"
+                        Margin="{StaticResource CardContentMargin}">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource LargeFontSize}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.InstanceActivitiesPage_ChangelogLabelText}" />
                     </Grid>
                     <husk:Divider Grid.Row="1" />
-                    <husk:LazyContainer Grid.Row="2" Source="{Binding PagedActions}">
+                    <husk:LazyContainer
+                        Grid.Row="2"
+                        Source="{Binding PagedActions}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="app:InstanceActionCollection">
                                 <Panel>
@@ -640,9 +644,9 @@
                         Grid.Row="4"
                         Margin="{StaticResource CardContentMargin}"
                         HorizontalAlignment="Center"
-                        PageIndex="{Binding ActionPageIndex, Mode=TwoWay}"
                         PageSize="20"
-                        TotalCount="{Binding ActionTotalCount}" />
+                        TotalCount="{Binding ActionTotalCount}"
+                        PageIndex="{Binding ActionPageIndex, Mode=TwoWay}" />
                 </Grid>
             </husk:Card>
         </Grid>

@@ -1,4 +1,4 @@
-<husk:Modal
+﻿<husk:Modal
     x:Class="Polymerium.App.Modals.ProgressModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,16 +13,16 @@
     mc:Ignorable="d">
     <Border
         Padding="24"
-        CornerRadius="{StaticResource MediumCornerRadius}"
-        Background="{DynamicResource ControlSolidBackgroundBrush}">
+        Background="{DynamicResource ControlSolidBackgroundBrush}"
+        CornerRadius="{StaticResource MediumCornerRadius}">
         <StackPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Spacing="16">
             <husk:ProgressRing
-                HorizontalAlignment="Center"
                 Width="48"
                 Height="48"
+                HorizontalAlignment="Center"
                 IsIndeterminate="{Binding $parent[app:ProgressModal].IsIndeterminate}"
                 Value="{Binding $parent[app:ProgressModal].ProgressValue}" />
             <TextBlock
