@@ -613,16 +613,16 @@
                     Spacing="8">
                     <Button
                         Classes="Small"
+                        Command="{Binding GarbageCollectCommand}"
+                        Content="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}" />
+                    <Button
+                        Classes="Small"
                         Command="{Binding ClearStatisticsCommand}"
                         Content="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}" />
                     <Button
                         Classes="Small"
                         Command="{Binding ClearRecordsCommand}"
                         Content="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}" />
-                    <Button
-                        Classes="Small"
-                        Command="{Binding GarbageCollectCommand}"
-                        Content="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}" />
                 </StackPanel>
             </app:SettingsEntryItem>
         </app:SettingsEntry>
