@@ -1,4 +1,4 @@
-<husk:Page
+﻿<husk:Page
     x:Class="Polymerium.App.Pages.SnapshotPortalPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -115,9 +115,9 @@
                     </StackPanel>
                     <StackPanel
                         Grid.Row="5"
+                        IsVisible="{Binding LatestTimeText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                         Orientation="Horizontal"
-                        Spacing="6"
-                        IsVisible="{Binding LatestTimeText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                        Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="最新:" />

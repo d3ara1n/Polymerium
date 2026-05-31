@@ -37,7 +37,7 @@ public class Configuration
     public const string UPDATE_SOURCE = "Update.Source";
     public const string UPDATE_MIRRORCHYAN_CDK = "Update.MirrorChyan.Cdk";
 
-    private static readonly Dictionary<string, object?> Defaults = new()
+    private static readonly Dictionary<string, object?> DEFAULTS = new()
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
         { APPLICATION_TITLEBAR_VISIBILITY, OperatingSystem.IsWindows() },
@@ -106,5 +106,5 @@ public class Configuration
     public int UpdateSource { get; set; } = AccessDefault<int>(UPDATE_SOURCE);
     public string UpdateMirrorChyanCdk { get; set; } = AccessDefault<string>(UPDATE_MIRRORCHYAN_CDK);
 
-    public static T AccessDefault<T>(string key) => (T)Defaults[key]!;
+    public static T AccessDefault<T>(string key) => (T)DEFAULTS[key]!;
 }
