@@ -8914,5 +8914,86 @@ namespace Polymerium.App.Properties {
                 return ResourceManager.GetString("WorkspaceDiffModal_LiveTagText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Garbage Collect.
+        /// </summary>
+        public static string SettingsPage_GarbageCollectButtonText {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Garbage Collect.
+        /// </summary>
+        public static string SettingsPage_GarbageCollectConfirmationTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following orphan data will be cleaned....
+        /// </summary>
+        public static string SettingsPage_GarbageCollectConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Garbage Collecting.
+        /// </summary>
+        public static string SettingsPage_GarbageCollectProgressTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectProgressTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanning....
+        /// </summary>
+        public static string SettingsPage_GarbageCollectProgressScanningText {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectProgressScanningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleaning....
+        /// </summary>
+        public static string SettingsPage_GarbageCollectProgressCleaningText {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectProgressCleaningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Garbage Collected.
+        /// </summary>
+        public static string SettingsPage_GarbageCollectSuccessTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectSuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Garbage Collect Failed.
+        /// </summary>
+        public static string SettingsPage_GarbageCollectDangerTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectDangerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Garbage collection completed successfully..
+        /// </summary>
+        public static string SettingsPage_GarbageCollectSuccessMessage {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectSuccessMessage", resourceCulture);
+            }
+        }
     }
 }

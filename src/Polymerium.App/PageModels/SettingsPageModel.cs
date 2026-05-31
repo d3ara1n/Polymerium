@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
@@ -26,8 +28,8 @@ public partial class SettingsPageModel : ViewModelBase
         NotificationService notificationService,
         PersistenceService persistenceService,
         UpdateService updateService,
-        UpdateManager updateManager
-    )
+        UpdateManager updateManager,
+        GarbageCollector garbageCollector)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
@@ -36,6 +38,7 @@ public partial class SettingsPageModel : ViewModelBase
         _persistenceService = persistenceService;
         UpdateService = updateService;
         _updateManager = updateManager;
+        _garbageCollector = garbageCollector;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -43,33 +46,26 @@ public partial class SettingsPageModel : ViewModelBase
         AccentColor = configurationService.Value.ApplicationStyleAccent;
         CornerStyle = configurationService.Value.ApplicationStyleCorner;
         BackgroundMode =
-            BackgroundStyles.FirstOrDefault(x =>
-                x.Index == configurationService.Value.ApplicationStyleBackground
-            ) ?? BackgroundStyles.First();
+            BackgroundStyles.FirstOrDefault(x => x.Index == configurationService.Value.ApplicationStyleBackground)
+         ?? BackgroundStyles.First();
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
-        Language =
-            Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
-            ?? Languages.First();
-        JavaHome8 =
-            configurationService.Value.RuntimeJavaHome8 != string.Empty
-                ? configurationService.Value.RuntimeJavaHome8
-                : null;
-        JavaHome11 =
-            configurationService.Value.RuntimeJavaHome11 != string.Empty
-                ? configurationService.Value.RuntimeJavaHome11
-                : null;
-        JavaHome17 =
-            configurationService.Value.RuntimeJavaHome17 != string.Empty
-                ? configurationService.Value.RuntimeJavaHome17
-                : null;
-        JavaHome21 =
-            configurationService.Value.RuntimeJavaHome21 != string.Empty
-                ? configurationService.Value.RuntimeJavaHome21
-                : null;
-        JavaHome25 =
-            configurationService.Value.RuntimeJavaHome25 != string.Empty
-                ? configurationService.Value.RuntimeJavaHome25
-                : null;
+        Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
+                ?? Languages.First();
+        JavaHome8 = configurationService.Value.RuntimeJavaHome8 != string.Empty
+                        ? configurationService.Value.RuntimeJavaHome8
+                        : null;
+        JavaHome11 = configurationService.Value.RuntimeJavaHome11 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome11
+                         : null;
+        JavaHome17 = configurationService.Value.RuntimeJavaHome17 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome17
+                         : null;
+        JavaHome21 = configurationService.Value.RuntimeJavaHome21 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome21
+                         : null;
+        JavaHome25 = configurationService.Value.RuntimeJavaHome25 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome25
+                         : null;
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         CommandWrapper = configurationService.Value.GameCommandWrapper;
@@ -80,9 +76,7 @@ public partial class SettingsPageModel : ViewModelBase
         MirrorChyanCdk = configurationService.Value.UpdateMirrorChyanCdk;
 
         ProxyMode = TryConvertEnum<ProxyMode>(configurationService.Value.NetworkProxyMode);
-        ProxyProtocol = TryConvertEnum<ProxyProtocol>(
-            configurationService.Value.NetworkProxyProtocol
-        );
+        ProxyProtocol = TryConvertEnum<ProxyProtocol>(configurationService.Value.NetworkProxyProtocol);
         ProxyEnabled = configurationService.Value.NetworkProxyEnabled;
         ProxyAddress = configurationService.Value.NetworkProxyAddress;
         ProxyPort = configurationService.Value.NetworkProxyPort;
@@ -117,6 +111,7 @@ public partial class SettingsPageModel : ViewModelBase
     private readonly NotificationService _notificationService;
     private readonly PersistenceService _persistenceService;
     private readonly UpdateManager _updateManager;
+    private readonly GarbageCollector _garbageCollector;
 
     #endregion
 
@@ -127,10 +122,8 @@ public partial class SettingsPageModel : ViewModelBase
     {
         if (box != null)
         {
-            var path = await OverlayService.RequestFileAsync(
-                Resources.InstancePropertiesPage_RequestJavaPrompt,
-                Resources.InstancePropertiesPage_RequestJavaTitle
-            );
+            var path = await OverlayService.RequestFileAsync(Resources.InstancePropertiesPage_RequestJavaPrompt,
+                                                             Resources.InstancePropertiesPage_RequestJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -162,11 +155,9 @@ public partial class SettingsPageModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(
-                ex,
-                Resources.SettingsPage_CheckUpdatesDangerNotificationTitle
-            );
+            _notificationService.PopMessage(ex, Resources.SettingsPage_CheckUpdatesDangerNotificationTitle);
         }
+
         SyncUpdateState();
         CheckUpdatesCommand.NotifyCanExecuteChanged();
         ViewReleaseCommand.NotifyCanExecuteChanged();
@@ -182,23 +173,20 @@ public partial class SettingsPageModel : ViewModelBase
             return;
         }
 
-        OverlayService.PopModal(
-            new AppUpdateModal
-            {
-                Model = model,
-                UpdateManager = _updateManager,
-                NotificationService = _notificationService,
-            }
-        );
+        OverlayService.PopModal(new AppUpdateModal
+        {
+            Model = model,
+            UpdateManager = _updateManager,
+            NotificationService = _notificationService,
+        });
     }
 
     [RelayCommand]
     private async Task ClearStatisticsAsync()
     {
-        var confirmed = await OverlayService.RequestConfirmationAsync(
-            Resources.SettingsPage_ClearStatisticsConfirmationMessage,
-            Resources.SettingsPage_ClearStatisticsConfirmationTitle
-        );
+        var confirmed =
+            await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_ClearStatisticsConfirmationMessage,
+                                                          Resources.SettingsPage_ClearStatisticsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -208,13 +196,58 @@ public partial class SettingsPageModel : ViewModelBase
     [RelayCommand]
     private async Task ClearRecordsAsync()
     {
-        var confirmed = await OverlayService.RequestConfirmationAsync(
-            Resources.SettingsPage_ClearRecordsConfirmationMessage,
-            Resources.SettingsPage_ClearRecordsConfirmationTitle
-        );
+        var confirmed =
+            await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_ClearRecordsConfirmationMessage,
+                                                          Resources.SettingsPage_ClearRecordsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
+        }
+    }
+
+    [RelayCommand]
+    private async Task GarbageCollectAsync()
+    {
+        var confirmed =
+            await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_GarbageCollectConfirmationMessage,
+                                                          Resources.SettingsPage_GarbageCollectConfirmationTitle);
+        if (!confirmed)
+            return;
+
+        var progress = new ProgressModal
+        {
+            Title = Resources.SettingsPage_GarbageCollectProgressTitle,
+            StatusText = Resources.SettingsPage_GarbageCollectProgressScanningText,
+            IsIndeterminate = true,
+        };
+        OverlayService.PopModal(progress);
+
+        var reporter = new Progress<double?>(v =>
+        {
+            if (v.HasValue)
+            {
+                progress.IsIndeterminate = false;
+                progress.StatusText = Resources.SettingsPage_GarbageCollectProgressCleaningText;
+                progress.ProgressValue = (int)(v.Value * 100);
+            }
+            else
+            {
+                progress.IsIndeterminate = true;
+            }
+        });
+
+        try
+        {
+            await Task.Run(() => _garbageCollector.Execute(reporter));
+            progress.Dismiss();
+            _notificationService.PopMessage(Resources.SettingsPage_GarbageCollectSuccessMessage,
+                                            Resources.SettingsPage_GarbageCollectSuccessTitle,
+                                            GrowlLevel.Success);
+        }
+        catch (Exception ex)
+        {
+            progress.Dismiss();
+            _notificationService.PopMessage(ex, Resources.SettingsPage_GarbageCollectDangerTitle);
         }
     }
 
@@ -231,14 +264,12 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial bool AutoCheckUpdates { get; set; }
 
-    partial void OnAutoCheckUpdatesChanged(bool value) =>
-        _configurationService.Value.UpdateAutoCheck = value;
+    partial void OnAutoCheckUpdatesChanged(bool value) => _configurationService.Value.UpdateAutoCheck = value;
 
     [ObservableProperty]
     public partial int UpdateSource { get; set; }
 
-    partial void OnUpdateSourceChanged(int value) =>
-        _configurationService.Value.UpdateSource = value;
+    partial void OnUpdateSourceChanged(int value) => _configurationService.Value.UpdateSource = value;
 
     [ObservableProperty]
     public partial string MirrorChyanCdk { get; set; }
@@ -258,8 +289,7 @@ public partial class SettingsPageModel : ViewModelBase
         UpdateTarget = UpdateService.CurrentUpdate;
     }
 
-    private T TryConvertEnum<T>(int value, T orDefault = default)
-        where T : struct, Enum
+    private T TryConvertEnum<T>(int value, T orDefault = default) where T : struct, Enum
     {
         if (Enum.IsDefined(typeof(T), value))
         {
@@ -379,16 +409,13 @@ public partial class SettingsPageModel : ViewModelBase
 
     public LanguageModel[] Languages { get; } =
     [
-        .. Configuration
-            .SupportedLanguages.Select(CultureInfo.GetCultureInfo)
-            .Select(x => new LanguageModel(x)),
+        .. Configuration.SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x)),
     ];
 
     [ObservableProperty]
     public partial LanguageModel Language { get; set; }
 
-    partial void OnLanguageChanged(LanguageModel value) =>
-        _configurationService.Value.ApplicationLanguage = value.Id;
+    partial void OnLanguageChanged(LanguageModel value) => _configurationService.Value.ApplicationLanguage = value.Id;
 
     #endregion
 
@@ -431,8 +458,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial uint JavaMaxMemory { get; set; }
 
-    partial void OnJavaMaxMemoryChanged(uint value) =>
-        _configurationService.Value.GameJavaMaxMemory = value;
+    partial void OnJavaMaxMemoryChanged(uint value) => _configurationService.Value.GameJavaMaxMemory = value;
 
     #endregion
 
@@ -451,8 +477,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial string CommandWrapper { get; set; }
 
-    partial void OnCommandWrapperChanged(string value) =>
-        _configurationService.Value.GameCommandWrapper = value;
+    partial void OnCommandWrapperChanged(string value) => _configurationService.Value.GameCommandWrapper = value;
 
     #endregion
 
@@ -461,8 +486,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial uint WindowInitialWidth { get; set; }
 
-    partial void OnWindowInitialWidthChanged(uint value) =>
-        _configurationService.Value.GameWindowInitialWidth = value;
+    partial void OnWindowInitialWidthChanged(uint value) => _configurationService.Value.GameWindowInitialWidth = value;
 
     #endregion
 
@@ -499,8 +523,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial bool ProxyEnabled { get; set; }
 
-    partial void OnProxyEnabledChanged(bool value) =>
-        _configurationService.Value.NetworkProxyEnabled = value;
+    partial void OnProxyEnabledChanged(bool value) => _configurationService.Value.NetworkProxyEnabled = value;
 
     [ObservableProperty]
     public partial string ProxyAddress { get; set; }
@@ -523,14 +546,12 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial string ProxyUsername { get; set; }
 
-    partial void OnProxyUsernameChanged(string value) =>
-        _configurationService.Value.NetworkProxyUsername = value;
+    partial void OnProxyUsernameChanged(string value) => _configurationService.Value.NetworkProxyUsername = value;
 
     [ObservableProperty]
     public partial string ProxyPassword { get; set; }
 
-    partial void OnProxyPasswordChanged(string value) =>
-        _configurationService.Value.NetworkProxyPassword = value;
+    partial void OnProxyPasswordChanged(string value) => _configurationService.Value.NetworkProxyPassword = value;
 
     [ObservableProperty]
     public partial string ProxyStatusText { get; set; } = string.Empty;
@@ -541,12 +562,9 @@ public partial class SettingsPageModel : ViewModelBase
             ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
             ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
             ProxyMode.Manual => Resources
-                .SettingsPage_ProxyStatusManualText.Replace(
-                    "{0}",
-                    ProxyProtocol.ToString().ToLower()
-                )
-                .Replace("{1}", ProxyAddress)
-                .Replace("{2}", ProxyPort.ToString()),
+                               .SettingsPage_ProxyStatusManualText.Replace("{0}", ProxyProtocol.ToString().ToLower())
+                               .Replace("{1}", ProxyAddress)
+                               .Replace("{2}", ProxyPort.ToString()),
             _ => string.Empty,
         };
 
@@ -566,10 +584,7 @@ public partial class SettingsPageModel : ViewModelBase
         var dialog = new ProxySettingsDialog();
         dialog.Initialize(currentSettings);
 
-        if (
-            await OverlayService.PopDialogAsync(dialog)
-            && dialog.Result is ProxySettingsModel newSettings
-        )
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is ProxySettingsModel newSettings)
         {
             // Apply the new settings
             ProxyMode = newSettings.Mode;

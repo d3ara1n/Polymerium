@@ -140,7 +140,7 @@
                                 <Border
                                     DockPanel.Dock="Top"
                                     Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                    BoxShadow="0 0 4 0 #3F000000"
+                                    BoxShadow="0 0 4 0 #1F000000"
                                     CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
                                                                               Converter={x:Static husk:CornerRadiusConverters.Top}}">
                                     <Grid
@@ -204,7 +204,7 @@
                                                 Stretch="UniformToFill" />
                                         </Border.Background>
                                         <Border.OpacityMask>
-                                            <LinearGradientBrush StartPoint="0%,10%" EndPoint="100%,100%">
+                                            <LinearGradientBrush StartPoint="0%,90%" EndPoint="100%,0%">
                                                 <GradientStop Offset="0" Color="#3F000000" />
                                                 <GradientStop Offset="0.5" Color="#6F000000" />
                                                 <GradientStop Offset="1" Color="#DF000000" />

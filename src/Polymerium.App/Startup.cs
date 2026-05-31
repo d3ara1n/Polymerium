@@ -190,7 +190,8 @@ public static class Startup
            .AddLifetimeService<ScrapService>()
            .AddSingleton<InstanceService>()
            .AddLifetimeService<UpdateService>()
-           .AddSingleton<WidgetHostService>();
+           .AddSingleton<WidgetHostService>()
+           .AddSingleton<GarbageCollector>();
     }
 
     public static void InitializeUnhostedServices()

@@ -2979,4 +2979,31 @@
     <data name="InstancePackageButton_RemoveEntryButtonText" xml:space="preserve">
         <value>移除条目</value>
     </data>
+    <data name="SettingsPage_GarbageCollectButtonText" xml:space="preserve">
+        <value>垃圾回收</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectConfirmationTitle" xml:space="preserve">
+        <value>垃圾回收</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectConfirmationMessage" xml:space="preserve">
+        <value>垃圾回收将扫描并清理数据库和快照存储中的孤儿数据。这包括实例相关的记录（账号映射、游玩历史、操作日志、视图状态、小组件数据）以及无主的快照文件。此操作是安全的，不会影响任何现有实例的数据。</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectProgressTitle" xml:space="preserve">
+        <value>正在回收</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectProgressScanningText" xml:space="preserve">
+        <value>正在扫描...</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectProgressCleaningText" xml:space="preserve">
+        <value>正在清理...</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectSuccessTitle" xml:space="preserve">
+        <value>回收完成</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectSuccessMessage" xml:space="preserve">
+        <value>垃圾回收已完成。</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectDangerTitle" xml:space="preserve">
+        <value>回收失败</value>
+    </data>
 </root>
