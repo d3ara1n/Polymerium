@@ -16,6 +16,8 @@ public class Configuration
     public const string APPLICATION_STYLE_BACKGROUND = "Application.Style.Background";
     public const string APPLICATION_STYLE_THEME_VARIANT = "Application.Style.ThemeVariant";
     public const string APPLICATION_LANGUAGE = "Application.Language";
+    public const string APPLICATION_WINDOW_WIDTH = "Application.Window.Width";
+    public const string APPLICATION_WINDOW_HEIGHT = "Application.Window.Height";
     public const string RUNTIME_JAVA_HOME_8 = "Runtime.Java.Home.8";
     public const string RUNTIME_JAVA_HOME_11 = "Runtime.Java.Home.11";
     public const string RUNTIME_JAVA_HOME_17 = "Runtime.Java.Home.17";
@@ -52,6 +54,8 @@ public class Configuration
         { APPLICATION_STYLE_BACKGROUND, 0 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, CultureInfo.InstalledUICulture.Name },
+        { APPLICATION_WINDOW_WIDTH, 1111.0 },
+        { APPLICATION_WINDOW_HEIGHT, 666.0 },
         { RUNTIME_JAVA_HOME_8, string.Empty },
         { RUNTIME_JAVA_HOME_11, string.Empty },
         { RUNTIME_JAVA_HOME_17, string.Empty },
@@ -85,6 +89,8 @@ public class Configuration
     public int ApplicationStyleBackground { get; set; } = AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
     public int ApplicationStyleThemeVariant { get; set; } = AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);
     public string ApplicationLanguage { get; set; } = AccessDefault<string>(APPLICATION_LANGUAGE);
+    public double ApplicationWindowWidth { get; set; } = AccessDefault<double>(APPLICATION_WINDOW_WIDTH);
+    public double ApplicationWindowHeight { get; set; } = AccessDefault<double>(APPLICATION_WINDOW_HEIGHT);
     public string RuntimeJavaHome8 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_8);
     public string RuntimeJavaHome11 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_11);
     public string RuntimeJavaHome17 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_17);

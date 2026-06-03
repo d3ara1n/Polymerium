@@ -115,6 +115,24 @@ public class App : Application
 
         var window = new MainWindow();
 
+        // 还原窗口大小
+        window.Opened += (_, _) =>
+        {
+            var w = configuration.Value.ApplicationWindowWidth;
+            var h = configuration.Value.ApplicationWindowHeight;
+            if (w > 0 && h > 0)
+            {
+                window.Width = w;
+                window.Height = h;
+            }
+        };
+
+        window.Closing += (_, _) =>
+        {
+            configuration.Value.ApplicationWindowWidth = window.Width;
+            configuration.Value.ApplicationWindowHeight = window.Height;
+        };
+
         window.SetColorVariant(configuration.Value.ApplicationStyleAccent);
         window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
         window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
