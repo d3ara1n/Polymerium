@@ -16,7 +16,8 @@ public partial class AccountModel : ModelBase
         string uuid,
         string userName,
         DateTimeOffset enrolledAt,
-        DateTimeOffset? lastUsedAt
+        DateTimeOffset? lastUsedAt,
+        string? authlibServerUrl = null
     )
     {
         UserName = userName;
@@ -24,6 +25,7 @@ public partial class AccountModel : ModelBase
         Type = type;
         EnrolledAtRaw = enrolledAt;
         LastUsedAtRaw = lastUsedAt;
+        AuthlibServerUrl = authlibServerUrl;
         if (type.IsAssignableTo(typeof(MicrosoftAccount)))
         {
             TypeName = Resources.Account_Microsoft;
@@ -70,9 +72,11 @@ public partial class AccountModel : ModelBase
 
     public Color Color1 { get; }
     public Color Color2 { get; }
-
     public Uri FaceUrl { get; }
+
     public Uri BodyUrl { get; }
+
+    public string? AuthlibServerUrl { get; }
 
     #endregion
 

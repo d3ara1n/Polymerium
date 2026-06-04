@@ -50,11 +50,7 @@ public partial class AccountsPageModel(
         var enrolledAt = DateTimeOffset.Now;
         var raw = AccountHelper.ToRaw(account, enrolledAt, null, isDefault);
         persistenceService.AppendAccount(raw);
-        Accounts.Add(new(account.GetType(),
-                         account.Uuid,
-                         account.Username,
-                         enrolledAt,
-                         null) { IsDefault = isDefault, });
+        Accounts.Add(AccountHelper.CreateModelFromAccount(account, enrolledAt));
         return true;
     }
 

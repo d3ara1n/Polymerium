@@ -810,6 +810,9 @@
     <data name="AccountEntryModal_MicrosoftPrompt" xml:space="preserve">
         <value>This type of account is type of: No use in the past then no use in the future any more.</value>
     </data>
+    <data name="AccountEntryModal_AuthlibServerUrlLabel" xml:space="preserve">
+        <value>Server</value>
+    </data>
     <data name="ExhibitPackageModal_FilterLabelText" xml:space="preserve">
         <value>Show compatible versions only</value>
     </data>

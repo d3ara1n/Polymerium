@@ -36,7 +36,8 @@ public static class AccountHelper
         DateTimeOffset? enrolledAt = null,
         DateTimeOffset? lastUsedAt = null)
     {
-        return new(account.GetType(), account.Uuid, account.Username, enrolledAt ?? DateTimeOffset.Now, lastUsedAt);
+        var serverUrl = account is AuthlibAccount authlib ? authlib.ServerUrl : null;
+        return new(account.GetType(), account.Uuid, account.Username, enrolledAt ?? DateTimeOffset.Now, lastUsedAt, serverUrl);
     }
 
     public static PersistenceService.Account ToRaw(
