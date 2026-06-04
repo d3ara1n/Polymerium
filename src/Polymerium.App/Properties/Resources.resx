@@ -546,6 +546,12 @@
     <data name="AccountCreationPortal_OfflineSubtitle" xml:space="preserve">
         <value>Nothing good but no Internet connection required.</value>
     </data>
+    <data name="AccountCreationPortal_AuthlibInjectorTitle" xml:space="preserve">
+        <value>External Auth</value>
+    </data>
+    <data name="AccountCreationPortal_AuthlibInjectorSubtitle" xml:space="preserve">
+        <value>authlib-injector (Yggdrasil)</value>
+    </data>
     <data name="AccountCreationPortal_Prompt" xml:space="preserve">
         <value>Offline account is unavailable if no Microsoft account is linked.</value>
     </data>
@@ -1499,6 +1505,9 @@
     </data>
     <data name="Account_Trial" xml:space="preserve">
         <value>Trial</value>
+    </data>
+    <data name="Account_AuthlibInjector" xml:space="preserve">
+        <value>External Auth</value>
     </data>
     <data name="LandingPage_RecentPlayButtonText" xml:space="preserve">
         <value>Play</value>
@@ -3017,5 +3026,35 @@ Affected entries: {0}
     </data>
     <data name="SettingsPage_GarbageCollectDangerTitle" xml:space="preserve">
         <value>Garbage Collect Failed</value>
+    </data>
+    <data name="AccountCreationAuthlib_Title" xml:space="preserve">
+        <value>External Account</value>
+    </data>
+    <data name="AccountCreationAuthlib_ServerUrl" xml:space="preserve">
+        <value>Server URL</value>
+    </data>
+    <data name="AccountCreationAuthlib_Username" xml:space="preserve">
+        <value>Username / Email</value>
+    </data>
+    <data name="AccountCreationAuthlib_Password" xml:space="preserve">
+        <value>Password</value>
+    </data>
+    <data name="AccountCreationAuthlib_Login" xml:space="preserve">
+        <value>Login</value>
+    </data>
+    <data name="AccountCreationAuthlib_ErrorAuthFailed" xml:space="preserve">
+        <value>Authentication failed</value>
+    </data>
+    <data name="AccountCreationAuthlib_ErrorInvalidServer" xml:space="preserve">
+        <value>Invalid server URL</value>
+    </data>
+    <data name="AccountCreationAuthlib_DoneSubtitle" xml:space="preserve">
+        <value>Authentication successful</value>
+    </data>
+    <data name="AccountCreationAuthlib_SelectProfile" xml:space="preserve">
+        <value>Select a profile to use</value>
+    </data>
+    <data name="AccountCreationAuthlib_ConfirmProfile" xml:space="preserve">
+        <value>Confirm</value>
     </data>
 </root>

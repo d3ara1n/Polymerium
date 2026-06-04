@@ -172,8 +172,8 @@ public partial class SnapshotCreationPageModel(
 
             if (!outerLookup.TryGetValue(primarySpan, out var secondaries))
             {
-                secondaries = new Dictionary<string, (int count, long size)>(
-                    StringComparer.OrdinalIgnoreCase);
+                secondaries = new(
+                                  StringComparer.OrdinalIgnoreCase);
                 outerLookup[primarySpan] = secondaries;
             }
 

@@ -23,7 +23,8 @@ public partial class AccountsPageModel(
     ConfigurationService configurationService,
     MicrosoftService microsoftService,
     XboxLiveService xboxLiveService,
-    MinecraftService minecraftService
+    MinecraftService minecraftService,
+    YggdrasilService yggdrasilService
 ) : ViewModelBase
 {
     #region Direct
@@ -104,6 +105,7 @@ public partial class AccountsPageModel(
                 XboxLiveService = xboxLiveService,
                 MinecraftService = minecraftService,
                 NotificationService = notificationService,
+                YggdrasilService = yggdrasilService,
             }
         );
 

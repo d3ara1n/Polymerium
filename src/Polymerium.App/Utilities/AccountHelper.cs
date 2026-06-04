@@ -9,14 +9,14 @@ namespace Polymerium.App.Utilities;
 public static class AccountHelper
 {
     public static IAccount ToCooked(PersistenceService.Account raw) =>
-        (IAccount?)(
-            raw.Kind switch
-            {
-                nameof(MicrosoftAccount) => JsonSerializer.Deserialize<MicrosoftAccount>(raw.Data),
-                nameof(TrialAccount) => JsonSerializer.Deserialize<TrialAccount>(raw.Data),
-                nameof(OfflineAccount) => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
-                _ => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
-            }
+        (IAccount?)(raw.Kind switch
+        {
+            nameof(MicrosoftAccount) => JsonSerializer.Deserialize<MicrosoftAccount>(raw.Data),
+            nameof(TrialAccount) => JsonSerializer.Deserialize<TrialAccount>(raw.Data),
+            nameof(OfflineAccount) => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
+            nameof(AuthlibInjectorAccount) => JsonSerializer.Deserialize<AuthlibInjectorAccount>(raw.Data),
+            _ => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
+        }
         ) ?? throw new FormatException("Failed to deserialize account from the raw data");
 
     public static PersistenceService.Account ToRaw(

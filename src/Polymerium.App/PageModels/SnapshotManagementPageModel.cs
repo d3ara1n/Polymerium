@@ -273,7 +273,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         var currentPurls = new HashSet<string>(current.Metadata.Packages.Select(x => x.Purl), StringComparer.OrdinalIgnoreCase);
         var previousPurls = new HashSet<string>(previous.Metadata.Packages.Select(x => x.Purl), StringComparer.OrdinalIgnoreCase);
 
-        return new SnapshotDiffModel
+        return new()
         {
             FilesAdded = currentPaths.Count - currentPaths.Intersect(previousPaths).Count(),
             FilesRemoved = previousPaths.Count - previousPaths.Intersect(currentPaths).Count(),

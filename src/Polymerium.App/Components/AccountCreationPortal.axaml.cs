@@ -21,6 +21,7 @@ public partial class AccountCreationPortal : AccountCreationStep
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
     public required NotificationService NotificationService { get; init; }
+    public required YggdrasilService YggdrasilService { get; init; }
 
     public bool IsOfflineAvailable
     {
@@ -39,7 +40,8 @@ public partial class AccountCreationPortal : AccountCreationStep
                 NotificationService = NotificationService,
             },
             1 => new AccountCreationTrial(),
-            2 => new AccountCreationOffline(),
+            2 => new AccountCreationAuthlibInjector { YggdrasilService = YggdrasilService },
+            3 => new AccountCreationOffline(),
             _ => throw new ArgumentOutOfRangeException(),
         };
 }
