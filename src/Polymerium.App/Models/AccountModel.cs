@@ -32,7 +32,7 @@ public partial class AccountModel : ModelBase
             FaceUrl = AccountHelper.GetFaceUrl(uuid);
             BodyUrl = AccountHelper.GetBodyUrl(uuid);
         }
-        else if (type.IsAssignableTo(typeof(AuthlibInjectorAccount)))
+        else if (type.IsAssignableTo(typeof(AuthlibAccount)))
         {
             TypeName = Resources.Account_AuthlibInjector;
             Color1 = Color.FromArgb(255, 131, 200, 255);

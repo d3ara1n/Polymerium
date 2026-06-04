@@ -25,8 +25,8 @@ public static class AccountHelper
                            nameof(MicrosoftAccount) => JsonSerializer.Deserialize<MicrosoftAccount>(raw.Data),
                            nameof(TrialAccount) => JsonSerializer.Deserialize<TrialAccount>(raw.Data),
                            nameof(OfflineAccount) => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
-                           nameof(AuthlibInjectorAccount) =>
-                               JsonSerializer.Deserialize<AuthlibInjectorAccount>(raw.Data),
+                           nameof(AuthlibAccount) =>
+                               JsonSerializer.Deserialize<AuthlibAccount>(raw.Data),
                            _ => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
                        })
      ?? throw new FormatException("Failed to deserialize account from the raw data");

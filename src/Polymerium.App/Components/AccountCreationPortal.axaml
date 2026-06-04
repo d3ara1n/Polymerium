@@ -34,10 +34,10 @@
                 <StackPanel>
                     <TextBlock
                         FontSize="{StaticResource LargeFontSize}"
-                        Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}" />
+                        Text="{x:Static lang:Resources.AccountCreationPortal_AuthlibInjectorTitle}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.AccountCreationPortal_TrialSubtitle}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_AuthlibInjectorSubtitle}"
                         TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
@@ -45,10 +45,10 @@
                 <StackPanel>
                     <TextBlock
                         FontSize="{StaticResource LargeFontSize}"
-                        Text="{x:Static lang:Resources.AccountCreationPortal_AuthlibInjectorTitle}" />
+                        Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.AccountCreationPortal_AuthlibInjectorSubtitle}"
+                        Text="{x:Static lang:Resources.AccountCreationPortal_TrialSubtitle}"
                         TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>

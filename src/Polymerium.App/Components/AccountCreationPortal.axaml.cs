@@ -39,8 +39,8 @@ public partial class AccountCreationPortal : AccountCreationStep
                 MinecraftService = MinecraftService,
                 NotificationService = NotificationService,
             },
-            1 => new AccountCreationTrial(),
-            2 => new AccountCreationAuthlibInjector { YggdrasilService = YggdrasilService },
+            1 => new AccountCreationAuthlibInjector { YggdrasilService = YggdrasilService },
+            2 => new AccountCreationTrial(),
             3 => new AccountCreationOffline(),
             _ => throw new ArgumentOutOfRangeException(),
         };
