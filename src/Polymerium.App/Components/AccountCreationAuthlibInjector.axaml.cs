@@ -99,7 +99,7 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
     public override object NextStep()
     {
         if (Account != null)
-            return new AccountCreationPreview { Account = Account, YggdrasilService = YggdrasilService };
+            return new AccountCreationPreview { Account = Account };
 
         throw new InvalidOperationException("Authenticate first before proceeding");
     }

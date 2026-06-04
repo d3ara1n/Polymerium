@@ -22,8 +22,6 @@ public partial class AccountCreationPreview : AccountCreationStep
 
     public AccountCreationPreview() => InitializeComponent();
 
-    public YggdrasilService? YggdrasilService { get; init; }
-
     public IAccount? Account
     {
         get;
