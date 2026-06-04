@@ -12,7 +12,7 @@ public partial class AssetIdentificationPersistModel(string path) : ModelBase
     public string Path => path;
 
     public IReadOnlyList<ResourceKind> Kinds { get; } =
-    [ResourceKind.MOD, ResourceKind.RESOURCE_PACK, ResourceKind.SHADER_PACK];
+    [ResourceKind.Mod, ResourceKind.ResourcePack, ResourceKind.ShaderPack];
 
     #endregion
 

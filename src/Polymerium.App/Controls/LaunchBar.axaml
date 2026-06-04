@@ -12,15 +12,15 @@
                 <app:LaunchBar
                     Width="256"
                     Height="96"
-                    State="IDLE" />
+                    State="Idle" />
                 <app:LaunchBar
                     Width="256"
                     Height="96"
-                    State="DEPLOYING" />
+                    State="Deploying" />
                 <app:LaunchBar
                     Width="256"
                     Height="96"
-                    State="RUNNING" />
+                    State="Running" />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
@@ -211,7 +211,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^[State=IDLE]">
+        <Style Selector="^[State=Idle]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
                     <VisualBrush
@@ -263,7 +263,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=DEPLOYING]">
+        <Style Selector="^[State=Deploying]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
                     <VisualBrush
@@ -330,7 +330,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=RUNNING]">
+        <Style Selector="^[State=Running]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
                     <VisualBrush

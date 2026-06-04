@@ -207,16 +207,16 @@
                                                                 Value="{x:Null}" />
                                                             <app:FilterModel
                                                                 Label="Fabric"
-                                                                Value="{x:Static app:ModLoaderKind.FABRIC}" />
+                                                                Value="{x:Static app:ModLoaderKind.Fabric}" />
                                                             <app:FilterModel
                                                                 Label="Forge"
-                                                                Value="{x:Static app:ModLoaderKind.FORGE}" />
+                                                                Value="{x:Static app:ModLoaderKind.Forge}" />
                                                             <app:FilterModel
                                                                 Label="Quilt"
-                                                                Value="{x:Static app:ModLoaderKind.QUILT}" />
+                                                                Value="{x:Static app:ModLoaderKind.Quilt}" />
                                                             <app:FilterModel
                                                                 Label="NeoForge"
-                                                                Value="{x:Static app:ModLoaderKind.NEO_FORGE}" />
+                                                                Value="{x:Static app:ModLoaderKind.NeoForge}" />
                                                         </TabStrip>
                                                     </Grid>
                                                 </StackPanel>

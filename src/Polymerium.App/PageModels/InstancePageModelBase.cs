@@ -39,7 +39,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial InstanceState State { get; set; } = InstanceState.IDLE;
+    public partial InstanceState State { get; set; } = InstanceState.Idle;
 
     #endregion
 
@@ -88,19 +88,19 @@ public abstract partial class InstancePageModelBase : ViewModelBase
             {
                 case UpdateTracker update:
                     // 已经处于更新状态而未收到事件
-                    State = InstanceState.UPDATING;
+                    State = InstanceState.Updating;
                     update.StateUpdated += OnInstanceUpdateStateChanged;
                     OnInstanceUpdating(update);
                     break;
                 case DeployTracker deploy:
                     // 已经处于部署状态而未收到事件
-                    State = InstanceState.DEPLOYING;
+                    State = InstanceState.Deploying;
                     deploy.StateUpdated += OnInstanceDeployStateChanged;
                     OnInstanceDeploying(deploy);
                     break;
                 case LaunchTracker launch:
                     // 已经处于启动状态而未收到事件
-                    State = InstanceState.RUNNING;
+                    State = InstanceState.Running;
                     launch.StateUpdated += OnInstanceLaunchingStateChanged;
                     OnInstanceLaunching(launch);
                     break;
@@ -128,7 +128,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
             return;
         }
 
-        Dispatcher.UIThread.Post(() => State = InstanceState.UPDATING);
+        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
 
         tracker.StateUpdated += OnInstanceUpdateStateChanged;
         OnInstanceUpdating(tracker);
@@ -142,7 +142,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
             return;
         }
 
-        Dispatcher.UIThread.Post(() => State = InstanceState.DEPLOYING);
+        Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
 
         tracker.StateUpdated += OnInstanceDeployStateChanged;
         OnInstanceDeploying(tracker);
@@ -155,7 +155,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
             return;
         }
 
-        Dispatcher.UIThread.Post(() => State = InstanceState.RUNNING);
+        Dispatcher.UIThread.Post(() => State = InstanceState.Running);
 
         tracker.StateUpdated += OnInstanceLaunchingStateChanged;
         OnInstanceLaunching(tracker);
@@ -163,12 +163,12 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     private void OnInstanceUpdateStateChanged(TrackerBase sender, TrackerState state)
     {
-        if (state is TrackerState.FAULTED or TrackerState.FINISHED)
+        if (state is TrackerState.Faulted or TrackerState.Finished)
         {
             sender.StateUpdated -= OnInstanceUpdateStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.IDLE;
+                State = InstanceState.Idle;
                 OnInstanceUpdated((UpdateTracker)sender);
             });
         }
@@ -176,12 +176,12 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     private void OnInstanceDeployStateChanged(TrackerBase sender, TrackerState state)
     {
-        if (state is TrackerState.FAULTED or TrackerState.FINISHED)
+        if (state is TrackerState.Faulted or TrackerState.Finished)
         {
             sender.StateUpdated -= OnInstanceDeployStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.IDLE;
+                State = InstanceState.Idle;
                 OnInstanceDeployed((DeployTracker)sender);
             });
         }
@@ -189,12 +189,12 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     private void OnInstanceLaunchingStateChanged(TrackerBase sender, TrackerState state)
     {
-        if (state is TrackerState.FAULTED or TrackerState.FINISHED)
+        if (state is TrackerState.Faulted or TrackerState.Finished)
         {
             sender.StateUpdated -= OnInstanceLaunchingStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.IDLE;
+                State = InstanceState.Idle;
                 OnInstanceLaunched((LaunchTracker)sender);
             });
         }

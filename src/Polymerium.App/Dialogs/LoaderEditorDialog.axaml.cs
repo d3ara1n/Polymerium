@@ -12,7 +12,7 @@ namespace Polymerium.App.Dialogs;
 
 public partial class LoaderEditorDialog : Dialog
 {
-    private static readonly LoaderCandidateModel[] CANDIDATES =
+    private static readonly LoaderCandidateModel[] Candidates =
     [
         new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LoaderNeoforgeBitmap),
         new(LoaderHelper.LOADERID_FORGE, "Forge", AssetUriIndex.LoaderForgeBitmap),
@@ -117,7 +117,7 @@ public partial class LoaderEditorDialog : Dialog
         if (change.Property == SelectedLoaderProperty)
         {
             var id = change.GetNewValue<string>();
-            var model = CANDIDATES.FirstOrDefault(x => x.Id == id);
+            var model = Candidates.FirstOrDefault(x => x.Id == id);
             Loader = model;
         }
 
@@ -140,7 +140,7 @@ public partial class LoaderEditorDialog : Dialog
 
     private async void AddLoaderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var dialog = new LoaderPickerDialog { Candidates = CANDIDATES };
+        var dialog = new LoaderPickerDialog { Candidates = Candidates };
         if (
             await OverlayService.PopDialogAsync(dialog)
             && dialog.Result is LoaderCandidateModel model

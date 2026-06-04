@@ -13,7 +13,7 @@ namespace Polymerium.App.Services;
 
 public class NotificationService
 {
-    private static readonly Animation COUNTDOWN = new()
+    private static readonly Animation Countdown = new()
     {
         Duration = TimeSpan.FromSeconds(7),
         FillMode = FillMode.Forward,
@@ -79,7 +79,7 @@ public class NotificationService
             if (ShouldExpire(level, actions, forceExpire))
             {
                 item.IsProgressBarVisible = true;
-                COUNTDOWN
+                Countdown
                     .RunAsync(item, item.Token)
                     .ContinueWith(
                         _ => item.Dismiss(),

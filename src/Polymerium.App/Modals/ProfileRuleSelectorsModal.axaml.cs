@@ -36,7 +36,7 @@ public partial class ProfileRuleSelectorsModal : Modal
 
     [RelayCommand]
     private void AddSelector() =>
-        Selectors.Add(new(new() { Type = Profile.Rice.Rule.RuleSelector.SelectorType.PURL }));
+        Selectors.Add(new(new() { Type = Profile.Rice.Rule.RuleSelector.SelectorType.Purl }));
 
     [RelayCommand]
     private void RemoveSelector(ProfileRuleSelectorModel? model)

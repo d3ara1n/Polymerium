@@ -247,7 +247,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
                     File.Delete(file);
                 }
 
-                _persistenceService.AppendAction(new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.RESET });
+                _persistenceService.AppendAction(new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.Reset });
                 _notificationService.PopMessage("Instance reset",
                                                 Basic.Key,
                                                 GrowlLevel.Success,
@@ -295,7 +295,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         _persistenceService.AppendAction(new()
         {
             Key = Basic.Key,
-            Kind = PersistenceService.ActionKind.UNLOCK,
+            Kind = PersistenceService.ActionKind.Unlock,
             Old = oldSource,
         });
         _notificationService.PopMessage(Resources.InstancePropertiesPage_UnlockingSuccessNotificationMessage,
@@ -349,7 +349,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             _persistenceService.AppendAction(new()
             {
                 Key = Basic.Key,
-                Kind = PersistenceService.ActionKind.RENAME,
+                Kind = PersistenceService.ActionKind.Rename,
                 Old = oldName,
                 New = name,
             });

@@ -31,7 +31,7 @@ public partial class GameCrashReportModal : Modal
     private const int MAX_UPLOAD_BYTES = 10 * 1024 * 1024 - 1;
     private const int MAX_CRASH_REPORT_UPLOAD_LINES = 25_000;
 
-    private static readonly Uri AI_TEMPLATE_URI = new(
+    private static readonly Uri AiTemplateUri = new(
         "avares://Polymerium.App/Assets/Templates/CrashAiAnalysis.md"
     );
 
@@ -367,7 +367,7 @@ public partial class GameCrashReportModal : Modal
 
     private async Task<string> LoadAiAnalysisTemplateAsync()
     {
-        await using var stream = AssetLoader.Open(AI_TEMPLATE_URI);
+        await using var stream = AssetLoader.Open(AiTemplateUri);
         using var reader = new StreamReader(stream, Encoding.UTF8, true);
         return await reader.ReadToEndAsync();
     }

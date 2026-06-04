@@ -208,7 +208,7 @@ public partial class LandingPageModel(
     {
         try
         {
-            await instanceService.DeployAndLaunchAsync(key, LaunchMode.MANAGED);
+            await instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
         }
         catch (Exception ex)
         {

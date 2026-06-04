@@ -15,11 +15,11 @@ public static class LocalizedEnumConverters
             (v, _) =>
                 v switch
                 {
-                    PackageBulkUpdatePreviewerTagPolicy.IGNORE =>
+                    PackageBulkUpdatePreviewerTagPolicy.Ignore =>
                         Resources.PackageBulkUpdatePreviewerTagPolicy_Ignore,
-                    PackageBulkUpdatePreviewerTagPolicy.INCLUDE =>
+                    PackageBulkUpdatePreviewerTagPolicy.Include =>
                         Resources.PackageBulkUpdatePreviewerTagPolicy_Include,
-                    PackageBulkUpdatePreviewerTagPolicy.EXCLUDE =>
+                    PackageBulkUpdatePreviewerTagPolicy.Exclude =>
                         Resources.PackageBulkUpdatePreviewerTagPolicy_Exclude,
                     _ => v,
                 }
@@ -33,13 +33,13 @@ public static class LocalizedEnumConverters
                 {
                     return kind switch
                     {
-                        ResourceKind.UNKNOWN => Resources.ResourceKind_Unknown,
-                        ResourceKind.MODPACK => Resources.ResourceKind_Modpack,
-                        ResourceKind.MOD => Resources.ResourceKind_Mod,
-                        ResourceKind.RESOURCE_PACK => Resources.ResourceKind_ResourcePack,
-                        ResourceKind.SHADER_PACK => Resources.ResourceKind_ShaderPack,
-                        ResourceKind.DATA_PACK => Resources.ResourceKind_DataPack,
-                        ResourceKind.WORLD => Resources.ResourceKind_World,
+                        ResourceKind.Unknown => Resources.ResourceKind_Unknown,
+                        ResourceKind.Modpack => Resources.ResourceKind_Modpack,
+                        ResourceKind.Mod => Resources.ResourceKind_Mod,
+                        ResourceKind.ResourcePack => Resources.ResourceKind_ResourcePack,
+                        ResourceKind.ShaderPack => Resources.ResourceKind_ShaderPack,
+                        ResourceKind.DataPack => Resources.ResourceKind_DataPack,
+                        ResourceKind.World => Resources.ResourceKind_World,
                         _ => kind,
                     };
                 }
@@ -56,9 +56,9 @@ public static class LocalizedEnumConverters
                 {
                     return mode switch
                     {
-                        LaunchMode.MANAGED => Resources.LaunchMode_Managed,
-                        LaunchMode.FIRE_AND_FORGET => Resources.LaunchMode_FireAndForget,
-                        LaunchMode.DEBUG => Resources.LaunchMode_Debug,
+                        LaunchMode.Managed => Resources.LaunchMode_Managed,
+                        LaunchMode.FireAndForget => Resources.LaunchMode_FireAndForget,
+                        LaunchMode.Debug => Resources.LaunchMode_Debug,
                         _ => mode,
                     };
                 }
@@ -75,18 +75,18 @@ public static class LocalizedEnumConverters
                 {
                     return type switch
                     {
-                        Profile.Rice.Rule.RuleSelector.SelectorType.AND =>
+                        Profile.Rice.Rule.RuleSelector.SelectorType.And =>
                             Resources.SelectorType_And,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.OR => Resources.SelectorType_Or,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.NOT =>
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Or => Resources.SelectorType_Or,
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Not =>
                             Resources.SelectorType_Not,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.PURL =>
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Purl =>
                             Resources.SelectorType_Purl,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.REPOSITORY =>
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Repository =>
                             Resources.SelectorType_Repository,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.TAG =>
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Tag =>
                             Resources.SelectorType_Tag,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.KIND =>
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Kind =>
                             Resources.SelectorType_Kind,
                         _ => type,
                     };

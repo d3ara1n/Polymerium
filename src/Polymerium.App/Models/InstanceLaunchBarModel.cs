@@ -8,7 +8,7 @@ public partial class InstanceLaunchBarModel : ModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial LaunchBarState State { get; set; } = LaunchBarState.IDLE;
+    public partial LaunchBarState State { get; set; } = LaunchBarState.Idle;
 
     #endregion
 }

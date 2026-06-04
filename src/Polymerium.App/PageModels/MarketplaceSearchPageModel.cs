@@ -186,7 +186,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
         {
             var handle = await _agent.SearchAsync(SelectedRepository.Label,
                                                   QueryText,
-                                                  new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.MODPACK));
+                                                  new(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
             var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);

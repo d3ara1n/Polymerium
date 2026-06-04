@@ -175,7 +175,7 @@ public partial class InstancePageModel : ViewModelBase
                                     new()
                                     {
                                         Key = Basic.Key,
-                                        Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
+                                        Kind = PersistenceService.ActionKind.EditPackage,
                                         New = purl,
                                     }
                                 );
@@ -280,17 +280,17 @@ public partial class InstancePageModel : ViewModelBase
             {
                 case UpdateTracker update:
                     // 已经处于更新状态而未收到事件
-                    State = InstanceState.UPDATING;
+                    State = InstanceState.Updating;
                     update.StateUpdated += OnProfileUpdateStateChanged;
                     break;
                 case DeployTracker deploy:
                     // 已经处于部署状态而未收到事件
-                    State = InstanceState.DEPLOYING;
+                    State = InstanceState.Deploying;
                     deploy.StateUpdated += OnProfileDeployStateChanged;
                     break;
                 case LaunchTracker launch:
                     // 已经处于启动状态而未收到事件
-                    State = InstanceState.RUNNING;
+                    State = InstanceState.Running;
                     launch.StateUpdated += OnProfileLaunchingStateChanged;
                     break;
             }
@@ -337,7 +337,7 @@ public partial class InstancePageModel : ViewModelBase
             return;
         }
 
-        Dispatcher.UIThread.Post(() => State = InstanceState.UPDATING);
+        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
 
         tracker.StateUpdated += OnProfileUpdateStateChanged;
         // 更新的事情交给 ProfileManager.ProfileUpdated
@@ -350,7 +350,7 @@ public partial class InstancePageModel : ViewModelBase
             return;
         }
 
-        Dispatcher.UIThread.Post(() => State = InstanceState.DEPLOYING);
+        Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
 
         tracker.StateUpdated += OnProfileDeployStateChanged;
     }
@@ -362,43 +362,43 @@ public partial class InstancePageModel : ViewModelBase
             return;
         }
 
-        Dispatcher.UIThread.Post(() => State = InstanceState.RUNNING);
+        Dispatcher.UIThread.Post(() => State = InstanceState.Running);
 
         tracker.StateUpdated += OnProfileLaunchingStateChanged;
     }
 
     private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
     {
-        if (state is TrackerState.FAULTED or TrackerState.FINISHED)
+        if (state is TrackerState.Faulted or TrackerState.Finished)
         {
             sender.StateUpdated -= OnProfileUpdateStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.IDLE;
+                State = InstanceState.Idle;
             });
         }
     }
 
     private void OnProfileDeployStateChanged(TrackerBase sender, TrackerState state)
     {
-        if (state is TrackerState.FAULTED or TrackerState.FINISHED)
+        if (state is TrackerState.Faulted or TrackerState.Finished)
         {
             sender.StateUpdated -= OnProfileDeployStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.IDLE;
+                State = InstanceState.Idle;
             });
         }
     }
 
     private void OnProfileLaunchingStateChanged(TrackerBase sender, TrackerState state)
     {
-        if (state is TrackerState.FAULTED or TrackerState.FINISHED)
+        if (state is TrackerState.Faulted or TrackerState.Finished)
         {
             sender.StateUpdated -= OnProfileLaunchingStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.IDLE;
+                State = InstanceState.Idle;
             });
         }
     }
@@ -467,7 +467,7 @@ public partial class InstancePageModel : ViewModelBase
     public partial InstanceSubpageEntryModel? SelectedPage { get; set; }
 
     [ObservableProperty]
-    public partial InstanceState State { get; set; } = InstanceState.IDLE;
+    public partial InstanceState State { get; set; } = InstanceState.Idle;
 
     #endregion
 }
