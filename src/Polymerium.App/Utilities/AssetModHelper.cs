@@ -52,7 +52,7 @@ public static class AssetModHelper
                 ?? archive.GetEntry("neoforge.mods.toml");
             if (neoforgeEntry != null)
             {
-                return ParseForgeMetadata(neoforgeEntry, ModLoaderKind.NEO_FORGE);
+                return ParseForgeMetadata(neoforgeEntry, ModLoaderKind.NeoForge);
             }
 
             // 尝试解析旧版 Forge (mcmod.info)
@@ -91,7 +91,7 @@ public static class AssetModHelper
 
         var metadata = new AssetModeMetadataModel
         {
-            LoaderType = ModLoaderKind.FABRIC,
+            LoaderType = ModLoaderKind.Fabric,
             ModId = GetJsonString(root, "id"),
             Name = GetJsonString(root, "name"),
             Version = GetJsonString(root, "version"),
@@ -162,7 +162,7 @@ public static class AssetModHelper
         {
             var metadata = new AssetModeMetadataModel
             {
-                LoaderType = ModLoaderKind.QUILT,
+                LoaderType = ModLoaderKind.Quilt,
                 ModId = GetJsonString(loaderElement, "id"),
                 Version = GetJsonString(loaderElement, "version"),
             };
@@ -208,7 +208,7 @@ public static class AssetModHelper
             return metadata;
         }
 
-        return new() { LoaderType = ModLoaderKind.QUILT };
+        return new() { LoaderType = ModLoaderKind.Quilt };
     }
 
     #endregion
@@ -239,10 +239,10 @@ public static class AssetModHelper
                     is true
             )
             {
-                metadata.LoaderType ??= ModLoaderKind.NEO_FORGE;
+                metadata.LoaderType ??= ModLoaderKind.NeoForge;
             }
 
-            metadata.LoaderType ??= ModLoaderKind.FORGE;
+            metadata.LoaderType ??= ModLoaderKind.Forge;
 
             // 解析 mods 数组
             if (
@@ -269,7 +269,7 @@ public static class AssetModHelper
         }
         catch
         {
-            return new() { LoaderType = ModLoaderKind.FORGE };
+            return new() { LoaderType = ModLoaderKind.Forge };
         }
     }
 
@@ -295,7 +295,7 @@ public static class AssetModHelper
             var homepage = GetJsonString(modInfo, "url");
             var metadata = new AssetModeMetadataModel
             {
-                LoaderType = ModLoaderKind.FORGE,
+                LoaderType = ModLoaderKind.Forge,
                 ModId = GetJsonString(modInfo, "modid"),
                 Name = GetJsonString(modInfo, "name"),
                 Version = GetJsonString(modInfo, "version"),
@@ -326,7 +326,7 @@ public static class AssetModHelper
         }
         catch
         {
-            return new() { LoaderType = ModLoaderKind.FORGE };
+            return new() { LoaderType = ModLoaderKind.Forge };
         }
     }
 

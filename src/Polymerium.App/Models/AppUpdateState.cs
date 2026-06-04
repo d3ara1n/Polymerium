@@ -2,8 +2,8 @@ namespace Polymerium.App.Models;
 
 public enum AppUpdateState
 {
-    UNAVAILABLE,
-    IDLE,
-    LATEST,
-    FOUND,
+    Unavailable,
+    Idle,
+    Latest,
+    Found,
 }

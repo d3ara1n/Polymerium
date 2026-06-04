@@ -465,16 +465,16 @@
                                                             Value="{x:Null}" />
                                                         <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_Mod}"
-                                                            Value="{x:Static resources:ResourceKind.MOD}" />
+                                                            Value="{x:Static resources:ResourceKind.Mod}" />
                                                         <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
-                                                            Value="{x:Static resources:ResourceKind.RESOURCE_PACK}" />
+                                                            Value="{x:Static resources:ResourceKind.ResourcePack}" />
                                                         <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
-                                                            Value="{x:Static resources:ResourceKind.SHADER_PACK}" />
+                                                            Value="{x:Static resources:ResourceKind.ShaderPack}" />
                                                         <app:FilterModel
                                                             Label="{x:Static lang:Resources.ResourceKind_DataPack}"
-                                                            Value="{x:Static resources:ResourceKind.DATA_PACK}" />
+                                                            Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
                                                 <husk:Divider Grid.Row="6" />

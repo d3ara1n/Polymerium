@@ -77,7 +77,7 @@ public class ScrapService : ILifetimeService
         }
         else
         {
-            return new(item.Message, last?.Level ?? ScrapLevel.INFORMATION, null, null, null, null);
+            return new(item.Message, last?.Level ?? ScrapLevel.Information, null, null, null, null);
         }
     }
 }

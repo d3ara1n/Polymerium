@@ -150,9 +150,9 @@ public partial class OobeQuickSetup : OobeStep
         var mode = (ProxyMode)config.NetworkProxyMode;
         ProxyStatusText = mode switch
         {
-            ProxyMode.AUTO => Properties.Resources.ProxySettingsDialog_ProxyMode_Auto,
-            ProxyMode.MANUAL => $"{config.NetworkProxyAddress}:{config.NetworkProxyPort}",
-            ProxyMode.DISABLED => Properties.Resources.ProxySettingsDialog_ProxyMode_Disabled,
+            ProxyMode.Auto => Properties.Resources.ProxySettingsDialog_ProxyMode_Auto,
+            ProxyMode.Manual => $"{config.NetworkProxyAddress}:{config.NetworkProxyPort}",
+            ProxyMode.Disabled => Properties.Resources.ProxySettingsDialog_ProxyMode_Disabled,
             _ => string.Empty,
         };
     }

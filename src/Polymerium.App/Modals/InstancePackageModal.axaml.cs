@@ -364,7 +364,7 @@ public partial class InstancePackageModal : Modal
                                         // null -> Project
                                         return new()
                                         {
-                                            Kind = InstancePackageModificationKind.ADD_UNVERSIONED,
+                                            Kind = InstancePackageModificationKind.AddUnversioned,
                                             VersionName = null,
                                             ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                         };
@@ -373,7 +373,7 @@ public partial class InstancePackageModal : Modal
                                     // -> Project: Unset
                                     return new()
                                     {
-                                        Kind = InstancePackageModificationKind.UNSET,
+                                        Kind = InstancePackageModificationKind.Unset,
                                         VersionName = null,
                                         ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                     };
@@ -389,7 +389,7 @@ public partial class InstancePackageModal : Modal
                                     // null -> Package: Add
                                     return new()
                                     {
-                                        Kind = InstancePackageModificationKind.ADD_VERSIONED,
+                                        Kind = InstancePackageModificationKind.AddVersioned,
                                         VersionName = package.VersionName,
                                         ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                     };
@@ -398,7 +398,7 @@ public partial class InstancePackageModal : Modal
                                 // Package -> Package: Update
                                 return new()
                                 {
-                                    Kind = InstancePackageModificationKind.UPDATE,
+                                    Kind = InstancePackageModificationKind.Update,
                                     VersionName = package.VersionName,
                                     ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                 };
@@ -406,7 +406,7 @@ public partial class InstancePackageModal : Modal
 
                             return new InstancePackageModificationModel
                             {
-                                Kind = InstancePackageModificationKind.REMOVE,
+                                Kind = InstancePackageModificationKind.Remove,
                                 VersionName = null,
                                 ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                             };
@@ -511,7 +511,7 @@ public partial class InstancePackageModal : Modal
             PersistenceService.AppendAction(new()
             {
                 Key = Guard.Key,
-                Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
+                Kind = PersistenceService.ActionKind.EditPackage,
                 Old = _old,
                 New = Model.Owner.Entry.Purl,
             });

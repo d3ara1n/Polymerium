@@ -10,12 +10,12 @@ public class ProxySettingsModel
     /// <summary>
     ///     Gets or sets the proxy operation mode.
     /// </summary>
-    public ProxyMode Mode { get; set; } = ProxyMode.AUTO;
+    public ProxyMode Mode { get; set; } = ProxyMode.Auto;
 
     /// <summary>
     ///     Gets or sets the proxy protocol type.
     /// </summary>
-    public ProxyProtocol Protocol { get; set; } = ProxyProtocol.HTTP;
+    public ProxyProtocol Protocol { get; set; } = ProxyProtocol.Http;
 
     /// <summary>
     ///     Gets or sets the proxy server address.
@@ -57,9 +57,9 @@ public class ProxySettingsModel
     public string GetStatusDisplayText() =>
         Mode switch
         {
-            ProxyMode.AUTO => Resources.SettingsPage_ProxyStatusAutoText,
-            ProxyMode.DISABLED => Resources.SettingsPage_ProxyStatusDisabledText,
-            ProxyMode.MANUAL => Protocol == ProxyProtocol.SOCKS5
+            ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
+            ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
+            ProxyMode.Manual => Protocol == ProxyProtocol.Socks5
                 ? $"socks5://{Address}:{Port}"
                 : $"{Address}:{Port}",
             _ => string.Empty,

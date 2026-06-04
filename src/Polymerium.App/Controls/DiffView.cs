@@ -19,7 +19,7 @@ public class DiffView : TemplatedControl
     public const double MEASURE_FONT_SIZE = 13.0;
     public const double LINE_HEIGHT = 22.0;
 
-    private static readonly Typeface MONOSPACE_TYPEFACE = new(
+    private static readonly Typeface MonospaceTypeface = new(
         new FontFamily("Cascadia Code, Consolas, Courier New, monospace")
     );
 
@@ -199,7 +199,7 @@ public class DiffView : TemplatedControl
                     leftText,
                     CultureInfo.CurrentCulture,
                     FlowDirection.LeftToRight,
-                    MONOSPACE_TYPEFACE,
+                    MonospaceTypeface,
                     MEASURE_FONT_SIZE,
                     null
                 );
@@ -212,7 +212,7 @@ public class DiffView : TemplatedControl
                     rightText,
                     CultureInfo.CurrentCulture,
                     FlowDirection.LeftToRight,
-                    MONOSPACE_TYPEFACE,
+                    MonospaceTypeface,
                     MEASURE_FONT_SIZE,
                     null
                 );
@@ -275,11 +275,11 @@ public class DiffView : TemplatedControl
     private static DiffLineKind ToKind(ChangeType type) =>
         type switch
         {
-            ChangeType.Unchanged => DiffLineKind.UNCHANGED,
-            ChangeType.Deleted => DiffLineKind.REMOVED,
-            ChangeType.Inserted => DiffLineKind.ADDED,
-            ChangeType.Modified => DiffLineKind.MODIFIED,
-            ChangeType.Imaginary => DiffLineKind.EMPTY,
-            _ => DiffLineKind.UNCHANGED,
+            ChangeType.Unchanged => DiffLineKind.Unchanged,
+            ChangeType.Deleted => DiffLineKind.Removed,
+            ChangeType.Inserted => DiffLineKind.Added,
+            ChangeType.Modified => DiffLineKind.Modified,
+            ChangeType.Imaginary => DiffLineKind.Empty,
+            _ => DiffLineKind.Unchanged,
         };
 }

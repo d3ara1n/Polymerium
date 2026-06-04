@@ -22,7 +22,7 @@ public partial class SnapshotCreationPageModel(
 {
     #region Constants
 
-    private static readonly FrozenDictionary<string, string> SECONDARY_ALIASES = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    private static readonly FrozenDictionary<string, string> SecondaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
         ["mods"] = "模组",
         ["resourcepacks"] = "资源包",
@@ -39,14 +39,14 @@ public partial class SnapshotCreationPageModel(
         ["assets"] = "资源文件",
     }.ToFrozenDictionary();
 
-    private static readonly FrozenDictionary<string, string> PRIMARY_ALIASES = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    private static readonly FrozenDictionary<string, string> PrimaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
         ["live"] = "运行副本",
         ["import"] = "整合包源",
         ["persist"] = "个人数据",
     }.ToFrozenDictionary();
 
-    private static readonly string[] PRIMARY_ORDER = ["live", "import", "persist"];
+    private static readonly string[] PrimaryOrder = ["live", "import", "persist"];
 
     #endregion
 
@@ -193,7 +193,7 @@ public partial class SnapshotCreationPageModel(
         var primaryOtherSize = 0L;
         var primaryOtherCategories = new List<FileCategoryEntryModel>();
 
-        foreach (var primary in PRIMARY_ORDER)
+        foreach (var primary in PrimaryOrder)
         {
             if (!buckets.TryGetValue(primary, out var secondaries))
                 continue;
@@ -208,7 +208,7 @@ public partial class SnapshotCreationPageModel(
             {
                 totalCount += count;
                 totalSize += size;
-                if (SECONDARY_ALIASES.TryGetValue(key, out var alias))
+                if (SecondaryAliases.TryGetValue(key, out var alias))
                 {
                     categories.Add(new(alias, count, size));
                 }
@@ -222,13 +222,13 @@ public partial class SnapshotCreationPageModel(
             if (otherCount > 0)
                 categories.Add(new("其他", otherCount, otherSize));
 
-            var primaryLabel = PRIMARY_ALIASES.GetValueOrDefault(primary, primary);
+            var primaryLabel = PrimaryAliases.GetValueOrDefault(primary, primary);
             result.Add(new(primaryLabel, totalCount, totalSize, categories));
         }
 
         foreach (var (primary, secondaries) in buckets)
         {
-            if (PRIMARY_ORDER.Contains(primary, StringComparer.OrdinalIgnoreCase))
+            if (PrimaryOrder.Contains(primary, StringComparer.OrdinalIgnoreCase))
                 continue;
 
             var totalCount = 0;
@@ -241,7 +241,7 @@ public partial class SnapshotCreationPageModel(
             {
                 totalCount += count;
                 totalSize += size;
-                if (SECONDARY_ALIASES.TryGetValue(key, out var alias))
+                if (SecondaryAliases.TryGetValue(key, out var alias))
                 {
                     categories.Add(new(alias, count, size));
                 }

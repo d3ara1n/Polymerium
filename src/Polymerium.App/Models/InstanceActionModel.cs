@@ -25,20 +25,20 @@ public class InstanceActionModel(
         {
             if (oldVersionId != null && newVersionId != null)
             {
-                return InstanceActionKind.UPDATE;
+                return InstanceActionKind.Update;
             }
 
             if (oldVersionId == null && newVersionId != null)
             {
-                return InstanceActionKind.ADD;
+                return InstanceActionKind.Add;
             }
 
             if (oldVersionId != null && newVersionId == null)
             {
-                return InstanceActionKind.REMOVE;
+                return InstanceActionKind.Remove;
             }
 
-            return InstanceActionKind.UNKNOWN;
+            return InstanceActionKind.Unknown;
         }
     }
 

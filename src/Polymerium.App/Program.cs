@@ -151,7 +151,7 @@ internal static class Program
             ErrorReporter.Report(
                 stopException,
                 new(
-                    ErrorReporter.ErrorReportSource.LIFETIME_SHUTDOWN,
+                    ErrorReporter.ErrorReportSource.LifetimeShutdown,
                     Phase: "shutdown",
                     Critical: true,
                     Terminating: true,

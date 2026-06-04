@@ -27,7 +27,7 @@ public static class NetworkCheckHelper
         CancellationToken cancellationToken = default
     )
     {
-        model.Status = ConnectionTestStatus.TESTING;
+        model.Status = ConnectionTestStatus.Testing;
         model.IsTesting = true;
         model.Latency = 0;
         model.ErrorMessage = null;
@@ -59,12 +59,12 @@ public static class NetworkCheckHelper
                 // 某些服务器可能不支持 HEAD 请求，返回 405，但这仍然表示服务器可达
                 // 如果返回 404，对于 API 测试来说也行得通
                 model.Latency = stopwatch.Elapsed.TotalMilliseconds;
-                model.Status = ConnectionTestStatus.SUCCESS;
+                model.Status = ConnectionTestStatus.Success;
                 model.IsTesting = false;
                 return true;
             }
 
-            model.Status = ConnectionTestStatus.FAILED;
+            model.Status = ConnectionTestStatus.Failed;
             model.ErrorMessage = $"HTTP {(int)response.StatusCode}";
             model.IsTesting = false;
             return false;
@@ -72,7 +72,7 @@ public static class NetworkCheckHelper
         catch (OperationCanceledException)
         {
             stopwatch.Stop();
-            model.Status = ConnectionTestStatus.FAILED;
+            model.Status = ConnectionTestStatus.Failed;
             model.ErrorMessage = "Timeout";
             model.IsTesting = false;
             return false;
@@ -80,7 +80,7 @@ public static class NetworkCheckHelper
         catch (HttpRequestException ex)
         {
             stopwatch.Stop();
-            model.Status = ConnectionTestStatus.FAILED;
+            model.Status = ConnectionTestStatus.Failed;
             model.ErrorMessage = GetSimplifiedErrorMessage(ex);
             model.IsTesting = false;
             return false;
@@ -88,7 +88,7 @@ public static class NetworkCheckHelper
         catch (Exception ex)
         {
             stopwatch.Stop();
-            model.Status = ConnectionTestStatus.FAILED;
+            model.Status = ConnectionTestStatus.Failed;
             model.ErrorMessage = ex.Message.Length > 50 ? ex.Message[..50] + "..." : ex.Message;
             model.IsTesting = false;
             return false;
@@ -175,7 +175,7 @@ public static class NetworkCheckHelper
     {
         foreach (var model in models)
         {
-            model.Status = ConnectionTestStatus.PENDING;
+            model.Status = ConnectionTestStatus.Pending;
             model.IsTesting = false;
             model.Latency = 0;
             model.ErrorMessage = null;

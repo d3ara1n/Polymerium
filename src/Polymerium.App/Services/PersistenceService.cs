@@ -16,13 +16,13 @@ public class PersistenceService(IFreeSql freeSql)
 
     public enum ActionKind
     {
-        INSTALL,
-        UPDATE,
-        UNLOCK,
-        RESET,
-        RENAME,
-        EDIT_PACKAGE,
-        EDIT_LOADER,
+        Install,
+        Update,
+        Unlock,
+        Reset,
+        Rename,
+        EditPackage,
+        EditLoader,
     }
 
     #endregion
@@ -155,7 +155,7 @@ public class PersistenceService(IFreeSql freeSql)
     {
         var query = freeSql
             .Select<Action>()
-            .Where(x => x.Key == key && x.Kind == ActionKind.EDIT_PACKAGE);
+            .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage);
 
         totalCount = (int)query.Count();
 
@@ -168,7 +168,7 @@ public class PersistenceService(IFreeSql freeSql)
     public IReadOnlyList<Action> GetActions(string key) =>
         freeSql
             .Select<Action>()
-            .Where(x => x.Key == key && x.Kind == ActionKind.EDIT_PACKAGE)
+            .Where(x => x.Key == key && x.Kind == ActionKind.EditPackage)
             .OrderByDescending(x => x.At)
             .ToList();
 

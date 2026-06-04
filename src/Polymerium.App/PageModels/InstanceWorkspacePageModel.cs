@@ -290,7 +290,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             var livePath = Path.Combine(liveDir, liveEntry);
             var importPath = Path.Combine(importDir, liveEntry);
             var kind = Diff(livePath, importPath);
-            if (kind != WorkspaceChangeKind.SAME)
+            if (kind != WorkspaceChangeKind.Same)
             {
                 var file = new FileInfo(livePath);
                 var type = Path.GetExtension(livePath).TrimStart('.');
@@ -573,19 +573,19 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
             if (liveTime > importTime)
             {
-                return WorkspaceChangeKind.UPDATED;
+                return WorkspaceChangeKind.Updated;
             }
             else if (liveTime < importTime)
             {
-                return WorkspaceChangeKind.OUTDATED;
+                return WorkspaceChangeKind.Outdated;
             }
             else
             {
-                return WorkspaceChangeKind.SAME;
+                return WorkspaceChangeKind.Same;
             }
         }
 
-        return WorkspaceChangeKind.DELETED;
+        return WorkspaceChangeKind.Deleted;
     }
 
     #endregion
@@ -840,7 +840,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
         if (suc)
         {
-            model.Kind = WorkspaceChangeKind.SAME;
+            model.Kind = WorkspaceChangeKind.Same;
             await LoadGitStatusAsync();
         }
     }
@@ -885,7 +885,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
         if (suc)
         {
-            model.Kind = WorkspaceChangeKind.SAME;
+            model.Kind = WorkspaceChangeKind.Same;
             await LoadGitStatusAsync();
         }
     }

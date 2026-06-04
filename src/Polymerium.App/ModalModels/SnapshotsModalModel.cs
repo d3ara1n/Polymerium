@@ -37,7 +37,7 @@ public class SnapshotsModalModel : ViewModelBase
             {
                 Basic = Basic,
                 Handle = _snapshots,
-                BackHandler = BackHandler!,
+                BackHandler = _backHandler!,
             };
         }
         catch (Exception ex)
@@ -45,7 +45,7 @@ public class SnapshotsModalModel : ViewModelBase
             _notificationService.PopMessage(ex, "Failed to open snapshots database");
         }
 
-        NavigateHandler!.Invoke(typeof(SnapshotPortalPage));
+        _navigateHandler!.Invoke(typeof(SnapshotPortalPage));
         return Task.CompletedTask;
     }
 
@@ -68,9 +68,9 @@ public class SnapshotsModalModel : ViewModelBase
 
     public InstanceBasicModel Basic { get; }
     public SnapshotContext? Context { get; private set; }
-    public Action<Type>? NavigateHandler { get; internal set; }
-    public Action? BackHandler { get; internal set; }
-    public Action? DismissHandler { get; internal set; }
+    public Action<Type>? _navigateHandler { get; internal set; }
+    public Action? _backHandler { get; internal set; }
+    public Action? _dismissHandler { get; internal set; }
 
     #endregion
 

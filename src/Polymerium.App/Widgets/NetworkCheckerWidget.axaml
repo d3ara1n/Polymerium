@@ -90,21 +90,21 @@
                                                     <!--  延迟显示  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.SUCCESS}}"
+                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Success}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="{Binding Latency, StringFormat={}{0:F0}ms}" />
 
                                                     <!--  错误消息  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.FAILED}}"
+                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Failed}}"
                                                         Foreground="{StaticResource ControlDangerForegroundBrush}"
                                                         Text="{Binding ErrorMessage}" />
 
                                                     <!--  等待中  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
-                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.PENDING}}"
+                                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Pending}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         Text="Waiting..." />
 
@@ -159,7 +159,7 @@
                                         <!--  成功状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.SUCCESS}}"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Success}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
                                             Text="{Binding Latency, StringFormat={}{0:F0}ms}" />
@@ -167,7 +167,7 @@
                                         <!--  失败状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.FAILED}}"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Failed}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
                                             Text="✗" />
@@ -175,7 +175,7 @@
                                         <!--  等待状态  -->
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.PENDING}}"
+                                            IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Pending}}"
                                             FontSize="11"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Text="—" />

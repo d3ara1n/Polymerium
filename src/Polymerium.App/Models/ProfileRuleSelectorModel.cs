@@ -24,9 +24,9 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
 
         if (
             value
-            is Profile.Rice.Rule.RuleSelector.SelectorType.AND
-                or Profile.Rice.Rule.RuleSelector.SelectorType.OR
-                or Profile.Rice.Rule.RuleSelector.SelectorType.NOT
+            is Profile.Rice.Rule.RuleSelector.SelectorType.And
+                or Profile.Rice.Rule.RuleSelector.SelectorType.Or
+                or Profile.Rice.Rule.RuleSelector.SelectorType.Not
         )
         {
             owner.Children ??= [];
@@ -69,10 +69,10 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
         owner.Tag = !string.IsNullOrWhiteSpace(value) ? value : null;
 
     [ObservableProperty]
-    public partial ResourceKind Kind { get; set; } = owner.Kind ?? ResourceKind.UNKNOWN;
+    public partial ResourceKind Kind { get; set; } = owner.Kind ?? ResourceKind.Unknown;
 
     partial void OnKindChanged(ResourceKind value) =>
-        owner.Kind = value != ResourceKind.UNKNOWN ? value : null;
+        owner.Kind = value != ResourceKind.Unknown ? value : null;
 
     #endregion
 }

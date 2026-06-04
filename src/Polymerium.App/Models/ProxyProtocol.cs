@@ -8,15 +8,15 @@ public enum ProxyProtocol
     /// <summary>
     ///     HTTP proxy protocol.
     /// </summary>
-    HTTP = 0,
+    Http = 0,
 
     /// <summary>
     ///     SOCKS4 proxy protocol (.NET 6+ native support).
     /// </summary>
-    SOCKS4 = 1,
+    Socks4 = 1,
 
     /// <summary>
     ///     SOCKS5 proxy protocol (.NET 6+ native support).
     /// </summary>
-    SOCKS5 = 2,
+    Socks5 = 2,
 }

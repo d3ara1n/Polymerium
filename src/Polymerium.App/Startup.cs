@@ -51,13 +51,13 @@ public static class Startup
 
                                                                switch (proxyMode)
                                                                {
-                                                                   case ProxyMode.AUTO:
+                                                                   case ProxyMode.Auto:
                                                                        // Use system proxy (default behavior)
                                                                        handler.UseProxy = true;
                                                                        handler.UseDefaultCredentials = true;
                                                                        break;
 
-                                                                   case ProxyMode.MANUAL:
+                                                                   case ProxyMode.Manual:
                                                                        // Use manually configured proxy
                                                                        if (!string.IsNullOrEmpty(config
                                                                               .NetworkProxyAddress))
@@ -66,9 +66,9 @@ public static class Startup
                                                                               .NetworkProxyProtocol;
                                                                            var proxyUri = protocol switch
                                                                            {
-                                                                               ProxyProtocol.SOCKS4 =>
+                                                                               ProxyProtocol.Socks4 =>
                                                                                    new($"socks4://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
-                                                                               ProxyProtocol.SOCKS5 =>
+                                                                               ProxyProtocol.Socks5 =>
                                                                                    new($"socks5://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
                                                                                _ => new
                                                                                    Uri($"http://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
@@ -92,7 +92,7 @@ public static class Startup
 
                                                                        break;
 
-                                                                   case ProxyMode.DISABLED:
+                                                                   case ProxyMode.Disabled:
                                                                        // Direct connection, no proxy
                                                                        handler.UseProxy = false;
                                                                        break;
