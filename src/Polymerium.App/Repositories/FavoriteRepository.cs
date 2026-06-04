@@ -116,7 +116,7 @@ public class FavoriteRepository(
             favorite.Kind,
             favorite.DownloadCount,
             PersistenceService.DeserializeFavoriteTags(favorite.Tags),
-            new Uri(favorite.Reference),
+            new(favorite.Reference),
             DateTimeHelper.FromPersistedLocalDateTime(favorite.CreatedAt),
             DateTimeHelper.FromPersistedLocalDateTime(favorite.UpdatedAt)
         );

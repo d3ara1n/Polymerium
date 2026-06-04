@@ -20,6 +20,7 @@ public partial class AccountCreationModal : StepWizardModalBase
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
     public required NotificationService NotificationService { get; init; }
+    public required YggdrasilService YggdrasilService { get; init; }
 
     public required bool IsOfflineAvailable { get; init; }
     public required Func<IAccount, bool> FinishCallback { get; init; }
@@ -35,6 +36,7 @@ public partial class AccountCreationModal : StepWizardModalBase
             XboxLiveService = XboxLiveService,
             MinecraftService = MinecraftService,
             NotificationService = NotificationService,
+            YggdrasilService = YggdrasilService,
         };
     }
 

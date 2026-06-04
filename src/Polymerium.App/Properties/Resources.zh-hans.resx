@@ -537,6 +537,12 @@
     <data name="AccountCreationPortal_OfflineSubtitle" xml:space="preserve">
         <value>不用网。</value>
     </data>
+    <data name="AccountCreationPortal_AuthlibInjectorTitle" xml:space="preserve">
+        <value>外置登录</value>
+    </data>
+    <data name="AccountCreationPortal_AuthlibInjectorSubtitle" xml:space="preserve">
+        <value>authlib-injector (外置验证)</value>
+    </data>
     <data name="AccountCreationPortal_Prompt" xml:space="preserve">
         <value>只有存在已链接的正版账号时才能添加离线账号。</value>
     </data>
@@ -1490,6 +1496,9 @@
     </data>
     <data name="Account_Trial" xml:space="preserve">
         <value>试用</value>
+    </data>
+    <data name="Account_AuthlibInjector" xml:space="preserve">
+        <value>外置登录</value>
     </data>
     <data name="LandingPage_RecentPlayButtonText" xml:space="preserve">
         <value>开始</value>
@@ -3005,5 +3014,35 @@
     </data>
     <data name="SettingsPage_GarbageCollectDangerTitle" xml:space="preserve">
         <value>回收失败</value>
+    </data>
+    <data name="AccountCreationAuthlib_Title" xml:space="preserve">
+        <value>外置账号</value>
+    </data>
+    <data name="AccountCreationAuthlib_ServerUrl" xml:space="preserve">
+        <value>服务器地址</value>
+    </data>
+    <data name="AccountCreationAuthlib_Username" xml:space="preserve">
+        <value>用户名 / 邮箱</value>
+    </data>
+    <data name="AccountCreationAuthlib_Password" xml:space="preserve">
+        <value>密码</value>
+    </data>
+    <data name="AccountCreationAuthlib_Login" xml:space="preserve">
+        <value>登录</value>
+    </data>
+    <data name="AccountCreationAuthlib_ErrorAuthFailed" xml:space="preserve">
+        <value>认证失败</value>
+    </data>
+    <data name="AccountCreationAuthlib_ErrorInvalidServer" xml:space="preserve">
+        <value>无效的服务器地址</value>
+    </data>
+    <data name="AccountCreationAuthlib_DoneSubtitle" xml:space="preserve">
+        <value>认证成功</value>
+    </data>
+    <data name="AccountCreationAuthlib_SelectProfile" xml:space="preserve">
+        <value>选择一个角色</value>
+    </data>
+    <data name="AccountCreationAuthlib_ConfirmProfile" xml:space="preserve">
+        <value>确认</value>
     </data>
 </root>

@@ -87,6 +87,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to External Auth.
+        /// </summary>
+        public static string Account_AuthlibInjector {
+            get {
+                return ResourceManager.GetString("Account_AuthlibInjector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to copy code.
         /// </summary>
         public static string AccountCreationMicrosoft_CopyCodeDangerNotificationTitle {
@@ -155,6 +164,96 @@ namespace Polymerium.App.Properties {
         public static string AccountCreationMicrosoft_UnavailableLabelText {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_UnavailableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication successful.
+        /// </summary>
+        public static string AccountCreationAuthlib_DoneSubtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_DoneSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication failed.
+        /// </summary>
+        public static string AccountCreationAuthlib_ErrorAuthFailed {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_ErrorAuthFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid server URL.
+        /// </summary>
+        public static string AccountCreationAuthlib_ErrorInvalidServer {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_ErrorInvalidServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string AccountCreationAuthlib_Login {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string AccountCreationAuthlib_Password {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server URL.
+        /// </summary>
+        public static string AccountCreationAuthlib_ServerUrl {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_ServerUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Account.
+        /// </summary>
+        public static string AccountCreationAuthlib_Title {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username / Email.
+        /// </summary>
+        public static string AccountCreationAuthlib_Username {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a profile to use.
+        /// </summary>
+        public static string AccountCreationAuthlib_SelectProfile {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_SelectProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string AccountCreationAuthlib_ConfirmProfile {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_ConfirmProfile", resourceCulture);
             }
         }
         
@@ -254,6 +353,24 @@ namespace Polymerium.App.Properties {
         public static string AccountCreationPortal_OfflineTitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_OfflineTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to authlib-injector (Yggdrasil).
+        /// </summary>
+        public static string AccountCreationPortal_AuthlibInjectorSubtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_AuthlibInjectorSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Auth.
+        /// </summary>
+        public static string AccountCreationPortal_AuthlibInjectorTitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_AuthlibInjectorTitle", resourceCulture);
             }
         }
         

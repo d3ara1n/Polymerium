@@ -22,7 +22,8 @@ public class InstanceService(
     PersistenceService persistenceService,
     MinecraftService minecraftService,
     XboxLiveService xboxLiveService,
-    MicrosoftService microsoftService
+    MicrosoftService microsoftService,
+    YggdrasilService yggdrasilService
 )
 {
     public async Task DeployAndLaunchAsync(string key, LaunchMode mode)
@@ -35,58 +36,93 @@ public class InstanceService(
             {
                 var cooked = AccountHelper.ToCooked(account);
 
-                if (cooked is MicrosoftAccount msa)
+                switch (cooked)
                 {
-                    var shouldValidateOnline =
-                        msa.AccessTokenExpiresAt is null
-                        || DateTimeOffset.UtcNow >= msa.AccessTokenExpiresAt.Value.AddMinutes(-5);
-
-                    if (shouldValidateOnline)
+                    case MicrosoftAccount msa:
                     {
-                        try
-                        {
-                            _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(
-                                msa.AccessToken
-                            );
-                        }
-                        catch (ApiException ex)
-                        {
-                            if (ex.StatusCode == HttpStatusCode.Unauthorized)
-                            {
-                                var microsoft = await microsoftService.RefreshUserAsync(
-                                    msa.RefreshToken
-                                );
-                                var xbox =
-                                    await xboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
-                                        microsoft.AccessToken
-                                    );
-                                var xsts =
-                                    await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
-                                        xbox.Token
-                                    );
-                                var minecraft =
-                                    await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(
-                                        xsts.Token,
-                                        xsts.DisplayClaims.Xui.First().Uhs
-                                    );
+                        var shouldValidateOnline =
+                            msa.AccessTokenExpiresAt is null
+                         || DateTimeOffset.UtcNow >= msa.AccessTokenExpiresAt.Value.AddMinutes(-5);
 
-                                msa.AccessToken = minecraft.AccessToken;
-                                msa.AccessTokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(
-                                    minecraft.ExpiresIn
-                                );
-                                msa.RefreshToken = !string.IsNullOrEmpty(microsoft.RefreshToken)
-                                    ? microsoft.RefreshToken
-                                    : msa.RefreshToken;
-                                persistenceService.UpdateAccount(
-                                    account.Uuid,
-                                    AccountHelper.ToRaw(msa)
-                                );
-                            }
-                            else
+                        if (shouldValidateOnline)
+                        {
+                            try
                             {
-                                throw new AccountInvalidException(ex.Message, ex);
+                                _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(
+                                         msa.AccessToken
+                                        );
+                            }
+                            catch (ApiException ex)
+                            {
+                                if (ex.StatusCode == HttpStatusCode.Unauthorized)
+                                {
+                                    var microsoft = await microsoftService.RefreshUserAsync(
+                                                         msa.RefreshToken
+                                                        );
+                                    var xbox =
+                                        await xboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
+                                             microsoft.AccessToken
+                                            );
+                                    var xsts =
+                                        await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
+                                             xbox.Token
+                                            );
+                                    var minecraft =
+                                        await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(
+                                             xsts.Token,
+                                             xsts.DisplayClaims.Xui.First().Uhs
+                                            );
+
+                                    msa.AccessToken = minecraft.AccessToken;
+                                    msa.AccessTokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(
+                                         minecraft.ExpiresIn
+                                        );
+                                    msa.RefreshToken = !string.IsNullOrEmpty(microsoft.RefreshToken)
+                                                           ? microsoft.RefreshToken
+                                                           : msa.RefreshToken;
+                                    persistenceService.UpdateAccount(
+                                                                     account.Uuid,
+                                                                     AccountHelper.ToRaw(msa)
+                                                                    );
+                                }
+                                else
+                                {
+                                    throw new AccountInvalidException(ex.Message, ex);
+                                }
                             }
                         }
+
+                        break;
+                    }
+                    case AuthlibInjectorAccount ai:
+                    {
+                        var isValid = await yggdrasilService.ValidateAsync(
+                                                                           ai.ServerUrl,
+                                                                           ai.AccessToken,
+                                                                           ai.ClientToken
+                                                                          );
+
+                        if (!isValid)
+                        {
+                            try
+                            {
+                                var refreshed = await yggdrasilService.RefreshAsync(ai, null);
+                                ai.AccessToken = refreshed.AccessToken;
+                                ai.ClientToken = refreshed.ClientToken;
+                                persistenceService.UpdateAccount(
+                                                                 account.Uuid,
+                                                                 AccountHelper.ToRaw(ai)
+                                                                );
+                            }
+                            catch
+                            {
+                                throw new AccountInvalidException(
+                                                                  "Unable to refresh the expired authlib-injector session. Please re-authenticate."
+                                                                 );
+                            }
+                        }
+
+                        break;
                     }
                 }
 

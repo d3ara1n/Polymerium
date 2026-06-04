@@ -154,6 +154,7 @@ public static class Startup
            .AddMinecraft()
            .AddMclogs()
            .AddAuthlibInjector()
+           .AddYggdrasil()
            .AddSnapshots<SnapshotStoreFactory>()
            .AddTransient<IProfileImporter, TridentImporter>()
            .AddTransient<IProfileImporter, CurseForgeImporter>()
