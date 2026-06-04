@@ -1,13 +1,10 @@
 using System;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Utilities;
-using Refit;
+using TridentCore.Abstractions.Accounts;
 using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.FileModels;
-using TridentCore.Core.Accounts;
 using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
@@ -15,122 +12,44 @@ using TridentCore.Core.Utilities;
 
 namespace Polymerium.App.Services;
 
-public class InstanceService(
-    InstanceManager instanceManager,
-    ProfileManager profileManager,
-    ConfigurationService configurationService,
-    PersistenceService persistenceService,
-    MinecraftService minecraftService,
-    XboxLiveService xboxLiveService,
-    MicrosoftService microsoftService,
-    YggdrasilService yggdrasilService
-)
+public class InstanceService
 {
-    public async Task DeployAndLaunchAsync(string key, LaunchMode mode)
+    private readonly InstanceManager _instanceManager;
+    private readonly ProfileManager _profileManager;
+    private readonly ConfigurationService _configurationService;
+    private readonly PersistenceService _persistenceService;
+
+    public InstanceService(
+        InstanceManager instanceManager,
+        ProfileManager profileManager,
+        ConfigurationService configurationService,
+        PersistenceService persistenceService
+    )
     {
-        var selector = persistenceService.GetAccountSelector(key);
+        _instanceManager = instanceManager;
+        _profileManager = profileManager;
+        _configurationService = configurationService;
+        _persistenceService = persistenceService;
+        instanceManager.AccountUpdated += OnAccountUpdated;
+    }
+
+    private void OnAccountUpdated(object? sender, IAccount account)
+    {
+        _persistenceService.UpdateAccount(account.Uuid, AccountHelper.ToRaw(account));
+    }
+
+    public void DeployAndLaunch(string key, LaunchMode mode)
+    {
+        var selector = _persistenceService.GetAccountSelector(key);
         if (selector != null)
         {
-            var account = persistenceService.GetAccount(selector.Uuid);
+            var account = _persistenceService.GetAccount(selector.Uuid);
             if (account != null)
             {
                 var cooked = AccountHelper.ToCooked(account);
-
-                switch (cooked)
-                {
-                    case MicrosoftAccount msa:
-                    {
-                        var shouldValidateOnline =
-                            msa.AccessTokenExpiresAt is null
-                         || DateTimeOffset.UtcNow >= msa.AccessTokenExpiresAt.Value.AddMinutes(-5);
-
-                        if (shouldValidateOnline)
-                        {
-                            try
-                            {
-                                _ = await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(
-                                         msa.AccessToken
-                                        );
-                            }
-                            catch (ApiException ex)
-                            {
-                                if (ex.StatusCode == HttpStatusCode.Unauthorized)
-                                {
-                                    var microsoft = await microsoftService.RefreshUserAsync(
-                                                         msa.RefreshToken
-                                                        );
-                                    var xbox =
-                                        await xboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
-                                             microsoft.AccessToken
-                                            );
-                                    var xsts =
-                                        await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(
-                                             xbox.Token
-                                            );
-                                    var minecraft =
-                                        await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(
-                                             xsts.Token,
-                                             xsts.DisplayClaims.Xui.First().Uhs
-                                            );
-
-                                    msa.AccessToken = minecraft.AccessToken;
-                                    msa.AccessTokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(
-                                         minecraft.ExpiresIn
-                                        );
-                                    msa.RefreshToken = !string.IsNullOrEmpty(microsoft.RefreshToken)
-                                                           ? microsoft.RefreshToken
-                                                           : msa.RefreshToken;
-                                    persistenceService.UpdateAccount(
-                                                                     account.Uuid,
-                                                                     AccountHelper.ToRaw(msa)
-                                                                    );
-                                }
-                                else
-                                {
-                                    throw new AccountInvalidException(ex.Message, ex);
-                                }
-                            }
-                        }
-
-                        break;
-                    }
-                    case AuthlibInjectorAccount ai:
-                    {
-                        var isValid = await yggdrasilService.ValidateAsync(
-                                                                           ai.ServerUrl,
-                                                                           ai.AccessToken,
-                                                                           ai.ClientToken
-                                                                          );
-
-                        if (!isValid)
-                        {
-                            try
-                            {
-                                var refreshed = await yggdrasilService.RefreshAsync(ai, null);
-                                ai.AccessToken = refreshed.AccessToken;
-                                ai.ClientToken = refreshed.ClientToken;
-                                persistenceService.UpdateAccount(
-                                                                 account.Uuid,
-                                                                 AccountHelper.ToRaw(ai)
-                                                                );
-                            }
-                            catch
-                            {
-                                throw new AccountInvalidException(
-                                                                  "Unable to refresh the expired authlib-injector session. Please re-authenticate."
-                                                                 );
-                            }
-                        }
-
-                        break;
-                    }
-                }
-
-                persistenceService.UseAccount(account.Uuid);
-                var profile = profileManager.GetImmutable(key);
-                // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
-                // Full Check Mode 只有在检查文件完整性时为 true，不随用户决定
-                var locator = CreateJavaLocator(profile, configurationService.Value);
+                _persistenceService.UseAccount(account.Uuid);
+                var profile = _profileManager.GetImmutable(key);
+                var locator = CreateJavaLocator(profile, _configurationService.Value);
                 var deploy = new DeployOptions(
                     profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
                     profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
@@ -139,20 +58,20 @@ public class InstanceService(
                 var launch = new LaunchOptions(
                     additionalArguments: profile.GetOverride(
                         Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                        configurationService.Value.GameJavaAdditionalArguments
+                        _configurationService.Value.GameJavaAdditionalArguments
                     ),
                     maxMemory: profile.GetOverride(
                         Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                        configurationService.Value.GameJavaMaxMemory
+                        _configurationService.Value.GameJavaMaxMemory
                     ),
                     windowSize: (
                         profile.GetOverride(
                             Profile.OVERRIDE_WINDOW_WIDTH,
-                            configurationService.Value.GameWindowInitialWidth
+                            _configurationService.Value.GameWindowInitialWidth
                         ),
                         profile.GetOverride(
                             Profile.OVERRIDE_WINDOW_HEIGHT,
-                            configurationService.Value.GameWindowInitialHeight
+                            _configurationService.Value.GameWindowInitialHeight
                         )
                     ),
                     quickConnectAddress: profile.GetOverride<string>(
@@ -160,13 +79,13 @@ public class InstanceService(
                     ),
                     commandWrapperTemplate: profile.GetOverride(
                         Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
-                        configurationService.Value.GameCommandWrapper
+                        _configurationService.Value.GameCommandWrapper
                     ),
                     launchMode: mode,
                     account: cooked,
                     brand: Program.Brand
                 );
-                instanceManager.DeployAndLaunch(key, deploy, launch, locator);
+                _instanceManager.DeployAndLaunch(key, deploy, launch, locator);
             }
         }
         else
@@ -182,15 +101,15 @@ public class InstanceService(
         bool? fullCheckMode = null
     )
     {
-        var profile = profileManager.GetImmutable(key);
+        var profile = _profileManager.GetImmutable(key);
         fastMode ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false);
         resolveDependency ??= profile.GetOverride(
             Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY,
             false
         );
         fullCheckMode ??= false;
-        var locator = CreateJavaLocator(profile, configurationService.Value);
-        instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
+        var locator = CreateJavaLocator(profile, _configurationService.Value);
+        _instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
     }
 
     private static JavaHomeLocatorDelegate CreateJavaLocator(

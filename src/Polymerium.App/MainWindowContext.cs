@@ -380,11 +380,11 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private async Task PlayAsync(string key)
+    private void Play(string key)
     {
         try
         {
-            await _instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+            _instanceService.DeployAndLaunch(key, LaunchMode.Managed);
         }
         catch (Exception ex)
         {
@@ -553,9 +553,8 @@ public partial class MainWindowContext : ObservableObject
         {
             InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source)
             {
-                LastPlayedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(
-                    _persistenceService.GetLastActivity(key)?.End
-                ),
+                LastPlayedAtRaw =
+                    DateTimeHelper.FromPersistedLocalDateTime(_persistenceService.GetLastActivity(key)?.End),
             };
             list.Add(model);
         }
@@ -903,14 +902,14 @@ public partial class MainWindowContext : ObservableObject
                         // Determine if this is an account issue or game crash
                         var isAccountIssue = e.FailureReason is AccountAuthenticationException
                                                              or AggregateException
-                        {
-                            InnerException: AccountAuthenticationException
-                        };
+                                                                {
+                                                                    InnerException: AccountAuthenticationException
+                                                                };
                         var isGameCrash = e.FailureReason is ProcessFaultedException
                                                           or AggregateException
-                        {
-                            InnerException: ProcessFaultedException
-                        };
+                                                             {
+                                                                 InnerException: ProcessFaultedException
+                                                             };
 
                         if (isAccountIssue)
                         {
@@ -950,7 +949,8 @@ public partial class MainWindowContext : ObservableObject
                         Key = e.Key,
                         AccountId = e.Options.Account?.Uuid ?? string.Empty,
                         DieInPeace = false,
-                        Begin = DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
+                        Begin =
+                            DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
                         End = DateTime.Now,
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -969,7 +969,8 @@ public partial class MainWindowContext : ObservableObject
                     {
                         Key = e.Key,
                         AccountId = e.Options.Account?.Uuid ?? string.Empty,
-                        Begin = DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
+                        Begin =
+                            DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
                         End = DateTime.Now,
                         DieInPeace = true,
                     });

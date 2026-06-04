@@ -24,8 +24,7 @@ public partial class AccountsPageModel(
     MicrosoftService microsoftService,
     XboxLiveService xboxLiveService,
     MinecraftService minecraftService,
-    YggdrasilService yggdrasilService
-) : ViewModelBase
+    YggdrasilService yggdrasilService) : ViewModelBase
 {
     #region Direct
 
@@ -40,12 +39,10 @@ public partial class AccountsPageModel(
         var found = persistenceService.GetAccount(account.Uuid);
         if (found != null)
         {
-            notificationService.PopMessage(
-                Resources.AccountsPage_AccountAddingDangerNotificationMessage,
-                Resources.AccountsPage_AccountAddingDangerNotificationTitle,
-                GrowlLevel.Danger,
-                thumbnail: AccountHelper.GetFaceUrl(account.Uuid)
-            );
+            notificationService.PopMessage(Resources.AccountsPage_AccountAddingDangerNotificationMessage,
+                                           Resources.AccountsPage_AccountAddingDangerNotificationTitle,
+                                           GrowlLevel.Danger,
+                                           thumbnail: AccountHelper.GetFaceUrl(account.Uuid));
             return false;
         }
 
@@ -53,12 +50,11 @@ public partial class AccountsPageModel(
         var enrolledAt = DateTimeOffset.Now;
         var raw = AccountHelper.ToRaw(account, enrolledAt, null, isDefault);
         persistenceService.AppendAccount(raw);
-        Accounts.Add(
-            new(account.GetType(), account.Uuid, account.Username, enrolledAt, null)
-            {
-                IsDefault = isDefault,
-            }
-        );
+        Accounts.Add(new(account.GetType(),
+                         account.Uuid,
+                         account.Username,
+                         enrolledAt,
+                         null) { IsDefault = isDefault, });
         return true;
     }
 
@@ -72,16 +68,12 @@ public partial class AccountsPageModel(
         foreach (var account in persistenceService.GetAccounts())
         {
             var cooked = AccountHelper.ToCooked(account);
-            var model = new AccountModel(
-                cooked.GetType(),
-                cooked.Uuid,
-                cooked.Username,
-                DateTimeHelper.FromPersistedLocalDateTime(account.EnrolledAt),
-                DateTimeHelper.FromPersistedLocalDateTime(account.LastUsedAt)
-            )
-            {
-                IsDefault = account.Uuid == defaultAccount?.Uuid,
-            };
+            var model = AccountHelper.CreateModelFromAccount(cooked,
+                                                             DateTimeHelper
+                                                                .FromPersistedLocalDateTime(account.EnrolledAt),
+                                                             DateTimeHelper
+                                                                .FromPersistedLocalDateTime(account.LastUsedAt));
+            model.IsDefault = account.Uuid == defaultAccount?.Uuid;
             Accounts.Add(model);
         }
 
@@ -94,20 +86,18 @@ public partial class AccountsPageModel(
 
     [RelayCommand]
     private void CreateAccount() =>
-        overlayService.PopModal(
-            new AccountCreationModal
-            {
-                FinishCallback = Finish,
-                IsOfflineAvailable =
-                    configurationService.Value.ApplicationSuperPowerActivated
-                    || persistenceService.HasMicrosoftAccount(),
-                MicrosoftService = microsoftService,
-                XboxLiveService = xboxLiveService,
-                MinecraftService = minecraftService,
-                NotificationService = notificationService,
-                YggdrasilService = yggdrasilService,
-            }
-        );
+        overlayService.PopModal(new AccountCreationModal
+        {
+            FinishCallback = Finish,
+            IsOfflineAvailable =
+                configurationService.Value.ApplicationSuperPowerActivated
+             || persistenceService.HasMicrosoftAccount(),
+            MicrosoftService = microsoftService,
+            XboxLiveService = xboxLiveService,
+            MinecraftService = minecraftService,
+            NotificationService = notificationService,
+            YggdrasilService = yggdrasilService,
+        });
 
     [RelayCommand]
     private void ViewAccount(AccountModel? model)

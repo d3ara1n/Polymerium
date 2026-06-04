@@ -227,11 +227,11 @@ public partial class InstanceHomePageModel(
     }
 
     [RelayCommand]
-    private async Task PlayAsync()
+    private void Play()
     {
         try
         {
-            await instanceService.DeployAndLaunchAsync(Basic.Key, Mode);
+            instanceService.DeployAndLaunch(Basic.Key, Mode);
         }
         catch (AccountNotFoundException)
         {
