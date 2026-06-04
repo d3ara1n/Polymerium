@@ -153,6 +153,7 @@ public static class Startup
            .AddXboxLive()
            .AddMinecraft()
            .AddMclogs()
+           .AddAuthlibInjector()
            .AddSnapshots<SnapshotStoreFactory>()
            .AddTransient<IProfileImporter, TridentImporter>()
            .AddTransient<IProfileImporter, CurseForgeImporter>()
