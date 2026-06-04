@@ -465,7 +465,7 @@ public partial class InstancePackageModal : Modal
                                                               Path.GetExtension(realPath));
             var realExists = File.Exists(realPath)
                           && FileHelper.IsPathEquivalent(File.ResolveLinkTarget(realPath, false)?.FullName, symPath);
-            var symExists = File.Exists(symPath) && FileHelper.VerifyModified(symPath, null, plan.Sha1);
+            var symExists = File.Exists(symPath) && FileHelper.VerifyModified(symPath, null, plan.Hash);
             return new InstancePackageBuildStatusResultModel()
             {
                 IsBuilt = realExists && symExists,
