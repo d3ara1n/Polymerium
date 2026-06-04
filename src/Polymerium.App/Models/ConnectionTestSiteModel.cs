@@ -5,10 +5,10 @@ namespace Polymerium.App.Models;
 
 public enum ConnectionTestStatus
 {
-    Pending,
-    Testing,
-    Success,
-    Failed,
+    PENDING,
+    TESTING,
+    SUCCESS,
+    FAILED,
 }
 
 public partial class ConnectionTestSiteModel(string display, Uri endpoint) : ObservableObject
@@ -29,7 +29,7 @@ public partial class ConnectionTestSiteModel(string display, Uri endpoint) : Obs
     public partial bool IsTesting { get; set; }
 
     [ObservableProperty]
-    public partial ConnectionTestStatus Status { get; set; } = ConnectionTestStatus.Pending;
+    public partial ConnectionTestStatus Status { get; set; } = ConnectionTestStatus.PENDING;
 
     [ObservableProperty]
     public partial string? ErrorMessage { get; set; }

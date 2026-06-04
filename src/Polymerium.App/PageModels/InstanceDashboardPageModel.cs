@@ -167,7 +167,7 @@ public partial class InstanceDashboardPageModel(
 
         void OnStateUpdated(TrackerBase _, TrackerState state)
         {
-            if (state is TrackerState.Faulted or TrackerState.Finished)
+            if (state is TrackerState.FAULTED or TrackerState.FINISHED)
             {
                 CallCleanup();
                 IsOnAir = false;
@@ -176,7 +176,7 @@ public partial class InstanceDashboardPageModel(
                 {
                     UpdateLogSource(SelectedSource);
                     SessionCount++;
-                    if (state is TrackerState.Faulted)
+                    if (state is TrackerState.FAULTED)
                     {
                         CrashCount++;
                     }
@@ -304,11 +304,11 @@ public partial class InstanceDashboardPageModel(
 
         return item =>
         {
-            if (!IsFilterError && item.Level == ScrapLevel.Error)
+            if (!IsFilterError && item.Level == ScrapLevel.ERROR)
                 return false;
-            if (!IsFilterWarning && item.Level == ScrapLevel.Warning)
+            if (!IsFilterWarning && item.Level == ScrapLevel.WARNING)
                 return false;
-            if (!IsFilterInformation && item.Level == ScrapLevel.Information)
+            if (!IsFilterInformation && item.Level == ScrapLevel.INFORMATION)
                 return false;
 
             if (hasSearch)

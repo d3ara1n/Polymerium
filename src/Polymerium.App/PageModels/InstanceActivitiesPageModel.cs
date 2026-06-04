@@ -32,7 +32,7 @@ public partial class InstanceActivitiesPageModel(
     PersistenceService persistenceService
 ) : InstancePageModelBase(context, instanceManager, profileManager)
 {
-    private const int ActionPageSize = 20;
+    private const int ACTION_PAGE_SIZE = 20;
 
     #region Other
 
@@ -67,7 +67,7 @@ public partial class InstanceActivitiesPageModel(
             var actions = persistenceService.GetActions(
                 Basic.Key,
                 pageIndex,
-                ActionPageSize,
+                ACTION_PAGE_SIZE,
                 out var totalCount
             );
             ActionTotalCount = totalCount;

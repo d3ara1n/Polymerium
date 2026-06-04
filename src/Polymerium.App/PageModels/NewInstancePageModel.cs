@@ -169,7 +169,7 @@ public partial class NewInstancePageModel(
         persistenceService.AppendAction(new()
         {
             Key = key.Key,
-            Kind = PersistenceService.ActionKind.Install,
+            Kind = PersistenceService.ActionKind.INSTALL,
             New = ImportedPack?.Path,
         });
 

@@ -94,8 +94,8 @@ public static class InternalConverters
             return status switch
             {
                 // 不可用: 红色 (Danger)
-                ConnectionTestStatus.Failed => Brushes.Red,
-                ConnectionTestStatus.Success => latency switch
+                ConnectionTestStatus.FAILED => Brushes.Red,
+                ConnectionTestStatus.SUCCESS => latency switch
                 {
                     // 根据延迟返回不同颜色
                     // < 1000ms: 绿色 (Success)
@@ -118,38 +118,38 @@ public static class InternalConverters
         return Brushes.Gray;
     });
 
-    private static IBrush? DiffAddedBrush;
+    private static IBrush? diffAddedBrush;
 
-    private static IBrush? DiffRemovedBrush;
+    private static IBrush? diffRemovedBrush;
 
-    private static IBrush? DiffEmptyBrush;
+    private static IBrush? diffEmptyBrush;
 
-    private static IBrush? DiffModifiedBrush;
-    private static ThemeVariant? DiffTheme;
+    private static IBrush? diffModifiedBrush;
+    private static ThemeVariant? diffTheme;
 
     private static void EnsureDiffBrushes()
     {
-        if (DiffTheme == Application.Current?.ActualThemeVariant)
+        if (diffTheme == Application.Current?.ActualThemeVariant)
         {
             return;
         }
 
-        DiffTheme = Application.Current?.ActualThemeVariant;
-        DiffAddedBrush =
+        diffTheme = Application.Current?.ActualThemeVariant;
+        diffAddedBrush =
             Application.Current?.TryGetResource("ControlSuccessTranslucentFullBackgroundBrush", null, out var res1)
          == true
                 ? res1 as IBrush
                 : new SolidColorBrush(Color.FromArgb(80, 0x40, 0xA0, 0x40));
-        DiffRemovedBrush =
+        diffRemovedBrush =
             Application.Current?.TryGetResource("ControlDangerTranslucentFullBackgroundBrush", null, out var res2)
          == true
                 ? res2 as IBrush
                 : new SolidColorBrush(Color.FromArgb(80, 0xA0, 0x40, 0x40));
-        DiffEmptyBrush =
+        diffEmptyBrush =
             Application.Current?.TryGetResource("ControlTranslucentFullBackgroundBrush", null, out var res3) == true
                 ? res3 as IBrush
                 : new SolidColorBrush(Color.FromArgb(40, 0x80, 0x80, 0x80));
-        DiffModifiedBrush =
+        diffModifiedBrush =
             Application.Current?.TryGetResource("ControlAccentTranslucentFullBackgroundBrush", null, out var res4)
          == true
                 ? res4 as IBrush
@@ -162,10 +162,10 @@ public static class InternalConverters
         return v is DiffLineKind kind
                    ? kind switch
                    {
-                       DiffLineKind.Added => DiffAddedBrush,
-                       DiffLineKind.Removed => DiffRemovedBrush,
-                       DiffLineKind.Empty => DiffEmptyBrush,
-                       DiffLineKind.Modified => DiffModifiedBrush,
+                       DiffLineKind.ADDED => diffAddedBrush,
+                       DiffLineKind.REMOVED => diffRemovedBrush,
+                       DiffLineKind.EMPTY => diffEmptyBrush,
+                       DiffLineKind.MODIFIED => diffModifiedBrush,
                        _ => Brushes.Transparent,
                    }
                    : AvaloniaProperty.UnsetValue;

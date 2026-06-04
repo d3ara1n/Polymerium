@@ -559,9 +559,9 @@ public partial class SettingsPageModel : ViewModelBase
     private void UpdateProxyStatusText() =>
         ProxyStatusText = ProxyMode switch
         {
-            ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
-            ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
-            ProxyMode.Manual => Resources
+            ProxyMode.AUTO => Resources.SettingsPage_ProxyStatusAutoText,
+            ProxyMode.DISABLED => Resources.SettingsPage_ProxyStatusDisabledText,
+            ProxyMode.MANUAL => Resources
                                .SettingsPage_ProxyStatusManualText.Replace("{0}", ProxyProtocol.ToString().ToLower())
                                .Replace("{1}", ProxyAddress)
                                .Replace("{2}", ProxyPort.ToString()),

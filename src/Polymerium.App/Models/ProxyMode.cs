@@ -8,15 +8,15 @@ public enum ProxyMode
     /// <summary>
     ///     Use system proxy settings (default HttpClient behavior).
     /// </summary>
-    Auto = 0,
+    AUTO = 0,
 
     /// <summary>
     ///     Use manually configured proxy settings.
     /// </summary>
-    Manual = 1,
+    MANUAL = 1,
 
     /// <summary>
     ///     Disable all proxies, use direct connection.
     /// </summary>
-    Disabled = 2,
+    DISABLED = 2,
 }

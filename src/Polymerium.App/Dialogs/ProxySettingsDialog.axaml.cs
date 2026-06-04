@@ -34,8 +34,8 @@ public partial class ProxySettingsDialog : Dialog
         var protocol = (ProxyProtocol)SelectedProtocolIndex;
         var proxyUri = protocol switch
         {
-            ProxyProtocol.Socks4 => new($"socks4://{ProxyAddress}:{port}"),
-            ProxyProtocol.Socks5 => new($"socks5://{ProxyAddress}:{port}"),
+            ProxyProtocol.SOCKS4 => new($"socks4://{ProxyAddress}:{port}"),
+            ProxyProtocol.SOCKS5 => new($"socks5://{ProxyAddress}:{port}"),
             _ => new Uri($"http://{ProxyAddress}:{port}"),
         };
 

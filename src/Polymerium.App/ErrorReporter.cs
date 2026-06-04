@@ -10,11 +10,11 @@ internal static class ErrorReporter
 {
     internal enum ErrorReportSource
     {
-        AppDomainUnhandled,
-        DispatcherUnhandled,
-        TaskUnobserved,
-        LifetimeStartup,
-        LifetimeShutdown,
+        APP_DOMAIN_UNHANDLED,
+        DISPATCHER_UNHANDLED,
+        TASK_UNOBSERVED,
+        LIFETIME_STARTUP,
+        LIFETIME_SHUTDOWN,
     }
 
     internal readonly record struct ErrorReportMeta(

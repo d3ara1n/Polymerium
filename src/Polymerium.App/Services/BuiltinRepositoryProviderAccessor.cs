@@ -15,14 +15,14 @@ public class BuiltinRepositoryProviderAccessor(IServiceProvider serviceProvider)
     {
         var curseforge = new IRepositoryProviderAccessor.ProviderProfile(CurseForgeHelper.LABEL,
                                                                          IRepositoryProviderAccessor.ProviderProfile
-                                                                            .DriverType.CurseForge,
+                                                                            .DriverType.CURSE_FORGE,
                                                                          CurseForgeHelper.ENDPOINT,
                                                                          ("x-api-key", CurseForgeHelper.API_KEY),
                                                                          null);
 
         var modrinth = new IRepositoryProviderAccessor.ProviderProfile(ModrinthHelper.LABEL,
                                                                        IRepositoryProviderAccessor.ProviderProfile
-                                                                          .DriverType.Modrinth,
+                                                                          .DriverType.MODRINTH,
                                                                        ModrinthHelper.OFFICIAL_ENDPOINT,
                                                                        null,
                                                                        null);

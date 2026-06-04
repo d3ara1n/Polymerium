@@ -192,7 +192,7 @@
             <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
         </Style>
 
-        <Style Selector="^[State=Idle]">
+        <Style Selector="^[State=IDLE]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -207,7 +207,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=Installing]">
+        <Style Selector="^[State=INSTALLING]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
@@ -232,7 +232,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=Updating]">
+        <Style Selector="^[State=UPDATING]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -257,7 +257,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=Preparing]">
+        <Style Selector="^[State=PREPARING]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -275,7 +275,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=Running]">
+        <Style Selector="^[State=RUNNING]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>

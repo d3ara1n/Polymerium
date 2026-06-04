@@ -10,7 +10,7 @@ namespace Polymerium.App.DialogModels;
 
 public partial class RuntimePickerDialogModel : ViewModelBase
 {
-    private static readonly SemaphoreSlim ScanLock = new(1, 1);
+    private static readonly SemaphoreSlim SCAN_LOCK = new(1, 1);
     private static RuntimePickerDialogCandidateCollection? cachedCandidates;
 
     [ObservableProperty]
@@ -31,7 +31,7 @@ public partial class RuntimePickerDialogModel : ViewModelBase
 
     private async Task ScanAsync(CancellationToken cancellationToken, bool forceRefresh = false)
     {
-        await ScanLock.WaitAsync(cancellationToken);
+        await SCAN_LOCK.WaitAsync(cancellationToken);
         try
         {
             if (!forceRefresh && cachedCandidates != null)
@@ -46,7 +46,7 @@ public partial class RuntimePickerDialogModel : ViewModelBase
         }
         finally
         {
-            ScanLock.Release();
+            SCAN_LOCK.Release();
         }
     }
 }
