@@ -136,6 +136,20 @@
                                 </StackPanel>
                             </StackPanel>
                         </husk:SwitchCase>
+                        <husk:SwitchCase Value="{x:Type accounts:AuthlibAccount}">
+                            <StackPanel Spacing="8">
+                                <TextBlock
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding TypeName, FallbackValue=Authlib}" />
+                                <StackPanel>
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.AccountEntryModal_AuthlibServerUrlLabel}" />
+                                    <TextBlock
+                                        Text="{Binding AuthlibServerUrl, FallbackValue=https://example.com}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </husk:SwitchCase>
                     </husk:SwitchContainer>
                 </Border>
             </StackPanel>

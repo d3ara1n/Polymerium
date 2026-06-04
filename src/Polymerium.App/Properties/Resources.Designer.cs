@@ -465,6 +465,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server.
+        /// </summary>
+        public static string AccountEntryModal_AuthlibServerUrlLabel {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_AuthlibServerUrlLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It&apos;s all set..
         /// </summary>
         public static string AccountEntryModal_OfflinePrompt {

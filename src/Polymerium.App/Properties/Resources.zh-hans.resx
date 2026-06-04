@@ -801,6 +801,9 @@
     <data name="AccountEntryModal_MicrosoftPrompt" xml:space="preserve">
         <value>需要定期检查令牌是否有效，检查可以，但定期还没做。</value>
     </data>
+    <data name="AccountEntryModal_AuthlibServerUrlLabel" xml:space="preserve">
+        <value>服务器</value>
+    </data>
     <data name="ExhibitPackageModal_FilterLabelText" xml:space="preserve">
         <value>仅显示兼容版本</value>
     </data>
