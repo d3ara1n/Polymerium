@@ -139,7 +139,7 @@ public class DataService(
                 // DataService 一半都是前端调用
                 // 真的需要拉取全部版本的情况下只有需要版本匹配的时候都会再次级进行处理
                 // 此处进行限制避免遇到版本过多
-                const int LIMIT = 20;
+                const int limit = 20;
                 var handle = await agent.InspectAsync(label, ns, pid, filter);
                 var rv = new List<Version>();
                 int lastCount;
@@ -150,7 +150,7 @@ public class DataService(
                     handle.PageIndex = index;
                     rv.AddRange(await handle.FetchAsync(CancellationToken.None));
                     index++;
-                } while (rv.Count != lastCount && rv.Count < LIMIT);
+                } while (rv.Count != lastCount && rv.Count < limit);
 
                 return rv.AsEnumerable();
             }
@@ -197,7 +197,7 @@ public class DataService(
                 var handle = await agent.SearchAsync(
                     CurseForgeHelper.LABEL,
                     string.Empty,
-                    new(null, null, ResourceKind.Modpack)
+                    new(null, null, ResourceKind.MODPACK)
                 );
                 var exhibits = await handle.FetchAsync(CancellationToken.None);
                 var models = exhibits.Take(5);

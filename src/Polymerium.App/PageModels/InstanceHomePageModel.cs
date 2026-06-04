@@ -172,14 +172,14 @@ public partial class InstanceHomePageModel(
     private string GetStageTitle(DeployStage stage) =>
         stage switch
         {
-            DeployStage.CheckArtifact => Resources.DeployStage_CheckArtifact,
-            DeployStage.InstallVanilla => Resources.DeployStage_InstallVanilla,
-            DeployStage.ProcessLoader => Resources.DeployStage_ProcessLoader,
-            DeployStage.ResolvePackage => Resources.DeployStage_ResolvePackage,
-            DeployStage.BuildArtifact => Resources.DeployStage_BuildArtifact,
-            DeployStage.EnsureRuntime => Resources.DeployStage_EnsureRuntime,
-            DeployStage.GenerateManifest => Resources.DeployStage_GenerateManifest,
-            DeployStage.SolidifyManifest => Resources.DeployStage_SolidifyManifest,
+            DeployStage.CHECK_ARTIFACT => Resources.DeployStage_CheckArtifact,
+            DeployStage.INSTALL_VANILLA => Resources.DeployStage_InstallVanilla,
+            DeployStage.PROCESS_LOADER => Resources.DeployStage_ProcessLoader,
+            DeployStage.RESOLVE_PACKAGE => Resources.DeployStage_ResolvePackage,
+            DeployStage.BUILD_ARTIFACT => Resources.DeployStage_BuildArtifact,
+            DeployStage.ENSURE_RUNTIME => Resources.DeployStage_EnsureRuntime,
+            DeployStage.GENERATE_MANIFEST => Resources.DeployStage_GenerateManifest,
+            DeployStage.SOLIDIFY_MANIFEST => Resources.DeployStage_SolidifyManifest,
             _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null),
         };
 
@@ -312,11 +312,11 @@ public partial class InstanceHomePageModel(
     private void SwitchMode() =>
         Mode = Mode switch
         {
-            LaunchMode.Managed => LaunchMode.FireAndForget,
-            LaunchMode.FireAndForget => configurationService.Value.ApplicationSuperPowerActivated
-                ? LaunchMode.Debug
-                : LaunchMode.Managed,
-            LaunchMode.Debug => LaunchMode.Managed,
+            LaunchMode.MANAGED => LaunchMode.FIRE_AND_FORGET,
+            LaunchMode.FIRE_AND_FORGET => configurationService.Value.ApplicationSuperPowerActivated
+                ? LaunchMode.DEBUG
+                : LaunchMode.MANAGED,
+            LaunchMode.DEBUG => LaunchMode.MANAGED,
             _ => throw new ArgumentOutOfRangeException(),
         };
 
@@ -343,7 +343,7 @@ public partial class InstanceHomePageModel(
     public partial bool DeployingPending { get; set; }
 
     [ObservableProperty]
-    public partial LaunchMode Mode { get; set; } = LaunchMode.Managed;
+    public partial LaunchMode Mode { get; set; } = LaunchMode.MANAGED;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LastPlayedAt))]

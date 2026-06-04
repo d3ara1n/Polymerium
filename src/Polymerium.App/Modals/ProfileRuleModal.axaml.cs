@@ -43,15 +43,15 @@ public partial class ProfileRuleModal : Modal
 
     private void TemplateDataPackButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Kind;
-        Rule.Selector.Kind = ResourceKind.DataPack;
+        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.KIND;
+        Rule.Selector.Kind = ResourceKind.DATA_PACK;
         Rule.Destination = "datapacks";
     }
 
     private void TemplateResourcePackButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Kind;
-        Rule.Selector.Kind = ResourceKind.ResourcePack;
+        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.KIND;
+        Rule.Selector.Kind = ResourceKind.RESOURCE_PACK;
         Rule.Skipping = false;
         Rule.Normalizing = true;
         Rule.Destination = string.Empty;
@@ -59,7 +59,7 @@ public partial class ProfileRuleModal : Modal
 
     private void TemplateTaCZButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Tag;
+        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.TAG;
         Rule.Selector.Tag = "TaC:Z";
         Rule.Skipping = false;
         Rule.Normalizing = false;
@@ -68,7 +68,7 @@ public partial class ProfileRuleModal : Modal
 
     private void TemplatePointBlankButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.Tag;
+        Rule.Selector.Type = Profile.Rice.Rule.RuleSelector.SelectorType.TAG;
         Rule.Selector.Tag = "PointBlank";
         Rule.Skipping = false;
         Rule.Normalizing = false;

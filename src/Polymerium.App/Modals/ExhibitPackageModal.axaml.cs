@@ -388,7 +388,7 @@ public partial class ExhibitPackageModal : Modal
             {
                 var versionId = Exhibit.State switch
                 {
-                    null or ExhibitState.Editable or ExhibitState.Removing =>
+                    null or ExhibitState.EDITABLE or ExhibitState.REMOVING =>
                         Exhibit.InstalledVersionId,
                     _ => Exhibit.PendingVersionId,
                 };
@@ -471,7 +471,7 @@ public partial class ExhibitPackageModal : Modal
                                 // null -> Project
                                 return new()
                                 {
-                                    Kind = InstancePackageModificationKind.AddUnversioned,
+                                    Kind = InstancePackageModificationKind.ADD_UNVERSIONED,
                                     VersionName = null,
                                     ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                                 };
@@ -480,7 +480,7 @@ public partial class ExhibitPackageModal : Modal
                             // -> Project: Unset
                             return new()
                             {
-                                Kind = InstancePackageModificationKind.Unset,
+                                Kind = InstancePackageModificationKind.UNSET,
                                 VersionName = null,
                                 ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                             };
@@ -498,7 +498,7 @@ public partial class ExhibitPackageModal : Modal
                             // null -> Package: Add
                             return new()
                             {
-                                Kind = InstancePackageModificationKind.AddVersioned,
+                                Kind = InstancePackageModificationKind.ADD_VERSIONED,
                                 VersionName = package.VersionName,
                                 ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                             };
@@ -507,7 +507,7 @@ public partial class ExhibitPackageModal : Modal
                         // Package -> Package: Update
                         return new()
                         {
-                            Kind = InstancePackageModificationKind.Update,
+                            Kind = InstancePackageModificationKind.UPDATE,
                             VersionName = package.VersionName,
                             ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                         };
@@ -515,7 +515,7 @@ public partial class ExhibitPackageModal : Modal
 
                     return new InstancePackageModificationModel
                     {
-                        Kind = InstancePackageModificationKind.Remove,
+                        Kind = InstancePackageModificationKind.REMOVE,
                         VersionName = null,
                         ModifiedAtRaw = DateTimeHelper.FromPersistedLocalDateTime(x.At),
                     };
@@ -543,10 +543,10 @@ public partial class ExhibitPackageModal : Modal
     {
         if (Exhibit.State is null)
         {
-            Exhibit.State = ExhibitState.Adding;
+            Exhibit.State = ExhibitState.ADDING;
         }
 
-        if (Exhibit.State is ExhibitState.Editable)
+        if (Exhibit.State is ExhibitState.EDITABLE)
         {
             if (Exhibit.InstalledVersionId == SelectedVersion?.VersionId)
             {
@@ -555,7 +555,7 @@ public partial class ExhibitPackageModal : Modal
                 return;
             }
 
-            Exhibit.State = ExhibitState.Modifying;
+            Exhibit.State = ExhibitState.MODIFYING;
         }
 
         if (SelectedVersionMode == 0 && SelectedVersion != null)
@@ -578,7 +578,7 @@ public partial class ExhibitPackageModal : Modal
     [RelayCommand]
     private void Delete()
     {
-        Exhibit.State = ExhibitState.Removing;
+        Exhibit.State = ExhibitState.REMOVING;
         Exhibit.PendingVersionId = null;
         Exhibit.PendingVersionName = null;
         ModifyPendingCallback(Exhibit);
@@ -588,7 +588,7 @@ public partial class ExhibitPackageModal : Modal
     [RelayCommand]
     private void Undo()
     {
-        Exhibit.State = Exhibit.Installed == null ? null : ExhibitState.Editable;
+        Exhibit.State = Exhibit.Installed == null ? null : ExhibitState.EDITABLE;
         Exhibit.PendingVersionId = null;
         Exhibit.PendingVersionName = null;
         ModifyPendingCallback(Exhibit);
@@ -614,7 +614,7 @@ public partial class ExhibitPackageModal : Modal
             Package.Summary,
             Package.Reference ?? Exhibit.Reference,
             Package.Thumbnail,
-            Filter.Kind ?? ResourceKind.Unknown,
+            Filter.Kind ?? ResourceKind.UNKNOWN,
             Package.DownloadCountRaw,
             Package.Tags,
             Package.UpdatedAtRaw,

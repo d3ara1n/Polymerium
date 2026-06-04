@@ -38,13 +38,13 @@ public class FavoriteRepository(
 
         List<ResourceKind> kinds =
         [
-            ResourceKind.Modpack,
-            ResourceKind.Mod,
-            ResourceKind.ResourcePack,
-            ResourceKind.ShaderPack,
-            ResourceKind.DataPack,
-            ResourceKind.World,
-            ResourceKind.Unknown
+            ResourceKind.MODPACK,
+            ResourceKind.MOD,
+            ResourceKind.RESOURCE_PACK,
+            ResourceKind.SHADER_PACK,
+            ResourceKind.DATA_PACK,
+            ResourceKind.WORLD,
+            ResourceKind.UNKNOWN
         ];
         return new(loaders, versions, kinds);
     }

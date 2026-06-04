@@ -27,9 +27,9 @@ public partial class SnapshotsModal : Modal
         {
             if (change.NewValue is SnapshotsModalModel viewModel)
             {
-                viewModel._navigateHandler = (p) => Frame.Navigate(p, ((SnapshotsModalModel)DataContext!).Context!, null);
-                viewModel._backHandler = Frame.GoBack;
-                viewModel._dismissHandler = Dismiss;
+                viewModel.NavigateHandler = (p) => Frame.Navigate(p, ((SnapshotsModalModel)DataContext!).Context!, null);
+                viewModel.BackHandler = Frame.GoBack;
+                viewModel.DismissHandler = Dismiss;
             }
         }
     }

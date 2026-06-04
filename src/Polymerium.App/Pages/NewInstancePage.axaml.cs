@@ -9,7 +9,7 @@ namespace Polymerium.App.Pages;
 
 public partial class NewInstancePage : ScopedPage
 {
-    private static readonly DataFormat FileContentsFormat = DataFormat.CreateStringPlatformFormat(
+    private static readonly DataFormat FILE_CONTENTS_FORMAT = DataFormat.CreateStringPlatformFormat(
         "FileContents"
     );
 
@@ -17,7 +17,7 @@ public partial class NewInstancePage : ScopedPage
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {
-        if (e.Data.Contains(DataFormat.File) && e.Data.Contains(FileContentsFormat))
+        if (e.Data.Contains(DataFormat.File) && e.Data.Contains(FILE_CONTENTS_FORMAT))
         {
             e.Accepted = true;
         }
@@ -25,7 +25,7 @@ public partial class NewInstancePage : ScopedPage
 
     private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
     {
-        if (e.Data.Contains(DataFormat.File) && e.Data.Contains(FileContentsFormat))
+        if (e.Data.Contains(DataFormat.File) && e.Data.Contains(FILE_CONTENTS_FORMAT))
         {
             var first = e.Data.TryGetFile();
             if (first != null)

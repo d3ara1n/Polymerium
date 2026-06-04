@@ -200,7 +200,7 @@ public partial class InstancePackageDependencyModal : Modal
             new()
             {
                 Key = Guard.Key,
-                Kind = PersistenceService.ActionKind.EditPackage,
+                Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
                 Old = null,
                 New = purl,
             }

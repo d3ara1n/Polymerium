@@ -180,7 +180,7 @@ public partial class InstanceSetupPageModel(
                                                                                     r.Vid,
                                                                                     Filter.None with
                                                                                     {
-                                                                                        Kind = ResourceKind.Modpack,
+                                                                                        Kind = ResourceKind.MODPACK,
                                                                                     });
 
                             return new InstanceReferenceModel(profile.Setup.Source,
@@ -584,7 +584,7 @@ public partial class InstanceSetupPageModel(
                         persistenceService.AppendAction(new()
                         {
                             Key = Basic.Key,
-                            Kind = PersistenceService.ActionKind.EditLoader,
+                            Kind = PersistenceService.ActionKind.EDIT_LOADER,
                             Old = old,
                             New = lurl,
                         });
@@ -599,7 +599,7 @@ public partial class InstanceSetupPageModel(
                         persistenceService.AppendAction(new()
                         {
                             Key = Basic.Key,
-                            Kind = PersistenceService.ActionKind.EditLoader,
+                            Kind = PersistenceService.ActionKind.EDIT_LOADER,
                             Old = old,
                         });
                     }
@@ -719,8 +719,8 @@ public partial class InstanceSetupPageModel(
                              .Items.Where(x => !enabledOnly || x.IsEnabled)
                              .Where(x => tagPolicy switch
                               {
-                                  PackageBulkUpdatePreviewerTagPolicy.Include => tags.Any(y => x.Tags.Contains(y)),
-                                  PackageBulkUpdatePreviewerTagPolicy.Exclude => !tags.Any(y => x.Tags.Contains(y)),
+                                  PackageBulkUpdatePreviewerTagPolicy.INCLUDE => tags.Any(y => x.Tags.Contains(y)),
+                                  PackageBulkUpdatePreviewerTagPolicy.EXCLUDE => !tags.Any(y => x.Tags.Contains(y)),
                                   _ => true,
                               })
                              .ToList();
@@ -892,7 +892,7 @@ public partial class InstanceSetupPageModel(
                             persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
                                 Old = old,
                                 New = model.Model.Entry.Purl,
                             });
@@ -998,7 +998,7 @@ public partial class InstanceSetupPageModel(
                                             {
                                                 Key = Basic.Key,
                                                 Kind = PersistenceService.ActionKind
-                                                                         .EditPackage,
+                                                                         .EDIT_PACKAGE,
                                                 Old = oldPurl,
                                                 New = importedEntry.Purl,
                                             });
@@ -1020,7 +1020,7 @@ public partial class InstanceSetupPageModel(
                                         {
                                             Key = Basic.Key,
                                             Kind = PersistenceService.ActionKind
-                                                                     .EditPackage,
+                                                                     .EDIT_PACKAGE,
                                             New = importedEntry.Purl,
                                         });
                                         addedCount++;
@@ -1153,7 +1153,7 @@ public partial class InstanceSetupPageModel(
                                                                   result.Pid,
                                                                   Filter.None with
                                                                   {
-                                                                      Kind = ResourceKind.Modpack,
+                                                                      Kind = ResourceKind.MODPACK,
                                                                       Version = Basic.Version,
                                                                   });
                 var versions = page
@@ -1243,7 +1243,7 @@ public partial class InstanceSetupPageModel(
                 persistenceService.AppendAction(new()
                 {
                     Key = Basic.Key,
-                    Kind = PersistenceService.ActionKind.EditPackage,
+                    Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
                     Old = model.Entry.Purl,
                 });
             }

@@ -27,7 +27,7 @@ public class App : Application
             ErrorReporter.Report(
                 e.ExceptionObject,
                 new(
-                    ErrorReporter.ErrorReportSource.AppDomainUnhandled,
+                    ErrorReporter.ErrorReportSource.APP_DOMAIN_UNHANDLED,
                     Phase: "runtime",
                     Critical: true,
                     Terminating: e.IsTerminating,
@@ -38,7 +38,7 @@ public class App : Application
             ErrorReporter.Report(
                 e.Exception,
                 new(
-                    ErrorReporter.ErrorReportSource.TaskUnobserved,
+                    ErrorReporter.ErrorReportSource.TASK_UNOBSERVED,
                     Phase: "runtime",
                     Critical: true,
                     Terminating: false,
@@ -49,7 +49,7 @@ public class App : Application
             ErrorReporter.Report(
                 e.Exception,
                 new(
-                    ErrorReporter.ErrorReportSource.DispatcherUnhandled,
+                    ErrorReporter.ErrorReportSource.DISPATCHER_UNHANDLED,
                     Phase: "runtime",
                     Critical: true,
                     Terminating: !e.Handled,
@@ -93,7 +93,7 @@ public class App : Application
             ErrorReporter.Report(
                 ex,
                 new(
-                    ErrorReporter.ErrorReportSource.LifetimeStartup,
+                    ErrorReporter.ErrorReportSource.LIFETIME_STARTUP,
                     Phase: "startup",
                     Critical: true,
                     Terminating: true,

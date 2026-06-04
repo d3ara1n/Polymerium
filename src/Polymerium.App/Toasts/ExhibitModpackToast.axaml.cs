@@ -115,7 +115,7 @@ public partial class ExhibitModpackToast : Toast
                 project.ProjectId,
                 Filter.None with
                 {
-                    Kind = ResourceKind.Modpack,
+                    Kind = ResourceKind.MODPACK,
                 }
             );
             var rv = versions
@@ -174,7 +174,7 @@ public partial class ExhibitModpackToast : Toast
             Modpack.Summary,
             Modpack.Reference,
             Modpack.Thumbnail,
-            ResourceKind.Modpack,
+            ResourceKind.MODPACK,
             Modpack.DownloadCountRaw,
             Modpack.Tags,
             Modpack.UpdatedAtRaw,

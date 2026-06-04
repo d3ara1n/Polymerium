@@ -78,19 +78,19 @@ public partial class PackageExplorerPageModel : ViewModelBase
         SelectedRepository = r.First();
         PendingPackagesSource
            .Connect()
-           .Filter(x => x.State == ExhibitState.Adding)
+           .Filter(x => x.State == ExhibitState.ADDING)
            .Bind(out var adding)
            .Subscribe()
            .DisposeWith(_subscriptions);
         PendingPackagesSource
            .Connect()
-           .Filter(x => x.State == ExhibitState.Modifying)
+           .Filter(x => x.State == ExhibitState.MODIFYING)
            .Bind(out var modifying)
            .Subscribe()
            .DisposeWith(_subscriptions);
         PendingPackagesSource
            .Connect()
-           .Filter(x => x.State == ExhibitState.Removing)
+           .Filter(x => x.State == ExhibitState.REMOVING)
            .Bind(out var removing)
            .Subscribe()
            .DisposeWith(_subscriptions);
@@ -119,7 +119,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             if (repository.Loaders == null || repository.Versions == null)
             {
                 var status = await _dataService.CheckStatusAsync(repository.Label);
-                repository.Kinds = [.. status.SupportedKinds.Where(x => x != ResourceKind.Modpack)];
+                repository.Kinds = [.. status.SupportedKinds.Where(x => x != ResourceKind.MODPACK)];
             }
         }
     }
@@ -130,7 +130,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
 
     private void ModifyPending(ExhibitModel model)
     {
-        if (model.State is null or ExhibitState.Editable)
+        if (model.State is null or ExhibitState.EDITABLE)
         {
             PendingPackagesSource.RemoveKey(model);
         }
@@ -185,8 +185,8 @@ public partial class PackageExplorerPageModel : ViewModelBase
         if (installed is not null)
         {
             model.State = installed.Source == null || installed.Source != Basic.Source
-                              ? ExhibitState.Editable
-                              : ExhibitState.Locked;
+                              ? ExhibitState.EDITABLE
+                              : ExhibitState.LOCKED;
             model.Installed = installed;
             // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
             if (PackageHelper.TryParse(installed.Purl, out var parsed))
@@ -229,7 +229,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
     }
 
     [ObservableProperty]
-    public partial Filter Filter { get; set; } = Filter.None with { Kind = ResourceKind.Mod };
+    public partial Filter Filter { get; set; } = Filter.None with { Kind = ResourceKind.MOD };
 
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
@@ -349,8 +349,8 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                     if (installed is not null)
                                     {
                                         model.State = installed.Source == null || installed.Source != Basic.Source
-                                                          ? ExhibitState.Editable
-                                                          : ExhibitState.Locked;
+                                                          ? ExhibitState.EDITABLE
+                                                          : ExhibitState.LOCKED;
                                         model.Installed = installed;
                                         // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
                                         if (PackageHelper.TryParse(installed.Purl, out var parsed))
@@ -466,7 +466,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
 
         exhibit.PendingVersionId = null;
         exhibit.PendingVersionName = null;
-        exhibit.State = ExhibitState.Adding;
+        exhibit.State = ExhibitState.ADDING;
         ModifyPending(exhibit);
     }
 
@@ -500,7 +500,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
     {
         foreach (var model in PendingPackagesSource.Items)
         {
-            model.State = model.Installed == null ? null : ExhibitState.Editable;
+            model.State = model.Installed == null ? null : ExhibitState.EDITABLE;
         }
 
         PendingPackagesSource.Clear();
@@ -514,7 +514,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             return;
         }
 
-        exhibit.State = exhibit.Installed == null ? null : ExhibitState.Editable;
+        exhibit.State = exhibit.Installed == null ? null : ExhibitState.EDITABLE;
         exhibit.PendingVersionId = null;
         exhibit.PendingVersionName = null;
 
@@ -530,7 +530,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             {
                 switch (model)
                 {
-                    case { State: ExhibitState.Adding }:
+                    case { State: ExhibitState.ADDING }:
                         {
                             var entry = new Profile.Rice.Entry
                             {
@@ -544,17 +544,17 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             _persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
                                 New = entry.Purl,
                             });
                             guard.Value.Setup.Packages.Add(entry);
-                            model.State = ExhibitState.Editable;
+                            model.State = ExhibitState.EDITABLE;
                             model.Installed = entry;
                             model.InstalledVersionName = model.PendingVersionName;
                             model.InstalledVersionId = model.PendingVersionId;
                             break;
                         }
-                    case { State: ExhibitState.Removing, Installed: not null }:
+                    case { State: ExhibitState.REMOVING, Installed: not null }:
                         {
                             var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
                             if (exist != null)
@@ -565,7 +565,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             _persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
                                 Old = model.Installed.Purl,
                             });
                             model.State = null;
@@ -574,7 +574,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             model.InstalledVersionId = null;
                             break;
                         }
-                    case { State: ExhibitState.Modifying, Installed: not null }:
+                    case { State: ExhibitState.MODIFYING, Installed: not null }:
                         {
                             var old = model.Installed.Purl;
                             model.Installed.Purl = PackageHelper.ToPurl(model.Label,
@@ -584,11 +584,11 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             _persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Kind = PersistenceService.ActionKind.EDIT_PACKAGE,
                                 Old = old,
                                 New = model.Installed.Purl,
                             });
-                            model.State = ExhibitState.Editable;
+                            model.State = ExhibitState.EDITABLE;
                             model.InstalledVersionName = model.PendingVersionName;
                             model.InstalledVersionId = model.PendingVersionId;
                             break;

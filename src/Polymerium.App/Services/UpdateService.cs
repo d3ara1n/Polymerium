@@ -21,8 +21,8 @@ public partial class UpdateService(
 
     public AppUpdateState UpdateState { get; private set; } =
         updateManager.IsInstalled || Program.IsDebug
-            ? AppUpdateState.Idle
-            : AppUpdateState.Unavailable;
+            ? AppUpdateState.IDLE
+            : AppUpdateState.UNAVAILABLE;
 
     public AppUpdateModel? CurrentUpdate { get; private set; }
 
@@ -43,7 +43,7 @@ public partial class UpdateService(
         {
             CurrentUpdate = null;
             IsUpdateChecked = false;
-            UpdateState = AppUpdateState.Unavailable;
+            UpdateState = AppUpdateState.UNAVAILABLE;
             _handler?.Invoke(null);
             return;
         }
@@ -58,12 +58,12 @@ public partial class UpdateService(
             if (result != null)
             {
                 CurrentUpdate = new(result);
-                UpdateState = AppUpdateState.Found;
+                UpdateState = AppUpdateState.FOUND;
             }
             else
             {
                 CurrentUpdate = null;
-                UpdateState = AppUpdateState.Latest;
+                UpdateState = AppUpdateState.LATEST;
             }
 
             IsUpdateChecked = true;
@@ -73,7 +73,7 @@ public partial class UpdateService(
         {
             if (!IsUpdateChecked)
             {
-                UpdateState = AppUpdateState.Idle;
+                UpdateState = AppUpdateState.IDLE;
             }
             throw;
         }
