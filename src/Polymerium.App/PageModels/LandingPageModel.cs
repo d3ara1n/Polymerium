@@ -204,11 +204,11 @@ public partial class LandingPageModel(
     private void RefreshMinecraftNews() => LoadMinecraftNews();
 
     [RelayCommand]
-    private async Task PlayAsync(string key)
+    private void Play(string key)
     {
         try
         {
-            await instanceService.DeployAndLaunchAsync(key, LaunchMode.Managed);
+            instanceService.DeployAndLaunch(key, LaunchMode.Managed);
         }
         catch (Exception ex)
         {

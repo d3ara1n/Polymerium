@@ -2,27 +2,27 @@ using System;
 using Avalonia;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
+using Polymerium.App.Utilities;
 using TridentCore.Abstractions.Accounts;
+using TridentCore.Core.Services;
 
 namespace Polymerium.App.Components;
 
 public partial class AccountCreationPreview : AccountCreationStep
 {
     public static readonly DirectProperty<AccountCreationPreview, IAccount?> AccountProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationPreview, IAccount?>(
-            nameof(Account),
-            o => o.Account,
-            (o, v) => o.Account = v
-        );
+        AvaloniaProperty.RegisterDirect<AccountCreationPreview, IAccount?>(nameof(Account),
+                                                                           o => o.Account,
+                                                                           (o, v) => o.Account = v);
 
     public static readonly DirectProperty<AccountCreationPreview, AccountModel?> ModelProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationPreview, AccountModel?>(
-            nameof(Model),
-            o => o.Model,
-            (o, v) => o.Model = v
-        );
+        AvaloniaProperty.RegisterDirect<AccountCreationPreview, AccountModel?>(nameof(Model),
+                                                                               o => o.Model,
+                                                                               (o, v) => o.Model = v);
 
     public AccountCreationPreview() => InitializeComponent();
+
+    public YggdrasilService? YggdrasilService { get; init; }
 
     public IAccount? Account
     {
@@ -43,13 +43,7 @@ public partial class AccountCreationPreview : AccountCreationStep
         if (change.Property == AccountProperty)
         {
             var account = change.GetNewValue<IAccount>();
-            Model = new(
-                account.GetType(),
-                account.Uuid,
-                account.Username,
-                DateTimeOffset.Now,
-                null
-            );
+            Model = AccountHelper.CreateModelFromAccount(account);
         }
     }
 
