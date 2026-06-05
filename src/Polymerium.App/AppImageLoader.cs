@@ -11,7 +11,9 @@ namespace Polymerium.App;
 
 /// <summary>
 ///     图片加载器，使用独立的 <see cref="MemoryCache" /> 提供带 LRU 驱逐策略的内存缓存。
-///     加载失败时记录日志而非静音，缓存驱逐时正确释放 <see cref="Bitmap" /> 的非托管内存。
+///     加载失败时记录日志而非静音，注意：缓存驱逐不会释放 <see cref="Bitmap" />，
+///     因为 Bitmap 可能仍被 UI 引用，提前释放会导致 ObjectDisposedException。
+///     GC 的 finalizer 会在所有引用消失后自行回收非托管资源。
 /// </summary>
 public class AppImageLoader(HttpClient httpClient, ILogger<AppImageLoader> logger)
     : BaseWebImageLoader(httpClient, disposeHttpClient: false)
@@ -49,7 +51,6 @@ public class AppImageLoader(HttpClient httpClient, ILogger<AppImageLoader> logge
                     new MemoryCacheEntryOptions()
                         .SetSize(1)
                         .SetSlidingExpiration(SLIDING_EXPIRATION)
-                        .RegisterPostEvictionCallback(OnBitmapEvicted)
                 );
             }
 
@@ -59,15 +60,6 @@ public class AppImageLoader(HttpClient httpClient, ILogger<AppImageLoader> logge
         {
             logger.LogWarning(ex, "Failed to load image: {Url}", url);
             return null;
-        }
-    }
-
-    private void OnBitmapEvicted(object key, object? value, EvictionReason reason, object? state)
-    {
-        if (value is Bitmap bitmap)
-        {
-            logger.LogDebug("Bitmap evicted from cache: {Url} ({Reason})", key, reason);
-            bitmap.Dispose();
         }
     }
 

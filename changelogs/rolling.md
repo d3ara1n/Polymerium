@@ -6,7 +6,7 @@
 
 ### Fixed
 
--
+- 修复 AppImageLoader 缓存驱逐时提前释放 Bitmap 导致 Avalonia 渲染管线崩溃的问题（#POLYMERIUM-1X, #POLYMERIUM-1W）
 
 ### Added
 
