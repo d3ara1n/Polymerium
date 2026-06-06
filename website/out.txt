@@ -1,8 +1,0 @@
-▲ Next.js 16.2.7 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://198.18.0.1:3000
-✓ Ready in 448ms
-[MDX] generated files in 14.474900000000048ms
-[MDX] started dev server
-
-[?25h
