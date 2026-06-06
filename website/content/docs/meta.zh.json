@@ -1,4 +1,13 @@
 {
   "title": "文档",
-  "description": "Polymerium 文档"
+  "description": "Polymerium 文档",
+  "pages": [
+    "index",
+    "getting-started",
+    "creating-instance",
+    "snapshots",
+    "import-export",
+    "cli",
+    "faq"
+  ]
 }

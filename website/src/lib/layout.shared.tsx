@@ -27,6 +27,13 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: appName,
     },
+    links: [
+      {
+        text: 'Docs',
+        url: '/en/docs',
+        active: 'nested-url',
+      },
+    ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     i18n: true,
   };

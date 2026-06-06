@@ -1,0 +1,129 @@
+---
+title: 命令行与 MCP
+description: 使用 trident 命令行工具自动化一切。
+---
+
+## 安装
+
+`trident` CLI 随 Polymerium 一起安装。在 Windows 上，它位于应用目录中的 `Trident.Cli`。你也可以将其作为独立的 .NET 工具安装：
+
+```bash
+dotnet tool install --global Trident.Cli
+```
+
+## 实例管理
+
+```bash
+# 创建新实例
+trident instance create my-pack --version 1.21.4 --loader fabric
+
+# 列出所有实例
+trident instance list
+
+# 查看实例详情
+trident instance inspect my-pack
+
+# 部署（构建）实例
+trident instance build my-pack
+
+# 启动实例
+trident instance run my-pack
+
+# 删除实例
+trident instance delete my-pack
+```
+
+## 模组管理
+
+```bash
+# 搜索模组
+trident package search "sodium"
+
+# 通过 PURL（包 URL）添加模组
+trident package add modrinth:sodium
+trident package add curseforge:jei
+
+# 列出已安装的模组
+trident package list
+
+# 启用或禁用模组
+trident package enable modrinth:sodium
+trident package disable modrinth:sodium
+
+# 列出可用版本
+trident package version list modrinth:sodium
+
+# 固定到特定版本
+trident package version set modrinth:sodium 0.6.0
+```
+
+## 导出与导入
+
+```bash
+# 导出为 Modrinth 整合包
+trident instance export my-pack --format modrinth --output ./release/
+
+# 导入整合包
+trident instance import ./cool-pack.mrpack
+```
+
+## 账户管理
+
+```bash
+# 添加微软账户（设备代码流程）
+trident account add
+
+# 列出账户
+trident account list
+
+# 删除账户
+trident account remove <uuid>
+```
+
+## MCP 模式
+
+`trident` 可以作为 MCP（模型上下文协议）服务器运行，让 Claude、GPT 或 Cursor 等 AI Agent 直接管理你的 Minecraft 实例。
+
+```bash
+# 启动 MCP 服务器（stdio 传输）
+trident --mcp
+```
+
+### MCP 配置示例
+
+添加到你的 AI 工具的 MCP 配置中：
+
+```json
+{
+  "mcpServers": {
+    "polymerium": {
+      "command": "trident",
+      "args": ["--mcp"]
+    }
+  }
+}
+```
+
+连接后，你的 AI Agent 可以：
+
+- 创建和管理实例
+- 搜索和安装模组
+- 配置加载器和版本
+- 导出整合包
+- 管理账户和仓库
+
+### AI 提示示例
+
+- "创建一个名为 `performance-pack` 的 Fabric 1.21.4 实例，安装 Sodium 和 Lithium"
+- "给我的 `skyblock` 实例拍个快照，然后更新所有模组"
+- "把我的 `vanilla-plus` 实例导出为 Modrinth 整合包"
+
+## 全局选项
+
+| 标志 | 描述 |
+|------|------|
+| `--home <path>` | 指定数据目录 |
+| `--json` | 以 JSON 格式输出 |
+| `--no-interactive` | 非交互模式（用于脚本） |
+| `--verbose` | 详细日志 |
+| `--debug` | 调试日志 |

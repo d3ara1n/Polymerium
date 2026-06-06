@@ -1,0 +1,64 @@
+---
+title: FAQ
+description: Frequently asked questions about Polymerium.
+---
+
+## Why does Polymerium require Developer Mode on Windows?
+
+Polymerium uses symbolic links (symlinks) to share mod files between instances instead of copying them. On Windows, creating symlinks requires Developer Mode or elevated privileges. Enabling Developer Mode is a one-time setting that allows symlink creation for your user account — it does not reduce system security.
+
+macOS and Linux support symlinks natively with no extra configuration.
+
+## Where is my data stored?
+
+All data stays on your machine:
+
+- **Settings**: Private data directory → `settings.json`
+- **Cache & persistence**: Private data directory → `persistence.sqlite.db`
+- **HTTP cache**: Private data directory → `cache.sqlite.db`
+- **Mod cache**: Shared cache directory (configurable)
+
+Polymerium does not upload any data. Error reports sent to Sentry contain no personal information.
+
+## Can I migrate from Prism Launcher or MultiMC?
+
+Yes. Export your modpack from your current launcher in Modrinth (.mrpack), CurseForge (.zip), or MultiMC (.zip) format, then import it into Polymerium. Your mods and configs carry over.
+
+## Which mod loaders are supported?
+
+Polymerium supports four loaders:
+
+- **Fabric** — lightweight and fast
+- **Quilt** — Fabric-compatible with more features
+- **Forge** — the classic mod loader
+- **NeoForge** — modern Forge fork
+
+## Is Polymerium free?
+
+Yes. Polymerium is open source under the MIT license and completely free to use. There are no ads, no premium tiers, and no data collection.
+
+## What platforms does Polymerium support?
+
+Polymerium runs on:
+
+- **Windows** x64
+- **Linux** x64
+- **macOS** ARM (Apple Silicon)
+
+## How does the snapshot system work?
+
+Snapshots use content-addressable storage to capture the complete state of an instance — mods, configs, and settings. Creating and restoring snapshots is fast because it only records references, not file copies. You can also diff between snapshots to see exactly what changed.
+
+## Can I use Polymerium without an internet connection?
+
+Yes. Polymerium supports offline accounts for local play. Once mods are cached and an instance is deployed, you can play without any internet connection.
+
+## What is MCP mode?
+
+MCP (Model Context Protocol) is a way for AI agents to interact with external tools. Polymerium's `trident --mcp` command starts an MCP server that exposes 30+ tools for managing Minecraft instances. This lets you use AI assistants like Claude or GPT to create instances, install mods, and manage your game setup through natural language.
+
+## How does symlink deduplication work?
+
+When you install a mod, Polymerium stores the actual file once in a shared cache. When an instance needs that mod, Polymerium creates a symbolic link pointing to the cached file instead of copying it. The game reads the link as if it were the original file — it's completely transparent.
+
+Multiple instances sharing the same mod file all point to the same cached copy, so 5 instances with Sodium only use the disk space of 1.
