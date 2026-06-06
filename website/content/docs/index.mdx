@@ -1,26 +1,37 @@
 ---
-title: Welcome
-description: Get started with Polymerium — the metadata-driven Minecraft launcher.
+title: Getting Started
+description: Welcome to Polymerium, a next-generation Minecraft instance manager.
 ---
 
-Welcome to the Polymerium documentation.
+Welcome to the Polymerium documentation!
 
-Polymerium is a next-generation Minecraft instance manager. Instead of
-copying and storing thousands of mod files for each instance,
-Polymerium describes your game setup as lightweight metadata and builds
-the actual game files on-demand.
-
-## Quick Start
-
-1. **Download** the latest release for your platform
-2. **Install** and run the setup wizard
-3. **Configure** your first instance
+Polymerium is a third-generation Minecraft launcher that manages game instances through lightweight metadata
+and on-demand deployment, instead of copying and storing thousands of mod files for each instance.
 
 ## Key Concepts
 
-<Cards>
-  <Card title="Instances" href="/docs/concepts/instances" />
-  <Card title="Deployment" href="/docs/concepts/deployment" />
-  <Card title="Snapshots" href="/docs/concepts/snapshots" />
-  <Card title="CLI & MCP" href="/docs/cli" />
-</Cards>
+### Metadata-Driven Instances
+
+Instead of duplicating files, Polymerium describes your game setup as lightweight metadata and builds the
+actual game files on-demand using symbolic links. Multiple instances sharing the same mods only store one
+copy on disk.
+
+### Smart Resource Management
+
+- **Zero Duplication**: Shared mods exist only once on disk
+- **Symlink Magic**: Files are linked, not copied
+- **Instant Switching**: Change between modpacks in seconds
+
+### Platform Integration
+
+- Native CurseForge and Modrinth support
+- Modpack publishing and export
+- Automatic changelog generation
+
+## Quick Start
+
+1. **Download** the installer for your platform
+2. **Enable Developer Mode** (Windows) for symlink support
+3. **Create** your first instance
+4. **Add** mods from CurseForge or Modrinth
+5. **Deploy** and play!

@@ -1,22 +1,13 @@
-import { docs, docsZh } from 'collections/server';
+import { docs } from 'collections/server';
 import { loader } from 'fumadocs-core/source';
-import { defineI18n } from 'fumadocs-core/i18n';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
+import { i18n } from './i18n';
 import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
 
-export const i18n = defineI18n({
-  defaultLanguage: 'en',
-  languages: ['en', 'zh'],
-});
-
-// See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
+  source: docs.toFumadocsSource(),
   i18n,
-  source: {
-    en: docs.toFumadocsSource(),
-    zh: docsZh.toFumadocsSource(),
-  },
   plugins: [lucideIconsPlugin()],
 });
 
