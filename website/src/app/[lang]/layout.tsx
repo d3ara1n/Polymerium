@@ -11,8 +11,27 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://polymerium.d3ara1n.dev'),
-  title: 'Polymerium',
-  description: 'A next-generation Minecraft instance manager',
+  title: {
+    default: 'Polymerium — Minecraft Instance Manager',
+    template: '%s | Polymerium',
+  },
+  description:
+    'Metadata-driven Minecraft instance manager with zero-duplication storage, cross-platform symlinks, snapshots, CLI, and MCP AI Agent mode.',
+  keywords: [
+    'Minecraft',
+    'launcher',
+    'instance manager',
+    'symlink',
+    'deduplication',
+    'modpack',
+    'CurseForge',
+    'Modrinth',
+  ],
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Polymerium',
+  },
 };
 
 export default async function Layout({ params, children }: LayoutProps<'/[lang]'>) {

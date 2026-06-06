@@ -1,4 +1,13 @@
 {
   "title": "Documentation",
-  "description": "Polymerium Documentation"
+  "description": "Polymerium Documentation",
+  "pages": [
+    "index",
+    "getting-started",
+    "creating-instance",
+    "snapshots",
+    "import-export",
+    "cli",
+    "faq"
+  ]
 }
