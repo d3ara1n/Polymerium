@@ -383,3 +383,7 @@ publish/
 .alma-snapshots
 .worktrees/
 .codegraph/
+.agents/
+website/node_modules
+website/.next
+website/out
