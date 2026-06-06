@@ -19,7 +19,17 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="flex flex-col min-h-screen font-sans antialiased">
-        <RootProvider>{children}</RootProvider>
+        <RootProvider
+          i18n={{
+            locale: 'en',
+            locales: [
+              { locale: 'en', name: 'English' },
+              { locale: 'zh', name: '简体中文' },
+            ],
+          }}
+        >
+          {children}
+        </RootProvider>
       </body>
     </html>
   );
