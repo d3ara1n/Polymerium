@@ -12,8 +12,6 @@ export const gitConfig = {
   branch: 'main',
 };
 
-// Navigation links for Fumadocs UI
-// Just text + url — external detection is automatic
 export const navItems = [
   {
     text: 'Docs',
@@ -29,8 +27,23 @@ export const navItems = [
   },
 ];
 
+export const locales = [
+  { locale: 'en', name: 'English' },
+  { locale: 'zh', name: '简体中文' },
+] as const;
+
+export type Locale = (typeof locales)[number]['locale'];
+
+/** Locale-specific download URLs */
+export function getDownloadUrl(locale: string): string {
+  if (locale === 'zh') {
+    return 'https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=polymerium-website';
+  }
+  return 'https://github.com/d3ara1n/Polymerium/releases';
+}
+
 export const socialLinks = {
   github: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
-  discord: null as string | null, // TODO: add Discord invite link
-  qq: null as string | null, // TODO: add QQ group link
+  discord: null as string | null,
+  qq: null as string | null,
 };
