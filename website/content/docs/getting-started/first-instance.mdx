@@ -1,0 +1,54 @@
+---
+title: Creating Your First Instance
+description: Set up a modded Minecraft instance in Polymerium — pick a version and you're ready.
+---
+
+## Creating an Instance
+
+1. Click the **+** button in the sidebar or the main area.
+2. Give your instance a name (e.g. "My First Modpack").
+3. Choose a **Minecraft version** — for example `1.21.4`.
+4. Click **Create**.
+
+That's it. Your instance is created — but no game files have been downloaded yet.
+
+## What Just Happened?
+
+In Polymerium, an instance is not a folder full of files. It's a **metadata file** (`profile.json`) that describes what your game should contain: which Minecraft version, which loader, which mods.
+
+The actual game directory is built on demand when you **deploy** (which happens automatically when you launch for the first time). This is what makes Polymerium different from traditional launchers — and why switching loaders or adding mods later is nearly instant.
+
+> You don't need to understand the details now. The important takeaway: **your instance is a description, not a copy**. If you're curious, read [Core Concepts → Metadata-Driven Instances](/docs/concepts/metadata-driven) later.
+
+## Configuring Your Instance
+
+After creating your instance, configure it before adding mods. Open the instance and switch to the **Setup** tab.
+
+### Setting a Mod Loader
+
+Choose a mod loader for your instance:
+
+| Loader | Best For |
+|--------|---------|
+| **Fabric** | Lightweight, fast updates, large performance mod ecosystem |
+| **Quilt** | Fabric-compatible with more features and faster development |
+| **Forge** | The classic — biggest mod ecosystem for older versions |
+| **NeoForge** | Modern Forge fork, used by many new mods for 1.20+ |
+
+You can switch loaders at any time — that's the advantage of metadata-driven instances. Polymerium will rebuild the game directory on your next deploy.
+
+### Memory Allocation
+
+Override the maximum memory (JVM heap) for this instance. This is useful if a large modpack needs more RAM than your global default.
+
+### Command Wrapper
+
+Set a command wrapper for special cases, like `prime-run` on Linux systems with dual GPUs. The wrapper prefixes the Java launch command.
+
+### Quick Connect
+
+Set a server address to auto-join when the game launches. No need to type it in-game every time.
+
+## Next Step
+
+Your instance is configured — let's [add some mods →](/docs/getting-started/adding-mods)

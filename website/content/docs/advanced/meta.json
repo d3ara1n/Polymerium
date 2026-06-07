@@ -1,0 +1,11 @@
+{
+  "title": "Advanced",
+  "pages": [
+    "rules",
+    "workspace",
+    "modpack-dev",
+    "cli",
+    "mcp",
+    "troubleshooting"
+  ]
+}

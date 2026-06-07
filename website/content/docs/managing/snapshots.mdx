@@ -1,0 +1,64 @@
+---
+title: Snapshots
+description: Save, restore, and compare your entire game state. Experiment freely — you can always go back.
+---
+
+## What Are Snapshots?
+
+A snapshot records everything about your instance that affects the build result:
+
+- **Profile setup** — the metadata (Minecraft version, loader, mod list, settings)
+- **Directory contents** — everything in `import/`, `live/`, and `persist/`
+
+Snapshots don't directly touch `build/`. Instead, they capture the inputs so you can reproduce an exact game state later. When you restore a snapshot, your metadata and directory contents are restored — and the next deploy rebuilds `build/` from that state.
+
+## When to Use Snapshots
+
+- **Before a risky change** — updating a major mod, switching loaders, tweaking configs
+- **Before experimenting** — trying out a new modpack configuration you might want to undo
+- **For "save scumming" your mod setup** — keep a snapshot of your stable setup and one for experimentation
+
+## Creating a Snapshot
+
+1. Select your instance.
+2. Open the **Snapshots** section.
+3. Click **Create Snapshot**.
+4. Give it a name and optional description.
+
+Polymerium records the current profile setup and the contents of `persist/`, `import/`, and `live/`.
+
+## Restoring a Snapshot
+
+1. Open the **Snapshots** section for your instance.
+2. Select a snapshot from the list.
+3. Click **Restore**.
+
+Polymerium restores the profile metadata and directory contents to the state they were in when the snapshot was taken. Your game directory (`build/`) will be rebuilt on the next deploy to match that state.
+
+> Restoring a snapshot doesn't immediately modify `build/`. The next deploy will reproduce the snapshot's state.
+
+## Comparing Snapshots (Diff)
+
+You can compare two snapshots to see exactly what changed between them:
+
+- **Metadata changes** — different mods, version, or loader settings
+- **Added files** — new files in `persist/`, `import/`, or `live/`
+- **Removed files** — files that existed in the earlier snapshot but not the later one
+- **Modified files** — same path but different contents
+
+This is useful for understanding what a mod update or config change actually did to your instance.
+
+## Snapshot Storage
+
+Snapshots store the actual profile setup data and directory file contents — not references to a cache. This means snapshots are self-contained and can be restored even if the shared cache has been cleared.
+
+## Snapshots vs. Backups
+
+| | Snapshot | Full Backup |
+|---|---------|------------|
+| What it stores | Profile metadata + directory contents | Complete file copies |
+| Disk usage | Compact (metadata + file contents) | Same as the instance itself |
+| Speed | Near-instant | Slow (copies everything) |
+| Restores | Restores metadata + dirs, then redeploy | Copies files back |
+
+Snapshots are lighter than a full backup and faster to create. They capture the inputs, not the entire deployed output — which is all you need, since `build/` can always be reconstructed.

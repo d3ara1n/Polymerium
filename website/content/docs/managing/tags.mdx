@@ -1,0 +1,53 @@
+---
+title: Tags & Batch Operations
+description: Organize mods with flexible tags instead of rigid categories. Filter, batch-update, and exclude with precision.
+---
+
+## Tags vs. Categories
+
+Most launchers let you put a mod in one category. Polymerium uses **tags** — a mod can have as many tags as you want.
+
+For example, Sodium might have:
+
+```
+performance  core  QoL  stability-watch
+```
+
+This lets you filter and operate on mods from multiple angles:
+
+- "Show me all performance mods"
+- "Update everything except stability-watch mods"
+- "Disable all QoL mods for testing"
+
+## Adding Tags
+
+1. Select an instance and go to the **Setup** tab.
+2. Each mod in the list has a tag field.
+3. Type tags separated by commas or spaces. Tags are freeform — use whatever makes sense to you.
+
+Tags are stored per-instance, per-package. The same mod can have different tags in different instances.
+
+## Filtering by Tag
+
+Use the tag filter in the mod list to narrow down what's visible. You can stack multiple tag filters to find exactly what you need.
+
+## Batch Updates
+
+When new mod versions are available:
+
+1. Open the **Bulk Update** dialog.
+2. Polymerium shows all mods with available updates.
+3. Review each update and check/uncheck.
+4. **Exclude by tag** — e.g. exclude all mods tagged `stability-watch` from the update batch.
+
+This gives you fine-grained control over mass updates without losing the convenience of "update all."
+
+## Using Tags in Deployment Rules
+
+Tags aren't just for organization — they integrate with the [deployment rules engine](/docs/advanced/rules). You can create rules like:
+
+- Skip all mods tagged `server-only` when deploying
+- Redirect all mods tagged `datapack` to a custom path
+- Normalize filenames for mods tagged `legacy-name`
+
+See [Deployment Rules →](/docs/advanced/rules) for the full rule syntax.

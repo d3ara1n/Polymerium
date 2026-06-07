@@ -1,0 +1,63 @@
+---
+title: Set Up Authlib Injector (外置登录)
+description: Connect to third-party authentication servers using the Yggdrasil protocol.
+---
+
+## What is Authlib Injector?
+
+Authlib Injector is a Java agent that intercepts Minecraft's authentication calls and redirects them to a third-party Yggdrasil-compatible server. This is commonly used by Chinese Minecraft communities for custom authentication (外置登录 / 正版登录).
+
+Polymerium has built-in support for this — no manual Java agent configuration needed.
+
+## Setup
+
+### Step 1: Add an Authlib Account
+
+1. Go to **Accounts** in the sidebar.
+2. Click **Add Account** → **Authlib Injector**.
+3. Enter the **server URL** of the Yggdrasil authentication server.
+
+   Example: `https://auth.example.com/api/yggdrasil`
+
+4. Polymerium fetches the server's metadata and validates the connection.
+5. Enter your credentials (username/email + password) for that server.
+6. The account is saved.
+
+### Step 2: Bind the Account to Your Instance
+
+1. Open the instance's properties.
+2. Set the **account override** to your Authlib account.
+
+Or set the Authlib account as your default account if you use it for most instances.
+
+### Step 3: Deploy and Launch
+
+1. Click **Deploy** (or **Launch** — it deploys automatically).
+2. Polymerium injects the `-javaagent` flag and prefetched server metadata into the launch command.
+3. The game authenticates against the third-party server instead of Mojang.
+
+## How It Works
+
+When launching an instance with an Authlib account:
+
+1. Polymerium downloads the latest Authlib Injector JAR (if not cached).
+2. Fetches and caches the server's Yggdrasil metadata.
+3. Adds `-javaagent:authlib-injector.jar={server_url}` to the JVM arguments.
+4. The game process loads Authlib Injector, which patches authentication in-memory.
+
+## Server Compatibility
+
+Polymerium works with any server that implements the Yggdrasil protocol, including:
+
+- [authlib-injector](https://github.com/yushijinhun/authlib-injector) compatible servers
+- Most Chinese community auth servers (LittleSkin, etc.)
+- Custom Yggdrasil implementations
+
+## Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| "Failed to fetch server metadata" | Check the server URL; ensure it's reachable |
+| "Authentication failed" | Verify your credentials; check if the server requires specific formats |
+| Game launches but can't join server | Ensure the server URL matches what the game server expects |
+| Skin not showing | This is a server-side feature; check with your auth server operator |

@@ -1,0 +1,73 @@
+---
+title: Metadata-Driven Instances
+description: In Polymerium, an instance is a description — not a folder copy. This changes everything about how you manage your game.
+---
+
+## The Core Idea
+
+Most Minecraft launchers treat an instance as a folder full of files — the game JAR, mods, configs, libraries, everything copied into one place. If you have 5 instances with the same Sodium mod, you have 5 copies of Sodium on your disk.
+
+Polymerium does something different: **an instance is a metadata file.**
+
+Your instance is a `profile.json` that describes what your game should contain:
+
+```json
+{
+  "version": "1.21.4",
+  "loader": "fabric:0.16.0",
+  "packages": [
+    { "purl": "modrinth:sodium", "enabled": true },
+    { "purl": "modrinth:iris", "enabled": true },
+    { "purl": "modrinth:fabric-api", "enabled": true }
+  ]
+}
+```
+
+The actual game directory is **built on demand** when you deploy. Files are symlinked from a shared cache — never duplicated.
+
+## What This Means in Practice
+
+### Switching Loaders is Instant
+
+Want to try Fabric instead of Forge? Change the loader field, deploy again. No re-downloading, no waiting. The new loader's libraries get linked into the game directory.
+
+### Adding a Mod Doesn't Copy Files
+
+When you install Sodium, the file goes into the shared cache once. If another instance already has it, Polymerium just creates a symlink. Zero extra disk space.
+
+### Your Instance is Portable
+
+Because it's just JSON + a few configuration files, your entire instance can be version-controlled with Git, shared with friends, or exported as a modpack.
+
+### Nothing is Permanent
+
+The game directory (`build/`) is a build artifact. You can delete it and redeploy at any time. For files you can't afford to lose — like `options.txt` or your saves — move them into the `persist/` directory. Polymerium never touches `persist/` during resets or updates. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+
+## The Workflow
+
+```
+Edit metadata (add mod, change version, switch loader)
+        ↓
+    Deploy
+        ↓
+  Game directory is rebuilt from cache + metadata
+        ↓
+    Launch
+```
+
+This is a compile-on-read model. Your metadata is the source of truth; the game directory is the output.
+
+## How It Compares
+
+| Action | Traditional Launcher | Polymerium |
+|--------|---------------------|------------|
+| Add a mod | Download + copy to instance folder | Download to cache, symlink into build |
+| Switch loader | Delete old files, re-download everything | Update metadata, redeploy |
+| Update modpack version | Create a new copy (doubles disk usage) | Switch versions in-place, redeploy |
+| Share instance | Zip the entire folder | Share `profile.json` |
+| Disk usage with 5 identical instances | 5× mod files | 1× mod files |
+
+## Where to Learn More
+
+- [Four-Layer Directories →](/docs/concepts/four-layers) — understand how files are organized inside an instance
+- [Deploy Pipeline →](/docs/concepts/deploy-explained) — see exactly what happens when you click "Deploy"

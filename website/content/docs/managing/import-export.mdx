@@ -1,0 +1,72 @@
+---
+title: Import & Export
+description: Import modpacks from CurseForge, Modrinth, MultiMC, or Trident format — and export your instances in any format.
+---
+
+## Supported Formats
+
+Polymerium supports four modpack formats for both import and export:
+
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| **Trident** (native) | `.zip` | Preserves the most metadata: tags, rules, overrides, icons, README, changelog |
+| **CurseForge** | `.zip` | Industry standard; compatible with CurseForge app, Prism, etc. |
+| **Modrinth** | `.mrpack` | Modern format; compatible with Modrinth app, Prism, etc. |
+| **MultiMC** | `.zip` | Compatible with MultiMC, Prism Launcher, and derivatives |
+
+## Importing a Modpack
+
+1. Click the **+** button to create a new instance.
+2. Choose **Import from file**.
+3. Select the modpack archive.
+4. Polymerium auto-detects the format and imports:
+
+   - The metadata is parsed and written to your instance's `profile.json`.
+   - Pack files (configs, resources) are extracted to `import/`.
+   - Mods listed in the pack are resolved and downloaded to the shared cache.
+
+5. Deploy and play.
+
+> **Updating a modpack?** If the instance was created from an import, you can re-import a newer version of the same pack. Polymerium replaces `import/` with the new files while leaving `persist/` untouched — files you've moved there are preserved.
+
+## Exporting an Instance
+
+1. Select an instance.
+2. Open the instance menu → **Export**.
+3. Choose the format, fill in metadata (name, author, version, summary).
+4. Polymerium packages the instance metadata + `import/` files into the chosen format.
+
+### What Gets Exported
+
+| Content | Included? |
+|---------|:---------:|
+| Mod list + versions | ✅ |
+| Config files (`import/`) | ✅ |
+| Instance icon | ✅ |
+| Modpack metadata (name, author, version) | ✅ |
+| Saves, screenshots, personal configs | ❌ — if you've moved these to `persist/`, they stay in `persist/` and aren't included in the export |
+
+### Format-Specific Notes
+
+- **Trident format** preserves the most information: tags, deployment rules, account bindings, and extra files. Best for Polymerium-to-Polymerium sharing.
+- **CurseForge / Modrinth** formats are widely compatible but lose Polymerium-specific features like tags and rules.
+- **MultiMC format** is the most basic — just the mod list and configs.
+
+## Online vs. Offline Formats
+
+Not all modpack formats work the same way under the hood:
+
+- **CurseForge and Modrinth** formats are **online** — they contain references (package URLs) to mods hosted on those platforms, not the actual mod files. When you import one, the launcher resolves those references and downloads the mods.
+
+  This means a CurseForge modpack should ideally only reference CurseForge mods, and a Modrinth modpack should only reference Modrinth mods. If you mix sources, the modpack won't pass platform review when publishing.
+
+- **Trident and MultiMC** formats are **offline** — they bundle the actual mod files inside the archive. No internet resolution needed on import.
+
+Keep this in mind when choosing a format for publishing your modpack.
+
+## Migrating From Another Launcher
+
+If you're coming from Prism Launcher, MultiMC, or the CurseForge app, you can import your existing modpacks directly. See the migration guides:
+
+- [Migrate from Prism / MultiMC →](/docs/guides/migrate-from-prism)
+- [Migrate from Shard →](/docs/guides/migrate-from-shard)

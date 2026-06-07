@@ -1,0 +1,10 @@
+{
+  "title": "实例管理",
+  "pages": [
+    "accounts",
+    "import-export",
+    "snapshots",
+    "tags",
+    "java"
+  ]
+}

@@ -1,0 +1,84 @@
+---
+title: Build a Performance Modpack from Scratch
+description: A step-by-step guide to creating an optimized Fabric modpack with essential performance mods.
+---
+
+## Goal
+
+Create a Fabric 1.21.4 modpack with the essential performance mods — Sodium, Lithium, FerriteCore, and Iris for shaders.
+
+## Step 1: Create the Instance
+
+1. Click **+** → **New Instance**.
+2. Name it "Performance Pack".
+3. Set Minecraft version to **1.21.4**.
+4. Choose loader **Fabric**.
+5. Click **Create**.
+
+## Step 2: Add Performance Mods
+
+Open the instance and go to the **Setup** tab. Search for and install each mod:
+
+### Core Performance
+
+| Mod | What It Does | Search |
+|-----|-------------|--------|
+| **Sodium** | Modern rendering engine — massive FPS boost | `modrinth:sodium` |
+| **Lithium** | Server-side optimizations — faster tick processing | `modrinth:lithium` |
+| **FerriteCore** | Memory usage reduction | `modrinth:ferrite-core` |
+| **Fabric API** | Required dependency for most Fabric mods | `modrinth:fabric-api` |
+
+### Optional: Shaders
+
+| Mod | What It Does | Search |
+|-----|-------------|--------|
+| **Iris** | Shader pack loader (requires Sodium) | `modrinth:iris` |
+
+### Optional: Quality of Life
+
+| Mod | What It Does | Search |
+|-----|-------------|--------|
+| **Mod Menu** | In-game mod list viewer | `modrinth:modmenu` |
+| **Roughly Enough Items** | Recipe viewer | Search "REI" on Modrinth |
+
+## Step 3: Deploy
+
+Click **Deploy**. Polymerium will:
+
+1. Download Fabric loader libraries.
+2. Download all mods to the shared cache.
+3. Build the game directory with symlinks.
+4. Download a Java 21 runtime if needed.
+
+## Step 4: Configure Memory
+
+1. Go to **Settings → Game**.
+2. Set **Max Memory** to at least 4 GB (6–8 GB if using shaders).
+3. Or set it per-instance in the instance's properties.
+
+## Step 5: Launch and Play
+
+Click **Launch**. The game starts with all performance mods active.
+
+## Step 6: Optional — Add Shaders
+
+1. Download a shader pack (e.g. Complementary Shaders from Modrinth).
+2. Move the shader `.zip` to `persist/shaderpacks/` and create `persist/shaderpacks/.keep` so the directory is linked into the game. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for how `persist/` works.
+3. In-game, go to **Options → Video → Shader Packs** and select it.
+
+## Step 7: Save a Snapshot (Recommended)
+
+Before you make further changes:
+
+1. Go to **Snapshots** for this instance.
+2. Click **Create Snapshot**.
+3. Name it "clean-performance-base".
+
+Now you can freely experiment — if something breaks, restore the snapshot.
+
+## What You've Achieved
+
+- ✅ A clean Fabric 1.21.4 instance with performance mods
+- ✅ Shared cache — these mods are available to other instances at zero extra disk cost
+- ✅ A snapshot you can restore if needed
+- ✅ Ready to add more mods on top of this base

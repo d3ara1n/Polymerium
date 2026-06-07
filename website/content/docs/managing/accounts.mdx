@@ -1,0 +1,71 @@
+---
+title: Account Management
+description: Set up Microsoft, offline, Authlib Injector, or trial accounts — and bind different accounts to different instances.
+---
+
+## Account Types
+
+Polymerium supports four types of accounts:
+
+| Type | Use Case | Authentication |
+|------|----------|---------------|
+| **Microsoft** | Full multiplayer, Realms, servers | Device Code Flow → Xbox Live → Minecraft API |
+| **Offline** | Local / single-player, no server access | Username only, generates a deterministic UUID |
+| **Authlib Injector** | Third-party authentication servers (外置登录) | Yggdrasil protocol with `-javaagent` injection |
+| **Trial** | Quick start — try the launcher without signing in | Built-in demo accounts with fixed roles (available without any Microsoft account) |
+
+## Adding Accounts
+
+Go to the **Accounts** page in the sidebar. Click **Add Account** and choose the type:
+
+### Microsoft Account
+
+1. Polymerium shows a device code (e.g. `A1B2C-3D4E5`).
+2. Open [microsoft.com/link](https://microsoft.com/link) on any device and enter the code.
+3. Sign in with your Microsoft account.
+4. Polymerium automatically detects the login and fetches your Minecraft profile.
+
+Your tokens are stored locally and refreshed automatically when they expire.
+
+### Offline Account
+
+1. Enter a username.
+2. That's it. Polymerium generates a deterministic UUID based on the name.
+
+Offline accounts can't join servers that require authentication, but they work perfectly for single-player and LAN.
+
+> Offline accounts are available only after you've added a Microsoft account. If you just want to try the launcher without signing in, use a Trial account instead.
+
+### Trial Account
+
+Trial accounts are pre-made with fixed roles — quick to pick up and play without any setup. No Microsoft account needed.
+
+They work for local and single-player play only, but they're enough to try out the launcher before committing to a full sign-in.
+
+### Authlib Injector Account
+
+1. Enter the **server URL** of the Yggdrasil authentication server (e.g. `https://auth.example.com/api/yggdrasil`).
+2. Polymerium fetches the server metadata and injects the appropriate `-javaagent` flag at launch.
+3. Sign in with your credentials for that server.
+
+This is useful for Chinese Minecraft communities that use third-party auth servers (外置登录).
+
+## Per-Instance Account Binding
+
+By default, your selected **default account** is used for all instances. But you can override this per instance:
+
+1. Open the instance's properties.
+2. Set the **account override** to any of your added accounts.
+
+This lets you use different accounts for different servers or game modes without switching globally every time.
+
+## Token Refresh
+
+- **Microsoft accounts** are refreshed automatically via OAuth token refresh — you won't need to re-login.
+- **Authlib Injector accounts** are validated and refreshed using the Yggdrasil protocol before each launch.
+
+If a token can't be refreshed (e.g. you revoked access), Polymerium will prompt you to re-authenticate.
+
+## Account Data Storage
+
+All account data is stored in the local SQLite database. Credentials are never uploaded anywhere. The only network calls are to Microsoft/Yggdrasil auth servers for token operations.

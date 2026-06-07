@@ -31,5 +31,9 @@
     "typescript": "^6.0.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.7"
+  },
+  "allowScripts": {
+    "esbuild@0.28.0": true,
+    "unrs-resolver@1.12.2": true
   }
 }

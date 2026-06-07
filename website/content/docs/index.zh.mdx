@@ -1,36 +1,26 @@
 ---
-title: 快速开始
-description: 欢迎使用 Polymerium，下一代 Minecraft 实例管理器。
+title: Documentation
+description: Learn how to use Polymerium — from your first instance to advanced modpack development.
 ---
 
-欢迎使用 Polymerium 文档！
+Polymerium is a cross-platform, open-source Minecraft launcher built around a simple idea:
 
-Polymerium 是第三代 Minecraft 启动器，通过轻量级元数据和按需部署来管理游戏实例，
-而不是为每个实例复制和存储数千个模组文件。
+**Your game setup is a description, not a folder copy.**
 
-## 核心概念
+Instead of duplicating mod files for every instance, Polymerium stores each file once and builds instances on demand. The result: less disk usage, instant switching, and a workflow that actually makes sense for modpack development.
 
-### 元数据驱动的实例
+## Where to Start
 
-Polymerium 不再重复文件，而是将你的游戏配置描述为轻量级元数据，
-并通过符号链接按需构建实际的游戏文件。共享相同模组的多个实例在磁盘上只存储一份副本。
+- **New to Polymerium?** Follow the [Getting Started](/docs/getting-started/installation) guide — you'll be playing in minutes.
+- **Coming from another launcher?** Check the [Migration Guides](/docs/guides/migrate-from-prism) for a quick transition.
+- **Curious how it works?** Read [Core Concepts](/docs/concepts/metadata-driven) to understand what makes Polymerium different.
 
-### 智能资源管理
+## What You'll Find Here
 
-- **零重复**：共享的模组在磁盘上只存在一份
-- **符号链接**：文件通过链接而非复制进行管理
-- **即时切换**：秒级切换不同整合包
-
-### 平台集成
-
-- 原生支持 CurseForge 和 Modrinth
-- 整合包发布和导出
-- 自动更新日志生成
-
-## 快速上手
-
-1. **下载** 适用于你平台的安装程序
-2. **启用开发者模式**（Windows）以支持符号链接
-3. **创建** 你的第一个实例
-4. **添加** 来自 CurseForge 或 Modrinth 的模组
-5. **部署** 并开始游戏！
+| Section | What It Covers |
+|---------|---------------|
+| [Getting Started](/docs/getting-started/installation) | Download, install, create an instance, add mods, play. |
+| [Core Concepts](/docs/concepts/metadata-driven) | The ideas behind Polymerium: metadata-driven instances, four-layer directories, deploy pipeline. |
+| [Managing Instances](/docs/managing/accounts) | Accounts, import/export, snapshots, tags, Java management, settings. |
+| [Advanced](/docs/advanced/rules) | Deployment rules, workspace, modpack development, CLI, MCP/AI agent mode. |
+| [Guides](/docs/guides/migrate-from-prism) | Step-by-step walkthroughs for specific tasks — no theory, just doing. |
