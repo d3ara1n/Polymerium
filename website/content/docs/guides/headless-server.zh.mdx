@@ -1,0 +1,130 @@
+---
+title: Headless Instance Management with CLI
+description: Manage Minecraft instances on a server or in CI/CD using the trident CLI — no GUI needed.
+---
+
+## Use Cases
+
+- **CI/CD pipelines** — automatically build and export modpacks on every commit.
+- **Dedicated servers** — manage game instances on a headless Linux box.
+- **Automation scripts** — batch-create, configure, and deploy instances.
+- **AI agent workflows** — use MCP mode to let AI manage instances programmatically.
+
+## Installation
+
+### As a .NET Global Tool
+
+```bash
+dotnet tool install --global Trident.Cli
+```
+
+### Standalone Binary
+
+Download from NuGet or build from source. The CLI is a self-contained .NET application — no GUI dependencies.
+
+## Basic Workflow
+
+### Create and Deploy an Instance
+
+```bash
+# Create a Fabric 1.21.4 instance
+trident instance create my-pack --version 1.21.4 --loader fabric
+
+# Add mods
+trident package add modrinth:sodium
+trident package add modrinth:lithium
+trident package add modrinth:ferrite-core
+trident package add modrinth:fabric-api
+
+# Deploy
+trident instance build my-pack
+```
+
+### Export for Distribution
+
+```bash
+# Export as Modrinth modpack
+trident instance export my-pack --format modrinth --output ./releases/
+
+# Export as CurseForge modpack
+trident instance export my-pack --format curseforge --output ./releases/
+```
+
+### Non-Interactive Mode
+
+Use `--no-interactive` to skip all prompts — required for CI/CD:
+
+```bash
+trident instance create my-pack --version 1.21.4 --loader fabric --no-interactive
+trident package add modrinth:sodium --no-interactive
+trident instance build my-pack --no-interactive
+```
+
+### JSON Output
+
+Use `--json` for programmatic consumption:
+
+```bash
+# List instances as JSON
+trident instance list --json
+
+# Search mods and pipe to jq
+trident package search "sodium" --json | jq '.[].purl'
+```
+
+## CI/CD Example: GitHub Actions
+
+```yaml
+name: Build Modpack
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Trident CLI
+        run: dotnet tool install --global Trident.Cli
+
+      - name: Build and Export
+        run: |
+          trident instance import ./my-pack.zip --no-interactive
+          trident instance build my-pack --no-interactive
+          trident instance export my-pack \
+            --format modrinth \
+            --output ./release/ \
+            --no-interactive
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./release/*.mrpack
+```
+
+## MCP Mode for Automation
+
+Start the MCP server for AI agent or programmatic access:
+
+```bash
+trident --mcp
+```
+
+The server speaks the Model Context Protocol over stdio. Any MCP-compatible client can connect and use the 30+ tools to manage instances.
+
+See [MCP Mode →](/docs/advanced/mcp) for the full tool list and usage examples.
+
+## Custom Data Directory
+
+Use `--home` to specify a different data directory:
+
+```bash
+trident --home /opt/minecraft-data instance list
+```
+
+This is useful for:
+- Running multiple configurations side by side
+- Pointing at a specific data directory in scripts
+- Isolating CI builds from your personal data

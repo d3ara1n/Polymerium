@@ -1,13 +1,12 @@
 {
   "title": "文档",
-  "description": "Polymerium 文档",
+  "description": "从创建第一个实例到整合包开发，全面了解 Polymerium 的使用方法。",
   "pages": [
     "index",
     "getting-started",
-    "creating-instance",
-    "snapshots",
-    "import-export",
-    "cli",
-    "faq"
+    "concepts",
+    "managing",
+    "advanced",
+    "guides"
   ]
 }

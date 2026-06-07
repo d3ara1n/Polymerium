@@ -1,0 +1,144 @@
+---
+title: Troubleshooting
+description: Diagnose and fix common issues — deployment failures, launch crashes, and runtime errors.
+---
+
+## Three Stages of Errors
+
+Polymerium classifies errors into three stages, each with different causes and solutions:
+
+```
+Stage 1: Deployment Failure  →  Game never started
+Stage 2: Launch Failure      →  Java started but exited quickly
+Stage 3: Runtime Crash       →  Game loaded but crashed
+```
+
+Identifying the stage is the first step to fixing the problem.
+
+---
+
+## Stage 1: Deployment Failure
+
+The deploy pipeline failed — Minecraft was never launched.
+
+### Network Issues
+
+**Symptoms:** Timeout errors, checksum failures, "failed to resolve resource."
+
+**Fixes:**
+- Check your internet connection.
+- If in China, try switching the update source to Mirror酱 in Settings.
+- Retry the deploy — network issues are often transient.
+
+### Symlink Permission Issues (Windows)
+
+**Symptoms:** "Failed to create symbolic link" errors during deploy.
+
+**Fixes:**
+- Confirm Developer Mode is enabled: **Settings → System → For developers**.
+- Restart Polymerium after enabling Developer Mode.
+- Check that no antivirus or sync tool is locking the `build/` directory.
+
+### Filesystem Conflicts
+
+**Symptoms:** "File already exists" or "Unexpected file in build directory."
+
+**Fixes:**
+- Delete the `build/` directory and redeploy.
+- Make sure no other process is writing to the instance directory.
+
+### Security Software
+
+**Symptoms:** Deploy seems to hang, or files are deleted after being created.
+
+**Fixes:**
+- Add Polymerium's data directory to your antivirus exclusions.
+- Disable real-time protection temporarily to test.
+
+---
+
+## Stage 2: Launch Failure
+
+Java started but the game exited immediately (usually within seconds).
+
+### Wrong Java Version
+
+**Symptoms:** `UnsupportedClassVersionError`, "A JNI error has occurred."
+
+**Fixes:**
+- Check the Java version configured for this instance (see [Java Management](/docs/managing/java)).
+- Minecraft 1.20.5+ requires Java 21. Minecraft 1.18–1.20.4 requires Java 17.
+- Let Polymerium auto-deploy the correct runtime by removing any manual Java override.
+
+### Bad Launch Parameters
+
+**Symptoms:** JVM exits with an error code, `Could not create the Java Virtual Machine`.
+
+**Fixes:**
+- Check memory allocation in Settings — don't allocate more than you have RAM.
+- Remove custom JVM arguments if you've added any.
+- Try the default settings.
+
+### Loader / Mod Conflicts
+
+**Symptoms:** `NoSuchMethodError`, `ClassNotFoundException`, loader crash on startup.
+
+**Fixes:**
+- Verify the loader matches the Minecraft version.
+- Check for mod version conflicts — a mod built for 1.21 won't work on 1.20.4.
+- Try disabling half your mods, then re-enable in batches to isolate the conflict.
+
+---
+
+## Stage 3: Runtime Crash
+
+The game loaded but crashed during play.
+
+### Reading the Logs
+
+1. Open the instance's **Files** tab.
+2. Navigate to `build/logs/latest.log` for the main log.
+3. Check `build/crash-reports/` for crash report files.
+
+### Common Causes
+
+| Symptom | Likely Cause |
+|---------|-------------|
+| `java.lang.OutOfMemoryError` | Increase max memory in Settings |
+| Shader pack crash | Update or switch shader packs; check Iris/Optimize compatibility |
+| Mod-specific crash | Check the mod's issue tracker; try a different version |
+| World corruption | Restore from a backup or snapshot |
+
+---
+
+## Diagnostic Tools
+
+### Crash Report Modal
+
+When a managed launch crashes, Polymerium shows a crash report with:
+
+- Exit code
+- Java version and path
+- Allocated memory
+- OS info
+- Last 50 lines of log output
+- Crash report file (if generated)
+- Number of installed mods
+- Full command line
+
+### Diagnostic Package
+
+You can export a diagnostic package containing all relevant information. This is useful when asking for help — share the package with the developers or community.
+
+### AI Analysis Package
+
+Polymerium can also export an AI-ready analysis package in Markdown format. You can paste this directly into an AI assistant (Claude, ChatGPT, etc.) for guided troubleshooting.
+
+---
+
+## Getting Help
+
+1. Check the logs first — most errors are self-explanatory.
+2. Try the fixes above for your error stage.
+3. Export a diagnostic package and share it on [GitHub Issues](https://github.com/d3ara1n/Polymerium/issues).
+4. If using AI troubleshooting, export the AI analysis package and paste it into your assistant.

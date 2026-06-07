@@ -1,0 +1,100 @@
+---
+title: Deployment Rules
+description: Fine-tune how mods are deployed with a powerful rule engine — skip, redirect, or normalize files conditionally.
+---
+
+## What Are Deployment Rules?
+
+Deployment rules let you control how individual mods (or groups of mods) are handled during deploy. Instead of a one-size-fits-all approach, you can write rules like:
+
+- "Skip this mod on Fabric instances"
+- "Redirect this datapack to the Paxi folder"
+- "Normalize this mod's filename"
+
+Rules are attached to individual packages in your instance's mod list.
+
+## Rule Anatomy
+
+A rule has two parts:
+
+1. **Selector** — which packages does this rule apply to?
+2. **Action** — what should happen to matching packages?
+
+### Selectors
+
+Selectors are boolean expressions that match packages by their properties:
+
+| Selector | Matches By | Example |
+|----------|-----------|---------|
+| `Purl` | Package URL (exact or partial) | `modrinth:sodium` |
+| `Repository` | Source repository | `curseforge` |
+| `Tag` | Tag name | `server-only` |
+| `Kind` | Resource type | `mod`, `resourcepack`, `shaderpack`, `datapack` |
+
+Selectors can be combined with boolean operators:
+
+- `And` — all sub-selectors must match
+- `Or` — any sub-selector must match
+- `Not` — inverts a selector
+
+Example: match all CurseForge datapacks:
+```
+And(Repository=curseforge, Kind=datapack)
+```
+
+### Actions
+
+| Action | What It Does |
+|--------|-------------|
+| `Skip` | Don't deploy this package at all |
+| `Normalize` | Rename the file to a standardized name |
+| `Destination` | Deploy to a custom path instead of the default |
+
+## Common Use Cases
+
+### Skip Server-Side Mods
+
+If you have server-side mods that shouldn't be in a client instance:
+
+```
+Selector: Tag=server-only
+Action: Skip
+```
+
+### Redirect Datapacks for Paxi
+
+Different loaders use different datapack paths. If you use Paxi:
+
+```
+Selector: Kind=datapack
+Action: Destination → datapacks/
+```
+
+### Normalize Filenames for Resource Packs
+
+Resource pack files often include version numbers in their filenames — `Sapphire-v2.1.zip`, for example. When the pack updates to `Sapphire-v2.2.zip`, the filename changes, and Minecraft forgets your resource pack selection. You have to re-enable it every time.
+
+Normalize fixes this by renaming the file to a consistent name:
+
+```
+Selector: Purl=modrinth:sapphire
+Action: Normalize → Sapphire.zip
+```
+
+Now the deployed filename stays `Sapphire.zip` regardless of what version number the author used. Your resource pack won't be deselected every time it updates.
+
+## Adding Rules
+
+1. Open your instance and go to the **Setup** tab.
+2. Open the **Rules** editor for the instance.
+3. Add a new rule: define the selector and action.
+4. Save. Rules take effect on the next deploy.
+
+## Rules and Tags
+
+Tags and rules work together. The typical workflow:
+
+1. **Tag your mods** with meaningful labels (see [Tags](/docs/managing/tags)).
+2. **Write rules** that target those tags.
+
+This gives you a maintainable system — change a mod's tags instead of editing individual rules.

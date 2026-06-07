@@ -1,13 +1,12 @@
 {
   "title": "Documentation",
-  "description": "Polymerium Documentation",
+  "description": "Learn how to use Polymerium — from your first instance to advanced modpack development.",
   "pages": [
     "index",
     "getting-started",
-    "creating-instance",
-    "snapshots",
-    "import-export",
-    "cli",
-    "faq"
+    "concepts",
+    "managing",
+    "advanced",
+    "guides"
   ]
 }

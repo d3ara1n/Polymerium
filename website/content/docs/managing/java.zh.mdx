@@ -1,0 +1,56 @@
+---
+title: Java Management
+description: Configure Java manually or let Polymerium auto-download the right version for you.
+---
+
+## How Polymerium Handles Java
+
+Polymerium doesn't scan your system drive for Java installations. It uses two sources:
+
+1. **Manually configured Java** — you specify a Java home directory.
+2. **Auto-deployed runtime** — Polymerium downloads a matching Java runtime from Mojang into its cache.
+
+### When Auto-Deploy Happens
+
+If you haven't configured a Java path (or the configured path doesn't work), Polymerium automatically downloads the appropriate runtime during deploy. This happens once — the runtime is cached and reused.
+
+Auto-deployed runtimes live in `cache/runtimes/` and don't touch your system registry or replace your system Java.
+
+## Supported Java Versions
+
+Polymerium can manage multiple Java versions because different Minecraft versions require different JREs:
+
+| Minecraft Version | Required Java |
+|-------------------|---------------|
+| 1.16.5 and earlier | Java 8 |
+| 1.17 | Java 16 |
+| 1.18–1.20.4 | Java 17 |
+| 1.20.5+ | Java 21 |
+
+## Configuring Java Paths
+
+Go to **Settings → Java** to set Java home paths for each major version. Each field accepts a path to a JDK/JRE home directory (containing `bin/java` or `bin/java.exe`).
+
+### Per-Instance Override
+
+You can override the Java version for a specific instance:
+
+1. Open the instance's properties.
+2. Set the **Java home override** to a specific path.
+
+This is useful for testing compatibility or using optimized JVM distributions for specific instances.
+
+## Manual vs. Auto: Which to Use?
+
+| Scenario | Recommendation |
+|----------|---------------|
+| Casual player | Let Polymerium auto-deploy — zero configuration |
+| System Java already installed | Configure the path — avoids duplicate runtimes |
+| Multiple MC versions | Configure paths per version, or let auto-deploy handle it |
+| Debugging Java issues | Set manually so you control exactly which Java runs |
+
+## Troubleshooting Java Issues
+
+- **Wrong Java version** → check the instance's Java override and the global Java settings for the matching version
+- **Java not found** → remove the override and let auto-deploy fetch the right one
+- **Crash on launch** → verify the Java path points to a valid JDK/JRE home (must contain `bin/java`)

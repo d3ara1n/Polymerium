@@ -1,0 +1,83 @@
+---
+title: Workspace
+description: Compare your in-game changes against the modpack source and sync them back — a diff-and-merge tool for modpack developers.
+---
+
+## Who Is This For?
+
+The Workspace is built for **modpack developers** — people who create and maintain modpacks.
+
+If you imported someone else's modpack, you don't need this feature. Your `import/` folder is read-only and the game runs from `live/` as expected. The only time you might open the workspace is to restore an original file from `import/` to `live/` if something broke — but that's rare.
+
+## The Problem
+
+When you develop a modpack, you configure things in-game: video settings, mod configs, world generation options. Those changes land in `live/`. But `import/` — your modpack's distributable source — stays untouched. You changed configs but don't know which files moved or how to promote them back into the modpack. That's what Workspace solves.
+
+## Opening the Workspace
+
+1. Select your instance.
+2. Switch to the **Workspace** tab.
+
+The workspace shows a side-by-side comparison of `import/` vs `live/`.
+
+## Understanding the Diff
+
+The workspace detects three types of changes:
+
+| Type | Meaning |
+|------|---------|
+| **Added** | File exists in `live/` but not in `import/` |
+| **Modified** | File exists in both, but content differs |
+| **Removed** | File exists in `import/` but not in `live/` |
+
+### Example: Config Tweaks
+
+You launched the game and adjusted performance settings for your modpack. The changes are in `live/config/` while the originals sit in `import/config/`. The workspace shows exactly which files changed and how they differ.
+
+## Syncing Changes
+
+There are two sync directions, each serving a different purpose.
+
+### Promote: live → import (primary)
+
+This is the main workflow. When you see a change in `live/` that you want to keep in your modpack:
+
+1. Select the file in the workspace.
+2. Click **Sync to Import**.
+3. The file is copied from `live/` to `import/`.
+
+That change is now part of your modpack's source. It will be included when you export or update the modpack.
+
+You can select multiple files and sync them at once — useful after a tuning session where you changed many config files.
+
+### Restore: import → live (secondary)
+
+If an in-game change went wrong and you want the original file back:
+
+1. Select the file in the workspace.
+2. Click **Sync to Live**.
+3. The file is copied from `import/` to `live/`, overwriting your local change.
+
+This restores the modpack's original version of that file.
+
+## Modpack Author Workflow
+
+This is the primary use case for the workspace:
+
+1. Build a modpack and add initial configs to `import/`.
+2. Launch the game and configure everything in-game (changes go to `live/`).
+3. Open the workspace and review what changed.
+4. Promote confirmed changes from `live/` to `import/`.
+5. Export or commit to Git.
+
+Repeat this loop as you iterate on your modpack.
+
+## Relationship to Git
+
+If you use Git for your modpack (see [Modpack Development](/docs/advanced/modpack-dev)), the workspace fits naturally into version control:
+
+1. `import/` is tracked by Git.
+2. `live/` is in `.gitignore`.
+3. Sync from `live/` → `import/` → then `git commit`.
+
+Think of `live/` as your working tree, `import/` as your staged changes, and `git commit` as the final step.

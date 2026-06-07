@@ -1,0 +1,10 @@
+{
+  "title": "Managing Instances",
+  "pages": [
+    "accounts",
+    "import-export",
+    "snapshots",
+    "tags",
+    "java"
+  ]
+}

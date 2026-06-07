@@ -1,0 +1,52 @@
+---
+title: Deploy & Play
+description: Deploy your instance and launch Minecraft — understand what "deploy" means and how launching works.
+---
+
+## Deploying Your Instance
+
+Before Minecraft can run, Polymerium needs to **deploy** your instance. This is the step where your metadata (version, loader, mod list) gets turned into an actual, runnable game directory.
+
+Click **Deploy** — or just click **Launch** and Polymerium will deploy automatically if needed.
+
+### What Deploy Does
+
+1. Downloads all required files — Minecraft jars, loader libraries, and mods — to the shared cache
+2. Builds the game directory using **symbolic links** pointing into the cache
+3. Generates launch parameters (classpath, JVM args, etc.)
+
+### First Deploy vs. Incremental Deploys
+
+Your first deploy downloads everything from scratch — expect it to take as long as installing a fresh modpack on any launcher. Polymerium uses an aggressive, optimized download strategy, so on a good network it can be faster than other launchers.
+
+The real speed advantage comes on subsequent deploys. When you make small changes (add a mod, switch a loader version), Polymerium only downloads what's new or changed and rebuilds the game directory with symlinks. Incremental deploys are fast — often near-instant.
+
+### Fast Mode
+
+If nothing has changed since your last deploy (same mods, same versions, same settings), Polymerium **skips the deploy entirely** and goes straight to launch. This makes subsequent launches feel instant.
+
+## Launching
+
+Click **Launch** to start Minecraft. Polymerium supports three launch modes:
+
+| Mode | What It Does |
+|------|-------------|
+| **Managed** (default) | Polymerium tracks the game process, captures output, and detects crashes. Recommended. |
+| **Fire-and-forget** | Launches the game and detaches. Use this if you want to close Polymerium while playing. |
+| **Debug** | Exports the full launch command for troubleshooting. Doesn't actually start the game. |
+
+## First Launch Checklist
+
+- [x] [Install Polymerium](/docs/getting-started/installation)
+- [x] [Create an instance](/docs/getting-started/first-instance)
+- [x] [Configure your instance](/docs/getting-started/first-instance#configuring-your-instance) (loader, settings)
+- [x] [Add mods](/docs/getting-started/adding-mods)
+- [x] Deploy and launch 🎉
+
+## What's Next?
+
+You're playing! Here's where to go from here:
+
+- **Understand what just happened** — read [Core Concepts](/docs/concepts/metadata-driven) to learn why Polymerium works this way
+- **Manage your instances** — [accounts](/docs/managing/accounts), [snapshots](/docs/managing/snapshots), [tags](/docs/managing/tags)
+- **Go deeper** — [deployment rules](/docs/advanced/rules), [CLI](/docs/advanced/cli), [modpack development](/docs/advanced/modpack-dev)

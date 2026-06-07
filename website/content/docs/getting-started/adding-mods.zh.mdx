@@ -1,0 +1,55 @@
+---
+title: Adding Mods
+description: Browse, search, and install mods from CurseForge and Modrinth directly in Polymerium.
+---
+
+## Browsing Mods
+
+1. Select your instance in the sidebar.
+2. Switch to the **Setup** tab — this is where all mod management happens.
+3. Click **Add Mod** or use the search bar at the top.
+
+Polymerium connects to **CurseForge** and **Modrinth** directly. You can search both repositories, browse categories, and install mods without leaving the app.
+
+## Searching
+
+Use the search bar in the marketplace to find mods by name or keyword. You can filter by:
+
+- **Repository** — CurseForge, Modrinth, or both
+- **Game version** — only show mods compatible with your instance's Minecraft version
+- **Loader** — only show mods for your instance's mod loader
+- **Category** — performance, technology, magic, adventure, etc.
+
+## Installing a Mod
+
+Click on any mod to see its details — description, screenshots, changelogs. When you're ready, click **Install** to add the mod to your instance.
+
+The mod file isn't downloaded yet. Installing only adds a reference to your instance's metadata. The actual download and file linking happens when you **deploy**.
+
+## Managing Your Mod List
+
+Once installed, each mod in your list can be:
+
+- **Enabled / Disabled** — toggle without removing. Disabled mods are ignored during deployment.
+- **Version-pinned** — click the version to pick a specific release instead of always using the latest.
+- **Tagged** — add custom tags like `performance`, `core`, `QoL` for your own organization. See [Tags & Batch Operations](/docs/managing/tags) for more.
+
+## Bulk Updates
+
+When mod authors release new versions, Polymerium can show you all available updates at once. The bulk update dialog lets you review each update and choose which ones to apply — or exclude mods with certain tags from auto-updating.
+
+## What About Dependencies?
+
+Many mods depend on other mods to function (for example, most Fabric mods require Fabric API). Polymerium shows you what a mod depends on and whether those dependencies are already in your instance.
+
+Here's how it works:
+
+1. **Dependency info** — When you view a mod, Polymerium lists its dependencies with real installation status. You can see at a glance which ones you already have and which are missing.
+2. **Nested exploration** — Click into any dependency to see *its* dependencies. You can drill down through the full dependency tree, level by level.
+3. **You choose what to add** — Polymerium doesn't auto-add anything. You install only the dependencies you want, with full visibility into what each one requires.
+
+Dependency data from mod hosting sites can be inaccurate, so Polymerium gives you the information and lets you decide. No surprises, no unwanted mods.
+
+## Next Step
+
+Your instance has mods. Time to [deploy and play →](/docs/getting-started/play)

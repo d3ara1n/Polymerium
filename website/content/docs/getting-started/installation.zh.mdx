@@ -1,0 +1,57 @@
+---
+title: Installation
+description: Download, install, and set up Polymerium on Windows, macOS, or Linux.
+---
+
+## Download
+
+Grab the latest release for your platform from [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases).
+
+| Platform | File |
+|----------|------|
+| Windows x64 | `Polymerium-win-Setup.exe` |
+| Linux x64 | `Polymerium.AppImage` |
+| macOS ARM | `Polymerium-osx-Setup.pkg` |
+
+Each platform uses its standard installer format. Run it and follow the prompts.
+
+## Windows: Enable Developer Mode
+
+Polymerium uses symbolic links to share mod files across instances without duplication. On Windows, creating symlinks requires **Developer Mode**.
+
+1. Open **Settings → System → For developers**
+2. Toggle **Developer Mode** on
+3. Confirm the prompt
+
+This is a one-time setup. It doesn't compromise security — it only allows your user account to create symbolic links, which is the default on macOS and Linux.
+
+> macOS and Linux users don't need any special configuration — symlinks work out of the box.
+
+## First Launch: The OOBE Wizard
+
+When you open Polymerium for the first time, the OOBE (Out-of-Box Experience) wizard walks you through:
+
+1. **Welcome & Features** — a quick overview of what Polymerium can do.
+2. **Privilege Check** — Polymerium tests whether it can create symlinks in its data directory. If this fails on Windows, you need to enable Developer Mode (see above).
+3. **Quick Setup** — optionally configure Java paths and language.
+4. **Privacy** — choose whether to send crash reports via Sentry.
+5. **Done** — you're ready to create your first instance.
+
+## What Gets Installed Where
+
+Polymerium stores all its data in `~/.trident/` on every platform. This includes settings, cached files, and your instances.
+
+| Data | Location |
+|------|----------|
+| Settings | `~/.trident/settings.json` |
+| Persistence DB | `~/.trident/persistence.sqlite.db` |
+| HTTP cache | `~/.trident/cache.sqlite.db` |
+| Shared mod cache | `~/.trident/cache/packages/` |
+| Game assets | `~/.trident/cache/assets/` |
+| Instances | `~/.trident/instances/` |
+
+> All data is local. Polymerium doesn't upload anything beyond optional crash reports.
+
+## Next Step
+
+Now that Polymerium is running, [create your first instance →](/docs/getting-started/first-instance)

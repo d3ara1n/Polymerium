@@ -1,0 +1,140 @@
+---
+title: Modpack Development with Git
+description: Use Git to version-control your modpack — track changes, collaborate, and publish releases.
+---
+
+## Why Git?
+
+A Polymerium instance is already Git-friendly by design:
+
+- `profile.json` is the modpack definition — plain JSON, diffable
+- `import/` contains the distributable files — configs, resources, custom content
+- `build/`, `live/`, `persist/` are runtime artifacts that don't belong in version control
+
+This means you can put an instance under Git and get meaningful diffs, branching, and collaboration.
+
+## Setting Up
+
+1. Initialize a Git repo in the instance directory:
+
+```bash
+cd instances/my-modpack
+git init
+```
+
+2. Create a `.gitignore`:
+
+```plaintext
+build/
+live/
+persist/
+data.lock.json
+```
+
+3. Commit the initial state:
+
+```bash
+git add profile.json import/ icon.png README.md CHANGELOG.md
+git commit -m "Initial modpack"
+```
+
+## What to Track
+
+| File | Track? | Why |
+|------|--------|-----|
+| `profile.json` | ✅ | The modpack definition — version, loader, mod list |
+| `import/` | ✅ | Distributable files (configs, resources) |
+| Icon / README / CHANGELOG | ✅ | Modpack metadata |
+| `build/` | ❌ | Build artifact, reproducible |
+| `live/` | ❌ | Working copy, personal |
+| `persist/` | ❌ | Player data (saves, screenshots) |
+| `data.lock.json` | ❌ | Deploy cache, auto-generated |
+
+## Development Workflow
+
+### Iterating on Configs
+
+1. Launch the game and modify settings in-game.
+2. Changes land in `live/`.
+3. Open the [Workspace](/docs/advanced/workspace) to review diffs.
+4. Sync confirmed changes to `import/`.
+5. Commit:
+
+```bash
+git add import/
+git commit -m "Tweak performance configs"
+```
+
+### Adding / Removing Mods
+
+1. Add or remove mods in Polymerium's Setup tab.
+2. `profile.json` is updated automatically.
+3. Commit:
+
+```bash
+git add profile.json
+git commit -m "Add Sodium and Lithium"
+```
+
+### Switching Branches
+
+You can use Git branches for experimental modpack versions:
+
+```bash
+git checkout -b experiment/new-loader
+# Change loader in Polymerium, add/remove mods
+git add profile.json import/
+git commit -m "Switch to NeoForge"
+# Test...
+git checkout main  # Go back to stable
+```
+
+## Collaboration
+
+### Sharing with Co-Authors
+
+1. Push the repo to a shared remote (GitHub, GitLab, etc.).
+2. Co-authors clone the repo into their `instances/` directory.
+3. Each person's `live/` and `persist/` are local and untracked.
+4. Collaborate on `profile.json` and `import/` via normal Git workflows.
+
+### Publishing a Release
+
+1. Tag a release:
+
+```bash
+git tag v1.2.0
+git push origin v1.2.0
+```
+
+2. Export the instance using Polymerium's [export](/docs/managing/import-export) feature.
+3. Upload the exported modpack to CurseForge, Modrinth, or both.
+
+#### Automating Exports with the CLI
+
+You can skip the GUI and export from the command line using [Trident CLI](/docs/advanced/cli):
+
+```bash
+trident instance export my-modpack --format modrinth --output ./releases/
+```
+
+This works well in CI/CD pipelines. For example, trigger an automatic build and export whenever you push a tag:
+
+```yaml
+# .github/workflows/release.yml (simplified)
+on:
+  push:
+    tags: ['v*']
+steps:
+  - uses: actions/checkout@v4
+  - run: trident instance export my-modpack --format modrinth --output ./releases/
+  - # upload ./releases/* to Modrinth / CurseForge
+```
+
+See the [headless server guide](/docs/guides/headless-server) for a full CI/CD example.
+
+## Tips
+
+- **Close Polymerium before Git operations** — Polymerium may be watching `profile.json` for changes. Quit, do your Git work, then reopen.
+- **Don't edit `profile.json` manually for version changes** — it's safer to create a new instance and migrate packages.
+- **Use the workspace** as your staging area — it's purpose-built for the `live/` → `import/` flow.

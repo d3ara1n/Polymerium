@@ -1,0 +1,198 @@
+---
+title: CLI Reference
+description: The trident command-line tool — manage instances, mods, accounts, and more from the terminal.
+---
+
+## Installation
+
+The CLI (`trident`) is included with Polymerium. It's also available as a standalone .NET tool:
+
+```bash
+dotnet tool install --global Trident.Cli
+```
+
+## Global Options
+
+| Option | Description |
+|--------|-------------|
+| `--home <path>` | Override the data directory |
+| `--json` | Output results as JSON |
+| `--no-interactive` | Disable interactive prompts |
+| `--verbose` / `--debug` | Increase output verbosity |
+
+## Instance Commands
+
+### Create an Instance
+
+```bash
+trident instance create my-modpack --version 1.21.4 --loader fabric
+```
+
+Options:
+- `--version` — Minecraft version (required)
+- `--loader` — Loader name: `fabric`, `forge`, `neoforge`, `quilt`
+
+### List Instances
+
+```bash
+trident instance list
+```
+
+### Inspect an Instance
+
+```bash
+trident instance inspect my-modpack
+```
+
+Shows version, loader, mod count, deploy status, and more.
+
+### Deploy (Build) an Instance
+
+```bash
+trident instance build my-modpack
+```
+
+Runs the full deploy pipeline. Equivalent to clicking "Deploy" in the GUI.
+
+### Launch an Instance
+
+```bash
+trident instance run my-modpack
+```
+
+Deploys if needed, then launches Minecraft.
+
+### Export a Modpack
+
+```bash
+trident instance export my-modpack --format modrinth --output ./release/
+```
+
+Supported formats: `trident`, `curseforge`, `modrinth`, `multimc`.
+
+### Import a Modpack
+
+```bash
+trident instance import ./my-pack.mrpack
+```
+
+Auto-detects the format.
+
+### Delete an Instance
+
+```bash
+trident instance delete my-modpack
+```
+
+## Package Commands
+
+### Search for Mods
+
+```bash
+trident package search "sodium"
+```
+
+### Add a Mod
+
+```bash
+trident package add modrinth:sodium
+```
+
+The `purl` format is `repository:project-id` or `repository:project-id@version-id`.
+
+### List Installed Mods
+
+```bash
+trident package list --instance my-modpack
+```
+
+### Enable / Disable a Mod
+
+```bash
+trident package enable modrinth:sodium --instance my-modpack
+trident package disable modrinth:sodium --instance my-modpack
+```
+
+### View Available Versions
+
+```bash
+trident package version list modrinth:sodium
+```
+
+### Pin a Specific Version
+
+```bash
+trident package version set modrinth:sodium <version-file-id>
+```
+
+## Loader Commands
+
+### List Loaders for an Instance
+
+```bash
+trident loader list --instance my-modpack
+```
+
+### Change the Loader
+
+```bash
+trident loader set my-modpack --loader neoforge --version 21.4.0
+```
+
+## Account Commands
+
+### Add a Microsoft Account
+
+```bash
+trident account add
+```
+
+Launches the Device Code Flow in the terminal.
+
+### Add an Offline Account
+
+```bash
+trident account add-offline --username Steve
+```
+
+### List Accounts
+
+```bash
+trident account list
+```
+
+### Remove an Account
+
+```bash
+trident account remove <uuid>
+```
+
+## Repository Commands
+
+### List Configured Repositories
+
+```bash
+trident repository list
+```
+
+### Check Repository Status
+
+```bash
+trident repository status
+```
+
+### Add a Repository
+
+```bash
+trident repository add my-repo https://api.example.com
+```
+
+## MCP Mode
+
+Start an MCP server for AI agent integration:
+
+```bash
+trident --mcp
+```
+
+See [MCP Mode →](/docs/advanced/mcp) for details.

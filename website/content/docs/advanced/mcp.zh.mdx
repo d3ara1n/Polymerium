@@ -1,0 +1,148 @@
+---
+title: MCP Mode & AI Agent Integration
+description: Let AI agents manage your Minecraft instances through the Model Context Protocol — unique to Polymerium.
+---
+
+## What is MCP?
+
+The Model Context Protocol (MCP) is a standard for AI agents to interact with external tools. Polymerium's CLI (`trident`) can run as an MCP server, exposing 30+ tools that AI agents can call directly.
+
+This means you can ask an AI assistant to:
+
+- "Create a Fabric 1.21.4 instance with performance mods"
+- "Take a snapshot, then update Sodium to the latest version"
+- "Export this instance as a Modrinth modpack"
+
+And it will do it — no manual clicks needed.
+
+**No other Minecraft launcher supports this.**
+
+## Starting the MCP Server
+
+```bash
+trident --mcp
+```
+
+This starts an MCP server over stdio. Connect your AI client (Claude, Cursor, etc.) to it as a tool provider.
+
+## Configuration for AI Clients
+
+### Claude Desktop
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "polymerium": {
+      "command": "trident",
+      "args": ["--mcp"]
+    }
+  }
+}
+```
+
+### Cursor
+
+Add as an MCP tool server in Cursor's settings, pointing to `trident --mcp`.
+
+### Other Clients
+
+Any client that supports MCP over stdio can connect. The server speaks the standard MCP protocol.
+
+## Available Tools (30+)
+
+### Instance Tools
+
+| Tool | Description |
+|------|-------------|
+| `instance_list` | List all instances |
+| `instance_inspect` | View instance details |
+| `instance_create` | Create a new instance |
+| `instance_delete` | Delete an instance |
+| `instance_unlock` | Unlock an imported instance's source binding |
+| `instance_reset` | Reset the build (clear build/ and live/) |
+| `instance_export` | Export instance as a modpack |
+| `instance_import` | Import a modpack file |
+
+### Package Tools
+
+| Tool | Description |
+|------|-------------|
+| `package_list` | List installed mods |
+| `package_search` | Search CurseForge / Modrinth |
+| `package_add` | Add a mod by purl |
+| `package_inspect` | View mod details |
+| `package_enable` / `package_disable` | Toggle mods |
+| `package_dependency_list` | List a mod's dependencies |
+| `package_dependent_list` | List mods that depend on a given mod |
+| `package_version_list` | List available versions |
+| `package_version_set` | Pin a specific version |
+
+### Loader Tools
+
+| Tool | Description |
+|------|-------------|
+| `loader_list` | List loaders for an instance |
+| `loader_version_list` | List available loader versions |
+| `loader_get` / `loader_set` | Get or set the loader |
+
+### Config Tools
+
+| Tool | Description |
+|------|-------------|
+| `config_get` / `config_set` | Read/write configuration |
+| `config_list` / `config_unset` | List or remove config keys |
+
+### Account Tools
+
+| Tool | Description |
+|------|-------------|
+| `account_list` | List accounts |
+| `account_add_offline` | Add an offline account |
+| `account_remove` | Remove an account |
+
+### Repository Tools
+
+| Tool | Description |
+|------|-------------|
+| `repository_list` | List configured repositories |
+| `repository_status` | Check repository connectivity |
+| `repository_add` / `repository_remove` | Add or remove repositories |
+
+## Example Sessions
+
+### Creating a Performance Modpack
+
+```
+You: Create a Fabric 1.21.4 instance called "perf-pack" with Sodium, Lithium, and Iris.
+
+Agent: I'll create the instance and add the mods.
+  → instance_create("perf-pack", version="1.21.4", loader="fabric")
+  → package_add("modrinth:sodium")
+  → package_add("modrinth:lithium")
+  → package_add("modrinth:iris")
+  → instance_build("perf-pack")
+  Done! Your "perf-pack" instance is ready to launch.
+```
+
+### Safe Experimentation
+
+```
+You: Take a snapshot of my "skyblock" instance, then update all mods.
+
+Agent:
+  → instance_inspect("skyblock")   // confirm instance exists
+  → snapshot_create("skyblock", name="before-bulk-update")
+  → package_version_list(...)      // check each mod for updates
+  → package_version_set(...)       // apply updates
+  → instance_build("skyblock")
+  Snapshot saved. All mods updated and redeployed.
+  If anything breaks, restore the "before-bulk-update" snapshot.
+```
+
+## Limitations
+
+- MCP runs over stdio — it's designed for local use, not remote servers.
+- Microsoft account login requires Device Code Flow, which isn't ideal for headless AI interaction. Use offline accounts for automated workflows.
+- The MCP server uses the same data directory as the GUI — don't run both simultaneously.

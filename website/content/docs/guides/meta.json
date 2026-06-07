@@ -1,0 +1,11 @@
+{
+  "title": "Guides",
+  "pages": [
+    "migrate-from-prism",
+    "migrate-from-shard",
+    "setup-authlib",
+    "performance-modpack",
+    "git-collaboration",
+    "headless-server"
+  ]
+}
