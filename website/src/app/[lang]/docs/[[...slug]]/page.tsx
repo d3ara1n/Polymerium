@@ -5,6 +5,7 @@ import {
   DocsPage,
   DocsTitle,
   MarkdownCopyButton,
+  PageLastUpdate,
   ViewOptionsPopover,
 } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
@@ -12,6 +13,7 @@ import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
+import { getBreadcrumbItems } from 'fumadocs-core/breadcrumb';
 
 export default async function Page(props: PageProps<'/[lang]/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -21,8 +23,36 @@ export default async function Page(props: PageProps<'/[lang]/docs/[[...slug]]'>)
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
 
+  // BreadcrumbList schema
+  const pageTree = source.getPageTree(params.lang);
+  const breadcrumbItems = getBreadcrumbItems(page.url, pageTree, {
+    includePage: true,
+  });
+  // Add root item manually for better naming
+  const allBreadcrumbItems = [
+    {
+      name: params.lang === 'zh' ? '首页' : 'Home',
+      url: `/${params.lang}`,
+    },
+    ...breadcrumbItems,
+  ];
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: allBreadcrumbItems.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: typeof item.name === 'string' ? item.name : (item.name as any).name,
+      item: `https://polymerium.dearain.dev${item.url}`,
+    })),
+  };
+
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
@@ -33,6 +63,7 @@ export default async function Page(props: PageProps<'/[lang]/docs/[[...slug]]'>)
         />
       </div>
       <DocsBody>
+        {page.data.lastModified && <PageLastUpdate date={page.data.lastModified} />}
         <MDX
           components={getMDXComponents({
             a: createRelativeLink(source, page),

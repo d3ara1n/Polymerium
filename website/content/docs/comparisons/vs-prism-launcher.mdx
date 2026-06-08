@@ -1,0 +1,295 @@
+---
+title: Polymerium vs Prism Launcher
+description: A detailed feature comparison between Polymerium and Prism Launcher, two popular Minecraft launchers.
+---
+
+## Overview
+
+Polymerium and Prism Launcher are both open-source Minecraft launchers that support multiple instances, mod loaders, and modpack platforms. However, they take fundamentally different approaches to instance management and storage.
+
+### Key Difference at a Glance
+
+| Aspect | Polymerium | Prism Launcher |
+|--------|:----------:|:--------------:|
+| **Instance representation** | Metadata file (`profile.json`) + shared cache | Full file copy (isolated `.minecraft` folders) |
+| **Storage model** | Symlink-based deduplication | File duplication with optional hard/symbolic links |
+| **Architecture** | Compile-on-read (metadata → deploy) | File-based instance folders |
+| **License** | MIT | GPL-3.0 |
+
+---
+
+## Feature Comparison
+
+### Storage & Disk Usage
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **Shared mod cache** | ✅ Central cache, symlinked into instances | ❌ Each instance stores its own copies |
+| **Disk space savings** | 60–80% vs traditional launchers | No deduplication by default |
+| **Symlink support** | ✅ Cross-platform (Win/Linux/macOS) | ✅ Supported (Unix only), with hard links and reflinks |
+| **Modpack version switching** | Seconds (metadata change) | Import new copy (full duplication) |
+
+**Real-world example:** 5 instances with identical modlists (50 mods, 2GB total)
+
+- **Prism Launcher:** ~10GB disk usage (5 × 2GB)
+- **Polymerium:** ~2GB disk usage (2GB shared cache + metadata)
+
+---
+
+### Instance Architecture
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **Instance definition** | Single `profile.json` file | `instance.cfg` + full folder structure |
+| **File organization** | 4-layer model (import/live/persist/build) | Single `.minecraft` folder |
+| **Reset/rebuild** | Clear `build/` and `live/`, redeploy from metadata | Manual file deletion/reimport |
+| **Modpack updates** | In-place, `import/` replaced, `persist/` preserved | Import new copy (duplicates files) |
+
+**Polymerium's 4-layer model:**
+
+```
+instances/my-pack/
+├── import/    ← Modpack source (read-only)
+├── live/      ← Working copy (in-game changes)
+├── persist/   ← User-preserved files (survives updates)
+└── build/     ← Final game directory (disposable)
+```
+
+This separation means:
+- Modpack updates don't overwrite your custom settings (`persist/`)
+- Resetting doesn't delete your world saves (`persist/saves/`)
+- The game directory (`build/`) is rebuildable from metadata
+
+---
+
+### Mod Loader Support
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **Fabric** | ✅ | ✅ |
+| **Forge** | ✅ | ✅ |
+| **NeoForge** | ✅ | ✅ |
+| **Quilt** | ✅ | ✅ |
+| **LiteLoader** | ❌ | ✅ |
+| **Ornithe / LegacyFabric / Rift** | ❌ | ✅ (as search filters) |
+| **Custom loader versions** | ✅ Select specific versions | ✅ Via instance version editor (patch components) |
+| **Instant loader switching** | ✅ Update metadata, redeploy | ⚠️ Create new instance or manual patch
+
+**Polymerium advantage:** Switch from Forge to NeoForge in seconds — just update the `loader` field and redeploy. No re-downloading the same mods.
+
+**Prism Launcher advantage:** Strong instance patching capabilities — customize core components and loader versions via the Version editor. Broader loader support including legacy loaders.
+
+---
+
+### Modpack Import/Export
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **CurseForge import** | ✅ | ✅ |
+| **Modrinth import** | ✅ | ✅ |
+| **MultiMC import** | ✅ | ✅ (MultiMC legacy support) |
+| **Trident format** | ✅ Native format | ❌ |
+| **CurseForge export** | ✅ | ✅ |
+| **Modrinth export** | ✅ | ✅ |
+| **MultiMC export** | ✅ | ✅ |
+| **Modpack updates** | In-place, `import/` refresh | Import new copy (full duplication) |
+
+---
+
+### Account Management
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **Microsoft account** | ✅ (Device Code Flow OAuth) | ✅ |
+| **Offline account** | ✅ | ✅ |
+| **Authlib Injector** | ✅ (Third-party auth / Yggdrasil) | ❌ |
+| **Trial account** | ✅ | ❌ |
+| **Per-instance accounts** | ✅ Bind different accounts to different instances | ❌ Global account setting |
+
+---
+
+### Mod Management
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **CurseForge integration** | ✅ Built-in | ✅ Built-in |
+| **Modrinth integration** | ✅ Built-in | ✅ Built-in |
+| **Tag-based organization** | ✅ Flexible tags, multi-tag filtering | ❌ Traditional categories |
+| **Deployment rules engine** | ✅ Skip/redirect/normalize files by condition | ❌ |
+| **Batch operations** | ✅ Bulk update, tag-based exclusion | ✅ Basic bulk operations |
+
+**Deployment rules example (Polymerium):**
+
+```json
+{
+  "selector": "And(Repository=curseforge, Kind=datapack)",
+  "action": "Destination → datapacks/"
+}
+```
+
+This redirects all CurseForge datapacks to a custom folder — useful for different datapack path conventions across loaders.
+
+---
+
+### Advanced Features
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **Snapshots** | ✅ Save/restore/diff entire game states | ❌ |
+| **CLI** | ✅ 30+ commands (`trident`) | ❌ |
+| **MCP Mode** | ✅ AI Agent integration (30+ tools) | ❌ |
+| **Crash diagnostics** | ✅ 3-stage error classification + AI analysis | ⚠️ Basic crash log |
+| **Git-friendly modpack dev** | ✅ Instance = JSON + assets, version-control ready | ⚠️ Requires manual zip export |
+| **Playtime tracking** | ✅ Charts, weekly activity, total hours | ✅ Basic timer |
+| **Widgets** | ✅ Text notes, network connectivity | ❌ |
+| **Java auto-download** | ✅ Automatic from Mojang | ✅ |
+| **Theme system** | ✅ Light/dark, custom accent, border radius | ✅ Basic theming |
+
+---
+
+### Platform & Localization
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **Windows** | ✅ | ✅ |
+| **macOS** | ✅ ARM64 (Apple Silicon) | ✅ ARM64 |
+| **Linux** | ✅ | ✅ |
+| **English** | ✅ | ✅ |
+| **Chinese** | ✅ Full localization | ✅ Weblate community translation |
+| **Other languages** | ⚠️ Add manually | ✅ Weblate (370+ contributors) |
+
+**Prism Launcher advantage:** Mature, battle-tested launcher with strong community support. Weblate project with 370+ contributors provides extensive localization. Strong instance patching capabilities via the Version editor. Broader mod loader support including legacy loaders.
+
+---
+
+### Open Source & Licensing
+
+| Feature | Polymerium | Prism Launcher |
+|---------|:----------:|:--------------:|
+| **License** | MIT | GPL-3.0 |
+| **Source code** | [GitHub](https://github.com/d3ara1n/Polymerium) | [GitHub](https://github.com/PrismLauncher/PrismLauncher) |
+| **Fork of** | Original project | MultiMC |
+
+---
+
+## When to Choose Each
+
+### Choose Polymerium if you:
+
+- ✅ Have limited disk space or manage many instances with overlapping modlists
+- ✅ Frequently switch between mod loaders or modpack versions
+- ✅ Develop or maintain modpacks (Git-friendly workflow)
+- ✅ Want to experiment safely (snapshots)
+- ✅ Need offline or third-party auth (Authlib Injector, Trial)
+- ✅ Prefer Chinese localization
+- ✅ Want AI Agent automation (MCP mode)
+- ✅ Need precise control over file deployment (rules engine)
+
+### Choose Prism Launcher if you:
+
+- ✅ Prefer a traditional file-based instance model
+- ✅ Need GPL-3.0 licensing for your project
+- ✅ Are already familiar with MultiMC-style instance folders
+- ✅ Want strong instance patching (custom component/JSON editing)
+- ✅ Need legacy loader support (LiteLoader, Ornithe, etc.)
+- ✅ Want a mature, battle-tested launcher with strong community support (370+ Weblate contributors)
+
+---
+
+## Unique Polymerium Features
+
+### MCP Mode & AI Integration
+
+Polymerium is the **only Minecraft launcher with built-in MCP support**. Run `trident --mcp` and AI agents can:
+
+- Create instances: `instance_create(...)`
+- Add mods: `package_add("modrinth:sodium")`
+- Take snapshots: `snapshot_create(...)`
+- Deploy and launch: `instance_build(...)`
+
+30+ tools cover the entire workflow — no other launcher offers this capability.
+
+### Snapshots & Diff
+
+Save the entire game state before making changes, then restore or compare later. Great for:
+
+- Testing mod updates
+- Experimenting with configurations
+- Debugging crashes
+- Rolling back broken setups
+
+### Git-Friendly Modpack Development
+
+Your instance source is clean: `profile.json` + `import/` + icon + README + CHANGELOG. Add a `.gitignore` to exclude `build/`, `live/`, `persist/`, and you have a version-controlled modpack ready for collaboration.
+
+---
+
+## Feature Matrix (Full)
+
+| Feature | Polymerium | Prism Launcher |
+|--------|:----------:|:--------------:|
+| **Storage** |||
+| Symlink-based deduplication | ✅ | ⚠️ Unix-only |
+| Hard link support | ✅ | ✅ |
+| Shared mod cache | ✅ | ❌ |
+| Disk space savings | 60–80% | None |
+| **Architecture** |||
+| Metadata-driven instances | ✅ | ❌ |
+| 4-layer file model | ✅ | ❌ |
+| Compile-on-read deployment | ✅ | ❌ |
+| **Mod Loaders** |||
+| Fabric | ✅ | ✅ |
+| Forge | ✅ | ✅ |
+| NeoForge | ✅ | ✅ |
+| Quilt | ✅ | ✅ |
+| LiteLoader | ❌ | ✅ |
+| Legacy loaders (Ornithe, Rift, etc.) | ❌ | ✅ (as filters) |
+| Custom loader versions | ✅ | ✅ (Version editor) |
+| **Modpacks** |||
+| CurseForge import/export | ✅ | ✅ |
+| Modrinth import/export | ✅ | ✅ |
+| MultiMC import/export | ✅ | ✅ |
+| Trident format | ✅ | ❌ |
+| In-place modpack updates | ✅ | ⚠️ Import new copy |
+| **Accounts** |||
+| Microsoft | ✅ | ✅ |
+| Offline | ✅ | ✅ |
+| Authlib Injector | ✅ | ❌ |
+| Trial | ✅ | ❌ |
+| Per-instance binding | ✅ | ❌ |
+| **Mods** |||
+| CurseForge + Modrinth | ✅ | ✅ |
+| Tag-based organization | ✅ | ❌ |
+| Deployment rules | ✅ | ❌ |
+| Batch update with exclusion | ✅ | ⚠️ Basic |
+| **Advanced** |||
+| Snapshots | ✅ | ❌ |
+| CLI (`trident`) | ✅ (30+ commands) | ❌ |
+| MCP Mode (AI Agents) | ✅ | ❌ |
+| Crash diagnostics + AI | ✅ | ⚠️ Basic |
+| Git-friendly modpack dev | ✅ | ⚠️ Manual export |
+| Playtime tracking (charts) | ✅ | ✅ (basic) |
+| Widgets | ✅ | ❌ |
+| **Platform** |||
+| Windows (x64) | ✅ | ✅ |
+| Linux (x64) | ✅ | ✅ |
+| macOS (ARM64) | ✅ | ✅ |
+| English | ✅ | ✅ |
+| Chinese | ✅ (built-in) | ✅ (Weblate) |
+| Other languages | ⚠️ (add manually) | ✅ (Weblate, 370+ contributors) |
+| **Other** |||
+| Java auto-download | ✅ | ✅ |
+| Theme system | ✅ | ✅ |
+| Open source | ✅ (MIT) | ✅ (GPL-3.0) |
+
+---
+
+## Summary
+
+Polymerium and Prism Launcher both provide robust Minecraft instance management, but they target different use cases:
+
+- **Polymerium** innovates on the instance model — metadata-driven, symlink-based deduplication, and unique features like snapshots, MCP mode, and Git-friendly modpack development. Ideal for power users, modpack developers, and those who want automation and efficiency.
+
+- **Prism Launcher** offers a traditional, battle-tested file-based approach with MultiMC heritage. Strong instance patching, broader loader support, and a mature Weblate-powered localization ecosystem with 370+ contributors. Solid choice if you want a mature launcher with strong community support and GPL licensing.
+
+Both are excellent choices — pick the one that matches your workflow.

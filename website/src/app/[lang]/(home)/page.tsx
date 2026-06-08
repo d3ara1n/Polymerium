@@ -346,6 +346,7 @@ export async function generateMetadata(props: PageProps<'/[lang]'>): Promise<Met
       description: d.metaDesc,
       locale: lang === 'zh' ? 'zh_CN' : 'en_US',
       url: `https://polymerium.dearain.dev/${lang}`,
+      images: [{ url: `/og/home?lang=${lang}`, width: 1200, height: 630, type: 'image/png' }],
     },
   };
 }
@@ -387,6 +388,27 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
     license: 'https://opensource.org/licenses/MIT',
   };
 
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Polymerium',
+    url: 'https://polymerium.dearain.dev',
+    logo: 'https://polymerium.dearain.dev/favicon.png',
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: lang === 'zh' ? '首页' : 'Home',
+        item: `https://polymerium.dearain.dev/${lang}`,
+      },
+    ],
+  };
+
   return (
     <div className="flex flex-col flex-1">
       <script
@@ -396,6 +418,14 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       {/* ──── Hero ──── */}
       <section className="relative overflow-hidden pt-24 pb-20 md:pt-36 md:pb-28">
