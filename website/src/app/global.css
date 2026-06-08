@@ -46,41 +46,10 @@ html > body[data-scroll-locked] {
   }
 }
 
-/* ── Window mockup (SVG-based app overview) ── */
+/* ── App schematic mockup ── */
 
-.window-mockup {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow:
-    0 0 0 1px var(--color-border),
-    0 25px 50px -12px oklch(0 0 0 / 0.25);
-}
-
-.dark .window-mockup {
-  box-shadow:
-    0 0 0 1px oklch(1 0 0 / 10%),
-    0 25px 50px -12px oklch(0 0 0 / 0.5);
-}
-
-.window-titlebar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  background: var(--color-muted);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.window-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.window-body {
-  background: var(--color-card);
-  padding: 20px;
-  min-height: 200px;
+.app-schematic {
+  /* Intentionally empty — styling via Tailwind utility classes in JSX */
 }
 
 /* ── Terminal block ── */

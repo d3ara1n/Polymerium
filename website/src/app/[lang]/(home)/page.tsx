@@ -10,6 +10,17 @@ import {
   RefreshCw,
   Monitor,
   ShieldCheck,
+  LayoutGrid,
+  Package,
+  Wrench,
+  Pencil,
+  Home,
+  ShoppingBag,
+  Plus,
+  ChevronDown,
+  Search,
+  RotateCw,
+  House,
 } from 'lucide-react';
 import { LinkButton } from '@/components/link-button';
 import {
@@ -95,10 +106,19 @@ function useDict(lang: string) {
       // Quick start
       quickTitle: '三步上手',
       quickSteps: [
-        { step: '01', title: '下载安装', desc: '从 GitHub Releases 下载对应平台版本，解压即用。' },
+        { step: '01', title: '下载安装', desc: '从 GitHub Releases 下载对应平台的安装包，安装即可。' },
         { step: '02', title: '创建实例', desc: '选择游戏版本和加载器，添加你需要的模组。' },
         { step: '03', title: '开始游戏', desc: '一键构建部署，启动 Minecraft。' },
       ],
+      // Quick start mockup strings
+      qsAssets: 'Assets',
+      qsNewInstance: '新建实例',
+      qsVersion: '版本',
+      qsLoader: '加载器',
+      qsSearchMods: '搜索模组…',
+      qsCreateBtn: '创建',
+      qsLaunching: '启动中…',
+      qsDeploying: '正在部署实例…',
 
       // FAQ
       faqTitle: '常见问题',
@@ -141,6 +161,21 @@ function useDict(lang: string) {
       // Meta
       metaTitle: 'Polymerium — Minecraft 实例管理器',
       metaDesc: '基于元数据驱动的 Minecraft 实例管理器。零重复存储、快照、CLI、MCP AI Agent 模式。',
+
+      // Mockup (app schematic)
+      mockOverview: '概览',
+      mockInstanceName: 'Fabulously Optimized',
+      mockSetup: '设置',
+      mockDetails: '详情 →',
+      mockPackages: '个包',
+      mockPlayTime: '游戏时长',
+      mockSnapshots: '快照',
+      mockStorageSaved: '节省空间',
+      mockReady: '一切就绪',
+      mockLaunch: '启动',
+      mockHome: '主页',
+      mockMarketplace: '市场',
+      mockAddInstance: '添加实例',
     };
   }
   return {
@@ -206,10 +241,19 @@ function useDict(lang: string) {
 
     quickTitle: 'Up and Running in 3 Steps',
     quickSteps: [
-      { step: '01', title: 'Download', desc: 'Grab the latest release for your platform from GitHub. No installer needed.' },
+      { step: '01', title: 'Download', desc: 'Download the installer for your platform from GitHub Releases.' },
       { step: '02', title: 'Create Instance', desc: 'Pick a Minecraft version, choose a loader, add the mods you want.' },
       { step: '03', title: 'Play', desc: 'One-click deploy and launch. That\'s it.' },
     ],
+    // Quick start mockup strings
+    qsAssets: 'Assets',
+    qsNewInstance: 'New Instance',
+    qsVersion: 'Version',
+    qsLoader: 'Loader',
+    qsSearchMods: 'Search mods…',
+    qsCreateBtn: 'Create',
+    qsLaunching: 'Launching…',
+    qsDeploying: 'Deploying instance…',
 
     faqTitle: 'Frequently Asked Questions',
     faqItems: [
@@ -248,6 +292,21 @@ function useDict(lang: string) {
 
     metaTitle: 'Polymerium — Minecraft Instance Manager',
     metaDesc: 'Metadata-driven Minecraft instance manager. Zero-duplication storage, snapshots, CLI, MCP AI Agent mode.',
+
+    // Mockup (app schematic)
+    mockOverview: 'Overview',
+    mockInstanceName: 'Fabulously Optimized',
+    mockSetup: 'Setup',
+    mockDetails: 'Details →',
+    mockPackages: 'packages',
+    mockPlayTime: 'Play Time',
+    mockSnapshots: 'Snapshots',
+    mockStorageSaved: 'Storage Saved',
+    mockReady: 'Everything is ready',
+    mockLaunch: 'LAUNCH',
+    mockHome: 'Home',
+    mockMarketplace: 'Marketplace',
+    mockAddInstance: 'Add Instance',
   };
 }
 
@@ -317,16 +376,16 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 {/* Left sidebar */}
                 <div className="hidden sm:flex w-12 flex-col items-center gap-4 py-4 border-r border-border bg-muted/50">
                   <div className="size-6 rounded-md bg-primary/10 flex items-center justify-center">
-                    <svg className="size-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    <LayoutGrid className="size-3.5 text-primary" />
                   </div>
                   <div className="size-6 rounded-md bg-muted flex items-center justify-center">
-                    <svg className="size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    <Package className="size-3.5 text-muted-foreground" />
                   </div>
                   <div className="size-6 rounded-md bg-muted flex items-center justify-center">
-                    <svg className="size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <Wrench className="size-3.5 text-muted-foreground" />
                   </div>
                   <div className="mt-auto size-6 rounded-md bg-muted flex items-center justify-center">
-                    <svg className="size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    <Pencil className="size-3.5 text-muted-foreground" />
                   </div>
                 </div>
 
@@ -336,19 +395,19 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                   <div className="flex gap-3 h-[100px]">
                     {/* Instance banner */}
                     <div className="flex-[2] rounded-lg overflow-hidden relative bg-gradient-to-br from-primary/20 to-muted border border-border">
-                      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(var(--primary) / 0.2) 0%, transparent 60%)' }} />
+                      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(var(--color-primary) / 0.2) 0%, transparent 60%)' }} />
                       <div className="relative p-3 h-full flex flex-col justify-between">
-                        <div className="text-[10px] text-muted-foreground font-medium">Overview</div>
-                        <div className="text-sm font-bold text-foreground truncate">Fabulously Optimized</div>
+                        <div className="text-[10px] text-muted-foreground font-medium">{d.mockOverview}</div>
+                        <div className="text-sm font-bold text-foreground truncate">{d.mockInstanceName}</div>
                       </div>
                     </div>
                     {/* Setup panel */}
                     <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col justify-between">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-muted-foreground">Setup</span>
-                        <span className="text-[10px] text-muted-foreground/60">Details →</span>
+                        <span className="text-[10px] text-muted-foreground">{d.mockSetup}</span>
+                        <span className="text-[10px] text-muted-foreground/60">{d.mockDetails}</span>
                       </div>
-                      <div className="text-lg font-bold text-foreground">43<span className="text-[10px] font-normal text-muted-foreground ml-1">packages</span></div>
+                      <div className="text-lg font-bold text-foreground">43<span className="text-[10px] font-normal text-muted-foreground ml-1">{d.mockPackages}</span></div>
                       <div className="flex gap-3 text-[10px]">
                         <span className="text-muted-foreground">Fabric</span>
                         <span className="text-muted-foreground">1.21.5</span>
@@ -366,30 +425,30 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                           <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="60 100" />
                         </svg>
                       </div>
-                      <div className="text-[9px] text-muted-foreground">Play Time</div>
+                      <div className="text-[9px] text-muted-foreground">{d.mockPlayTime}</div>
                       <div className="text-sm font-bold text-foreground">8.3<span className="text-[9px] font-normal text-muted-foreground">h</span></div>
                     </div>
                     {/* Snapshots */}
                     <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col items-center justify-center gap-1">
-                      <svg className="size-6 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                      <div className="text-[9px] text-muted-foreground">Snapshots</div>
+                      <Camera className="size-6 text-muted-foreground" />
+                      <div className="text-[9px] text-muted-foreground">{d.mockSnapshots}</div>
                       <div className="text-sm font-bold text-foreground">3</div>
                     </div>
                     {/* Storage Saved */}
                     <div className="hidden sm:flex flex-1 rounded-lg border border-border bg-muted p-3 flex-col items-center justify-center gap-1">
-                      <svg className="size-6 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/></svg>
-                      <div className="text-[9px] text-muted-foreground">Storage Saved</div>
+                      <Package className="size-6 text-muted-foreground" />
+                      <div className="text-[9px] text-muted-foreground">{d.mockStorageSaved}</div>
                       <div className="text-sm font-bold text-foreground">4.2<span className="text-[9px] font-normal text-muted-foreground">GB</span></div>
                     </div>
                   </div>
 
                   {/* Bottom row — launch pad */}
                   <div className="flex items-center gap-3">
-                    <div className="flex-1 flex items-center gap-2 text-[10px] text-emerald-600 dark:text-emerald-400">
-                      <span className="size-2 rounded-full bg-emerald-500/60" />
-                      Everything is ready
+                    <div className="flex-1 flex items-center gap-2 text-[10px] text-primary">
+                      <span className="size-2 rounded-full bg-primary/60" />
+                      {d.mockReady}
                     </div>
-                    <div className="rounded-md bg-primary px-4 py-1.5 text-[11px] font-bold text-primary-foreground">LAUNCH</div>
+                    <div className="rounded-md bg-primary px-4 py-1.5 text-[11px] font-bold text-primary-foreground">{d.mockLaunch}</div>
                     <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
                       <div className="size-5 rounded bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground">ST</div>
                       <span>Stewie</span>
@@ -400,12 +459,12 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 {/* Right sidebar */}
                 <div className="hidden md:flex w-40 flex-col gap-2 p-3 border-l border-border bg-muted/50">
                   <div className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-[10px] text-muted-foreground">
-                    <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    Home
+                    <Home className="size-3" />
+                    {d.mockHome}
                   </div>
                   <div className="flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-[10px] font-medium text-primary-foreground">
-                    <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                    Marketplace
+                    <ShoppingBag className="size-3" />
+                    {d.mockMarketplace}
                   </div>
                   {/* Instance list */}
                   <div className="mt-1 flex-1 rounded-md border border-border bg-card p-2 flex flex-col gap-1.5">
@@ -425,9 +484,9 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                         <span className="text-[7px] text-muted-foreground">1.20.1</span>
                       </div>
                     </div>
-                    <div className="mt-auto rounded-md border border-dashed border-muted-foreground/30 bg-muted/30 p-2 flex items-center justify-center gap-1.5 text-muted-foreground/50 hover:text-primary hover:border-primary/30 transition-colors cursor-pointer">
-                      <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                      <span className="text-[10px]">Add Instance</span>
+                    <div className="mt-auto rounded-md border border-dashed border-muted-foreground/30 bg-muted/30 p-2 flex items-center justify-center gap-1.5 text-muted-foreground/50">
+                      <Plus className="size-3" />
+                      <span className="text-[10px]">{d.mockAddInstance}</span>
                     </div>
                   </div>
                 </div>
@@ -589,25 +648,100 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
 
       {/* ──── Quick Start ──── */}
       <section className="py-20 border-t border-fd-border">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-5xl px-6">
           <h2 className="text-center text-3xl font-bold text-foreground">{d.quickTitle}</h2>
           <div className="mt-14 grid gap-10 md:grid-cols-3">
-            {d.quickSteps.map((step) => (
-              <div key={step.step} className="flex flex-col items-center text-center">
-                {/* Screenshot placeholder */}
-                <div className="mb-6 w-full overflow-hidden rounded-xl border border-border bg-muted">
-                  <img
-                    src={`https://placehold.co/400x240/f5f5f5/a3a3a3?text=Step+${step.step}`}
-                    alt={step.title}
-                    className="w-full object-cover"
-                    loading="lazy"
-                  />
+            {/* Step 1 — Download: Chrome browser download bar focused crop */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6 w-full aspect-[5/3] rounded-xl border border-border bg-background overflow-hidden flex flex-col">
+                {/* Browser toolbar crop — no traffic lights, just nav + address */}
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/60 border-b border-border">
+                  <RotateCw className="size-3 text-muted-foreground" />
+                  <House className="size-3 text-muted-foreground" />
+                  <div className="ml-1 flex-1 h-5 rounded-full bg-muted flex items-center px-2.5 gap-1.5">
+                    <svg className="size-2.5 text-muted-foreground shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span className="text-[9px] text-muted-foreground truncate">github.com/d3ara1n/Polymerium/releases</span>
+                  </div>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-primary">{step.step}</span>
-                <h3 className="mt-2 text-lg font-semibold text-foreground">{step.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                {/* Page content — minimal skeleton hint */}
+                <div className="px-4 pt-3 bg-background">
+                  <div className="h-2 w-32 rounded bg-muted mb-1" />
+                  <div className="h-1.5 w-20 rounded bg-muted/50" />
+                </div>
+                {/* Download bar — the focus, fully visible */}
+                <div className="mt-auto border-t border-border bg-muted px-4 py-3 flex items-center gap-3">
+                  <Download className="size-4 text-primary shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[10px] font-medium text-foreground truncate">Polymerium-1.0.0-win-x64.exe</div>
+                    <div className="mt-1 h-1.5 rounded-full bg-border overflow-hidden">
+                      <div className="h-full w-[68%] rounded-full bg-primary" />
+                    </div>
+                  </div>
+                  <span className="text-[9px] text-muted-foreground whitespace-nowrap shrink-0">67.8 / 89.2 MB</span>
+                </div>
               </div>
-            ))}
+              <span className="text-xs font-bold uppercase tracking-widest text-primary">{d.quickSteps[0].step}</span>
+              <h3 className="mt-2 text-lg font-semibold text-foreground">{d.quickSteps[0].title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.quickSteps[0].desc}</p>
+            </div>
+
+            {/* Step 2 — Create Instance: Polymerium dialog, no window chrome */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6 w-full aspect-[5/3] rounded-xl border border-border bg-background flex items-start justify-center overflow-hidden p-5">
+                <div className="w-full max-w-[280px] rounded-lg border border-border bg-card shadow-lg">
+                  <div className="px-4 py-2.5 border-b border-border">
+                    <div className="text-xs font-semibold text-foreground">{d.qsNewInstance}</div>
+                  </div>
+                  <div className="p-3 space-y-2.5">
+                    <div>
+                      <div className="text-[9px] text-muted-foreground mb-1">{d.qsVersion}</div>
+                      <div className="h-6 rounded border border-border bg-muted px-2 flex items-center justify-between text-[10px] text-foreground">
+                        <span>1.21.5</span>
+                        <ChevronDown className="size-3 text-muted-foreground" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[9px] text-muted-foreground mb-1">{d.qsLoader}</div>
+                      <div className="flex gap-1.5">
+                        <div className="h-6 px-2 rounded border border-primary bg-primary/10 flex items-center text-[10px] font-medium text-primary">Fabric</div>
+                        <div className="h-6 px-2 rounded border border-border bg-muted flex items-center text-[10px] text-muted-foreground">Forge</div>
+                        <div className="h-6 px-2 rounded border border-border bg-muted flex items-center text-[10px] text-muted-foreground">Quilt</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-3 py-2.5 border-t border-border flex justify-end">
+                    <div className="h-6 px-3 rounded bg-primary flex items-center text-[10px] font-bold text-primary-foreground">{d.qsCreateBtn}</div>
+                  </div>
+                </div>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary">{d.quickSteps[1].step}</span>
+              <h3 className="mt-2 text-lg font-semibold text-foreground">{d.quickSteps[1].title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.quickSteps[1].desc}</p>
+            </div>
+
+            {/* Step 3 — Play: Launch progress, no window chrome */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6 w-full aspect-[5/3] rounded-xl border border-border bg-background flex flex-col items-center justify-center gap-3 p-6">
+                <div className="text-xs font-semibold text-foreground">{d.mockInstanceName}</div>
+                <div className="w-full max-w-[80%]">
+                  <div className="h-2 rounded-full bg-border overflow-hidden">
+                    <div className="h-full w-[87%] rounded-full bg-primary" />
+                  </div>
+                  <div className="mt-1.5 text-center text-[9px] text-muted-foreground">{d.qsDeploying}</div>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                  <span className="size-2 rounded-full bg-primary/60" />
+                  {d.qsLaunching}
+                </div>
+                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                  <div className="size-4 rounded bg-muted flex items-center justify-center text-[7px] font-bold text-muted-foreground">ST</div>
+                  <span>Stewie</span>
+                </div>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary">{d.quickSteps[2].step}</span>
+              <h3 className="mt-2 text-lg font-semibold text-foreground">{d.quickSteps[2].title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.quickSteps[2].desc}</p>
+            </div>
           </div>
         </div>
       </section>
