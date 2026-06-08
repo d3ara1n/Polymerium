@@ -303,30 +303,30 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
 
           {/* App schematic — simplified Polymerium UI mockup */}
           <div className="mx-auto mt-16 max-w-4xl">
-            <div className="app-schematic rounded-xl overflow-hidden border border-neutral-800 bg-[#1e1b18] shadow-2xl shadow-black/40">
+            <div className="app-schematic rounded-xl overflow-hidden border border-border bg-card shadow-2xl">
               {/* Titlebar */}
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-[#2a2622]">
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-muted">
                 <span className="size-3 rounded-full bg-[#ff5f57]" />
                 <span className="size-3 rounded-full bg-[#febc2e]" />
                 <span className="size-3 rounded-full bg-[#28c840]" />
-                <span className="ml-3 text-[11px] font-medium text-neutral-500">Polymerium</span>
+                <span className="ml-3 text-[11px] font-medium text-muted-foreground">Polymerium</span>
               </div>
 
               {/* App body — 3-column layout */}
               <div className="flex h-[280px] sm:h-[320px]">
                 {/* Left sidebar */}
-                <div className="hidden sm:flex w-12 flex-col items-center gap-4 py-4 border-r border-white/5 bg-[#25211d]">
-                  <div className="size-6 rounded-md bg-amber-500/20 flex items-center justify-center">
-                    <svg className="size-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                <div className="hidden sm:flex w-12 flex-col items-center gap-4 py-4 border-r border-border bg-muted/50">
+                  <div className="size-6 rounded-md bg-primary/10 flex items-center justify-center">
+                    <svg className="size-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                   </div>
-                  <div className="size-6 rounded-md bg-white/5 flex items-center justify-center">
-                    <svg className="size-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                  <div className="size-6 rounded-md bg-muted flex items-center justify-center">
+                    <svg className="size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
                   </div>
-                  <div className="size-6 rounded-md bg-white/5 flex items-center justify-center">
-                    <svg className="size-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <div className="size-6 rounded-md bg-muted flex items-center justify-center">
+                    <svg className="size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                   </div>
-                  <div className="mt-auto size-6 rounded-md bg-white/5 flex items-center justify-center">
-                    <svg className="size-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <div className="mt-auto size-6 rounded-md bg-muted flex items-center justify-center">
+                    <svg className="size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                   </div>
                 </div>
 
@@ -335,82 +335,99 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                   {/* Top row — banner + setup panel */}
                   <div className="flex gap-3 h-[100px]">
                     {/* Instance banner */}
-                    <div className="flex-[2] rounded-lg overflow-hidden relative bg-gradient-to-br from-emerald-900/60 to-slate-900/80 border border-white/5">
-                      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, rgb(20 184 166 / 0.3) 0%, transparent 60%)' }} />
+                    <div className="flex-[2] rounded-lg overflow-hidden relative bg-gradient-to-br from-primary/20 to-muted border border-border">
+                      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(var(--primary) / 0.2) 0%, transparent 60%)' }} />
                       <div className="relative p-3 h-full flex flex-col justify-between">
-                        <div className="text-[10px] text-white/40 font-medium">Overview</div>
-                        <div className="text-sm font-bold text-white/90 truncate">Fabulously Optimized</div>
+                        <div className="text-[10px] text-muted-foreground font-medium">Overview</div>
+                        <div className="text-sm font-bold text-foreground truncate">Fabulously Optimized</div>
                       </div>
                     </div>
                     {/* Setup panel */}
-                    <div className="flex-1 rounded-lg border border-white/5 bg-[#2a2622] p-3 flex flex-col justify-between">
+                    <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col justify-between">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-white/40">Setup</span>
-                        <span className="text-[10px] text-white/30">Details →</span>
+                        <span className="text-[10px] text-muted-foreground">Setup</span>
+                        <span className="text-[10px] text-muted-foreground/60">Details →</span>
                       </div>
-                      <div className="text-lg font-bold text-white/90">43<span className="text-[10px] font-normal text-white/40 ml-1">packages</span></div>
+                      <div className="text-lg font-bold text-foreground">43<span className="text-[10px] font-normal text-muted-foreground ml-1">packages</span></div>
                       <div className="flex gap-3 text-[10px]">
-                        <span className="text-white/50">Fabric</span>
-                        <span className="text-white/50">1.21.5</span>
+                        <span className="text-muted-foreground">Fabric</span>
+                        <span className="text-muted-foreground">1.21.5</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Middle row — stats */}
                   <div className="flex gap-3 flex-1">
-                    <div className="flex-1 rounded-lg border border-white/5 bg-[#2a2622] p-3 flex flex-col items-center justify-center gap-1">
-                      <div className="relative size-14">
+                    {/* Play Time */}
+                    <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col items-center justify-center gap-1">
+                      <div className="relative size-14 text-primary">
                         <svg className="size-14 -rotate-90" viewBox="0 0 36 36">
-                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2" />
-                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgb(251 191 36 / 0.8)" strokeWidth="2" strokeDasharray="40 100" />
+                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border)" strokeWidth="2" />
+                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="60 100" />
                         </svg>
                       </div>
-                      <div className="text-[9px] text-white/30">Total Hours</div>
-                      <div className="text-sm font-bold text-white/80">0.0</div>
+                      <div className="text-[9px] text-muted-foreground">Play Time</div>
+                      <div className="text-sm font-bold text-foreground">8.3<span className="text-[9px] font-normal text-muted-foreground">h</span></div>
                     </div>
-                    <div className="flex-1 rounded-lg border border-white/5 bg-[#2a2622] p-3 flex flex-col items-center justify-center">
-                      <div className="text-sm text-white/30">Working</div>
-                      <div className="text-[10px] text-white/20">Never</div>
+                    {/* Snapshots */}
+                    <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col items-center justify-center gap-1">
+                      <svg className="size-6 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                      <div className="text-[9px] text-muted-foreground">Snapshots</div>
+                      <div className="text-sm font-bold text-foreground">3</div>
                     </div>
-                    <div className="hidden sm:flex flex-1 rounded-lg border border-white/5 bg-[#2a2622] p-3 flex-col items-center justify-center">
-                      <div className="text-sm text-white/30">In</div>
-                      <div className="text-[10px] text-white/20">Be</div>
+                    {/* Storage Saved */}
+                    <div className="hidden sm:flex flex-1 rounded-lg border border-border bg-muted p-3 flex-col items-center justify-center gap-1">
+                      <svg className="size-6 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/></svg>
+                      <div className="text-[9px] text-muted-foreground">Storage Saved</div>
+                      <div className="text-sm font-bold text-foreground">4.2<span className="text-[9px] font-normal text-muted-foreground">GB</span></div>
                     </div>
                   </div>
 
                   {/* Bottom row — launch pad */}
                   <div className="flex items-center gap-3">
-                    <div className="flex-1 flex items-center gap-2 text-[10px] text-emerald-400/80">
+                    <div className="flex-1 flex items-center gap-2 text-[10px] text-emerald-600 dark:text-emerald-400">
                       <span className="size-2 rounded-full bg-emerald-500/60" />
                       Everything is ready
                     </div>
-                    <div className="rounded-md bg-amber-500 px-4 py-1.5 text-[11px] font-bold text-amber-950">LAUNCH</div>
-                    <div className="flex items-center gap-2 text-[10px] text-white/40">
-                      <div className="size-5 rounded bg-white/10 flex items-center justify-center text-[8px] font-bold text-white/60">ST</div>
+                    <div className="rounded-md bg-primary px-4 py-1.5 text-[11px] font-bold text-primary-foreground">LAUNCH</div>
+                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                      <div className="size-5 rounded bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground">ST</div>
                       <span>Stewie</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Right sidebar */}
-                <div className="hidden md:flex w-36 flex-col gap-2 p-3 border-l border-white/5 bg-[#25211d]">
-                  <div className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-2 text-[10px] text-white/60">
+                <div className="hidden md:flex w-40 flex-col gap-2 p-3 border-l border-border bg-muted/50">
+                  <div className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-[10px] text-muted-foreground">
                     <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                     Home
                   </div>
-                  <div className="flex items-center gap-2 rounded-md bg-amber-500/90 px-3 py-2 text-[10px] font-medium text-amber-950">
+                  <div className="flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-[10px] font-medium text-primary-foreground">
                     <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     Marketplace
                   </div>
-                  <div className="mt-2 rounded-md border border-white/5 bg-[#1e1b18] p-2 flex flex-col gap-1.5">
-                    <div className="h-2 w-full rounded bg-white/5" />
-                    <div className="rounded border border-white/5 bg-white/3 p-1.5">
-                      <div className="text-[8px] text-white/30 truncate">CURSEFORGE#fabulously_optimized</div>
-                      <div className="text-[9px] text-white/50 truncate">Fabulously Optimized</div>
+                  {/* Instance list */}
+                  <div className="mt-1 flex-1 rounded-md border border-border bg-card p-2 flex flex-col gap-1.5">
+                    <div className="rounded border border-border bg-muted/50 p-1.5 text-left">
+                      <div className="text-[8px] text-muted-foreground/60 truncate text-left">CURSEFORGE#fabulously_optimized</div>
+                      <div className="text-[9px] text-foreground truncate text-left">Fabulously Optimized</div>
                       <div className="flex gap-2 mt-1">
-                        <span className="text-[7px] text-white/30">Fabric</span>
-                        <span className="text-[7px] text-white/30">1.21.5</span>
+                        <span className="text-[7px] text-muted-foreground">Fabric</span>
+                        <span className="text-[7px] text-muted-foreground">1.21.5</span>
                       </div>
+                    </div>
+                    <div className="rounded border border-border bg-muted/50 p-1.5 text-left">
+                      <div className="text-[8px] text-muted-foreground/60 truncate text-left">MODRINTH#create</div>
+                      <div className="text-[9px] text-foreground truncate text-left">Create: Above and Beyond</div>
+                      <div className="flex gap-2 mt-1">
+                        <span className="text-[7px] text-muted-foreground">Forge</span>
+                        <span className="text-[7px] text-muted-foreground">1.20.1</span>
+                      </div>
+                    </div>
+                    <div className="mt-auto rounded-md border border-dashed border-muted-foreground/30 bg-muted/30 p-2 flex items-center justify-center gap-1.5 text-muted-foreground/50 hover:text-primary hover:border-primary/30 transition-colors cursor-pointer">
+                      <svg className="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                      <span className="text-[10px]">Add Instance</span>
                     </div>
                   </div>
                 </div>
