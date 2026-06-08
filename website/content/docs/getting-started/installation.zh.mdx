@@ -17,9 +17,9 @@ description: 在 Windows、macOS 或 Linux 上下载、安装和设置 Polymeriu
 
 ## Windows：启用开发者模式
 
-Polymerium 使用符号链接来在实例之间共享模组文件，而无需重复复制。在 Windows 上，创建符号链接需要启用 **开发者模式**。
+Polymerium 使用符号链接在实例之间共享模组文件，无需重复存储。在 Windows 上，创建符号链接需要启用 **开发者模式**。
 
-1. 打开 **设置 → 系统 → 开发者信息**
+1. 打开 **设置 → 系统 → 面向开发者**
 2. 打开 **开发者模式** 开关
 3. 确认提示
 
@@ -44,13 +44,13 @@ Polymerium 在所有平台上将所有数据存储在 `~/.trident/` 中。这包
 | 数据 | 位置 |
 |------|----------|
 | 设置 | `~/.trident/settings.json` |
-| 持久层 DB | `~/.trident/persistence.sqlite.db` |
+| 持久化数据库 | `~/.trident/persistence.sqlite.db` |
 | HTTP 缓存 | `~/.trident/cache.sqlite.db` |
 | 共享模组缓存 | `~/.trident/cache/packages/` |
 | 游戏资源 | `~/.trident/cache/assets/` |
 | 实例 | `~/.trident/instances/` |
 
-> 所有数据都是本地的。除了可选的崩溃报告外，Polymerium 不会上传任何内容。
+> 想将数据放在其他磁盘上？参见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
 
 ## 下一步
 

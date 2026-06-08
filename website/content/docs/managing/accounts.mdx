@@ -11,7 +11,7 @@ Polymerium supports four types of accounts:
 |------|----------|---------------|
 | **Microsoft** | Full multiplayer, Realms, servers | Device Code Flow → Xbox Live → Minecraft API |
 | **Offline** | Local / single-player, no server access | Username only, generates a deterministic UUID |
-| **Authlib Injector** | Third-party authentication servers (外置登录) | Yggdrasil protocol with `-javaagent` injection |
+| **Authlib Injector** | Third-party authentication servers | Yggdrasil protocol with `-javaagent` injection |
 | **Trial** | Quick start — try the launcher without signing in | Built-in demo accounts with fixed roles (available without any Microsoft account) |
 
 ## Adding Accounts
@@ -48,7 +48,7 @@ They work for local and single-player play only, but they're enough to try out t
 2. Polymerium fetches the server metadata and injects the appropriate `-javaagent` flag at launch.
 3. Sign in with your credentials for that server.
 
-This is useful for Chinese Minecraft communities that use third-party auth servers (外置登录).
+This is useful for Chinese Minecraft communities that use third-party auth servers.
 
 ## Per-Instance Account Binding
 

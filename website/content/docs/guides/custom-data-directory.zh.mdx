@@ -1,0 +1,106 @@
+---
+title: 自定义数据目录
+description: 将 Polymerium 的全部数据——设置、缓存和实例——迁移到其他磁盘或自定义位置。
+---
+
+## 为什么要移动数据目录？
+
+默认情况下，Polymerium 将所有数据存储在 `~/.trident/` 下：
+
+- **设置和数据库** 在 `~/.trident/.polymerium/`
+- **共享缓存** 在 `~/.trident/cache/`（模组文件、游戏资源、Java 运行时）
+- **实例** 在 `~/.trident/instances/`
+
+在 Windows 上，`~` 通常是 `C:\Users\<用户名>`。如果 C 盘空间紧张，或者想把游戏数据放在单独的 SSD 上，共享缓存会随着时间推移变得很大。移动整个数据目录可以释放 C 盘空间。
+
+## 工作原理
+
+Polymerium 通过一个名为 `~/.trident.home` 的文件来覆盖默认的数据位置。这个文件：
+
+- 位于你的用户主目录下（`~/.trident.home`）
+- 内容只有一行：指向新数据根目录的绝对路径
+- 在启动时读取，早于所有其他初始化逻辑
+
+在 Windows 上，`~/.trident.home` 即 `C:\Users\<用户名>\.trident.home`。
+
+## 设置步骤
+
+### 第一步：关闭 Polymerium
+
+确保 Polymerium 没有在运行。覆盖文件只在启动时被读取。
+
+### 第二步：选择新位置
+
+选择一个空的目录（或尚不存在的路径），放在你想要的磁盘上。例如：
+
+| 平台 | 示例路径 |
+|------|---------|
+| Windows | `D:\PolymeriumData` |
+| Linux | `/mnt/games/polymerium` |
+| macOS | `/Volumes/External/polymerium` |
+
+目录会在首次启动时自动创建。
+
+### 第三步：创建覆盖文件
+
+在你的用户主目录下创建名为 `.trident.home` 的文件，写入绝对路径：
+
+**Windows（PowerShell）：**
+```powershell
+New-Item -Path "$env:USERPROFILE\.trident.home" -ItemType File -Force
+Set-Content -Path "$env:USERPROFILE\.trident.home" -Value "D:\PolymeriumData"
+```
+
+**Linux / macOS（终端）：**
+```bash
+echo "/mnt/games/polymerium" > ~/.trident.home
+```
+
+### 第四步：启动 Polymerium
+
+启动 Polymerium。它会检测到 `.trident.home` 文件，切换到新的数据根目录，并自动创建需要的目录结构。
+
+## 验证规则
+
+`.trident.home` 中的路径必须满足：
+
+- 是**绝对**路径（例如 `D:\Data`，不能是 `..\Data`）
+- **不能**指向一个已存在的文件（可以指向尚不存在的目录，或已存在的目录）
+
+如果文件存在但路径不合法（相对路径，或指向已存在的文件），Polymerium 会静默回退到默认的 `~/.trident/`。
+
+> 首次使用新数据根目录启动时，Polymerium 会创建全新的配置——设置恢复默认，共享缓存为空。原有的 `~/.trident/` 中的数据**不会被自动删除或迁移**。
+
+## 迁移已有数据
+
+如果你已有实例和设置在 `~/.trident/` 下，想要迁移它们：
+
+1. 关闭 Polymerium。
+2. 创建 `.trident.home` 文件，指向新路径。
+3. 将 `~/.trident/` 的全部内容复制到新位置。
+4. 启动 Polymerium——你的实例、设置和缓存都会被识别。
+
+## 如何切换回来
+
+要恢复到默认位置：
+
+1. 关闭 Polymerium。
+2. 删除 `~/.trident.home` 文件。
+3. 启动 Polymerium——它会重新使用 `~/.trident/`。
+
+> 切换或删除覆盖文件时，不会删除任何数据。自定义路径下的数据保持原样。如需找回，手动复制回来即可。
+
+## 使用场景
+
+| 场景 | 好处 |
+|------|------|
+| Windows C 盘空间不足 | 将大体积缓存迁移到 D 盘或外接 SSD |
+| 多套 Polymerium 配置 | 用不同的 `.trident.home` 指向不同的数据根目录，分别管理 |
+| 将游戏数据与系统盘分离 | 适合双系统或系统重装场景 |
+| 外接硬盘便携使用 | 数据随身携带——在任何装有 Polymerium 的电脑上插盘即玩 |
+
+## 限制
+
+- `.trident.home` 文件位于用户主目录——它是全局生效的，不是按实例生效。
+- Polymerium 不会自动迁移旧数据。你需要手动复制。
+- 路径必须是绝对路径。不支持相对路径和环境变量。
