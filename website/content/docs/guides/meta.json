@@ -5,6 +5,7 @@
     "setup-authlib",
     "performance-modpack",
     "git-collaboration",
-    "headless-server"
+    "headless-server",
+    "custom-data-directory"
   ]
 }

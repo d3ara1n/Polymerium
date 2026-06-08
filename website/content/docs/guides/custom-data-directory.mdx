@@ -1,0 +1,106 @@
+---
+title: Custom Data Directory
+description: Move Polymerium's entire data directory — settings, caches, and instances — to a different drive or custom location.
+---
+
+## Why Move the Data Directory?
+
+By default, Polymerium stores everything under `~/.trident/`:
+
+- **Settings and databases** in `~/.trident/.polymerium/`
+- **Shared cache** in `~/.trident/cache/` (mod files, assets, Java runtimes)
+- **Your instances** in `~/.trident/instances/`
+
+On Windows, `~` is typically `C:\Users\<YourName>`. If you have a small C: drive or want to keep game data on a separate SSD, the shared cache can grow large over time. Moving the entire data directory lets you reclaim that space.
+
+## How It Works
+
+Polymerium uses a file called `~/.trident.home` to override the default data location. This file:
+
+- Lives at `~/.trident.home` (your user profile directory)
+- Contains a single line: an absolute path to the new data root
+- Is read once at startup, before anything else
+
+On Windows, `~/.trident.home` is `C:\Users\<YourName>\.trident.home`.
+
+## Setting It Up
+
+### Step 1: Close Polymerium
+
+Make sure Polymerium is not running. The override file is only read at startup.
+
+### Step 2: Choose a New Location
+
+Pick an empty directory (or one that doesn't exist yet) on the drive you want to use. For example:
+
+| Platform | Example path |
+|----------|-------------|
+| Windows | `D:\PolymeriumData` |
+| Linux | `/mnt/games/polymerium` |
+| macOS | `/Volumes/External/polymerium` |
+
+The directory will be created automatically on first launch.
+
+### Step 3: Create the Override File
+
+Create a file named `.trident.home` in your user profile directory and put the absolute path in it:
+
+**Windows (PowerShell):**
+```powershell
+New-Item -Path "$env:USERPROFILE\.trident.home" -ItemType File -Force
+Set-Content -Path "$env:USERPROFILE\.trident.home" -Value "D:\PolymeriumData"
+```
+
+**Linux / macOS (Terminal):**
+```bash
+echo "/mnt/games/polymerium" > ~/.trident.home
+```
+
+### Step 4: Launch Polymerium
+
+Start Polymerium. It will detect the `.trident.home` file, switch to the new data root, and create the necessary directories automatically.
+
+## Validation Rules
+
+The path in `.trident.home` must:
+
+- Be an **absolute** path (e.g. `D:\Data`, not `..\Data`)
+- **Not** point to an existing file (it can be a new directory, or an existing directory)
+
+If the file exists but the path is invalid (relative path, or points to an existing file), Polymerium silently falls back to the default `~/.trident/`.
+
+> On first launch with a new data root, Polymerium creates a fresh setup — settings revert to defaults and the shared cache starts empty. Old data in `~/.trident/` is **not deleted or migrated automatically**.
+
+## Migrating Existing Data
+
+If you already have instances and settings under `~/.trident/` and want to move them:
+
+1. Close Polymerium.
+2. Create the `.trident.home` file pointing to the new path.
+3. Copy the entire contents of `~/.trident/` to the new location.
+4. Launch Polymerium — your instances, settings, and cache will be picked up.
+
+## Switching Back
+
+To revert to the default location:
+
+1. Close Polymerium.
+2. Delete `~/.trident.home`.
+3. Launch Polymerium — it will use `~/.trident/` again.
+
+> Nothing is deleted when you switch or remove the override. Your data at the custom path remains as-is. Move it back manually if needed.
+
+## Use Cases
+
+| Scenario | Benefit |
+|----------|---------|
+| Small C: drive on Windows | Move bulky cache to D: or an external SSD |
+| Multiple Polymerium profiles | Point different `.trident.home` files to different roots for separate setups |
+| Keeping game data off the system drive | Useful for dual-boot setups or OS reinstalls |
+| External drive | Keep everything portable — plug in and play on any machine running Polymerium |
+
+## Limitations
+
+- The `.trident.home` file is in your user profile directory — it applies globally, not per-instance.
+- Polymerium does not migrate old data automatically. You must copy it yourself.
+- The path must be absolute. Relative paths and environment variables are not supported.
