@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   HardDrive,
@@ -322,6 +323,33 @@ function GitHubIcon(props: React.ComponentProps<'svg'>) {
 
 const featureIcons = [HardDrive, RefreshCw, Camera, FileJson, Terminal, ShieldCheck];
 
+/* ─── Metadata ─── */
+
+export async function generateMetadata(props: PageProps<'/[lang]'>): Promise<Metadata> {
+  const params = await props.params;
+  const lang = params.lang;
+  const d = useDict(lang);
+
+  return {
+    title: d.metaTitle,
+    description: d.metaDesc,
+    alternates: {
+      canonical: `https://polymerium.dearain.dev/${lang}`,
+      languages: {
+        en: 'https://polymerium.dearain.dev/en',
+        zh: 'https://polymerium.dearain.dev/zh',
+        'x-default': 'https://polymerium.dearain.dev/en',
+      },
+    },
+    openGraph: {
+      title: d.metaTitle,
+      description: d.metaDesc,
+      locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+      url: `https://polymerium.dearain.dev/${lang}`,
+    },
+  };
+}
+
 /* ─── Page ─── */
 
 export default async function HomePage(props: PageProps<'/[lang]'>) {
@@ -329,8 +357,46 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
   const lang = params.lang;
   const d = useDict(lang);
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  };
+
+  const softwareSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Polymerium',
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Windows, Linux, macOS',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: d.metaDesc,
+    url: `https://polymerium.dearain.dev/${lang}`,
+    installUrl: 'https://github.com/d3ara1n/Polymerium/releases',
+    license: 'https://opensource.org/licenses/MIT',
+  };
+
   return (
     <div className="flex flex-col flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
       {/* ──── Hero ──── */}
       <section className="relative overflow-hidden pt-24 pb-20 md:pt-36 md:pb-28">
         <div aria-hidden className="pointer-events-none absolute inset-0 hero-grid" />

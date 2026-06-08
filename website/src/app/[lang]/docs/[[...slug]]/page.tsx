@@ -52,11 +52,23 @@ export async function generateMetadata(props: PageProps<'/[lang]/docs/[[...slug]
   const page = source.getPage(params.slug, params.lang);
   if (!page) notFound();
 
+  const slugPath = params.slug?.join('/') ?? '';
+  const canonicalUrl = `https://polymerium.dearain.dev${page.url}`;
+
   return {
     title: page.data.title,
     description: page.data.description,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        en: `https://polymerium.dearain.dev/en/docs/${slugPath}`,
+        zh: `https://polymerium.dearain.dev/zh/docs/${slugPath}`,
+        'x-default': `https://polymerium.dearain.dev/en/docs/${slugPath}`,
+      },
+    },
     openGraph: {
       images: getPageImage(page).url,
+      locale: params.lang === 'zh' ? 'zh_CN' : 'en_US',
     },
   };
 }
