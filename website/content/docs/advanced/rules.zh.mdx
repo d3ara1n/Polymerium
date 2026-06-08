@@ -1,100 +1,100 @@
 ---
-title: Deployment Rules
-description: Fine-tune how mods are deployed with a powerful rule engine — skip, redirect, or normalize files conditionally.
+title: 部署规则
+description: 通过强大的规则引擎精细控制模组的部署方式——按条件跳过、重定向或规范化文件。
 ---
 
-## What Are Deployment Rules?
+## 什么是部署规则？
 
-Deployment rules let you control how individual mods (or groups of mods) are handled during deploy. Instead of a one-size-fits-all approach, you can write rules like:
+部署规则让你可以控制单个模组（或一组模组）在部署时的处理方式。告别一刀切的方式，你可以编写如下规则：
 
-- "Skip this mod on Fabric instances"
-- "Redirect this datapack to the Paxi folder"
-- "Normalize this mod's filename"
+- "在 Fabric 实例中跳过此模组"
+- "将此数据包重定向到 Paxi 文件夹"
+- "规范化此模组的文件名"
 
-Rules are attached to individual packages in your instance's mod list.
+规则附加在实例模组列表中的各个包上。
 
-## Rule Anatomy
+## 规则结构
 
-A rule has two parts:
+一条规则由两部分组成：
 
-1. **Selector** — which packages does this rule apply to?
-2. **Action** — what should happen to matching packages?
+1. **选择器**——这条规则应用于哪些包？
+2. **操作**——对匹配的包执行什么动作？
 
-### Selectors
+### 选择器
 
-Selectors are boolean expressions that match packages by their properties:
+选择器是布尔表达式，通过包的属性进行匹配：
 
-| Selector | Matches By | Example |
+| 选择器 | 匹配依据 | 示例 |
 |----------|-----------|---------|
-| `Purl` | Package URL (exact or partial) | `modrinth:sodium` |
-| `Repository` | Source repository | `curseforge` |
-| `Tag` | Tag name | `server-only` |
-| `Kind` | Resource type | `mod`, `resourcepack`, `shaderpack`, `datapack` |
+| `Purl` | 包 URL（精确或部分匹配） | `modrinth:sodium` |
+| `Repository` | 来源仓库 | `curseforge` |
+| `Tag` | 标签名 | `server-only` |
+| `Kind` | 资源类型 | `mod`、`resourcepack`、`shaderpack`、`datapack` |
 
-Selectors can be combined with boolean operators:
+选择器可以通过布尔运算符组合使用：
 
-- `And` — all sub-selectors must match
-- `Or` — any sub-selector must match
-- `Not` — inverts a selector
+- `And`——所有子选择器都必须匹配
+- `Or`——任意一个子选择器匹配即可
+- `Not`——反转选择器的匹配结果
 
-Example: match all CurseForge datapacks:
+示例：匹配所有来自 CurseForge 的数据包：
 ```
 And(Repository=curseforge, Kind=datapack)
 ```
 
-### Actions
+### 操作
 
-| Action | What It Does |
+| 操作 | 作用 |
 |--------|-------------|
-| `Skip` | Don't deploy this package at all |
-| `Normalize` | Rename the file to a standardized name |
-| `Destination` | Deploy to a custom path instead of the default |
+| `Skip` | 完全不部署此包 |
+| `Normalize` | 将文件重命名为标准化名称 |
+| `Destination` | 部署到自定义路径而非默认路径 |
 
-## Common Use Cases
+## 常见用例
 
-### Skip Server-Side Mods
+### 跳过服务端模组
 
-If you have server-side mods that shouldn't be in a client instance:
+如果你有一些不应出现在客户端实例中的服务端模组：
 
 ```
 Selector: Tag=server-only
 Action: Skip
 ```
 
-### Redirect Datapacks for Paxi
+### 为 Paxi 重定向数据包
 
-Different loaders use different datapack paths. If you use Paxi:
+不同的加载器使用不同的数据包路径。如果你使用 Paxi：
 
 ```
 Selector: Kind=datapack
 Action: Destination → datapacks/
 ```
 
-### Normalize Filenames for Resource Packs
+### 规范化资源包文件名
 
-Resource pack files often include version numbers in their filenames — `Sapphire-v2.1.zip`, for example. When the pack updates to `Sapphire-v2.2.zip`, the filename changes, and Minecraft forgets your resource pack selection. You have to re-enable it every time.
+资源包文件名通常包含版本号——例如 `Sapphire-v2.1.zip`。当资源包更新到 `Sapphire-v2.2.zip` 时，文件名发生了变化，Minecraft 会忘记你的资源包选择，你每次都必须重新启用它。
 
-Normalize fixes this by renaming the file to a consistent name:
+规范化通过将文件重命名为一致的名称来解决这个问题：
 
 ```
 Selector: Purl=modrinth:sapphire
 Action: Normalize → Sapphire.zip
 ```
 
-Now the deployed filename stays `Sapphire.zip` regardless of what version number the author used. Your resource pack won't be deselected every time it updates.
+现在部署的文件名始终保持为 `Sapphire.zip`，无论作者使用了什么版本号。你的资源包不会在每次更新时被取消选择。
 
-## Adding Rules
+## 添加规则
 
-1. Open your instance and go to the **Setup** tab.
-2. Open the **Rules** editor for the instance.
-3. Add a new rule: define the selector and action.
-4. Save. Rules take effect on the next deploy.
+1. 打开你的实例，进入 **Setup** 标签页。
+2. 打开实例的 **Rules** 编辑器。
+3. 添加新规则：定义选择器和操作。
+4. 保存。规则将在下次部署时生效。
 
-## Rules and Tags
+## 规则与标签
 
-Tags and rules work together. The typical workflow:
+标签和规则协同工作。典型的工作流程：
 
-1. **Tag your mods** with meaningful labels (see [Tags](/docs/managing/tags)).
-2. **Write rules** that target those tags.
+1. **为模组添加标签**，使用有意义的标签名（参见 [标签](/docs/managing/tags)）。
+2. **编写规则**，针对这些标签进行操作。
 
-This gives you a maintainable system — change a mod's tags instead of editing individual rules.
+这为你提供了一个可维护的系统——修改模组的标签即可，无需逐条编辑规则。

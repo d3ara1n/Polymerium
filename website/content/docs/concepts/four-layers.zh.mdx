@@ -1,106 +1,106 @@
 ---
-title: Four-Layer Directory Model
-description: Every Polymerium instance has four directories with distinct roles and lifecycles. Understanding them is the key to mastering the launcher.
+title: 四层目录模型
+description: 每个 Polymerium 实例都有四个具有不同角色和生命周期的目录。理解它们是掌握这个启动器的关键。
 ---
 
-## The Four Layers
+## 四层目录
 
-Every instance in Polymerium has four directories. Each has a different job and a different lifecycle:
+Polymerium 中的每个实例都有四个目录。每个目录都有不同的任务和不同的生命周期：
 
 ```
 instances/my-modpack/
-├── import/     ← Files that ship with the modpack (authoritative source)
-├── live/       ← Working copy — receives in-game modifications
-├── persist/    ← Files you choose to preserve across resets and updates
-└── build/      ← The deployed game directory (build artifact)
+├── import/     ← 随模组包附带的文件（权威来源）
+├── live/       ← 工作副本——接收游戏内修改
+├── persist/    ← 你选择在重置和更新之间保留的文件
+└── build/      ← 部署的游戏目录（构建产物）
 ```
 
-### `import/` — The Modpack Source
+### `import/` — 模组包来源
 
-This is what the modpack author intended. When you import a modpack, its files land here — configs, default options, custom resources, etc.
+这是模组包作者的意图。当你导入模组包时，它的文件会放置在这里——配置、默认选项、自定义资源等。
 
-- **Who writes it:** The modpack author (via import or manual placement)
-- **When it changes:** When you update or re-import the modpack
-- **What it's for:** The authoritative, distributable version of the modpack's files
+- **谁写入它：** 模组包作者（通过导入或手动放置）
+- **它何时改变：** 当你更新或重新导入模组包时
+- **它的用途：** 模组包文件的权威、可分发版本
 
-### `live/` — The Working Copy
+### `live/` — 工作副本
 
-This is a writable copy of `import/`. When you play the game, in-game changes (modified configs, generated files) land here instead of in `import/`.
+这是 `import/` 的可写副本。当你玩游戏时，游戏内的更改（修改的配置、生成的文件）会落地在这里，而不是 `import/` 中。
 
-- **Who writes it:** The game runtime (and you, when tweaking configs)
-- **When it changes:** Every play session
-- **What it's for:** A sandbox for runtime modifications without polluting the source
+- **谁写入它：** 游戏运行时（以及你，当你调整配置时）
+- **它何时改变：** 每次游戏会话
+- **它的用途：** 运行时修改的沙盒，不会污染来源
 
-### `persist/` — User-Managed Persistence
+### `persist/` — 用户管理的持久层
 
-This directory is **yours**. Polymerium doesn't write to it automatically — you decide what goes here.
+这个目录是**你的**。Polymerium 不会自动写入它——你决定什么内容放在这里。
 
-The idea is simple: some files are too important to lose on reset or modpack update. Maybe your `options.txt` has sensitivity settings you spent an hour dialing in, or your `saves/` directory has a world you can't afford to lose. You move those files into `persist/` yourself.
+想法很简单：有些文件太重要了，不能在重置或模组包更新时丢失。也许你的 `options.txt` 包含了你花了一个小时调整的灵敏度设置，或者你的 `saves/` 目录包含了一个你无法承受丢失的世界。你自己将这些文件移动到 `persist/` 中。
 
-**How it works:**
+**它的工作原理：**
 
-1. **For single files** — move the file from `build/` to `persist/`. For example, move `build/options.txt` to `persist/options.txt`. On the next deploy, Polymerium will link `persist/options.txt` into `build/` with the highest priority, so your version always wins.
+1. **对于单个文件** —— 将文件从 `build/` 移动到 `persist/`。例如，将 `build/options.txt` 移动到 `persist/options.txt`。在下一次部署时，Polymerium 会以最高优先级将 `persist/options.txt` 链接到 `build/`，所以你的版本总是胜出。
 
-2. **For directories** — move the directory (e.g. `saves/`) into `persist/`, then create an empty `.keep` file inside it: `persist/saves/.keep`. This tells Polymerium to project the entire directory into `build/`.
+2. **对于目录** —— 将目录（例如 `saves/`）移动到 `persist/`，然后在其中创建一个空的 `.keep` 文件：`persist/saves/.keep`。这告诉 Polymerium 将整个目录投射到 `build/` 中。
 
-- **Who writes it:** You
-- **When it changes:** When you decide to add or update files
-- **What it's for:** Files you want to survive resets, modpack updates, and rebuilds
+- **谁写入它：** 你
+- **它何时改变：** 当你决定添加或更新文件时
+- **它的用途：** 你想要在重置、模组包更新和重建中幸存的文件
 
-### `build/` — The Deployed Game
+### `build/` — 部署的游戏
 
-This is the final game directory — what Minecraft sees as `.minecraft`. It's assembled from the other layers during deploy.
+这是最终的游戏目录——Minecraft 看到的 `.minecraft`。它是在部署期间从其他层组装而成的。
 
-- **Who writes it:** Polymerium's deploy engine
-- **When it changes:** Every deploy
-- **What it's for:** The runnable game directory
-- **Can you delete it?** Yes — but anything that only exists in `build/` and isn't backed by `persist/`, `live/`, or `import/` will be lost. Files you've moved to `persist/` are always safe. Everything else gets rebuilt from the metadata and cache.
+- **谁写入它：** Polymerium 的部署引擎
+- **它何时改变：** 每次部署
+- **它的用途：** 可运行的游戏目录
+- **你可以删除它吗？** 可以——但任何只存在于 `build/` 中且没有被 `persist/`、`live/` 或 `import/` 支持的内容都会丢失。你已经移动到 `persist/` 的文件总是安全的。其他所有内容都会从元数据和缓存重新构建。
 
-## How They Relate
+## 它们如何关联
 
 ```
 import/ ─────→ live/ ─────→ build/
                 ↑              ↑
-          Game writes    Final game dir
-                │              
+          游戏写入       最终游戏目录
+                │
 persist/ ───────┴────────────→ build/
-  (highest priority, user-managed)
+  （最高优先级，用户管理）
 ```
 
-During deploy, files are layered into `build/` in this order:
+在部署期间，文件按此顺序分层到 `build/` 中：
 
-1. **Cached files** — mods, libraries, assets (symlinked from cache)
-2. **`import/` files** — modpack source files
-3. **`live/` files** — working copy (overrides import)
-4. **`persist/` files** — your preserved files (highest priority, always wins)
+1. **缓存文件** —— 模组、库、资源（从缓存符号链接）
+2. **`import/` 文件** —— 模组包源文件
+3. **`live/` 文件** —— 工作副本（覆盖 import）
+4. **`persist/` 文件** —— 你保留的文件（最高优先级，总是胜出）
 
-If the same file exists in both `live/` and `persist/`, the `persist/` version takes precedence in `build/`.
+如果同一个文件同时存在于 `live/` 和 `persist/` 中，`persist/` 版本会在 `build/` 中优先。
 
-## What Happens During Common Operations
+## 常见操作期间发生什么
 
-| Operation | `import/` | `live/` | `persist/` | `build/` |
+| 操作 | `import/` | `live/` | `persist/` | `build/` |
 |-----------|:---------:|:-------:|:----------:|:--------:|
-| **Deploy** | Read | Read | Read | Rebuilt |
-| **Play game** | Unchanged | Modified | Unchanged | Modified |
-| **Reset** | Unchanged | Cleared | Unchanged | Cleared |
-| **Modpack update** | Replaced | Cleared | Unchanged | Cleared |
+| **部署** | 读取 | 读取 | 读取 | 重建 |
+| **玩游戏** | 不变 | 修改 | 不变 | 修改 |
+| **重置** | 不变 | 清除 | 不变 | 清除 |
+| **模组包更新** | 替换 | 清除 | 不变 | 清除 |
 
-### Key Takeaways
+### 关键要点
 
-- **Reset** clears `live/` and `build/`. Files you've placed in `persist/` are untouched.
-- **Modpack update** replaces `import/` and clears `live/`. `persist/` is preserved — that's the whole point.
-- **`build/`** is disposable as long as anything you care about is backed by `persist/`.
+- **重置**会清除 `live/` 和 `build/`。你放置在 `persist/` 中的文件不受影响。
+- **模组包更新**会替换 `import/` 并清除 `live/`。`persist/` 会被保留——这就是全部意义。
+- **`build/`** 是可丢弃的，只要你关心的任何内容都有 `persist/` 支持。
 
-## Why This Matters
+## 为什么这很重要
 
-This four-layer model solves a real tension in modded Minecraft:
+这个四层模型解决了模组 Minecraft 中的一个真实矛盾：
 
-- **Modpack authors** want to distribute consistent configs and resources.
-- **Players** want to keep their settings and saves across updates.
-- **Both** want modpack updates to work without losing important data.
+- **模组包作者**想要分发一致的配置和资源。
+- **玩家**想要在更新之间保留他们的设置和存档。
+- **双方**都希望模组包更新能够在不丢失重要数据的情况下工作。
 
-Polymerium's answer: separate these concerns into distinct directories with different lifecycles. You control what's preserved — move it to `persist/`, and Polymerium guarantees it survives.
+Polymerium 的答案：将这些关注点分离到具有不同生命周期的不同目录中。你控制什么被保留——将其移动到 `persist/`，Polymerium 保证它会幸存。
 
-## Next Step
+## 下一步
 
-Learn how deploy assembles these layers → [Deploy Pipeline](/docs/concepts/deploy-explained)
+了解部署如何组装这些层 → [部署流水线](/docs/concepts/deploy-explained)

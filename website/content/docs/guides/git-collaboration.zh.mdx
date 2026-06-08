@@ -1,26 +1,26 @@
 ---
-title: Collaborate on a Modpack with Git
-description: Set up a Git-based workflow for co-developing a modpack with multiple contributors.
+title: 使用 Git 协作开发整合包
+description: 设置基于 Git 的工作流，让多人共同协作开发整合包，包括实例配置、模组选择与配置调优。
 ---
 
-## Overview
+## 概述
 
-This guide shows you how to set up a shared modpack repository where multiple people can collaborate on instance configuration, mod selection, and config tuning using Git.
+本指南将帮助您搭建一个共享的整合包仓库，使多人可以通过 Git 协作开发实例配置、模组选择与配置调优。
 
-## Step 1: Initialize the Repository
+## 步骤 1：初始化仓库
 
-One person creates the modpack:
+由一人创建整合包：
 
-1. Create a new instance in Polymerium (e.g. "our-pack", Fabric 1.21.4).
-2. Add the initial mod list and configure everything.
-3. Initialize Git in the instance directory:
+1. 在 Polymerium 中创建一个新实例（例如「our-pack」，Fabric 1.21.4）。
+2. 添加初始模组列表并完成各项配置。
+3. 在实例目录中初始化 Git：
 
 ```bash
 cd instances/our-pack
 git init
 ```
 
-4. Create `.gitignore`:
+4. 创建 `.gitignore`：
 
 ```plaintext
 build/
@@ -29,44 +29,44 @@ persist/
 data.lock.json
 ```
 
-5. Commit:
+5. 提交：
 
 ```bash
 git add profile.json import/ icon.png README.md CHANGELOG.md LICENSE.txt
 git commit -m "Initial modpack setup"
 ```
 
-6. Push to GitHub/GitLab:
+6. 推送到 GitHub/GitLab：
 
 ```bash
 git remote add origin git@github.com:yourname/our-pack.git
 git push -u origin main
 ```
 
-## Step 2: Clone (For Collaborators)
+## 步骤 2：克隆（协作者）
 
-Each collaborator:
+每位协作者：
 
-1. Clone the repo into their Polymerium `instances/` directory:
+1. 将仓库克隆到自己的 Polymerium `instances/` 目录：
 
 ```bash
-cd ~/.local/share/Polymerium/instances/  # or Windows equivalent
+cd ~/.local/share/Polymerium/instances/  # 或 Windows 的对应路径
 git clone git@github.com:yourname/our-pack.git
 ```
 
-2. Open Polymerium — the instance appears in the sidebar.
-3. Deploy to build the game directory.
-4. Play and iterate.
+2. 打开 Polymerium —— 实例将显示在侧边栏中。
+3. 部署以构建游戏目录。
+4. 游玩并迭代。
 
-## Step 3: Iteration Workflow
+## 步骤 3：迭代工作流
 
-For each change cycle:
+每个变更周期：
 
-### Adding / Removing Mods
+### 添加 / 删除模组
 
-1. Make changes in Polymerium's Setup tab.
-2. `profile.json` is updated automatically.
-3. Commit:
+1. 在 Polymerium 的设置（Setup）标签页中进行修改。
+2. `profile.json` 会自动更新。
+3. 提交：
 
 ```bash
 cd instances/our-pack
@@ -75,13 +75,13 @@ git commit -m "Add Create mod and dependencies"
 git push
 ```
 
-### Tuning Configs
+### 调整配置
 
-1. Launch the game and tweak settings in-game.
-2. Changes land in `live/` (untracked).
-3. Open the **Workspace** tab to review diffs.
-4. Sync desired changes from `live/` → `import/`.
-5. Commit:
+1. 启动游戏并在游戏内调整设置。
+2. 变更会保存到 `live/`（未跟踪）。
+3. 打开 **工作空间（Workspace）** 标签页查看差异。
+4. 将需要的更改从 `live/` 同步到 `import/`。
+5. 提交：
 
 ```bash
 git add import/
@@ -89,45 +89,45 @@ git commit -m "Tweak performance configs for lower-end hardware"
 git push
 ```
 
-### Syncing with Others
+### 与他人同步
 
 ```bash
 git pull
-# Redeploy in Polymerium to pick up changes
+# 在 Polymerium 中重新部署以应用变更
 ```
 
-> **Important:** Close Polymerium before `git pull` to avoid conflicts with the file watcher. Reopen after pulling, then redeploy.
+> **重要提示：** 在 `git pull` 前关闭 Polymerium，以免与文件监视器产生冲突。拉取后重新打开 Polymerium，再重新部署。
 
-## Step 4: Resolve Conflicts
+## 步骤 4：解决冲突
 
-If two people edit `profile.json` simultaneously:
+如果两人同时编辑 `profile.json`：
 
-1. `git pull` — Git will flag the conflict.
-2. Open `profile.json` and resolve manually. The format is JSON — look for the conflicting package entries.
-3. Reopen Polymerium, verify the mod list looks correct.
-4. Commit the resolution.
+1. 执行 `git pull` —— Git 将标记冲突。
+2. 打开 `profile.json` 并手动解决。格式为 JSON —— 查找冲突的模组条目。
+3. 重新打开 Polymerium，验证模组列表是否正确。
+4. 提交解决方案。
 
-## Step 5: Publish a Release
+## 步骤 5：发布版本
 
-When you're ready to share the modpack publicly:
+当您准备好公开发布整合包时：
 
-1. Tag the release:
+1. 为发布打标签：
 
 ```bash
 git tag -a v1.0.0 -m "First public release"
 git push origin v1.0.0
 ```
 
-2. In Polymerium, export the instance:
-   - **Export → Modrinth format** (for Modrinth publishing)
-   - **Export → CurseForge format** (for CurseForge publishing)
-   - **Export → Trident format** (for Polymerium-to-Polymerium sharing)
+2. 在 Polymerium 中导出实例：
+   - **导出 → Modrinth 格式（Export → Modrinth format）**（用于发布到 Modrinth）
+   - **导出 → CurseForge 格式（Export → CurseForge format）**（用于发布到 CurseForge）
+   - **导出 → Trident 格式（Export → Trident format）**（用于 Polymerium 与 Polymerium 之间共享）
 
-3. Upload the exported file to your platform of choice.
+3. 将导出的文件上传到您选择的平台。
 
-## Tips
+## 提示
 
-- **Use branches** for experiments — `git checkout -b experiment/new-mod`, test, merge or discard.
-- **Don't track `live/` or `persist/`** — these are personal and machine-specific.
-- **Use the workspace** for promoting `live/` changes to `import/` — it shows exactly what changed.
-- **Keep a `CHANGELOG.md`** in the instance directory — update it with each release.
+- **使用分支** 进行实验 —— `git checkout -b experiment/new-mod`，测试后合并或丢弃。
+- **不要跟踪 `live/` 或 `persist/`** —— 这些是个人与机器特定的数据。
+- **使用工作空间** 将 `live/` 的更改提升到 `import/` —— 它会精确显示哪些内容发生了变化。
+- **在实例目录中保留一个 `CHANGELOG.md`** —— 每次发布时更新它。

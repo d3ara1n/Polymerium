@@ -1,58 +1,58 @@
 ---
-title: Headless Instance Management with CLI
-description: Manage Minecraft instances on a server or in CI/CD using the trident CLI — no GUI needed.
+title: 使用命令行进行无头实例管理
+description: 在服务器或 CI/CD 环境中使用 trident 命令行管理 Minecraft 实例 —— 无需图形界面。
 ---
 
-## Use Cases
+## 使用场景
 
-- **CI/CD pipelines** — automatically build and export modpacks on every commit.
-- **Dedicated servers** — manage game instances on a headless Linux box.
-- **Automation scripts** — batch-create, configure, and deploy instances.
-- **AI agent workflows** — use MCP mode to let AI manage instances programmatically.
+- **CI/CD 流水线** —— 每次提交时自动构建并导出整合包。
+- **专用服务器** —— 在无头 Linux 服务器上管理游戏实例。
+- **自动化脚本** —— 批量创建、配置和部署实例。
+- **AI 智能体工作流** —— 使用 MCP 模式让 AI 以编程方式管理实例。
 
-## Installation
+## 安装
 
-### As a .NET Global Tool
+### 作为 .NET 全局工具
 
 ```bash
 dotnet tool install --global Trident.Cli
 ```
 
-### Standalone Binary
+### 独立二进制文件
 
-Download from NuGet or build from source. The CLI is a self-contained .NET application — no GUI dependencies.
+从 NuGet 下载或从源码构建。CLI 是一个独立的 .NET 应用程序 —— 无需图形界面依赖。
 
-## Basic Workflow
+## 基本工作流
 
-### Create and Deploy an Instance
+### 创建并部署实例
 
 ```bash
-# Create a Fabric 1.21.4 instance
+# 创建一个 Fabric 1.21.4 实例
 trident instance create my-pack --version 1.21.4 --loader fabric
 
-# Add mods
+# 添加模组
 trident package add modrinth:sodium
 trident package add modrinth:lithium
 trident package add modrinth:ferrite-core
 trident package add modrinth:fabric-api
 
-# Deploy
+# 部署
 trident instance build my-pack
 ```
 
-### Export for Distribution
+### 导出用于分发
 
 ```bash
-# Export as Modrinth modpack
+# 导出为 Modrinth 整合包
 trident instance export my-pack --format modrinth --output ./releases/
 
-# Export as CurseForge modpack
+# 导出为 CurseForge 整合包
 trident instance export my-pack --format curseforge --output ./releases/
 ```
 
-### Non-Interactive Mode
+### 非交互模式
 
-Use `--no-interactive` to skip all prompts — required for CI/CD:
+使用 `--no-interactive` 跳过所有提示 —— CI/CD 必需：
 
 ```bash
 trident instance create my-pack --version 1.21.4 --loader fabric --no-interactive
@@ -60,19 +60,19 @@ trident package add modrinth:sodium --no-interactive
 trident instance build my-pack --no-interactive
 ```
 
-### JSON Output
+### JSON 输出
 
-Use `--json` for programmatic consumption:
+使用 `--json` 以便于程序化处理：
 
 ```bash
-# List instances as JSON
+# 以 JSON 格式列出实例
 trident instance list --json
 
-# Search mods and pipe to jq
+# 搜索模组并通过管道传递给 jq
 trident package search "sodium" --json | jq '.[].purl'
 ```
 
-## CI/CD Example: GitHub Actions
+## CI/CD 示例：GitHub Actions
 
 ```yaml
 name: Build Modpack
@@ -104,27 +104,27 @@ jobs:
           files: ./release/*.mrpack
 ```
 
-## MCP Mode for Automation
+## MCP 模式用于自动化
 
-Start the MCP server for AI agent or programmatic access:
+启动 MCP 服务器，以供 AI 智能体或程序化访问：
 
 ```bash
 trident --mcp
 ```
 
-The server speaks the Model Context Protocol over stdio. Any MCP-compatible client can connect and use the 30+ tools to manage instances.
+服务器通过 stdio 通信，使用模型上下文协议（Model Context Protocol）。任何兼容 MCP 的客户端都可以连接并使用 30 多个工具来管理实例。
 
-See [MCP Mode →](/docs/advanced/mcp) for the full tool list and usage examples.
+完整工具列表与使用示例请参阅 [MCP 模式 →](/docs/advanced/mcp)。
 
-## Custom Data Directory
+## 自定义数据目录
 
-Use `--home` to specify a different data directory:
+使用 `--home` 指定不同的数据目录：
 
 ```bash
 trident --home /opt/minecraft-data instance list
 ```
 
-This is useful for:
-- Running multiple configurations side by side
-- Pointing at a specific data directory in scripts
-- Isolating CI builds from your personal data
+这适用于：
+- 并行运行多个配置
+- 在脚本中指定特定的数据目录
+- 将 CI 构建与个人数据隔离

@@ -1,63 +1,63 @@
 ---
-title: Set Up Authlib Injector (外置登录)
-description: Connect to third-party authentication servers using the Yggdrasil protocol.
+title: 设置 Authlib Injector（外置登录）
+description: 使用 Yggdrasil 协议连接第三方认证服务器。
 ---
 
-## What is Authlib Injector?
+## 什么是 Authlib Injector？
 
-Authlib Injector is a Java agent that intercepts Minecraft's authentication calls and redirects them to a third-party Yggdrasil-compatible server. This is commonly used by Chinese Minecraft communities for custom authentication (外置登录 / 正版登录).
+Authlib Injector 是一个 Java 代理，用于拦截 Minecraft 的认证调用并将其重定向到第三方 Yggdrasil 兼容服务器。中国 Minecraft 社区常使用它进行自定义认证（外置登录 / 正版登录）。
 
-Polymerium has built-in support for this — no manual Java agent configuration needed.
+Polymerium 内置支持此功能 —— 无需手动配置 Java 代理。
 
-## Setup
+## 设置
 
-### Step 1: Add an Authlib Account
+### 步骤 1：添加 Authlib 账号
 
-1. Go to **Accounts** in the sidebar.
-2. Click **Add Account** → **Authlib Injector**.
-3. Enter the **server URL** of the Yggdrasil authentication server.
+1. 在侧边栏中进入 **账号（Accounts）**。
+2. 点击 **添加账号（Add Account）** → **Authlib Injector**。
+3. 输入 Yggdrasil 认证服务器的 **服务器 URL**。
 
-   Example: `https://auth.example.com/api/yggdrasil`
+   示例：`https://auth.example.com/api/yggdrasil`
 
-4. Polymerium fetches the server's metadata and validates the connection.
-5. Enter your credentials (username/email + password) for that server.
-6. The account is saved.
+4. Polymerium 会获取服务器元数据并验证连接。
+5. 输入该服务器的凭据（用户名/邮箱 + 密码）。
+6. 账号已保存。
 
-### Step 2: Bind the Account to Your Instance
+### 步骤 2：将账号绑定到您的实例
 
-1. Open the instance's properties.
-2. Set the **account override** to your Authlib account.
+1. 打开实例的属性。
+2. 将 **账号覆盖（account override）** 设置为您的 Authlib 账号。
 
-Or set the Authlib account as your default account if you use it for most instances.
+或者，如果多数实例都使用此账号，也可以将其设置为默认账号。
 
-### Step 3: Deploy and Launch
+### 步骤 3：部署并启动
 
-1. Click **Deploy** (or **Launch** — it deploys automatically).
-2. Polymerium injects the `-javaagent` flag and prefetched server metadata into the launch command.
-3. The game authenticates against the third-party server instead of Mojang.
+1. 点击 **部署（Deploy）**（或 **启动（Launch）** —— 会自动部署）。
+2. Polymerium 将 `-javaagent` 标志与预取的服务器元数据注入到启动命令中。
+3. 游戏将通过第三方服务器进行认证，而非 Mojang。
 
-## How It Works
+## 工作原理
 
-When launching an instance with an Authlib account:
+使用 Authlib 账号启动实例时：
 
-1. Polymerium downloads the latest Authlib Injector JAR (if not cached).
-2. Fetches and caches the server's Yggdrasil metadata.
-3. Adds `-javaagent:authlib-injector.jar={server_url}` to the JVM arguments.
-4. The game process loads Authlib Injector, which patches authentication in-memory.
+1. Polymerium 会下载最新版的 Authlib Injector JAR（如果尚未缓存）。
+2. 获取并缓存服务器的 Yggdrasil 元数据。
+3. 向 JVM 参数添加 `-javaagent:authlib-injector.jar={server_url}`。
+4. 游戏进程加载 Authlib Injector，在内存中修补认证流程。
 
-## Server Compatibility
+## 服务器兼容性
 
-Polymerium works with any server that implements the Yggdrasil protocol, including:
+Polymerium 兼容任何实现 Yggdrasil 协议的服务器，包括：
 
-- [authlib-injector](https://github.com/yushijinhun/authlib-injector) compatible servers
-- Most Chinese community auth servers (LittleSkin, etc.)
-- Custom Yggdrasil implementations
+- [authlib-injector](https://github.com/yushijinhun/authlib-injector) 兼容服务器
+- 大多数中国社区认证服务器（LittleSkin 等）
+- 自定义 Yggdrasil 实现
 
-## Troubleshooting
+## 故障排除
 
-| Problem | Solution |
+| 问题 | 解决方案 |
 |---------|----------|
-| "Failed to fetch server metadata" | Check the server URL; ensure it's reachable |
-| "Authentication failed" | Verify your credentials; check if the server requires specific formats |
-| Game launches but can't join server | Ensure the server URL matches what the game server expects |
-| Skin not showing | This is a server-side feature; check with your auth server operator |
+| 无法获取服务器元数据 | 检查服务器 URL；确保其可访问 |
+| 认证失败 | 验证凭据；检查服务器是否要求特定格式 |
+| 游戏可启动但无法加入服务器 | 确保服务器 URL 与游戏服务器期望的一致 |
+| 皮肤不显示 | 这是服务器端功能；请咨询您的认证服务器管理员 |

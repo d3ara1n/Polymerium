@@ -1,15 +1,15 @@
 ---
-title: Metadata-Driven Instances
-description: In Polymerium, an instance is a description — not a folder copy. This changes everything about how you manage your game.
+title: 元数据驱动的实例
+description: 在 Polymerium 中，实例是一个描述——而不是文件夹副本。这彻底改变了你管理游戏的方式。
 ---
 
-## The Core Idea
+## 核心理念
 
-Most Minecraft launchers treat an instance as a folder full of files — the game JAR, mods, configs, libraries, everything copied into one place. If you have 5 instances with the same Sodium mod, you have 5 copies of Sodium on your disk.
+大多数 Minecraft 启动器将实例视为一个装满文件的文件夹——游戏 JAR、模组、配置、库文件，所有东西都复制到一个地方。如果你有 5 个实例都使用了同一个 Sodium 模组，你的磁盘上就会有 5 份 Sodium 的副本。
 
-Polymerium does something different: **an instance is a metadata file.**
+Polymerium 做了一些不同的设计：**实例是一个元数据文件。**
 
-Your instance is a `profile.json` that describes what your game should contain:
+你的实例是一个 `profile.json` 描述文件，它描述了你的游戏应该包含什么：
 
 ```json
 {
@@ -23,51 +23,51 @@ Your instance is a `profile.json` that describes what your game should contain:
 }
 ```
 
-The actual game directory is **built on demand** when you deploy. Files are symlinked from a shared cache — never duplicated.
+实际的游戏目录是**在部署时按需构建**的。文件通过符号链接从共享缓存中引入——从不重复复制。
 
-## What This Means in Practice
+## 这在实践中意味着什么
 
-### Switching Loaders is Instant
+### 切换加载器是即时的
 
-Want to try Fabric instead of Forge? Change the loader field, deploy again. No re-downloading, no waiting. The new loader's libraries get linked into the game directory.
+想试试 Fabric 而不是 Forge？修改加载器字段，重新部署。无需重新下载，无需等待。新加载器的库文件会被链接到游戏目录中。
 
-### Adding a Mod Doesn't Copy Files
+### 添加模组不会复制文件
 
-When you install Sodium, the file goes into the shared cache once. If another instance already has it, Polymerium just creates a symlink. Zero extra disk space.
+当你安装 Sodium 时，文件只会下载一次到共享缓存中。如果另一个实例已经有它，Polymerium 只需要创建一个符号链接。零额外磁盘占用。
 
-### Your Instance is Portable
+### 你的实例是可移植的
 
-Because it's just JSON + a few configuration files, your entire instance can be version-controlled with Git, shared with friends, or exported as a modpack.
+因为它只是 JSON 加上一些配置文件，你的整个实例可以通过 Git 进行版本控制、与朋友分享，或导出为模组包。
 
-### Nothing is Permanent
+### 没有什么是永久的
 
-The game directory (`build/`) is a build artifact. You can delete it and redeploy at any time. For files you can't afford to lose — like `options.txt` or your saves — move them into the `persist/` directory. Polymerium never touches `persist/` during resets or updates. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+游戏目录（`build/`）是一个构建产物。你可以随时删除它并重新部署。对于那些你无法承受丢失的文件——比如 `options.txt` 或你的存档——将它们移动到 `persist/` 目录中。Polymerium 在重置或更新期间永远不会触碰 `persist/`。详情请参见[四层目录 →](/docs/concepts/four-layers#persist---用户管理的持久层)。
 
-## The Workflow
+## 工作流程
 
 ```
-Edit metadata (add mod, change version, switch loader)
+编辑元数据（添加模组、更改版本、切换加载器）
         ↓
-    Deploy
+    部署
         ↓
-  Game directory is rebuilt from cache + metadata
+  游戏目录从缓存 + 元数据重建
         ↓
-    Launch
+    启动
 ```
 
-This is a compile-on-read model. Your metadata is the source of truth; the game directory is the output.
+这是一个按需编译的模型。你的元数据是事实的来源；游戏目录是输出。
 
-## How It Compares
+## 对比
 
-| Action | Traditional Launcher | Polymerium |
-|--------|---------------------|------------|
-| Add a mod | Download + copy to instance folder | Download to cache, symlink into build |
-| Switch loader | Delete old files, re-download everything | Update metadata, redeploy |
-| Update modpack version | Create a new copy (doubles disk usage) | Switch versions in-place, redeploy |
-| Share instance | Zip the entire folder | Share `profile.json` |
-| Disk usage with 5 identical instances | 5× mod files | 1× mod files |
+| 操作 | 传统启动器 | Polymerium |
+|------|-----------|------------|
+| 添加模组 | 下载 + 复制到实例文件夹 | 下载到缓存，符号链接到 build |
+| 切换加载器 | 删除旧文件，重新下载所有内容 | 更新元数据，重新部署 |
+| 更新模组包版本 | 创建新副本（磁盘使用量翻倍） | 原地切换版本，重新部署 |
+| 分享实例 | 压缩整个文件夹 | 分享 `profile.json` |
+| 5 个相同实例的磁盘占用 | 5 倍模组文件 | 1 倍模组文件 |
 
-## Where to Learn More
+## 了解更多
 
-- [Four-Layer Directories →](/docs/concepts/four-layers) — understand how files are organized inside an instance
-- [Deploy Pipeline →](/docs/concepts/deploy-explained) — see exactly what happens when you click "Deploy"
+- [四层目录 →](/docs/concepts/four-layers) —— 了解实例内的文件是如何组织的
+- [部署流水线 →](/docs/concepts/deploy-explained) —— 看看当你点击"部署"时到底发生了什么

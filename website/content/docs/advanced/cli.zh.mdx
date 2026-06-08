@@ -1,198 +1,198 @@
 ---
-title: CLI Reference
-description: The trident command-line tool — manage instances, mods, accounts, and more from the terminal.
+title: CLI 参考
+description: trident 命令行工具——从终端管理实例、模组、账户等。
 ---
 
-## Installation
+## 安装
 
-The CLI (`trident`) is included with Polymerium. It's also available as a standalone .NET tool:
+CLI（`trident`）随 Polymerium 一起安装。它也可以作为独立的 .NET 工具使用：
 
 ```bash
 dotnet tool install --global Trident.Cli
 ```
 
-## Global Options
+## 全局选项
 
-| Option | Description |
+| 选项 | 说明 |
 |--------|-------------|
-| `--home <path>` | Override the data directory |
-| `--json` | Output results as JSON |
-| `--no-interactive` | Disable interactive prompts |
-| `--verbose` / `--debug` | Increase output verbosity |
+| `--home <path>` | 覆盖数据目录 |
+| `--json` | 以 JSON 格式输出结果 |
+| `--no-interactive` | 禁用交互式提示 |
+| `--verbose` / `--debug` | 增加输出详细程度 |
 
-## Instance Commands
+## 实例命令
 
-### Create an Instance
+### 创建实例
 
 ```bash
 trident instance create my-modpack --version 1.21.4 --loader fabric
 ```
 
-Options:
-- `--version` — Minecraft version (required)
-- `--loader` — Loader name: `fabric`, `forge`, `neoforge`, `quilt`
+选项：
+- `--version`——Minecraft 版本（必填）
+- `--loader`——加载器名称：`fabric`、`forge`、`neoforge`、`quilt`
 
-### List Instances
+### 列出实例
 
 ```bash
 trident instance list
 ```
 
-### Inspect an Instance
+### 查看实例详情
 
 ```bash
 trident instance inspect my-modpack
 ```
 
-Shows version, loader, mod count, deploy status, and more.
+显示版本、加载器、模组数量、部署状态等信息。
 
-### Deploy (Build) an Instance
+### 部署（构建）实例
 
 ```bash
 trident instance build my-modpack
 ```
 
-Runs the full deploy pipeline. Equivalent to clicking "Deploy" in the GUI.
+运行完整的部署管道。等同于在 GUI 中点击"Deploy"。
 
-### Launch an Instance
+### 启动实例
 
 ```bash
 trident instance run my-modpack
 ```
 
-Deploys if needed, then launches Minecraft.
+如有需要会先部署，然后启动 Minecraft。
 
-### Export a Modpack
+### 导出整合包
 
 ```bash
 trident instance export my-modpack --format modrinth --output ./release/
 ```
 
-Supported formats: `trident`, `curseforge`, `modrinth`, `multimc`.
+支持的格式：`trident`、`curseforge`、`modrinth`、`multimc`。
 
-### Import a Modpack
+### 导入整合包
 
 ```bash
 trident instance import ./my-pack.mrpack
 ```
 
-Auto-detects the format.
+自动检测格式。
 
-### Delete an Instance
+### 删除实例
 
 ```bash
 trident instance delete my-modpack
 ```
 
-## Package Commands
+## 包命令
 
-### Search for Mods
+### 搜索模组
 
 ```bash
 trident package search "sodium"
 ```
 
-### Add a Mod
+### 添加模组
 
 ```bash
 trident package add modrinth:sodium
 ```
 
-The `purl` format is `repository:project-id` or `repository:project-id@version-id`.
+`purl` 格式为 `repository:project-id` 或 `repository:project-id@version-id`。
 
-### List Installed Mods
+### 列出已安装的模组
 
 ```bash
 trident package list --instance my-modpack
 ```
 
-### Enable / Disable a Mod
+### 启用/禁用模组
 
 ```bash
 trident package enable modrinth:sodium --instance my-modpack
 trident package disable modrinth:sodium --instance my-modpack
 ```
 
-### View Available Versions
+### 查看可用版本
 
 ```bash
 trident package version list modrinth:sodium
 ```
 
-### Pin a Specific Version
+### 固定特定版本
 
 ```bash
 trident package version set modrinth:sodium <version-file-id>
 ```
 
-## Loader Commands
+## 加载器命令
 
-### List Loaders for an Instance
+### 列出实例的加载器
 
 ```bash
 trident loader list --instance my-modpack
 ```
 
-### Change the Loader
+### 更换加载器
 
 ```bash
 trident loader set my-modpack --loader neoforge --version 21.4.0
 ```
 
-## Account Commands
+## 账户命令
 
-### Add a Microsoft Account
+### 添加微软账户
 
 ```bash
 trident account add
 ```
 
-Launches the Device Code Flow in the terminal.
+在终端中启动设备代码流（Device Code Flow）。
 
-### Add an Offline Account
+### 添加离线账户
 
 ```bash
 trident account add-offline --username Steve
 ```
 
-### List Accounts
+### 列出账户
 
 ```bash
 trident account list
 ```
 
-### Remove an Account
+### 移除账户
 
 ```bash
 trident account remove <uuid>
 ```
 
-## Repository Commands
+## 仓库命令
 
-### List Configured Repositories
+### 列出已配置的仓库
 
 ```bash
 trident repository list
 ```
 
-### Check Repository Status
+### 检查仓库状态
 
 ```bash
 trident repository status
 ```
 
-### Add a Repository
+### 添加仓库
 
 ```bash
 trident repository add my-repo https://api.example.com
 ```
 
-## MCP Mode
+## MCP 模式
 
-Start an MCP server for AI agent integration:
+启动 MCP 服务器用于 AI Agent 集成：
 
 ```bash
 trident --mcp
 ```
 
-See [MCP Mode →](/docs/advanced/mcp) for details.
+详见 [MCP 模式 →](/docs/advanced/mcp)。

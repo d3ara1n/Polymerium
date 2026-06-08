@@ -1,56 +1,56 @@
 ---
-title: Java Management
-description: Configure Java manually or let Polymerium auto-download the right version for you.
+title: Java 管理
+description: 手动配置 Java 或让 Polymerium 为您自动下载正确的版本。
 ---
 
-## How Polymerium Handles Java
+## Polymerium 如何处理 Java
 
-Polymerium doesn't scan your system drive for Java installations. It uses two sources:
+Polymerium 不会扫描您的系统驱动器以查找 Java 安装。它使用两个来源：
 
-1. **Manually configured Java** — you specify a Java home directory.
-2. **Auto-deployed runtime** — Polymerium downloads a matching Java runtime from Mojang into its cache.
+1. **手动配置的 Java** — 您指定 Java 主目录。
+2. **自动部署的运行时** — Polymerium 从 Mojang 将匹配的 Java 运行时下载到其缓存中。
 
-### When Auto-Deploy Happens
+### 自动部署何时发生
 
-If you haven't configured a Java path (or the configured path doesn't work), Polymerium automatically downloads the appropriate runtime during deploy. This happens once — the runtime is cached and reused.
+如果您尚未配置 Java 路径（或配置的路径无效），Polymerium 会在部署期间自动下载相应的运行时。这仅发生一次 — 运行时会被缓存并重复使用。
 
-Auto-deployed runtimes live in `cache/runtimes/` and don't touch your system registry or replace your system Java.
+自动部署的运行时位于 `cache/runtimes/` 中，不会触及您的系统注册表或替换您的系统 Java。
 
-## Supported Java Versions
+## 支持的 Java 版本
 
-Polymerium can manage multiple Java versions because different Minecraft versions require different JREs:
+Polymerium 可以管理多个 Java 版本，因为不同的 Minecraft 版本需要不同的 JRE：
 
-| Minecraft Version | Required Java |
+| Minecraft 版本 | 所需 Java |
 |-------------------|---------------|
-| 1.16.5 and earlier | Java 8 |
+| 1.16.5 及更早版本 | Java 8 |
 | 1.17 | Java 16 |
 | 1.18–1.20.4 | Java 17 |
 | 1.20.5+ | Java 21 |
 
-## Configuring Java Paths
+## 配置 Java 路径
 
-Go to **Settings → Java** to set Java home paths for each major version. Each field accepts a path to a JDK/JRE home directory (containing `bin/java` or `bin/java.exe`).
+进入**设置 → Java** 来为每个主要版本设置 Java 主目录路径。每个字段接受 JDK/JRE 主目录的路径（包含 `bin/java` 或 `bin/java.exe`）。
 
-### Per-Instance Override
+### 按实例覆盖
 
-You can override the Java version for a specific instance:
+您可以为特定实例覆盖 Java 版本：
 
-1. Open the instance's properties.
-2. Set the **Java home override** to a specific path.
+1. 打开实例的属性。
+2. 将**Java 主目录覆盖**设置为特定路径。
 
-This is useful for testing compatibility or using optimized JVM distributions for specific instances.
+这对于测试兼容性或为特定实例使用优化的 JVM 发行版很有用。
 
-## Manual vs. Auto: Which to Use?
+## 手动与自动：使用哪个？
 
-| Scenario | Recommendation |
+| 场景 | 建议 |
 |----------|---------------|
-| Casual player | Let Polymerium auto-deploy — zero configuration |
-| System Java already installed | Configure the path — avoids duplicate runtimes |
-| Multiple MC versions | Configure paths per version, or let auto-deploy handle it |
-| Debugging Java issues | Set manually so you control exactly which Java runs |
+| 休闲玩家 | 让 Polymerium 自动部署 — 零配置 |
+| 已安装系统 Java | 配置路径 — 避免重复运行时 |
+| 多个 MC 版本 | 按版本配置路径，或让自动部署处理 |
+| 调试 Java 问题 | 手动设置以便您精确控制运行哪个 Java |
 
-## Troubleshooting Java Issues
+## Java 问题故障排除
 
-- **Wrong Java version** → check the instance's Java override and the global Java settings for the matching version
-- **Java not found** → remove the override and let auto-deploy fetch the right one
-- **Crash on launch** → verify the Java path points to a valid JDK/JRE home (must contain `bin/java`)
+- **Java 版本错误** → 检查实例的 Java 覆盖和匹配版本的全局 Java 设置
+- **找不到 Java** → 删除覆盖并让自动部署获取正确的版本
+- **启动时崩溃** → 验证 Java 路径指向有效的 JDK/JRE 主目录（必须包含 `bin/java`）

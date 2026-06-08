@@ -1,83 +1,83 @@
 ---
-title: Workspace
-description: Compare your in-game changes against the modpack source and sync them back — a diff-and-merge tool for modpack developers.
+title: 工作区
+description: 将游戏内的修改与整合包源进行比较并同步回去——整合包开发者的差异比较与合并工具。
 ---
 
-## Who Is This For?
+## 适合谁？
 
-The Workspace is built for **modpack developers** — people who create and maintain modpacks.
+工作区专为**整合包开发者**打造——即创建和维护整合包的人。
 
-If you imported someone else's modpack, you don't need this feature. Your `import/` folder is read-only and the game runs from `live/` as expected. The only time you might open the workspace is to restore an original file from `import/` to `live/` if something broke — but that's rare.
+如果你导入的是别人的整合包，则不需要此功能。你的 `import/` 文件夹是只读的，游戏从 `live/` 正常运行。你唯一可能打开工作区的情况是——当某个文件损坏时，从 `import/` 恢复原始文件到 `live/`——但这种情况很少发生。
 
-## The Problem
+## 问题所在
 
-When you develop a modpack, you configure things in-game: video settings, mod configs, world generation options. Those changes land in `live/`. But `import/` — your modpack's distributable source — stays untouched. You changed configs but don't know which files moved or how to promote them back into the modpack. That's what Workspace solves.
+当你开发整合包时，你在游戏内进行配置：视频设置、模组配置、世界生成选项。这些修改保存在 `live/` 中。但 `import/`——你的整合包可分发的源文件——始终保持不变。你修改了配置，却不知道哪些文件发生了变化，也不知道如何将它们提升回整合包。这就是工作区要解决的问题。
 
-## Opening the Workspace
+## 打开工作区
 
-1. Select your instance.
-2. Switch to the **Workspace** tab.
+1. 选择你的实例。
+2. 切换到 **Workspace** 标签页。
 
-The workspace shows a side-by-side comparison of `import/` vs `live/`.
+工作区会显示 `import/` 与 `live/` 的并排比较。
 
-## Understanding the Diff
+## 理解差异
 
-The workspace detects three types of changes:
+工作区检测三种类型的变化：
 
-| Type | Meaning |
+| 类型 | 含义 |
 |------|---------|
-| **Added** | File exists in `live/` but not in `import/` |
-| **Modified** | File exists in both, but content differs |
-| **Removed** | File exists in `import/` but not in `live/` |
+| **Added（新增）** | 文件存在于 `live/` 但不存在于 `import/` |
+| **Modified（修改）** | 文件在两处都存在，但内容不同 |
+| **Removed（删除）** | 文件存在于 `import/` 但不存在于 `live/` |
 
-### Example: Config Tweaks
+### 示例：配置调整
 
-You launched the game and adjusted performance settings for your modpack. The changes are in `live/config/` while the originals sit in `import/config/`. The workspace shows exactly which files changed and how they differ.
+你启动了游戏并为整合包调整了性能设置。修改保存在 `live/config/` 中，而原始文件位于 `import/config/`。工作区会精确显示哪些文件发生了变化以及它们之间的差异。
 
-## Syncing Changes
+## 同步修改
 
-There are two sync directions, each serving a different purpose.
+同步有两个方向，各有不同的用途。
 
-### Promote: live → import (primary)
+### 提升：live → import（主要方向）
 
-This is the main workflow. When you see a change in `live/` that you want to keep in your modpack:
+这是主要的工作流程。当你在 `live/` 中看到想要保留到整合包中的修改时：
 
-1. Select the file in the workspace.
-2. Click **Sync to Import**.
-3. The file is copied from `live/` to `import/`.
+1. 在工作区中选择该文件。
+2. 点击 **Sync to Import**。
+3. 文件从 `live/` 复制到 `import/`。
 
-That change is now part of your modpack's source. It will be included when you export or update the modpack.
+该修改现在成为了整合包源的一部分。在你导出或更新整合包时，它将被包含在内。
 
-You can select multiple files and sync them at once — useful after a tuning session where you changed many config files.
+你可以选择多个文件并一次性同步——这在你调整了许多配置文件之后非常有用。
 
-### Restore: import → live (secondary)
+### 恢复：import → live（辅助方向）
 
-If an in-game change went wrong and you want the original file back:
+如果游戏内的修改出了问题，你想恢复原始文件：
 
-1. Select the file in the workspace.
-2. Click **Sync to Live**.
-3. The file is copied from `import/` to `live/`, overwriting your local change.
+1. 在工作区中选择该文件。
+2. 点击 **Sync to Live**。
+3. 文件从 `import/` 复制到 `live/`，覆盖你的本地修改。
 
-This restores the modpack's original version of that file.
+这将恢复该文件的整合包原始版本。
 
-## Modpack Author Workflow
+## 整合包作者工作流
 
-This is the primary use case for the workspace:
+这是工作区的主要使用场景：
 
-1. Build a modpack and add initial configs to `import/`.
-2. Launch the game and configure everything in-game (changes go to `live/`).
-3. Open the workspace and review what changed.
-4. Promote confirmed changes from `live/` to `import/`.
-5. Export or commit to Git.
+1. 构建整合包并将初始配置添加到 `import/`。
+2. 启动游戏并在游戏内完成所有配置（修改保存到 `live/`）。
+3. 打开工作区，查看哪些内容发生了变化。
+4. 将确认的修改从 `live/` 提升到 `import/`。
+5. 导出或提交到 Git。
 
-Repeat this loop as you iterate on your modpack.
+在迭代整合包的过程中重复此循环。
 
-## Relationship to Git
+## 与 Git 的关系
 
-If you use Git for your modpack (see [Modpack Development](/docs/advanced/modpack-dev)), the workspace fits naturally into version control:
+如果你使用 Git 管理整合包（参见 [整合包开发](/docs/advanced/modpack-dev)），工作区可以自然地融入版本控制：
 
-1. `import/` is tracked by Git.
-2. `live/` is in `.gitignore`.
-3. Sync from `live/` → `import/` → then `git commit`.
+1. `import/` 由 Git 跟踪。
+2. `live/` 在 `.gitignore` 中。
+3. 从 `live/` 同步到 `import/` → 然后 `git commit`。
 
-Think of `live/` as your working tree, `import/` as your staged changes, and `git commit` as the final step.
+可以将 `live/` 视为你的工作树，`import/` 视为暂存区，`git commit` 视为最终步骤。

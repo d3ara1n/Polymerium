@@ -1,28 +1,28 @@
 ---
-title: Modpack Development with Git
-description: Use Git to version-control your modpack — track changes, collaborate, and publish releases.
+title: 使用 Git 进行整合包开发
+description: 使用 Git 对整合包进行版本控制——跟踪变更、协作开发并发布发行版。
 ---
 
-## Why Git?
+## 为什么使用 Git？
 
-A Polymerium instance is already Git-friendly by design:
+Polymerium 实例在设计上天然适配 Git：
 
-- `profile.json` is the modpack definition — plain JSON, diffable
-- `import/` contains the distributable files — configs, resources, custom content
-- `build/`, `live/`, `persist/` are runtime artifacts that don't belong in version control
+- `profile.json` 是整合包的定义文件——纯 JSON，方便 diff 比较
+- `import/` 包含可分发的文件——配置、资源、自定义内容
+- `build/`、`live/`、`persist/` 是运行时产物，不应纳入版本控制
 
-This means you can put an instance under Git and get meaningful diffs, branching, and collaboration.
+这意味着你可以将实例纳入 Git 管理，获得有意义的差异比较、分支管理和协作能力。
 
-## Setting Up
+## 初始设置
 
-1. Initialize a Git repo in the instance directory:
+1. 在实例目录中初始化 Git 仓库：
 
 ```bash
 cd instances/my-modpack
 git init
 ```
 
-2. Create a `.gitignore`:
+2. 创建 `.gitignore`：
 
 ```plaintext
 build/
@@ -31,110 +31,110 @@ persist/
 data.lock.json
 ```
 
-3. Commit the initial state:
+3. 提交初始状态：
 
 ```bash
 git add profile.json import/ icon.png README.md CHANGELOG.md
 git commit -m "Initial modpack"
 ```
 
-## What to Track
+## 应该跟踪什么
 
-| File | Track? | Why |
+| 文件 | 跟踪？ | 原因 |
 |------|--------|-----|
-| `profile.json` | ✅ | The modpack definition — version, loader, mod list |
-| `import/` | ✅ | Distributable files (configs, resources) |
-| Icon / README / CHANGELOG | ✅ | Modpack metadata |
-| `build/` | ❌ | Build artifact, reproducible |
-| `live/` | ❌ | Working copy, personal |
-| `persist/` | ❌ | Player data (saves, screenshots) |
-| `data.lock.json` | ❌ | Deploy cache, auto-generated |
+| `profile.json` | ✅ | 整合包定义文件——版本、加载器、模组列表 |
+| `import/` | ✅ | 可分发文件（配置、资源） |
+| 图标 / README / CHANGELOG | ✅ | 整合包元数据 |
+| `build/` | ❌ | 构建产物，可复现 |
+| `live/` | ❌ | 工作副本，个人使用 |
+| `persist/` | ❌ | 玩家数据（存档、截图） |
+| `data.lock.json` | ❌ | 部署缓存，自动生成 |
 
-## Development Workflow
+## 开发工作流
 
-### Iterating on Configs
+### 迭代配置
 
-1. Launch the game and modify settings in-game.
-2. Changes land in `live/`.
-3. Open the [Workspace](/docs/advanced/workspace) to review diffs.
-4. Sync confirmed changes to `import/`.
-5. Commit:
+1. 启动游戏并在游戏内修改设置。
+2. 修改保存在 `live/` 中。
+3. 打开[工作区](/docs/advanced/workspace)查看差异。
+4. 将确认的修改同步到 `import/`。
+5. 提交：
 
 ```bash
 git add import/
 git commit -m "Tweak performance configs"
 ```
 
-### Adding / Removing Mods
+### 添加/移除模组
 
-1. Add or remove mods in Polymerium's Setup tab.
-2. `profile.json` is updated automatically.
-3. Commit:
+1. 在 Polymerium 的 Setup 标签页中添加或移除模组。
+2. `profile.json` 会自动更新。
+3. 提交：
 
 ```bash
 git add profile.json
 git commit -m "Add Sodium and Lithium"
 ```
 
-### Switching Branches
+### 切换分支
 
-You can use Git branches for experimental modpack versions:
+你可以使用 Git 分支来管理实验性的整合包版本：
 
 ```bash
 git checkout -b experiment/new-loader
-# Change loader in Polymerium, add/remove mods
+# 在 Polymerium 中更换加载器、添加/移除模组
 git add profile.json import/
 git commit -m "Switch to NeoForge"
-# Test...
-git checkout main  # Go back to stable
+# 测试...
+git checkout main  # 回到稳定版本
 ```
 
-## Collaboration
+## 协作
 
-### Sharing with Co-Authors
+### 与合著者共享
 
-1. Push the repo to a shared remote (GitHub, GitLab, etc.).
-2. Co-authors clone the repo into their `instances/` directory.
-3. Each person's `live/` and `persist/` are local and untracked.
-4. Collaborate on `profile.json` and `import/` via normal Git workflows.
+1. 将仓库推送到共享远程仓库（GitHub、GitLab 等）。
+2. 合著者将仓库克隆到他们的 `instances/` 目录中。
+3. 每个人的 `live/` 和 `persist/` 都是本地的且不被跟踪。
+4. 通过常规 Git 工作流在 `profile.json` 和 `import/` 上协作。
 
-### Publishing a Release
+### 发布发行版
 
-1. Tag a release:
+1. 打标签发布：
 
 ```bash
 git tag v1.2.0
 git push origin v1.2.0
 ```
 
-2. Export the instance using Polymerium's [export](/docs/managing/import-export) feature.
-3. Upload the exported modpack to CurseForge, Modrinth, or both.
+2. 使用 Polymerium 的[导出](/docs/managing/import-export)功能导出实例。
+3. 将导出的整合包上传到 CurseForge、Modrinth 或两者。
 
-#### Automating Exports with the CLI
+#### 使用 CLI 自动化导出
 
-You can skip the GUI and export from the command line using [Trident CLI](/docs/advanced/cli):
+你可以跳过 GUI，使用 [Trident CLI](/docs/advanced/cli) 从命令行导出：
 
 ```bash
 trident instance export my-modpack --format modrinth --output ./releases/
 ```
 
-This works well in CI/CD pipelines. For example, trigger an automatic build and export whenever you push a tag:
+这在 CI/CD 管道中非常好用。例如，当你推送标签时自动触发构建和导出：
 
 ```yaml
-# .github/workflows/release.yml (simplified)
+# .github/workflows/release.yml（简化版）
 on:
   push:
     tags: ['v*']
 steps:
   - uses: actions/checkout@v4
   - run: trident instance export my-modpack --format modrinth --output ./releases/
-  - # upload ./releases/* to Modrinth / CurseForge
+  - # 将 ./releases/* 上传到 Modrinth / CurseForge
 ```
 
-See the [headless server guide](/docs/guides/headless-server) for a full CI/CD example.
+完整 CI/CD 示例请参阅[无头服务器指南](/docs/guides/headless-server)。
 
-## Tips
+## 提示
 
-- **Close Polymerium before Git operations** — Polymerium may be watching `profile.json` for changes. Quit, do your Git work, then reopen.
-- **Don't edit `profile.json` manually for version changes** — it's safer to create a new instance and migrate packages.
-- **Use the workspace** as your staging area — it's purpose-built for the `live/` → `import/` flow.
+- **在执行 Git 操作前关闭 Polymerium**——Polymerium 可能正在监视 `profile.json` 的变化。退出后执行 Git 操作，然后再重新打开。
+- **不要手动编辑 `profile.json` 来更改版本**——更安全的做法是创建新实例并迁移包。
+- **使用工作区**作为你的暂存区——它专为 `live/` → `import/` 流程而设计。

@@ -1,57 +1,57 @@
 ---
-title: Installation
-description: Download, install, and set up Polymerium on Windows, macOS, or Linux.
+title: 安装
+description: 在 Windows、macOS 或 Linux 上下载、安装和设置 Polymerium。
 ---
 
-## Download
+## 下载
 
-Grab the latest release for your platform from [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases).
+从 [GitHub Releases](https://github.com/d3ara1n/Polymerium/releases) 下载适合你平台的最新版本。
 
-| Platform | File |
+| 平台 | 文件 |
 |----------|------|
 | Windows x64 | `Polymerium-win-Setup.exe` |
 | Linux x64 | `Polymerium.AppImage` |
 | macOS ARM | `Polymerium-osx-Setup.pkg` |
 
-Each platform uses its standard installer format. Run it and follow the prompts.
+每个平台使用其标准的安装程序格式。运行它并按照提示操作。
 
-## Windows: Enable Developer Mode
+## Windows：启用开发者模式
 
-Polymerium uses symbolic links to share mod files across instances without duplication. On Windows, creating symlinks requires **Developer Mode**.
+Polymerium 使用符号链接来在实例之间共享模组文件，而无需重复复制。在 Windows 上，创建符号链接需要启用 **开发者模式**。
 
-1. Open **Settings → System → For developers**
-2. Toggle **Developer Mode** on
-3. Confirm the prompt
+1. 打开 **设置 → 系统 → 开发者信息**
+2. 打开 **开发者模式** 开关
+3. 确认提示
 
-This is a one-time setup. It doesn't compromise security — it only allows your user account to create symbolic links, which is the default on macOS and Linux.
+这是一次性设置。这不会影响安全性 — 它只是允许你的用户账号创建符号链接，这是 macOS 和 Linux 的默认行为。
 
-> macOS and Linux users don't need any special configuration — symlinks work out of the box.
+> macOS 和 Linux 用户不需要任何特殊配置 — 符号链接开箱即用。
 
-## First Launch: The OOBE Wizard
+## 首次启动：首次启动向导
 
-When you open Polymerium for the first time, the OOBE (Out-of-Box Experience) wizard walks you through:
+当你第一次打开 Polymerium 时，首次启动向导（OOBE）会引导你完成以下步骤：
 
-1. **Welcome & Features** — a quick overview of what Polymerium can do.
-2. **Privilege Check** — Polymerium tests whether it can create symlinks in its data directory. If this fails on Windows, you need to enable Developer Mode (see above).
-3. **Quick Setup** — optionally configure Java paths and language.
-4. **Privacy** — choose whether to send crash reports via Sentry.
-5. **Done** — you're ready to create your first instance.
+1. **欢迎与功能** — 快速了解 Polymerium 能做什么。
+2. **权限检查** — Polymerium 测试是否可以在其数据目录中创建符号链接。如果在 Windows 上失败，你需要启用开发者模式（见上文）。
+3. **快速设置** — 可选地配置 Java 路径和语言。
+4. **隐私** — 选择是否通过 Sentry 发送崩溃报告。
+5. **完成** — 你准备好创建第一个实例了。
 
-## What Gets Installed Where
+## 安装内容在哪里
 
-Polymerium stores all its data in `~/.trident/` on every platform. This includes settings, cached files, and your instances.
+Polymerium 在所有平台上将所有数据存储在 `~/.trident/` 中。这包括设置、缓存文件和你的实例。
 
-| Data | Location |
+| 数据 | 位置 |
 |------|----------|
-| Settings | `~/.trident/settings.json` |
-| Persistence DB | `~/.trident/persistence.sqlite.db` |
-| HTTP cache | `~/.trident/cache.sqlite.db` |
-| Shared mod cache | `~/.trident/cache/packages/` |
-| Game assets | `~/.trident/cache/assets/` |
-| Instances | `~/.trident/instances/` |
+| 设置 | `~/.trident/settings.json` |
+| 持久层 DB | `~/.trident/persistence.sqlite.db` |
+| HTTP 缓存 | `~/.trident/cache.sqlite.db` |
+| 共享模组缓存 | `~/.trident/cache/packages/` |
+| 游戏资源 | `~/.trident/cache/assets/` |
+| 实例 | `~/.trident/instances/` |
 
-> All data is local. Polymerium doesn't upload anything beyond optional crash reports.
+> 所有数据都是本地的。除了可选的崩溃报告外，Polymerium 不会上传任何内容。
 
-## Next Step
+## 下一步
 
-Now that Polymerium is running, [create your first instance →](/docs/getting-started/first-instance)
+现在 Polymerium 已经运行，[创建你的第一个实例 →](/docs/getting-started/first-instance)

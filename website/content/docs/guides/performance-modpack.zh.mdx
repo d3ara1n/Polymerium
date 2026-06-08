@@ -1,84 +1,84 @@
 ---
-title: Build a Performance Modpack from Scratch
-description: A step-by-step guide to creating an optimized Fabric modpack with essential performance mods.
+title: 从零构建性能整合包
+description: 分步指南，打造一个包含基础性能模组的优化版 Fabric 整合包。
 ---
 
-## Goal
+## 目标
 
-Create a Fabric 1.21.4 modpack with the essential performance mods — Sodium, Lithium, FerriteCore, and Iris for shaders.
+创建一个 Fabric 1.21.4 整合包，内置核心性能模组：Sodium、Lithium、FerriteCore，以及用于着色器的 Iris。
 
-## Step 1: Create the Instance
+## 步骤 1：创建实例
 
-1. Click **+** → **New Instance**.
-2. Name it "Performance Pack".
-3. Set Minecraft version to **1.21.4**.
-4. Choose loader **Fabric**.
-5. Click **Create**.
+1. 点击 **+** → **新实例（New Instance）**。
+2. 将其命名为「Performance Pack」。
+3. 将 Minecraft 版本设置为 **1.21.4**。
+4. 选择加载器 **Fabric**。
+5. 点击 **创建（Create）**。
 
-## Step 2: Add Performance Mods
+## 步骤 2：添加性能模组
 
-Open the instance and go to the **Setup** tab. Search for and install each mod:
+打开实例，进入 **设置（Setup）** 标签页。搜索并安装以下模组：
 
-### Core Performance
+### 核心性能
 
-| Mod | What It Does | Search |
+| 模组 | 作用 | 搜索 |
 |-----|-------------|--------|
-| **Sodium** | Modern rendering engine — massive FPS boost | `modrinth:sodium` |
-| **Lithium** | Server-side optimizations — faster tick processing | `modrinth:lithium` |
-| **FerriteCore** | Memory usage reduction | `modrinth:ferrite-core` |
-| **Fabric API** | Required dependency for most Fabric mods | `modrinth:fabric-api` |
+| **Sodium** | 现代渲染引擎 —— 显著提升帧率 | `modrinth:sodium` |
+| **Lithium** | 服务端优化 —— 更快的 tick 处理 | `modrinth:lithium` |
+| **FerriteCore** | 降低内存占用 | `modrinth:ferrite-core` |
+| **Fabric API** | 大多数 Fabric 模组的必要依赖 | `modrinth:fabric-api` |
 
-### Optional: Shaders
+### 可选：着色器
 
-| Mod | What It Does | Search |
+| 模组 | 作用 | 搜索 |
 |-----|-------------|--------|
-| **Iris** | Shader pack loader (requires Sodium) | `modrinth:iris` |
+| **Iris** | 着色器包加载器（需要 Sodium） | `modrinth:iris` |
 
-### Optional: Quality of Life
+### 可选：体验优化
 
-| Mod | What It Does | Search |
+| 模组 | 作用 | 搜索 |
 |-----|-------------|--------|
-| **Mod Menu** | In-game mod list viewer | `modrinth:modmenu` |
-| **Roughly Enough Items** | Recipe viewer | Search "REI" on Modrinth |
+| **Mod Menu** | 游戏内模组列表查看器 | `modrinth:modmenu` |
+| **Roughly Enough Items** | 配方查看器 | 在 Modrinth 上搜索「REI」 |
 
-## Step 3: Deploy
+## 步骤 3：部署
 
-Click **Deploy**. Polymerium will:
+点击 **部署（Deploy）**。Polymerium 将：
 
-1. Download Fabric loader libraries.
-2. Download all mods to the shared cache.
-3. Build the game directory with symlinks.
-4. Download a Java 21 runtime if needed.
+1. 下载 Fabric 加载器依赖。
+2. 将所有模组下载到共享缓存。
+3. 使用符号链接构建游戏目录。
+4. 如有需要，下载 Java 21 运行时。
 
-## Step 4: Configure Memory
+## 步骤 4：配置内存
 
-1. Go to **Settings → Game**.
-2. Set **Max Memory** to at least 4 GB (6–8 GB if using shaders).
-3. Or set it per-instance in the instance's properties.
+1. 进入 **设置 → 游戏（Settings → Game）**。
+2. 将 **最大内存（Max Memory）** 设置为至少 4 GB（如果使用着色器，建议 6–8 GB）。
+3. 也可以在实例属性中为每个实例单独设置。
 
-## Step 5: Launch and Play
+## 步骤 5：启动并游玩
 
-Click **Launch**. The game starts with all performance mods active.
+点击 **启动（Launch）**。游戏将在所有性能模组激活的情况下启动。
 
-## Step 6: Optional — Add Shaders
+## 步骤 6：可选 —— 添加着色器
 
-1. Download a shader pack (e.g. Complementary Shaders from Modrinth).
-2. Move the shader `.zip` to `persist/shaderpacks/` and create `persist/shaderpacks/.keep` so the directory is linked into the game. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for how `persist/` works.
-3. In-game, go to **Options → Video → Shader Packs** and select it.
+1. 下载一个着色器包（例如从 Modrinth 下载 Complementary Shaders）。
+2. 将着色器 `.zip` 移动到 `persist/shaderpacks/`，并创建 `persist/shaderpacks/.keep`，使该目录被链接到游戏。有关 `persist/` 的工作方式，请参阅[四层目录 →](/docs/concepts/four-layers#persist---用户管理的持久层)。
+3. 在游戏中，进入 **选项 → 视频 → 着色器包（Options → Video → Shader Packs）** 并选中它。
 
-## Step 7: Save a Snapshot (Recommended)
+## 步骤 7：保存快照（推荐）
 
-Before you make further changes:
+在进行进一步修改之前：
 
-1. Go to **Snapshots** for this instance.
-2. Click **Create Snapshot**.
-3. Name it "clean-performance-base".
+1. 进入此实例的 **快照（Snapshots）**。
+2. 点击 **创建快照（Create Snapshot）**。
+3. 将其命名为「clean-performance-base」。
 
-Now you can freely experiment — if something breaks, restore the snapshot.
+现在您可以自由实验 —— 如果出现问题，可恢复快照。
 
-## What You've Achieved
+## 您已完成
 
-- ✅ A clean Fabric 1.21.4 instance with performance mods
-- ✅ Shared cache — these mods are available to other instances at zero extra disk cost
-- ✅ A snapshot you can restore if needed
-- ✅ Ready to add more mods on top of this base
+- ✅ 一个包含性能模组的干净 Fabric 1.21.4 实例
+- ✅ 共享缓存 —— 这些模组可供其他实例使用，无需额外磁盘空间
+- ✅ 一份可在需要时恢复的快照
+- ✅ 可在此基础之上继续添加更多模组

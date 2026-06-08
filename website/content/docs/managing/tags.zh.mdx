@@ -1,53 +1,53 @@
 ---
-title: Tags & Batch Operations
-description: Organize mods with flexible tags instead of rigid categories. Filter, batch-update, and exclude with precision.
+title: 标签与批量操作
+description: 使用灵活的标签而非僵化的类别来组织模组。精确地筛选、批量更新和排除。
 ---
 
-## Tags vs. Categories
+## 标签与类别
 
-Most launchers let you put a mod in one category. Polymerium uses **tags** — a mod can have as many tags as you want.
+大多数启动器让您将模组放入一个类别。Polymerium 使用**标签** — 一个模组可以有任意多个标签。
 
-For example, Sodium might have:
+例如，Sodium 可能具有：
 
 ```
 performance  core  QoL  stability-watch
 ```
 
-This lets you filter and operate on mods from multiple angles:
+这使您可以从多个角度筛选和操作模组：
 
-- "Show me all performance mods"
-- "Update everything except stability-watch mods"
-- "Disable all QoL mods for testing"
+- "显示所有性能模组"
+- "更新除 stability-watch 模组外的所有内容"
+- "禁用所有 QoL 模组进行测试"
 
-## Adding Tags
+## 添加标签
 
-1. Select an instance and go to the **Setup** tab.
-2. Each mod in the list has a tag field.
-3. Type tags separated by commas or spaces. Tags are freeform — use whatever makes sense to you.
+1. 选择一个实例并进入**设置**选项卡。
+2. 列表中的每个模组都有一个标签字段。
+3. 输入以逗号或空格分隔的标签。标签是自由形式 — 使用任何对您有意义的内容。
 
-Tags are stored per-instance, per-package. The same mod can have different tags in different instances.
+标签按实例、按包存储。同一模组在不同实例中可以有不同的标签。
 
-## Filtering by Tag
+## 按标签筛选
 
-Use the tag filter in the mod list to narrow down what's visible. You can stack multiple tag filters to find exactly what you need.
+使用模组列表中的标签筛选器来缩小可见范围。您可以叠加多个标签筛选器以精确找到您需要的内容。
 
-## Batch Updates
+## 批量更新
 
-When new mod versions are available:
+当有新的模组版本可用时：
 
-1. Open the **Bulk Update** dialog.
-2. Polymerium shows all mods with available updates.
-3. Review each update and check/uncheck.
-4. **Exclude by tag** — e.g. exclude all mods tagged `stability-watch` from the update batch.
+1. 打开**批量更新**对话框。
+2. Polymerium 显示所有有可用更新的模组。
+3. 审查每个更新并选中/取消选中。
+4. **按标签排除** — 例如，将标记为 `stability-watch` 的所有模组从更新批次中排除。
 
-This gives you fine-grained control over mass updates without losing the convenience of "update all."
+这使您可以对批量更新进行精细控制，而不会失去"全部更新"的便利性。
 
-## Using Tags in Deployment Rules
+## 在部署规则中使用标签
 
-Tags aren't just for organization — they integrate with the [deployment rules engine](/docs/advanced/rules). You can create rules like:
+标签不仅用于组织 — 它们与[部署规则引擎](/docs/advanced/rules)集成。您可以创建如下规则：
 
-- Skip all mods tagged `server-only` when deploying
-- Redirect all mods tagged `datapack` to a custom path
-- Normalize filenames for mods tagged `legacy-name`
+- 部署时跳过所有标记为 `server-only` 的模组
+- 将所有标记为 `datapack` 的模组重定向到自定义路径
+- 为标记为 `legacy-name` 的模组规范化文件名
 
-See [Deployment Rules →](/docs/advanced/rules) for the full rule syntax.
+有关完整规则语法，请参阅[部署规则 →](/docs/advanced/rules)。

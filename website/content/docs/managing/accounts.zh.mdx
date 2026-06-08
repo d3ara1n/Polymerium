@@ -1,71 +1,71 @@
 ---
-title: Account Management
-description: Set up Microsoft, offline, Authlib Injector, or trial accounts — and bind different accounts to different instances.
+title: 账号管理
+description: 设置微软、离线、Authlib 注入器或试用账号 — 并为不同实例绑定不同账号。
 ---
 
-## Account Types
+## 账号类型
 
-Polymerium supports four types of accounts:
+Polymerium 支持四种账号类型：
 
-| Type | Use Case | Authentication |
+| 类型 | 使用场景 | 认证方式 |
 |------|----------|---------------|
-| **Microsoft** | Full multiplayer, Realms, servers | Device Code Flow → Xbox Live → Minecraft API |
-| **Offline** | Local / single-player, no server access | Username only, generates a deterministic UUID |
-| **Authlib Injector** | Third-party authentication servers (外置登录) | Yggdrasil protocol with `-javaagent` injection |
-| **Trial** | Quick start — try the launcher without signing in | Built-in demo accounts with fixed roles (available without any Microsoft account) |
+| **微软** | 完整多人游戏、Realms、服务器 | 设备代码流程 → Xbox Live → Minecraft API |
+| **离线** | 本地/单人游戏，无法访问服务器 | 仅用户名，生成确定性 UUID |
+| **Authlib 注入器** | 第三方认证服务器（外置登录） | 使用 `-javaagent` 注入的 Yggdrasil 协议 |
+| **试用** | 快速开始 — 无需登录即可试用启动器 | 具有固定角色的内置演示账号（无需任何微软账号） |
 
-## Adding Accounts
+## 添加账号
 
-Go to the **Accounts** page in the sidebar. Click **Add Account** and choose the type:
+进入侧边栏的**账号**页面。点击**添加账号**并选择类型：
 
-### Microsoft Account
+### 微软账号
 
-1. Polymerium shows a device code (e.g. `A1B2C-3D4E5`).
-2. Open [microsoft.com/link](https://microsoft.com/link) on any device and enter the code.
-3. Sign in with your Microsoft account.
-4. Polymerium automatically detects the login and fetches your Minecraft profile.
+1. Polymerium 显示设备代码（例如 `A1B2C-3D4E5`）。
+2. 在任意设备上打开 [microsoft.com/link](https://microsoft.com/link) 并输入代码。
+3. 使用您的微软账号登录。
+4. Polymerium 会自动检测登录并获取您的 Minecraft 个人资料。
 
-Your tokens are stored locally and refreshed automatically when they expire.
+您的令牌存储在本地，过期时会自动刷新。
 
-### Offline Account
+### 离线账号
 
-1. Enter a username.
-2. That's it. Polymerium generates a deterministic UUID based on the name.
+1. 输入用户名。
+2. 就这样。Polymerium 根据名称生成确定性 UUID。
 
-Offline accounts can't join servers that require authentication, but they work perfectly for single-player and LAN.
+离线账号无法加入需要认证的服务器，但对于单人游戏和本地局域网完全适用。
 
-> Offline accounts are available only after you've added a Microsoft account. If you just want to try the launcher without signing in, use a Trial account instead.
+> 离线账号仅在您添加微软账号后才可用。如果您只想在未登录的情况下试用启动器，请改用试用账号。
 
-### Trial Account
+### 试用账号
 
-Trial accounts are pre-made with fixed roles — quick to pick up and play without any setup. No Microsoft account needed.
+试用账号预配置了固定角色 — 可直接上手游玩，无需任何设置。无需微软账号。
 
-They work for local and single-player play only, but they're enough to try out the launcher before committing to a full sign-in.
+它们仅适用于本地和单人游戏，但在您决定完全登录前足够用来试用启动器。
 
-### Authlib Injector Account
+### Authlib 注入器账号
 
-1. Enter the **server URL** of the Yggdrasil authentication server (e.g. `https://auth.example.com/api/yggdrasil`).
-2. Polymerium fetches the server metadata and injects the appropriate `-javaagent` flag at launch.
-3. Sign in with your credentials for that server.
+1. 输入 Yggdrasil 认证服务器的**服务器 URL**（例如 `https://auth.example.com/api/yggdrasil`）。
+2. Polymerium 获取服务器元数据，并在启动时注入相应的 `-javaagent` 参数。
+3. 使用该服务器的凭据登录。
 
-This is useful for Chinese Minecraft communities that use third-party auth servers (外置登录).
+这对于使用第三方认证服务器（外置登录）的 Minecraft 社区非常有用。
 
-## Per-Instance Account Binding
+## 按实例绑定账号
 
-By default, your selected **default account** is used for all instances. But you can override this per instance:
+默认情况下，您选择的**默认账号**用于所有实例。但您可以为每个实例覆盖此设置：
 
-1. Open the instance's properties.
-2. Set the **account override** to any of your added accounts.
+1. 打开实例的属性。
+2. 将**账号覆盖**设置为您已添加的任何账号。
 
-This lets you use different accounts for different servers or game modes without switching globally every time.
+这使您可以为不同服务器或游戏模式使用不同账号，而无需每次全局切换。
 
-## Token Refresh
+## 令牌刷新
 
-- **Microsoft accounts** are refreshed automatically via OAuth token refresh — you won't need to re-login.
-- **Authlib Injector accounts** are validated and refreshed using the Yggdrasil protocol before each launch.
+- **微软账号**通过 OAuth 令牌刷新自动刷新 — 您无需重新登录。
+- **Authlib 注入器账号**在每次启动前使用 Yggdrasil 协议进行验证和刷新。
 
-If a token can't be refreshed (e.g. you revoked access), Polymerium will prompt you to re-authenticate.
+如果令牌无法刷新（例如您撤销了访问权限），Polymerium 会提示您重新认证。
 
-## Account Data Storage
+## 账号数据存储
 
-All account data is stored in the local SQLite database. Credentials are never uploaded anywhere. The only network calls are to Microsoft/Yggdrasil auth servers for token operations.
+所有账号数据存储在本地 SQLite 数据库中。凭据绝不会上传到任何地方。唯一的网络调用是向微软/Yggdrasil 认证服务器进行令牌操作。
