@@ -32,7 +32,7 @@ function useDict(lang: string) {
       heroSub:
         '基于元数据驱动的实例管理器——零重复存储、快照、内置 CLI 与 MCP AI Agent 模式。',
       ctaDownload: '下载',
-      ctaGitHub: 'GitHub',
+      ctaCli: '命令行工具',
       ctaViewDocs: '查看文档',
 
       // Tech badges
@@ -148,7 +148,7 @@ function useDict(lang: string) {
     heroSub:
       'Metadata-driven instance manager with zero-duplication storage, snapshots, and a built-in CLI with MCP mode for AI agents.',
     ctaDownload: 'Download',
-    ctaGitHub: 'GitHub',
+    ctaCli: 'CLI Tool',
     ctaViewDocs: 'View Docs',
 
     badgeCrossPlatform: 'Cross-platform',
@@ -291,9 +291,9 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 <Download className="size-4" />
                 {d.ctaDownload}
             </LinkButton>
-            <LinkButton href={GITHUB_URL} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
-                <GitHubIcon className="size-4" />
-                {d.ctaGitHub}
+            <LinkButton href={`/${lang}/docs/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
+                <Terminal className="size-4" />
+                {d.ctaCli}
             </LinkButton>
             <LinkButton href={`/${lang}/docs`} variant="ghost" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 {d.ctaViewDocs}
@@ -557,9 +557,9 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 <Download className="size-4" />
                 {d.ctaDownload}
             </LinkButton>
-            <LinkButton href={GITHUB_URL} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
-                <GitHubIcon className="size-4" />
-                {d.ctaGitHub}
+            <LinkButton href={`/${lang}/docs/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
+                <Terminal className="size-4" />
+                {d.ctaCli}
             </LinkButton>
           </div>
         </div>
