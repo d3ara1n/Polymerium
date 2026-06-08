@@ -1,0 +1,119 @@
+---
+title: Migrate from Other Launchers
+description: Move your worlds, mods, and settings from the vanilla Minecraft launcher, Prism Launcher, MultiMC, or any other launcher to Polymerium.
+---
+
+## From the Vanilla Minecraft Launcher
+
+The official Minecraft Launcher doesn't have an export function — everything lives inside a single `.minecraft` folder. Migration is entirely manual, but straightforward once you know where things are.
+
+### Step 1: Locate Your `.minecraft` Directory
+
+| Platform | Path |
+|----------|------|
+| Windows | `%APPDATA%\.minecraft\` |
+| macOS | `~/Library/Application Support/minecraft/` |
+| Linux | `~/.minecraft/` |
+
+If you've used a custom directory, you can find it in the official launcher under **Installations → (…) → Open Folder**.
+
+### Step 2: Create a Matching Instance in Polymerium
+
+1. Click the **+** button in Polymerium.
+2. Choose **New Instance**.
+3. Select the **same Minecraft version** you were playing.
+4. If you use mods, select the **same mod loader** (Fabric, Forge, NeoForge, or Quilt) and a compatible version.
+
+> **Not sure which loader or version?** Open `.minecraft/versions/` — if you see a folder like `1.21.4-fabric-0.16.9`, you were using Fabric 0.16.9 on 1.21.4. If all folders are plain version numbers like `1.21.4`, you were playing vanilla (no loader).
+
+### Step 3: Add Your Mods
+
+The official launcher stores mods directly in `.minecraft/mods/`. You need to add them through Polymerium instead:
+
+1. Open `.minecraft/mods/` in a file explorer.
+2. For each `.jar` file, search for the mod by name in Polymerium's **Add Package** dialog (it searches CurseForge and Modrinth). This way the mod is tracked and can be updated.
+3. If a mod isn't available on CurseForge or Modrinth, you can place the `.jar` directly into the instance's `import/mods/` directory — but it won't be managed or updated automatically.
+
+### Step 4: Transfer Your Worlds and Personal Data
+
+This is the most important step. Your saves, resource packs, screenshots, and settings live in various subfolders of `.minecraft/`. You need to copy them into your Polymerium instance's `persist/` directory.
+
+**Which folders to copy:**
+
+| Source (`.minecraft/`) | Destination (`persist/`) | What It Contains |
+|------------------------|--------------------------|------------------|
+| `saves/` | `saves/` | All your worlds |
+| `resourcepacks/` | `resourcepacks/` | Resource packs |
+| `shaderpacks/` | `shaderpacks/` | Shader packs |
+| `screenshots/` | `screenshots/` | In-game screenshots |
+| `options.txt` | `options.txt` | Game settings (FOV, render distance, etc.) |
+| `servers.dat` | `servers.dat` | Saved multiplayer servers |
+
+> **Important:** For each **directory** you copy (like `saves/`), create a `.keep` file inside it (e.g., `persist/saves/.keep`). This tells Polymerium to link that directory into the game on deploy. Files placed directly in `persist/` (like `options.txt`) are linked automatically. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+
+### Step 5: Deploy and Play
+
+1. Click **Deploy** (or just **Launch** — Polymerium deploys automatically).
+2. Your worlds, settings, and resource packs will appear in the game.
+3. Verify everything looks correct — check your worlds are there, settings are right, etc.
+
+### Troubleshooting
+
+- **Worlds are missing:** Make sure `persist/saves/.keep` exists and you deployed after copying.
+- **Settings reset:** Check that `persist/options.txt` is present — this file controls in-game settings like render distance and keybinds.
+- **Mods aren't loading:** Verify the mod loader version matches. A Fabric mod won't load on Forge, and vice versa.
+
+---
+
+## From Prism Launcher or MultiMC
+
+Polymerium can directly import MultiMC-format modpacks, which Prism Launcher also uses.
+
+### Step 1: Export from Prism
+
+1. Right-click the instance in Prism Launcher.
+2. Select **Export Instance**.
+3. Choose **MultiMC format** (or Modrinth / CurseForge format — Polymerium supports all three).
+4. Save the `.zip` file.
+
+### Step 2: Import into Polymerium
+
+1. Click the **+** button in Polymerium.
+2. Choose **Import from file**.
+3. Select the `.zip` you exported from Prism.
+4. Polymerium auto-detects the format, resolves mods, and creates the instance.
+
+### Step 3: Set Up Your Account
+
+If you were using a Microsoft account in Prism:
+
+1. Go to **Accounts** in Polymerium.
+2. Add your Microsoft account via Device Code Flow.
+3. Set it as the default or bind it to the imported instance.
+
+## What Transfers
+
+| Data | Transfers? | Notes |
+|------|:----------:|-------|
+| Mod list + versions | ✅ | Resolved from CurseForge / Modrinth |
+| Config files | ✅ | Included in the modpack export |
+| Minecraft version | ✅ | |
+| Loader (Fabric/Forge/etc.) | ✅ | |
+| Saves & screenshots | ❌ | Not included in modpack exports — copy manually |
+| Account credentials | ❌ | Re-authenticate in Polymerium |
+| JVM settings | ❌ | Reconfigure in Polymerium settings |
+
+## Manual File Transfer (Saves, Screenshots)
+
+If you want to keep your saves and screenshots:
+
+1. Find Prism's instance directory (usually `~/.local/share/PrismLauncher/instances/`).
+2. Copy `saves/`, `screenshots/`, `resourcepacks/`, and `options.txt` from the Prism instance.
+3. Paste them into your Polymerium instance's `persist/` directory. For directories like `saves/`, create a `.keep` file inside (`persist/saves/.keep`) so they get linked into the game. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+4. Deploy — the files will be projected into the game directory.
+
+## Things to Know
+
+- **Polymerium uses symlinks** — make sure Developer Mode is enabled on Windows.
+- **Mod files are shared** — you won't need to re-download mods that are already in CurseForge/Modrinth format. Polymerium resolves them from its cache.
+- **Your old launcher instances are untouched** — importing creates new instances; nothing is deleted or modified in your previous launcher.

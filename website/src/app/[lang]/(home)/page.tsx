@@ -137,7 +137,7 @@ function useDict(lang: string) {
         },
         {
           q: '能从其他启动器迁移吗？',
-          a: '支持从 Prism Launcher 导入实例。详见迁移文档。',
+          a: '支持从官方 Minecraft 启动器、Prism Launcher 等启动器迁移。详见迁移指南。',
         },
         {
           q: '什么是 MCP 模式？',
@@ -271,7 +271,7 @@ function useDict(lang: string) {
       },
       {
         q: 'Can I migrate from other launchers?',
-        a: 'Yes. Polymerium supports importing instances from Prism Launcher. See the migration guide for details.',
+        a: 'Yes. Polymerium supports migrating from the vanilla Minecraft launcher, Prism Launcher, and more. See the migration guide for details.',
       },
       {
         q: 'What is MCP mode?',
@@ -350,7 +350,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 <Download className="size-4" />
                 {d.ctaDownload}
             </LinkButton>
-            <LinkButton href={`/${lang}/docs/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
+            <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 <Terminal className="size-4" />
                 {d.ctaCli}
             </LinkButton>
@@ -637,7 +637,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
               {d.mcpDesc}
             </p>
             <div className="mt-8">
-              <LinkButton href={`/${lang}/docs/cli`} variant="outline" className="rounded-full">
+              <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" className="rounded-full">
                   {d.mcpCta}
                   <ArrowRight className="size-4" />
               </LinkButton>
@@ -773,7 +773,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 <Download className="size-4" />
                 {d.ctaDownload}
             </LinkButton>
-            <LinkButton href={`/${lang}/docs/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
+            <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 <Terminal className="size-4" />
                 {d.ctaCli}
             </LinkButton>

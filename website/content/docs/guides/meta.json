@@ -1,8 +1,7 @@
 {
   "title": "Guides",
   "pages": [
-    "migrate-from-prism",
-    "migrate-from-shard",
+    "migrate-from-other-launchers",
     "setup-authlib",
     "performance-modpack",
     "git-collaboration",

@@ -1,0 +1,119 @@
+---
+title: 从其他启动器迁移
+description: 从官方 Minecraft 启动器、Prism Launcher、MultiMC 或其他启动器迁移你的存档、模组和设置到 Polymerium。
+---
+
+## 从官方 Minecraft 启动器迁移
+
+官方 Minecraft 启动器没有导出功能——所有内容都存放在一个 `.minecraft` 文件夹中。迁移完全依靠手动操作，但了解文件位置后其实很简单。
+
+### 第 1 步：找到你的 `.minecraft` 目录
+
+| 平台 | 路径 |
+|------|------|
+| Windows | `%APPDATA%\.minecraft\` |
+| macOS | `~/Library/Application Support/minecraft/` |
+| Linux | `~/.minecraft/` |
+
+如果你使用了自定义目录，可以在官方启动器中通过 **安装配置 → (…) → 打开文件夹** 找到。
+
+### 第 2 步：在 Polymerium 中创建匹配的实例
+
+1. 点击 Polymerium 中的 **+** 按钮。
+2. 选择 **新建实例**。
+3. 选择与你之前游玩**相同的 Minecraft 版本**。
+4. 如果你使用了模组，选择**相同的模组加载器**（Fabric、Forge、NeoForge 或 Quilt）及兼容版本。
+
+> **不确定用了哪个加载器或版本？** 打开 `.minecraft/versions/`——如果你看到类似 `1.21.4-fabric-0.16.9` 的文件夹，说明你使用的是 Fabric 0.16.9（Minecraft 1.21.4）。如果所有文件夹都是纯版本号（如 `1.21.4`），说明你玩的是原版（无加载器）。
+
+### 第 3 步：添加模组
+
+官方启动器将模组直接存放在 `.minecraft/mods/` 中。你需要通过 Polymerium 来添加它们：
+
+1. 在文件管理器中打开 `.minecraft/mods/`。
+2. 对于每个 `.jar` 文件，在 Polymerium 的 **添加包** 对话框中按名称搜索该模组（它会搜索 CurseForge 和 Modrinth）。这样模组会被追踪管理，并可以自动更新。
+3. 如果某个模组在 CurseForge 和 Modrinth 上都找不到，你可以将 `.jar` 文件直接放入实例的 `import/mods/` 目录——但它不会被自动管理和更新。
+
+### 第 4 步：转移存档和个人数据
+
+这是最重要的一步。你的存档、资源包、截图和设置存放在 `.minecraft/` 的各个子文件夹中，你需要将它们复制到 Polymerium 实例的 `persist/` 目录。
+
+**需要复制的文件夹：**
+
+| 来源（`.minecraft/`） | 目标（`persist/`） | 内容 |
+|------------------------|---------------------|------|
+| `saves/` | `saves/` | 所有存档 |
+| `resourcepacks/` | `resourcepacks/` | 资源包 |
+| `shaderpacks/` | `shaderpacks/` | 光影包 |
+| `screenshots/` | `screenshots/` | 游戏截图 |
+| `options.txt` | `options.txt` | 游戏设置（FOV、渲染距离等） |
+| `servers.dat` | `servers.dat` | 保存的多人游戏服务器 |
+
+> **重要：** 对于你复制的每个**目录**（如 `saves/`），需要在其内部创建一个 `.keep` 文件（例如 `persist/saves/.keep`）。这会告诉 Polymerium 在部署时将该目录链接到游戏中。直接放在 `persist/` 下的文件（如 `options.txt`）会自动链接。详见 [四层目录 →](/docs/concepts/four-layers#persist---用户管理的持久层)。
+
+### 第 5 步：部署并开始游戏
+
+1. 点击 **部署**（或直接点击 **启动**——Polymerium 会自动部署）。
+2. 你的存档、设置和资源包将出现在游戏中。
+3. 检查一切是否正确——确认存档都在、设置正确等。
+
+### 常见问题
+
+- **存档不见了：** 确认 `persist/saves/.keep` 文件存在，并且在复制后执行了部署。
+- **设置被重置了：** 检查 `persist/options.txt` 是否存在——这个文件控制渲染距离、按键绑定等游戏内设置。
+- **模组没有加载：** 确认模组加载器版本匹配。Fabric 模组不能在 Forge 上加载，反之亦然。
+
+---
+
+## 从 Prism Launcher 或 MultiMC 迁移
+
+Polymerium 可以直接导入 MultiMC 格式的整合包，Prism Launcher 也使用这个格式。
+
+### 第 1 步：从 Prism 导出
+
+1. 在 Prism Launcher 中右键点击实例。
+2. 选择 **导出实例**。
+3. 选择 **MultiMC 格式**（或 Modrinth / CurseForge 格式——Polymerium 支持全部三种）。
+4. 保存 `.zip` 文件。
+
+### 第 2 步：导入 Polymerium
+
+1. 点击 Polymerium 中的 **+** 按钮。
+2. 选择 **从文件导入**。
+3. 选择你从 Prism 导出的 `.zip` 文件。
+4. Polymerium 会自动检测格式、解析模组并创建实例。
+
+### 第 3 步：设置账号
+
+如果你在 Prism 中使用的是微软账号：
+
+1. 在 Polymerium 中进入 **账号**。
+2. 通过设备代码流程添加你的微软账号。
+3. 将其设为默认，或绑定到导入的实例。
+
+## 哪些数据会迁移
+
+| 数据 | 会迁移？ | 备注 |
+|------|:--------:|------|
+| 模组列表及版本 | ✅ | 从 CurseForge / Modrinth 解析 |
+| 配置文件 | ✅ | 包含在整合包导出中 |
+| Minecraft 版本 | ✅ | |
+| 加载器（Fabric/Forge 等） | ✅ | |
+| 存档和截图 | ❌ | 不包含在整合包导出中——需手动复制 |
+| 账号凭据 | ❌ | 在 Polymerium 中重新登录 |
+| JVM 设置 | ❌ | 在 Polymerium 设置中重新配置 |
+
+## 手动文件转移（存档、截图）
+
+如果你想保留存档和截图：
+
+1. 找到 Prism 的实例目录（通常是 `~/.local/share/PrismLauncher/instances/`）。
+2. 从 Prism 实例中复制 `saves/`、`screenshots/`、`resourcepacks/` 和 `options.txt`。
+3. 粘贴到你的 Polymerium 实例的 `persist/` 目录。对于 `saves/` 等目录，需要在其内部创建 `.keep` 文件（如 `persist/saves/.keep`），这样它们才会被链接到游戏中。详见 [四层目录 →](/docs/concepts/four-layers#persist---用户管理的持久层)。
+4. 部署——文件将投射到游戏目录中。
+
+## 注意事项
+
+- **Polymerium 使用符号链接**——请确保在 Windows 上启用了开发者模式。
+- **模组文件是共享的**——你不需要重新下载已经是 CurseForge/Modrinth 格式的模组。Polymerium 会从缓存中解析它们。
+- **你之前的启动器实例不受影响**——导入会创建新实例；不会删除或修改原启动器中的任何内容。
