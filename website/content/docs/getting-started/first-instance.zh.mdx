@@ -1,54 +1,54 @@
 ---
-title: Creating Your First Instance
-description: Set up a modded Minecraft instance in Polymerium — pick a version and you're ready.
+title: 创建你的第一个实例
+description: 在 Polymerium 中设置一个模组化 Minecraft 实例 — 选择版本，然后你就可以开始了。
 ---
 
-## Creating an Instance
+## 创建实例
 
-1. Click the **+** button in the sidebar or the main area.
-2. Give your instance a name (e.g. "My First Modpack").
-3. Choose a **Minecraft version** — for example `1.21.4`.
-4. Click **Create**.
+1. 点击侧边栏或主区域中的 **+** 按钮。
+2. 为你的实例命名（例如"我的第一个整合包"）。
+3. 选择一个 **Minecraft 版本** — 例如 `1.21.4`。
+4. 点击 **创建**。
 
-That's it. Your instance is created — but no game files have been downloaded yet.
+就是这样。你的实例已经创建 — 但还没有下载任何游戏文件。
 
-## What Just Happened?
+## 刚刚发生了什么？
 
-In Polymerium, an instance is not a folder full of files. It's a **metadata file** (`profile.json`) that describes what your game should contain: which Minecraft version, which loader, which mods.
+在 Polymerium 中，实例不是一个装满文件的文件夹。它是一个 **元数据文件**（`profile.json`），描述了你的游戏应该包含什么：哪个 Minecraft 版本、哪个加载器、哪些模组。
 
-The actual game directory is built on demand when you **deploy** (which happens automatically when you launch for the first time). This is what makes Polymerium different from traditional launchers — and why switching loaders or adding mods later is nearly instant.
+实际的游戏目录是在你 **部署** 时按需构建的（当你第一次启动时会自动进行）。这就是 Polymerium 与传统启动器的不同之处 — 也是为什么切换加载器或稍后添加模组几乎是瞬间的。
 
-> You don't need to understand the details now. The important takeaway: **your instance is a description, not a copy**. If you're curious, read [Core Concepts → Metadata-Driven Instances](/docs/concepts/metadata-driven) later.
+> 你现在不需要理解这些细节。重要的是：**你的实例是一个描述，而不是副本**。如果你好奇，可以稍后阅读 [核心概念 → 元数据驱动的实例](/docs/concepts/metadata-driven)。
 
-## Configuring Your Instance
+## 配置你的实例
 
-After creating your instance, configure it before adding mods. Open the instance and switch to the **Setup** tab.
+创建实例后，在添加模组之前先配置它。打开实例并切换到 **设置** 标签页。
 
-### Setting a Mod Loader
+### 设置模组加载器
 
-Choose a mod loader for your instance:
+为你的实例选择一个模组加载器：
 
-| Loader | Best For |
+| 加载器 | 最适合 |
 |--------|---------|
-| **Fabric** | Lightweight, fast updates, large performance mod ecosystem |
-| **Quilt** | Fabric-compatible with more features and faster development |
-| **Forge** | The classic — biggest mod ecosystem for older versions |
-| **NeoForge** | Modern Forge fork, used by many new mods for 1.20+ |
+| **Fabric** | 轻量级、快速更新、大型性能模组生态系统 |
+| **Quilt** | 兼容 Fabric，功能更多，开发更快 |
+| **Forge** | 经典选择 — 旧版本最大的模组生态系统 |
+| **NeoForge** | 现代 Forge 分支，许多 1.20+ 的新模组使用 |
 
-You can switch loaders at any time — that's the advantage of metadata-driven instances. Polymerium will rebuild the game directory on your next deploy.
+你可以随时切换加载器 — 这是元数据驱动实例的优势。Polymerium 会在你下次部署时重建游戏目录。
 
-### Memory Allocation
+### 内存分配
 
-Override the maximum memory (JVM heap) for this instance. This is useful if a large modpack needs more RAM than your global default.
+为这个实例覆盖最大内存（JVM 堆）。如果大型整合包需要比全局默认值更多的 RAM，这很有用。
 
-### Command Wrapper
+### 命令包装器
 
-Set a command wrapper for special cases, like `prime-run` on Linux systems with dual GPUs. The wrapper prefixes the Java launch command.
+为特殊情况设置命令包装器，例如具有双 GPU 的 Linux 系统上的 `prime-run`。包装器会作为前缀添加到 Java 启动命令中。
 
-### Quick Connect
+### 快速连接
 
-Set a server address to auto-join when the game launches. No need to type it in-game every time.
+设置一个服务器地址，在游戏启动时自动加入。无需每次在游戏中输入。
 
-## Next Step
+## 下一步
 
-Your instance is configured — let's [add some mods →](/docs/getting-started/adding-mods)
+你的实例已配置 — 让我们 [添加一些模组 →](/docs/getting-started/adding-mods)

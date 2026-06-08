@@ -1,71 +1,71 @@
 ---
-title: Import & Export
-description: Import modpacks from CurseForge, Modrinth, MultiMC, or Trident format — and export your instances in any format.
+title: 导入与导出
+description: 从 CurseForge、Modrinth、MultiMC 或 Trident 格式导入整合包 — 并以任何格式导出您的实例。
 ---
 
-## Supported Formats
+## 支持的格式
 
-Polymerium supports four modpack formats for both import and export:
+Polymerium 支持四种用于导入和导出的整合包格式：
 
-| Format | Extension | Notes |
+| 格式 | 扩展名 | 说明 |
 |--------|-----------|-------|
-| **Trident** (native) | `.zip` | Preserves the most metadata: tags, rules, overrides, icons, README, changelog |
-| **CurseForge** | `.zip` | Industry standard; compatible with CurseForge app, Prism, etc. |
-| **Modrinth** | `.mrpack` | Modern format; compatible with Modrinth app, Prism, etc. |
-| **MultiMC** | `.zip` | Compatible with MultiMC, Prism Launcher, and derivatives |
+| **Trident**（原生） | `.zip` | 保留最多元数据：标签、规则、覆盖、图标、README、更新日志 |
+| **CurseForge** | `.zip` | 行业标准；兼容 CurseForge 应用、Prism 等 |
+| **Modrinth** | `.mrpack` | 现代格式；兼容 Modrinth 应用、Prism 等 |
+| **MultiMC** | `.zip` | 兼容 MultiMC、Prism Launcher 及其衍生版本 |
 
-## Importing a Modpack
+## 导入整合包
 
-1. Click the **+** button to create a new instance.
-2. Choose **Import from file**.
-3. Select the modpack archive.
-4. Polymerium auto-detects the format and imports:
+1. 点击 **+** 按钮创建新实例。
+2. 选择**从文件导入**。
+3. 选择整合包存档。
+4. Polymerium 自动检测格式并导入：
 
-   - The metadata is parsed and written to your instance's `profile.json`.
-   - Pack files (configs, resources) are extracted to `import/`.
-   - Mods listed in the pack are resolved and downloaded to the shared cache.
+   - 元数据被解析并写入实例的 `profile.json`。
+   - 整合包文件（配置、资源）被提取到 `import/`。
+   - 整合包中列出的模组会被解析并下载到共享缓存中。
 
-5. Deploy and play.
+5. 部署并游玩。
 
-> **Updating a modpack?** If the instance was created from an import, you can re-import a newer version of the same pack. Polymerium replaces `import/` with the new files while leaving `persist/` untouched — files you've moved there are preserved.
+> **更新整合包？**如果实例是通过导入创建的，您可以重新导入同一整合包的较新版本。Polymerium 会用新文件替换 `import/`，同时保持 `persist/` 不变 — 您移动到那里的文件将被保留。
 
-## Exporting an Instance
+## 导出实例
 
-1. Select an instance.
-2. Open the instance menu → **Export**.
-3. Choose the format, fill in metadata (name, author, version, summary).
-4. Polymerium packages the instance metadata + `import/` files into the chosen format.
+1. 选择一个实例。
+2. 打开实例菜单 → **导出**。
+3. 选择格式，填写元数据（名称、作者、版本、摘要）。
+4. Polymerium 将实例元数据 + `import/` 文件打包为所选格式。
 
-### What Gets Exported
+### 导出内容
 
-| Content | Included? |
+| 内容 | 是否包含 |
 |---------|:---------:|
-| Mod list + versions | ✅ |
-| Config files (`import/`) | ✅ |
-| Instance icon | ✅ |
-| Modpack metadata (name, author, version) | ✅ |
-| Saves, screenshots, personal configs | ❌ — if you've moved these to `persist/`, they stay in `persist/` and aren't included in the export |
+| 模组列表 + 版本 | ✅ |
+| 配置文件（`import/`） | ✅ |
+| 实例图标 | ✅ |
+| 整合包元数据（名称、作者、版本） | ✅ |
+| 存档、截图、个人配置 | ❌ — 如果您将这些移动到 `persist/`，它们会保留在 `persist/` 中，不会包含在导出中 |
 
-### Format-Specific Notes
+### 格式特定说明
 
-- **Trident format** preserves the most information: tags, deployment rules, account bindings, and extra files. Best for Polymerium-to-Polymerium sharing.
-- **CurseForge / Modrinth** formats are widely compatible but lose Polymerium-specific features like tags and rules.
-- **MultiMC format** is the most basic — just the mod list and configs.
+- **Trident 格式**保留最多信息：标签、部署规则、账号绑定和额外文件。最适合 Polymerium 之间的共享。
+- **CurseForge / Modrinth** 格式广泛兼容但会丢失 Polymerium 特定功能，如标签和规则。
+- **MultiMC 格式**是最基础的 — 仅模组列表和配置。
 
-## Online vs. Offline Formats
+## 在线与离线格式
 
-Not all modpack formats work the same way under the hood:
+并非所有整合包格式在底层的工作方式都相同：
 
-- **CurseForge and Modrinth** formats are **online** — they contain references (package URLs) to mods hosted on those platforms, not the actual mod files. When you import one, the launcher resolves those references and downloads the mods.
+- **CurseForge 和 Modrinth** 格式是**在线**格式 — 它们包含托管在这些平台上的模组的引用（包 URL），而不是实际的模组文件。导入时，启动器会解析这些引用并下载模组。
 
-  This means a CurseForge modpack should ideally only reference CurseForge mods, and a Modrinth modpack should only reference Modrinth mods. If you mix sources, the modpack won't pass platform review when publishing.
+  这意味着 CurseForge 整合包理想情况下应仅引用 CurseForge 模组，Modrinth 整合包应仅引用 Modrinth 模组。如果您混合来源，整合包在发布时将无法通过平台审核。
 
-- **Trident and MultiMC** formats are **offline** — they bundle the actual mod files inside the archive. No internet resolution needed on import.
+- **Trident 和 MultiMC** 格式是**离线**格式 — 它们将实际模组文件打包在存档中。导入时无需互联网解析。
 
-Keep this in mind when choosing a format for publishing your modpack.
+在为发布您的整合包选择格式时请记住这一点。
 
-## Migrating From Another Launcher
+## 从其他启动器迁移
 
-If you're coming from another launcher, check the migration guide:
+如果您来自其他启动器，请查看迁移指南：
 
-- [Migrate from Other Launchers →](/docs/guides/migrate-from-other-launchers)
+- [从其他启动器迁移 →](/docs/guides/migrate-from-other-launchers)

@@ -1,35 +1,35 @@
 ---
-title: MCP Mode & AI Agent Integration
-description: Let AI agents manage your Minecraft instances through the Model Context Protocol — unique to Polymerium.
+title: MCP 模式与 AI Agent 集成
+description: 让 AI Agent 通过模型上下文协议管理你的 Minecraft 实例——Polymerium 独有功能。
 ---
 
-## What is MCP?
+## 什么是 MCP？
 
-The Model Context Protocol (MCP) is a standard for AI agents to interact with external tools. Polymerium's CLI (`trident`) can run as an MCP server, exposing 30+ tools that AI agents can call directly.
+模型上下文协议（Model Context Protocol，MCP）是 AI Agent 与外部工具交互的标准。Polymerium 的 CLI（`trident`）可以作为 MCP 服务器运行，暴露 30 多个工具供 AI Agent 直接调用。
 
-This means you can ask an AI assistant to:
+这意味着你可以让 AI 助手：
 
-- "Create a Fabric 1.21.4 instance with performance mods"
-- "Take a snapshot, then update Sodium to the latest version"
-- "Export this instance as a Modrinth modpack"
+- "创建一个 Fabric 1.21.4 实例，装上性能优化模组"
+- "先打个快照，然后把 Sodium 更新到最新版本"
+- "将这个实例导出为 Modrinth 整合包"
 
-And it will do it — no manual clicks needed.
+它就会帮你完成——无需手动点击。
 
-**No other Minecraft launcher supports this.**
+**没有其他 Minecraft 启动器支持这个功能。**
 
-## Starting the MCP Server
+## 启动 MCP 服务器
 
 ```bash
 trident --mcp
 ```
 
-This starts an MCP server over stdio. Connect your AI client (Claude, Cursor, etc.) to it as a tool provider.
+这会通过 stdio 启动一个 MCP 服务器。将你的 AI 客户端（Claude、Cursor 等）连接到它作为工具提供者。
 
-## Configuration for AI Clients
+## AI 客户端配置
 
 ### Claude Desktop
 
-Add to your `claude_desktop_config.json`:
+添加到你的 `claude_desktop_config.json`：
 
 ```json
 {
@@ -44,105 +44,105 @@ Add to your `claude_desktop_config.json`:
 
 ### Cursor
 
-Add as an MCP tool server in Cursor's settings, pointing to `trident --mcp`.
+在 Cursor 的设置中添加为 MCP 工具服务器，指向 `trident --mcp`。
 
-### Other Clients
+### 其他客户端
 
-Any client that supports MCP over stdio can connect. The server speaks the standard MCP protocol.
+任何支持通过 stdio 使用 MCP 的客户端都可以连接。服务器使用标准的 MCP 协议。
 
-## Available Tools (30+)
+## 可用工具（30+）
 
-### Instance Tools
+### 实例工具
 
-| Tool | Description |
+| 工具 | 说明 |
 |------|-------------|
-| `instance_list` | List all instances |
-| `instance_inspect` | View instance details |
-| `instance_create` | Create a new instance |
-| `instance_delete` | Delete an instance |
-| `instance_unlock` | Unlock an imported instance's source binding |
-| `instance_reset` | Reset the build (clear build/ and live/) |
-| `instance_export` | Export instance as a modpack |
-| `instance_import` | Import a modpack file |
+| `instance_list` | 列出所有实例 |
+| `instance_inspect` | 查看实例详情 |
+| `instance_create` | 创建新实例 |
+| `instance_delete` | 删除实例 |
+| `instance_unlock` | 解除导入实例的源绑定 |
+| `instance_reset` | 重置构建（清除 build/ 和 live/） |
+| `instance_export` | 将实例导出为整合包 |
+| `instance_import` | 导入整合包文件 |
 
-### Package Tools
+### 包工具
 
-| Tool | Description |
+| 工具 | 说明 |
 |------|-------------|
-| `package_list` | List installed mods |
-| `package_search` | Search CurseForge / Modrinth |
-| `package_add` | Add a mod by purl |
-| `package_inspect` | View mod details |
-| `package_enable` / `package_disable` | Toggle mods |
-| `package_dependency_list` | List a mod's dependencies |
-| `package_dependent_list` | List mods that depend on a given mod |
-| `package_version_list` | List available versions |
-| `package_version_set` | Pin a specific version |
+| `package_list` | 列出已安装的模组 |
+| `package_search` | 搜索 CurseForge / Modrinth |
+| `package_add` | 通过 purl 添加模组 |
+| `package_inspect` | 查看模组详情 |
+| `package_enable` / `package_disable` | 切换模组状态 |
+| `package_dependency_list` | 列出模组的依赖项 |
+| `package_dependent_list` | 列出依赖于指定模组的其他模组 |
+| `package_version_list` | 列出可用版本 |
+| `package_version_set` | 固定特定版本 |
 
-### Loader Tools
+### 加载器工具
 
-| Tool | Description |
+| 工具 | 说明 |
 |------|-------------|
-| `loader_list` | List loaders for an instance |
-| `loader_version_list` | List available loader versions |
-| `loader_get` / `loader_set` | Get or set the loader |
+| `loader_list` | 列出实例的加载器 |
+| `loader_version_list` | 列出可用的加载器版本 |
+| `loader_get` / `loader_set` | 获取或设置加载器 |
 
-### Config Tools
+### 配置工具
 
-| Tool | Description |
+| 工具 | 说明 |
 |------|-------------|
-| `config_get` / `config_set` | Read/write configuration |
-| `config_list` / `config_unset` | List or remove config keys |
+| `config_get` / `config_set` | 读取/写入配置 |
+| `config_list` / `config_unset` | 列出或移除配置键 |
 
-### Account Tools
+### 账户工具
 
-| Tool | Description |
+| 工具 | 说明 |
 |------|-------------|
-| `account_list` | List accounts |
-| `account_add_offline` | Add an offline account |
-| `account_remove` | Remove an account |
+| `account_list` | 列出账户 |
+| `account_add_offline` | 添加离线账户 |
+| `account_remove` | 移除账户 |
 
-### Repository Tools
+### 仓库工具
 
-| Tool | Description |
+| 工具 | 说明 |
 |------|-------------|
-| `repository_list` | List configured repositories |
-| `repository_status` | Check repository connectivity |
-| `repository_add` / `repository_remove` | Add or remove repositories |
+| `repository_list` | 列出已配置的仓库 |
+| `repository_status` | 检查仓库连接状态 |
+| `repository_add` / `repository_remove` | 添加或移除仓库 |
 
-## Example Sessions
+## 示例会话
 
-### Creating a Performance Modpack
+### 创建性能优化整合包
 
 ```
-You: Create a Fabric 1.21.4 instance called "perf-pack" with Sodium, Lithium, and Iris.
+你：创建一个名为 "perf-pack" 的 Fabric 1.21.4 实例，装上 Sodium、Lithium 和 Iris。
 
-Agent: I'll create the instance and add the mods.
+Agent：我来创建实例并添加模组。
   → instance_create("perf-pack", version="1.21.4", loader="fabric")
   → package_add("modrinth:sodium")
   → package_add("modrinth:lithium")
   → package_add("modrinth:iris")
   → instance_build("perf-pack")
-  Done! Your "perf-pack" instance is ready to launch.
+  完成！你的 "perf-pack" 实例已准备就绪。
 ```
 
-### Safe Experimentation
+### 安全实验
 
 ```
-You: Take a snapshot of my "skyblock" instance, then update all mods.
+你：给我的 "skyblock" 实例打个快照，然后更新所有模组。
 
-Agent:
-  → instance_inspect("skyblock")   // confirm instance exists
+Agent：
+  → instance_inspect("skyblock")   // 确认实例存在
   → snapshot_create("skyblock", name="before-bulk-update")
-  → package_version_list(...)      // check each mod for updates
-  → package_version_set(...)       // apply updates
+  → package_version_list(...)      // 检查每个模组是否有更新
+  → package_version_set(...)       // 应用更新
   → instance_build("skyblock")
-  Snapshot saved. All mods updated and redeployed.
-  If anything breaks, restore the "before-bulk-update" snapshot.
+  快照已保存。所有模组已更新并重新部署。
+  如果出现问题，可以恢复 "before-bulk-update" 快照。
 ```
 
-## Limitations
+## 限制
 
-- MCP runs over stdio — it's designed for local use, not remote servers.
-- Microsoft account login requires Device Code Flow, which isn't ideal for headless AI interaction. Use offline accounts for automated workflows.
-- The MCP server uses the same data directory as the GUI — don't run both simultaneously.
+- MCP 通过 stdio 运行——设计用于本地使用，不适用于远程服务器。
+- 微软账户登录需要设备代码流（Device Code Flow），对无头 AI 交互不够理想。在自动化工作流中请使用离线账户。
+- MCP 服务器与 GUI 使用相同的数据目录——不要同时运行两者。

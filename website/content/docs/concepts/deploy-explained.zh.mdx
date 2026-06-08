@@ -1,42 +1,42 @@
 ---
-title: The Deploy Pipeline
-description: What happens when you click "Deploy" — how Polymerium turns your mod list into a runnable game.
+title: 部署流水线
+description: 当你点击"部署"时发生了什么——Polymerium 如何将你的模组列表变成可运行的游戏。
 ---
 
-## What Deploy Does
+## 部署做什么
 
-Deploy turns your instance metadata — the Minecraft version, loader, and mod list — into a runnable game directory. Think of it as building your game from a recipe: the metadata is the recipe, and the deployed `build/` folder is the meal.
+部署将你的实例元数据——Minecraft 版本、加载器和模组列表——转换为可运行的游戏目录。将其视为从配方构建游戏：元数据是配方，部署的 `build/` 文件夹是成品。
 
-## What Gets Downloaded
+## 会下载什么
 
-On your first deploy, Polymerium downloads everything needed to run your game:
+在第一次部署时，Polymerium 会下载运行游戏所需的一切：
 
-- **Minecraft itself** — the version JAR and assets from Mojang's servers
-- **Loader libraries** — Fabric, Forge, NeoForge, or Quilt runtime files
-- **Mods** — resolved from CurseForge and Modrinth, including any dependencies
+- **Minecraft 本身** —— 来自 Mojang 服务器的版本 JAR 和资源
+- **加载器库** —— Fabric、Forge、NeoForge 或 Quilt 运行时文件
+- **模组** —— 从 CurseForge 和 Modrinth 解析，包括任何依赖项
 
-All of these are stored in a **shared cache** on your disk. Once downloaded, they're never downloaded again — any instance can reuse them.
+所有这些都存储在你磁盘上的一个**共享缓存**中。一旦下载，它们就不会再被下载——任何实例都可以重用它们。
 
-## Symlinks, Not Copies
+## 符号链接，而不是副本
 
-Instead of copying mod files into each instance, Polymerium creates symbolic links from the shared cache into your `build/` directory. If you have five instances all using Sodium, there's only one copy of Sodium on your disk — every instance just links to it.
+Polymerium 不会将模组文件复制到每个实例中，而是从共享缓存创建符号链接到你的 `build/` 目录。如果你有五个实例都使用 Sodium，你的磁盘上只有一份 Sodium 副本——每个实例只是链接到它。
 
-Files from your `import/`, `live/`, and `persist/` directories are also layered into `build/` in priority order. See [Four-Layer Directories →](/docs/concepts/four-layers) for how that works.
+来自你的 `import/`、`live/` 和 `persist/` 目录的文件也会按优先级顺序分层到 `build/` 中。参见[四层目录 →](/docs/concepts/four-layers) 了解其工作原理。
 
-## Fast Deploys
+## 快速部署
 
-The first deploy for a new instance downloads everything, so it takes a moment — just like any launcher. After that, things get fast:
+新实例的第一次部署会下载所有内容，所以需要一点时间——就像任何启动器一样。在那之后，事情会变得很快：
 
-- **Nothing changed?** Deploy is skipped entirely. Your last build is still valid.
-- **Only a few mods changed?** Only those mods are updated. Everything else stays in place.
+- **什么都没变？** 完全跳过部署。你的最后一次构建仍然有效。
+- **只有几个模组改变了？** 只有那些模组会被更新。其他一切都保持原位。
 
-This is why launching an instance you've already deployed feels instant.
+这就是为什么启动一个你已经部署过的实例感觉是即时的。
 
-## Caching Benefits
+## 缓存的好处
 
-The shared cache means your other instances benefit too. If Instance A has already downloaded a mod, and you add the same mod to Instance B, there's nothing to download — deploy just creates a new symlink.
+共享缓存意味着你的其他实例也会受益。如果实例 A 已经下载了一个模组，而你向实例 B 添加了相同的模组，就不需要下载任何东西——部署只是创建一个新的符号链接。
 
-## Learn More
+## 了解更多
 
-- [Metadata-Driven Instances →](/docs/concepts/metadata-driven) — why instances are descriptions, not folder copies
-- [Four-Layer Directories →](/docs/concepts/four-layers) — how files are layered into the game directory
+- [元数据驱动的实例 →](/docs/concepts/metadata-driven) —— 为什么实例是描述而不是文件夹副本
+- [四层目录 →](/docs/concepts/four-layers) —— 文件如何分层到游戏目录中

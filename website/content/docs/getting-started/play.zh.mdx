@@ -1,52 +1,52 @@
 ---
-title: Deploy & Play
-description: Deploy your instance and launch Minecraft — understand what "deploy" means and how launching works.
+title: 部署与游戏
+description: 部署你的实例并启动 Minecraft — 了解"部署"的含义以及启动如何工作。
 ---
 
-## Deploying Your Instance
+## 部署你的实例
 
-Before Minecraft can run, Polymerium needs to **deploy** your instance. This is the step where your metadata (version, loader, mod list) gets turned into an actual, runnable game directory.
+在 Minecraft 可以运行之前，Polymerium 需要 **部署** 你的实例。这是将你的元数据（版本、加载器、模组列表）转换为实际可运行的游戏目录的步骤。
 
-Click **Deploy** — or just click **Launch** and Polymerium will deploy automatically if needed.
+点击 **部署** — 或者直接点击 **启动**，Polymerium 会在需要时自动部署。
 
-### What Deploy Does
+### 部署做了什么
 
-1. Downloads all required files — Minecraft jars, loader libraries, and mods — to the shared cache
-2. Builds the game directory using **symbolic links** pointing into the cache
-3. Generates launch parameters (classpath, JVM args, etc.)
+1. 将所有必需的文件 — Minecraft jar、加载器库和模组 — 下载到共享缓存
+2. 使用指向缓存的 **符号链接** 构建游戏目录
+3. 生成启动参数（classpath、JVM 参数等）
 
-### First Deploy vs. Incremental Deploys
+### 首次部署 vs 增量部署
 
-Your first deploy downloads everything from scratch — expect it to take as long as installing a fresh modpack on any launcher. Polymerium uses an aggressive, optimized download strategy, so on a good network it can be faster than other launchers.
+首次部署会从头下载所有内容 — 预计时间与在任何启动器上安装新的整合包一样长。Polymerium 使用激进的优化下载策略，因此在良好的网络环境下，它可能比其他启动器更快。
 
-The real speed advantage comes on subsequent deploys. When you make small changes (add a mod, switch a loader version), Polymerium only downloads what's new or changed and rebuilds the game directory with symlinks. Incremental deploys are fast — often near-instant.
+真正的速度优势体现在后续部署中。当你做出小改动（添加模组、切换加载器版本）时，Polymerium 只下载新增或更改的内容，并使用符号链接重建游戏目录。增量部署很快 — 通常是近乎即时的。
 
-### Fast Mode
+### 快速模式
 
-If nothing has changed since your last deploy (same mods, same versions, same settings), Polymerium **skips the deploy entirely** and goes straight to launch. This makes subsequent launches feel instant.
+如果自上次部署以来没有任何更改（相同的模组、相同的版本、相同的设置），Polymerium 会 **完全跳过部署** 并直接进入启动。这使得后续启动感觉是瞬间的。
 
-## Launching
+## 启动
 
-Click **Launch** to start Minecraft. Polymerium supports three launch modes:
+点击 **启动** 来启动 Minecraft。Polymerium 支持三种启动模式：
 
-| Mode | What It Does |
+| 模式 | 功能 |
 |------|-------------|
-| **Managed** (default) | Polymerium tracks the game process, captures output, and detects crashes. Recommended. |
-| **Fire-and-forget** | Launches the game and detaches. Use this if you want to close Polymerium while playing. |
-| **Debug** | Exports the full launch command for troubleshooting. Doesn't actually start the game. |
+| **托管**（默认） | Polymerium 跟踪游戏进程，捕获输出，并检测崩溃。推荐。 |
+| **即发即忘** | 启动游戏并分离。如果你想在游戏时关闭 Polymerium，请使用此模式。 |
+| **调试** | 导出完整的启动命令以供故障排除。实际上不启动游戏。 |
 
-## First Launch Checklist
+## 首次启动清单
 
-- [x] [Install Polymerium](/docs/getting-started/installation)
-- [x] [Create an instance](/docs/getting-started/first-instance)
-- [x] [Configure your instance](/docs/getting-started/first-instance#configuring-your-instance) (loader, settings)
-- [x] [Add mods](/docs/getting-started/adding-mods)
-- [x] Deploy and launch 🎉
+- [x] [安装 Polymerium](/docs/getting-started/installation)
+- [x] [创建实例](/docs/getting-started/first-instance)
+- [x] [配置实例](/docs/getting-started/first-instance#configuring-your-instance)（加载器、设置）
+- [x] [添加模组](/docs/getting-started/adding-mods)
+- [x] 部署并启动 🎉
 
-## What's Next?
+## 接下来做什么？
 
-You're playing! Here's where to go from here:
+你已经在游戏了！从这里你可以：
 
-- **Understand what just happened** — read [Core Concepts](/docs/concepts/metadata-driven) to learn why Polymerium works this way
-- **Manage your instances** — [accounts](/docs/managing/accounts), [snapshots](/docs/managing/snapshots), [tags](/docs/managing/tags)
-- **Go deeper** — [deployment rules](/docs/advanced/rules), [CLI](/docs/advanced/cli), [modpack development](/docs/advanced/modpack-dev)
+- **理解刚刚发生了什么** — 阅读 [核心概念](/docs/concepts/metadata-driven) 来了解 Polymerium 为什么这样工作
+- **管理你的实例** — [账号](/docs/managing/accounts)、[快照](/docs/managing/snapshots)、[标签](/docs/managing/tags)
+- **深入探索** — [部署规则](/docs/advanced/rules)、[CLI](/docs/advanced/cli)、[整合包开发](/docs/advanced/modpack-dev)

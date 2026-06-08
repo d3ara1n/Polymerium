@@ -1,55 +1,55 @@
 ---
-title: Adding Mods
-description: Browse, search, and install mods from CurseForge and Modrinth directly in Polymerium.
+title: 添加模组
+description: 直接在 Polymerium 中浏览、搜索和安装来自 CurseForge 和 Modrinth 的模组。
 ---
 
-## Browsing Mods
+## 浏览模组
 
-1. Select your instance in the sidebar.
-2. Switch to the **Setup** tab — this is where all mod management happens.
-3. Click **Add Mod** or use the search bar at the top.
+1. 在侧边栏中选择你的实例。
+2. 切换到 **设置** 标签页 — 所有模组管理都在这里进行。
+3. 点击 **添加模组** 或使用顶部的搜索栏。
 
-Polymerium connects to **CurseForge** and **Modrinth** directly. You can search both repositories, browse categories, and install mods without leaving the app.
+Polymerium 直接连接到 **CurseForge** 和 **Modrinth**。你可以搜索两个仓库，浏览分类，并在不离开应用的情况下安装模组。
 
-## Searching
+## 搜索
 
-Use the search bar in the marketplace to find mods by name or keyword. You can filter by:
+使用市场中的搜索栏按名称或关键词查找模组。你可以按以下条件过滤：
 
-- **Repository** — CurseForge, Modrinth, or both
-- **Game version** — only show mods compatible with your instance's Minecraft version
-- **Loader** — only show mods for your instance's mod loader
-- **Category** — performance, technology, magic, adventure, etc.
+- **仓库** — CurseForge、Modrinth 或两者
+- **游戏版本** — 仅显示与你的实例的 Minecraft 版本兼容的模组
+- **加载器** — 仅显示适用于你的实例模组加载器的模组
+- **分类** — 性能、科技、魔法、冒险等
 
-## Installing a Mod
+## 安装模组
 
-Click on any mod to see its details — description, screenshots, changelogs. When you're ready, click **Install** to add the mod to your instance.
+点击任何模组查看其详细信息 — 描述、截图、更新日志。准备好后，点击 **安装** 将模组添加到你的实例中。
 
-The mod file isn't downloaded yet. Installing only adds a reference to your instance's metadata. The actual download and file linking happens when you **deploy**.
+模组文件尚未下载。安装只是在你的实例元数据中添加一个引用。实际的下载和文件链接发生在你 **部署** 时。
 
-## Managing Your Mod List
+## 管理你的模组列表
 
-Once installed, each mod in your list can be:
+安装后，列表中的每个模组都可以：
 
-- **Enabled / Disabled** — toggle without removing. Disabled mods are ignored during deployment.
-- **Version-pinned** — click the version to pick a specific release instead of always using the latest.
-- **Tagged** — add custom tags like `performance`, `core`, `QoL` for your own organization. See [Tags & Batch Operations](/docs/managing/tags) for more.
+- **启用 / 禁用** — 切换而不删除。禁用的模组在部署期间会被忽略。
+- **固定版本** — 点击版本选择特定版本，而不是始终使用最新版本。
+- **添加标签** — 添加自定义标签如 `performance`、`core`、`QoL` 以便自己组织。详见 [标签与批量操作](/docs/managing/tags)。
 
-## Bulk Updates
+## 批量更新
 
-When mod authors release new versions, Polymerium can show you all available updates at once. The bulk update dialog lets you review each update and choose which ones to apply — or exclude mods with certain tags from auto-updating.
+当模组作者发布新版本时，Polymerium 可以一次性显示所有可用更新。批量更新对话框让你查看每个更新并选择应用哪些更新 — 或排除具有某些标签的模组不自动更新。
 
-## What About Dependencies?
+## 依赖项怎么办？
 
-Many mods depend on other mods to function (for example, most Fabric mods require Fabric API). Polymerium shows you what a mod depends on and whether those dependencies are already in your instance.
+许多模组依赖于其他模组才能运行（例如，大多数 Fabric 模组需要 Fabric API）。Polymerium 会显示模组依赖于什么，以及这些依赖项是否已经在你的实例中。
 
-Here's how it works:
+它是这样工作的：
 
-1. **Dependency info** — When you view a mod, Polymerium lists its dependencies with real installation status. You can see at a glance which ones you already have and which are missing.
-2. **Nested exploration** — Click into any dependency to see *its* dependencies. You can drill down through the full dependency tree, level by level.
-3. **You choose what to add** — Polymerium doesn't auto-add anything. You install only the dependencies you want, with full visibility into what each one requires.
+1. **依赖项信息** — 当你查看模组时，Polymerium 会列出其依赖项及实际安装状态。你可以一眼看出哪些已有，哪些缺失。
+2. **嵌套探索** — 点击任何依赖项查看 *它的* 依赖项。你可以逐层深入了解完整的依赖关系树。
+3. **你决定添加什么** — Polymerium 不会自动添加任何内容。你只安装你想要的依赖项，并完全了解每个依赖项的要求。
 
-Dependency data from mod hosting sites can be inaccurate, so Polymerium gives you the information and lets you decide. No surprises, no unwanted mods.
+模组托管网站的依赖项数据可能不准确，所以 Polymerium 会提供信息让你自己决定。没有意外，不需要的模组。
 
-## Next Step
+## 下一步
 
-Your instance has mods. Time to [deploy and play →](/docs/getting-started/play)
+你的实例已有模组。是时候 [部署并游戏 →](/docs/getting-started/play)

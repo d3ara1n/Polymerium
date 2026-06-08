@@ -1,144 +1,144 @@
 ---
-title: Troubleshooting
-description: Diagnose and fix common issues — deployment failures, launch crashes, and runtime errors.
+title: 故障排查
+description: 诊断和修复常见问题——部署失败、启动崩溃和运行时错误。
 ---
 
-## Three Stages of Errors
+## 错误的三个阶段
 
-Polymerium classifies errors into three stages, each with different causes and solutions:
+Polymerium 将错误分为三个阶段，每个阶段有不同的原因和解决方案：
 
 ```
-Stage 1: Deployment Failure  →  Game never started
-Stage 2: Launch Failure      →  Java started but exited quickly
-Stage 3: Runtime Crash       →  Game loaded but crashed
+阶段 1：部署失败  →  游戏从未启动
+阶段 2：启动失败  →  Java 已启动但很快退出
+阶段 3：运行时崩溃  →  游戏已加载但发生了崩溃
 ```
 
-Identifying the stage is the first step to fixing the problem.
+确定错误阶段是解决问题的第一步。
 
 ---
 
-## Stage 1: Deployment Failure
+## 阶段 1：部署失败
 
-The deploy pipeline failed — Minecraft was never launched.
+部署管道失败——Minecraft 从未启动。
 
-### Network Issues
+### 网络问题
 
-**Symptoms:** Timeout errors, checksum failures, "failed to resolve resource."
+**症状：** 超时错误、校验和失败、"failed to resolve resource"。
 
-**Fixes:**
-- Check your internet connection.
-- If in China, try switching the update source to Mirror酱 in Settings.
-- Retry the deploy — network issues are often transient.
+**解决方法：**
+- 检查网络连接。
+- 如果你在中国大陆，尝试在设置中将更新源切换为 Mirror酱。
+- 重试部署——网络问题通常是暂时性的。
 
-### Symlink Permission Issues (Windows)
+### 符号链接权限问题（Windows）
 
-**Symptoms:** "Failed to create symbolic link" errors during deploy.
+**症状：** 部署时出现 "Failed to create symbolic link" 错误。
 
-**Fixes:**
-- Confirm Developer Mode is enabled: **Settings → System → For developers**.
-- Restart Polymerium after enabling Developer Mode.
-- Check that no antivirus or sync tool is locking the `build/` directory.
+**解决方法：**
+- 确认已启用开发者模式：**设置 → 系统 → 面向开发者**。
+- 启用开发者模式后重启 Polymerium。
+- 检查是否有杀毒软件或同步工具锁定了 `build/` 目录。
 
-### Filesystem Conflicts
+### 文件系统冲突
 
-**Symptoms:** "File already exists" or "Unexpected file in build directory."
+**症状：** "File already exists" 或 "Unexpected file in build directory"。
 
-**Fixes:**
-- Delete the `build/` directory and redeploy.
-- Make sure no other process is writing to the instance directory.
+**解决方法：**
+- 删除 `build/` 目录并重新部署。
+- 确保没有其他进程正在写入实例目录。
 
-### Security Software
+### 安全软件
 
-**Symptoms:** Deploy seems to hang, or files are deleted after being created.
+**症状：** 部署似乎卡住了，或者文件创建后被删除。
 
-**Fixes:**
-- Add Polymerium's data directory to your antivirus exclusions.
-- Disable real-time protection temporarily to test.
-
----
-
-## Stage 2: Launch Failure
-
-Java started but the game exited immediately (usually within seconds).
-
-### Wrong Java Version
-
-**Symptoms:** `UnsupportedClassVersionError`, "A JNI error has occurred."
-
-**Fixes:**
-- Check the Java version configured for this instance (see [Java Management](/docs/managing/java)).
-- Minecraft 1.20.5+ requires Java 21. Minecraft 1.18–1.20.4 requires Java 17.
-- Let Polymerium auto-deploy the correct runtime by removing any manual Java override.
-
-### Bad Launch Parameters
-
-**Symptoms:** JVM exits with an error code, `Could not create the Java Virtual Machine`.
-
-**Fixes:**
-- Check memory allocation in Settings — don't allocate more than you have RAM.
-- Remove custom JVM arguments if you've added any.
-- Try the default settings.
-
-### Loader / Mod Conflicts
-
-**Symptoms:** `NoSuchMethodError`, `ClassNotFoundException`, loader crash on startup.
-
-**Fixes:**
-- Verify the loader matches the Minecraft version.
-- Check for mod version conflicts — a mod built for 1.21 won't work on 1.20.4.
-- Try disabling half your mods, then re-enable in batches to isolate the conflict.
+**解决方法：**
+- 将 Polymerium 的数据目录添加到杀毒软件的排除列表中。
+- 暂时禁用实时保护进行测试。
 
 ---
 
-## Stage 3: Runtime Crash
+## 阶段 2：启动失败
 
-The game loaded but crashed during play.
+Java 已启动但游戏立即退出（通常在几秒内）。
 
-### Reading the Logs
+### Java 版本错误
 
-1. Open the instance's **Files** tab.
-2. Navigate to `build/logs/latest.log` for the main log.
-3. Check `build/crash-reports/` for crash report files.
+**症状：** `UnsupportedClassVersionError`、"A JNI error has occurred"。
 
-### Common Causes
+**解决方法：**
+- 检查为此实例配置的 Java 版本（参见 [Java 管理](/docs/managing/java)）。
+- Minecraft 1.20.5+ 需要 Java 21。Minecraft 1.18–1.20.4 需要 Java 17。
+- 移除手动设置的 Java 覆盖，让 Polymerium 自动部署正确的运行时。
 
-| Symptom | Likely Cause |
+### 启动参数错误
+
+**症状：** JVM 以错误码退出，`Could not create the Java Virtual Machine`。
+
+**解决方法：**
+- 检查设置中的内存分配——不要分配超过你实际拥有的 RAM。
+- 移除你添加的自定义 JVM 参数。
+- 尝试使用默认设置。
+
+### 加载器/模组冲突
+
+**症状：** `NoSuchMethodError`、`ClassNotFoundException`、加载器启动时崩溃。
+
+**解决方法：**
+- 验证加载器是否与 Minecraft 版本匹配。
+- 检查模组版本冲突——为 1.21 构建的模组无法在 1.20.4 上运行。
+- 尝试禁用一半的模组，然后分批重新启用以定位冲突。
+
+---
+
+## 阶段 3：运行时崩溃
+
+游戏已加载但在游戏过程中发生了崩溃。
+
+### 查看日志
+
+1. 打开实例的 **Files** 标签页。
+2. 导航到 `build/logs/latest.log` 查看主日志。
+3. 检查 `build/crash-reports/` 中的崩溃报告文件。
+
+### 常见原因
+
+| 症状 | 可能的原因 |
 |---------|-------------|
-| `java.lang.OutOfMemoryError` | Increase max memory in Settings |
-| Shader pack crash | Update or switch shader packs; check Iris/Optimize compatibility |
-| Mod-specific crash | Check the mod's issue tracker; try a different version |
-| World corruption | Restore from a backup or snapshot |
+| `java.lang.OutOfMemoryError` | 在设置中增加最大内存 |
+| 光影包崩溃 | 更新或更换光影包；检查 Iris/Optimize 兼容性 |
+| 特定模组崩溃 | 查看模组的问题追踪器；尝试不同版本 |
+| 世界损坏 | 从备份或快照恢复 |
 
 ---
 
-## Diagnostic Tools
+## 诊断工具
 
-### Crash Report Modal
+### 崩溃报告弹窗
 
-When a managed launch crashes, Polymerium shows a crash report with:
+当托管启动崩溃时，Polymerium 会显示包含以下信息的崩溃报告：
 
-- Exit code
-- Java version and path
-- Allocated memory
-- OS info
-- Last 50 lines of log output
-- Crash report file (if generated)
-- Number of installed mods
-- Full command line
+- 退出代码
+- Java 版本和路径
+- 已分配的内存
+- 操作系统信息
+- 日志最后 50 行
+- 崩溃报告文件（如已生成）
+- 已安装模组数量
+- 完整的命令行
 
-### Diagnostic Package
+### 诊断包
 
-You can export a diagnostic package containing all relevant information. This is useful when asking for help — share the package with the developers or community.
+你可以导出包含所有相关信息的诊断包。在寻求帮助时这非常有用——将诊断包分享给开发者或社区。
 
-### AI Analysis Package
+### AI 分析包
 
-Polymerium can also export an AI-ready analysis package in Markdown format. You can paste this directly into an AI assistant (Claude, ChatGPT, etc.) for guided troubleshooting.
+Polymerium 还可以导出 Markdown 格式的 AI 分析包。你可以直接将其粘贴到 AI 助手（Claude、ChatGPT 等）中进行引导式故障排查。
 
 ---
 
-## Getting Help
+## 获取帮助
 
-1. Check the logs first — most errors are self-explanatory.
-2. Try the fixes above for your error stage.
-3. Export a diagnostic package and share it on [GitHub Issues](https://github.com/d3ara1n/Polymerium/issues).
-4. If using AI troubleshooting, export the AI analysis package and paste it into your assistant.
+1. 首先查看日志——大多数错误信息是不言自明的。
+2. 根据你的错误阶段尝试上述解决方法。
+3. 导出诊断包并分享到 [GitHub Issues](https://github.com/d3ara1n/Polymerium/issues)。
+4. 如果使用 AI 故障排查，导出 AI 分析包并粘贴到你的 AI 助手中。

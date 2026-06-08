@@ -1,64 +1,64 @@
 ---
-title: Snapshots
-description: Save, restore, and compare your entire game state. Experiment freely — you can always go back.
+title: 快照
+description: 保存、恢复和比较您的整个游戏状态。自由实验 — 您随时可以回退。
 ---
 
-## What Are Snapshots?
+## 什么是快照？
 
-A snapshot records everything about your instance that affects the build result:
+快照记录影响构建结果的实例所有内容：
 
-- **Profile setup** — the metadata (Minecraft version, loader, mod list, settings)
-- **Directory contents** — everything in `import/`, `live/`, and `persist/`
+- **配置文件设置** — 元数据（Minecraft 版本、加载器、模组列表、设置）
+- **目录内容** — `import/`、`live/` 和 `persist/` 中的所有内容
 
-Snapshots don't directly touch `build/`. Instead, they capture the inputs so you can reproduce an exact game state later. When you restore a snapshot, your metadata and directory contents are restored — and the next deploy rebuilds `build/` from that state.
+快照不会直接修改 `build/`。相反，它们捕获输入以便稍后重现精确的游戏状态。恢复快照时，您的元数据和目录内容会被恢复 — 下次部署会从该状态重新构建 `build/`。
 
-## When to Use Snapshots
+## 何时使用快照
 
-- **Before a risky change** — updating a major mod, switching loaders, tweaking configs
-- **Before experimenting** — trying out a new modpack configuration you might want to undo
-- **For "save scumming" your mod setup** — keep a snapshot of your stable setup and one for experimentation
+- **在进行风险更改之前** — 更新主要模组、切换加载器、调整配置
+- **在进行实验之前** — 尝试可能想要撤销的新整合包配置
+- **用于模组设置的"存档读档"** — 保留稳定设置的快照，以及一个用于实验的快照
 
-## Creating a Snapshot
+## 创建快照
 
-1. Select your instance.
-2. Open the **Snapshots** section.
-3. Click **Create Snapshot**.
-4. Give it a name and optional description.
+1. 选择您的实例。
+2. 打开**快照**部分。
+3. 点击**创建快照**。
+4. 给它一个名称和可选的描述。
 
-Polymerium records the current profile setup and the contents of `persist/`, `import/`, and `live/`.
+Polymerium 会记录当前的配置文件设置以及 `persist/`、`import/` 和 `live/` 的内容。
 
-## Restoring a Snapshot
+## 恢复快照
 
-1. Open the **Snapshots** section for your instance.
-2. Select a snapshot from the list.
-3. Click **Restore**.
+1. 为您的实例打开**快照**部分。
+2. 从列表中选择一个快照。
+3. 点击**恢复**。
 
-Polymerium restores the profile metadata and directory contents to the state they were in when the snapshot was taken. Your game directory (`build/`) will be rebuilt on the next deploy to match that state.
+Polymerium 会将配置文件元数据和目录内容恢复到拍摄快照时的状态。您的游戏目录（`build/`）将在下次部署时重新构建以匹配该状态。
 
-> Restoring a snapshot doesn't immediately modify `build/`. The next deploy will reproduce the snapshot's state.
+> 恢复快照不会立即修改 `build/`。下次部署将重现快照的状态。
 
-## Comparing Snapshots (Diff)
+## 比较快照（差异）
 
-You can compare two snapshots to see exactly what changed between them:
+您可以比较两个快照以查看它们之间确切的变化：
 
-- **Metadata changes** — different mods, version, or loader settings
-- **Added files** — new files in `persist/`, `import/`, or `live/`
-- **Removed files** — files that existed in the earlier snapshot but not the later one
-- **Modified files** — same path but different contents
+- **元数据更改** — 不同的模组、版本或加载器设置
+- **添加的文件** — `persist/`、`import/` 或 `live/` 中的新文件
+- **删除的文件** — 在较早快照中存在但在较晚快照中不存在的文件
+- **修改的文件** — 相同路径但内容不同
 
-This is useful for understanding what a mod update or config change actually did to your instance.
+这对于了解模组更新或配置更改对实例的实际影响非常有用。
 
-## Snapshot Storage
+## 快照存储
 
-Snapshots store the actual profile setup data and directory file contents — not references to a cache. This means snapshots are self-contained and can be restored even if the shared cache has been cleared.
+快照存储实际的配置文件设置数据和目录文件内容 — 而不是对缓存的引用。这意味着快照是自包含的，即使共享缓存已被清除也可以恢复。
 
-## Snapshots vs. Backups
+## 快照与备份
 
-| | Snapshot | Full Backup |
+| | 快照 | 完整备份 |
 |---|---------|------------|
-| What it stores | Profile metadata + directory contents | Complete file copies |
-| Disk usage | Compact (metadata + file contents) | Same as the instance itself |
-| Speed | Near-instant | Slow (copies everything) |
-| Restores | Restores metadata + dirs, then redeploy | Copies files back |
+| 存储内容 | 配置文件元数据 + 目录内容 | 完整文件副本 |
+| 磁盘使用 | 紧凑（元数据 + 文件内容） | 与实例本身相同 |
+| 速度 | 近乎即时 | 慢（复制所有内容） |
+| 恢复 | 恢复元数据 + 目录，然后重新部署 | 复制文件回来 |
 
-Snapshots are lighter than a full backup and faster to create. They capture the inputs, not the entire deployed output — which is all you need, since `build/` can always be reconstructed.
+快照比完整备份更轻量，创建速度更快。它们捕获的是输入，而不是整个部署输出 — 这就是您所需要的，因为 `build/` 始终可以重建。
