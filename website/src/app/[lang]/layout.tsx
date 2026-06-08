@@ -27,6 +27,10 @@ export const metadata: Metadata = {
     'CurseForge',
     'Modrinth',
   ],
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/favicon.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
