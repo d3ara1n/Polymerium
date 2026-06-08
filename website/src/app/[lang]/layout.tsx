@@ -3,6 +3,8 @@ import { i18nProvider } from 'fumadocs-ui/i18n';
 import { Inter } from 'next/font/google';
 import { translations } from '@/lib/layout.shared';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import '../global.css';
 
 const inter = Inter({
@@ -44,6 +46,8 @@ export default async function Layout({ params, children }: LayoutProps<'/[lang]'
     <html lang={lang} className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <RootProvider i18n={i18nProvider(translations, lang)}>{children}</RootProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
