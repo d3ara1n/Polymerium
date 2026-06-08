@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://polymerium.d3ara1n.dev'),
+  metadataBase: new URL('https://polymerium.dearain.dev'),
   title: {
     default: 'Polymerium — Minecraft Instance Manager',
     template: '%s | Polymerium',
