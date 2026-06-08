@@ -22,7 +22,7 @@ export const translations = i18n
     },
   });
 
-export function baseOptions(): BaseLayoutProps {
+export function baseOptions(lang: string): BaseLayoutProps {
   return {
     nav: {
       title: appName,
@@ -30,7 +30,7 @@ export function baseOptions(): BaseLayoutProps {
     links: [
       {
         text: 'Docs',
-        url: '/en/docs',
+        url: `/${lang}/docs`,
         active: 'nested-url',
       },
     ],
