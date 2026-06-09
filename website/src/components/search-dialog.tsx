@@ -13,7 +13,7 @@ import {
   SearchDialogOverlay,
   type SharedProps,
 } from 'fumadocs-ui/components/dialog/search';
-import { useDocsSearch } from 'fumadocs-core/search/client';
+import { useAlgoliaSearch } from '@/lib/algolia-search';
 import { useI18n } from 'fumadocs-ui/contexts/i18n';
 
 // These are inlined at build time. If missing, the Provider will not render
@@ -24,8 +24,7 @@ const client = liteClient(appId, apiKey);
 
 export default function CustomSearchDialog(props: SharedProps) {
   const { locale } = useI18n();
-  const { search, setSearch, query } = useDocsSearch({
-    type: 'algolia',
+  const { search, setSearch, query } = useAlgoliaSearch({
     client,
     indexName: 'document',
     locale,
