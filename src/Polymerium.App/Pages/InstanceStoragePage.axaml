@@ -46,7 +46,7 @@
                     Classes="Small"
                     VerticalAlignment="Center"
                     Command="{x:Static app:InternalCommands.OpenStringUriCommand}"
-                    CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87">
+                    CommandParameter="https://polymerium.dearain.dev/docs/concepts/four-layers">
                     <husk:IconLabel
                         Icon="BookQuestionMark"
                         Text="{x:Static lang:Resources.InstanceStoragePage_OpenWikiButtonText}" />

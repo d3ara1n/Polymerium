@@ -377,7 +377,7 @@
                     Classes="Small"
                     VerticalAlignment="Center"
                     Command="{x:Static app:InternalCommands.OpenStringUriCommand}"
-                    CommandParameter="https://github.com/d3ara1n/Polymerium/wiki/%E6%95%B4%E5%90%88%E5%8C%85">
+                    CommandParameter="https://polymerium.dearain.dev/docs/managing/import-export">
                     <husk:IconLabel
                         FontSize="{StaticResource SmallFontSize}"
                         Icon="BookQuestionMark"
