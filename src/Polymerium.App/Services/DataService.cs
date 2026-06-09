@@ -89,11 +89,9 @@ public class DataService(
         var entry = cache.CreateEntry(key);
         entry.AbsoluteExpirationRelativeToNow = EXPIRED_IN;
         entry.Value = rv;
-        entry.RegisterPostEvictionCallback((_, value, _, _) =>
-        {
-            if (value is Task<Bitmap> { Result: Bitmap bmp })
-                bmp.Dispose();
-        });
+        // 缓存驱逐时不释放 Bitmap，因为 Bitmap 可能仍被 UI 引用，
+        // 提前释放会导致 ObjectDisposedException。
+        // GC 的 finalizer 会在所有引用消失后自行回收非托管资源。
         entry.Dispose();
         return new(rv);
     }
