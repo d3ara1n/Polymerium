@@ -15,7 +15,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8516e3e1a3994d138a1adc537d7c6ecd)](https://app.codacy.com/gh/d3ara1n/Polymerium/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/d3ara1n/polymerium/badge)](https://www.codefactor.io/repository/github/d3ara1n/polymerium)
 
-[🌐 中文介绍](https://github.com/d3ara1n/Polymerium/blob/main/README.zh.md) • [📥 Download](https://github.com/d3ara1n/Polymerium/releases) • [📖 Documentation](https://github.com/d3ara1n/Polymerium/wiki) • [🐛 Report Bug](https://github.com/d3ara1n/Polymerium/issues) • [💡 Request Feature](https://github.com/d3ara1n/Polymerium/issues)
+[🌐 中文介绍](https://github.com/d3ara1n/Polymerium/blob/main/README.zh.md) • [📥 Download](https://github.com/d3ara1n/Polymerium/releases) • [📖 Documentation](https://polymerium.dearain.dev) • [🐛 Report Bug](https://github.com/d3ara1n/Polymerium/issues) • [💡 Request Feature](https://github.com/d3ara1n/Polymerium/issues)
 
 </div>
 

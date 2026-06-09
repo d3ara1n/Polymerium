@@ -646,6 +646,10 @@
                     <HyperlinkButton
                         Content="GitHub"
                         NavigateUri="https://github.com/d3ara1n/Polymerium" />
+                    <Run Text="Documentation:" />
+                    <HyperlinkButton
+                        Content="polymerium.dearain.dev"
+                        NavigateUri="https://polymerium.dearain.dev" />
                     <Run Text="License:" />
                     <HyperlinkButton
                         Content="MIT"
