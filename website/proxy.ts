@@ -38,3 +38,9 @@ export default function proxy(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  // Keep same matcher as the old middleware — skip API, static files, and
+  // favicon so i18n redirects don't break asset loading.
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+};
