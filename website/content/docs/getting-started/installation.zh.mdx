@@ -15,6 +15,21 @@ description: 在 Windows、macOS 或 Linux 上下载、安装和设置 Polymeriu
 
 每个平台使用其标准的安装程序格式。运行它并按照提示操作。
 
+## macOS：PKG 安装提示
+
+由于 PKG 安装包未经 Apple 开发者证书签名，macOS Gatekeeper 可能会阻止安装并提示「安装包已损坏」。解决方法：
+
+1. 右键点击 `.pkg` 文件，选择 **打开**。
+2. 如果仍然无法打开，在终端中移除隔离标记：
+
+```bash
+xattr -d com.apple.quarantine Polymerium-osx-arm64-Setup.pkg
+```
+
+3. 再次打开 `.pkg` 文件，按照安装向导操作即可。
+
+> 这是一次性操作。后续版本可能会切换为 DMG 分发，届时将不再出现此问题。
+
 ## Windows：启用开发者模式
 
 Polymerium 使用符号链接在实例之间共享模组文件，无需重复存储。在 Windows 上，创建符号链接需要启用 **开发者模式**。
