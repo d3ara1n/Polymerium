@@ -1,0 +1,136 @@
+﻿<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.WorkspaceDiffModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    d:DesignHeight="600"
+    d:DesignWidth="900"
+    x:DataType="app:WorkspaceDiffModalModel"
+    mc:Ignorable="d">
+    <DockPanel VerticalSpacing="12">
+        <StackPanel
+            DockPanel.Dock="Bottom"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding $parent[app:WorkspaceDiffModal].Dismiss}"
+                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+        </StackPanel>
+        <Grid
+            RowDefinitions="Auto,Auto,*"
+            RowSpacing="8">
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="12">
+                <StackPanel Grid.Column="0">
+                    <TextBlock
+                        FontSize="{StaticResource ExtraLargeFontSize}"
+                        Text="{Binding Model.FileName}" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{Binding Model.RelativePath}" />
+                </StackPanel>
+                <husk:SwitchContainer
+                    Grid.Column="1"
+                    TargetType="x:Boolean">
+                    <husk:SwitchContainer.Value>
+                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                            <Binding
+                                ElementName="DiffView"
+                                Path="LeftHasDifference" />
+                            <Binding
+                                ElementName="DiffView"
+                                Path="RightHasDifference" />
+                        </MultiBinding>
+                    </husk:SwitchContainer.Value>
+                    <husk:SwitchCase Value="{x:True}">
+                        <Border
+                            Padding="12,8"
+                            Background="{StaticResource ControlWarningTranslucentFullBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlWarningBorderBrush}"
+                            BorderThickness="1,1,4,1"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <StackPanel>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Foreground="{StaticResource ControlWarningForegroundBrush}"
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_DifferentTitle}" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
+                            </StackPanel>
+                        </Border>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <Border
+                            Padding="12,8"
+                            Background="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlSuccessBorderBrush}"
+                            BorderThickness="1,1,4,1"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <StackPanel>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_IdenticalTitle}" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
+                            </StackPanel>
+                        </Border>
+                    </husk:SwitchCase>
+                </husk:SwitchContainer>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="*,*"
+                ColumnSpacing="12">
+                <DockPanel Grid.Column="0">
+                    <TextBlock
+                        DockPanel.Dock="Right"
+                        VerticalAlignment="Bottom"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <Run Text="{Binding #DiffView.LeftLineCount}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding #DiffView.TotalLineCount}" />
+                        <Run Text="{x:Static lang:Resources.WorkspaceDiffModal_LineCountSuffix}" />
+                    </TextBlock>
+                    <husk:Tag
+                        Classes="Primary"
+                        Content="{x:Static lang:Resources.WorkspaceDiffModal_LiveTagText}" />
+                </DockPanel>
+                <DockPanel Grid.Column="1">
+                    <TextBlock
+                        DockPanel.Dock="Right"
+                        VerticalAlignment="Bottom"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                        <Run Text="{Binding #DiffView.RightLineCount}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding #DiffView.TotalLineCount}" />
+                        <Run Text="{x:Static lang:Resources.WorkspaceDiffModal_LineCountSuffix}" />
+                    </TextBlock>
+                    <husk:Tag
+                        Classes="Primary"
+                        Content="{x:Static lang:Resources.WorkspaceDiffModal_ImportTagText}" />
+                </DockPanel>
+            </Grid>
+            <controls:DiffView
+                x:Name="DiffView"
+                Grid.Row="2"
+                LeftText="{Binding LiveText}"
+                RightText="{Binding ImportText}" />
+        </Grid>
+    </DockPanel>
+</husk:Modal>

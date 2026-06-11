@@ -1,0 +1,71 @@
+﻿<app:OobeStep
+    x:Class="Polymerium.Avalonia.Components.OobeFinish"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="400"
+    d:DesignWidth="480"
+    mc:Ignorable="d">
+    <StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="24">
+        <!--  Success Icon  -->
+        <Border
+            Width="80"
+            Height="80"
+            HorizontalAlignment="Center"
+            Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+            CornerRadius="{StaticResource FullCornerRadius}">
+            <fi:SymbolIcon
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="48"
+                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                IconVariant="Filled"
+                Symbol="SparkleCircle" />
+        </Border>
+
+        <!--  Title  -->
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="24"
+            FontWeight="{StaticResource ControlStrongFontWeight}"
+            Text="{x:Static lang:Resources.OobeFinish_Title}" />
+
+        <!--  Description  -->
+        <TextBlock
+            MaxWidth="360"
+            HorizontalAlignment="Center"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            Text="{x:Static lang:Resources.OobeFinish_Description}"
+            TextAlignment="Center"
+            TextWrapping="Wrap" />
+
+        <!--  Tip  -->
+        <Border
+            Padding="12"
+            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="8">
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="LightbulbFilament" />
+                <TextBlock
+                    MaxWidth="320"
+                    FontSize="{StaticResource SmallFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.OobeFinish_Tip}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</app:OobeStep>

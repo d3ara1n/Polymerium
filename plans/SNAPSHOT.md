@@ -50,7 +50,7 @@ TridentCore.Core
 ├── SnapshotManager               # 单例，工厂方法 Open(key)
 └── InstanceSnapshots             # scoped handle，IDisposable
 
-Polymerium.App
+Polymerium.Avalonia
 └── FreeSqlSnapshotStore          # ISnapshotStore 的 FreeSql 实现
 ```
 

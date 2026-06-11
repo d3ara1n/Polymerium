@@ -102,7 +102,7 @@ private async Task GarbageCollectAsync()
 
 ## 3. 服务层：GarbageCollector
 
-新建 `src/Polymerium.App/Services/GarbageCollector.cs`，作为单例服务注册到 DI。
+新建 `src/Polymerium.Avalonia/Services/GarbageCollector.cs`，作为单例服务注册到 DI。
 
 ### 3.1 扫描阶段
 
@@ -445,15 +445,15 @@ This operation is safe and will not affect existing instance data.</value>
 
 | 文件 | 改动 |
 |------|------|
-| `src/Polymerium.App/Services/GarbageCollector.cs` | **新建** — 扫描 + 清理逻辑 |
-| `src/Polymerium.App/PageModels/SettingsPageModel.cs` | 注入 `GarbageCollector`，新增 `GarbageCollectCommand` |
-| `src/Polymerium.App/Pages/SettingsPage.axaml` | 维护板块 DataManagement 区域追加 GC 按钮 |
-| `src/Polymerium.App/Startup.cs` | DI 注册 `GarbageCollector` |
-| `src/Polymerium.App/Properties/Resources.resx` | 新增英文字符串 |
-| `src/Polymerium.App/Properties/Resources.zh-hans.resx` | 新增中文字符串 |
-| `src/Polymerium.App/Properties/Resources.Designer.cs` | 重新生成或手动添加属性 |
+| `src/Polymerium.Avalonia/Services/GarbageCollector.cs` | **新建** — 扫描 + 清理逻辑 |
+| `src/Polymerium.Avalonia/PageModels/SettingsPageModel.cs` | 注入 `GarbageCollector`，新增 `GarbageCollectCommand` |
+| `src/Polymerium.Avalonia/Pages/SettingsPage.axaml` | 维护板块 DataManagement 区域追加 GC 按钮 |
+| `src/Polymerium.Avalonia/Startup.cs` | DI 注册 `GarbageCollector` |
+| `src/Polymerium.Avalonia/Properties/Resources.resx` | 新增英文字符串 |
+| `src/Polymerium.Avalonia/Properties/Resources.zh-hans.resx` | 新增中文字符串 |
+| `src/Polymerium.Avalonia/Properties/Resources.Designer.cs` | 重新生成或手动添加属性 |
 | `submodules/Trident.Net/src/TridentCore.Abstractions/Snapshots/ISnapshotStore.cs` | 新增 `GetOrphanSnapshotIds()` 和 `DeleteReferencesBySnapshotIds()` |
-| `src/Polymerium.App/Snapshots/SnapshotStore.cs` | 实现上述两个新方法 |
+| `src/Polymerium.Avalonia/Snapshots/SnapshotStore.cs` | 实现上述两个新方法 |
 
 ---
 

@@ -11,23 +11,23 @@
 ## Repo Shape
 
 - This repo is a .NET 10 solution rooted at `Polymerium.slnx`.
-- `src/Polymerium.App` is the only app in this repo.
+- `src/Polymerium.Avalonia` is the only app in this repo.
 - `submodules/Trident.Net` is a git submodule and is part of the solution build. Treat it as an integral part of this project: it participates in the same development workflow and should be edited freely alongside the main codebase. Do not treat submodule changes as out-of-scope — feel free to modify files under `submodules/Trident.Net` when the task requires it. `Huskui.Avalonia` is consumed as a NuGet package, not a submodule.
 - Fresh clones need submodules initialized: `git submodule update --init --recursive`.
 
 ## Verified Commands
 
 - Full solution build: `dotnet build "Polymerium.slnx"`
-- Focused app build: `dotnet build "src/Polymerium.App/Polymerium.App.csproj"`
+- Focused app build: `dotnet build "src/Polymerium.Avalonia/Polymerium.Avalonia.csproj"`
 - There are no test projects in this repo right now. `dotnet test "Polymerium.slnx"` is not a meaningful verification step; use build plus targeted checks instead.
 - **Do NOT run any formatting tools** (`scripts/Format-Files.ps1`, `csharpier`, `xstyler`, etc.). They operate across the entire repo including submodules and will produce unintended changes in unrelated files. Only the user may invoke formatting.
 
 ## Architecture Entry Points
 
-- App bootstrap starts in `src/Polymerium.App/Program.cs`.
-- DI wiring lives in `src/Polymerium.App/Startup.cs`.
-- Window construction, global exception hooks, and startup of lifetime services live in `src/Polymerium.App/App.axaml.cs`.
-- The first navigation goes to `LandingPage`; shell-level state, notifications, OOBE, and update prompts are coordinated from `src/Polymerium.App/MainWindowContext.cs`.
+- App bootstrap starts in `src/Polymerium.Avalonia/Program.cs`.
+- DI wiring lives in `src/Polymerium.Avalonia/Startup.cs`.
+- Window construction, global exception hooks, and startup of lifetime services live in `src/Polymerium.Avalonia/App.axaml.cs`.
+- The first navigation goes to `LandingPage`; shell-level state, notifications, OOBE, and update prompts are coordinated from `src/Polymerium.Avalonia/MainWindowContext.cs`.
 
 ## Persistence And Runtime Paths
 
@@ -46,7 +46,7 @@
 
 ## Localization
 
-- Localized strings live in `src/Polymerium.App/Properties/Resources.resx` and `Resources.zh-hans.resx`.
+- Localized strings live in `src/Polymerium.Avalonia/Properties/Resources.resx` and `Resources.zh-hans.resx`.
 - `Resources.Designer.cs` is generated from the `.resx` files; edit the `.resx` and `Resource.Designer.cs` to pass the build process.
 - If encountered build failure due to missing localized string references, tell the user to generate `Rsources.Designer.cs` in the IDE to fix that or fix it by yourself.
 

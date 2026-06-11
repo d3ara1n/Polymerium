@@ -1,6 +1,6 @@
 # Java Runtime 扫描与检测
 
-为 Polymerium.App 的设置界面中添加扫描计算机中原装的 Java Runtime 并选择功能。
+为 Polymerium.Avalonia 的设置界面中添加扫描计算机中原装的 Java Runtime 并选择功能。
 
 ## 扫描
 
@@ -30,7 +30,7 @@
 
 ## 界面
 
-位于 Polymerium.App。
+位于 Polymerium.Avalonia。
 
 ### 设置界面
 

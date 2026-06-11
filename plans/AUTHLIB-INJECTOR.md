@@ -93,27 +93,27 @@
 
 ---
 
-## 待完成：UI 层（Polymerium.App）
+## 待完成：UI 层（Polymerium.Avalonia）
 
 ### 新增文件
 
 | 文件 | 说明 |
 |------|------|
-| `src/Polymerium.App/Components/AccountCreationAuthlibInjector.axaml` | 添加账号的 UI：服务器地址、用户名、密码输入框，登录按钮 |
-| `src/Polymerium.App/Components/AccountCreationAuthlibInjector.axaml.cs` | code-behind，调用 `YggdrasilService` 完成认证 |
+| `src/Polymerium.Avalonia/Components/AccountCreationAuthlibInjector.axaml` | 添加账号的 UI：服务器地址、用户名、密码输入框，登录按钮 |
+| `src/Polymerium.Avalonia/Components/AccountCreationAuthlibInjector.axaml.cs` | code-behind，调用 `YggdrasilService` 完成认证 |
 
 ### 修改文件
 
 | 文件 | 改动 |
 |------|------|
-| `src/Polymerium.App/Components/AccountCreationPortal.axaml` | `AccountTypeSelectBox` 新增第四个 `TabStripItem`（authlib-injector） |
-| `src/Polymerium.App/Components/AccountCreationPortal.axaml.cs` | `NextStep()` 增加 `case 3` 返回 `AccountCreationAuthlibInjector`，注入 `YggdrasilService` |
-| `src/Polymerium.App/Modals/AccountCreationModal.axaml.cs` | 注入 `YggdrasilService` 并传递给 `AccountCreationPortal` |
-| `src/Polymerium.App/PageModels/AccountsPageModel.cs` | 构造函数注入 `YggdrasilService`，传递给 `AccountCreationModal` |
-| `src/Polymerium.App/Utilities/AccountHelper.cs` | `ToCooked` 增加 `AuthlibInjectorAccount` 反序列化分支 |
-| `src/Polymerium.App/Properties/Resources.resx` | 添加英文本地化字符串 |
-| `src/Polymerium.App/Properties/Resources.zh-hans.resx` | 添加中文本地化字符串 |
-| `src/Polymerium.App/Startup.cs` | 调用 `AddAuthlibInjector()` + 注册 `YggdrasilService` |
+| `src/Polymerium.Avalonia/Components/AccountCreationPortal.axaml` | `AccountTypeSelectBox` 新增第四个 `TabStripItem`（authlib-injector） |
+| `src/Polymerium.Avalonia/Components/AccountCreationPortal.axaml.cs` | `NextStep()` 增加 `case 3` 返回 `AccountCreationAuthlibInjector`，注入 `YggdrasilService` |
+| `src/Polymerium.Avalonia/Modals/AccountCreationModal.axaml.cs` | 注入 `YggdrasilService` 并传递给 `AccountCreationPortal` |
+| `src/Polymerium.Avalonia/PageModels/AccountsPageModel.cs` | 构造函数注入 `YggdrasilService`，传递给 `AccountCreationModal` |
+| `src/Polymerium.Avalonia/Utilities/AccountHelper.cs` | `ToCooked` 增加 `AuthlibInjectorAccount` 反序列化分支 |
+| `src/Polymerium.Avalonia/Properties/Resources.resx` | 添加英文本地化字符串 |
+| `src/Polymerium.Avalonia/Properties/Resources.zh-hans.resx` | 添加中文本地化字符串 |
+| `src/Polymerium.Avalonia/Startup.cs` | 调用 `AddAuthlibInjector()` + 注册 `YggdrasilService` |
 
 ### UI 组件参考
 

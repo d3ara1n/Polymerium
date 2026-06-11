@@ -1,0 +1,28 @@
+using Avalonia.Metadata;
+
+[assembly: XmlnsPrefix("https://github.com/d3ara1n/Polymerium/Languages", "lang")]
+[assembly: XmlnsDefinition(
+    "https://github.com/d3ara1n/Polymerium/Languages",
+    "Polymerium.Avalonia.Properties"
+)]
+
+[assembly: XmlnsPrefix("https://github.com/d3ara1n/Polymerium", "app")]
+
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Assets")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Services")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Models")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Controls")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Components")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Converters")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Widgets")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Pages")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.PageModels")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Dialogs")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.DialogModels")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Modals")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.ModalModels")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Sidebars")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.SidebarModels")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.Toasts")]
+[assembly: XmlnsDefinition("https://github.com/d3ara1n/Polymerium", "Polymerium.Avalonia.ToastModels")]

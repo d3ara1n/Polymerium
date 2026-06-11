@@ -1,0 +1,81 @@
+﻿<app:OobeStep
+    x:Class="Polymerium.Avalonia.Components.OobeFeatures"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="400"
+    d:DesignWidth="480"
+    mc:Ignorable="d">
+    <StackPanel
+        Margin="24,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <!--  Header  -->
+        <StackPanel
+            HorizontalAlignment="Center"
+            Spacing="8">
+            <Border
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                CornerRadius="32">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="32"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="Sparkle" />
+            </Border>
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.OobeFeatures_Title}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{x:Static lang:Resources.OobeFeatures_Subtitle}" />
+        </StackPanel>
+
+        <!--  Feature Cards Grid  -->
+        <ItemsControl ItemsSource="{Binding $parent[app:OobeFeatures].Features}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="app:OobeFeatureModel">
+                    <Border
+                        Margin="4"
+                        Padding="12"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                        <StackPanel Spacing="8">
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Left"
+                                FontSize="24"
+                                Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                Symbol="{Binding Icon}" />
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{Binding Title}"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding Description}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</app:OobeStep>

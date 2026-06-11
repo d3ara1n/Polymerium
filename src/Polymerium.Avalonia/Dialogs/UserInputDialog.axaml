@@ -1,0 +1,21 @@
+﻿<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.UserInputDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.UserInputDialog_Title}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    IsPrimaryButtonVisible="True"
+    Message="{x:Static lang:Resources.UserInputDialog_Prompt}"
+    mc:Ignorable="d">
+    <TextBox
+        AcceptsReturn="{Binding $parent[app:UserInputDialog].AllowMultiLine}"
+        AcceptsTab="{Binding $parent[app:UserInputDialog].AllowMultiLine}"
+        PlaceholderText="{Binding $parent[app:UserInputDialog].PlaceholderText}"
+        Text="{Binding $parent[app:UserInputDialog].Result, Mode=TwoWay}" />
+</husk:Dialog>

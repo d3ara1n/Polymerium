@@ -1,0 +1,17 @@
+using Avalonia.Animation;
+using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
+using Huskui.Avalonia.Transitions;
+
+namespace Polymerium.Avalonia.Modals;
+
+public partial class TrophyModal : Modal, IPageTransitionOverride
+{
+    public TrophyModal() => InitializeComponent();
+
+    #region IPageTransitionOverride Members
+
+    public IPageTransition TransitionOverride { get; } = new TrophyTransition();
+
+    #endregion
+}

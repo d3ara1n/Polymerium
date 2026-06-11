@@ -61,3 +61,10 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+
+###############################################################################
+# Ignore macOS extended attributes for cross-platform compatibility
+###############################################################################
+* -attr.com.apple.provenance
+* -attr.com.apple.quarantine

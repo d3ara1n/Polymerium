@@ -33,13 +33,13 @@
 		"version": "0.2.0",
 		"configurations": [
 			{
-				"name": "Polymerium.App",
+				"name": "Polymerium.Avalonia",
 				"type": "coreclr",
 				"request": "launch",
 				"preLaunchTask": "build",
-				"program": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net10.0/Polymerium.App.dll",
+				"program": "${workspaceFolder}/src/Polymerium.Avalonia/bin/Debug/net10.0/Polymerium.Avalonia.dll",
 				"args": [],
-				"cwd": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net10.0",
+				"cwd": "${workspaceFolder}/src/Polymerium.Avalonia/bin/Debug/net10.0",
 				"console": "internalConsole",
 				"stopAtEntry": false
 			},
