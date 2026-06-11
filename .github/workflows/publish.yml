@@ -119,13 +119,13 @@ jobs:
 
             - name: Pack with Velopack
               run: |
-                  pack_extra_args=""
+                  pack_extra_args="--packAuthors d3ara1n"
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
-                      pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.Installer.ico"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.App/Assets/Icon.Installer.ico"
                   elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-                      pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.Installer.icns"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.App/Assets/Icon.icns --bundleId dev.dearain.Polymerium"
                   else
-                      pack_extra_args="--icon ./src/Polymerium.App/Assets/Icon.png"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.App/Assets/Icon.png"
                   fi
                   vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
 

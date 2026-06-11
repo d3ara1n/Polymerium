@@ -1,4 +1,4 @@
-﻿param(
+param(
     [Parameter(Mandatory = $true)]
     [string]$Version,
 
@@ -43,57 +43,57 @@ if ($Rid -like "win-*") {
     $IconPath = "./src/Polymerium.App/Assets/Icon.Installer.ico"
 } elseif ($Rid -like "osx-*") {
     $ExeName = "Polymerium.App"
-    $IconPath = "./src/Polymerium.App/Assets/Icon.Installer.icns"
+    $IconPath = "./src/Polymerium.App/Assets/Icon.icns"
 } else {
     $ExeName = "Polymerium.App"
     $IconPath = "./src/Polymerium.App/Assets/Icon.png"
 }
 
-$PackDir = "Publish/$Rid"
-
-Write-Host "Publishing Polymerium..."
-Write-Host "Version: $Version"
-Write-Host "Runtime: $Rid"
-Write-Host "Framework: $DotnetFramework"
-Write-Host "Output Directory: $PackDir"
-Write-Host "Executable: $ExeName"
-Write-Host "Icon: $IconPath"
-Write-Host "Current OS: $CurrentOS"
-Write-Host "Target OS: $TargetOS"
-Write-Host "Cross-platform: $IsCrossPlatform"
-
-# Clean and publish the project
-Write-Host "`nStep 1: Publishing project..."
-$PublishArgs = @(
-    "publish",
-    $ProjectPath,
-    "-f", $DotnetFramework,
-    "-r", $Rid,
-    "-c", "Release",
-    "-o", $PackDir,
-    "--self-contained",
-    "/p:PublishSingleFile=false",
-    "/p:IncludeNativeLibrariesForSelfExtract=true"
-)
-
-if ($IsCrossPlatform) {
-    Write-Host "Running: dotnet $($PublishArgs -join ' ')"
-    & dotnet @PublishArgs
-    $exitCode = $LASTEXITCODE
-} else {
-    Write-Host "Running: dotnet $($PublishArgs -join ' ')"
-    & dotnet @PublishArgs
-    $exitCode = $LASTEXITCODE
-}
-
-if ($exitCode -ne 0) {
-    Write-Error "dotnet publish failed with exit code $exitCode"
-    exit $exitCode
-}
-
-Write-Host "Project published successfully to: $PackDir`n"
-
-# Step 2: Build vpk command arguments
+$PackDir = "Publish/$Rid"
+
+Write-Host "Publishing Polymerium..."
+Write-Host "Version: $Version"
+Write-Host "Runtime: $Rid"
+Write-Host "Framework: $DotnetFramework"
+Write-Host "Output Directory: $PackDir"
+Write-Host "Executable: $ExeName"
+Write-Host "Icon: $IconPath"
+Write-Host "Current OS: $CurrentOS"
+Write-Host "Target OS: $TargetOS"
+Write-Host "Cross-platform: $IsCrossPlatform"
+
+# Clean and publish the project
+Write-Host "`nStep 1: Publishing project..."
+$PublishArgs = @(
+    "publish",
+    $ProjectPath,
+    "-f", $DotnetFramework,
+    "-r", $Rid,
+    "-c", "Release",
+    "-o", $PackDir,
+    "--self-contained",
+    "/p:PublishSingleFile=false",
+    "/p:IncludeNativeLibrariesForSelfExtract=true"
+)
+
+if ($IsCrossPlatform) {
+    Write-Host "Running: dotnet $($PublishArgs -join ' ')"
+    & dotnet @PublishArgs
+    $exitCode = $LASTEXITCODE
+} else {
+    Write-Host "Running: dotnet $($PublishArgs -join ' ')"
+    & dotnet @PublishArgs
+    $exitCode = $LASTEXITCODE
+}
+
+if ($exitCode -ne 0) {
+    Write-Error "dotnet publish failed with exit code $exitCode"
+    exit $exitCode
+}
+
+Write-Host "Project published successfully to: $PackDir`n"
+
+# Step 2: Build vpk command arguments
 Write-Host "Step 2: Packing with Velopack..."
 $VpkArgs = @(
     "pack",
@@ -103,8 +103,13 @@ $VpkArgs = @(
     "--packDir", $PackDir,
     "--releaseNotes", "README.md",
     "--mainExe", $ExeName,
-    "--icon", $IconPath
+    "--icon", $IconPath,
+    "--packAuthors", "d3ara1n"
 )
+
+if ($Rid -like "osx-*") {
+    $VpkArgs += @("--bundleId", "dev.dearain.Polymerium")
+}
 
 # For cross-platform packing, we need to use vpk [platform] pack syntax
 # Velopack requires specifying the target platform in brackets when cross-compiling
