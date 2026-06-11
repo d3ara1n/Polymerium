@@ -16,6 +16,7 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Exceptions;
+using TridentCore.Core.Exceptions;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
@@ -229,7 +230,7 @@ public partial class InstanceHomePageModel(
                                                    SwitchAccountCommand),
                                            ]);
         }
-        catch (AccountInvalidException ex)
+        catch (AccountException ex)
         {
             notificationService.PopMessage(ex,
                                            Resources.InstanceHomePage_AccountAuthenticationDangerNotificationTitle,
