@@ -382,6 +382,7 @@ publish/
 .kilo/
 .alma-snapshots
 .worktrees/
+.DS_Store
 .codegraph/
 .agents/
 website/node_modules
