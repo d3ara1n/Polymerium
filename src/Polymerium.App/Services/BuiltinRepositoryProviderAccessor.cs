@@ -18,7 +18,8 @@ public class BuiltinRepositoryProviderAccessor(IServiceProvider serviceProvider)
                                                                             .DriverType.CurseForge,
                                                                          CurseForgeHelper.ENDPOINT,
                                                                          ("x-api-key", CurseForgeHelper.API_KEY),
-                                                                         null);
+                                                                         null,
+                                                                         ["edge.forgecdn.net", "media.forgecdn.net"]);
 
         var modrinth = new IRepositoryProviderAccessor.ProviderProfile(ModrinthHelper.LABEL,
                                                                        IRepositoryProviderAccessor.ProviderProfile
