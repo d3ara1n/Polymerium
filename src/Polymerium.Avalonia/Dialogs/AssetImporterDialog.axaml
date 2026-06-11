@@ -1,0 +1,200 @@
+﻿<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.AssetImporterDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
+    Title="{x:Static lang:Resources.AssetImporterDialog_Title}"
+    Width="420"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
+    <husk:PlaceholderContainer Source="{Binding $parent[app:AssetImporterDialog].Model, Mode=OneWay}">
+        <husk:PlaceholderContainer.SourceTemplate>
+            <DataTemplate DataType="app:AssetIdentificationModel">
+                <Grid
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="8"
+                    RowDefinitions="*,*,Auto"
+                    RowSpacing="8">
+                    <husk:PlaceholderContainer
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Source="{Binding Package}">
+                        <husk:PlaceholderContainer.SourceTemplate>
+                            <DataTemplate DataType="app:AssetIdentificationPackageModel">
+                                <Border
+                                    Padding="4"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Grid RowDefinitions="Auto,*">
+                                        <DockPanel
+                                            Grid.Row="0"
+                                            Margin="12,8">
+                                            <HyperlinkButton
+                                                DockPanel.Dock="Right"
+                                                Content="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                NavigateUri="{Binding Reference}" />
+                                            <RadioButton IsChecked="{Binding $parent[app:AssetImporterDialog].IsPackageSelected, Mode=TwoWay}">
+                                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsPackageLabelText}" />
+                                            </RadioButton>
+                                        </DockPanel>
+                                        <Border
+                                            Grid.Row="1"
+                                            Padding="16"
+                                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <Grid
+                                                ColumnDefinitions="Auto,*"
+                                                ColumnSpacing="12"
+                                                RowDefinitions="*,*">
+                                                <Border
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="0"
+                                                    Width="36"
+                                                    Height="36"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <Border.Background>
+                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                                    </Border.Background>
+                                                </Border>
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Text="{Binding ProjectName}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Grid.ColumnSpan="2"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding VersionName}" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </husk:PlaceholderContainer.SourceTemplate>
+                        <Border
+                            Padding="12"
+                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <StackPanel Spacing="8">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="Warning" />
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </husk:PlaceholderContainer>
+                    <husk:Card
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Padding="16"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                        <StackPanel Spacing="8">
+                            <DockPanel>
+                                <CheckBox
+                                    DockPanel.Dock="Right"
+                                    IsChecked="{Binding Persist.IsInImportMode, Mode=TwoWay}">
+                                    <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PortableLabelText}" />
+                                </CheckBox>
+                                <RadioButton IsChecked="{Binding $parent[app:AssetImporterDialog].IsAssetSelected, Mode=TwoWay}">
+                                    <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
+                                </RadioButton>
+                            </DockPanel>
+                            <TabStrip
+                                ItemsSource="{Binding Persist.Kinds}"
+                                SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
+                                <TabStrip.ItemTemplate>
+                                    <DataTemplate DataType="resources:ResourceKind">
+                                        <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                    </DataTemplate>
+                                </TabStrip.ItemTemplate>
+                            </TabStrip>
+                            <StackPanel Spacing="4">
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}"
+                                    TextWrapping="Wrap" />
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetPrompt}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </StackPanel>
+                    </husk:Card>
+                    <husk:InfoBar
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Content="{x:Static lang:Resources.AssetImporterDialog_Prompt}" />
+                </Grid>
+            </DataTemplate>
+        </husk:PlaceholderContainer.SourceTemplate>
+        <husk:ConstrainedBox AspectRatio="16:9">
+            <husk:DropZone
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                IsEnabled="{Binding $parent[app:AssetImporterDialog].PathAccepted, Mode=OneWay, Converter={x:Static ObjectConverters.IsNull}}"
+                DragOver="DropZone_OnDragOver"
+                Drop="DropZone_OnDrop"
+                Model="{Binding $parent[app:AssetImporterDialog].PathAccepted, Mode=OneWayToSource}">
+                <husk:SwitchContainer
+                    TargetType="x:Boolean"
+                    Value="{Binding $parent[app:AssetImporterDialog].PathAccepted, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="12">
+                            <husk:ProgressRing
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True" />
+                            <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_IdentifyingLabelText}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <fi:SymbolIcon
+                                    IsHitTestVisible="False"
+                                    FontSize="14"
+                                    IconVariant="Filled"
+                                    Symbol="Attach" />
+                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                    <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
+                                    <HyperlinkButton
+                                        Name="BrowseButton"
+                                        Click="BrowseButton_OnClick"
+                                        Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                </TextBlock>
+
+                            </StackPanel>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                IsHitTestVisible="False"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                </husk:SwitchContainer>
+            </husk:DropZone>
+        </husk:ConstrainedBox>
+    </husk:PlaceholderContainer>
+</husk:Dialog>

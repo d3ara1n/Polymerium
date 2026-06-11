@@ -1,0 +1,90 @@
+﻿<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.AccountPickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.AccountPickerDialog_Title}"
+    Width="256"
+    IsPrimaryButtonVisible="True"
+    mc:Ignorable="d">
+    <husk:SwitchContainer
+        TargetType="x:Boolean"
+        Value="{Binding $parent[app:AccountPickerDialog].AccountsSource.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
+        <husk:SwitchCase Value="{x:False}">
+            <StackPanel
+                Margin="0,24"
+                VerticalAlignment="Center"
+                Spacing="8">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="{StaticResource ExtraLargeFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="PersonSettings" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Text="{x:Static lang:Resources.AccountPickerDialog_EmptyListPrompt}"
+                    TextWrapping="Wrap" />
+                <Button
+                    HorizontalAlignment="Center"
+                    Command="{Binding $parent[app:AccountPickerDialog].GotoManagerViewCommand}"
+                    CommandParameter="{Binding $parent[app:AccountPickerDialog]}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <fi:SymbolIcon
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="People" />
+                        <TextBlock Text="{x:Static lang:Resources.AccountPickerDialog_ManageAccountsButtonText}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </husk:SwitchCase>
+        <husk:SwitchCase Value="{x:True}">
+            <ListBox
+                ItemsSource="{Binding $parent[app:AccountPickerDialog].AccountsSource}"
+                SelectedItem="{Binding $parent[app:AccountPickerDialog].Result, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="app:AccountModel">
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            RowDefinitions="*,Auto">
+                            <Border
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Width="48"
+                                Height="48"
+                                BoxShadow="0 0 4 0 #3F000000"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Border.Background>
+                                    <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="8"
+                                VerticalAlignment="Bottom">
+                                <Run
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Binding UserName, FallbackValue=Name}" />
+                                <LineBreak />
+                                <Run
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding TypeName, FallbackValue=Type}" />
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </husk:SwitchCase>
+    </husk:SwitchContainer>
+</husk:Dialog>

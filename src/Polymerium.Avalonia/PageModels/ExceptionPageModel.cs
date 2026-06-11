@@ -1,0 +1,25 @@
+using System;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Huskui.Avalonia.Mvvm.Activation;
+using Polymerium.Avalonia.Facilities;
+
+namespace Polymerium.Avalonia.PageModels;
+
+public partial class ExceptionPageModel : ViewModelBase
+{
+    public ExceptionPageModel(IViewContext<Exception> context)
+    {
+        Message = context.GetRequiredParameter().Message;
+        StackTrace = context.GetRequiredParameter().StackTrace ?? "No details provided.";
+    }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial string Message { get; set; }
+
+    [ObservableProperty]
+    public partial string StackTrace { get; set; }
+
+    #endregion
+}

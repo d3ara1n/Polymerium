@@ -2,7 +2,7 @@
 
 Build status: ✅ **succeeded** (0 warnings, 0 errors)
 
-Scope: `src/Polymerium.App/` + `submodules/Trident.Net/`
+Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
 
 ---
 
@@ -10,28 +10,28 @@ Scope: `src/Polymerium.App/` + `submodules/Trident.Net/`
 
 ### 1. Service Locator Anti-Pattern
 
-- **File:** `src/Polymerium.App/Program.cs:35`
+- **File:** `src/Polymerium.Avalonia/Program.cs:35`
 - **Detail:** `internal static IServiceProvider? Services` 将 DI 容器全局暴露。至少 10 处调用点直接通过 `Program.Services` 解析服务（`App.axaml.cs:82,114,147,155,162,164`、`Program.cs:93,98,115,136`）。
 - **风险:** 隐藏依赖关系、失去编译期验证、生命期不匹配不可见。
 - **建议:** 通过构造函数/方法参数传递所需服务。对于 Avalonia XAML 构造边界，可用 `ActivatorUtilities.CreateInstance` 替代原始查找。
 
 ### 2. AppImageLoader Never Disposed
 
-- **File:** `src/Polymerium.App/Program.cs:98-100`
+- **File:** `src/Polymerium.Avalonia/Program.cs:98-100`
 - **Detail:** `new AppImageLoader(...)` 创建后赋值给静态 `AsyncImageLoader`，但关闭序列中从未调用 `Dispose()`。`AppImageLoader` 持有 `MemoryCache` 和 `BaseWebImageLoader`。
 - **风险:** 内存泄漏、HttpClient 泄漏。
 - **建议:** 在 DI 中注册为 Singleton，或在关闭区段显式 `.Dispose()`。
 
 ### 3. Fire-and-Forget StartLifetimeServicesAsync
 
-- **File:** `src/Polymerium.App/App.axaml.cs:68,91`
+- **File:** `src/Polymerium.Avalonia/App.axaml.cs:68,91`
 - **Detail:** `_ = StartLifetimeServicesAsync(desktop)` 丢弃 `Task`。catch 中 `desktop.Shutdown()` 在后台线程调用，违反 Avalonia 线程模型。
 - **风险:** 异常逃逸后 App 可能无响应。
 - **建议:** 在 catch 内使用 `Dispatcher.UIThread.Post(() => desktop.Shutdown(-1))`。
 
 ### 4. Configuration 线程不安全单例
 
-- **File:** `src/Polymerium.App/Configuration.cs` + `Services/ConfigurationService.cs`
+- **File:** `src/Polymerium.Avalonia/Configuration.cs` + `Services/ConfigurationService.cs`
 - **Detail:** `Configuration` 是可变的 POCO（~30 个 setter 属性），注册为 Singleton。被 UI 线程和后台服务（UpdateService、HttpClient 等）同时读写。
 - **风险:** 数据竞争，读取到部分修改的状态。
 - **建议:** 改为 immutability + `with` 表达式，或加锁保护，或 copy-on-read 快照语义。
@@ -70,7 +70,7 @@ Scope: `src/Polymerium.App/` + `submodules/Trident.Net/`
 
 ### 9. 关闭时同步 .GetAwaiter().GetResult()
 
-- **File:** `src/Polymerium.App/Program.cs:115-120`
+- **File:** `src/Polymerium.Avalonia/Program.cs:115-120`
 - **Detail:** `runtime.StopAsync().GetAwaiter().GetResult()` 阻塞主线程。
 - **风险:** 若任何 ILifetimeService 有同步上下文依赖则死锁。
 - **建议:** 加 timeout `WaitAsync(TimeSpan.FromSeconds(10))`。
@@ -84,7 +84,7 @@ Scope: `src/Polymerium.App/` + `submodules/Trident.Net/`
 
 ### 11. MainWindowContext 事件订阅永不取消
 
-- **File:** `src/Polymerium.App/MainWindowContext.cs:68-69,87`
+- **File:** `src/Polymerium.Avalonia/MainWindowContext.cs:68-69,87`
 - **Detail:** `SubscribeProfileList` 和 `SubscribeState` 订阅的 `ProfileManager` / `InstanceManager` 事件，在 `OnDeinitialize()` 中不取消订阅。
 - **风险:** 如果 Context 被重建，事件处理器会累积。
 - **建议:** 在 `OnDeinitialize` 中存储并取消事件处理器。
@@ -98,14 +98,14 @@ Scope: `src/Polymerium.App/` + `submodules/Trident.Net/`
 
 ### 13. ConfigurationService.Dispose 静默吞写错误
 
-- **File:** `src/Polymerium.App/Services/ConfigurationService.cs:63-71`
+- **File:** `src/Polymerium.Avalonia/Services/ConfigurationService.cs:63-71`
 - **Detail:** `Dispose()` 中 catch 所有异常并静默忽略，是唯一写入配置的地方。
 - **风险:** 若写入失败（盘满、权限），用户静默丢失全部配置。
 - **建议:** 至少记录日志。写临时文件后再替换。
 
 ### 14. DataService Bitmap 内存泄漏
 
-- **File:** `src/Polymerium.App/Services/DataService.cs:82-101`
+- **File:** `src/Polymerium.Avalonia/Services/DataService.cs:82-101`
 - **Detail:** IMemoryCache 驱逐 `Task<Bitmap>` 时不释放 Bitmap。长时间浏览独特图片累积大量非托管内存。
 - **风险:** 内存压力累积直到 GC finalizer。
 - **建议:** 实现 `PostEvictionCallbacks` 追踪释放状态，或使用 WeakReference。

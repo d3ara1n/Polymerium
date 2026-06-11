@@ -136,7 +136,7 @@ Upgrade to Windows 10+ first 💥
 | Platform | Package | Direct Download |
 | --- | --- | --- |
 | Windows x64 | Installer | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
-| Linux x64 | AppImage | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AppImage) |
+| Linux x64 | AppImage | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AvaloniaImage) |
 | macOS Apple Silicon | PKG installer | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
 
 [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
@@ -173,7 +173,7 @@ Upgrade to Windows 10+ first 💥
 ```sh
 Polymerium/
 ├── 📚 docs/                   # Documentation
-├── 🎨 src/Polymerium.App/     # UI application layer
+├── 🎨 src/Polymerium.Avalonia/     # UI application layer
 ├── 🔗 submodules/             # Shared components
 └── 📦 Releases/               # Build artifacts
 ```
@@ -227,7 +227,7 @@ We welcome contributions! Please ensure your code follows the established patter
 | ✨ **Code Style**            | Follow the .editorconfig guidelines            |
 
 We use `resx` for localization. If you want to contribute to the translation, you can edit the `Resources.resx` file in
-`src/Polymerium.App/Properties` and add your language file in the same directory. Rider and Visual Studio have built-in
+`src/Polymerium.Avalonia/Properties` and add your language file in the same directory. Rider and Visual Studio have built-in
 editors for resx files.
 
 ---

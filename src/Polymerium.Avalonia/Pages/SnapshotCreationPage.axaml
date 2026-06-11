@@ -1,0 +1,305 @@
+﻿<husk:Page
+    x:Class="Polymerium.Avalonia.Pages.SnapshotCreationPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="app:SnapshotCreationPageModel"
+    Header="创建快照"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
+    <Grid
+        ColumnDefinitions="45*,55*"
+        ColumnSpacing="12">
+        <husk:PlaceholderContainer
+            Grid.Column="1"
+            Padding="8"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}"
+            Source="{Binding SnapshotTaken}">
+            <husk:PlaceholderContainer.SourceTemplate>
+                <DataTemplate DataType="app:SnapshotTakenModel">
+                    <Grid
+                        RowDefinitions="*,Auto"
+                        RowSpacing="8">
+                        <Grid
+                            Grid.Row="0"
+                            RowDefinitions="Auto,*"
+                            RowSpacing="12">
+                            <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="8">
+                                <Border
+                                    Grid.Column="0"
+                                    Padding="12,8"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
+                                    <Border.CornerRadius>
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                            <Binding
+                                                Path="CornerRadius"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=husk:PlaceholderContainer}" />
+                                            <Binding
+                                                Path="Padding"
+                                                RelativeSource="{RelativeSource FindAncestor,
+                                                                                AncestorType=husk:PlaceholderContainer}" />
+                                        </MultiBinding>
+                                    </Border.CornerRadius>
+                                    <StackPanel>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding FileCount, Converter={x:Static app:HumanizerConverters.Metric}}" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="文件数" />
+                                    </StackPanel>
+                                </Border>
+                                <Border
+                                    Grid.Column="1"
+                                    Padding="12,8"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
+                                    <Border.CornerRadius>
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                            <Binding
+                                                Path="CornerRadius"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=husk:PlaceholderContainer}" />
+                                            <Binding
+                                                Path="Padding"
+                                                RelativeSource="{RelativeSource FindAncestor,
+                                                                                AncestorType=husk:PlaceholderContainer}" />
+                                        </MultiBinding>
+                                    </Border.CornerRadius>
+                                    <StackPanel>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding TotalSize, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="总大小" />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <ScrollViewer Grid.Row="1">
+                                <ItemsControl ItemsSource="{Binding Partitions}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Spacing="8" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="app:FilePartitionModel">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                    <Run Text="{Binding Label}" />
+                                                    <Run Text="·" />
+                                                    <Run Text="{Binding Count}" />
+                                                    <Run Text="个文件" />
+                                                    <Run Text="·" />
+                                                    <Run Text="{Binding Size, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
+                                                </TextBlock>
+                                                <ItemsControl ItemsSource="{Binding Categories}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel
+                                                                ItemSpacing="4"
+                                                                LineSpacing="4"
+                                                                Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate DataType="app:FileCategoryEntryModel">
+                                                            <Border
+                                                                Padding="8,4"
+                                                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                <StackPanel Spacing="2">
+                                                                    <TextBlock
+                                                                        FontSize="{StaticResource CaptionFontSize}"
+                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                        Text="{Binding Label}" />
+                                                                    <TextBlock
+                                                                        FontSize="{StaticResource SmallFontSize}"
+                                                                        FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                        <Run Text="{Binding Count}" />
+                                                                        <Run Text="·" />
+                                                                        <Run Text="{Binding Size, Mode=OneWay, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                        <Border
+                            Grid.Row="1"
+                            Padding="16"
+                            Background="{StaticResource OverlaySolidBackgroundBrush}">
+                            <Border.CornerRadius>
+                                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                    <Binding
+                                        Path="CornerRadius"
+                                        RelativeSource="{RelativeSource FindAncestor,
+                                                                        AncestorType=husk:PlaceholderContainer}" />
+                                    <Binding
+                                        Path="Padding"
+                                        RelativeSource="{RelativeSource FindAncestor,
+                                                                        AncestorType=husk:PlaceholderContainer}" />
+                                </MultiBinding>
+                            </Border.CornerRadius>
+                            <Grid
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="8">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    Spacing="4">
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="游戏版本" />
+                                    <TextBlock
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Text="{Binding VersionLabel}" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="加载器" />
+                                    <TextBlock
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Text="{Binding LoaderLabel}" />
+                                </StackPanel>
+                                <DockPanel
+                                    Grid.Column="1"
+                                    VerticalSpacing="4">
+                                    <TextBlock
+                                        DockPanel.Dock="Top"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="包数量" />
+                                    <Border
+                                        Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource ExtraLargeFontSize}"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                            Text="{Binding PackageCount}" />
+                                    </Border>
+                                </DockPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </husk:PlaceholderContainer.SourceTemplate>
+            <husk:SwitchContainer
+                TargetType="x:Boolean"
+                Value="{Binding IsSnapshotTaking}">
+                <husk:SwitchCase Value="{x:False}">
+                    <StackPanel
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource LargeFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="快照未拍摄" />
+                        <Button
+                            Classes="Success"
+                            HorizontalAlignment="Center"
+                            Command="{Binding TakeCommand}">
+                            <husk:IconLabel
+                                Icon="Camera"
+                                Text="拍摄" />
+                        </Button>
+                    </StackPanel>
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="{x:True}">
+                    <StackPanel
+                        VerticalAlignment="Center"
+                        Spacing="4">
+                        <husk:ProgressRing
+                            Width="48"
+                            Height="48"
+                            HorizontalAlignment="Center"
+                            IsIndeterminate="True" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <Run Text="{Binding TotalProcessed}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding TotalCollected}" />
+                        </TextBlock>
+                    </StackPanel>
+                </husk:SwitchCase>
+            </husk:SwitchContainer>
+        </husk:PlaceholderContainer>
+        <DockPanel Grid.Column="0">
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button
+                    Classes="Primary"
+                    Command="{Binding CreateCommand}"
+                    CommandParameter="{Binding SnapshotTaken, Mode=OneWay}">
+                    <husk:SwitchContainer
+                        TargetType="x:Boolean"
+                        Value="{Binding IsCreating}">
+                        <husk:SwitchCase Value="{x:False}">
+                            <TextBlock Text="创建并插入数据库" />
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="{x:True}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <husk:ProgressRing
+                                    Width="{StaticResource MediumFontSize}"
+                                    Height="{StaticResource MediumFontSize}"
+                                    IsIndeterminate="{Binding IsCreating}"
+                                    Theme="{StaticResource SolidProgressRingTheme}" />
+                                <TextBlock>
+                                    <Run Text="提交文件 (" />
+                                    <Run Text="{Binding TotalCommitted}" />
+                                    <Run Text="/" />
+                                    <Run Text="{Binding SnapshotTaken?.FileCount, FallbackValue=N/A}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                    </husk:SwitchContainer>
+                </Button>
+            </StackPanel>
+            <StackPanel Spacing="4">
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="标签" />
+                <TextBox
+                    PlaceholderText="用于提示快照的创建目的"
+                    Text="{Binding Label, Mode=TwoWay}" />
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="备注" />
+                <TextBox
+                    MinHeight="128"
+                    AcceptsReturn="True"
+                    PlaceholderText="标签要是不够写这里还能再写点提示性的文字"
+                    Text="{Binding Remark, Mode=TwoWay}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</husk:Page>

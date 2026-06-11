@@ -36,7 +36,7 @@ jobs:
             - name: Extract .NET version from csproj
               id: dotnet
               run: |
-                  dotnet_version=$(grep '<TargetFramework>' src/Polymerium.App/Polymerium.App.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
+                  dotnet_version=$(grep '<TargetFramework>' src/Polymerium.Avalonia/Polymerium.Avalonia.csproj | grep -o 'net[0-9]\+\.[0-9]\+' | sed 's/net//')
                   echo "dotnet_version=$dotnet_version" >> $GITHUB_OUTPUT
                   echo "dotnet_framework=net${dotnet_version}" >> $GITHUB_OUTPUT
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
@@ -64,18 +64,18 @@ jobs:
 
             - name: Fix for dotnet publish
               run: |
-                  if [ -d "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
+                  if [ -d "src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" ]; then
                       echo "Renamed zh-hans folder to zh-Hans"
-                      mv "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
-                         "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
+                      mv "src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-hans" \
+                         "src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
                   else
                       echo "Created zh-Hans folder"
-                      mkdir -p "src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
+                      mkdir -p "src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish/zh-Hans"
                   fi
 
             - name: Publish Application
               run: |
-                  dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.App/Polymerium.App.csproj
+                  dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.Avalonia/Polymerium.Avalonia.csproj
 
             - name: Determine Release Type
               id: get_version
@@ -112,22 +112,22 @@ jobs:
               id: exe_name
               run: |
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
-                      echo "exe_name=Polymerium.App.exe" >> $GITHUB_OUTPUT
+                      echo "exe_name=Polymerium.Avalonia.exe" >> $GITHUB_OUTPUT
                   else
-                      echo "exe_name=Polymerium.App" >> $GITHUB_OUTPUT
+                      echo "exe_name=Polymerium.Avalonia" >> $GITHUB_OUTPUT
                   fi
 
             - name: Pack with Velopack
               run: |
                   pack_extra_args="--packAuthors d3ara1n"
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
-                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.App/Assets/Icon.Installer.ico"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.Installer.ico"
                   elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.App/Assets/Icon.icns --bundleId dev.dearain.Polymerium"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.icns --bundleId dev.dearain.Polymerium"
                   else
-                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.App/Assets/Icon.png"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.png"
                   fi
-                  vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.App/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
+                  vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args
 
             - name: Upload Build Artifact
               uses: actions/upload-artifact@v4

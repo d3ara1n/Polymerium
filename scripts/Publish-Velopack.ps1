@@ -8,7 +8,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$ProjectPath = "src/Polymerium.App/Polymerium.App.csproj"
+$ProjectPath = "src/Polymerium.Avalonia/Polymerium.Avalonia.csproj"
 
 # Extract TargetFramework from csproj
 $CsprojContent = Get-Content $ProjectPath -Raw
@@ -39,14 +39,14 @@ $IsCrossPlatform = $CurrentOS -ne $TargetOS
 
 # Determine executable name and icon based on target runtime
 if ($Rid -like "win-*") {
-    $ExeName = "Polymerium.App.exe"
-    $IconPath = "./src/Polymerium.App/Assets/Icon.Installer.ico"
+    $ExeName = "Polymerium.exe"
+    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.Installer.ico"
 } elseif ($Rid -like "osx-*") {
-    $ExeName = "Polymerium.App"
-    $IconPath = "./src/Polymerium.App/Assets/Icon.icns"
+    $ExeName = "Polymerium"
+    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.icns"
 } else {
-    $ExeName = "Polymerium.App"
-    $IconPath = "./src/Polymerium.App/Assets/Icon.png"
+    $ExeName = "Polymerium"
+    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.png"
 }
 
 $PackDir = "Publish/$Rid"

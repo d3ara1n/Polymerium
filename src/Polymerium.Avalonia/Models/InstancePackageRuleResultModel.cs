@@ -1,0 +1,13 @@
+using Polymerium.Avalonia.Facilities;
+using TridentCore.Abstractions.Utilities;
+
+namespace Polymerium.Avalonia.Models;
+
+public class InstancePackageRuleResultModel(RuleHelper.Result result) : ModelBase
+{
+    public int AppliedRuleCount => result.AppliedRules.Count;
+    public bool Matched => result.Matched;
+    public string? Destination => result.EffectiveRule?.Destination;
+    public bool Skipping => result.EffectiveRule?.Skipping ?? false;
+    public bool Normalizing => result.EffectiveRule?.Normalizing ?? false;
+}

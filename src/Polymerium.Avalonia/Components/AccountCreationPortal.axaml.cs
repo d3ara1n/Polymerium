@@ -1,0 +1,47 @@
+using System;
+using Avalonia;
+using Polymerium.Avalonia.Controls;
+using Polymerium.Avalonia.Services;
+using TridentCore.Core.Services;
+
+namespace Polymerium.Avalonia.Components;
+
+public partial class AccountCreationPortal : AccountCreationStep
+{
+    public static readonly DirectProperty<AccountCreationPortal, bool> IsOfflineAvailableProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationPortal, bool>(
+            nameof(IsOfflineAvailable),
+            o => o.IsOfflineAvailable,
+            (o, v) => o.IsOfflineAvailable = v
+        );
+
+    public AccountCreationPortal() => InitializeComponent();
+
+    public required MicrosoftService MicrosoftService { get; init; }
+    public required XboxLiveService XboxLiveService { get; init; }
+    public required MinecraftService MinecraftService { get; init; }
+    public required NotificationService NotificationService { get; init; }
+    public required YggdrasilService YggdrasilService { get; init; }
+
+    public bool IsOfflineAvailable
+    {
+        get;
+        set => SetAndRaise(IsOfflineAvailableProperty, ref field, value);
+    }
+
+    public override object NextStep() =>
+        AccountTypeSelectBox.SelectedIndex switch
+        {
+            0 => new AccountCreationMicrosoft
+            {
+                MicrosoftService = MicrosoftService,
+                XboxLiveService = XboxLiveService,
+                MinecraftService = MinecraftService,
+                NotificationService = NotificationService,
+            },
+            1 => new AccountCreationAuthlibInjector { YggdrasilService = YggdrasilService },
+            2 => new AccountCreationTrial(),
+            3 => new AccountCreationOffline(),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+}

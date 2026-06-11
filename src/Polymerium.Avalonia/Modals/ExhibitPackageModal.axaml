@@ -1,0 +1,1187 @@
+﻿<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.ExhibitPackageModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
+    MinHeight="360"
+    Margin="64"
+    Padding="0"
+    VerticalAlignment="Stretch"
+    d:DesignHeight="660"
+    d:DesignWidth="720"
+    x:DataType="app:ExhibitPackageModel"
+    Background="{x:Null}"
+    BorderBrush="{x:Null}"
+    BorderThickness="0"
+    CornerRadius="0"
+    mc:Ignorable="d">
+    <husk:Modal.Resources>
+        <DataTemplate x:Key="VersionEditorTemplate">
+            <Border>
+                <Grid
+                    RowDefinitions="Auto,Auto"
+                    RowSpacing="4">
+                    <Border
+                        Grid.Row="0"
+                        Padding="12,8"
+                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
+                        <CheckBox IsChecked="{Binding $parent[app:ExhibitPackageModal].IsFilterEnabled, Mode=TwoWay}">
+                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_FilterLabelText}" />
+                        </CheckBox>
+                    </Border>
+                    <TabStrip
+                        Grid.Row="1"
+                        SelectedIndex="{Binding $parent[app:ExhibitPackageModal].SelectedVersionMode, Mode=TwoWay}">
+                        <TabStrip.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid
+                                    ColumnDefinitions="*,Auto"
+                                    ColumnSpacing="8" />
+                            </ItemsPanelTemplate>
+                        </TabStrip.ItemsPanel>
+                        <TabStripItem
+                            Grid.Column="0"
+                            Padding="0">
+                            <husk:LazyContainer
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                Source="{Binding $parent[app:ExhibitPackageModal].LazyVersions, Mode=OneWay}">
+                                <husk:LazyContainer.SourceTemplate>
+                                    <DataTemplate DataType="app:ExhibitVersionCollection">
+                                        <ComboBox
+                                            VerticalAlignment="Stretch"
+                                            VerticalContentAlignment="Center"
+                                            ItemsSource="{Binding}"
+                                            PlaceholderText="{x:Static lang:Resources.ExhibitPackageModal_VersionBoxPlaceholder}"
+                                            SelectedItem="{Binding $parent[app:ExhibitPackageModal].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}"
+                                            Theme="{StaticResource GhostComboBoxTheme}">
+                                            <ComboBox.SelectionBoxItemTemplate>
+                                                <DataTemplate DataType="app:ExhibitVersionModel">
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{x:Static lang:Resources.ExhibitPackageModal_VersionLabelText}" />
+                                                        <TextBlock
+                                                            Text="{Binding VersionName}"
+                                                            TextTrimming="CharacterEllipsis" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.SelectionBoxItemTemplate>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate DataType="app:ExhibitVersionModel">
+                                                    <StackPanel Spacing="4">
+                                                        <Grid
+                                                            ColumnDefinitions="Auto,*"
+                                                            ColumnSpacing="4">
+                                                            <husk:SwitchContainer
+                                                                Grid.Column="0"
+                                                                TargetType="trident:ReleaseType"
+                                                                Value="{Binding TypeRaw, FallbackValue=Release}">
+                                                                <husk:SwitchCase Value="Release">
+                                                                    <husk:Tag
+                                                                        Classes="Success"
+                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="Beta">
+                                                                    <husk:Tag
+                                                                        Classes="Warning"
+                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="Alpha">
+                                                                    <husk:Tag
+                                                                        Classes="Danger"
+                                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                            </husk:SwitchContainer>
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                Text="{Binding VersionName, FallbackValue=Display}"
+                                                                TextTrimming="CharacterEllipsis" />
+                                                        </Grid>
+                                                        <Grid
+                                                            ColumnDefinitions="Auto,Auto,*"
+                                                            ColumnSpacing="4">
+                                                            <husk:IconLabel
+                                                                Grid.Column="0"
+                                                                Background="Transparent"
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Icon="Calendar"
+                                                                Text="{Binding PublishedAt}"
+                                                                ToolTip.Tip="{Binding PublishedAtRaw}" />
+                                                            <husk:IconLabel
+                                                                Grid.Column="1"
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Icon="Flag"
+                                                                Text="{Binding CompatibleLoaders}" />
+                                                            <husk:IconLabel
+                                                                Grid.Column="2"
+                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Icon="Branch"
+                                                                Text="{Binding CompatibleVersions}"
+                                                                TextBlock.TextTrimming="CharacterEllipsis" />
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </husk:LazyContainer.SourceTemplate>
+                            </husk:LazyContainer>
+                        </TabStripItem>
+                        <TabStripItem Grid.Column="1">
+                            <StackPanel>
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="BoxCheckmark" />
+                                <TextBlock Text="Auto" />
+                            </StackPanel>
+                        </TabStripItem>
+                    </TabStrip>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </husk:Modal.Resources>
+    <Grid
+        ColumnDefinitions="*,Auto"
+        ColumnSpacing="12">
+        <Border
+            Grid.Column="1"
+            Width="300"
+            Background="{StaticResource FlyoutBackgroundBrush}"
+            BorderBrush="{StaticResource ControlBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource MediumCornerRadius}">
+            <Grid RowDefinitions="Auto,*">
+                <Border
+                    Grid.Row="0"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                    CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
+                                                              Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                    <Panel>
+                        <Grid
+                            Margin="10"
+                            VerticalAlignment="Top"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="12">
+                            <ToggleButton
+                                Grid.Column="0"
+                                Classes="Small"
+                                BorderThickness="1"
+                                IsChecked="{Binding $parent[app:ExhibitPackageModal].IsDetailPanelVisible, Mode=TwoWay}">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="PanelLeftText" />
+                            </ToggleButton>
+                            <Button
+                                Grid.Column="2"
+                                Classes="Small"
+                                Background="Transparent"
+                                Command="{Binding $parent[app:ExhibitPackageModal].Dismiss}"
+                                IsCancel="True"
+                                Theme="{StaticResource OutlineButtonTheme}">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Dismiss" />
+                            </Button>
+                        </Grid>
+                        <StackPanel
+                            Margin="18"
+                            Spacing="6">
+                            <Border
+                                Width="72"
+                                Height="72"
+                                BorderBrush="{StaticResource OverlaySolidBackgroundBrush}"
+                                BorderThickness="4"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Border.Background>
+                                    <ImageBrush
+                                        async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                        Stretch="UniformToFill" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock
+                                FontSize="{StaticResource LargeFontSize}"
+                                Text="{Binding ProjectName, FallbackValue=Project}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <HyperlinkButton NavigateUri="{Binding Reference}">
+                                    <ToolTip.Tip>
+                                        <StackPanel Spacing="2">
+                                            <Grid
+                                                ColumnDefinitions="*,Auto"
+                                                ColumnSpacing="4">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                                <fi:SymbolIcon
+                                                    Grid.Column="1"
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Symbol="Open" />
+                                            </Grid>
+                                            <TextBlock Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                        </StackPanel>
+                                    </ToolTip.Tip>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <TextBlock Text="{Binding Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="Open" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                                <TextBlock Text="{Binding AuthorName, StringFormat={}@{0}, FallbackValue=@Author}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Panel>
+                </Border>
+                <Grid
+                    Grid.Row="1"
+                    Margin="18"
+                    RowDefinitions="Auto,*,Auto"
+                    RowSpacing="12">
+                    <TextBlock
+                        Grid.Row="0"
+                        MaxLines="4"
+                        Text="{Binding Summary, FallbackValue=Summary}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
+                    <ItemsControl
+                        Grid.Row="1"
+                        ItemsSource="{Binding Tags}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <husk:Tag
+                                    Content="{Binding}"
+                                    FontSize="{StaticResource MediumFontSize}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel
+                                    ItemSpacing="4"
+                                    LineSpacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <husk:SwitchContainer
+                        Grid.Row="2"
+                        TargetType="app:ExhibitState"
+                        Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
+                        <husk:SwitchCase Value="{x:Null}">
+                            <Grid
+                                RowDefinitions="Auto,Auto"
+                                RowSpacing="12">
+                                <ContentControl
+                                    Grid.Row="0"
+                                    ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid
+                                    Grid.Row="1"
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="12">
+                                    <Button
+                                        Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    IconVariant="Filled"
+                                                    Symbol="BookmarkOff" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="BookmarkAdd" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="1"
+                                        Classes="Primary"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="12">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="Add" />
+                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_AddButtonText}" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Editable">
+                            <Grid RowDefinitions="Auto,4,Auto,12,Auto">
+                                <husk:Tag
+                                    Grid.Row="0"
+                                    Classes="Success"
+                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="MailInbox" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
+                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
+                                                    <Run
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl
+                                    Grid.Row="2"
+                                    ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid
+                                    Grid.Row="4"
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    ColumnSpacing="12">
+                                    <Button
+                                        Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="1"
+                                        Classes="Primary"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="12">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="Add" />
+                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyButtonText}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="2"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].DeleteCommand}">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="Delete" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Locked">
+                            <Border
+                                Padding="12"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Grid
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="12">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
+                                        Symbol="LockClosed" />
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="{x:Static lang:Resources.ExhibitPackageModal_LockedVersionLabelText}" />
+                                        <TextBlock
+                                            Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=LockedVersionName}"
+                                            TextTrimming="CharacterEllipsis"
+                                            ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Adding">
+                            <Grid RowDefinitions="Auto,4,Auto,12,Auto">
+                                <husk:Tag
+                                    Grid.Row="0"
+                                    Classes="Warning"
+                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=Version}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="AddCircle" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_AddingVersionTagText}" />
+                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionName, FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_AddingVersionTagText}" />
+                                                    <Run
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl
+                                    Grid.Row="2"
+                                    ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid
+                                    Grid.Row="4"
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    ColumnSpacing="12">
+                                    <Button
+                                        Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="1"
+                                        Classes="Primary"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="12">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="Add" />
+                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyButtonText}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="2"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].UndoCommand}">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="ArrowUndo" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Modifying">
+                            <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
+                                <husk:Tag
+                                    Grid.Row="0"
+                                    Classes="Success"
+                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="MailInbox" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
+                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
+                                                    <Run
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <husk:Tag
+                                    Grid.Row="2"
+                                    Classes="Warning"
+                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=Version}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="Pen" />
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyingTagText}" />
+                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionName, FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyingTagText}" />
+                                                    <Run
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl
+                                    Grid.Row="4"
+                                    ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid
+                                    Grid.Row="6"
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    ColumnSpacing="12">
+                                    <Button
+                                        Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="1"
+                                        Classes="Primary"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="12">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="Add" />
+                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyButtonText}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="2"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].UndoCommand}">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource MediumFontSize}"
+                                            Symbol="ArrowUndo" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Removing">
+                            <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
+                                <husk:Tag
+                                    Grid.Row="0"
+                                    Classes="Danger"
+                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="Delete" />
+                                        <TextBlock TextTrimming="CharacterEllipsis">
+                                            <Run Text="{x:Static lang:Resources.ExhibitPackageModal_RemovingTagText}" />
+                                            <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=Version}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl
+                                    Grid.Row="4"
+                                    ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid
+                                    Grid.Row="6"
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="12">
+                                    <Button
+                                        Grid.Column="0"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                        <husk:SwitchContainer
+                                            TargetType="x:Boolean"
+                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            <husk:SwitchCase Value="True">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="CheckmarkCircle" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Symbol="Bookmark" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchContainer>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="1"
+                                        Command="{Binding $parent[app:ExhibitPackageModal].UndoCommand}">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="12">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="ArrowReset" />
+                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_RestoreButtonText}" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                    </husk:SwitchContainer>
+                </Grid>
+            </Grid>
+        </Border>
+        <!--  即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值  -->
+        <husk:ConstrainedBox
+            Grid.Column="0"
+            IsVisible="{Binding $parent[app:ExhibitPackageModal].IsDetailPanelVisible, Mode=OneWay}"
+            AspectRatio="0.8">
+            <Border
+                Background="{StaticResource FlyoutBackgroundBrush}"
+                BorderBrush="{StaticResource ControlBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+                <TabControl
+                    Padding="0"
+                    Theme="{StaticResource SolidTabControlTheme}">
+                    <TabControl.ItemContainerTheme>
+                        <ControlTheme
+                            BasedOn="{StaticResource SolidTabItemTheme}"
+                            TargetType="TabItem">
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+                        </ControlTheme>
+                    </TabControl.ItemContainerTheme>
+                    <TabControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel
+                                Margin="12"
+                                Orientation="Horizontal"
+                                Spacing="4" />
+                        </ItemsPanelTemplate>
+                    </TabControl.ItemsPanel>
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_AboutTabText}">
+                        <TabItem.Header>
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Home" />
+                                <!-- <TextBlock Text="About" VerticalAlignment="Center" /> -->
+                            </StackPanel>
+                        </TabItem.Header>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <husk:ConstrainedBox
+                                    IsVisible="{Binding Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    AspectRatio="1.78">
+                                    <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                                        <Panel>
+                                            <Carousel
+                                                Name="GalleryCarousel"
+                                                ItemsSource="{Binding Gallery}">
+                                                <Carousel.ItemTemplate>
+                                                    <DataTemplate DataType="x:Uri">
+                                                        <Image
+                                                            async:ImageLoader.Source="{Binding}"
+                                                            RenderOptions.BitmapInterpolationMode="HighQuality" />
+                                                    </DataTemplate>
+                                                </Carousel.ItemTemplate>
+                                            </Carousel>
+                                            <husk:PipsPager
+                                                Margin="6"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Bottom"
+                                                ItemCount="{Binding #GalleryCarousel.ItemCount}"
+                                                SelectedIndex="{Binding #GalleryCarousel.SelectedIndex, Mode=TwoWay}" />
+                                        </Panel>
+                                    </Border>
+                                </husk:ConstrainedBox>
+                                <husk:LazyContainer Source="{Binding $parent[app:ExhibitPackageModal].LazyDescription}">
+                                    <husk:LazyContainer.SourceTemplate>
+                                        <DataTemplate DataType="x:String">
+                                            <husk:MarkdownViewer
+                                                Margin="12"
+                                                Markdown="{Binding}" />
+                                        </DataTemplate>
+                                    </husk:LazyContainer.SourceTemplate>
+                                </husk:LazyContainer>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabText}">
+                        <TabItem.Header>
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="List" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabText}" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <Grid RowDefinitions="Auto,*">
+                            <Border
+                                Grid.Row="0"
+                                Margin="12,0"
+                                Padding="12"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <StackPanel>
+                                    <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabPrompt}" />
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding $parent[app:ExhibitPackageModal].LazyDependencies.((app:ExhibitDependencyCollection)Value).VersionName, FallbackValue=None}" />
+                                </StackPanel>
+                            </Border>
+                            <Panel Grid.Row="1">
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    IsVisible="{Binding $parent[app:ExhibitPackageModal].LazyDependencies.((app:ExhibitDependencyCollection)Value).Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                                    Spacing="8">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="Box" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                </StackPanel>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <husk:LazyContainer
+                                        MinHeight="72"
+                                        Margin="12"
+                                        Source="{Binding $parent[app:ExhibitPackageModal].LazyDependencies, Mode=OneWay}">
+                                        <husk:LazyContainer.SourceTemplate>
+                                            <DataTemplate x:DataType="app:ExhibitDependencyCollection">
+                                                <ItemsControl ItemsSource="{Binding Mode=OneWay}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="app:ExhibitDependencyModel">
+                                                            <app:PackageDependencyButton
+                                                                Command="{Binding $parent[app:ExhibitPackageModal].ViewPackageCommand, Mode=OneWay}"
+                                                                CommandParameter="{Binding Exhibit}"
+                                                                Theme="{StaticResource ExhibitPackageDependencyButtonTheme}">
+                                                                <app:PackageDependencyButton.IsChecked>
+                                                                    <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                                        <Binding
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                            ConverterParameter="Editable"
+                                                                            Path="Exhibit.State" />
+                                                                        <Binding
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                            ConverterParameter="Locked"
+                                                                            Path="Exhibit.State" />
+                                                                        <Binding
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                            ConverterParameter="Adding"
+                                                                            Path="Exhibit.State" />
+                                                                        <Binding
+                                                                            Converter="{x:Static husk:ObjectConverters.Match}"
+                                                                            ConverterParameter="Modifying"
+                                                                            Path="Exhibit.State" />
+                                                                    </MultiBinding>
+                                                                </app:PackageDependencyButton.IsChecked>
+                                                            </app:PackageDependencyButton>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </husk:LazyContainer.SourceTemplate>
+                                    </husk:LazyContainer>
+                                </ScrollViewer>
+                            </Panel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabText}">
+                        <TabItem.Header>
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="DocumentText" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabText}" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <Panel>
+                            <ScrollViewer
+                                IsVisible="{Binding $parent[app:ExhibitPackageModal].SelectedVersion, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
+                                VerticalScrollBarVisibility="Auto">
+                                <Grid RowDefinitions="Auto,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        Margin="12,0"
+                                        Padding="12"
+                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabPrompt}" />
+                                            <TextBlock
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding $parent[app:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=None}" />
+                                        </StackPanel>
+                                    </Border>
+                                    <husk:LazyContainer
+                                        Grid.Row="1"
+                                        Source="{Binding $parent[app:ExhibitPackageModal].LazyChangelog}">
+                                        <husk:LazyContainer.SourceTemplate>
+                                            <DataTemplate DataType="x:String">
+                                                <husk:MarkdownViewer
+                                                    Margin="12"
+                                                    Markdown="{Binding}" />
+                                            </DataTemplate>
+                                        </husk:LazyContainer.SourceTemplate>
+                                    </husk:LazyContainer>
+                                </Grid>
+                            </ScrollViewer>
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding $parent[app:ExhibitPackageModal].SelectedVersion, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Symbol="CheckmarkUnderlineCircle" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.ExhibitPackageModal_EmptyListLabelText}" />
+                            </StackPanel>
+                        </Panel>
+                    </TabItem>
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_HistoryTabText}">
+                        <TabItem.Header>
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="History" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.ExhibitPackageModal_HistoryTabText}" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <husk:LazyContainer Source="{Binding $parent[app:ExhibitPackageModal].LazyHistory}">
+                            <husk:LazyContainer.SourceTemplate>
+                                <DataTemplate DataType="app:InstancePackageModificationCollection">
+                                    <Panel>
+                                        <StackPanel
+                                            VerticalAlignment="Center"
+                                            IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}"
+                                            Spacing="8">
+                                            <fi:SymbolIcon
+                                                HorizontalAlignment="Center"
+                                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Symbol="History" />
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                        </StackPanel>
+                                        <ScrollViewer IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
+                                            <StackPanel Margin="{StaticResource CardContentMargin}">
+                                                <husk:Tag Content="{x:Static lang:Resources.InstancePackageModal_NowTagText}" />
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate DataType="app:InstancePackageModificationModel">
+                                                            <Grid
+                                                                ColumnDefinitions="Auto,*"
+                                                                ColumnSpacing="12">
+                                                                <!--  Timeline indicator column  -->
+                                                                <Grid
+                                                                    Grid.Column="0"
+                                                                    RowDefinitions="*,Auto,*">
+                                                                    <!--  Top connector line  -->
+                                                                    <Rectangle
+                                                                        Grid.Row="0"
+                                                                        Width="2"
+                                                                        HorizontalAlignment="Center"
+                                                                        Fill="{StaticResource ControlBorderBrush}" />
+
+                                                                    <!--  Action icon with colored background  -->
+                                                                    <husk:SwitchContainer
+                                                                        Grid.Row="1"
+                                                                        TargetType="app:InstancePackageModificationKind"
+                                                                        Value="{Binding Kind}">
+                                                                        <husk:SwitchCase Value="AddUnversioned">
+                                                                            <Border
+                                                                                Width="32"
+                                                                                Height="32"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}"
+                                                                                CornerRadius="16">
+                                                                                <fi:SymbolIcon
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                                                    Symbol="Add" />
+                                                                            </Border>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="AddVersioned">
+                                                                            <Border
+                                                                                Width="32"
+                                                                                Height="32"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}"
+                                                                                CornerRadius="16">
+                                                                                <fi:SymbolIcon
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                                                    Symbol="Add" />
+                                                                            </Border>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="Remove">
+                                                                            <Border
+                                                                                Width="32"
+                                                                                Height="32"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}"
+                                                                                CornerRadius="16">
+                                                                                <fi:SymbolIcon
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                                                    Symbol="Dismiss" />
+                                                                            </Border>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="Update">
+                                                                            <Border
+                                                                                Width="32"
+                                                                                Height="32"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}"
+                                                                                CornerRadius="16">
+                                                                                <fi:SymbolIcon
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlWarningForegroundBrush}"
+                                                                                    Symbol="ArrowSort" />
+                                                                            </Border>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="Unset">
+                                                                            <Border
+                                                                                Width="32"
+                                                                                Height="32"
+                                                                                VerticalAlignment="Top"
+                                                                                Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                                                                                CornerRadius="16">
+                                                                                <fi:SymbolIcon
+                                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                                    Foreground="{StaticResource ControlWarningForegroundBrush}"
+                                                                                    Symbol="Sparkle" />
+                                                                            </Border>
+                                                                        </husk:SwitchCase>
+                                                                    </husk:SwitchContainer>
+
+                                                                    <!--  Bottom connector line  -->
+                                                                    <Rectangle
+                                                                        Grid.Row="2"
+                                                                        Width="2"
+                                                                        HorizontalAlignment="Center"
+                                                                        Fill="{StaticResource ControlBorderBrush}" />
+                                                                </Grid>
+
+                                                                <!--  Content column  -->
+                                                                <Border
+                                                                    Grid.Column="1"
+                                                                    Margin="0,0,0,6"
+                                                                    Padding="12,8"
+                                                                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                                                    <Grid
+                                                                        RowDefinitions="Auto,Auto"
+                                                                        RowSpacing="4">
+                                                                        <!--  Action description  -->
+                                                                        <husk:SwitchContainer
+                                                                            Grid.Row="0"
+                                                                            TargetType="app:InstancePackageModificationKind"
+                                                                            Value="{Binding Kind}">
+                                                                            <husk:SwitchCase Value="AddUnversioned">
+                                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                                    <InlineUIContainer BaselineAlignment="Bottom">
+                                                                                        <Panel>
+                                                                                            <Rectangle
+                                                                                                RadiusX="4"
+                                                                                                RadiusY="4"
+                                                                                                Stroke="{StaticResource ControlBorderBrush}"
+                                                                                                StrokeDashArray="4,2"
+                                                                                                StrokeThickness="1" />
+                                                                                            <TextBlock
+                                                                                                Margin="6,2"
+                                                                                                FontSize="{StaticResource ExtraSmallFontSize}"
+                                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                                Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}" />
+                                                                                        </Panel>
+                                                                                    </InlineUIContainer>
+                                                                                </TextBlock>
+                                                                            </husk:SwitchCase>
+                                                                            <husk:SwitchCase Value="AddVersioned">
+                                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                                    <Run
+                                                                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                                                        Text="{Binding VersionName}" />
+                                                                                </TextBlock>
+                                                                            </husk:SwitchCase>
+                                                                            <husk:SwitchCase Value="Remove">
+                                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
+                                                                                </TextBlock>
+                                                                            </husk:SwitchCase>
+                                                                            <husk:SwitchCase Value="Update">
+                                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
+                                                                                    <Run
+                                                                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                                                        Text="{Binding VersionName}" />
+                                                                                </TextBlock>
+                                                                            </husk:SwitchCase>
+                                                                            <husk:SwitchCase Value="Unset">
+                                                                                <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
+                                                                                    <InlineUIContainer BaselineAlignment="Bottom">
+                                                                                        <Panel>
+                                                                                            <Rectangle
+                                                                                                RadiusX="4"
+                                                                                                RadiusY="4"
+                                                                                                Stroke="{StaticResource ControlBorderBrush}"
+                                                                                                StrokeDashArray="4,2"
+                                                                                                StrokeThickness="1" />
+                                                                                            <TextBlock
+                                                                                                Margin="6,2"
+                                                                                                FontSize="{StaticResource ExtraSmallFontSize}"
+                                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                                Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}" />
+                                                                                        </Panel>
+                                                                                    </InlineUIContainer>
+                                                                                </TextBlock>
+                                                                            </husk:SwitchCase>
+                                                                        </husk:SwitchContainer>
+
+                                                                        <!--  Timestamp  -->
+                                                                        <Grid
+                                                                            Grid.Row="1"
+                                                                            ColumnDefinitions="Auto,*"
+                                                                            ColumnSpacing="6">
+                                                                            <fi:SymbolIcon
+                                                                                Grid.Column="0"
+                                                                                VerticalAlignment="Center"
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                Symbol="Clock" />
+                                                                            <TextBlock
+                                                                                Grid.Column="1"
+                                                                                VerticalAlignment="Center"
+                                                                                Background="Transparent"
+                                                                                FontSize="{StaticResource SmallFontSize}"
+                                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                                Text="{Binding ModifiedAt}"
+                                                                                ToolTip.Tip="{Binding ModifiedAtRaw}" />
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </Border>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                                <husk:Tag Content="{x:Static lang:Resources.InstancePackageModal_PastTagText}" />
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                    </Panel>
+                                </DataTemplate>
+                            </husk:LazyContainer.SourceTemplate>
+                        </husk:LazyContainer>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </husk:ConstrainedBox>
+    </Grid>
+</husk:Modal>

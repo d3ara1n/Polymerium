@@ -133,7 +133,7 @@
 | 平台 | 包类型 | 直达下载 |
 | --- | --- | --- |
 | Windows x64 | 安装器 | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
-| Linux x64 | AppImage | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AppImage) |
+| Linux x64 | AppImage | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AvaloniaImage) |
 | macOS Apple Silicon | PKG 安装器 | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
 
 [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
@@ -170,7 +170,7 @@
 ```sh
 Polymerium/
 ├── 📚 docs/                   # 文档
-├── 🎨 src/Polymerium.App/     # UI 应用程序层
+├── 🎨 src/Polymerium.Avalonia/     # UI 应用程序层
 ├── 🔗 submodules/             # 共享组件
 └── 📦 Releases/               # 构建产物
 ```
@@ -223,7 +223,7 @@ git cliff
 | 🔥 **现代 C#** | 利用最新的语言功能和模式        |
 | ✨ **代码风格**   | 遵循 .editorconfig 指南 |
 
-我们使用 `.resx` 文件进行本地化。如果您想贡献翻译，可以编辑 `src/Polymerium.App/Properties` 目录下的 `Resources.resx`
+我们使用 `.resx` 文件进行本地化。如果您想贡献翻译，可以编辑 `src/Polymerium.Avalonia/Properties` 目录下的 `Resources.resx`
 文件，并在
 同一目录下添加您的语言文件。Rider 和 Visual Studio 都内置了 resx 文件的编辑器。
 

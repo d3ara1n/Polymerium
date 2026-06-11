@@ -5,9 +5,9 @@
 
 $ErrorActionPreference = "Stop"
 
-$ProjectPath = "src/Polymerium.App/Polymerium.App.csproj"
+$ProjectPath = "src/Polymerium.Avalonia/Polymerium.Avalonia.csproj"
 
-Write-Host "Publishing Polymerium.App for $Rid..."
+Write-Host "Publishing Polymerium for $Rid..."
 
 dotnet publish -c Release --self-contained -r $Rid $ProjectPath -o "Publish/$Rid"
 

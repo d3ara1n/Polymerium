@@ -1,0 +1,150 @@
+﻿<husk:Page
+    x:Class="Polymerium.Avalonia.Pages.SnapshotPortalPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="app:SnapshotPortalPageModel"
+    IsHeaderVisible="False"
+    mc:Ignorable="d">
+    <Grid
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="20">
+        <StackPanel
+            Grid.Row="0"
+            Spacing="4">
+            <TextBlock
+                FontSize="{StaticResource ExtraLargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="快照管理" />
+            <TextBlock
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="为实例创建、管理和还原快照" />
+        </StackPanel>
+
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="20">
+            <Button
+                Grid.Column="0"
+                Padding="24"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Command="{Binding $parent[app:SnapshotsModal].NavigateCommand}"
+                CommandParameter="{x:Type app:SnapshotCreationPage}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+                <Grid
+                    RowDefinitions="Auto,Auto,*,Auto,Auto"
+                    RowSpacing="8">
+                    <fi:SymbolIcon
+                        Grid.Row="0"
+                        FontSize="32"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="SaveSync" />
+                    <TextBlock
+                        Grid.Row="1"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="创建快照" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="保存当前实例的文件布局状态"
+                        TextWrapping="Wrap" />
+                    <husk:Divider Grid.Row="3" />
+                    <StackPanel
+                        Grid.Row="4"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="上次创建:" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding LatestTimeText, FallbackValue=暂无}" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <Button
+                Grid.Column="1"
+                Padding="24"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Command="{Binding $parent[app:SnapshotsModal].NavigateCommand}"
+                CommandParameter="{x:Type app:SnapshotManagementPage}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+                <Grid
+                    RowDefinitions="Auto,Auto,*,Auto,Auto,Auto"
+                    RowSpacing="8">
+                    <fi:SymbolIcon
+                        Grid.Row="0"
+                        FontSize="32"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Symbol="History" />
+                    <TextBlock
+                        Grid.Row="1"
+                        FontSize="{StaticResource LargeFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="快照列表" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="查看已保存的所有快照记录"
+                        TextWrapping="Wrap" />
+                    <husk:Divider Grid.Row="3" />
+                    <StackPanel
+                        Grid.Row="4"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="共" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding SnapshotCount, FallbackValue=0}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="个快照" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="5"
+                        IsVisible="{Binding LatestTimeText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="最新:" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding LatestTimeText}" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <StackPanel
+            Grid.Row="2"
+            Spacing="4">
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="8">
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="Info" />
+                <TextBlock
+                    FontStyle="Italic"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="快照记录实例当前的【托管文件】的状态和布局，使快照的构建结果可复现。"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</husk:Page>
