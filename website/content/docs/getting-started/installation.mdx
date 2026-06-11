@@ -15,6 +15,21 @@ Grab the latest release for your platform from [GitHub Releases](https://github.
 
 Each platform uses its standard installer format. Run it and follow the prompts.
 
+## macOS: PKG Installation Notice
+
+Because the PKG installer is not signed with an Apple Developer certificate, macOS Gatekeeper may block it with a "damaged" warning. To install:
+
+1. Right-click the `.pkg` file and choose **Open**.
+2. If that doesn't work, remove the quarantine flag from Terminal:
+
+```bash
+xattr -d com.apple.quarantine Polymerium-osx-arm64-Setup.pkg
+```
+
+3. Open the `.pkg` file again and follow the installer.
+
+> This is a one-time workaround. A future release may switch to DMG distribution which avoids this issue.
+
 ## Windows: Enable Developer Mode
 
 Polymerium uses symbolic links to share mod files across instances without duplication. On Windows, creating symlinks requires **Developer Mode**.
