@@ -155,6 +155,7 @@ public static class Startup
            .AddMclogs()
            .AddAuthlibInjector()
            .AddYggdrasil()
+           .AddRepositoryInfrastructure()
            .AddSnapshots<SnapshotStoreFactory>()
            .AddTransient<IProfileImporter, TridentImporter>()
            .AddTransient<IProfileImporter, CurseForgeImporter>()
