@@ -900,10 +900,10 @@ public partial class MainWindowContext : ObservableObject
                         model.State = InstanceEntryState.Idle;
 
                         // Determine if this is an account issue or game crash
-                        var isAccountIssue = e.FailureReason is AccountAuthenticationException
+                        var isAccountIssue = e.FailureReason is AccountException
                                                              or AggregateException
                                                                 {
-                                                                    InnerException: AccountAuthenticationException
+                                                                    InnerException: AccountException
                                                                 };
                         var isGameCrash = e.FailureReason is ProcessFaultedException
                                                           or AggregateException

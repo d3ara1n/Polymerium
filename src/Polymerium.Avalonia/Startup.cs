@@ -145,6 +145,9 @@ public static class Startup
            });
 
         // Trident
+        // NOTE: AddAccountConfigurers depends on AddMicrosoft, AddXboxLive, AddMinecraft,
+        //       AddYggdrasil, and AddAuthlibInjector being registered first.
+        //       Do not reorder this chain without consulting the dependency graph.
         services
            .AddLifetimeRuntime()
            .AddPrismLauncher()
@@ -155,6 +158,7 @@ public static class Startup
            .AddMclogs()
            .AddAuthlibInjector()
            .AddYggdrasil()
+           .AddAccountConfigurers()
            .AddRepositoryInfrastructure()
            .AddSnapshots<SnapshotStoreFactory>()
            .AddTransient<IProfileImporter, TridentImporter>()

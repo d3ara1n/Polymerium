@@ -6,7 +6,7 @@
 
 ### Fixed
 
--
+- 修正 Authlib-Injector 账号的程序性配置方式，去掉了原先的非机制性（即补丁性）写法(#POLY-94)
 
 ### Added
 
