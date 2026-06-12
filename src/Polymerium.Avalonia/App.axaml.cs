@@ -171,6 +171,9 @@ public class App : Application
         window.DataContext = viewModel;
         notification.SetHandler(viewModel.PopNotification);
 
+        // 应用级 NativeMenu 的 DataContext 设为同一个 ViewModel，使菜单命令绑定生效
+        Application.Current!.DataContext = viewModel;
+
         // MainWindowContext 没有 InitializeAsync 能力，这里代替进行初始化
         navigation.Navigate<LandingPage>();
 

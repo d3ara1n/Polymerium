@@ -7,7 +7,9 @@ using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -527,6 +529,66 @@ public partial class MainWindowContext : ObservableObject
                 UnreadNotificationCount--;
             }
         }
+    }
+
+    #endregion
+
+    #region Menu Commands
+
+    [RelayCommand]
+    private void About()
+    {
+        _notificationService.PopMessage($"{Program.Brand} v{Program.Version}\n{Program.ReleaseDate}", "About");
+    }
+
+    [RelayCommand]
+    private void NewInstance() => _navigationService.Navigate<NewInstancePage>();
+
+    [RelayCommand]
+    private void GoHome() => _navigationService.Navigate<LandingPage>();
+
+    [RelayCommand]
+    private void GoMarketplace() => _navigationService.Navigate<MarketplacePortalPage>();
+
+    [RelayCommand]
+    private void GoAccounts() => _navigationService.Navigate<AccountsPage>();
+
+    [RelayCommand]
+    private void GoStorage() => _navigationService.Navigate<MaintenanceStoragePage>();
+
+    [RelayCommand]
+    private void GoSettings() => _navigationService.Navigate<SettingsPage>();
+
+    [RelayCommand]
+    private void ToggleFullScreen()
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
+        {
+            MainWindow: Window window
+        })
+        {
+            window.WindowState = window.WindowState == WindowState.FullScreen
+                ? WindowState.Normal
+                : WindowState.FullScreen;
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCheckForUpdates))]
+    private async Task CheckForUpdatesAsync() => await _updateService.CheckUpdateAsync();
+
+    private bool CanCheckForUpdates => _updateService.IsAvailable;
+
+    [RelayCommand]
+    private async Task OpenGitHubAsync()
+    {
+        var topLevel = TopLevel.GetTopLevel(
+            (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow
+        );
+        await TopLevelHelper.LaunchUriAsync(
+            topLevel,
+            new Uri("https://github.com/d3ara1n/Polymerium"),
+            "Failed to open GitHub"
+        );
     }
 
     #endregion

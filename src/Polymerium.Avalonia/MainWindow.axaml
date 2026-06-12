@@ -21,6 +21,37 @@
     Loaded="Control_OnLoaded"
     Unloaded="Control_OnUnloded"
     mc:Ignorable="d">
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FileText}">
+                <NativeMenuItem.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_NewInstanceText}" Gesture="Cmd+N" Command="{Binding NewInstanceCommand}" />
+                    </NativeMenu>
+                </NativeMenuItem.Menu>
+            </NativeMenuItem>
+            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_ViewText}">
+                <NativeMenuItem.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_HomeText}" Command="{Binding GoHomeCommand}" />
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_MarketplaceText}" Command="{Binding GoMarketplaceCommand}" />
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_AccountsText}" Command="{Binding GoAccountsCommand}" />
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_StorageText}" Command="{Binding GoStorageCommand}" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FullScreenText}" Gesture="F11" Command="{Binding ToggleFullScreenCommand}" />
+                    </NativeMenu>
+                </NativeMenuItem.Menu>
+            </NativeMenuItem>
+            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_HelpText}">
+                <NativeMenuItem.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_CheckForUpdatesText}" Command="{Binding CheckForUpdatesCommand}" />
+                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FeedbackText}" Command="{Binding OpenGitHubCommand}" />
+                    </NativeMenu>
+                </NativeMenuItem.Menu>
+            </NativeMenuItem>
+        </NativeMenu>
+    </NativeMenu.Menu>
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />

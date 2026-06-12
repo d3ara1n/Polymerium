@@ -3,9 +3,19 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     Name="Polymerium"
-    RequestedThemeVariant="Default">
+    RequestedThemeVariant="Default"
+    x:DataType="app:MainWindowContext">
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_AboutText}" Command="{Binding AboutCommand}" />
+            <NativeMenuItemSeparator />
+            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_SettingsText}" Gesture="Cmd+," Command="{Binding GoSettingsCommand}" />
+        </NativeMenu>
+    </NativeMenu.Menu>
     <Application.Styles>
         <husk:HuskuiTheme />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
