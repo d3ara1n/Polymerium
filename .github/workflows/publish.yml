@@ -112,9 +112,9 @@ jobs:
               id: exe_name
               run: |
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
-                      echo "exe_name=Polymerium.Avalonia.exe" >> $GITHUB_OUTPUT
+                      echo "exe_name=Polymerium.exe" >> $GITHUB_OUTPUT
                   else
-                      echo "exe_name=Polymerium.Avalonia" >> $GITHUB_OUTPUT
+                      echo "exe_name=Polymerium" >> $GITHUB_OUTPUT
                   fi
 
             - name: Pack with Velopack

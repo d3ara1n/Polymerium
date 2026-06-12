@@ -33,8 +33,7 @@ public partial class InstanceFilesPageModel(
     ProfileManager profileManager,
     OverlayService overlayService,
     NotificationService notificationService,
-    PersistenceService persistenceService,
-    YggdrasilService yggdrasilService) : InstancePageModelBase(context, instanceManager, profileManager)
+    PersistenceService persistenceService) : InstancePageModelBase(context, instanceManager, profileManager)
 {
     #region Overrides
 
