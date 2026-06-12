@@ -9121,5 +9121,122 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectSuccessMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Polymerium.
+        /// </summary>
+        public static string AppMenu_AboutText {
+            get {
+                return ResourceManager.GetString("AppMenu_AboutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings….
+        /// </summary>
+        public static string AppMenu_SettingsText {
+            get {
+                return ResourceManager.GetString("AppMenu_SettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string AppMenu_FileText {
+            get {
+                return ResourceManager.GetString("AppMenu_FileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Instance.
+        /// </summary>
+        public static string AppMenu_NewInstanceText {
+            get {
+                return ResourceManager.GetString("AppMenu_NewInstanceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string AppMenu_ViewText {
+            get {
+                return ResourceManager.GetString("AppMenu_ViewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string AppMenu_HomeText {
+            get {
+                return ResourceManager.GetString("AppMenu_HomeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marketplace.
+        /// </summary>
+        public static string AppMenu_MarketplaceText {
+            get {
+                return ResourceManager.GetString("AppMenu_MarketplaceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string AppMenu_AccountsText {
+            get {
+                return ResourceManager.GetString("AppMenu_AccountsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storage.
+        /// </summary>
+        public static string AppMenu_StorageText {
+            get {
+                return ResourceManager.GetString("AppMenu_StorageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Full Screen.
+        /// </summary>
+        public static string AppMenu_FullScreenText {
+            get {
+                return ResourceManager.GetString("AppMenu_FullScreenText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string AppMenu_HelpText {
+            get {
+                return ResourceManager.GetString("AppMenu_HelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for Updates….
+        /// </summary>
+        public static string AppMenu_CheckForUpdatesText {
+            get {
+                return ResourceManager.GetString("AppMenu_CheckForUpdatesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feedback on GitHub.
+        /// </summary>
+        public static string AppMenu_FeedbackText {
+            get {
+                return ResourceManager.GetString("AppMenu_FeedbackText", resourceCulture);
+            }
+        }
     }
 }

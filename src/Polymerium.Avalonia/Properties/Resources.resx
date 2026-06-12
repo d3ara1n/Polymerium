@@ -3060,4 +3060,43 @@ Affected entries: {0}
     <data name="AccountCreationAuthlib_ConfirmProfile" xml:space="preserve">
         <value>Confirm</value>
     </data>
+    <data name="AppMenu_AboutText" xml:space="preserve">
+        <value>About Polymerium</value>
+    </data>
+    <data name="AppMenu_SettingsText" xml:space="preserve">
+        <value>Settings…</value>
+    </data>
+    <data name="AppMenu_FileText" xml:space="preserve">
+        <value>File</value>
+    </data>
+    <data name="AppMenu_NewInstanceText" xml:space="preserve">
+        <value>New Instance</value>
+    </data>
+    <data name="AppMenu_ViewText" xml:space="preserve">
+        <value>View</value>
+    </data>
+    <data name="AppMenu_HomeText" xml:space="preserve">
+        <value>Home</value>
+    </data>
+    <data name="AppMenu_MarketplaceText" xml:space="preserve">
+        <value>Marketplace</value>
+    </data>
+    <data name="AppMenu_AccountsText" xml:space="preserve">
+        <value>Accounts</value>
+    </data>
+    <data name="AppMenu_StorageText" xml:space="preserve">
+        <value>Storage</value>
+    </data>
+    <data name="AppMenu_FullScreenText" xml:space="preserve">
+        <value>Toggle Full Screen</value>
+    </data>
+    <data name="AppMenu_HelpText" xml:space="preserve">
+        <value>Help</value>
+    </data>
+    <data name="AppMenu_CheckForUpdatesText" xml:space="preserve">
+        <value>Check for Updates…</value>
+    </data>
+    <data name="AppMenu_FeedbackText" xml:space="preserve">
+        <value>Feedback on GitHub</value>
+    </data>
 </root>

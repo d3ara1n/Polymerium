@@ -3048,4 +3048,43 @@
     <data name="AccountCreationAuthlib_ConfirmProfile" xml:space="preserve">
         <value>确认</value>
     </data>
+    <data name="AppMenu_AboutText" xml:space="preserve">
+        <value>关于 Polymerium</value>
+    </data>
+    <data name="AppMenu_SettingsText" xml:space="preserve">
+        <value>设置…</value>
+    </data>
+    <data name="AppMenu_FileText" xml:space="preserve">
+        <value>文件</value>
+    </data>
+    <data name="AppMenu_NewInstanceText" xml:space="preserve">
+        <value>新建实例</value>
+    </data>
+    <data name="AppMenu_ViewText" xml:space="preserve">
+        <value>视图</value>
+    </data>
+    <data name="AppMenu_HomeText" xml:space="preserve">
+        <value>主页</value>
+    </data>
+    <data name="AppMenu_MarketplaceText" xml:space="preserve">
+        <value>市场中心</value>
+    </data>
+    <data name="AppMenu_AccountsText" xml:space="preserve">
+        <value>账户管理</value>
+    </data>
+    <data name="AppMenu_StorageText" xml:space="preserve">
+        <value>存储管理</value>
+    </data>
+    <data name="AppMenu_FullScreenText" xml:space="preserve">
+        <value>切换全屏</value>
+    </data>
+    <data name="AppMenu_HelpText" xml:space="preserve">
+        <value>帮助</value>
+    </data>
+    <data name="AppMenu_CheckForUpdatesText" xml:space="preserve">
+        <value>检查更新…</value>
+    </data>
+    <data name="AppMenu_FeedbackText" xml:space="preserve">
+        <value>在 GitHub 上反馈</value>
+    </data>
 </root>
