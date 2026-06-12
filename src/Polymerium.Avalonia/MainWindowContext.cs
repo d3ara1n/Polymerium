@@ -563,9 +563,9 @@ public partial class MainWindowContext : ObservableObject
     private void ToggleFullScreen()
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
-        {
-            MainWindow: Window window
-        })
+            {
+                MainWindow: Window window
+            })
         {
             window.WindowState = window.WindowState == WindowState.FullScreen
                 ? WindowState.Normal
@@ -964,14 +964,14 @@ public partial class MainWindowContext : ObservableObject
                         // Determine if this is an account issue or game crash
                         var isAccountIssue = e.FailureReason is AccountException
                                                              or AggregateException
-                                                                {
-                                                                    InnerException: AccountException
-                                                                };
+                        {
+                            InnerException: AccountException
+                        };
                         var isGameCrash = e.FailureReason is ProcessFaultedException
                                                           or AggregateException
-                                                             {
-                                                                 InnerException: ProcessFaultedException
-                                                             };
+                        {
+                            InnerException: ProcessFaultedException
+                        };
 
                         if (isAccountIssue)
                         {

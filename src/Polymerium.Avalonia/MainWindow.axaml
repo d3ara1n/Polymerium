@@ -26,27 +26,45 @@
             <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FileText}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_NewInstanceText}" Gesture="Cmd+N" Command="{Binding NewInstanceCommand}" />
+                        <NativeMenuItem
+                            Command="{Binding NewInstanceCommand}"
+                            Gesture="Cmd+N"
+                            Header="{x:Static lang:Resources.AppMenu_NewInstanceText}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
             <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_ViewText}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_HomeText}" Command="{Binding GoHomeCommand}" />
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_MarketplaceText}" Command="{Binding GoMarketplaceCommand}" />
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_AccountsText}" Command="{Binding GoAccountsCommand}" />
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_StorageText}" Command="{Binding GoStorageCommand}" />
+                        <NativeMenuItem
+                            Command="{Binding GoHomeCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_HomeText}" />
+                        <NativeMenuItem
+                            Command="{Binding GoMarketplaceCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_MarketplaceText}" />
+                        <NativeMenuItem
+                            Command="{Binding GoAccountsCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_AccountsText}" />
+                        <NativeMenuItem
+                            Command="{Binding GoStorageCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_StorageText}" />
                         <NativeMenuItemSeparator />
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FullScreenText}" Gesture="F11" Command="{Binding ToggleFullScreenCommand}" />
+                        <NativeMenuItem
+                            Command="{Binding ToggleFullScreenCommand}"
+                            Gesture="F11"
+                            Header="{x:Static lang:Resources.AppMenu_FullScreenText}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
             <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_HelpText}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_CheckForUpdatesText}" Command="{Binding CheckForUpdatesCommand}" />
-                        <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FeedbackText}" Command="{Binding OpenGitHubCommand}" />
+                        <NativeMenuItem
+                            Command="{Binding CheckForUpdatesCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_CheckForUpdatesText}" />
+                        <NativeMenuItem
+                            Command="{Binding OpenGitHubCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_FeedbackText}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>

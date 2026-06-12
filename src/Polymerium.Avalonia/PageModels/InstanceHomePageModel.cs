@@ -200,7 +200,9 @@ public partial class InstanceHomePageModel(
                       .ToList();
         var dialog = new AccountPickerDialog
         {
-            GotoManagerViewCommand = OpenAccountsPageCommand, AccountsSource = accounts, Result = SelectedAccount,
+            GotoManagerViewCommand = OpenAccountsPageCommand,
+            AccountsSource = accounts,
+            Result = SelectedAccount,
         };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
         {

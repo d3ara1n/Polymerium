@@ -1,4 +1,4 @@
-<app:AccountCreationStep
+﻿<app:AccountCreationStep
     x:Class="Polymerium.Avalonia.Components.AccountCreationAuthlibInjector"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -11,8 +11,8 @@
         <StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AccountCreationAuthlib_ServerUrl}" />
             <TextBox
-                Text="{Binding $parent[app:AccountCreationAuthlibInjector].ServerUrl, Mode=TwoWay}"
-                PlaceholderText="https://example.com/api/yggdrasil" />
+                PlaceholderText="https://example.com/api/yggdrasil"
+                Text="{Binding $parent[app:AccountCreationAuthlibInjector].ServerUrl, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AccountCreationAuthlib_Username}" />
@@ -25,8 +25,8 @@
                 Text="{Binding $parent[app:AccountCreationAuthlibInjector].Password, Mode=TwoWay}" />
         </StackPanel>
         <Button
-            HorizontalAlignment="Stretch"
             Classes="Primary"
+            HorizontalAlignment="Stretch"
             Command="{Binding $parent[app:AccountCreationAuthlibInjector].LoginCommand}"
             Content="{x:Static lang:Resources.AccountCreationAuthlib_Login}" />
         <husk:InfoBar

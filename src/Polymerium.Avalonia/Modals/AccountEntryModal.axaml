@@ -146,7 +146,8 @@
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{x:Static lang:Resources.AccountEntryModal_AuthlibServerUrlLabel}" />
                                     <TextBlock
-                                        Text="{Binding AuthlibServerUrl, FallbackValue=https://example.com}" TextWrapping="Wrap"/>
+                                        Text="{Binding AuthlibServerUrl, FallbackValue=https://example.com}"
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
                             </StackPanel>
                         </husk:SwitchCase>
