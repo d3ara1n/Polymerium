@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -11,6 +12,7 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Facilities;
+using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Services;
 
@@ -24,6 +26,21 @@ public partial class UnknownPageModel(
 ) : ViewModelBase
 {
     public string Title { get; } = $"User's Unknown Playground({context.Parameter ?? "None"})";
+
+    /// <summary>
+    ///     七种 <see cref="Rendering.SkinViewType" /> 的 <c>poly://</c> 渲染样本，
+    ///     用内置 Steve 皮肤渲染，供皮肤渲染组件目测对比各视图。
+    /// </summary>
+    public IReadOnlyList<SkinViewSample> SkinViewSamples { get; } =
+    [
+        new("Face · 正面头像", "poly://skin?type=face&src=asset:Steve"),
+        new("Body · 等距全身", "poly://skin?type=body&src=asset:Steve"),
+        new("Cover · 等距半身", "poly://skin?type=cover&src=asset:Steve"),
+        new("Front · 正面平视", "poly://skin?type=front&src=asset:Steve"),
+        new("Right · 右侧平视", "poly://skin?type=right&src=asset:Steve"),
+        new("Back · 背面平视", "poly://skin?type=back&src=asset:Steve"),
+        new("Left · 左侧平视", "poly://skin?type=left&src=asset:Steve"),
+    ];
 
     #region Overrides
 

@@ -106,7 +106,11 @@ internal static class Program
             configurationService.Value.ApplicationLanguage
         );
         Resources.Culture = CultureInfo.CurrentUICulture;
-        var loader = new AppImageLoader(Services.GetRequiredService<HttpClient>(), Services.GetRequiredService<ILogger<AppImageLoader>>());
+        var loader = new AppImageLoader(
+            Services.GetRequiredService<HttpClient>(),
+            Services.GetRequiredService<SkinRenderService>(),
+            Services.GetRequiredService<ILogger<AppImageLoader>>()
+        );
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
 

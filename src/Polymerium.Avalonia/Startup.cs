@@ -12,6 +12,7 @@ using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
+using Polymerium.Avalonia.Rendering;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Snapshots;
 using Sentry;
@@ -198,7 +199,9 @@ public static class Startup
            .AddSingleton<InstanceService>()
            .AddLifetimeService<UpdateService>()
            .AddSingleton<WidgetHostService>()
-           .AddSingleton<GarbageCollector>();
+           .AddSingleton<GarbageCollector>()
+           .AddSingleton<SkinRenderer>()
+           .AddSingleton<SkinRenderService>();
     }
 
     public static void InitializeUnhostedServices()
