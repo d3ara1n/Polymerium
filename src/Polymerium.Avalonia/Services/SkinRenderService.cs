@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -17,13 +15,14 @@ namespace Polymerium.Avalonia.Services;
 ///     解析 <c>poly://skin?type=&amp;src=</c> 形态的 URI，按数据源路由取得原始皮肤 PNG，
 ///     交由 <see cref="SkinRenderer" /> 本地离线渲染后产出 Avalonia <see cref="Bitmap" />。
 ///     <para>
-///         数据源三路：<c>mojang:{uuid}</c>（查 Mojang sessionserver profile，取 textures.SKIN.url）、
+///         数据源三路：<c>mojang:{uuid}</c>（经第三方皮肤镜像下载原始皮肤 PNG）、
 ///         裸 http(s) URL（直接下载，供 Authlib 账户使用）、<c>asset:{key}</c>（内置默认皮肤）。
 ///         任一来源失败一律回落内置 Steve，保证视觉不空缺。
 ///     </para>
 ///     <para>
 ///         渲染结果由 <see cref="AppImageLoader" /> 以完整 poly:// URL 为 key 写入 MemoryCache，
-///         30 分钟滑动过期内同 URL 不重复请求 Mojang，天然缓解 sessionserver 的速率限制。
+///         30 分钟滑动过期内同 URL 不重复请求，天然缓解上游服务的速率限制；
+///         加载失败同样写入负缓存（3 分钟绝对过期），避免网络不可达时反复重试刷屏。
 ///     </para>
 /// </summary>
 public sealed class SkinRenderService(
@@ -35,8 +34,11 @@ public sealed class SkinRenderService(
     private const string SteveAssetUri = "avares://Polymerium/Assets/Images/Skins/Steve.png";
     private const string AlexAssetUri = "avares://Polymerium/Assets/Images/Skins/Alex.png";
 
-    private const string MojangProfileApi =
-        "https://sessionserver.minecraft.net/session/minecraft/profile/";
+    /// <summary>
+///     第三方皮肤镜像根：按 UUID 返回原始皮肤 PNG（64×64 展开图），供本地渲染。
+///     用常量集中便于上游不可用时一键换源。现在使用 mineatar，其原图端点在国内直连可达。
+/// </summary>
+    private const string SkinMirrorBase = "https://api.mineatar.io/skin/";
 
     /// <summary>
     ///     渲染入口：仅处理 <c>poly://</c> URI，其余返回 null 交由上层走默认网络加载。
@@ -97,7 +99,8 @@ public sealed class SkinRenderService(
         try
         {
             if (src.StartsWith("mojang:", StringComparison.Ordinal))
-                return await LoadMojangSkinAsync(src["mojang:".Length..]).ConfigureAwait(false);
+                return await httpClient.GetByteArrayAsync(SkinMirrorBase + src["mojang:".Length..])
+                    .ConfigureAwait(false);
 
             if (src.StartsWith("asset:", StringComparison.Ordinal))
                 return TryLoadAsset(ResolveAssetUri(src["asset:".Length..]));
@@ -110,65 +113,6 @@ public sealed class SkinRenderService(
             logger.LogWarning(ex, "Skin source unavailable, falling back to Steve: {Src}", src);
             return null;
         }
-    }
-
-    private async Task<byte[]?> LoadMojangSkinAsync(string uuid)
-    {
-        var profileUrl = new Uri(MojangProfileApi + uuid, UriKind.Absolute);
-        var profileJson = await httpClient.GetStringAsync(profileUrl).ConfigureAwait(false);
-        var texturesBase64 = ExtractTexturesValue(profileJson);
-        if (texturesBase64 is null)
-            return null;
-
-        var texturesJson = DecodeBase64(texturesBase64);
-        var skinUrl = ExtractSkinUrl(texturesJson);
-        return skinUrl is null
-            ? null
-            : await httpClient.GetByteArrayAsync(skinUrl).ConfigureAwait(false);
-    }
-
-    private static string? ExtractTexturesValue(string profileJson)
-    {
-        using var doc = JsonDocument.Parse(profileJson);
-        if (!doc.RootElement.TryGetProperty("properties", out var props))
-            return null;
-
-        foreach (var p in props.EnumerateArray())
-        {
-            if (p.TryGetProperty("name", out var name)
-                && name.ValueKind == JsonValueKind.String
-                && name.GetString() == "textures"
-                && p.TryGetProperty("value", out var value)
-                && value.ValueKind == JsonValueKind.String)
-            {
-                return value.GetString();
-            }
-        }
-
-        return null;
-    }
-
-    private static string? ExtractSkinUrl(string texturesJson)
-    {
-        using var doc = JsonDocument.Parse(texturesJson);
-        if (doc.RootElement.TryGetProperty("textures", out var textures)
-            && textures.TryGetProperty("SKIN", out var skin)
-            && skin.TryGetProperty("url", out var url)
-            && url.ValueKind == JsonValueKind.String)
-        {
-            return url.GetString();
-        }
-
-        return null;
-    }
-
-    private static string DecodeBase64(string base64)
-    {
-        // Mojang textures value 为标准 base64，兼容偶发缺失 padding 的情况。
-        var rem = base64.Length % 4;
-        if (rem != 0)
-            base64 += new string('=', 4 - rem);
-        return Encoding.UTF8.GetString(Convert.FromBase64String(base64));
     }
 
     /// <summary>
