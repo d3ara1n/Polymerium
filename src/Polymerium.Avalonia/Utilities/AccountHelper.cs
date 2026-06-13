@@ -84,15 +84,6 @@ public static class AccountHelper
     public static Uri GetCoverUrl(string src) =>
         new($"poly://skin?type=cover&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
 
-    /// <summary>
-    ///     内置 Steve 的全身图，供无皮肤的账户（Trial/Offline）及所有渲染失败的回落使用。
-    /// </summary>
-    public static Uri GetSteveBodyUrl() => GetBodyUrl("asset:Steve");
-
-    /// <summary>
-    ///     四方向全身渲染（Front → Right → Back → Left），顺序构成 360° 旋转，
-    ///     供 <c>RotatingSkinView</c> 循环播放。
-    /// </summary>
     public static IReadOnlyList<Uri> GetBodyViewUrls(string src) =>
     [
         new($"poly://skin?type=front&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
