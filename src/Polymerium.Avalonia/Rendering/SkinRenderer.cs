@@ -31,13 +31,12 @@ public sealed class SkinRenderer
     /// <param name="skin">皮肤位图。</param>
     /// <param name="yawDeg">绕 Y 轴旋转角度，默认 45°（正面 + 右侧）。</param>
     /// <param name="pitchDeg">绕 X 轴俯视角度，正值从上往下（俯视），默认 15°。</param>
-    /// <param name="includeLegs">是否包含双腿；false 时只渲染上半身（半身像，自动放大居中）。</param>
     /// <param name="width">输出宽。</param>
     /// <param name="height">输出高。</param>
-    public SKImage RenderBody(SKBitmap skin, float yawDeg = 45f, float pitchDeg = 15f, bool includeLegs = true, int width = 210, int height = 420)
+    public SKImage RenderBody(SKBitmap skin, float yawDeg = 45f, float pitchDeg = 15f, int width = 210, int height = 420)
     {
         var type = SkinFormat.Detect(skin);
-        var faces = SkinGeometry.BuildBody(type, includeLegs);
+        var faces = SkinGeometry.BuildBody(type);
         return Draw(skin, faces, yawDeg, pitchDeg, width, height);
     }
 
@@ -48,18 +47,18 @@ public sealed class SkinRenderer
     {
         var result = new List<SKImage>(4);
         foreach (var yaw in new[] { 0f, 90f, 180f, 270f })
-            result.Add(RenderBody(skin, yaw, 0f, includeLegs: true, width, height));
+            result.Add(RenderBody(skin, yaw, 0f, width, height));
         return result;
     }
 
     /// <summary>
-    ///     按视图类型调度渲染。<see cref="SkinViewType.Body" /> 为等距上半身（截断腿），
-    ///     其余为 pitch=0 的 3D 正视图（保留立体厚度，不倾斜）。
+    ///     按视图类型调度渲染：<see cref="SkinViewType.Body" /> 与 <see cref="SkinViewType.Cover" />
+    ///     为等距侧身（右上俯视），Cover 经画布裁切为上半身特写；其余为 pitch=0 的 3D 正视图（保留立体厚度，不倾斜）。
     /// </summary>
     public SKImage Render(SKBitmap skin, SkinViewType view) => view switch
     {
         SkinViewType.Face => RenderHead(skin, 0f, 0f),
-        SkinViewType.Body => RenderBody(skin, 45f, 15f, includeLegs: true),
+        SkinViewType.Body => RenderBody(skin, 45f, 15f),
         SkinViewType.Cover => RenderCover(skin),
         SkinViewType.Front => RenderBody(skin, 0f, 0f),
         SkinViewType.Right => RenderBody(skin, 90f, 0f),
@@ -75,7 +74,7 @@ public sealed class SkinRenderer
     private SKImage RenderCover(SKBitmap skin)
     {
         var type = SkinFormat.Detect(skin);
-        var faces = SkinGeometry.BuildBody(type, includeLegs: true);
+        var faces = SkinGeometry.BuildBody(type);
         const int w = 210, h = 420;
         // 上半身理想比例为 0.625(头+躯干 2.5 / 全身 4.0)；在此基础上再收 15%，
         // 截断点上移到大腿根部稍上方，少露腿，更像框住上半身的证件照。
