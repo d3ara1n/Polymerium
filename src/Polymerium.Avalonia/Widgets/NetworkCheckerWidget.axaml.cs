@@ -21,6 +21,7 @@ public partial class NetworkCheckerWidget : WidgetBase
         ("Mojang Meta", "https://launchermeta.mojang.com"),
         ("PrismLauncher Meta", "https://meta.prismlauncher.org"),
         ("Starlight Skins", "https://starlightskins.lunareclipse.studio"),
+        ("Mineatar Skin", "https://api.mineatar.io"),
         ("CurseForge API", "https://api.curseforge.com"),
         ("Modrinth API", "https://api.modrinth.com"),
     ];

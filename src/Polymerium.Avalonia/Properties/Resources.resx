@@ -813,6 +813,9 @@
     <data name="AccountEntryModal_AuthlibServerUrlLabel" xml:space="preserve">
         <value>Server</value>
     </data>
+    <data name="AccountEntryModal_UuidLabelText" xml:space="preserve">
+        <value>UUID</value>
+    </data>
     <data name="ExhibitPackageModal_FilterLabelText" xml:space="preserve">
         <value>Show compatible versions only</value>
     </data>

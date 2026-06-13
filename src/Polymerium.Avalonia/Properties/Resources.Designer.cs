@@ -9319,5 +9319,14 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("AppMenu_FeedbackText", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to UUID.
+        /// </summary>
+        public static string AccountEntryModal_UuidLabelText {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_UuidLabelText", resourceCulture);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
@@ -33,6 +34,7 @@ public partial class AccountModel : ModelBase
             Color2 = Color.FromArgb(255, 121, 255, 207);
             FaceUrl = AccountHelper.GetFaceUrl(uuid);
             BodyUrl = AccountHelper.GetBodyUrl(uuid);
+            SkinViews = AccountHelper.GetBodyViewUrls(uuid);
         }
         else if (type.IsAssignableTo(typeof(AuthlibAccount)))
         {
@@ -41,6 +43,7 @@ public partial class AccountModel : ModelBase
             Color2 = Color.FromArgb(255, 180, 130, 255);
             FaceUrl = AccountHelper.GetFaceUrl(uuid);
             BodyUrl = AccountHelper.GetBodyUrl(uuid);
+            SkinViews = AccountHelper.GetBodyViewUrls(uuid);
         }
         else if (type.IsAssignableTo(typeof(TrialAccount)))
         {
@@ -49,6 +52,7 @@ public partial class AccountModel : ModelBase
             Color2 = Color.FromArgb(255, 246, 211, 101);
             FaceUrl = AccountHelper.GetFaceUrl(userName);
             BodyUrl = AccountHelper.GetBodyUrl(userName);
+            SkinViews = AccountHelper.GetBodyViewUrls(userName);
         }
         else
         {
@@ -57,6 +61,7 @@ public partial class AccountModel : ModelBase
             Color2 = Color.FromArgb(255, 89, 97, 100);
             FaceUrl = AccountHelper.GetFaceUrl(userName);
             BodyUrl = AccountHelper.GetBodyUrl(userName);
+            SkinViews = AccountHelper.GetBodyViewUrls(userName);
         }
     }
 
@@ -75,6 +80,12 @@ public partial class AccountModel : ModelBase
     public Uri FaceUrl { get; }
 
     public Uri BodyUrl { get; }
+
+    /// <summary>
+    ///     The four directional body render URLs (front → right → back → left) consumed by the
+    ///     rotating skin preview. Order matters for a continuous 360° turn.
+    /// </summary>
+    public IReadOnlyList<Uri> SkinViews { get; } = [];
 
     public string? AuthlibServerUrl { get; }
 

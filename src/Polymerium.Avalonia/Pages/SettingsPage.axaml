@@ -675,6 +675,9 @@
                     <HyperlinkButton
                         Content="Starlight API"
                         NavigateUri="https://docs.lunareclipse.studio/" />
+                    <HyperlinkButton
+                        Content="Mineatar API"
+                        NavigateUri="https://mineatar.io/" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Repositories:" />
