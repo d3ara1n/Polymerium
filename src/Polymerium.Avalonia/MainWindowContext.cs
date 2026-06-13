@@ -536,10 +536,7 @@ public partial class MainWindowContext : ObservableObject
     #region Menu Commands
 
     [RelayCommand]
-    private void About()
-    {
-        _notificationService.PopMessage($"{Program.Brand} v{Program.Version}\n{Program.ReleaseDate}", "About");
-    }
+    private void About() => _overlayService.PopModal(new AboutModal());
 
     [RelayCommand]
     private void NewInstance() => _navigationService.Navigate<NewInstancePage>();
@@ -586,8 +583,8 @@ public partial class MainWindowContext : ObservableObject
         );
         await TopLevelHelper.LaunchUriAsync(
             topLevel,
-            new Uri("https://github.com/d3ara1n/Polymerium"),
-            "Failed to open GitHub"
+            new Uri(Program.RepositoryUrl),
+            Resources.MainWindow_OpenGitHubDangerNotificationTitle
         );
     }
 

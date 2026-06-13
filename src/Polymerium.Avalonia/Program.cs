@@ -26,6 +26,17 @@ internal static class Program
 
     public static readonly string ReleaseDate = GitVersionInformation.CommitDate;
 
+    public static readonly string CommitHash = GitVersionInformation.ShortSha;
+
+    public static readonly string RepositoryUrl = "https://github.com/d3ara1n/Polymerium";
+
+    public static readonly string DocumentationUrl = "https://polymerium.dearain.dev";
+
+    public static readonly string IssuesUrl = "https://github.com/d3ara1n/Polymerium/issues";
+
+    public static readonly string LicenseUrl =
+        "https://github.com/d3ara1n/Polymerium/blob/main/LICENSE.txt";
+
     public static readonly string MagicWords = "say u say me";
 
     public static readonly string MirrorChyanCdk = "0001bf520b5a75eb3e61f458";
