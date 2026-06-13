@@ -385,8 +385,8 @@ public partial class SettingsPageModel : ViewModelBase
     [
         new(0, Resources.SettingsPage_BackgroundStyleAutoText),
         new(1, Resources.SettingsPage_BackgroundStyleMicaText, "Windows 11+"),
-        new(2, Resources.SettingsPage_BackgroundStyleAcrylicText, "Windows 10+"),
-        new(3, Resources.SettingsPage_BackgroundStyleBlurText, "macOS/Linux"),
+        new(2, Resources.SettingsPage_BackgroundStyleAcrylicText, "Windows 10+/macOS"),
+        new(3, Resources.SettingsPage_BackgroundStyleBlurText, "Linux"),
         new(4, Resources.SettingsPage_BackgroundStyleNoneText),
     ];
 
