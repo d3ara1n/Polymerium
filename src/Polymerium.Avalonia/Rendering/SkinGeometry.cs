@@ -92,9 +92,9 @@ public static class SkinGeometry
     /// <summary>
     ///     构建全身网格（head + body + 双臂 + 双腿，本体与外层）。
     /// </summary>
-    public static List<SkinFace> BuildBody(SkinType type, bool includeLegs = true)
+    public static List<SkinFace> BuildBody(SkinType type)
     {
-        var parts = type == SkinType.Legacy ? LegacyParts(includeLegs) : NewParts(type, includeLegs);
+        var parts = type == SkinType.Legacy ? LegacyParts() : NewParts(type);
         var faces = new List<SkinFace>();
         foreach (var p in parts)
             AddPart(faces, p, false);
@@ -104,7 +104,7 @@ public static class SkinGeometry
         return faces;
     }
 
-    private static IEnumerable<PartSpec> NewParts(SkinType type, bool includeLegs)
+    private static IEnumerable<PartSpec> NewParts(SkinType type)
     {
         var armTex = type == SkinType.Slim ? SlimArmTex : LegArmTex;
         var armHx = type == SkinType.Slim ? 0.1875f : 0.25f;
@@ -113,25 +113,19 @@ public static class SkinGeometry
         yield return new PartSpec(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 16, 32, true);
         yield return new PartSpec(armHx, 0.75f, 0.25f, new Vector3(armPx, 0, 0), armTex, 32, 48, 48, 48, true);
         yield return new PartSpec(armHx, 0.75f, 0.25f, new Vector3(-armPx, 0, 0), armTex, 40, 16, 40, 32, true);
-        if (includeLegs)
-        {
-            yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 48, true);
-            yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.25f, -1.5f, 0), LegArmTex, 16, 48, 0, 32, true);
-        }
+        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 48, true);
+        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.25f, -1.5f, 0), LegArmTex, 16, 48, 0, 32, true);
     }
 
-    private static IEnumerable<PartSpec> LegacyParts(bool includeLegs)
+    private static IEnumerable<PartSpec> LegacyParts()
     {
         // 旧版无外层（head 除外），左右肢体镜像复用右侧贴图区。
         yield return new PartSpec(0.5f, 0.5f, 0.5f, new Vector3(0, 1.25f, 0), HeadTex, 0, 0, 32, 0, true);
         yield return new PartSpec(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 0, 0, false);
         yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);
         yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);
-        if (includeLegs)
-        {
-            yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
-            yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
-        }
+        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
+        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
     }
 
     private static void AddPart(ICollection<SkinFace> faces, PartSpec p, bool overlay)
