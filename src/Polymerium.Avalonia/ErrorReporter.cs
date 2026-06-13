@@ -13,6 +13,7 @@ internal static class ErrorReporter
         AppDomainUnhandled,
         DispatcherUnhandled,
         TaskUnobserved,
+        NetworkUnobserved,
         LifetimeStartup,
         LifetimeShutdown,
     }
@@ -27,11 +28,6 @@ internal static class ErrorReporter
 
     public static void Report(object core, ErrorReportMeta meta)
     {
-        if (!meta.Critical)
-        {
-            return;
-        }
-
         if (core is Exception ex)
         {
             SentrySdk.CaptureException(
