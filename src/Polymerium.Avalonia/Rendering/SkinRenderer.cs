@@ -103,8 +103,8 @@ public sealed class SkinRenderer
         }
 
         // 本体先画（远→近），外层后画（远→近，叠加在本体之上）。
-        // Linear 双线性采样对应旧 SKFilterQuality.Medium；采样选项随 shader 而非 paint 传递。
-        using var shader = skin.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, new SKSamplingOptions(SKFilterMode.Linear));
+        // Nearest 最近邻采样保留 Minecraft 像素艺术的锐利边缘；采样选项随 shader 而非 paint 传递。
+        using var shader = skin.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, new SKSamplingOptions(SKFilterMode.Nearest));
         using var paint = new SKPaint { IsAntialias = true, Shader = shader };
 
         foreach (var pf in visible.Where(p => !p.Overlay).OrderBy(p => p.Depth))
