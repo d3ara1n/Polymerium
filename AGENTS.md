@@ -54,3 +54,5 @@
 
 - `dotnet build "Polymerium.slnx"` currently emits Avalonia Accelerate Community telemetry notices and a warning in `submodules/Trident.Net`; those are existing build outputs, not necessarily regressions from your change.
 - IDE or lsp will lock the .dll files and cause the build process failed, treat it as a success if there is no more errors.
+
+@ROLLING.md
