@@ -6,6 +6,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Polymerium.Avalonia.Services;
 
 namespace Polymerium.Avalonia;
 
@@ -15,7 +16,11 @@ namespace Polymerium.Avalonia;
 ///     因为 Bitmap 可能仍被 UI 引用，提前释放会导致 ObjectDisposedException。
 ///     GC 的 finalizer 会在所有引用消失后自行回收非托管资源。
 /// </summary>
-public class AppImageLoader(HttpClient httpClient, ILogger<AppImageLoader> logger)
+public class AppImageLoader(
+    HttpClient httpClient,
+    SkinRenderService skinRenderer,
+    ILogger<AppImageLoader> logger
+)
     : BaseWebImageLoader(httpClient, disposeHttpClient: false)
 {
     private const int MAX_IMAGE_COUNT = 256;
@@ -41,7 +46,9 @@ public class AppImageLoader(HttpClient httpClient, ILogger<AppImageLoader> logge
             if (_cache.TryGetValue(url, out Bitmap? cached))
                 return cached;
 
-            var bitmap = await LoadAsync(url, storageProvider).ConfigureAwait(false);
+            var bitmap = url.StartsWith("poly://", StringComparison.Ordinal)
+                             ? await skinRenderer.RenderAsync(url).ConfigureAwait(false)
+                             : await LoadAsync(url, storageProvider).ConfigureAwait(false);
 
             if (bitmap != null)
             {

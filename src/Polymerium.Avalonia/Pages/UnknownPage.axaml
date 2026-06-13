@@ -3,10 +3,12 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:UnknownPageModel"
@@ -730,6 +732,39 @@
             </TabItem>
             <TabItem Header="Leading">
                 <husk:MarkdownViewer Markdown="{Binding MarkdownContent}" />
+            </TabItem>
+            <TabItem Header="Skin">
+                <ItemsControl
+                    Margin="12"
+                    ItemsSource="{Binding SkinViewSamples}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel ItemSpacing="12" LineSpacing="12" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:SkinViewSample">
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Border
+                                    Padding="6"
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Image
+                                        Width="120"
+                                        Height="220"
+                                        Stretch="Uniform"
+                                        async:ImageLoader.Source="{Binding Url}" />
+                                </Border>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Text="{Binding Label}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </TabItem>
         </TabControl>
     </StackPanel>

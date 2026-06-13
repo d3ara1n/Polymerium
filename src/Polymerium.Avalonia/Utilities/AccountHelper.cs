@@ -12,14 +12,6 @@ namespace Polymerium.Avalonia.Utilities;
 
 public static class AccountHelper
 {
-    private static readonly Uri STEVE_FACE_URL =
-        new("https://starlightskins.lunareclipse.studio/render/pixel/8667ba71b85a4004af54457a9734eed7/face",
-            UriKind.Absolute);
-
-    private static readonly Uri STEVE_BODY_URL =
-        new("https://starlightskins.lunareclipse.studio/render/default/8667ba71b85a4004af54457a9734eed7/face",
-            UriKind.Absolute);
-
     public static IAccount ToCooked(PersistenceService.Account raw) =>
         (IAccount?)(raw.Kind switch
         {
@@ -38,8 +30,23 @@ public static class AccountHelper
         DateTimeOffset? lastUsedAt = null)
     {
         var serverUrl = account is AuthlibAccount authlib ? authlib.ServerUrl : null;
-        return new(account.GetType(), account.Uuid, account.Username, enrolledAt ?? DateTimeOffset.Now, lastUsedAt, serverUrl);
+        var skinSource = BuildSkinSource(account);
+        return new(account.GetType(), account.Uuid, account.Username, enrolledAt ?? DateTimeOffset.Now, lastUsedAt, serverUrl, skinSource);
     }
+
+    /// <summary>
+    ///     按账户类型构造本地渲染所需的皮肤数据源（src）：<br />
+    ///     Microsoft → <c>mojang:{uuid}</c>（渲染时查 Mojang sessionserver profile）；<br />
+    ///     Authlib → 账户 <c>SkinUrl</c>（裸 URL），缺失时回落 Steve；<br />
+    ///     Trial/Offline → 内置 Steve。
+    /// </summary>
+    private static string BuildSkinSource(IAccount account) =>
+        account switch
+        {
+            MicrosoftAccount => $"mojang:{account.Uuid}",
+            AuthlibAccount { SkinUrl: { } url } => url,
+            _ => "asset:Steve",
+        };
 
     public static PersistenceService.Account ToRaw(
         IAccount account,
@@ -58,43 +65,38 @@ public static class AccountHelper
 
     public static string ToRaw(IAccount account) => JsonSerializer.Serialize(account, account.GetType());
 
-    public static Uri GetSteveFaceUrl() => STEVE_FACE_URL;
+    /// <summary>
+    ///     构造本地渲染的 <c>poly://skin</c> URI。<paramref name="src" /> 由
+    ///     <see cref="BuildSkinSource" /> 按账户类型产生，由
+    ///     <see cref="Services.SkinRenderService" /> 解析路由后离线渲染。
+    /// </summary>
+    public static Uri GetFaceUrl(string src) =>
+        new($"poly://skin?type=face&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
 
-    public static Uri GetSteveBodyUrl() => STEVE_BODY_URL;
-
-    public static Uri GetFaceUrl(string uuidOrUsername) =>
-        new($"https://starlightskins.lunareclipse.studio/render/pixel/{uuidOrUsername}/face", UriKind.Absolute);
-
-    public static Uri GetBodyUrl(string uuidOrUsername) =>
-        new($"https://starlightskins.lunareclipse.studio/render/default/{uuidOrUsername}/face", UriKind.Absolute);
-
-    private static Uri GetBodyViewUrl(string uuidOrUsername, SkinView view, int scale = 8) =>
-        new(
-            $"https://api.mineatar.io/body/{view.ToString().ToLowerInvariant()}/{uuidOrUsername}?scale={scale}",
-            UriKind.Absolute
-        );
+    public static Uri GetBodyUrl(string src) =>
+        new($"poly://skin?type=body&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
 
     /// <summary>
-    ///     Returns the four directional body render URLs (front → right → back → left) used by
-    ///     the rotating skin preview. Order matters: it forms a full 360° turn.
+    ///     构造半身像（Cover）的本地渲染 URI：与 <see cref="GetBodyUrl" /> 共用全身缩放，
+    ///     头顶贴顶、画布截取上半身，适合方形卡片预览。
     /// </summary>
-    public static IReadOnlyList<Uri> GetBodyViewUrls(string uuidOrUsername, int scale = 8) =>
+    public static Uri GetCoverUrl(string src) =>
+        new($"poly://skin?type=cover&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
+
+    /// <summary>
+    ///     内置 Steve 的全身图，供无皮肤的账户（Trial/Offline）及所有渲染失败的回落使用。
+    /// </summary>
+    public static Uri GetSteveBodyUrl() => GetBodyUrl("asset:Steve");
+
+    /// <summary>
+    ///     四方向全身渲染（Front → Right → Back → Left），顺序构成 360° 旋转，
+    ///     供 <c>RotatingSkinView</c> 循环播放。
+    /// </summary>
+    public static IReadOnlyList<Uri> GetBodyViewUrls(string src) =>
     [
-        GetBodyViewUrl(uuidOrUsername, SkinView.Front, scale),
-        GetBodyViewUrl(uuidOrUsername, SkinView.Right, scale),
-        GetBodyViewUrl(uuidOrUsername, SkinView.Back, scale),
-        GetBodyViewUrl(uuidOrUsername, SkinView.Left, scale),
+        new($"poly://skin?type=front&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
+        new($"poly://skin?type=right&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
+        new($"poly://skin?type=back&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
+        new($"poly://skin?type=left&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
     ];
-
-    /// <summary>
-    ///     The four cardinal directions a skin body render can face, ordered so that rotating
-    ///     through them yields a continuous 360° turn.
-    /// </summary>
-    private enum SkinView
-    {
-        Front,
-        Right,
-        Back,
-        Left,
-    }
 }

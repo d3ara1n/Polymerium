@@ -18,7 +18,8 @@ public partial class AccountModel : ModelBase
         string userName,
         DateTimeOffset enrolledAt,
         DateTimeOffset? lastUsedAt,
-        string? authlibServerUrl = null
+        string? authlibServerUrl = null,
+        string? skinSource = null
     )
     {
         UserName = userName;
@@ -32,37 +33,31 @@ public partial class AccountModel : ModelBase
             TypeName = Resources.Account_Microsoft;
             Color1 = Color.FromArgb(255, 131, 158, 255);
             Color2 = Color.FromArgb(255, 121, 255, 207);
-            FaceUrl = AccountHelper.GetFaceUrl(uuid);
-            BodyUrl = AccountHelper.GetBodyUrl(uuid);
-            SkinViews = AccountHelper.GetBodyViewUrls(uuid);
         }
         else if (type.IsAssignableTo(typeof(AuthlibAccount)))
         {
             TypeName = Resources.Account_AuthlibInjector;
             Color1 = Color.FromArgb(255, 131, 200, 255);
             Color2 = Color.FromArgb(255, 180, 130, 255);
-            FaceUrl = AccountHelper.GetFaceUrl(uuid);
-            BodyUrl = AccountHelper.GetBodyUrl(uuid);
-            SkinViews = AccountHelper.GetBodyViewUrls(uuid);
         }
         else if (type.IsAssignableTo(typeof(TrialAccount)))
         {
             TypeName = Resources.Account_Trial;
             Color1 = Color.FromArgb(255, 253, 160, 133);
             Color2 = Color.FromArgb(255, 246, 211, 101);
-            FaceUrl = AccountHelper.GetFaceUrl(userName);
-            BodyUrl = AccountHelper.GetBodyUrl(userName);
-            SkinViews = AccountHelper.GetBodyViewUrls(userName);
         }
         else
         {
             TypeName = Resources.Account_Offline;
             Color1 = Color.FromArgb(255, 134, 143, 150);
             Color2 = Color.FromArgb(255, 89, 97, 100);
-            FaceUrl = AccountHelper.GetFaceUrl(userName);
-            BodyUrl = AccountHelper.GetBodyUrl(userName);
-            SkinViews = AccountHelper.GetBodyViewUrls(userName);
         }
+
+        var src = skinSource ?? "asset:Steve";
+        FaceUrl = AccountHelper.GetFaceUrl(src);
+        BodyUrl = AccountHelper.GetBodyUrl(src);
+        CoverUrl = AccountHelper.GetCoverUrl(src);
+        SkinViews = AccountHelper.GetBodyViewUrls(src);
     }
 
     #region Direct
@@ -80,6 +75,11 @@ public partial class AccountModel : ModelBase
     public Uri FaceUrl { get; }
 
     public Uri BodyUrl { get; }
+
+    /// <summary>
+    ///     半身像（Cover）渲染 URI，供方形卡片预览（如 <see cref="Controls.AccountEntryButton" />）。
+    /// </summary>
+    public Uri CoverUrl { get; }
 
     /// <summary>
     ///     The four directional body render URLs (front → right → back → left) consumed by the

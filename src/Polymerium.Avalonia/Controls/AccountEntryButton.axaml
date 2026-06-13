@@ -47,7 +47,7 @@
                                     Height="148"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
-                                    async:ImageLoader.Source="{Binding BodyUrl}" />
+                                    async:ImageLoader.Source="{Binding CoverUrl}" />
                             </Border>
                             <StackPanel Spacing="6">
                                 <TextBlock
