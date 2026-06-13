@@ -25,6 +25,13 @@ public class AppImageLoader(
 {
     private const int MAX_IMAGE_COUNT = 256;
     private static readonly TimeSpan SLIDING_EXPIRATION = TimeSpan.FromMinutes(30);
+    private static readonly TimeSpan NEGATIVE_EXPIRATION = TimeSpan.FromMinutes(3);
+
+    /// <summary>
+    ///     负缓存标记：加载失败（网络异常或回落 Steve）会以此占位符写入缓存，
+    ///     使后续命中能区分「缓存了失败」与「缓存了成功」，短期内不再重复请求网络。
+    /// </summary>
+    private sealed record NegativeMarker;
 
     private readonly MemoryCache _cache = new(new MemoryCacheOptions
     {
@@ -41,14 +48,27 @@ public class AppImageLoader(
         IStorageProvider? storageProvider = null
     )
     {
-        try
-        {
-            if (_cache.TryGetValue(url, out Bitmap? cached))
-                return cached;
+            if (_cache.TryGetValue(url, out var cached))
+            {
+                // 负缓存命中：加载过的失败结果在短期内直接返回 null，避免重复请求网络。
+                if (cached is NegativeMarker)
+                    return null;
+                return cached as Bitmap;
+            }
 
-            var bitmap = url.StartsWith("poly://", StringComparison.Ordinal)
+            Bitmap? bitmap;
+            try
+            {
+                bitmap = url.StartsWith("poly://", StringComparison.Ordinal)
                              ? await skinRenderer.RenderAsync(url).ConfigureAwait(false)
                              : await LoadAsync(url, storageProvider).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to load image: {Url}", url);
+                CacheNegative(url);
+                return null;
+            }
 
             if (bitmap != null)
             {
@@ -60,14 +80,24 @@ public class AppImageLoader(
                         .SetSlidingExpiration(SLIDING_EXPIRATION)
                 );
             }
+            else
+            {
+                CacheNegative(url);
+            }
 
             return bitmap;
-        }
-        catch (Exception ex)
-        {
-            logger.LogWarning(ex, "Failed to load image: {Url}", url);
-            return null;
-        }
+    }
+
+    private void CacheNegative(string url)
+    {
+        // 负缓存用绝对过期（非滑动）：保证「网络恢复后最多 N 分钟自动重试」的上限确定，
+        // 不会因频繁访问该 URL 而被无限续期。不计入 SizeLimit，避免挤占成功条目配额。
+        _cache.Set(
+            url,
+            new NegativeMarker(),
+            new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(NEGATIVE_EXPIRATION)
+        );
     }
 
     protected override void Dispose(bool disposing)
