@@ -1,52 +1,93 @@
-﻿<husk:Modal
+<husk:Modal
     x:Class="Polymerium.Avalonia.Modals.AccountEntryModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:accounts="clr-namespace:TridentCore.Core.Accounts;assembly=TridentCore.Core"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="280"
+    Width="540"
     x:DataType="app:AccountModel"
     Background="Transparent"
     mc:Ignorable="d">
-    <Grid
-        ColumnSpacing="12"
-        RowDefinitions="Auto,Auto,*">
-        <Border
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            Background="{StaticResource FlyoutBackgroundBrush}"
-            CornerRadius="{StaticResource MediumCornerRadius}">
+    <Border
+        Background="{StaticResource FlyoutBackgroundBrush}"
+        ClipToBounds="True"
+        CornerRadius="{StaticResource MediumCornerRadius}">
+        <Grid ColumnDefinitions="Auto,*">
+            <!--  Rotating skin preview on a gradient that echoes the account button  -->
+            <Border Grid.Column="0" Padding="10">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="100%,0%" EndPoint="0%,100%">
+                        <GradientStop Offset="0" Color="{Binding Color1}" />
+                        <GradientStop Offset="1" Color="{Binding Color2}" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <app:RotatingSkinView
+                    Fallback="{Binding BodyUrl}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Sources="{Binding SkinViews}" />
+            </Border>
+
+            <!--  Account information  -->
             <StackPanel
-                Margin="{StaticResource ModalContentMargin}"
-                Spacing="24">
-                <StackPanel Spacing="12">
-                    <Panel>
-                        <Button
-                            DockPanel.Dock="Right"
-                            Classes="Small"
-                            HorizontalAlignment="Right"
-                            Command="{Binding $parent[app:AccountEntryModal].Dismiss}"
-                            CornerRadius="{StaticResource FullCornerRadius}"
-                            IsCancel="True">
-                            <fi:SymbolIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="Dismiss" />
-                        </Button>
-                    </Panel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontSize="{StaticResource LargeFontSize}"
-                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{Binding UserName, FallbackValue=Name}" />
-                </StackPanel>
+                Grid.Column="1"
+                Margin="20,18"
+                Spacing="14">
+                <Panel>
+                    <StackPanel Spacing="2">
+                        <TextBlock
+                            FontSize="{StaticResource LargeFontSize}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding UserName, FallbackValue=Name}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding TypeName, FallbackValue=Type}" />
+                    </StackPanel>
+                    <Button
+                        Classes="Small"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Command="{Binding $parent[app:AccountEntryModal].Dismiss}"
+                        CornerRadius="{StaticResource FullCornerRadius}"
+                        IsCancel="True">
+                        <fi:SymbolIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="Dismiss" />
+                    </Button>
+                </Panel>
+
+                <Border Height="1" Background="{StaticResource ControlBorderBrush}" />
+
+                <!--  UUID with copy  -->
+                <DockPanel>
+                    <Button
+                        Classes="Small"
+                        Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                        CommandParameter="{Binding Uuid}"
+                        CornerRadius="{StaticResource FullCornerRadius}"
+                        DockPanel.Dock="Right">
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="Copy" />
+                    </Button>
+                    <StackPanel Margin="0,0,8,0" Spacing="2">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.AccountEntryModal_UuidLabelText}" />
+                        <TextBlock
+                            Text="{Binding Uuid, FallbackValue=069a79f444e94726a5befca90e38aaf5}"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </DockPanel>
+
+                <!--  Timestamps  -->
                 <StackPanel Spacing="4">
                     <DockPanel>
                         <TextBlock
@@ -55,7 +96,6 @@
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{x:Static lang:Resources.AccountEntryModal_EnrolledLabelText}" />
-
                     </DockPanel>
                     <DockPanel>
                         <TextBlock
@@ -66,6 +106,8 @@
                             Text="{x:Static lang:Resources.AccountEntryModal_LastUsedLabelText}" />
                     </DockPanel>
                 </StackPanel>
+
+                <!--  Type-specific banner  -->
                 <Border
                     Padding="12,8"
                     Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
@@ -78,12 +120,10 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding TypeName, FallbackValue=Family}" />
-                                <StackPanel>
-                                    <TextBlock
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.AccountEntryModal_TrialPrompt}"
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.AccountEntryModal_TrialPrompt}"
+                                    TextWrapping="Wrap" />
                             </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:OfflineAccount}">
@@ -91,12 +131,10 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding TypeName, FallbackValue=Offline}" />
-                                <StackPanel>
-                                    <TextBlock
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.AccountEntryModal_OfflinePrompt}"
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.AccountEntryModal_OfflinePrompt}"
+                                    TextWrapping="Wrap" />
                             </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:MicrosoftAccount}">
@@ -104,36 +142,10 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding TypeName, FallbackValue=Microsoft}" />
-                                <StackPanel>
-                                    <TextBlock
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.AccountEntryModal_MicrosoftPrompt}"
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
-                                <StackPanel
-                                    HorizontalAlignment="Right"
-                                    IsVisible="False"
-                                    Orientation="Horizontal"
-                                    Spacing="8">
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        Spacing="4">
-                                        <fi:SymbolIcon
-                                            VerticalAlignment="Center"
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            IconVariant="Filled"
-                                            Symbol="CheckmarkCircle" />
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                            Text="Refreshed" />
-                                    </StackPanel>
-                                    <Button
-                                        Classes="Primary Small"
-                                        HorizontalAlignment="Right"
-                                        Content="Refresh" />
-                                </StackPanel>
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.AccountEntryModal_MicrosoftPrompt}"
+                                    TextWrapping="Wrap" />
                             </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:Type accounts:AuthlibAccount}">
@@ -154,23 +166,6 @@
                     </husk:SwitchContainer>
                 </Border>
             </StackPanel>
-        </Border>
-        <Border
-            Grid.Row="0"
-            Grid.RowSpan="2"
-            Padding="8"
-            HorizontalAlignment="Center"
-            Background="{StaticResource FlyoutBackgroundBrush}"
-            BoxShadow="0 0 4 0 #3F000000"
-            CornerRadius="{StaticResource LargeCornerRadius}">
-            <Border
-                Width="64"
-                Height="64"
-                CornerRadius="{StaticResource SmallCornerRadius}">
-                <Border.Background>
-                    <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
-                </Border.Background>
-            </Border>
-        </Border>
-    </Grid>
+        </Grid>
+    </Border>
 </husk:Modal>

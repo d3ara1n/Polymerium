@@ -55,4 +55,11 @@
 - `dotnet build "Polymerium.slnx"` currently emits Avalonia Accelerate Community telemetry notices and a warning in `submodules/Trident.Net`; those are existing build outputs, not necessarily regressions from your change.
 - IDE or lsp will lock the .dll files and cause the build process failed, treat it as a success if there is no more errors.
 
+## Code Organization
+
+- **One type per `.cs` file.** Never declare more than one top-level type in a single file. A new type has only two valid homes: its own file, or nested inside the type it belongs to.
+- **Choose by semantic ownership, not by visibility or who references it.** The question is whether the type is that other type's own concept — not whether it is public or used elsewhere.
+  - **Nested type (类中类)** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
+  - **Own file** when it is a shared model — a type with its own data/properties that View, ViewModel, and Services may all consume is a standalone entity and gets its own file (under `Models/` for models). Example: `SkinFrame` is a model the view binds to and view models build, so it lives in `Models/SkinFrame.cs`, not tucked inside the control.
+
 @ROLLING.md

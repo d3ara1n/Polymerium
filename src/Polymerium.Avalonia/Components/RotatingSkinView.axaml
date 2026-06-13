@@ -1,0 +1,99 @@
+<UserControl
+    x:Class="Polymerium.Avalonia.Components.RotatingSkinView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
+    Width="220"
+    PointerEntered="OnPointerEntered"
+    PointerExited="OnPointerExited">
+    <!--
+        Width is fixed so the inner '*' column has a deterministic available width; without it,
+        placing this control inside a parent Auto column collapses the '*' column to zero and the
+        skin images vanish.
+    -->
+    <Grid RowDefinitions="Auto,Auto">
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="Auto,*,Auto"
+            HorizontalAlignment="Center">
+            <Button
+                Name="PreviousButton"
+                Classes="Small"
+                Width="28"
+                Height="28"
+                VerticalAlignment="Center"
+                Click="OnPreviousClicked"
+                CornerRadius="{StaticResource FullCornerRadius}">
+                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ChevronLeft" />
+            </Button>
+            <ItemsControl
+                Name="FramesList"
+                Grid.Column="1"
+                Width="160"
+                Height="200"
+                HorizontalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:SkinFrameModel">
+                        <Image
+                            Width="140"
+                            Height="190"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Stretch="Uniform"
+                            async:ImageLoader.Source="{Binding Url, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}"
+                            Opacity="{Binding FrameOpacity}">
+                            <Image.Transitions>
+                                <Transitions>
+                                    <DoubleTransition
+                                        Easing="SineEaseInOut"
+                                        Property="Opacity"
+                                        Duration="0:0:0.45" />
+                                </Transitions>
+                            </Image.Transitions>
+                        </Image>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button
+                Name="NextButton"
+                Grid.Column="2"
+                Classes="Small"
+                Width="28"
+                Height="28"
+                VerticalAlignment="Center"
+                Click="OnNextClicked"
+                CornerRadius="{StaticResource FullCornerRadius}">
+                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ChevronRight" />
+            </Button>
+        </Grid>
+
+        <ItemsControl
+            Name="Indicators"
+            Grid.Row="1"
+            Margin="0,6,0,0"
+            HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="6" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:SkinFrameModel">
+                    <Ellipse
+                        Width="6"
+                        Height="6"
+                        Fill="{StaticResource ControlSecondaryForegroundBrush}"
+                        Opacity="{Binding IndicatorOpacity}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

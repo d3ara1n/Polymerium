@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Polymerium.Avalonia.Models;
@@ -66,4 +67,34 @@ public static class AccountHelper
 
     public static Uri GetBodyUrl(string uuidOrUsername) =>
         new($"https://starlightskins.lunareclipse.studio/render/default/{uuidOrUsername}/face", UriKind.Absolute);
+
+    private static Uri GetBodyViewUrl(string uuidOrUsername, SkinView view, int scale = 8) =>
+        new(
+            $"https://api.mineatar.io/body/{view.ToString().ToLowerInvariant()}/{uuidOrUsername}?scale={scale}",
+            UriKind.Absolute
+        );
+
+    /// <summary>
+    ///     Returns the four directional body render URLs (front → right → back → left) used by
+    ///     the rotating skin preview. Order matters: it forms a full 360° turn.
+    /// </summary>
+    public static IReadOnlyList<Uri> GetBodyViewUrls(string uuidOrUsername, int scale = 8) =>
+    [
+        GetBodyViewUrl(uuidOrUsername, SkinView.Front, scale),
+        GetBodyViewUrl(uuidOrUsername, SkinView.Right, scale),
+        GetBodyViewUrl(uuidOrUsername, SkinView.Back, scale),
+        GetBodyViewUrl(uuidOrUsername, SkinView.Left, scale),
+    ];
+
+    /// <summary>
+    ///     The four cardinal directions a skin body render can face, ordered so that rotating
+    ///     through them yields a continuous 360° turn.
+    /// </summary>
+    private enum SkinView
+    {
+        Front,
+        Right,
+        Back,
+        Left,
+    }
 }
