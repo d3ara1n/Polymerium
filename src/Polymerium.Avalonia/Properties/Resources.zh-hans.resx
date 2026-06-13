@@ -3087,4 +3087,34 @@
     <data name="AppMenu_FeedbackText" xml:space="preserve">
         <value>在 GitHub 上反馈</value>
     </data>
+    <data name="AboutModal_Slogan" xml:space="preserve">
+        <value>重新定义游戏管理的下一代 Minecraft 实例管理器。</value>
+    </data>
+    <data name="AboutModal_CommitLabel" xml:space="preserve">
+        <value>提交</value>
+    </data>
+    <data name="AboutModal_RuntimeLabel" xml:space="preserve">
+        <value>运行时</value>
+    </data>
+    <data name="AboutModal_PlatformLabel" xml:space="preserve">
+        <value>平台</value>
+    </data>
+    <data name="AboutModal_RepositoryLabel" xml:space="preserve">
+        <value>仓库</value>
+    </data>
+    <data name="AboutModal_DocumentationLabel" xml:space="preserve">
+        <value>文档</value>
+    </data>
+    <data name="AboutModal_IssuesLabel" xml:space="preserve">
+        <value>问题反馈</value>
+    </data>
+    <data name="AboutModal_LicenseLabel" xml:space="preserve">
+        <value>许可证</value>
+    </data>
+    <data name="AboutModal_OpenLinkDangerNotificationTitle" xml:space="preserve">
+        <value>打开链接失败</value>
+    </data>
+    <data name="MainWindow_OpenGitHubDangerNotificationTitle" xml:space="preserve">
+        <value>打开 GitHub 失败</value>
+    </data>
 </root>

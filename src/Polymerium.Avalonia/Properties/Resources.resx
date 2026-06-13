@@ -2440,9 +2440,6 @@
     <data name="InstanceDashboardPage_SearchPlaceholder" xml:space="preserve">
         <value>Search logs...</value>
     </data>
-    <data name="InstanceDashboardPage_Test" xml:space="preserve">
-        <value />
-    </data>
     <data name="NotificationSidebar_NotificationsLabelText" xml:space="preserve">
         <value>Notifications</value>
     </data>
@@ -3098,5 +3095,35 @@ Affected entries: {0}
     </data>
     <data name="AppMenu_FeedbackText" xml:space="preserve">
         <value>Feedback on GitHub</value>
+    </data>
+    <data name="AboutModal_Slogan" xml:space="preserve">
+        <value>A next-generation Minecraft instance manager that thinks differently about game management.</value>
+    </data>
+    <data name="AboutModal_CommitLabel" xml:space="preserve">
+        <value>Commit</value>
+    </data>
+    <data name="AboutModal_RuntimeLabel" xml:space="preserve">
+        <value>Runtime</value>
+    </data>
+    <data name="AboutModal_PlatformLabel" xml:space="preserve">
+        <value>Platform</value>
+    </data>
+    <data name="AboutModal_RepositoryLabel" xml:space="preserve">
+        <value>Repository</value>
+    </data>
+    <data name="AboutModal_DocumentationLabel" xml:space="preserve">
+        <value>Documentation</value>
+    </data>
+    <data name="AboutModal_IssuesLabel" xml:space="preserve">
+        <value>Report Issue</value>
+    </data>
+    <data name="AboutModal_LicenseLabel" xml:space="preserve">
+        <value>License</value>
+    </data>
+    <data name="AboutModal_OpenLinkDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to open link</value>
+    </data>
+    <data name="MainWindow_OpenGitHubDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to open GitHub</value>
     </data>
 </root>

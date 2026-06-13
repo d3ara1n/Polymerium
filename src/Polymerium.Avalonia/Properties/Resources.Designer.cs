@@ -60,6 +60,96 @@ namespace Polymerium.Avalonia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_Slogan {
+            get {
+                return ResourceManager.GetString("AboutModal_Slogan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_CommitLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_CommitLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_RuntimeLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_RuntimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_PlatformLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_PlatformLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_RepositoryLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_RepositoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_DocumentationLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_DocumentationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_IssuesLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_IssuesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_LicenseLabel {
+            get {
+                return ResourceManager.GetString("AboutModal_LicenseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string AboutModal_OpenLinkDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("AboutModal_OpenLinkDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string MainWindow_OpenGitHubDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_OpenGitHubDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Microsoft.
         /// </summary>
         public static string Account_Microsoft {
@@ -2153,15 +2243,6 @@ namespace Polymerium.Avalonia.Properties {
         public static string InstanceDashboardPage_SuccessRateLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_SuccessRateLabelText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string InstanceDashboardPage_Test {
-            get {
-                return ResourceManager.GetString("InstanceDashboardPage_Test", resourceCulture);
             }
         }
         

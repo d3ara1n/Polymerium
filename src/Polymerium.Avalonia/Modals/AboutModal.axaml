@@ -1,0 +1,154 @@
+<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.AboutModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="520"
+    MaxHeight="600"
+    d:DesignHeight="560"
+    d:DesignWidth="520"
+    mc:Ignorable="d">
+    <DockPanel>
+        <!--  Close Button  -->
+        <Button
+            DockPanel.Dock="Top"
+            HorizontalAlignment="Right"
+            Classes="Small"
+            Command="{Binding $parent[app:AboutModal].Dismiss}"
+            CornerRadius="{StaticResource FullCornerRadius}"
+            IsCancel="True">
+            <fi:SymbolIcon
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource MediumFontSize}"
+                Symbol="Dismiss" />
+        </Button>
+
+        <!--  Brand Block  -->
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="14">
+
+            <!--  App Icon  -->
+            <Border
+                Width="96"
+                Height="96"
+                HorizontalAlignment="Center"
+                CornerRadius="{StaticResource LargeCornerRadius}"
+                ClipToBounds="True">
+                <Image Source="/Assets/Icon.png" Stretch="UniformToFill" />
+            </Border>
+
+            <!--  Brand Name  -->
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="30"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{Binding $parent[app:AboutModal].Brand}" />
+
+            <!--  Slogan  -->
+            <TextBlock
+                Margin="24,0"
+                HorizontalAlignment="Center"
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Text="{x:Static lang:Resources.AboutModal_Slogan}" />
+
+            <!--  Version / Build Date Tags  -->
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="8">
+                <husk:Tag Classes="Primary">
+                    <TextBlock Text="{Binding $parent[app:AboutModal].Version, StringFormat=v{0}}" />
+                </husk:Tag>
+                <husk:Tag>
+                    <TextBlock Text="{Binding $parent[app:AboutModal].ReleaseDate}" />
+                </husk:Tag>
+            </StackPanel>
+
+            <!--  Info Rows  -->
+            <Grid
+                ColumnDefinitions="100,*"
+                ColumnSpacing="12"
+                RowDefinitions="Auto,Auto,Auto"
+                RowSpacing="6">
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.AboutModal_CommitLabel}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding $parent[app:AboutModal].CommitHash}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.AboutModal_RuntimeLabel}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding $parent[app:AboutModal].Runtime}" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.AboutModal_PlatformLabel}" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding $parent[app:AboutModal].Platform}" />
+            </Grid>
+
+            <!--  Links  -->
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="8">
+                <Button
+                    Command="{Binding $parent[app:AboutModal].OpenLinkCommand}"
+                    CommandParameter="{Binding $parent[app:AboutModal].RepositoryUrl}">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Branch" />
+                        <TextBlock Text="{x:Static lang:Resources.AboutModal_RepositoryLabel}" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Command="{Binding $parent[app:AboutModal].OpenLinkCommand}"
+                    CommandParameter="{Binding $parent[app:AboutModal].DocumentationUrl}">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Document" />
+                        <TextBlock Text="{x:Static lang:Resources.AboutModal_DocumentationLabel}" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Command="{Binding $parent[app:AboutModal].OpenLinkCommand}"
+                    CommandParameter="{Binding $parent[app:AboutModal].IssuesUrl}">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Question" />
+                        <TextBlock Text="{x:Static lang:Resources.AboutModal_IssuesLabel}" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Command="{Binding $parent[app:AboutModal].OpenLinkCommand}"
+                    CommandParameter="{Binding $parent[app:AboutModal].LicenseUrl}">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="LockClosed" />
+                        <TextBlock Text="{x:Static lang:Resources.AboutModal_LicenseLabel}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</husk:Modal>
