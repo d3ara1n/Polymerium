@@ -35,12 +35,13 @@ public static class AccountHelper
     }
 
     /// <summary>
-    ///     按账户类型构造本地渲染所需的皮肤数据源（src）：<br />
+    ///     按账户类型构造本地渲染所需的皮肤数据源（src），是 <c>IAccount → src</c> 的唯一入口：<br />
     ///     Microsoft → <c>mojang:{uuid}</c>（渲染时查 Mojang sessionserver profile）；<br />
     ///     Authlib → 账户 <c>SkinUrl</c>（裸 URL），缺失时回落 Steve；<br />
-    ///     Trial/Offline → 内置 Steve。
+    ///     Trial/Offline → 内置 Steve。<br />
+    ///     所有 <see cref="GetFaceUrl" />/<see cref="GetBodyUrl" /> 等都消费此函数产出的 src，避免在调用方散落账户→src 的组装。
     /// </summary>
-    private static string BuildSkinSource(IAccount account) =>
+    public static string BuildSkinSource(IAccount account) =>
         account switch
         {
             MicrosoftAccount => $"mojang:{account.Uuid}",

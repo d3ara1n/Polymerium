@@ -24,7 +24,7 @@ public sealed class SkinCamera
     public int Height { get; set; }
 
     /// <summary>模型相对画布的缩放系数（0~1，1.0 = 填满贴边无留白）。</summary>
-    public float Margin { get; set; } = 1f;
+    public float FitScale { get; set; } = 1f;
 
     /// <summary>模型在画布中的垂直对齐方式，影响 <see cref="Fit" /> 的垂直平移。</summary>
     public VerticalAlign Alignment { get; set; } = VerticalAlign.Center;
@@ -63,7 +63,7 @@ public sealed class SkinCamera
         var sizeY = maxy - miny;
         var sx = sizeX > 0 ? Width / sizeX : 1f;
         var sy = sizeY > 0 ? Height / sizeY : 1f;
-        var scale = MathF.Min(sx, sy) * Margin;
+        var scale = MathF.Min(sx, sy) * FitScale;
 
         var cx = (minx + maxx) * 0.5f;
         var cy = (miny + maxy) * 0.5f;

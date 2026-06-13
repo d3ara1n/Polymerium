@@ -33,6 +33,7 @@ public sealed class SkinRenderService(
 {
     private const string Scheme = "poly://";
     private const string SteveAssetUri = "avares://Polymerium/Assets/Images/Skins/Steve.png";
+    private const string AlexAssetUri = "avares://Polymerium/Assets/Images/Skins/Alex.png";
 
     private const string MojangProfileApi =
         "https://sessionserver.minecraft.net/session/minecraft/profile/";
@@ -66,8 +67,8 @@ public sealed class SkinRenderService(
         SKImage image;
         lock (renderer)
         {
-            // SkinRenderer 本身无状态，但 SkiaSharp 的位图/画布操作共享底层句柄，
-            // 串行化渲染以避免并发句柄竞争。皮肤图很小，锁开销可忽略。
+            // SkiaSharp 的位图/画布操作共享底层句柄，串行化渲染以避免并发句柄竞争。
+            // 皮肤图很小，锁开销可忽略。
             // type 字符串直接对应 SkinViewType 枚举名（不区分大小写）；
             // 不识别时回落 Body（等距全身），与历史默认行为一致。
             var view = Enum.TryParse<SkinViewType>(type, ignoreCase: true, out var v)
@@ -99,7 +100,7 @@ public sealed class SkinRenderService(
                 return await LoadMojangSkinAsync(src["mojang:".Length..]).ConfigureAwait(false);
 
             if (src.StartsWith("asset:", StringComparison.Ordinal))
-                return TryLoadAsset(SteveAssetUri);
+                return TryLoadAsset(ResolveAssetUri(src["asset:".Length..]));
 
             // 裸 http(s) URL：直接下载原始皮肤展开图（Authlib 账户的 SkinUrl）。
             return await httpClient.GetByteArrayAsync(src).ConfigureAwait(false);
@@ -170,7 +171,17 @@ public sealed class SkinRenderService(
         return Encoding.UTF8.GetString(Convert.FromBase64String(base64));
     }
 
-    private static byte[]? TryLoadAsset(string uri)
+    /// <summary>
+    ///     解析 <c>asset:{key}</c> 的 key 为内置皮肤资源 URI：
+    ///     <c>Steve</c>/<c>Alex</c>（不区分大小写）各自映射，其余一律回落 Steve。
+    /// </summary>
+    private static string ResolveAssetUri(string key) => key.ToLowerInvariant() switch
+    {
+        "alex" => AlexAssetUri,
+        _ => SteveAssetUri,
+    };
+
+    private byte[]? TryLoadAsset(string uri)
     {
         try
         {
@@ -179,8 +190,9 @@ public sealed class SkinRenderService(
             stream.CopyTo(ms);
             return ms.ToArray();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            logger.LogWarning(ex, "Built-in skin asset unavailable: {Uri}", uri);
             return null;
         }
     }
