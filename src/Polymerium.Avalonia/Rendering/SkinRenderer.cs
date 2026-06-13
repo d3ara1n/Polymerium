@@ -7,22 +7,6 @@ using SkiaSharp;
 namespace Polymerium.Avalonia.Rendering;
 
 /// <summary>
-///     皮肤渲染视图类型，对应 poly://skin?type= 的取值。
-///     <see cref="Body" /> 与 <see cref="Cover" /> 为等距侧身（右上俯视），其中 Body 含双腿、Cover 截断双腿为上半身特写；
-///     其余均为 pitch=0 的 3D 正视图（保留立体厚度，不倾斜）。
-/// </summary>
-public enum SkinViewType
-{
-    Face,
-    Body,
-    Cover,
-    Front,
-    Right,
-    Back,
-    Left,
-}
-
-/// <summary>
 ///     纯软件 Minecraft 皮肤 3D 渲染器：输入皮肤 PNG，输出头像与全身预览。
 ///     不依赖任何外部网络渲染服务。
 /// </summary>
@@ -120,8 +104,9 @@ public sealed class SkinRenderer
         }
 
         // 本体先画（远→近），外层后画（远→近，叠加在本体之上）。
-        using var shader = SKShader.CreateBitmap(skin, SKShaderTileMode.Clamp, SKShaderTileMode.Clamp);
-        using var paint = new SKPaint { IsAntialias = true, Shader = shader, FilterQuality = SKFilterQuality.Medium };
+        // Linear 双线性采样对应旧 SKFilterQuality.Medium；采样选项随 shader 而非 paint 传递。
+        using var shader = skin.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, new SKSamplingOptions(SKFilterMode.Linear));
+        using var paint = new SKPaint { IsAntialias = true, Shader = shader };
 
         foreach (var pf in visible.Where(p => !p.Overlay).OrderBy(p => p.Depth))
             DrawFace(canvas, skin, pf.Face, pf.Pts, paint);

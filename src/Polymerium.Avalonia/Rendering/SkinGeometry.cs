@@ -4,30 +4,6 @@ using System.Numerics;
 namespace Polymerium.Avalonia.Rendering;
 
 /// <summary>
-///     一个待渲染的四边形面：4 个模型空间顶点 + 4 个皮肤像素 UV，标记是否为外层。
-/// </summary>
-public readonly record struct SkinFace(
-    Vector3 V0, Vector3 V1, Vector3 V2, Vector3 V3,
-    Vector2 U0, Vector2 U1, Vector2 U2, Vector2 U3,
-    bool Overlay);
-
-/// <summary>
-///     轴对齐包围盒，用于投影时缩放适配。
-/// </summary>
-public readonly record struct BoundingBox(Vector3 Min, Vector3 Max)
-{
-    public Vector3 Center => (Min + Max) * 0.5f;
-
-    public Vector3[] Corners() =>
-    [
-        new(Min.X, Min.Y, Min.Z), new(Max.X, Min.Y, Min.Z),
-        new(Min.X, Max.Y, Min.Z), new(Max.X, Max.Y, Min.Z),
-        new(Min.X, Min.Y, Max.Z), new(Max.X, Min.Y, Max.Z),
-        new(Min.X, Max.Y, Max.Z), new(Max.X, Max.Y, Max.Z),
-    ];
-}
-
-/// <summary>
 ///     Minecraft 玩家模型的几何与贴图 UV 定义，全部坐标已对齐 Mojang 1.8+ 规格。
 /// </summary>
 public static class SkinGeometry

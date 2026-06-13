@@ -42,7 +42,7 @@ public partial class AccountsPageModel(
             notificationService.PopMessage(Resources.AccountsPage_AccountAddingDangerNotificationMessage,
                                            Resources.AccountsPage_AccountAddingDangerNotificationTitle,
                                            GrowlLevel.Danger,
-                                           thumbnail: AccountHelper.GetFaceUrl(account.Uuid));
+                                           thumbnail: AccountHelper.GetFaceUrl(AccountHelper.BuildSkinSource(account)));
             return false;
         }
 
