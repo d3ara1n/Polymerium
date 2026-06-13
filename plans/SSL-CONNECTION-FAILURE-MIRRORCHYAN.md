@@ -1,7 +1,7 @@
 # POLYMERIUM-21: SSL Connection Failure in MirrorChyan Update Check
 
 > **Sentry**: https://gravitylab.sentry.io/issues/POLYMERIUM-21
-> **Status**: unresolved (new)
+> **Status**: resolved (code-side mitigation 2026-06-13)
 > **Date**: 2026-06-09
 > **Release**: 1.9.0
 
@@ -55,11 +55,31 @@ UpdateService.StartAsync
 ### C. 网络重试 / 更优雅的错误处理
 对 MirrorChyan 的 HTTP 调用增加更健壮的重试逻辑或降级策略。
 
+> **已排除**：调查确认 Polymerium 的 `Startup.cs` 已通过 `ConfigureHttpClientDefaults` + `AddTransientHttpErrorPolicy` 为所有经 `IHttpClientFactory` 创建的 client（包括 MirrorChyan.Net 注册的 Refit client）配置了 3 次指数退避重试。而复现场景（用户开启 VPN/梯子）属于确定性网络失败——TLS 握手被同一中间人持续破坏，重试必然全部失败且令用户多等 ~14s，反而有害。故本项否决。
+
 ### D. 标记为 ignored
 如果只发生一次且不再复现，说明是用户侧网络问题，可以 ignored。
 
 ---
 
+## 调查结论（2026-06-13）
+
+逐行复核 `VelopackExtension.MirrorChyan` 与 `MirrorChyan.Net` 两个仓库的调用链后确认：
+- `MirrorChyanSource.GetReleaseFeed`、`MirrorChyanService.GetLatestVersionAsync` 全部为干净 `await` + `ConfigureAwait(false)`，**无 fire-and-forget**；
+- 该链路本身已由 Polymerium 全局 Polly 重试保护（见上 C 项结论）；
+- 因此孤儿 Task 不源自这条链路，最大嫌疑是 Velopack `UpdateManager.CheckForUpdatesAsync()` 内部（无源码，未坐实）。
+
+原 Decision 中「排查 MirrorChyan 扩展的 Task observe 问题」已排除——扩展本身无 observe 缺陷。
+
 ## Decision
 
-暂缓，日后排查 Velopack MirrorChyan 扩展中 Task observe 的问题。当前只发生 1 次。
+代码侧已处理（2026-06-13）。
+
+在 `Polymerium.Avalonia/App.axaml.cs` 的 `TaskScheduler.UnobservedTaskException` handler 中增加网络类异常的分级处理：
+- 沿异常链（含 `AggregateException` / `InnerException`，带循环引用保护）判断是否含 `HttpRequestException` / `SocketException` / `AuthenticationException` / `IOException`；
+- 命中则 `e.SetObserved()` **阻止进程崩溃**，但仍以 `SentryLevel.Warning` 上报 Sentry 并打 tag `polymerium.source = NetworkUnobserved`，**保留对真正网络代码错误的可观测性**；
+- 非网络类异常维持原 `ErrorReporter.Report`（critical）路径不变。
+
+这样用户开启梯子/代理导致 TLS 握手失败时不再崩溃、不再污染 Sentry 关键流，而真正的网络代码错误仍可按该 source / level 筛出排查。
+
+Sentry issue POLYMERIUM-21 可在 Web 端 resolve/ignore，代码侧已不会让其再进入关键流。

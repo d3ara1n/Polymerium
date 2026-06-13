@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -35,6 +39,26 @@ public class App : Application
                 )
             );
         TaskScheduler.UnobservedTaskException += (_, e) =>
+        {
+            // 网络/传输层异常（代理、VPN/梯子、防火墙导致的 TLS 握手损坏等）
+            // 属于用户环境问题而非应用 bug，吞掉以避免崩溃，但仍以 Warning 级别上报 Sentry，
+            // 便于区分真正的网络代码错误与用户侧网络环境问题。
+            if (IsNetworkRelatedException(e.Exception))
+            {
+                e.SetObserved();
+                ErrorReporter.Report(
+                    e.Exception,
+                    new(
+                        ErrorReporter.ErrorReportSource.NetworkUnobserved,
+                        Phase: "runtime",
+                        Critical: false,
+                        Terminating: false,
+                        Level: SentryLevel.Warning
+                    )
+                );
+                return;
+            }
+
             ErrorReporter.Report(
                 e.Exception,
                 new(
@@ -45,6 +69,7 @@ public class App : Application
                     Level: SentryLevel.Warning
                 )
             );
+        };
         Dispatcher.UIThread.UnhandledException += (_, e) =>
             ErrorReporter.Report(
                 e.Exception,
@@ -73,6 +98,52 @@ public class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    /// <summary>
+    ///     判断异常链中是否包含网络/传输层异常。
+    ///     用于在 UnobservedTaskException 中区分用户环境导致的网络失败（代理、VPN、防火墙破坏 TLS 握手等），
+    ///     这类异常不是应用 bug，吞掉后仍以 Warning 级别上报 Sentry，便于与真正的应用 bug 区分排查。
+    /// </summary>
+    private static bool IsNetworkRelatedException(Exception? exception)
+    {
+        HashSet<Exception>? visited = null;
+        while (exception is not null)
+        {
+            // 循环引用保护
+            visited ??= [];
+            if (!visited.Add(exception))
+            {
+                break;
+            }
+
+            // HttpRequestException(含 SSL/认证失败)、SocketException、AuthenticationException 均视为传输层问题
+            // 不纳入 IOException，避免本地文件系统异常（文件缺失/损坏等）被误判为网络问题而吞掉
+            if (
+                exception is HttpRequestException
+                or SocketException
+                or AuthenticationException
+            )
+            {
+                return true;
+            }
+
+            // AggregateException: 展开内层异常逐个检查
+            if (exception is AggregateException ae)
+            {
+                foreach (var inner in ae.InnerExceptions)
+                {
+                    if (IsNetworkRelatedException(inner))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            exception = exception.InnerException;
+        }
+
+        return false;
     }
 
     private static async Task StartLifetimeServicesAsync(
