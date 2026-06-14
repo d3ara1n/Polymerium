@@ -1,5 +1,13 @@
 # Code Review — 2025-06-11
 
+> **更新（2025-06-14）：** 下列问题已在本轮处理：
+> - ✅ #7（ImporterAgent 资源释放）
+> - ✅ #8（ProfileManager 的 sync-over-async）— **彻底解决，方式与 Review 原建议不同。** Review 只看到 `Add` 的 `.Wait()`，但核实后整个 `SaveAsync` 链都是「写几 KB 本地 JSON、async 获益≈0」的伪异步。改为把 `ProfileHandle.SaveAsync` 整体收敛为同步 `Save`（`File.WriteAllText`），`Add`/`Update`/`Dispose` 的 `.Wait()` 全部消除，`ProfileGuard`/`ProfileHandle` 仍保留 `IAsyncDisposable` 契约（UI 层 `await using` 零改动）。顺带修掉 `Update` 的同款 `.Wait()`（Review 未列）。
+> - ✅ #17（CompressedProfilePack.Open null guard）
+> - ✅ #29（ProfileManager.Dispose 误导性 guard）
+> - ✅ #30（McpHost.RunAsync 退出码）
+> - ⏭️ #34（TridentExporter 中文注释）— 按维护者意愿**保留**，非「因为是中文」而是该条本身为开发期备注；如需清理另议。
+
 Build status: ✅ **succeeded** (0 warnings, 0 errors)
 
 Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
@@ -50,19 +58,22 @@ Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
 - **风险:** 中途 swap 导致不一致的文件路径。
 - **建议:** 用 `Lazy<PathDef>` 或 immutability singleton，setter 设为 private。
 
-### 7. ImporterAgent.ExtractFilesAsync 资源泄漏
+### 7. ImporterAgent.ExtractFilesAsync 资源泄漏 ✅ 已解决
 
 - **File:** `submodules/Trident.Net/src/TridentCore.Core/Services/ImporterAgent.cs:44-52`
 - **Detail:** 手动 `.Close()` 而不使用 `using`。若 `CopyToAsync` 抛异常，流不释放。
 - **风险:** 文件句柄泄漏。
 - **建议:** 替换为 `await using var fromStream = ...` 和 `await using var file = ...`。
 
-### 8. ProfileManager.Add 同步 .Wait() + 重复 SaveAsync
+### 8. ProfileManager.Add 同步 .Wait() + 重复 SaveAsync ✅ 彻底解决
 
 - **File:** `submodules/Trident.Net/src/TridentCore.Core/Services/ProfileManager.cs:105-108`
 - **Detail:** `SaveAsync()` 被调用了两次（一次在 `_profiles.Add` 前，一次在后），且使用 `.Wait()`。
 - **风险:** 死锁风险 + 重复 I/O。
 - **建议:** 改为 async、删除第一次重复 save。
+- **实际处理（2025-06-14）：** 两步彻底解决。
+  1. 删除 `Add` 中 add 后那次重复 save（保留 add 前那次）——顺序为「先持久化、再入内存、再释放 key」，保证 save 失败时内存与 key 不被推进、可重试。
+  2. 将 `ProfileHandle.SaveAsync` 整体收敛为同步 `Save`（`File.WriteAllText`），消除 `Add`/`Update` 的 `.Wait()` sync-over-async。`ProfileGuard`/`ProfileHandle` 仍保留 `IAsyncDisposable` 契约（内部同步完成）。顺带修掉 `Update` 的同款 `.Wait()`（Review 未列）。
 
 ---
 
@@ -124,7 +135,7 @@ Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
 - **风险:** Mock/stub 必须实现全部 16 个方法。
 - **建议:** 拆分为 `IRepositoryQueryService`、`IRepositoryResolutionService`、`IRepositoryInfoService`。
 
-### 17. CompressedProfilePack.Open NRE via !
+### 17. CompressedProfilePack.Open NRE via ! ✅ 已解决
 
 - **File:** `submodules/Trident.Net/src/TridentCore.Abstractions/Importers/CompressedProfilePack.cs:25`
 - **Detail:** `_archive.GetEntry(fileName)!.Open()` — `GetEntry` 返回 null 时抛出无意义的 NRE。
@@ -154,8 +165,8 @@ Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
 | 26 | `DataService.GetOrCreate` 缓存 faulted Task — 后续命中返回失败任务 | `Services/DataService.cs:183-191` |
 | 27 | `AssetModHelper` 大量静默 `catch {}`（~18 处）— 调试困难 | `Utilities/AssetModHelper.cs` |
 | 28 | `ModrinthExporter/Importer` 硬编码 URL path slicing — CDN URL 格式变化时脆弱 | `submodules/Trident.Net/.../ModrinthExporter.cs:67-75` |
-| 29 | `ProfileManager.Dispose` 结束后设 `_isDisposing = false` — 误导 guard | `submodules/Trident.Net/.../ProfileManager.cs:192` |
-| 30 | `McpHost.RunAsync` 即使失败也始终返回 0 | `submodules/Trident.Net/.../McpHost.cs:10-28` |
+| 29 | `ProfileManager.Dispose` 结束后设 `_isDisposing = false` — 误导 guard ✅ 已解决 | `submodules/Trident.Net/.../ProfileManager.cs:192` |
+| 30 | `McpHost.RunAsync` 即使失败也始终返回 0 ✅ 已解决 | `submodules/Trident.Net/.../McpHost.cs:10-28` |
 
 ---
 
@@ -166,7 +177,7 @@ Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
 | 31 | `BuildAvaloniaApp()` 是 public — 仅设计器需要 | `Program.cs:157` |
 | 32 | 硬编码密钥 `MagicWords` / `MirrorChyanCdk` — 应移入配置 | `Program.cs:19,21` |
 | 33 | `TopLevelHelper` 使用废弃的 `TopLevel.Clipboard` API | `Utilities/TopLevelHelper.cs:118` |
-| 34 | TridentExporter 中文注释遗留 | `submodules/Trident.Net/.../TridentExporter.cs:16` |
+| 34 | TridentExporter 中文注释遗留 ⏭️ 维护者决定保留 | `submodules/Trident.Net/.../TridentExporter.cs:16` |
 | 35 | `ISnapshotStore` 同步接口处理可能 I/O 的操作 | `submodules/Trident.Net/.../ISnapshotStore.cs` |
 | 36 | Exporter/Importer 接口缺少 `CancellationToken` | `submodules/Trident.Net/.../IProfileExporter.cs`、`IProfileImporter.cs` |
 
