@@ -23,19 +23,21 @@ Scope: `src/Polymerium.Avalonia/` + `submodules/Trident.Net/`
 - **风险:** 隐藏依赖关系、失去编译期验证、生命期不匹配不可见。
 - **建议:** 通过构造函数/方法参数传递所需服务。对于 Avalonia XAML 构造边界，可用 `ActivatorUtilities.CreateInstance` 替代原始查找。
 
-### 2. AppImageLoader Never Disposed
+### 2. AppImageLoader Never Disposed ✅ 已解决
 
 - **File:** `src/Polymerium.Avalonia/Program.cs:98-100`
 - **Detail:** `new AppImageLoader(...)` 创建后赋值给静态 `AsyncImageLoader`，但关闭序列中从未调用 `Dispose()`。`AppImageLoader` 持有 `MemoryCache` 和 `BaseWebImageLoader`。
 - **风险:** 内存泄漏、HttpClient 泄漏。
 - **建议:** 在 DI 中注册为 Singleton，或在关闭区段显式 `.Dispose()`。
+- **实际处理（2025-06-14）：** 在关闭序列 8.1 区（`IViewStateStore.Flush()` 后）加 `loader.Dispose()`。核实 `AppImageLoader._cache` 是字段初始化器 `new MemoryCache(...)` 独占实例（非 DI 注入），释放安全；`BaseWebImageLoader(disposeHttpClient: false)` 不误关 DI 的 HttpClient。
 
-### 3. Fire-and-Forget StartLifetimeServicesAsync
+### 3. Fire-and-Forget StartLifetimeServicesAsync ✅ 已解决
 
 - **File:** `src/Polymerium.Avalonia/App.axaml.cs:68,91`
 - **Detail:** `_ = StartLifetimeServicesAsync(desktop)` 丢弃 `Task`。catch 中 `desktop.Shutdown()` 在后台线程调用，违反 Avalonia 线程模型。
 - **风险:** 异常逃逸后 App 可能无响应。
 - **建议:** 在 catch 内使用 `Dispatcher.UIThread.Post(() => desktop.Shutdown(-1))`。
+- **实际处理（2025-06-14）：** catch 内 `desktop.Shutdown(-1)` 改为 `Dispatcher.UIThread.Post(() => desktop.Shutdown(-1))`。
 
 ### 4. Configuration 线程不安全单例
 

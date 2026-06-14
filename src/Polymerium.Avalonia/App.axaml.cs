@@ -171,7 +171,7 @@ public class App : Application
                     Level: SentryLevel.Fatal
                 )
             );
-            desktop.Shutdown(-1);
+            Dispatcher.UIThread.Post(() => desktop.Shutdown(-1));
         }
     }
 
