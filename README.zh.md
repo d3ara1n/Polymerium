@@ -98,37 +98,53 @@
 
 ## 开始使用
 
-### 前置要求
+### 📥 安装
 
-> [!IMPORTANT]
-> **需要 Windows 开发者模式**
->
-> Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行高效的文件管理。启用开发者模式以允许在没有管理员权限的情况下创建符号链接。
+> [!NOTE]
+> Polymerium 目前正在积极开发中。功能和界面可能在版本之间发生变化。
 
-#### 📋 如何启用开发者模式
+下载前请先查看对应平台的注意事项：
 
-##### Windows 11
+<details>
+<summary>🪟 <strong>Windows</strong> — 启用开发者模式（符号链接所需）</summary>
+
+Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行高效的文件管理。启用开发者模式以允许在没有管理员权限的情况下创建符号链接。
+
+**Windows 11**
 
 ```sh
 设置 → 系统 → 开发者选项 → 开发者模式
 ```
 
-##### Windows 10
+**Windows 10**
 
 ```sh
 设置 → 更新和安全 → 开发者选项 → 开发者模式
 ```
 
-##### Windows 7/8
+**Windows 7/8**
 
 ```sh
 请先升级到 Windows 10+ 😉
 ```
 
-### 📥 安装
+</details>
 
-> [!NOTE]
-> Polymerium 目前正在积极开发中。功能和界面可能在版本之间发生变化。
+<details>
+<summary>🍎 <strong>macOS</strong> — 「安装包已损坏」处理方法</summary>
+
+由于 PKG 安装包未经 Apple 开发者证书签名，macOS Gatekeeper 可能会阻止安装并提示「安装包已损坏」。
+
+1. 右键点击 `.pkg` 文件，选择 **打开**。
+2. 如果仍然无法打开，在终端中移除隔离标记：
+
+   ```bash
+   xattr -d com.apple.quarantine Polymerium-osx-arm64-Setup.pkg
+   ```
+
+3. 再次打开 `.pkg` 文件，按照安装向导操作即可。
+
+</details>
 
 | 平台 | 包类型 | 直达下载 |
 | --- | --- | --- |
@@ -160,7 +176,7 @@
 | 🛠️ 技术          | 📋 用途            | 🔗 集成 |
 |-----------------|------------------|-------|
 | **.NET 10.0**   | 具有 C# 预览功能的最新运行时 | 核心平台  |
-| **Avalonia 11** | 跨平台 XAML UI 框架   | 表示层   |
+| **Avalonia 12** | 跨平台 XAML UI 框架   | 表示层   |
 | **MVVM 模式**     | 清晰的关注点分离         | 架构模式  |
 | **依赖注入**        | 模块化、可测试的架构       | 服务管理  |
 | **响应式扩展**       | 响应式数据处理          | 数据流   |
@@ -169,63 +185,15 @@
 
 ```sh
 Polymerium/
-├── 📚 docs/                   # 文档
-├── 🎨 src/Polymerium.Avalonia/     # UI 应用程序层
-├── 🔗 submodules/             # 共享组件
-└── 📦 Releases/               # 构建产物
+├── 📖 website/                # 文档与项目网站
+├── 🎨 src/                    # 应用源码
+├── 🔗 submodules/             # 引入的外部项目源码
+├── 📝 notes/                  # 内部笔记
+├── 📜 changelogs/             # 版本更新日志
+├── 🛠️ scripts/                # 构建与发布脚本
+├── 🖼️ assets/                 # 截图与素材
+└── 📋 plans/                  # 规划文档
 ```
-
----
-
-## 开发
-
-### 🔨 从源码构建
-
-```bash
-# 克隆包含子模块
-git clone --recursive https://github.com/d3ara1n/Polymerium.git
-cd Polymerium
-
-# 构建解决方案
-dotnet build
-
-# 以开发模式运行
-./Development.ps1
-```
-
-### 🛠️ 开发命令
-
-```powershell
-# 开发模式
-./Development.ps1
-
-# 生产模式
-./Production.ps1
-
-# 构建和发布
-./Publish.ps1
-
-# 获取版本信息
-dotnet gitversion
-
-# 生成更新日志
-git cliff
-```
-
-### 🤝 贡献
-
-我们欢迎贡献！请确保您的代码遵循既定的模式：
-
-| 方面           | 要求                  |
-|--------------|---------------------|
-| 🏗️ **架构**   | 具有清晰关注点分离的 MVVM 模式  |
-| 💉 **依赖注入**  | 全程使用构造函数注入          |
-| 🔥 **现代 C#** | 利用最新的语言功能和模式        |
-| ✨ **代码风格**   | 遵循 .editorconfig 指南 |
-
-我们使用 `.resx` 文件进行本地化。如果您想贡献翻译，可以编辑 `src/Polymerium.Avalonia/Properties` 目录下的 `Resources.resx`
-文件，并在
-同一目录下添加您的语言文件。Rider 和 Visual Studio 都内置了 resx 文件的编辑器。
 
 ---
 

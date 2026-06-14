@@ -100,38 +100,53 @@ revolutionary approach brings several game-changing benefits:
 
 ## Getting Started
 
-### Prerequisites
+### 📥 Installation
 
-> [!IMPORTANT]
-> **Windows Developer Mode Required**
->
-> Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable
-> Developer Mode to allow symlink creation without administrator privileges.
+> [!NOTE]
+> Polymerium is currently in active development. Features and UI may change between releases.
 
-#### 📋 How to Enable Developer Mode
+Before downloading, check the note for your platform:
 
-##### Windows 11
+<details>
+<summary>🪟 <strong>Windows</strong> — enable Developer Mode (required for symlinks)</summary>
+
+Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable Developer Mode to allow symlink creation without administrator privileges.
+
+**Windows 11**
 
 ```
 Settings → System → For developers → Developer Mode
 ```
 
-##### Windows 10
+**Windows 10**
 
 ```
 Settings → Update & Security → For developers → Developer Mode
 ```
 
-##### Windows 7/8
+**Windows 7/8**
 
 ```
 Upgrade to Windows 10+ first 💥
 ```
 
-### 📥 Installation
+</details>
 
-> [!NOTE]
-> Polymerium is currently in active development. Features and UI may change between releases.
+<details>
+<summary>🍎 <strong>macOS</strong> — "Installer is damaged" workaround</summary>
+
+The PKG installer is not signed with an Apple Developer certificate, so macOS Gatekeeper may block it with a "damaged" message.
+
+1. Right-click the `.pkg` file and choose **Open**.
+2. If that doesn't work, remove the quarantine flag from Terminal:
+
+   ```bash
+   xattr -d com.apple.quarantine Polymerium-osx-arm64-Setup.pkg
+   ```
+
+3. Open the `.pkg` file again and follow the installer.
+
+</details>
 
 | Platform | Package | Direct Download |
 | --- | --- | --- |
@@ -163,7 +178,7 @@ Upgrade to Windows 10+ first 💥
 | 🛠️ Technology           | 📋 Purpose                              | 🔗 Integration       |
 |--------------------------|-----------------------------------------|----------------------|
 | **.NET 10.0**            | Latest runtime with C# preview features | Core platform        |
-| **Avalonia 11**          | Cross-platform XAML UI framework        | Presentation layer   |
+| **Avalonia 12**          | Cross-platform XAML UI framework        | Presentation layer   |
 | **MVVM Pattern**         | Clean separation of concerns            | Architecture pattern |
 | **Dependency Injection** | Modular, testable architecture          | Service management   |
 | **Reactive Extensions**  | Responsive data handling                | Data flow            |
@@ -172,63 +187,15 @@ Upgrade to Windows 10+ first 💥
 
 ```sh
 Polymerium/
-├── 📚 docs/                   # Documentation
-├── 🎨 src/Polymerium.Avalonia/     # UI application layer
-├── 🔗 submodules/             # Shared components
-└── 📦 Releases/               # Build artifacts
+├── 📖 website/                # Documentation & project site
+├── 🎨 src/                    # Application source code
+├── 🔗 submodules/             # Embedded third-party project sources
+├── 📝 notes/                  # Internal notes
+├── 📜 changelogs/             # Version changelogs
+├── 🛠️ scripts/                # Build & publish scripts
+├── 🖼️ assets/                 # Screenshots and media
+└── 📋 plans/                  # Planning documents
 ```
-
----
-
-## Development
-
-### 🔨 Building from Source
-
-```sh
-# Clone with submodules
-git clone --recursive https://github.com/d3ara1n/Polymerium.git
-cd Polymerium
-
-# Build the solution
-dotnet build
-
-# Run in development mode
-./Development.ps1
-```
-
-### 🛠️ Development Commands
-
-```sh
-# Development mode
-./Development.ps1
-
-# Production mode
-./Production.ps1
-
-# Build and publish
-./Publish.ps1
-
-# Get version info
-dotnet gitversion
-
-# Generate changelog
-git cliff
-```
-
-### 🤝 Contributing
-
-We welcome contributions! Please ensure your code follows the established patterns:
-
-| Aspect                      | Requirement                                    |
-|-----------------------------|------------------------------------------------|
-| 🏗️ **Architecture**        | MVVM pattern with clear separation of concerns |
-| 💉 **Dependency Injection** | Use constructor injection throughout           |
-| 🔥 **Modern C#**            | Leverage latest language features and patterns |
-| ✨ **Code Style**            | Follow the .editorconfig guidelines            |
-
-We use `resx` for localization. If you want to contribute to the translation, you can edit the `Resources.resx` file in
-`src/Polymerium.Avalonia/Properties` and add your language file in the same directory. Rider and Visual Studio have built-in
-editors for resx files.
 
 ---
 
