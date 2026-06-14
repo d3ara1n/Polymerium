@@ -149,6 +149,7 @@ internal static class Program
             #region 8.1 部分用 ServiceProvider.Dispose 不可靠的服务处置需要显式写在这
 
             Services.GetRequiredService<IViewStateStore>().Flush();
+            loader.Dispose();
 
             #endregion
         }
