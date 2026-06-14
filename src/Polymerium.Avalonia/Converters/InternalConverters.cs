@@ -125,6 +125,13 @@ public static class InternalConverters
     private static IBrush? DiffEmptyBrush;
 
     private static IBrush? DiffModifiedBrush;
+    private static IBrush? DiffAddedIndicatorBrush;
+    private static IBrush? DiffRemovedIndicatorBrush;
+    private static IBrush? DiffModifiedIndicatorBrush;
+    private static IBrush? DiffAddedForegroundBrush;
+    private static IBrush? DiffRemovedForegroundBrush;
+    private static IBrush? DiffModifiedForegroundBrush;
+    private static IBrush? DiffSecondaryForegroundBrush;
     private static ThemeVariant? DiffTheme;
 
     private static void EnsureDiffBrushes()
@@ -154,6 +161,34 @@ public static class InternalConverters
          == true
                 ? res4 as IBrush
                 : new SolidColorBrush(Color.FromArgb(80, 0x40, 0x80, 0xC0));
+        DiffAddedIndicatorBrush =
+            Application.Current?.TryGetResource("ControlSuccessBackgroundBrush", null, out var res5) == true
+                ? res5 as IBrush
+                : new SolidColorBrush(Color.FromRgb(0x2B, 0x9A, 0x66));
+        DiffRemovedIndicatorBrush =
+            Application.Current?.TryGetResource("ControlDangerBackgroundBrush", null, out var res6) == true
+                ? res6 as IBrush
+                : new SolidColorBrush(Color.FromRgb(0xDC, 0x3E, 0x42));
+        DiffModifiedIndicatorBrush =
+            Application.Current?.TryGetResource("ControlAccentBackgroundBrush", null, out var res7) == true
+                ? res7 as IBrush
+                : new SolidColorBrush(Color.FromRgb(0x00, 0x90, 0xFF));
+        DiffAddedForegroundBrush =
+            Application.Current?.TryGetResource("ControlSuccessForegroundBrush", null, out var res8) == true
+                ? res8 as IBrush
+                : new SolidColorBrush(Color.FromRgb(0x2B, 0x9A, 0x66));
+        DiffRemovedForegroundBrush =
+            Application.Current?.TryGetResource("ControlDangerForegroundBrush", null, out var res9) == true
+                ? res9 as IBrush
+                : new SolidColorBrush(Color.FromRgb(0xDC, 0x3E, 0x42));
+        DiffModifiedForegroundBrush =
+            Application.Current?.TryGetResource("ControlAccentForegroundBrush", null, out var res10) == true
+                ? res10 as IBrush
+                : new SolidColorBrush(Color.FromRgb(0x00, 0x90, 0xFF));
+        DiffSecondaryForegroundBrush =
+            Application.Current?.TryGetResource("ControlSecondaryForegroundBrush", null, out var res11) == true
+                ? res11 as IBrush
+                : Brushes.Gray;
     }
 
     public static IValueConverter DiffLineKindToBackground { get; } = new RelayConverter((v, _) =>
@@ -167,6 +202,34 @@ public static class InternalConverters
                        DiffLineKind.Empty => DiffEmptyBrush,
                        DiffLineKind.Modified => DiffModifiedBrush,
                        _ => Brushes.Transparent,
+                   }
+                   : AvaloniaProperty.UnsetValue;
+    });
+
+    public static IValueConverter DiffLineKindToIndicatorBrush { get; } = new RelayConverter((v, _) =>
+    {
+        EnsureDiffBrushes();
+        return v is DiffLineKind kind
+                   ? kind switch
+                   {
+                       DiffLineKind.Added => DiffAddedIndicatorBrush,
+                       DiffLineKind.Removed => DiffRemovedIndicatorBrush,
+                       DiffLineKind.Modified => DiffModifiedIndicatorBrush,
+                       _ => Brushes.Transparent,
+                   }
+                   : AvaloniaProperty.UnsetValue;
+    });
+
+    public static IValueConverter DiffLineKindToForeground { get; } = new RelayConverter((v, _) =>
+    {
+        EnsureDiffBrushes();
+        return v is DiffLineKind kind
+                   ? kind switch
+                   {
+                       DiffLineKind.Added => DiffAddedForegroundBrush,
+                       DiffLineKind.Removed => DiffRemovedForegroundBrush,
+                       DiffLineKind.Modified => DiffModifiedForegroundBrush,
+                       _ => DiffSecondaryForegroundBrush,
                    }
                    : AvaloniaProperty.UnsetValue;
     });

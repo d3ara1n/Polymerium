@@ -17,7 +17,7 @@
                         <ScrollViewer
                             x:Name="PART_ScrollViewer"
                             HorizontalScrollBarVisibility="Disabled"
-                            VerticalScrollBarVisibility="Auto">
+                            VerticalScrollBarVisibility="Hidden">
                             <ItemsControl ItemsSource="{TemplateBinding Lines}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -36,16 +36,23 @@
                                             </Grid.ColumnDefinitions>
                                             <Border
                                                 Grid.Column="0"
+                                                Background="{Binding LeftKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}"
                                                 BorderBrush="{StaticResource ControlBorderBrush}"
                                                 BorderThickness="0,0,1,0">
-                                                <TextBlock
-                                                    Margin="8,2"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{Binding LeftLineNumber}" />
+                                                <Panel>
+                                                    <Border
+                                                        Width="3"
+                                                        HorizontalAlignment="Left"
+                                                        Background="{Binding LeftKind, Converter={x:Static app:InternalConverters.DiffLineKindToIndicatorBrush}}" />
+                                                    <TextBlock
+                                                        Margin="8,2"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                        FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                        Foreground="{Binding LeftKind, Converter={x:Static app:InternalConverters.DiffLineKindToForeground}}"
+                                                        Text="{Binding LeftLineNumber}" />
+                                                </Panel>
                                             </Border>
                                             <Border
                                                 Grid.Column="1"
@@ -72,16 +79,23 @@
                                                 Background="{StaticResource ControlBorderBrush}" />
                                             <Border
                                                 Grid.Column="3"
+                                                Background="{Binding RightKind, Converter={x:Static app:InternalConverters.DiffLineKindToBackground}}"
                                                 BorderBrush="{StaticResource ControlBorderBrush}"
                                                 BorderThickness="0,0,1,0">
-                                                <TextBlock
-                                                    Margin="8,2"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Cascadia Code, Consolas, Courier New, monospace"
-                                                    FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{Binding RightLineNumber}" />
+                                                <Panel>
+                                                    <Border
+                                                        Width="3"
+                                                        HorizontalAlignment="Left"
+                                                        Background="{Binding RightKind, Converter={x:Static app:InternalConverters.DiffLineKindToIndicatorBrush}}" />
+                                                    <TextBlock
+                                                        Margin="8,2"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                                        FontSize="{x:Static app:DiffView.MEASURE_FONT_SIZE}"
+                                                        Foreground="{Binding RightKind, Converter={x:Static app:InternalConverters.DiffLineKindToForeground}}"
+                                                        Text="{Binding RightLineNumber}" />
+                                                </Panel>
                                             </Border>
                                             <Border
                                                 Grid.Column="4"
@@ -108,6 +122,16 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
+                        <app:DiffOverviewBar
+                            x:Name="PART_OverviewBar"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Stretch"
+                            Margin="2"
+                            Width="{x:Static app:DiffOverviewBar.DEFAULT_WIDTH}"
+                            TotalLines="{Binding $parent[app:DiffView].TotalLineCount}"
+                            Markers="{Binding $parent[app:DiffView].Markers}"
+                            ViewTopRatio="{Binding $parent[app:DiffView].OverviewTopRatio}"
+                            ViewportRatio="{Binding $parent[app:DiffView].OverviewViewportRatio}" />
                         <ScrollBar
                             x:Name="PART_HScrollBar"
                             VerticalAlignment="Bottom"
