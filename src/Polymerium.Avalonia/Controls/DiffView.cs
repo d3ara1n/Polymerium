@@ -113,6 +113,33 @@ public class DiffView : TemplatedControl
         set => SetValue(LinesProperty, value);
     }
 
+    public static readonly StyledProperty<IReadOnlyList<DiffMarker>?> MarkersProperty =
+        AvaloniaProperty.Register<DiffView, IReadOnlyList<DiffMarker>?>(nameof(Markers));
+
+    public static readonly StyledProperty<double> OverviewTopRatioProperty =
+        AvaloniaProperty.Register<DiffView, double>(nameof(OverviewTopRatio));
+
+    public static readonly StyledProperty<double> OverviewViewportRatioProperty =
+        AvaloniaProperty.Register<DiffView, double>(nameof(OverviewViewportRatio));
+
+    public IReadOnlyList<DiffMarker>? Markers
+    {
+        get => GetValue(MarkersProperty);
+        private set => SetValue(MarkersProperty, value);
+    }
+
+    public double OverviewTopRatio
+    {
+        get => GetValue(OverviewTopRatioProperty);
+        private set => SetValue(OverviewTopRatioProperty, value);
+    }
+
+    public double OverviewViewportRatio
+    {
+        get => GetValue(OverviewViewportRatioProperty);
+        private set => SetValue(OverviewViewportRatioProperty, value);
+    }
+
     public double HorizontalOffset
     {
         get => GetValue(HorizontalOffsetProperty);
@@ -127,6 +154,7 @@ public class DiffView : TemplatedControl
 
     private ScrollBar? _hScrollBar;
     private ScrollViewer? _scrollViewer;
+    private DiffOverviewBar? _overviewBar;
     private double _maxContentWidth;
     private double _lastViewportWidth;
     private double _lastMaxContentWidth;
@@ -147,20 +175,58 @@ public class DiffView : TemplatedControl
 
         _scrollViewer = e.NameScope.Find<ScrollViewer>("PART_ScrollViewer");
         _hScrollBar = e.NameScope.Find<ScrollBar>("PART_HScrollBar");
+        _overviewBar = e.NameScope.Find<DiffOverviewBar>("PART_OverviewBar");
 
         if (_hScrollBar != null)
             _hScrollBar.ValueChanged += OnHScrollBarValueChanged;
+        if (_scrollViewer != null)
+            _scrollViewer.ScrollChanged += OnScrollChanged;
+        if (_overviewBar != null)
+            _overviewBar.ScrollRequested += OnOverviewScrollRequested;
+
+        UpdateOverview();
     }
 
     protected override Size ArrangeOverride(Size finalSize)
     {
         var result = base.ArrangeOverride(finalSize);
         UpdateScrollBarMaximum(force: false);
+        UpdateOverview();
         return result;
     }
 
     private void OnHScrollBarValueChanged(object? sender, RangeBaseValueChangedEventArgs e) =>
         SetCurrentValue(HorizontalOffsetProperty, -e.NewValue);
+
+    private void OnScrollChanged(object? sender, ScrollChangedEventArgs e) => UpdateOverview();
+
+    private void OnOverviewScrollRequested(object? sender, double ratio)
+    {
+        if (_scrollViewer == null)
+            return;
+        var scrollable = _scrollViewer.Extent.Height - _scrollViewer.Viewport.Height;
+        if (scrollable <= 0)
+            return;
+        _scrollViewer.Offset = _scrollViewer.Offset.WithY(Math.Clamp(ratio, 0.0, 1.0) * scrollable);
+    }
+
+    private void UpdateOverview()
+    {
+        if (_scrollViewer == null)
+            return;
+        var extent = _scrollViewer.Extent;
+        var viewport = _scrollViewer.Viewport;
+        var offset = _scrollViewer.Offset;
+        var scrollable = Math.Max(1.0, extent.Height - viewport.Height);
+        SetCurrentValue(
+            OverviewTopRatioProperty,
+            Math.Clamp(offset.Y / scrollable, 0.0, 1.0)
+        );
+        SetCurrentValue(
+            OverviewViewportRatioProperty,
+            Math.Clamp(viewport.Height / Math.Max(1.0, extent.Height), 0.0, 1.0)
+        );
+    }
 
     private void UpdateDiff()
     {
@@ -240,6 +306,43 @@ public class DiffView : TemplatedControl
         if (_hScrollBar != null)
             _hScrollBar.Value = 0;
 
+        var markers = new List<DiffMarker>();
+        for (var mi = 0; mi < count; mi++)
+        {
+            var lk = lines[mi].LeftKind;
+            var rk = lines[mi].RightKind;
+            var leftChanged = lk is DiffLineKind.Added or DiffLineKind.Removed or DiffLineKind.Modified;
+            var rightChanged = rk is DiffLineKind.Added or DiffLineKind.Removed or DiffLineKind.Modified;
+            if (!leftChanged && !rightChanged)
+                continue;
+            var kind = leftChanged ? lk : rk;
+            // 合并相邻同 kind 的行：连续多行同色 → 一个区域 marker
+            var end = mi + 1;
+            while (end < count)
+            {
+                var lk2 = lines[end].LeftKind;
+                var rk2 = lines[end].RightKind;
+                var lc2 = lk2 is DiffLineKind.Added or DiffLineKind.Removed or DiffLineKind.Modified;
+                var rc2 = rk2 is DiffLineKind.Added or DiffLineKind.Removed or DiffLineKind.Modified;
+                if (!lc2 && !rc2)
+                    break;
+                var k2 = lc2 ? lk2 : rk2;
+                if (k2 != kind)
+                    break;
+                end++;
+            }
+            markers.Add(
+                new()
+                {
+                    YRatio = count > 1 ? (double)mi / count : 0.0,
+                    HeightRatio = count > 0 ? (double)(end - mi) / count : 0.0,
+                    Kind = kind,
+                }
+            );
+            mi = end - 1; // for 循环会 mi++，跳过已合并区间
+        }
+
+        SetCurrentValue(MarkersProperty, markers);
         SetCurrentValue(LinesProperty, lines);
     }
 
