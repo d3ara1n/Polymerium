@@ -2605,9 +2605,9 @@
   <data name="SettingsPage_CheckUpdatesDangerNotificationTitle" xml:space="preserve">
     <value>Failed to check updates</value>
   </data>
-  <data name="MaintenanceStoragePage_PurgeCacheConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to purge the cache?</value>
-  </data>
+    <data name="MaintenanceStoragePage_PurgeCacheConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to clear the cache directory? This operation does not result in data loss.</value>
+    </data>
   <data name="MaintenanceStoragePage_PurgeCacheDangerNotificationTitle" xml:space="preserve">
     <value>Failed to purge cache</value>
   </data>
@@ -3045,20 +3045,8 @@ Affected entries: {0}
     <data name="AccountCreationAuthlib_Login" xml:space="preserve">
         <value>Login</value>
     </data>
-    <data name="AccountCreationAuthlib_ErrorAuthFailed" xml:space="preserve">
-        <value>Authentication failed</value>
-    </data>
-    <data name="AccountCreationAuthlib_ErrorInvalidServer" xml:space="preserve">
-        <value>Invalid server URL</value>
-    </data>
     <data name="AccountCreationAuthlib_DoneSubtitle" xml:space="preserve">
         <value>Authentication successful</value>
-    </data>
-    <data name="AccountCreationAuthlib_SelectProfile" xml:space="preserve">
-        <value>Select a profile to use</value>
-    </data>
-    <data name="AccountCreationAuthlib_ConfirmProfile" xml:space="preserve">
-        <value>Confirm</value>
     </data>
     <data name="AppMenu_AboutText" xml:space="preserve">
         <value>About Polymerium</value>
