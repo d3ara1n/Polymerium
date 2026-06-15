@@ -109,7 +109,7 @@ public partial class InstancePageModel : ViewModelBase
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         return TopLevelHelper.LaunchDirectoryInfoAsync(
-            TopLevel.GetTopLevel(MainWindow.Instance),
+            TopLevelHelper.GetTopLevel(),
             new(dir),
             Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
             _notificationService,

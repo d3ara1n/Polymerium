@@ -532,7 +532,7 @@ public partial class InstanceFilesPageModel(
     {
         if (model != null)
         {
-            return TopLevelHelper.LaunchFileInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+            return TopLevelHelper.LaunchFileInfoAsync(TopLevelHelper.GetTopLevel(),
                                                       new(model.Image.LocalPath),
                                                       Resources.InstanceFilesPage_OpenScreenshotDangerNotificationTitle,
                                                       notificationService,
@@ -550,7 +550,7 @@ public partial class InstanceFilesPageModel(
             var dir = Path.GetDirectoryName(filePath);
             if (dir != null && Directory.Exists(dir))
             {
-                return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+                return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                                new(dir),
                                                                Resources
                                                                   .Shared_FailedToOpenFolderDangerNotificationTitle,

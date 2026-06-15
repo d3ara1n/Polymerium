@@ -455,7 +455,7 @@ public partial class InstanceDashboardPageModel(
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
         if (Directory.Exists(dir))
             return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
+                TopLevelHelper.GetTopLevel(),
                 new(dir),
                 Resources.InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle,
                 notificationService
@@ -470,7 +470,7 @@ public partial class InstanceDashboardPageModel(
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
         if (Directory.Exists(dir))
             return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
+                TopLevelHelper.GetTopLevel(),
                 new(dir),
                 Resources.InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle,
                 notificationService

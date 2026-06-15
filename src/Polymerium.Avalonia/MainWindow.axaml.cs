@@ -6,11 +6,11 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
-using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Mixins;
 using Polymerium.Avalonia.Pages;
+using Polymerium.Avalonia.Services;
 
 namespace Polymerium.Avalonia;
 
@@ -30,7 +30,6 @@ public partial class MainWindow : AppWindow
 
     public MainWindow()
     {
-        Instance = this;
         InitializeComponent();
     }
 
@@ -46,13 +45,32 @@ public partial class MainWindow : AppWindow
         set => SetAndRaise(IsTitleBarVisibleProperty, ref field, value);
     }
 
-    public static MainWindow Instance { get; private set; } = null!;
-
     internal void SetFrameActivator(IViewActivator activator) =>
         FrameActivationMixin.Install(Root, activator);
 
-    internal void SetTransparencyLevelHintByIndex(int index) =>
-        TransparencyLevelHint = index switch
+    internal void AttachTheme(ThemeService theme)
+    {
+        ApplyTheme(theme);
+        theme.ThemeChanged += (_, _) => ApplyTheme(theme);
+    }
+
+    private void ApplyTheme(ThemeService theme)
+    {
+        if (Application.Current is App { Theme: { } appTheme })
+        {
+            appTheme.Accent = theme.Accent;
+            appTheme.Corner = theme.Corner;
+        }
+
+        Application.Current!.RequestedThemeVariant = theme.ThemeVariantIndex switch
+        {
+            0 => ThemeVariant.Default,
+            1 => ThemeVariant.Light,
+            2 => ThemeVariant.Dark,
+            _ => ThemeVariant.Default,
+        };
+
+        TransparencyLevelHint = theme.TransparencyIndex switch
         {
             0 =>
             [
@@ -67,29 +85,8 @@ public partial class MainWindow : AppWindow
             _ => [WindowTransparencyLevel.None],
         };
 
-    internal void SetThemeVariantByIndex(int index) =>
-        Application.Current!.RequestedThemeVariant = index switch
-        {
-            0 => ThemeVariant.Default,
-            1 => ThemeVariant.Light,
-            2 => ThemeVariant.Dark,
-            _ => ThemeVariant.Default,
-        };
-
-    internal void SetColorVariant(AccentColor accent)
-    {
-        if (Application.Current is App { Theme: { } theme })
-        {
-            theme.Accent = accent;
-        }
-    }
-
-    internal void SetCornerStyle(CornerStyle corner)
-    {
-        if (Application.Current is App { Theme: { } theme })
-        {
-            theme.Corner = corner;
-        }
+        IsTitleBarVisible = theme.TitleBarVisible;
+        IsLeftPanelMode = theme.LeftPanelMode;
     }
 
     private void DropContainer_OnDragOver(object? sender, DropContainer.DragOverEventArgs e)

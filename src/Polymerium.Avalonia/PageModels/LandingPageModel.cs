@@ -163,7 +163,7 @@ public partial class LandingPageModel(
         {
             var dir = PathDef.Default.DirectoryOfHome(key);
             return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
+                TopLevelHelper.GetTopLevel(),
                 new(dir),
                 Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
                 notificationService,

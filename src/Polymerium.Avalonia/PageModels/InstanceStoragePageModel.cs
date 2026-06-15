@@ -167,7 +167,7 @@ public partial class InstanceStoragePageModel(
         if (Directory.Exists(dir))
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
+                TopLevelHelper.GetTopLevel(),
                 new(dir),
                 Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle
             );
@@ -203,7 +203,7 @@ public partial class InstanceStoragePageModel(
         if (Directory.Exists(dir))
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
+                TopLevelHelper.GetTopLevel(),
                 new(dir),
                 Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
                     "{0}",

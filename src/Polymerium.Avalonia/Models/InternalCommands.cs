@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
@@ -17,7 +16,7 @@ public static class InternalCommands
             if (uri != null && uri.IsAbsoluteUri)
             {
                 return TopLevelHelper.LaunchUriAsync(
-                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    TopLevelHelper.GetTopLevel(),
                     uri,
                     Resources.InternalCommands_OpenLinkDangerNotificationTitle
                 );
@@ -32,7 +31,7 @@ public static class InternalCommands
             if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
             {
                 return TopLevelHelper.LaunchUriAsync(
-                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    TopLevelHelper.GetTopLevel(),
                     new(str),
                     Resources.InternalCommands_OpenLinkDangerNotificationTitle
                 );
@@ -52,7 +51,7 @@ public static class InternalCommands
             if (path != null && Directory.Exists(path))
             {
                 return TopLevelHelper.LaunchDirectoryInfoAsync(
-                    TopLevel.GetTopLevel(MainWindow.Instance),
+                    TopLevelHelper.GetTopLevel(),
                     new(path),
                     Resources.Shared_FailedToOpenFolderDangerNotificationTitle
                 );
@@ -70,7 +69,7 @@ public static class InternalCommands
             }
 
             await TopLevelHelper.CopyToClipboardAsync(
-                TopLevel.GetTopLevel(MainWindow.Instance),
+                TopLevelHelper.GetTopLevel(),
                 text,
                 Resources.InternalCommands_CopyTextDangerNotificationTitle
             );
