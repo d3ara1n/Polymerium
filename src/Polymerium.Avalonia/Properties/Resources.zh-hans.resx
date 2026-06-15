@@ -2596,9 +2596,9 @@
   <data name="SettingsPage_CheckUpdatesDangerNotificationTitle" xml:space="preserve">
     <value>检查更新失败</value>
   </data>
-  <data name="MaintenanceStoragePage_PurgeCacheConfirmationMessage" xml:space="preserve">
-    <value>确定要清空缓存吗？</value>
-  </data>
+    <data name="MaintenanceStoragePage_PurgeCacheConfirmationMessage" xml:space="preserve">
+        <value>确定要清空缓存目录吗？这项操作不会丢失数据。</value>
+    </data>
   <data name="MaintenanceStoragePage_PurgeCacheDangerNotificationTitle" xml:space="preserve">
     <value>清空缓存失败</value>
   </data>
@@ -3036,20 +3036,8 @@
     <data name="AccountCreationAuthlib_Login" xml:space="preserve">
         <value>登录</value>
     </data>
-    <data name="AccountCreationAuthlib_ErrorAuthFailed" xml:space="preserve">
-        <value>认证失败</value>
-    </data>
-    <data name="AccountCreationAuthlib_ErrorInvalidServer" xml:space="preserve">
-        <value>无效的服务器地址</value>
-    </data>
     <data name="AccountCreationAuthlib_DoneSubtitle" xml:space="preserve">
         <value>认证成功</value>
-    </data>
-    <data name="AccountCreationAuthlib_SelectProfile" xml:space="preserve">
-        <value>选择一个角色</value>
-    </data>
-    <data name="AccountCreationAuthlib_ConfirmProfile" xml:space="preserve">
-        <value>确认</value>
     </data>
     <data name="AppMenu_AboutText" xml:space="preserve">
         <value>关于 Polymerium</value>
