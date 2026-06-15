@@ -1,7 +1,10 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input.Platform;
 using Avalonia.Platform.Storage;
 using Huskui.Avalonia.Models;
@@ -12,6 +15,25 @@ namespace Polymerium.Avalonia.Utilities;
 
 public static class TopLevelHelper
 {
+    /// <summary>
+    ///     从当前应用生命周期中获取活跃主窗口的 TopLevel。
+    ///     正常运行时主窗口一定存在；走到无窗口分支意味着在窗口关闭后仍有调用，属于不应发生的异常路径。
+    /// </summary>
+    public static TopLevel GetTopLevel()
+    {
+        if (
+            Application.Current?.ApplicationLifetime
+            is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+        {
+            return TopLevel.GetTopLevel(window)
+                ?? throw new UnreachableException(
+                    "TopLevel is null for the active main window."
+                );
+        }
+
+        throw new UnreachableException("No active main window to resolve a TopLevel from.");
+    }
+
     public static Task LaunchUriAsync(
         TopLevel? topLevel,
         Uri uri,

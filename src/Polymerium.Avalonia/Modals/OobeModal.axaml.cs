@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Avalonia.Components;
 using Polymerium.Avalonia.Controls;
 using Polymerium.Avalonia.Services;
@@ -66,6 +67,7 @@ public partial class OobeModal : StepWizardModalBase
             {
                 ConfigurationService = ConfigurationService,
                 OverlayService = OverlayService,
+                ThemeService = Program.Services!.GetRequiredService<ThemeService>(),
             }
         );
         _steps.Add(new OobePrivacy());

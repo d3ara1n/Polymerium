@@ -320,7 +320,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     {
         if (exhibit is not null)
         {
-            return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+            return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
                                                  exhibit.Reference,
                                                  Resources
                                                     .MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle,

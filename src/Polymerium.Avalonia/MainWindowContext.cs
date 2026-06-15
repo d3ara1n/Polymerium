@@ -248,7 +248,7 @@ public partial class MainWindowContext : ObservableObject
 
             if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
             {
-                var top = TopLevel.GetTopLevel(MainWindow.Instance);
+                var top = TopLevelHelper.GetTopLevel();
                 if (top != null)
                 {
                     var storage = top.StorageProvider;
@@ -363,7 +363,7 @@ public partial class MainWindowContext : ObservableObject
             var path = Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key), "logs", "latest.log");
             if (File.Exists(path))
             {
-                return TopLevelHelper.LaunchFileInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+                return TopLevelHelper.LaunchFileInfoAsync(TopLevelHelper.GetTopLevel(),
                                                           new(path),
                                                           Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
                                                           _notificationService,
@@ -417,7 +417,7 @@ public partial class MainWindowContext : ObservableObject
         if (key != null)
         {
             var dir = PathDef.Default.DirectoryOfHome(key);
-            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
                                                            Resources
                                                               .Shared_FailedToOpenInstanceFolderDangerNotificationTitle,

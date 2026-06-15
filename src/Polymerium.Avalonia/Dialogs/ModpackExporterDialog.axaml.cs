@@ -179,7 +179,7 @@ public partial class ModpackExporterDialog : Dialog
     {
         if (Result is ModpackExporterModel model)
         {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(MainWindow.Instance),
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(this),
                                                            new(PathDef.Default.DirectoryOfImport(model.Key)),
                                                            AppResources
                                                               .ModpackExporterDialog_OpenImportFolderDangerNotificationTitle);

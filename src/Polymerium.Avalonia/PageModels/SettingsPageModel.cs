@@ -29,7 +29,8 @@ public partial class SettingsPageModel : ViewModelBase
         PersistenceService persistenceService,
         UpdateService updateService,
         UpdateManager updateManager,
-        GarbageCollector garbageCollector)
+        GarbageCollector garbageCollector,
+        ThemeService themeService)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
@@ -39,6 +40,7 @@ public partial class SettingsPageModel : ViewModelBase
         UpdateService = updateService;
         _updateManager = updateManager;
         _garbageCollector = garbageCollector;
+        _themeService = themeService;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -112,6 +114,7 @@ public partial class SettingsPageModel : ViewModelBase
     private readonly PersistenceService _persistenceService;
     private readonly UpdateManager _updateManager;
     private readonly GarbageCollector _garbageCollector;
+    private readonly ThemeService _themeService;
 
     #endregion
 
@@ -320,8 +323,7 @@ public partial class SettingsPageModel : ViewModelBase
 
     partial void OnTitleBarVisibilityChanged(bool value)
     {
-        _configurationService.Value.ApplicationTitleBarVisibility = value;
-        MainWindow.Instance.IsTitleBarVisible = value;
+        _themeService.TitleBarVisible = value;
     }
 
     #endregion
@@ -334,8 +336,7 @@ public partial class SettingsPageModel : ViewModelBase
     partial void OnSidebarPlacementChanged(int value)
     {
         var rv = value == 0;
-        _configurationService.Value.ApplicationLeftPanelMode = rv;
-        MainWindow.Instance.IsLeftPanelMode = rv;
+        _themeService.LeftPanelMode = rv;
     }
 
     #endregion
@@ -347,8 +348,7 @@ public partial class SettingsPageModel : ViewModelBase
 
     partial void OnAccentColorChanged(AccentColor value)
     {
-        _configurationService.Value.ApplicationStyleAccent = value;
-        MainWindow.Instance.SetColorVariant(value);
+        _themeService.Accent = value;
     }
 
     public AccentColor[] AccentColors { get; } = Enum.GetValues<AccentColor>();
@@ -362,8 +362,7 @@ public partial class SettingsPageModel : ViewModelBase
 
     partial void OnCornerStyleChanged(CornerStyle value)
     {
-        _configurationService.Value.ApplicationStyleCorner = value;
-        MainWindow.Instance.SetCornerStyle(value);
+        _themeService.Corner = value;
     }
 
     public CornerStyle[] CornerStyles { get; } = Enum.GetValues<CornerStyle>();
@@ -377,8 +376,7 @@ public partial class SettingsPageModel : ViewModelBase
 
     partial void OnBackgroundModeChanged(BackgroundStyleModel value)
     {
-        _configurationService.Value.ApplicationStyleBackground = value.Index;
-        MainWindow.Instance.SetTransparencyLevelHintByIndex(value.Index);
+        _themeService.TransparencyIndex = value.Index;
     }
 
     public BackgroundStyleModel[] BackgroundStyles { get; } =
@@ -399,8 +397,7 @@ public partial class SettingsPageModel : ViewModelBase
 
     partial void OnDarkModeChanged(int value)
     {
-        _configurationService.Value.ApplicationStyleThemeVariant = value;
-        MainWindow.Instance.SetThemeVariantByIndex(value);
+        _themeService.ThemeVariantIndex = value;
     }
 
     #endregion

@@ -58,6 +58,7 @@ public partial class OobeQuickSetup : OobeStep
 
     public required ConfigurationService ConfigurationService { get; init; }
     public required OverlayService OverlayService { get; init; }
+    public required ThemeService ThemeService { get; init; }
 
     public LanguageModel[] Languages { get; } =
     [
@@ -85,8 +86,7 @@ public partial class OobeQuickSetup : OobeStep
         {
             if (SetAndRaise(DarkModeIndexProperty, ref field, value))
             {
-                ConfigurationService.Value.ApplicationStyleThemeVariant = value;
-                MainWindow.Instance.SetThemeVariantByIndex(value);
+                ThemeService.ThemeVariantIndex = value;
             }
         }
     }
@@ -100,8 +100,7 @@ public partial class OobeQuickSetup : OobeStep
         {
             if (SetAndRaise(SelectedAccentColorProperty, ref field, value))
             {
-                ConfigurationService.Value.ApplicationStyleAccent = value;
-                MainWindow.Instance.SetColorVariant(value);
+                ThemeService.Accent = value;
             }
         }
     }

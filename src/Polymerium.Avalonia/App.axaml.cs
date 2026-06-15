@@ -204,12 +204,8 @@ public class App : Application
             configuration.Value.ApplicationWindowHeight = window.Height;
         };
 
-        window.SetColorVariant(configuration.Value.ApplicationStyleAccent);
-        window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
-        window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
-        window.IsTitleBarVisible = configuration.Value.ApplicationTitleBarVisibility;
-        window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
-        window.SetCornerStyle(configuration.Value.ApplicationStyleCorner);
+        var themeService = Program.Services.GetRequiredService<ThemeService>();
+        window.AttachTheme(themeService);
         // 并不还原窗体大小，没必要
 
         #region Navigation
