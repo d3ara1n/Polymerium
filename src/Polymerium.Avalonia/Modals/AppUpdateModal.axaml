@@ -64,7 +64,7 @@
         <Grid
             DockPanel.Dock="Bottom"
             Margin="0,16,0,0"
-            ColumnDefinitions="*,Auto,Auto"
+            ColumnDefinitions="*,Auto"
             ColumnSpacing="8">
             <!--  Progress Bar  -->
             <StackPanel
@@ -88,33 +88,37 @@
                 </ProgressBar>
             </StackPanel>
 
-            <Button
+            <husk:ModalActionPanel
                 Grid.Column="1"
-                Classes="Primary"
-                IsEnabled="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
-                Command="{Binding $parent[app:AppUpdateModal].ConfirmUpdateCommand}">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <fi:SymbolIcon
-                        IsVisible="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
-                        FontSize="{StaticResource MediumFontSize}"
-                        Symbol="ArrowDownload" />
-                    <husk:ProgressRing
-                        Width="{StaticResource MediumFontSize}"
-                        Height="{StaticResource MediumFontSize}"
-                        IsVisible="{Binding $parent[app:AppUpdateModal].IsDownloading, FallbackValue=False}"
-                        IsIndeterminate="True"
-                        Theme="{StaticResource SolidProgressRingTheme}" />
-                    <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_ConfirmButtonText}" />
-                </StackPanel>
-            </Button>
-            <Button
-                Grid.Column="2"
-                IsVisible="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
-                Command="{Binding $parent[app:AppUpdateModal].Dismiss}">
-                <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_CancelButtonText}" />
-            </Button>
+                Layout="Right"
+                Spacing="8">
+                <Button
+                    Classes="Primary"
+                    IsDefault="True"
+                    IsEnabled="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
+                    Command="{Binding $parent[app:AppUpdateModal].ConfirmUpdateCommand}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <fi:SymbolIcon
+                            IsVisible="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="ArrowDownload" />
+                        <husk:ProgressRing
+                            Width="{StaticResource MediumFontSize}"
+                            Height="{StaticResource MediumFontSize}"
+                            IsVisible="{Binding $parent[app:AppUpdateModal].IsDownloading, FallbackValue=False}"
+                            IsIndeterminate="True"
+                            Theme="{StaticResource SolidProgressRingTheme}" />
+                        <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_ConfirmButtonText}" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    IsVisible="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
+                    Command="{Binding $parent[app:AppUpdateModal].Dismiss}">
+                    <TextBlock Text="{x:Static lang:Resources.AppUpdateModal_CancelButtonText}" />
+                </Button>
+            </husk:ModalActionPanel>
         </Grid>
 
         <!--  Release Notes Content  -->

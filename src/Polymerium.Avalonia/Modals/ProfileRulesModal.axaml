@@ -280,27 +280,31 @@
         <Grid
             Grid.Row="2"
             Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutTop}}"
-            ColumnDefinitions="Auto,*,Auto,Auto"
+            ColumnDefinitions="Auto,*,Auto"
             ColumnSpacing="8">
-            <Button
-                Grid.Column="0"
-                Classes="Primary"
-                Command="{Binding $parent[app:ProfileRulesModal].AddRuleCommand}">
-                <husk:IconLabel
-                    Icon="Add"
-                    Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />
-            </Button>
             <TextBlock
-                Grid.Column="2"
+                Grid.Column="0"
                 VerticalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                 <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
                 <Run Text="{Binding $parent[app:ProfileRulesModal].Rules.Count, FallbackValue=0}" />
             </TextBlock>
-            <Button
-                Grid.Column="3"
-                Command="{Binding $parent[husk:Modal].Dismiss}"
-                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+            <husk:ModalActionPanel
+                Grid.Column="2"
+                Layout="Right"
+                Spacing="8">
+                <Button
+                    Classes="Primary"
+                    IsDefault="True"
+                    Command="{Binding $parent[app:ProfileRulesModal].AddRuleCommand}">
+                    <husk:IconLabel
+                        Icon="Add"
+                        Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />
+                </Button>
+                <Button
+                    Command="{Binding $parent[husk:Modal].Dismiss}"
+                    Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+            </husk:ModalActionPanel>
         </Grid>
     </Grid>
 </husk:Modal>
