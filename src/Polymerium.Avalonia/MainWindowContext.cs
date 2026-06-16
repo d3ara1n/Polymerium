@@ -873,7 +873,7 @@ public partial class MainWindowContext : ObservableObject
                 Dispatcher.UIThread.Post(() =>
                 {
                     model.IsPending = false;
-                    model.Progress = x.Item2 != 0 ? x.Item1 * 100d / x.Item2 : 0;
+                    model.Progress = x ?? 0d;
                 });
             })
            .DisposeWith(e);

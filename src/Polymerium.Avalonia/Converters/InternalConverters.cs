@@ -32,6 +32,12 @@ public static class InternalConverters
         return 0.0d;
     });
 
+    public static IValueConverter RatioToPercent { get; } = new RelayConverter(v => v switch
+    {
+        double d => d * 100d,
+        _ => v,
+    });
+
     public static IValueConverter EnumTypeToList { get; } = new RelayConverter((v, _) =>
     {
         if (v is Type { IsEnum: true } t)
