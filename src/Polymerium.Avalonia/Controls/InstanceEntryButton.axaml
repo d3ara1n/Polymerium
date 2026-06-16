@@ -257,7 +257,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=Preparing]">
+        <Style Selector="^[State=Deploying]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>

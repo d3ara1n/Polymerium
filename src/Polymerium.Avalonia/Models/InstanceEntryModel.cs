@@ -2,6 +2,7 @@ using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
+using TridentCore.Abstractions;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -20,7 +21,7 @@ public partial class InstanceEntryModel : ModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial InstanceEntryState State { get; set; }
+    public partial InstanceState State { get; set; }
 
     [ObservableProperty]
     public partial double Progress { get; set; }
