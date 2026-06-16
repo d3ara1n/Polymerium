@@ -176,7 +176,8 @@ public static class Startup
            .AddSingleton<RepositoryAgent>()
            .AddSingleton<ImporterAgent>()
            .AddSingleton<ExporterAgent>()
-           .AddSingleton<InstanceManager>();
+           .AddSingleton<InstanceManager>()
+           .AddSingleton<InstanceStateAggregator>();
 
         // App
         services
