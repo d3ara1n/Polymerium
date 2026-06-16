@@ -14,6 +14,7 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Services.Sinks;
 using Sentry;
 using TridentCore.Core.Lifetimes;
 
@@ -236,7 +237,12 @@ public class App : Application
         // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
         var viewModel = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
         window.DataContext = viewModel;
-        notification.SetHandler(viewModel.PopNotification);
+        notification.SetHandler(notification.PopNotification);
+
+        // 初始化 Sinks：订阅 Aggregator 的事件流
+        Program.Services.GetRequiredService<ActivitySink>().Attach();
+        Program.Services.GetRequiredService<NotificationSink>().Attach();
+        Program.Services.GetRequiredService<CrashDiagnosisSink>().Attach();
 
         // 应用级 NativeMenu 的 DataContext 设为同一个 ViewModel，使菜单命令绑定生效
         Application.Current!.DataContext = viewModel;

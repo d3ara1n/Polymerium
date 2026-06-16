@@ -14,6 +14,7 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Rendering;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Services.Sinks;
 using Polymerium.Avalonia.Snapshots;
 using Sentry;
 using TridentCore.Abstractions;
@@ -177,7 +178,10 @@ public static class Startup
            .AddSingleton<ImporterAgent>()
            .AddSingleton<ExporterAgent>()
            .AddSingleton<InstanceManager>()
-           .AddSingleton<InstanceStateAggregator>();
+           .AddSingleton<InstanceStateAggregator>()
+           .AddSingleton<ActivitySink>()
+           .AddSingleton<NotificationSink>()
+           .AddSingleton<CrashDiagnosisSink>();
 
         // App
         services

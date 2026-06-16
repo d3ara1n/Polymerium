@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -12,6 +13,7 @@ using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core;
 using TridentCore.Core.Services;
+using Polymerium.Avalonia.Services;
 using TridentCore.Core.Services.Instances;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -20,10 +22,12 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 {
     protected InstancePageModelBase(
         IViewContext<InstanceContextParameter> context,
+        InstanceStateAggregator aggregator,
         InstanceManager instanceManager,
         ProfileManager profileManager
     )
     {
+        _aggregator = aggregator;
         InstanceManager = instanceManager;
         ProfileManager = profileManager;
         if (context.Parameter is not null)
@@ -72,6 +76,9 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     protected readonly InstanceManager InstanceManager;
     protected readonly ProfileManager ProfileManager;
+    private readonly InstanceStateAggregator _aggregator;
+    private IDisposable? _aggregatorSubscription;
+    private TrackerBase? _currentTracker;
 
     #endregion
 
@@ -79,34 +86,60 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     public override Task InitializeAsync(CancellationToken cancellationToken)
     {
-        InstanceManager.InstanceUpdating += OnInstanceUpdating;
-        InstanceManager.InstanceDeploying += OnInstanceDeploying;
-        InstanceManager.InstanceLaunching += OnInstanceLaunching;
         ProfileManager.ProfileUpdated += OnProfileUpdated;
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker))
+
+        _aggregatorSubscription = _aggregator.Watch(Basic.Key).Subscribe(snapshot =>
         {
-            switch (tracker)
+            if (snapshot is null)
             {
-                case UpdateTracker update:
-                    // 已经处于更新状态而未收到事件
-                    State = InstanceState.Updating;
-                    update.StateUpdated += OnInstanceUpdateStateChanged;
-                    OnInstanceUpdating(update);
-                    break;
-                case DeployTracker deploy:
-                    // 已经处于部署状态而未收到事件
-                    State = InstanceState.Deploying;
-                    deploy.StateUpdated += OnInstanceDeployStateChanged;
-                    OnInstanceDeploying(deploy);
-                    break;
-                case LaunchTracker launch:
-                    // 已经处于启动状态而未收到事件
-                    State = InstanceState.Running;
-                    launch.StateUpdated += OnInstanceLaunchingStateChanged;
-                    OnInstanceLaunching(launch);
-                    break;
+                var completed = _currentTracker;
+                _currentTracker = null;
+                Dispatcher.UIThread.Post(() =>
+                {
+                    State = InstanceState.Idle;
+                    switch (completed)
+                    {
+                        case UpdateTracker update:
+                            OnInstanceUpdated(update);
+                            break;
+                        case DeployTracker deploy:
+                            OnInstanceDeployed(deploy);
+                            break;
+                        case LaunchTracker launch:
+                            OnInstanceLaunched(launch);
+                            break;
+                    }
+                });
             }
-        }
+            else
+            {
+                // 只在 tracker 变化时调 hook（避免每次 snapshot 更新重复调）
+                if (!ReferenceEquals(snapshot.Tracker, _currentTracker))
+                {
+                    _currentTracker = snapshot.Tracker;
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        State = snapshot.State;
+                        switch (snapshot.Tracker)
+                        {
+                            case UpdateTracker update:
+                                OnInstanceUpdating(update);
+                                break;
+                            case DeployTracker deploy:
+                                OnInstanceDeploying(deploy);
+                                break;
+                            case LaunchTracker launch:
+                                OnInstanceLaunching(launch);
+                                break;
+                        }
+                    });
+                }
+                else
+                {
+                    Dispatcher.UIThread.Post(() => State = snapshot.State);
+                }
+            }
+        });
 
         OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
 
@@ -115,90 +148,9 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     public override Task DeinitializeAsync()
     {
-        InstanceManager.InstanceUpdating -= OnInstanceUpdating;
-        InstanceManager.InstanceDeploying -= OnInstanceDeploying;
-        InstanceManager.InstanceLaunching -= OnInstanceLaunching;
         ProfileManager.ProfileUpdated -= OnProfileUpdated;
+        _aggregatorSubscription?.Dispose();
         return base.DeinitializeAsync();
-    }
-
-    private void OnInstanceUpdating(object? sender, UpdateTracker tracker)
-    {
-        if (tracker.Key != Basic.Key)
-        {
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
-
-        tracker.StateUpdated += OnInstanceUpdateStateChanged;
-        OnInstanceUpdating(tracker);
-        // 更新的事情交给 ProfileManager.ProfileUpdated
-    }
-
-    private void OnInstanceDeploying(object? sender, DeployTracker tracker)
-    {
-        if (tracker.Key != Basic.Key)
-        {
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
-
-        tracker.StateUpdated += OnInstanceDeployStateChanged;
-        OnInstanceDeploying(tracker);
-    }
-
-    private void OnInstanceLaunching(object? sender, LaunchTracker tracker)
-    {
-        if (tracker.Key != Basic.Key)
-        {
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() => State = InstanceState.Running);
-
-        tracker.StateUpdated += OnInstanceLaunchingStateChanged;
-        OnInstanceLaunching(tracker);
-    }
-
-    private void OnInstanceUpdateStateChanged(TrackerBase sender, TrackerState state)
-    {
-        if (state is TrackerState.Faulted or TrackerState.Finished)
-        {
-            sender.StateUpdated -= OnInstanceUpdateStateChanged;
-            Dispatcher.UIThread.Post(() =>
-            {
-                State = InstanceState.Idle;
-                OnInstanceUpdated((UpdateTracker)sender);
-            });
-        }
-    }
-
-    private void OnInstanceDeployStateChanged(TrackerBase sender, TrackerState state)
-    {
-        if (state is TrackerState.Faulted or TrackerState.Finished)
-        {
-            sender.StateUpdated -= OnInstanceDeployStateChanged;
-            Dispatcher.UIThread.Post(() =>
-            {
-                State = InstanceState.Idle;
-                OnInstanceDeployed((DeployTracker)sender);
-            });
-        }
-    }
-
-    private void OnInstanceLaunchingStateChanged(TrackerBase sender, TrackerState state)
-    {
-        if (state is TrackerState.Faulted or TrackerState.Finished)
-        {
-            sender.StateUpdated -= OnInstanceLaunchingStateChanged;
-            Dispatcher.UIThread.Post(() =>
-            {
-                State = InstanceState.Idle;
-                OnInstanceLaunched((LaunchTracker)sender);
-            });
-        }
     }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)

@@ -30,13 +30,14 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     public InstancePropertiesPageModel(
         IViewContext<InstanceContextParameter> context,
         ProfileManager profileManager,
+        InstanceStateAggregator aggregator,
         InstanceManager instanceManager,
         OverlayService overlayService,
         NotificationService notificationService,
         NavigationService navigationService,
         ConfigurationService configurationService,
         PersistenceService persistenceService,
-        InstanceService instanceService) : base(context, instanceManager, profileManager)
+        InstanceService instanceService) : base(context, aggregator, instanceManager, profileManager)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         _overlayService = overlayService;

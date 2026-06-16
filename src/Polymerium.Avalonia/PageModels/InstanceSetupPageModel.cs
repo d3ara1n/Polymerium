@@ -55,12 +55,13 @@ public partial class InstanceSetupPageModel(
     IServiceProvider serviceProvider,
     ProfileManager profileManager,
     NotificationService notificationService,
+    InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
     PackageMaterializer packageMaterializer,
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
-    PersistenceService persistenceService) : InstancePageModelBase(context, instanceManager, profileManager),
+    PersistenceService persistenceService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager),
                                              IStatefulViewModel<InstanceSetupPageModel.StateView>,
                                              IViewStateKeyProvider
 {

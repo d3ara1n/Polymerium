@@ -11,14 +11,16 @@ using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Core.Services;
 using TridentCore.Core.Utilities;
+using Polymerium.Avalonia.Services;
 
 namespace Polymerium.Avalonia.PageModels;
 
 public partial class InstanceStoragePageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
+    InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
     ProfileManager profileManager
-) : InstancePageModelBase(context, instanceManager, profileManager)
+) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     #region Overrides
 

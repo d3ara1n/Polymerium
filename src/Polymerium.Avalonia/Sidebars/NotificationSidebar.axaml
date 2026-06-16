@@ -14,7 +14,7 @@
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="400"
-    x:DataType="{x:Type app:MainWindowContext}"
+    x:DataType="{x:Type app:NotificationService}"
     mc:Ignorable="d">
     <Grid RowDefinitions="Auto,*">
         <Grid
@@ -242,20 +242,20 @@
                                                     <MenuFlyout>
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
-                                                            Command="{Binding $parent[app:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
+                                                            Command="{Binding $parent[app:NotificationSidebar].((app:NotificationService)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}"
                                                             Icon="{fie:SymbolIcon CheckmarkCircle,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead}"
-                                                            Command="{Binding $parent[app:NotificationSidebar].((app:MainWindowContext)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
+                                                            Command="{Binding $parent[app:NotificationSidebar].((app:NotificationService)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}"
                                                             Icon="{fie:SymbolIcon CheckmarkCircleHint,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
-                                                            Command="{Binding $parent[app:NotificationSidebar].((app:MainWindowContext)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
+                                                            Command="{Binding $parent[app:NotificationSidebar].((app:NotificationService)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
                                                             Header="{x:Static lang:Resources.NotificationSidebar_RemoveMenuText}"
                                                             Icon="{fie:SymbolIcon DismissCircle,

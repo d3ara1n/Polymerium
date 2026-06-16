@@ -37,6 +37,7 @@ public partial class InstancePageModel : ViewModelBase
         IViewContext context,
         OverlayService overlayService,
         ProfileManager profileManager,
+        InstanceStateAggregator aggregator,
         InstanceManager instanceManager,
         WidgetHostService widgetHostService,
         NotificationService notificationService,
@@ -50,6 +51,7 @@ public partial class InstancePageModel : ViewModelBase
         _notificationService = notificationService;
         _dataService = dataService;
         _persistenceService = persistenceService;
+        _aggregator = aggregator;
         SelectedPage =
             context.Parameter switch
             {
@@ -265,57 +267,6 @@ public partial class InstancePageModel : ViewModelBase
 
     #endregion
 
-    #region Overrides
-
-    protected override async Task OnInitializeAsync(CancellationToken token)
-    {
-        // 终究还是得有个 InstanceStateAggregator
-        _instanceManager.InstanceUpdating += OnProfileUpdating;
-        _instanceManager.InstanceDeploying += OnProfileDeploying;
-        _instanceManager.InstanceLaunching += OnProfileLaunching;
-        _profileManager.ProfileUpdated += OnProfileUpdated;
-        if (_instanceManager.IsTracking(Basic.Key, out var tracker))
-        {
-            switch (tracker)
-            {
-                case UpdateTracker update:
-                    // 已经处于更新状态而未收到事件
-                    State = InstanceState.Updating;
-                    update.StateUpdated += OnProfileUpdateStateChanged;
-                    break;
-                case DeployTracker deploy:
-                    // 已经处于部署状态而未收到事件
-                    State = InstanceState.Deploying;
-                    deploy.StateUpdated += OnProfileDeployStateChanged;
-                    break;
-                case LaunchTracker launch:
-                    // 已经处于启动状态而未收到事件
-                    State = InstanceState.Running;
-                    launch.StateUpdated += OnProfileLaunchingStateChanged;
-                    break;
-            }
-        }
-
-        foreach (var widget in Context.Widgets)
-        {
-            await widget.InitializeAsync();
-        }
-    }
-
-    protected override async Task OnDeinitializeAsync()
-    {
-        _instanceManager.InstanceUpdating -= OnProfileUpdating;
-        _instanceManager.InstanceDeploying -= OnProfileDeploying;
-        _instanceManager.InstanceLaunching -= OnProfileLaunching;
-        _profileManager.ProfileUpdated -= OnProfileUpdated;
-
-        foreach (var widget in Context.Widgets)
-        {
-            await widget.DeinitializeAsync();
-        }
-    }
-
-    #endregion
 
     #region Injected
 
@@ -325,81 +276,40 @@ public partial class InstancePageModel : ViewModelBase
     private readonly DataService _dataService;
     private readonly NotificationService _notificationService;
     private readonly PersistenceService _persistenceService;
+    private readonly InstanceStateAggregator _aggregator;
 
     #endregion
 
     #region Tracking
 
-    private void OnProfileUpdating(object? sender, UpdateTracker tracker)
+    private IDisposable? _aggregatorSubscription;
+
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        if (tracker.Key != Basic.Key)
+        _aggregatorSubscription = _aggregator.Watch(Basic.Key).Subscribe(snapshot =>
         {
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
-
-        tracker.StateUpdated += OnProfileUpdateStateChanged;
-        // 更新的事情交给 ProfileManager.ProfileUpdated
-    }
-
-    private void OnProfileDeploying(object? sender, DeployTracker tracker)
-    {
-        if (tracker.Key != Basic.Key)
-        {
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
-
-        tracker.StateUpdated += OnProfileDeployStateChanged;
-    }
-
-    private void OnProfileLaunching(object? sender, LaunchTracker tracker)
-    {
-        if (tracker.Key != Basic.Key)
-        {
-            return;
-        }
-
-        Dispatcher.UIThread.Post(() => State = InstanceState.Running);
-
-        tracker.StateUpdated += OnProfileLaunchingStateChanged;
-    }
-
-    private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
-    {
-        if (state is TrackerState.Faulted or TrackerState.Finished)
-        {
-            sender.StateUpdated -= OnProfileUpdateStateChanged;
             Dispatcher.UIThread.Post(() =>
             {
-                State = InstanceState.Idle;
+                State = snapshot?.State ?? InstanceState.Idle;
             });
+        });
+
+        _profileManager.ProfileUpdated += OnProfileUpdated;
+
+        foreach (var widget in Context.Widgets)
+        {
+            await widget.InitializeAsync();
         }
     }
 
-    private void OnProfileDeployStateChanged(TrackerBase sender, TrackerState state)
+    protected override async Task OnDeinitializeAsync()
     {
-        if (state is TrackerState.Faulted or TrackerState.Finished)
-        {
-            sender.StateUpdated -= OnProfileDeployStateChanged;
-            Dispatcher.UIThread.Post(() =>
-            {
-                State = InstanceState.Idle;
-            });
-        }
-    }
+        _aggregatorSubscription?.Dispose();
+        _profileManager.ProfileUpdated -= OnProfileUpdated;
 
-    private void OnProfileLaunchingStateChanged(TrackerBase sender, TrackerState state)
-    {
-        if (state is TrackerState.Faulted or TrackerState.Finished)
+        foreach (var widget in Context.Widgets)
         {
-            sender.StateUpdated -= OnProfileLaunchingStateChanged;
-            Dispatcher.UIThread.Post(() =>
-            {
-                State = InstanceState.Idle;
-            });
+            await widget.DeinitializeAsync();
         }
     }
 

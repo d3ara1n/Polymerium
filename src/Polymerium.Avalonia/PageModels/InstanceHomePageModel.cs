@@ -37,13 +37,14 @@ public partial class InstanceHomePageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     ProfileManager profileManager,
     OverlayService overlayService,
+    InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
     NavigationService navigationService,
     NotificationService notificationService,
     ConfigurationService configurationService,
     PersistenceService persistenceService,
     InstanceService instanceService,
-    WidgetHostService widgetHostService) : InstancePageModelBase(context, instanceManager, profileManager)
+    WidgetHostService widgetHostService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     // Launch Lifecycle
     private CompositeDisposable? _subscription;
