@@ -609,9 +609,9 @@
                                 <ProgressBar
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
-                                    Maximum="{Binding DeployingProgressTotal, Mode=OneWay}"
+                                    Maximum="1"
                                     Theme="{StaticResource LaunchProgressBarTheme}"
-                                    Value="{Binding DeployingProgressCurrent, Mode=OneWay}">
+                                    Value="{Binding DeployingProgress, Mode=OneWay}">
                                     <ProgressBar.Transitions>
                                         <Transitions>
                                             <DoubleTransition
@@ -627,15 +627,6 @@
                                     <TextBlock
                                         Text="{Binding DeployingMessage, Mode=OneWay}"
                                         TextAlignment="Center" />
-                                    <TextBlock
-                                        IsVisible="{Binding DeployingPending, Converter={x:Static BoolConverters.Not}, Mode=OneWay}"
-                                        FontSize="{StaticResource SmallFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        TextAlignment="Center">
-                                        <Run Text="{Binding DeployingProgressCurrent, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding DeployingProgressTotal, Mode=OneWay}" />
-                                    </TextBlock>
                                 </StackPanel>
 
                             </Panel>

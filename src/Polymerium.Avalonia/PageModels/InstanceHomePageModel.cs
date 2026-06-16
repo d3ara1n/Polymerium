@@ -140,8 +140,7 @@ public partial class InstanceHomePageModel(
            .Select(x => x.Last())
            .Subscribe(x =>
             {
-                DeployingProgressTotal = x.Item2;
-                DeployingProgressCurrent = x.Item1;
+                DeployingProgress = x ?? 0d;
                 DeployingPending = false;
             })
            .DisposeWith(tracker)
@@ -308,10 +307,7 @@ public partial class InstanceHomePageModel(
     public partial int PackageCount { get; set; }
 
     [ObservableProperty]
-    public partial double DeployingProgressTotal { get; set; }
-
-    [ObservableProperty]
-    public partial double DeployingProgressCurrent { get; set; }
+    public partial double DeployingProgress { get; set; }
 
     [ObservableProperty]
     public partial string DeployingMessage { get; set; } = string.Empty;
