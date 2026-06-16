@@ -251,27 +251,31 @@
         <Grid
             Grid.Row="2"
             Margin="{Binding Source={StaticResource ModalContentMargin}, Converter={x:Static husk:ThicknessConverters.WithoutTop}}"
-            ColumnDefinitions="Auto,*,Auto,Auto"
+            ColumnDefinitions="Auto,*,Auto"
             ColumnSpacing="8">
-            <Button
-                Grid.Column="0"
-                Classes="Primary"
-                Command="{Binding $parent[app:ProfileRuleSelectorsModal].AddSelectorCommand}">
-                <husk:IconLabel
-                    Icon="Add"
-                    Text="添加新选择器" />
-            </Button>
             <TextBlock
-                Grid.Column="2"
+                Grid.Column="0"
                 VerticalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                 <Run Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_SelectorCountLabelText}" />
                 <Run Text="{Binding $parent[app:ProfileRuleSelectorsModal].Selectors.Count, FallbackValue=0}" />
             </TextBlock>
-            <Button
-                Grid.Column="3"
-                Command="{Binding $parent[husk:Modal].Dismiss}"
-                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+            <husk:ModalActionPanel
+                Grid.Column="2"
+                Layout="Right"
+                Spacing="8">
+                <Button
+                    Classes="Primary"
+                    IsDefault="True"
+                    Command="{Binding $parent[app:ProfileRuleSelectorsModal].AddSelectorCommand}">
+                    <husk:IconLabel
+                        Icon="Add"
+                        Text="添加新选择器" />
+                </Button>
+                <Button
+                    Command="{Binding $parent[husk:Modal].Dismiss}"
+                    Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+            </husk:ModalActionPanel>
         </Grid>
     </Grid>
 </husk:Modal>
