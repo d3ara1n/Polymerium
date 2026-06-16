@@ -26,11 +26,12 @@ namespace Polymerium.Avalonia.PageModels;
 
 public partial class InstanceActivitiesPageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
+    InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     DataService dataService,
     PersistenceService persistenceService
-) : InstancePageModelBase(context, instanceManager, profileManager)
+) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     private const int ActionPageSize = 20;
 

@@ -38,10 +38,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     /// <inheritdoc/>
     public InstanceWorkspacePageModel(
         IViewContext<InstanceContextParameter> context,
+        InstanceStateAggregator aggregator,
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
-        ProfileManager profileManager) : base(context, instanceManager, profileManager)
+        ProfileManager profileManager) : base(context, aggregator, instanceManager, profileManager)
     {
         _notificationService = notificationService;
         _overlayService = overlayService;

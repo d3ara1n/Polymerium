@@ -42,7 +42,6 @@ namespace Polymerium.Avalonia;
 
 public partial class MainWindowContext : ObservableObject
 {
-    private const int MAX_NOTIFICATION_COUNT = 100;
 
     #region Fields
 
@@ -53,6 +52,7 @@ public partial class MainWindowContext : ObservableObject
     public MainWindowContext(
         ProfileManager profileManager,
         InstanceManager instanceManager,
+        InstanceStateAggregator aggregator,
         NotificationService notificationService,
         NavigationService navigationService,
         PersistenceService persistenceService,
@@ -78,7 +78,7 @@ public partial class MainWindowContext : ObservableObject
         CurrentUpdate = _updateService.CurrentUpdate;
 
         SubscribeProfileList(profileManager);
-        SubscribeState(instanceManager);
+        SubscribeState(aggregator);
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
         _ = _entries
@@ -115,10 +115,7 @@ public partial class MainWindowContext : ObservableObject
     {
         _updateService.SetHandler(null);
 
-        foreach (var model in Notifications)
-        {
-            model.OnRemoved();
-        }
+        _notificationService.ClearAll();
     }
 
     #endregion
@@ -126,22 +123,6 @@ public partial class MainWindowContext : ObservableObject
     #region Other
 
     public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
-
-    public void PopNotification(NotificationModel model)
-    {
-        if (Notifications.Count >= MAX_NOTIFICATION_COUNT)
-        {
-            var first = Notifications.FirstOrDefault();
-            if (first != null)
-            {
-                first.OnRemoved();
-                Notifications.Remove(first);
-            }
-        }
-
-        Notifications.Add(model);
-        UnreadNotificationCount++;
-    }
 
     #endregion
 
@@ -168,10 +149,6 @@ public partial class MainWindowContext : ObservableObject
     [ObservableProperty]
     public partial string FilterText { get; set; } = string.Empty;
 
-    public ObservableCollection<NotificationModel> Notifications { get; } = [];
-
-    [ObservableProperty]
-    public partial int UnreadNotificationCount { get; set; }
 
     [ObservableProperty]
     public partial AppUpdateModel? CurrentUpdate { get; set; }
@@ -451,7 +428,7 @@ public partial class MainWindowContext : ObservableObject
     [RelayCommand]
     private void OpenNotificationSidebar()
     {
-        var sidebar = new NotificationSidebar();
+        var sidebar = new NotificationSidebar { DataContext = _notificationService };
         _overlayService.PopSidebar(sidebar);
     }
 
@@ -471,64 +448,6 @@ public partial class MainWindowContext : ObservableObject
             NotificationService = _notificationService,
             UpdateManager = _updateManager,
         });
-    }
-
-    [RelayCommand]
-    private void DiagnoseGameCrash(LaunchTracker? tracker)
-    {
-        if (tracker == null)
-        {
-            return;
-        }
-
-        var crashReport = BuildCrashReport(tracker);
-        var modal = new GameCrashReportModal { Report = crashReport };
-        _overlayService.PopModal(modal);
-    }
-
-    [RelayCommand]
-    private void MarkAllAsRead()
-    {
-        foreach (var model in Notifications.Where(x => !x.IsRead))
-        {
-            model.IsRead = true;
-        }
-
-        UnreadNotificationCount = 0;
-    }
-
-    [RelayCommand]
-    private void MarkAsRead(NotificationModel? model)
-    {
-        if (model is { IsRead: false })
-        {
-            model.IsRead = true;
-            UnreadNotificationCount--;
-        }
-    }
-
-    [RelayCommand]
-    private void MarkAsUnread(NotificationModel? model)
-    {
-        if (model is { IsRead: true })
-        {
-            model.IsRead = false;
-            UnreadNotificationCount++;
-        }
-    }
-
-    [RelayCommand]
-    private void RemoveNotification(NotificationModel? model)
-    {
-        if (model is not null && Notifications.Contains(model))
-        {
-            model.OnRemoved();
-            Notifications.Remove(model);
-            if (!model.IsRead)
-            {
-                UnreadNotificationCount--;
-            }
-        }
     }
 
     #endregion
@@ -678,478 +597,68 @@ public partial class MainWindowContext : ObservableObject
 
     #region Instance State
 
-    internal void SubscribeState(InstanceManager manager)
+    internal void SubscribeState(InstanceStateAggregator aggregator)
     {
-        manager.InstanceUpdating += OnInstanceUpdating;
-        manager.InstanceInstalling += OnInstanceInstalling;
-        manager.InstanceDeploying += OnInstanceDeploying;
-        manager.InstanceLaunching += OnInstanceLaunching;
+        aggregator.StateChangeStream
+                  .Subscribe(change =>
+                  {
+                      foreach (var item in change)
+                      {
+                          switch (item.Reason)
+                          {
+                              case ChangeReason.Add:
+                              case ChangeReason.Update:
+                                  HandleSnapshotUpdate(item.Current);
+                                  break;
+                              case ChangeReason.Remove:
+                                  HandleSnapshotRemove(item.Current);
+                                  break;
+                          }
+                      }
+                  });
     }
 
-    private void OnInstanceInstalling(object? sender, InstallTracker e)
+    private void HandleSnapshotUpdate(InstanceStateSnapshot snapshot)
     {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = new InstanceEntryModel(e.Key, e.Key, "N/A", null, null);
-
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
-            {
-                model.IsPending = !x.HasValue;
-                model.Progress = x ?? 0d;
-            })
-           .DisposeWith(e);
-
-        e.StateUpdated += OnStateChanged;
-        _entries.AddOrUpdate(model);
-        return;
-
-        void OnStateChanged(TrackerBase _, TrackerState state)
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == snapshot.Key);
+        if (model is not null)
         {
-            switch (state)
+            Dispatcher.UIThread.Post(() =>
             {
-                case TrackerState.Idle:
-                    break;
-                case TrackerState.Running:
-                    model.IsPending = true;
-                    model.Progress = 0d;
-                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Installing);
-                    break;
-                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _entries.Remove(model);
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceInstallingDangerNotificationTitle
-                                                                 .Replace("{0}", e.Key),
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Finished:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceInstallingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success,
-                                                        forceExpire: true,
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key),
-                                                        actions: new
-                                                            GrowlAction(Resources
-                                                                           .MainWindow_InstanceInstallingSuccessNotificationOpenText,
-                                                                        ViewInstanceCommand,
-                                                                        e.Key));
-                    });
-                    _persistenceService.AppendAction(new()
-                    {
-                        Key = e.Key,
-                        Kind = PersistenceService.ActionKind.Install,
-                        New = e.Reference,
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _entries.Remove(model);
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
+                model.State = snapshot.State;
+                model.IsPending = snapshot.Progress is TrackerProgress.Indeterminate;
+                model.Progress = snapshot.Progress is TrackerProgress.Determinate d ? d.Percent : 0d;
+            });
+        }
+        else if (snapshot.State == InstanceState.Installing)
+        {
+            // Install 创建的新实例不在列表中，需要添加
+            var newModel = new InstanceEntryModel(snapshot.Key, snapshot.Key, "N/A", null, null);
+            Dispatcher.UIThread.Post(() =>
+            {
+                newModel.State = snapshot.State;
+                newModel.IsPending = true;
+                newModel.Progress = 0d;
+                _entries.AddOrUpdate(newModel);
+            });
         }
     }
 
-    private void OnInstanceUpdating(object? sender, UpdateTracker e)
+    private void HandleSnapshotRemove(InstanceStateSnapshot snapshot)
     {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is null)
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == snapshot.Key);
+        if (model is not null)
         {
-            return;
-        }
-
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
+            Dispatcher.UIThread.Post(() =>
             {
-                model.IsPending = !x.HasValue;
-                model.Progress = x ?? 0d;
-            })
-           .DisposeWith(e);
-
-        e.StateUpdated += OnStateChanged;
-        return;
-
-        void OnStateChanged(TrackerBase _, TrackerState state)
-        {
-            switch (state)
-            {
-                case TrackerState.Idle:
-                    break;
-                case TrackerState.Running:
-                    model.IsPending = true;
-                    model.Progress = 0d;
-                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Updating);
-                    break;
-                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
-                                                                 .Replace("{0}", e.Key),
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Finished:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success,
-                                                        forceExpire: true,
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key),
-                                                        actions: new
-                                                            GrowlAction(Resources
-                                                                           .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
-                                                                        ViewInstanceCommand,
-                                                                        e.Key));
-                    });
-                    _persistenceService.AppendAction(new()
-                    {
-                        Key = e.Key,
-                        Kind = PersistenceService.ActionKind.Update,
-                        Old = e.OldSource,
-                        New = e.NewSource,
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Idle);
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
-        }
-    }
-
-    private void OnInstanceDeploying(object? sender, DeployTracker e)
-    {
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is null)
-        {
-            return;
-        }
-
-        e
-           .StageStream.Subscribe(_ =>
-            {
-                Dispatcher.UIThread.Post(() =>
+                model.State = InstanceState.Idle;
+                model.IsPending = false;
+                // Install 完成后从列表移除（安装的是新实例，列表里不该留）
+                if (snapshot.Tracker is InstallTracker && snapshot.Tracker.State is TrackerState.Finished or TrackerState.Faulted)
                 {
-                    model.IsPending = true;
-                    model.Progress = 0d;
-                });
-            })
-           .DisposeWith(e);
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
-            {
-                Dispatcher.UIThread.Post(() =>
-                {
-                    model.IsPending = false;
-                    model.Progress = x ?? 0d;
-                });
-            })
-           .DisposeWith(e);
-
-        e.StateUpdated += OnStateChanged;
-        return;
-
-        void OnStateChanged(TrackerBase _, TrackerState state)
-        {
-            switch (state)
-            {
-                case TrackerState.Idle:
-                    break;
-                case TrackerState.Running:
-                    model.IsPending = true;
-                    model.Progress = 0d;
-                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Deploying);
-                    break;
-                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _notificationService.PopMessage(e.FailureReason,
-                                                        Resources.MainWindow_InstanceDeployingNotificationTitle
-                                                                 .Replace("{0}", e.Key),
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Finished:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceDeployingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success,
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Idle);
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
-        }
-    }
-
-    private void OnInstanceLaunching(object? sender, LaunchTracker e)
-    {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is null)
-        {
-            return;
-        }
-
-        e.StateUpdated += OnStateChanged;
-        return;
-
-        void OnStateChanged(TrackerBase _, TrackerState state)
-        {
-            switch (state)
-            {
-                case TrackerState.Idle:
-                    break;
-                case TrackerState.Running:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.IsPending = true;
-                        model.Progress = 0d;
-                        // 不从 ProfileManager 里取，反正 UI 上只要行为类似就好
-                        model.LastPlayedAtRaw = DateTimeOffset.Now;
-                        model.State = InstanceState.Running;
-                    });
-                    break;
-                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-
-                        // Determine if this is an account issue or game crash
-                        var isAccountIssue = e.FailureReason is AccountException
-                                                             or AggregateException
-                        {
-                            InnerException: AccountException
-                        };
-                        var isGameCrash = e.FailureReason is ProcessFaultedException
-                                                          or AggregateException
-                        {
-                            InnerException: ProcessFaultedException
-                        };
-
-                        if (isAccountIssue)
-                        {
-                            // TODO: Detailed message
-                            _notificationService.PopMessage(e.FailureReason,
-                                                            e.Key,
-                                                            thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                        }
-                        else if (isGameCrash)
-                        {
-                            // Game crash error
-                            _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceLaunchingDangerNotificationMessage
-                                                           .Replace("{0}", e.Key),
-                                                            Resources
-                                                               .MainWindow_InstanceLaunchingDangerNotificationTitle,
-                                                            GrowlLevel.Danger,
-                                                            thumbnail: ThumbnailHelper.ForInstance(e.Key),
-                                                            actions:
-                                                            [
-                                                                new(Resources
-                                                                       .MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
-                                                                    DiagnoseGameCrashCommand,
-                                                                    e),
-                                                            ]);
-                        }
-                        else
-                        {
-                            // Other errors
-                            _notificationService.PopMessage(e.FailureReason,
-                                                            e.Key,
-                                                            thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                        }
-                    });
-                    _persistenceService.AppendActivity(new()
-                    {
-                        Key = e.Key,
-                        AccountId = e.Options.Account?.Uuid ?? string.Empty,
-                        DieInPeace = false,
-                        Begin =
-                            DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
-                        End = DateTime.Now,
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Finished:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceState.Idle;
-                        _notificationService.PopMessage(Resources
-                                                           .MainWindow_InstanceLaunchingSuccessNotificationMessage,
-                                                        e.Key,
-                                                        GrowlLevel.Success,
-                                                        thumbnail: ThumbnailHelper.ForInstance(e.Key));
-                    });
-                    _persistenceService.AppendActivity(new()
-                    {
-                        Key = e.Key,
-                        AccountId = e.Options.Account?.Uuid ?? string.Empty,
-                        Begin =
-                            DateTimeHelper.ToPersistedLocalDateTime(e.StartedAt),
-                        End = DateTime.Now,
-                        DieInPeace = true,
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Idle);
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
-        }
-    }
-
-    #endregion
-
-    #region Diagnostic Helpers
-
-    private CrashReportModel BuildCrashReport(LaunchTracker tracker)
-    {
-        var profile = _profileManager.TryGetImmutable(tracker.Key, out var p) ? p : null;
-        var gameDir = PathDef.Default.DirectoryOfBuild(tracker.Key);
-        var logPath = Path.Combine(gameDir, "logs", "latest.log");
-        var crashReportPath = FindLatestCrashReport(gameDir);
-
-        // Extract loader info
-        var loaderLabel = profile?.Setup.Loader != null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
-                              ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
-                              : Resources.Enum_Vanilla;
-
-        // Get Java info
-        var javaVersion = tracker.JavaVersion?.ToString();
-        var javaPath = tracker.JavaHome;
-
-        // Get allocated memory
-        var allocatedMemory = $"{tracker.Options.MaxMemory} MB";
-
-        // Get last log lines
-        string? lastLogLines = null;
-        try
-        {
-            if (File.Exists(logPath))
-            {
-                var lines = File.ReadAllLines(logPath);
-                var lastLines = lines.TakeLast(50).ToArray();
-                lastLogLines = string.Join(Environment.NewLine, lastLines);
-            }
-        }
-        catch
-        {
-            // Ignore errors reading log
-        }
-
-        // Get OS info
-        var osDescription = RuntimeInformation.OSDescription;
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            osDescription = $"Windows {Environment.OSVersion.Version}";
-        }
-
-        var installedMemory =
-            $"{double.Round((double)GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024 / 1024)} GB";
-
-        // Extract exit code and exception message
-        var exitCode = tracker.FailureReason is ProcessFaultedException pfe ? pfe.ExitCode : -1;
-        var exceptionMessage = tracker.FailureReason?.Message ?? "Unknown error";
-        if (tracker.FailureReason is AggregateException { InnerException: not null } ae)
-        {
-            exceptionMessage = ae.InnerException?.Message ?? "Unknown error";
-            if (ae.InnerException is ProcessFaultedException innerPfe)
-            {
-                exitCode = innerPfe.ExitCode;
-            }
-        }
-
-        return new()
-        {
-            InstanceKey = tracker.Key,
-            InstanceName = profile?.Name ?? tracker.Key,
-            ExitCode = exitCode,
-            LaunchTime = tracker.StartedAt,
-            CrashTime = DateTimeOffset.Now,
-            ExceptionMessage = exceptionMessage,
-            MinecraftVersion = profile?.Setup.Version ?? "Unknown",
-            LoaderLabel = loaderLabel,
-            GameDirectory = gameDir,
-            OperatingSystem = osDescription,
-            InstalledMemory = installedMemory,
-            JavaVersion = javaVersion ?? "Unknown",
-            JavaPath = javaPath ?? "Unknown",
-            AllocatedMemory = allocatedMemory,
-            LogFilePath = File.Exists(logPath) ? logPath : null,
-            CrashReportPath = crashReportPath,
-            LastLogLines = lastLogLines,
-            ModCount = profile?.Setup.Packages.Count ?? 0,
-            CommandLine = tracker.CommandLine,
-        };
-    }
-
-    private string? FindLatestCrashReport(string gameDir)
-    {
-        try
-        {
-            var crashReportsDir = Path.Combine(gameDir, "crash-reports");
-            if (!Directory.Exists(crashReportsDir))
-            {
-                return null;
-            }
-
-            var crashReports = Directory
-                              .GetFiles(crashReportsDir, "crash-*.txt")
-                              .OrderByDescending(File.GetLastWriteTime)
-                              .FirstOrDefault();
-
-            return crashReports;
-        }
-        catch
-        {
-            return null;
+                    _entries.Remove(model);
+                }
+            });
         }
     }
 

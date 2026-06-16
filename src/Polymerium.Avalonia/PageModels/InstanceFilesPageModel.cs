@@ -29,11 +29,12 @@ namespace Polymerium.Avalonia.PageModels;
 public partial class InstanceFilesPageModel(
     ILogger<InstanceFilesPageModel> logger,
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
+    InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     OverlayService overlayService,
     NotificationService notificationService,
-    PersistenceService persistenceService) : InstancePageModelBase(context, instanceManager, profileManager)
+    PersistenceService persistenceService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     #region Overrides
 

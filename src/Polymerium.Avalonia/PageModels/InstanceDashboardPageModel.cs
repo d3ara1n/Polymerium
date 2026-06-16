@@ -27,12 +27,13 @@ namespace Polymerium.Avalonia.PageModels;
 
 public partial class InstanceDashboardPageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
+    InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
     ProfileManager profileManager,
     ScrapService scrapService,
     NotificationService notificationService,
     PersistenceService persistenceService
-) : InstancePageModelBase(context, instanceManager, profileManager)
+) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     #region Reactive
 

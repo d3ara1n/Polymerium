@@ -1,18 +1,101 @@
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Animation;
 using Avalonia.Collections;
 using Avalonia.Styling;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Services;
 
-public class NotificationService
+public partial class NotificationService : ObservableObject
 {
+    private const int MAX_NOTIFICATION_COUNT = 100;
+
+    // 持久通知集合：app 级单例持有，NotificationSidebar 直接绑定，不受窗口生命周期影响。
+    public ObservableCollection<NotificationModel> Notifications { get; } = [];
+
+    [ObservableProperty]
+    public partial int UnreadNotificationCount { get; set; }
+
+    [RelayCommand]
+    private void MarkAllAsRead()
+    {
+        foreach (var model in Notifications.Where(x => !x.IsRead))
+        {
+            model.IsRead = true;
+        }
+
+        UnreadNotificationCount = 0;
+    }
+
+    [RelayCommand]
+    private void MarkAsRead(NotificationModel? model)
+    {
+        if (model is { IsRead: false })
+        {
+            model.IsRead = true;
+            UnreadNotificationCount--;
+        }
+    }
+
+    [RelayCommand]
+    private void MarkAsUnread(NotificationModel? model)
+    {
+        if (model is { IsRead: true })
+        {
+            model.IsRead = false;
+            UnreadNotificationCount++;
+        }
+    }
+
+    [RelayCommand]
+    private void RemoveNotification(NotificationModel? model)
+    {
+        if (model is not null && Notifications.Contains(model))
+        {
+            model.OnRemoved();
+            Notifications.Remove(model);
+            if (!model.IsRead)
+            {
+                UnreadNotificationCount--;
+            }
+        }
+    }
+
+    public void PopNotification(NotificationModel model)
+    {
+        if (Notifications.Count >= MAX_NOTIFICATION_COUNT)
+        {
+            var first = Notifications.FirstOrDefault();
+            if (first != null)
+            {
+                first.OnRemoved();
+                Notifications.Remove(first);
+            }
+        }
+
+        Notifications.Add(model);
+        UnreadNotificationCount++;
+    }
+
+    /// <summary>
+    ///     清理所有通知的资源（应用退出时调用）。
+    /// </summary>
+    public void ClearAll()
+    {
+        foreach (var model in Notifications)
+        {
+            model.OnRemoved();
+        }
+    }
     private static readonly Animation Countdown = new()
     {
         Duration = TimeSpan.FromSeconds(7),
@@ -47,9 +130,16 @@ public class NotificationService
 
     private void Pop(NotificationModel model, GrowlItem item)
     {
+        // 持久通知记录：永远写，不受窗口生命周期影响
         _notificationHandler?.Invoke(model);
-        _growlHandler?.Invoke(item);
-        return;
+
+        // growl 弹窗：通过网关检查是否有活跃 TopLevel
+        // TODO(B): 无窗口时通过 TrayIcon / macOS Notification Center 发系统通知
+        //   现状：无窗口时 growl 静默丢弃（持久记录照写），崩溃诊断也转持久记录
+        if (_growlHandler is not null)
+        {
+            _growlHandler.Invoke(item);
+        }
     }
 
     public void PopMessage(
